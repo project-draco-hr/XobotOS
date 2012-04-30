@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("null address!");
+  ReferTo referTo=new ReferTo();
+  referTo.setAddress(address);
+  return referTo;
+}

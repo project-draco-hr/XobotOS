@@ -1,0 +1,15 @@
+{
+  write("new ");
+  CSharpTypeReferenceVisitor arrayElementTypeVisitor=new CSharpTypeReferenceVisitor(this);
+  node.elementType().accept(arrayElementTypeVisitor);
+  write("[");
+  if (null != node.length()) {
+    node.length().accept(this);
+  }
+  write("]");
+  write(arrayElementTypeVisitor.sufix());
+  if (null != node.initializer()) {
+    write(" ");
+    node.initializer().accept(this);
+  }
+}

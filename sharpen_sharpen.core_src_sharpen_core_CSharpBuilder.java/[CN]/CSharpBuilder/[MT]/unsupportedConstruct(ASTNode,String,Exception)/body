@@ -1,0 +1,4 @@
+{
+  addProblem(node,ProblemKind.INTERNAL_ERROR,message + ": " + cause);
+  throw new IllegalArgumentException(sourceInformation(node) + ": " + message,cause);
+}

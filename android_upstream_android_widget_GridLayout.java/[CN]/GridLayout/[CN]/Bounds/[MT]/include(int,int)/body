@@ -1,0 +1,4 @@
+{
+  this.before=max(this.before,before);
+  this.after=max(this.after,after);
+}

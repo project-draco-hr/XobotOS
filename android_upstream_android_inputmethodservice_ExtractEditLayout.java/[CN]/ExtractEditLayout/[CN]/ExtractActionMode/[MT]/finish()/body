@@ -1,0 +1,11 @@
+{
+  if (mActionMode != this) {
+    return;
+  }
+  mCallback.onDestroyActionMode(this);
+  mCallback=null;
+  mExtractActionButton.setVisibility(VISIBLE);
+  mEditButton.setVisibility(INVISIBLE);
+  sendAccessibilityEvent(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
+  mActionMode=null;
+}

@@ -1,0 +1,6 @@
+{
+  if (organization == null)   throw new NullPointerException("bad organization arg");
+  Organization o=new Organization();
+  o.setOrganization(organization);
+  return o;
+}

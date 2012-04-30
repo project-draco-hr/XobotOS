@@ -1,0 +1,3 @@
+{
+  return SIPTransactionStack.isDialogCreated(ucaseMethod);
+}

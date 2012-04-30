@@ -1,0 +1,9 @@
+{
+  for (  final File file : directory.listFiles()) {
+    if (file.isDirectory())     collectAllFiles(files,root,file,suffix);
+ else {
+      if ((suffix != null) && !file.getName().endsWith(suffix))       continue;
+      files.add(root.relativize(file.toURI()).getPath());
+    }
+  }
+}

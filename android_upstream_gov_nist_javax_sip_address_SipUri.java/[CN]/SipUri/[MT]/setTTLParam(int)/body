@@ -1,0 +1,7 @@
+{
+  if (ttl <= 0)   throw new IllegalArgumentException("Bad ttl value");
+  if (uriParms != null) {
+    NameValue nv=new NameValue("ttl",Integer.valueOf(ttl));
+    uriParms.set(nv);
+  }
+}

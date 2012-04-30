@@ -1,0 +1,5 @@
+{
+  ContentLanguageList retval=new ContentLanguageList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

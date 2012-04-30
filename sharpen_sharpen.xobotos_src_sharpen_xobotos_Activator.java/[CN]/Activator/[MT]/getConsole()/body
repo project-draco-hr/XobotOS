@@ -1,0 +1,3 @@
+{
+  return findConsole(CONSOLE_NAME);
+}

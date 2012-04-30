@@ -1,0 +1,18 @@
+{
+  SIPTransactionErrorEvent newErrorEvent;
+  Iterator<SIPTransactionEventListener> listenerIterator;
+  SIPTransactionEventListener nextListener;
+  newErrorEvent=new SIPTransactionErrorEvent(this,errorEventID);
+synchronized (eventListeners) {
+    listenerIterator=eventListeners.iterator();
+    while (listenerIterator.hasNext()) {
+      nextListener=(SIPTransactionEventListener)listenerIterator.next();
+      nextListener.transactionErrorEvent(newErrorEvent);
+    }
+  }
+  if (errorEventID != SIPTransactionErrorEvent.TIMEOUT_RETRANSMIT) {
+    eventListeners.clear();
+    this.setState(TransactionState.TERMINATED);
+    if (this instanceof SIPServerTransaction && this.isByeTransaction() && this.getDialog() != null)     ((SIPDialog)this.getDialog()).setState(SIPDialog.TERMINATED_STATE);
+  }
+}

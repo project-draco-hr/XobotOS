@@ -1,0 +1,20 @@
+{
+  StringBuffer retval=new StringBuffer("");
+  while (true) {
+    char ch;
+    int i=inputStream.read();
+    if (i == -1) {
+      throw new IOException("End of stream");
+    }
+ else     ch=(char)i;
+    if (this.maxMessageSize > 0) {
+      this.sizeCounter--;
+      if (this.sizeCounter <= 0)       throw new IOException("Max size exceeded!");
+    }
+    if (ch != '\r')     retval.append(ch);
+    if (ch == '\n') {
+      break;
+    }
+  }
+  return retval.toString();
+}

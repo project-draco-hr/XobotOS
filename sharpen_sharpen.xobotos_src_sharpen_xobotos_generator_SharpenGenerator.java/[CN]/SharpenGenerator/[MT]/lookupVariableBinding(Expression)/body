@@ -1,0 +1,13 @@
+{
+  if (expr instanceof Name) {
+    IBinding binding=((Name)expr).resolveBinding();
+    if (binding instanceof IVariableBinding)     return my(BindingManager.class).resolveBinding((IVariableBinding)binding);
+    return null;
+  }
+  if (expr instanceof QualifiedName) {
+    IBinding binding=((QualifiedName)expr).resolveBinding();
+    if (binding instanceof IVariableBinding)     return my(BindingManager.class).resolveBinding((IVariableBinding)binding);
+    return null;
+  }
+  return null;
+}

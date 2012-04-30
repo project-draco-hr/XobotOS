@@ -1,0 +1,53 @@
+{
+  Arrays.checkOffsetAndCount(chars.length,offset,count);
+  if (buffer == null) {
+    throw new IOException("Pipe is closed");
+  }
+  if (lastReader != null && !lastReader.isAlive()) {
+    throw new IOException("Pipe broken");
+  }
+  lastWriter=Thread.currentThread();
+  while (count > 0) {
+    try {
+      while (buffer != null && out == in) {
+        notifyAll();
+        wait(1000);
+        if (lastReader != null && !lastReader.isAlive()) {
+          throw new IOException("Pipe broken");
+        }
+      }
+    }
+ catch (    InterruptedException e) {
+      throw new InterruptedIOException();
+    }
+    if (buffer == null) {
+      throw new IOException("Pipe is closed");
+    }
+    if (in == -1) {
+      in=0;
+    }
+    if (in >= out) {
+      int length=buffer.length - in;
+      if (count < length) {
+        length=count;
+      }
+      System.arraycopy(chars,offset,buffer,in,length);
+      offset+=length;
+      count-=length;
+      in+=length;
+      if (in == buffer.length) {
+        in=0;
+      }
+    }
+    if (count > 0 && in != out) {
+      int length=out - in;
+      if (count < length) {
+        length=count;
+      }
+      System.arraycopy(chars,offset,buffer,in,length);
+      offset+=length;
+      count-=length;
+      in+=length;
+    }
+  }
+}

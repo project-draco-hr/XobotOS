@@ -1,0 +1,4 @@
+{
+  if (node.isConstructor())   return null;
+ else   return MethodTemplate.DEFAULT;
+}

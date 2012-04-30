@@ -1,0 +1,60 @@
+{
+  int pendingIdleHandlerCount=-1;
+  int nextPollTimeoutMillis=0;
+  for (; ; ) {
+    if (nextPollTimeoutMillis != 0) {
+      Binder.flushPendingCommands();
+    }
+    nativePollOnce(mPtr,nextPollTimeoutMillis);
+synchronized (this) {
+      final long now=SystemClock.uptimeMillis();
+      final Message msg=mMessages;
+      if (msg != null) {
+        final long when=msg.when;
+        if (now >= when) {
+          mBlocked=false;
+          mMessages=msg.next;
+          msg.next=null;
+          if (false)           Log.v("MessageQueue","Returning message: " + msg);
+          msg.markInUse();
+          return msg;
+        }
+ else {
+          nextPollTimeoutMillis=(int)Math.min(when - now,Integer.MAX_VALUE);
+        }
+      }
+ else {
+        nextPollTimeoutMillis=-1;
+      }
+      if (pendingIdleHandlerCount < 0) {
+        pendingIdleHandlerCount=mIdleHandlers.size();
+      }
+      if (pendingIdleHandlerCount == 0) {
+        mBlocked=true;
+        continue;
+      }
+      if (mPendingIdleHandlers == null) {
+        mPendingIdleHandlers=new IdleHandler[Math.max(pendingIdleHandlerCount,4)];
+      }
+      mPendingIdleHandlers=mIdleHandlers.toArray(mPendingIdleHandlers);
+    }
+    for (int i=0; i < pendingIdleHandlerCount; i++) {
+      final IdleHandler idler=mPendingIdleHandlers[i];
+      mPendingIdleHandlers[i]=null;
+      boolean keep=false;
+      try {
+        keep=idler.queueIdle();
+      }
+ catch (      Throwable t) {
+        Log.wtf("MessageQueue","IdleHandler threw exception",t);
+      }
+      if (!keep) {
+synchronized (this) {
+          mIdleHandlers.remove(idler);
+        }
+      }
+    }
+    pendingIdleHandlerCount=0;
+    nextPollTimeoutMillis=0;
+  }
+}

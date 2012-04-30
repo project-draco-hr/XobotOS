@@ -1,0 +1,9 @@
+{
+  if (_fieldType != null)   field.type(_fieldType.getExpression());
+  if (_fieldInitializer != null) {
+    final String code=_fieldInitializer.code();
+    if (code != null)     field.initializer(new CSStringLiteralExpression(code));
+ else     field.initializer(null);
+  }
+  super.modify(builder,node,field);
+}

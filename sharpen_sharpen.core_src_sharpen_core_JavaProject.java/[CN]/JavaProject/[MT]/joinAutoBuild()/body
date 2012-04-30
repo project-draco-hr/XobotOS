@@ -1,0 +1,3 @@
+{
+  joinBuild(ResourcesPlugin.FAMILY_AUTO_BUILD);
+}

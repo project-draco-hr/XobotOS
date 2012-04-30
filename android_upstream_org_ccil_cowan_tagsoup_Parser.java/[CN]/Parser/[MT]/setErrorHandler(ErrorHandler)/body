@@ -1,0 +1,3 @@
+{
+  theErrorHandler=(handler == null) ? this : handler;
+}

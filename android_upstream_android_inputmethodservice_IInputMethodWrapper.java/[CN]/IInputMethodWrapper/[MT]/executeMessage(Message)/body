@@ -1,0 +1,81 @@
+{
+  InputMethod inputMethod=mInputMethod.get();
+  if (inputMethod == null && msg.what != DO_DUMP) {
+    Log.w(TAG,"Input method reference was null, ignoring message: " + msg.what);
+    return;
+  }
+switch (msg.what) {
+case DO_DUMP:
+{
+      AbstractInputMethodService target=mTarget.get();
+      if (target == null) {
+        return;
+      }
+      HandlerCaller.SomeArgs args=(HandlerCaller.SomeArgs)msg.obj;
+      try {
+        target.dump((FileDescriptor)args.arg1,(PrintWriter)args.arg2,(String[])args.arg3);
+      }
+ catch (      RuntimeException e) {
+        ((PrintWriter)args.arg2).println("Exception: " + e);
+      }
+synchronized (args.arg4) {
+        ((CountDownLatch)args.arg4).countDown();
+      }
+      return;
+    }
+case DO_ATTACH_TOKEN:
+{
+    inputMethod.attachToken((IBinder)msg.obj);
+    return;
+  }
+case DO_SET_INPUT_CONTEXT:
+{
+  inputMethod.bindInput((InputBinding)msg.obj);
+  return;
+}
+case DO_UNSET_INPUT_CONTEXT:
+inputMethod.unbindInput();
+return;
+case DO_START_INPUT:
+{
+HandlerCaller.SomeArgs args=(HandlerCaller.SomeArgs)msg.obj;
+IInputContext inputContext=(IInputContext)args.arg1;
+InputConnection ic=inputContext != null ? new InputConnectionWrapper(inputContext) : null;
+EditorInfo info=(EditorInfo)args.arg2;
+info.makeCompatible(mTargetSdkVersion);
+inputMethod.startInput(ic,info);
+return;
+}
+case DO_RESTART_INPUT:
+{
+HandlerCaller.SomeArgs args=(HandlerCaller.SomeArgs)msg.obj;
+IInputContext inputContext=(IInputContext)args.arg1;
+InputConnection ic=inputContext != null ? new InputConnectionWrapper(inputContext) : null;
+EditorInfo info=(EditorInfo)args.arg2;
+info.makeCompatible(mTargetSdkVersion);
+inputMethod.restartInput(ic,info);
+return;
+}
+case DO_CREATE_SESSION:
+{
+inputMethod.createSession(new InputMethodSessionCallbackWrapper(mCaller.mContext,(IInputMethodCallback)msg.obj));
+return;
+}
+case DO_SET_SESSION_ENABLED:
+inputMethod.setSessionEnabled((InputMethodSession)msg.obj,msg.arg1 != 0);
+return;
+case DO_REVOKE_SESSION:
+inputMethod.revokeSession((InputMethodSession)msg.obj);
+return;
+case DO_SHOW_SOFT_INPUT:
+inputMethod.showSoftInput(msg.arg1,(ResultReceiver)msg.obj);
+return;
+case DO_HIDE_SOFT_INPUT:
+inputMethod.hideSoftInput(msg.arg1,(ResultReceiver)msg.obj);
+return;
+case DO_CHANGE_INPUTMETHOD_SUBTYPE:
+inputMethod.changeInputMethodSubtype((InputMethodSubtype)msg.obj);
+return;
+}
+Log.w(TAG,"Unhandled message code: " + msg.what);
+}

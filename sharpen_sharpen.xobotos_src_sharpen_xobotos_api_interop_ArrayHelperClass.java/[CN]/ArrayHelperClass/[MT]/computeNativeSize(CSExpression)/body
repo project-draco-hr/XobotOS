@@ -1,0 +1,13 @@
+{
+  CSExpression baseSize=NATIVE_SIZE.expr();
+  final CSExpression elementSize;
+  if (_ptrMember.isByRef()) {
+    CSExpression sizeof=new CSReferenceExpression("Marshal.SizeOf");
+    elementSize=new CSMethodInvocationExpression(sizeof,new CSTypeofExpression(new CSTypeReference("System.IntPtr")));
+  }
+ else {
+    elementSize=_ptrMember.getNativeElementSizeExpr();
+  }
+  CSExpression length=new CSMemberReferenceExpression(expr,"Length");
+  return new CSInfixExpression("+",baseSize,new CSInfixExpression("*",elementSize,length));
+}

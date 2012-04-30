@@ -1,0 +1,8 @@
+{
+  int newCount=count + chars.length;
+  if (newCount > value.length) {
+    enlargeBuffer(newCount);
+  }
+  System.arraycopy(chars,0,value,count,chars.length);
+  count=newCount;
+}

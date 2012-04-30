@@ -1,0 +1,3 @@
+{
+  return ancestorOf(node,CompilationUnit.class);
+}

@@ -1,0 +1,7 @@
+{
+  mOpenSubMenuId=0;
+  if (mOpenSubMenu != null) {
+    mOpenSubMenu.dismiss();
+    mOpenSubMenu=null;
+  }
+}

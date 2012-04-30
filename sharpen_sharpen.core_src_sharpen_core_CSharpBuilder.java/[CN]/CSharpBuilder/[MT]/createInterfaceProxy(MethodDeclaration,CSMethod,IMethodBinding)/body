@@ -1,0 +1,21 @@
+{
+  final IMethodBinding binding=node.resolveBinding();
+  final ITypeBinding returnType=binding.getReturnType();
+  final ITypeBinding ifaceReturnType=ifaceMethod.getReturnType();
+  CSTypeReferenceExpression ifaceName=mappedTypeReference(ifaceMethod.getDeclaringClass());
+  CSMethod proxy=new CSMethod(ifaceName.getTypeName() + '.' + ifaceMethod.getName());
+  proxy.visibility(CSVisibility.Private);
+  proxy.modifier(CSMethodModifier.None);
+  proxy.returnType(mappedTypeReference(ifaceMethod.getReturnType()));
+  mapTypeParameters(node.typeParameters(),proxy);
+  mapParameters(node,proxy);
+  CSAttribute attr=new CSAttribute("Sharpen.Proxy");
+  proxy.addAttribute(attr);
+  CSExpression name=new CSReferenceExpression(method.name());
+  CSMethodInvocationExpression mie=new CSMethodInvocationExpression(name);
+  for (  CSVariableDeclaration param : proxy.parameters())   mie.addArgument(new CSReferenceExpression(param.name()));
+  for (  CSTypeParameter param : proxy.typeParameters())   mie.addTypeArgument(new CSTypeReference(param.name()));
+  CSExpression retval=castIfNeeded(ifaceReturnType,returnType,mie);
+  proxy.body().addStatement(new CSReturnStatement(-1,retval));
+  return proxy;
+}

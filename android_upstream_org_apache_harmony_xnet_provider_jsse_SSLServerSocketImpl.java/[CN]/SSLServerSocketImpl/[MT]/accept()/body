@@ -1,0 +1,12 @@
+{
+  if (logger != null) {
+    logger.println("SSLServerSocketImpl.accept ..");
+  }
+  SSLSocketImpl s=new SSLSocketImpl((SSLParametersImpl)sslParameters.clone());
+  implAccept(s);
+  s.init();
+  if (logger != null) {
+    logger.println("SSLServerSocketImpl: accepted, initialized");
+  }
+  return s;
+}

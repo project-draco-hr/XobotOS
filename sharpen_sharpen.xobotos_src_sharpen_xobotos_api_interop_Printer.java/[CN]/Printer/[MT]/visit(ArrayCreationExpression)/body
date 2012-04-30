@@ -1,0 +1,7 @@
+{
+  _writer.write("new ");
+  node.getType().accept(this);
+  _writer.write("[");
+  node.getSize().accept(this);
+  _writer.writeBlock("]");
+}

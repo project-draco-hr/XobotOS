@@ -1,0 +1,9 @@
+{
+  enforceSealed();
+  final int childAccessibilityViewId=mChildAccessibilityIds.get(index);
+  if (!canPerformRequestOverConnection(childAccessibilityViewId)) {
+    return null;
+  }
+  AccessibilityInteractionClient client=AccessibilityInteractionClient.getInstance();
+  return client.findAccessibilityNodeInfoByAccessibilityId(mConnection,mAccessibilityWindowId,childAccessibilityViewId);
+}

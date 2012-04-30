@@ -1,0 +1,17 @@
+{
+  int threadCount;
+  while (true) {
+    threadCount=threadGroup.enumerate(threads);
+    if (threadCount == threads.length) {
+      resize();
+    }
+ else {
+      break;
+    }
+  }
+  if (threadCount < lastThread) {
+    Arrays.fill(threads,threadCount,lastThread,null);
+  }
+  lastThread=threadCount;
+  return threads;
+}

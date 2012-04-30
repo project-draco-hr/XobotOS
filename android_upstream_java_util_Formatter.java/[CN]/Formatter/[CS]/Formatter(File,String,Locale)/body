@@ -1,0 +1,16 @@
+{
+  FileOutputStream fout=null;
+  try {
+    fout=new FileOutputStream(file);
+    out=new BufferedWriter(new OutputStreamWriter(fout,csn));
+  }
+ catch (  RuntimeException e) {
+    IoUtils.closeQuietly(fout);
+    throw e;
+  }
+catch (  UnsupportedEncodingException e) {
+    IoUtils.closeQuietly(fout);
+    throw e;
+  }
+  locale=l;
+}

@@ -1,0 +1,27 @@
+{
+  sipWkDay=w;
+  if (sipWkDay.compareToIgnoreCase(MON) == 0) {
+    wkday=Calendar.MONDAY;
+  }
+ else   if (sipWkDay.compareToIgnoreCase(TUE) == 0) {
+    wkday=Calendar.TUESDAY;
+  }
+ else   if (sipWkDay.compareToIgnoreCase(WED) == 0) {
+    wkday=Calendar.WEDNESDAY;
+  }
+ else   if (sipWkDay.compareToIgnoreCase(THU) == 0) {
+    wkday=Calendar.THURSDAY;
+  }
+ else   if (sipWkDay.compareToIgnoreCase(FRI) == 0) {
+    wkday=Calendar.FRIDAY;
+  }
+ else   if (sipWkDay.compareToIgnoreCase(SAT) == 0) {
+    wkday=Calendar.SATURDAY;
+  }
+ else   if (sipWkDay.compareToIgnoreCase(SUN) == 0) {
+    wkday=Calendar.SUNDAY;
+  }
+ else {
+    throw new IllegalArgumentException("Illegal Week day :" + w);
+  }
+}

@@ -1,0 +1,26 @@
+{
+synchronized (mDhcpInfoInternal) {
+    mDhcpInfoInternal=dhcpInfoInternal;
+  }
+  mLastSignalLevel=-1;
+  WifiConfigStore.setIpConfiguration(mLastNetworkId,dhcpInfoInternal);
+  InetAddress addr=NetworkUtils.numericToInetAddress(dhcpInfoInternal.ipAddress);
+  mWifiInfo.setInetAddress(addr);
+  if (getNetworkDetailedState() == DetailedState.CONNECTED) {
+    LinkProperties linkProperties=dhcpInfoInternal.makeLinkProperties();
+    linkProperties.setHttpProxy(WifiConfigStore.getProxyProperties(mLastNetworkId));
+    linkProperties.setInterfaceName(mInterfaceName);
+    if (!linkProperties.equals(mLinkProperties)) {
+      if (DBG) {
+        log("Link configuration changed for netId: " + mLastNetworkId + " old: "+ mLinkProperties+ "new: "+ linkProperties);
+      }
+      mLinkProperties=linkProperties;
+      sendLinkConfigurationChangedBroadcast();
+    }
+  }
+ else {
+    configureLinkProperties();
+    setNetworkDetailedState(DetailedState.CONNECTED);
+    sendNetworkStateChangeBroadcast(mLastBssid);
+  }
+}

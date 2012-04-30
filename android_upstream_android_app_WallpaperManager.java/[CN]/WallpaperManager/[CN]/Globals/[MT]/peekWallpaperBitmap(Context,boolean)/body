@@ -1,0 +1,27 @@
+{
+synchronized (this) {
+    if (mWallpaper != null) {
+      return mWallpaper;
+    }
+    if (mDefaultWallpaper != null) {
+      return mDefaultWallpaper;
+    }
+    mWallpaper=null;
+    try {
+      mWallpaper=getCurrentWallpaperLocked();
+    }
+ catch (    OutOfMemoryError e) {
+      Log.w(TAG,"No memory load current wallpaper",e);
+    }
+    if (returnDefault) {
+      if (mWallpaper == null) {
+        mDefaultWallpaper=getDefaultWallpaperLocked(context);
+        return mDefaultWallpaper;
+      }
+ else {
+        mDefaultWallpaper=null;
+      }
+    }
+    return mWallpaper;
+  }
+}

@@ -1,0 +1,18 @@
+{
+synchronized (this) {
+    if (mService == null || !mConnected) {
+      throw new IllegalStateException("not connected to MediaScannerService");
+    }
+    try {
+      if (false) {
+        Log.v(TAG,"Scanning file " + path);
+      }
+      mService.requestScanFile(path,mimeType,mListener);
+    }
+ catch (    RemoteException e) {
+      if (false) {
+        Log.d(TAG,"Failed to scan file " + path);
+      }
+    }
+  }
+}

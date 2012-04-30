@@ -1,0 +1,5 @@
+def configuration_dirname(self):
+    if self.configuration:
+        return self.configuration.split('|')[0]
+    else:
+        return 'Default'

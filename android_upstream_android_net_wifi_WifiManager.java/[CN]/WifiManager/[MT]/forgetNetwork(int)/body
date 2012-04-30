@@ -1,0 +1,6 @@
+{
+  if (netId < 0) {
+    return;
+  }
+  mAsyncChannel.sendMessage(CMD_FORGET_NETWORK,netId);
+}

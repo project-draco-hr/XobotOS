@@ -1,0 +1,10 @@
+{
+  if (member instanceof AbstractDefinition) {
+    AbstractDefinition definition=(AbstractDefinition)member;
+    if (hasDeclaration())     return new MemberEntry(definition,definition.getDeclaration(),visibility);
+ else     return new MemberEntry(definition,null,visibility);
+  }
+ else {
+    return new MemberEntry(null,member,visibility);
+  }
+}

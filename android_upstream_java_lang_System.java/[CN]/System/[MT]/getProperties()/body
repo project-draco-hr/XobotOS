@@ -1,0 +1,6 @@
+{
+  if (systemProperties == null) {
+    initSystemProperties();
+  }
+  return systemProperties;
+}

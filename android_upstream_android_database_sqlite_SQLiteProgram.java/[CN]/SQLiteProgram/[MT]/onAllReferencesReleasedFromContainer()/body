@@ -1,0 +1,4 @@
+{
+  release();
+  mDatabase.releaseReference();
+}

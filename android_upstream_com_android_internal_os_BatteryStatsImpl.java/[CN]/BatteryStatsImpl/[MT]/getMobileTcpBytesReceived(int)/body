@@ -1,0 +1,4 @@
+{
+  final long mobileRxBytes=getNetworkStatsSummary().getTotal(null,mMobileIfaces).rxBytes;
+  return getTcpBytes(mobileRxBytes,mMobileDataRx,which);
+}

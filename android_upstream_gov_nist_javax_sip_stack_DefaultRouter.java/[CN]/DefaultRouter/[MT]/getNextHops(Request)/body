@@ -1,0 +1,10 @@
+{
+  try {
+    LinkedList llist=new LinkedList();
+    llist.add(this.getNextHop(request));
+    return llist.listIterator();
+  }
+ catch (  SipException ex) {
+    return null;
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return (networkType == ServiceState.RADIO_TECHNOLOGY_LTE);
+}

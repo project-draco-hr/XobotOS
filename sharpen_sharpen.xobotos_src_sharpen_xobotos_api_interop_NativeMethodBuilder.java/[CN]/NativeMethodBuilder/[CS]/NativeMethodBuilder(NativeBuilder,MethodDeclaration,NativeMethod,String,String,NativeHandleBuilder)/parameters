@@ -1,0 +1,6 @@
+NativeBuilder builder
+MethodDeclaration method
+NativeMethod template
+String name
+String funcName
+NativeHandleBuilder handleBuilder

@@ -1,0 +1,5 @@
+{
+  if (isClass())   return getHelper().NATIVE_SIZE.expr();
+  CSExpression sizeof=new CSReferenceExpression("Marshal.SizeOf");
+  return new CSMethodInvocationExpression(sizeof,new CSTypeofExpression(_elementInfo.getManagedType()));
+}

@@ -1,0 +1,9 @@
+{
+  final int slash=languageTag.indexOf('-');
+  if (slash >= 0) {
+    this.locale=new Locale(languageTag.substring(0,slash),languageTag.substring(slash + 1));
+  }
+ else {
+    this.locale=new Locale(languageTag);
+  }
+}

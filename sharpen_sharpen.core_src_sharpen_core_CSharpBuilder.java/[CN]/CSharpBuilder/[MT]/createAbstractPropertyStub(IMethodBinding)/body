@@ -1,0 +1,5 @@
+{
+  CSProperty stub=newAbstractPropertyStubFor(method);
+  safeProcessDisableTags(method,stub);
+  return stub;
+}

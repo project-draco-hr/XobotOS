@@ -1,0 +1,26 @@
+{
+  Element sp;
+  while (true) {
+    for (sp=theStack; sp != null; sp=sp.next()) {
+      if (sp.canContain(e))       break;
+    }
+    if (sp != null)     break;
+    ElementType parentType=e.parent();
+    if (parentType == null)     break;
+    Element parent=new Element(parentType,defaultAttributes);
+    parent.setNext(e);
+    e=parent;
+  }
+  if (sp == null)   return;
+  while (theStack != sp) {
+    if (theStack == null || theStack.next() == null || theStack.next().next() == null)     break;
+    restartablyPop();
+  }
+  while (e != null) {
+    Element nexte=e.next();
+    if (!e.name().equals("<pcdata>"))     push(e);
+    e=nexte;
+    restart(e);
+  }
+  theNewElement=null;
+}

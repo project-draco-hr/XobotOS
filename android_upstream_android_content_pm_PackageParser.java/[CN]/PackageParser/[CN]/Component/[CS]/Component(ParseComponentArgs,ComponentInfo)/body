@@ -1,0 +1,20 @@
+{
+  this(args,(PackageItemInfo)outInfo);
+  if (args.outError[0] != null) {
+    return;
+  }
+  if (args.processRes != 0) {
+    CharSequence pname;
+    if (owner.applicationInfo.targetSdkVersion >= Build.VERSION_CODES.FROYO) {
+      pname=args.sa.getNonConfigurationString(args.processRes,0);
+    }
+ else {
+      pname=args.sa.getNonResourceString(args.processRes);
+    }
+    outInfo.processName=buildProcessName(owner.applicationInfo.packageName,owner.applicationInfo.processName,pname,args.flags,args.sepProcesses,args.outError);
+  }
+  if (args.descriptionRes != 0) {
+    outInfo.descriptionRes=args.sa.getResourceId(args.descriptionRes,0);
+  }
+  outInfo.enabled=args.sa.getBoolean(args.enabledRes,true);
+}

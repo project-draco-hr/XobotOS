@@ -1,0 +1,7 @@
+{
+  mRS=rs;
+  mUsage=usage;
+  mVertexTypeCount=0;
+  mVertexTypes=new Entry[16];
+  mIndexTypes=new Vector();
+}

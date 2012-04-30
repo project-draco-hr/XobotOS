@@ -1,0 +1,4 @@
+def unlink(self, file):
+    'Unlinks the specified file name.\n        The file name may be a list, in which case the elements are\n        concatenated with the os.path.join() method.  The file is\n        assumed to be under the temporary working directory unless it\n        is an absolute path name.\n        '
+    file = self.canonicalize(file)
+    os.unlink(file)

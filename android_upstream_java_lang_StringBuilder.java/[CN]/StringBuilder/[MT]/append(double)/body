@@ -1,0 +1,4 @@
+{
+  RealToString.getInstance().appendDouble(this,d);
+  return this;
+}

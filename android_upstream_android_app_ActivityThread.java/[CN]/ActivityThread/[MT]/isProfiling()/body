@@ -1,0 +1,3 @@
+{
+  return mProfiler != null && mProfiler.profileFile != null && mProfiler.profileFd == null;
+}

@@ -1,0 +1,9 @@
+{
+  this.p=p;
+  if (this.p == null) {
+    throw new NullPointerException("p == null");
+  }
+  if (this.p.signum() != 1) {
+    throw new IllegalArgumentException("p <= 0");
+  }
+}

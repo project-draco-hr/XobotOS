@@ -1,0 +1,9 @@
+{
+  acquireReference();
+  try {
+    return nativePutLong(mWindowPtr,value,row - mStartPos,column);
+  }
+  finally {
+    releaseReference();
+  }
+}

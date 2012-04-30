@@ -1,0 +1,17 @@
+{
+  final ITypeBinding typeBinding=node.resolveBinding();
+  CSTypeDeclaration type;
+  TypeDeclaration oldCurrentTypeDeclaration=_currentTypeDeclaration;
+  _currentTypeDeclaration=node;
+  if (node.isInterface() && !isValidCSInterface(typeBinding)) {
+    type=processExtractedInterface(node);
+  }
+ else   if (mustExtractRawType(typeBinding)) {
+    type=processExtractedRawType(node);
+  }
+ else {
+    type=processOrdinaryTypeDeclaration(node);
+  }
+  _currentTypeDeclaration=oldCurrentTypeDeclaration;
+  return type;
+}

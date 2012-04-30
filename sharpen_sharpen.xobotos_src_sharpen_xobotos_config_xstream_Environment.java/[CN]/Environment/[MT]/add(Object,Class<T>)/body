@@ -1,0 +1,4 @@
+{
+  if (_variables.containsKey(klass))   throw new ConfigurationException("Current environment already contains an instance of class '%s'",klass);
+  _variables.put(klass,klass.cast(variable));
+}

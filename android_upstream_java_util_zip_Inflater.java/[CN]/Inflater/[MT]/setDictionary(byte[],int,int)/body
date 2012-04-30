@@ -1,0 +1,5 @@
+{
+  checkOpen();
+  Arrays.checkOffsetAndCount(dictionary.length,offset,byteCount);
+  setDictionaryImpl(dictionary,offset,byteCount,streamHandle);
+}

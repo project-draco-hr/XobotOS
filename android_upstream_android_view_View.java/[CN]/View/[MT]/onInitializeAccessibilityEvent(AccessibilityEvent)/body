@@ -1,0 +1,8 @@
+{
+  if (mAccessibilityDelegate != null) {
+    mAccessibilityDelegate.onInitializeAccessibilityEvent(this,event);
+  }
+ else {
+    onInitializeAccessibilityEventInternal(event);
+  }
+}

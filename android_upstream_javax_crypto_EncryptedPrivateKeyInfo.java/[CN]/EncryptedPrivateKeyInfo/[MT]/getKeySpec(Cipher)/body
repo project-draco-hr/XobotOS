@@ -1,0 +1,24 @@
+{
+  if (cipher == null) {
+    throw new NullPointerException("cipher == null");
+  }
+  try {
+    byte[] decryptedData=cipher.doFinal(encryptedData);
+    try {
+      ASN1PrivateKeyInfo.verify(decryptedData);
+    }
+ catch (    IOException e1) {
+      throw new InvalidKeySpecException("Decrypted data does not represent valid PKCS#8 PrivateKeyInfo");
+    }
+    return new PKCS8EncodedKeySpec(decryptedData);
+  }
+ catch (  IllegalStateException e) {
+    throw new InvalidKeySpecException(e.getMessage());
+  }
+catch (  IllegalBlockSizeException e) {
+    throw new InvalidKeySpecException(e.getMessage());
+  }
+catch (  BadPaddingException e) {
+    throw new InvalidKeySpecException(e.getMessage());
+  }
+}

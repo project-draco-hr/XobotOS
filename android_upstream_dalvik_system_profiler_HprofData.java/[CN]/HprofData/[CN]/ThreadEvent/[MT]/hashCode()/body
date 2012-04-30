@@ -1,0 +1,9 @@
+{
+  int result=17;
+  result=31 * result + objectId;
+  result=31 * result + threadId;
+  result=31 * result + hashCode(threadName);
+  result=31 * result + hashCode(groupName);
+  result=31 * result + hashCode(parentGroupName);
+  return result;
+}

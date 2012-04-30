@@ -1,0 +1,5 @@
+{
+  NameValue retval=(NameValue)super.clone();
+  if (value != null)   retval.value=makeClone(value);
+  return retval;
+}

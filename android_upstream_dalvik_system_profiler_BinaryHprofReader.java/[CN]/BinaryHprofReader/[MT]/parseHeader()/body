@@ -1,0 +1,8 @@
+{
+  if (TRACE) {
+    System.out.println("hprofTag=HEADER");
+  }
+  parseVersion();
+  parseIdSize();
+  parseTime();
+}

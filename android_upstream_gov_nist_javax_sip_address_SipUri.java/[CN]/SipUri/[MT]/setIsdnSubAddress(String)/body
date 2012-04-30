@@ -1,0 +1,4 @@
+{
+  if (telephoneSubscriber == null)   telephoneSubscriber=new TelephoneNumber();
+  telephoneSubscriber.setIsdnSubaddress(isdnSubAddress);
+}

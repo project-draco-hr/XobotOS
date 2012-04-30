@@ -1,0 +1,3 @@
+{
+  mPlusMinusZoomControls.setOnZoomOutClickListener(listener);
+}

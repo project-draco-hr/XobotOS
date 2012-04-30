@@ -1,0 +1,3 @@
+def ReportError(text):
+    'Report an error and raise an exception.\n    '
+    raise IOError(text)

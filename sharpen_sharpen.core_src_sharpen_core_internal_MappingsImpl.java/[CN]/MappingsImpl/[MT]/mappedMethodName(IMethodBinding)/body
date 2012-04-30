@@ -1,0 +1,4 @@
+{
+  Configuration.MemberMapping mapping=effectiveMappingFor(binding);
+  return computeMethodName(binding,mapping);
+}

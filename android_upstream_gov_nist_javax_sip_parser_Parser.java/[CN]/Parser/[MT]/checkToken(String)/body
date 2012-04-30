@@ -1,0 +1,12 @@
+{
+  if (token == null || token.length() == 0) {
+    throw new ParseException("null or empty token",-1);
+  }
+ else {
+    for (int i=0; i < token.length(); ++i) {
+      if (!LexerCore.isTokenChar(token.charAt(i))) {
+        throw new ParseException("Invalid character(s) in string (not allowed in 'token')",i);
+      }
+    }
+  }
+}

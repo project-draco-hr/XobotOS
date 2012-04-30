@@ -1,0 +1,3 @@
+{
+  getMember().addMember(member);
+}

@@ -1,0 +1,6 @@
+{
+  _writer.writeIndentation();
+  _writer.write("delete ");
+  node.getExpression().accept(this);
+  _writer.writeLine(";");
+}

@@ -1,0 +1,4 @@
+{
+  PrivacyList retval=new PrivacyList();
+  return retval.clonehlist(this.hlist);
+}

@@ -1,0 +1,7 @@
+{
+  for (  String k : mapToPut.keySet()) {
+    ArrayList<V> al=new ArrayList<V>();
+    al.addAll(mapToPut.get(k));
+    this.map.put(k,al);
+  }
+}

@@ -1,0 +1,11 @@
+{
+  Set<Sample> samples=new HashSet<Sample>(stackTraces.size());
+  for (  Entry<StackTrace,int[]> e : stackTraces.entrySet()) {
+    StackTrace stackTrace=e.getKey();
+    int countCell[]=e.getValue();
+    int count=countCell[0];
+    Sample sample=new Sample(stackTrace,count);
+    samples.add(sample);
+  }
+  return samples;
+}

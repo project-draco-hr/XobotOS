@@ -1,0 +1,4 @@
+{
+  onSaveInstanceState(outState);
+  saveManagedDialogs(outState);
+}

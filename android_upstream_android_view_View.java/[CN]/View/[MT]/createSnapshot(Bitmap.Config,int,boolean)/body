@@ -1,0 +1,50 @@
+{
+  int width=mRight - mLeft;
+  int height=mBottom - mTop;
+  final AttachInfo attachInfo=mAttachInfo;
+  final float scale=attachInfo != null ? attachInfo.mApplicationScale : 1.0f;
+  width=(int)((width * scale) + 0.5f);
+  height=(int)((height * scale) + 0.5f);
+  Bitmap bitmap=Bitmap.createBitmap(width > 0 ? width : 1,height > 0 ? height : 1,quality);
+  if (bitmap == null) {
+    throw new OutOfMemoryError();
+  }
+  Resources resources=getResources();
+  if (resources != null) {
+    bitmap.setDensity(resources.getDisplayMetrics().densityDpi);
+  }
+  Canvas canvas;
+  if (attachInfo != null) {
+    canvas=attachInfo.mCanvas;
+    if (canvas == null) {
+      canvas=new Canvas();
+    }
+    canvas.setBitmap(bitmap);
+    attachInfo.mCanvas=null;
+  }
+ else {
+    canvas=new Canvas(bitmap);
+  }
+  if ((backgroundColor & 0xff000000) != 0) {
+    bitmap.eraseColor(backgroundColor);
+  }
+  computeScroll();
+  final int restoreCount=canvas.save();
+  canvas.scale(scale,scale);
+  canvas.translate(-mScrollX,-mScrollY);
+  int flags=mPrivateFlags;
+  mPrivateFlags&=~DIRTY_MASK;
+  if ((mPrivateFlags & SKIP_DRAW) == SKIP_DRAW) {
+    dispatchDraw(canvas);
+  }
+ else {
+    draw(canvas);
+  }
+  mPrivateFlags=flags;
+  canvas.restoreToCount(restoreCount);
+  canvas.setBitmap(null);
+  if (attachInfo != null) {
+    attachInfo.mCanvas=canvas;
+  }
+  return bitmap;
+}

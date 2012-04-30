@@ -1,0 +1,9 @@
+{
+  mContext.unregisterReceiver(mReceiver);
+  try {
+    cleanupNativeDataNative();
+  }
+  finally {
+    super.finalize();
+  }
+}

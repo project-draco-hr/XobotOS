@@ -1,0 +1,4 @@
+{
+  if (mLabel == 0 || pm == null)   return "";
+  return pm.getText(getPackageName(),mLabel,mService.serviceInfo.applicationInfo);
+}

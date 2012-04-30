@@ -1,0 +1,6 @@
+{
+  this(transaction);
+  if (sipResponse == null)   throw new NullPointerException("Null SipResponse");
+  this.setLastResponse(transaction,sipResponse);
+  this.isBackToBackUserAgent=sipStack.isBackToBackUserAgent;
+}

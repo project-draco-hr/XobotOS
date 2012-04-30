@@ -1,0 +1,35 @@
+{
+  String number=null;
+  Uri uri=intent.getData();
+  String scheme=uri.getScheme();
+  if (scheme.equals("tel") || scheme.equals("sip")) {
+    return uri.getSchemeSpecificPart();
+  }
+  if (scheme.equals("voicemail")) {
+    return TelephonyManager.getDefault().getCompleteVoiceMailNumber();
+  }
+  if (context == null) {
+    return null;
+  }
+  String type=intent.resolveType(context);
+  String phoneColumn=null;
+  final String authority=uri.getAuthority();
+  if (Contacts.AUTHORITY.equals(authority)) {
+    phoneColumn=Contacts.People.Phones.NUMBER;
+  }
+ else   if (ContactsContract.AUTHORITY.equals(authority)) {
+    phoneColumn=ContactsContract.CommonDataKinds.Phone.NUMBER;
+  }
+  final Cursor c=context.getContentResolver().query(uri,new String[]{phoneColumn},null,null,null);
+  if (c != null) {
+    try {
+      if (c.moveToFirst()) {
+        number=c.getString(c.getColumnIndex(phoneColumn));
+      }
+    }
+  finally {
+      c.close();
+    }
+  }
+  return number;
+}

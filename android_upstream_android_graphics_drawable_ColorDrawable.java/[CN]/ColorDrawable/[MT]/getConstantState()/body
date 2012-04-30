@@ -1,0 +1,4 @@
+{
+  mState.mChangingConfigurations=getChangingConfigurations();
+  return mState;
+}

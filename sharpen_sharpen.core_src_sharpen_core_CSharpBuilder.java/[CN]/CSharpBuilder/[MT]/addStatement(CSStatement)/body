@@ -1,0 +1,3 @@
+{
+  _currentBlock.addStatement(statement);
+}

@@ -1,0 +1,25 @@
+def create_lines(revision_data_points, settings, bench_of_interest, config_of_interest, time_of_interest):
+    'Convert revision data into sorted line data.\n    \n    ({int:[BenchDataPoints]}, {str:str}, str?, str?, str?)\n        -> {Label:[(x,y)] | [n].x <= [n+1].x}'
+    revisions = revision_data_points.keys()
+    revisions.sort()
+    lines = {}
+    for revision in revisions:
+        for point in revision_data_points[revision]:
+            if ((bench_of_interest is not None) and (not (bench_of_interest == point.bench))):
+                continue
+            if ((config_of_interest is not None) and (not (config_of_interest == point.config))):
+                continue
+            if ((time_of_interest is not None) and (not (time_of_interest == point.time_type))):
+                continue
+            skip = False
+            for (key, value) in settings.items():
+                if ((key in point.settings) and (point.settings[key] != value)):
+                    skip = True
+                    break
+            if skip:
+                continue
+            line_name = Label(point.bench, point.config, point.time_type, point.settings)
+            if (line_name not in lines):
+                lines[line_name] = []
+            lines[line_name].append((revision, point.time))
+    return lines

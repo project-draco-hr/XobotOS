@@ -1,0 +1,23 @@
+{
+  if (stackLogger.isLoggingEnabled()) {
+    stackLogger.logDebug("findCancelTransaction request= \n" + cancelRequest + "\nfindCancelRequest isServer="+ isServer);
+  }
+  if (isServer) {
+    Iterator<SIPServerTransaction> li=this.serverTransactionTable.values().iterator();
+    while (li.hasNext()) {
+      SIPTransaction transaction=(SIPTransaction)li.next();
+      SIPServerTransaction sipServerTransaction=(SIPServerTransaction)transaction;
+      if (sipServerTransaction.doesCancelMatchTransaction(cancelRequest))       return sipServerTransaction;
+    }
+  }
+ else {
+    Iterator<SIPClientTransaction> li=this.clientTransactionTable.values().iterator();
+    while (li.hasNext()) {
+      SIPTransaction transaction=(SIPTransaction)li.next();
+      SIPClientTransaction sipClientTransaction=(SIPClientTransaction)transaction;
+      if (sipClientTransaction.doesCancelMatchTransaction(cancelRequest))       return sipClientTransaction;
+    }
+  }
+  if (stackLogger.isLoggingEnabled())   stackLogger.logDebug("Could not find transaction for cancel request");
+  return null;
+}

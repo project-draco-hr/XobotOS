@@ -1,0 +1,10 @@
+{
+  printPrecedingComments(node);
+  writeIndentedLine("try");
+  node.body().accept(this);
+  visitList(node.catchClauses());
+  if (null != node.finallyBlock()) {
+    writeIndentedLine("finally");
+    node.finallyBlock().accept(this);
+  }
+}

@@ -1,0 +1,20 @@
+{
+  final ITypeEntry entry=_typeStack.peek();
+  final FieldTemplate template=entry.getTemplate().findFieldTemplate(node);
+  if (template == null)   return false;
+  final NativeHandle nativeHandle;
+  final NativeTypeEntry nativeType=entry.getNativeType();
+  if ((nativeType != null) && (nativeType.Template instanceof NativeHandle))   nativeHandle=(NativeHandle)nativeType.Template;
+ else   nativeHandle=null;
+  VariableBinding binding=template.getBinding();
+  for (  Object o : node.fragments()) {
+    VariableDeclarationFragment fragment=(VariableDeclarationFragment)o;
+    final IVariableBinding vb=fragment.resolveBinding();
+    final String name=vb.getName();
+    if ((nativeHandle != null) && name.equals(nativeHandle.getField()))     nativeHandleField(vb,nativeHandle);
+ else     if (binding != null)     _variableBindings.put(vb,binding);
+    checkFieldAndMethodNameClash(fragment,vb);
+    if (fragment.getInitializer() != null)     fragment.getInitializer().accept(this);
+  }
+  return false;
+}

@@ -1,0 +1,17 @@
+def sort_and_merge(ranges):
+    'Given a list of (start, end, value), merge elements where the ranges are\n     continuous and the values are the same.'
+    output = []
+    ranges.sort()
+    current = None
+    for v in ranges:
+        if (current is None):
+            current = v
+            continue
+        if (((current[1] + 1) == v[0]) and (current[2] == v[2])):
+            current = (current[0], v[1], v[2])
+        else:
+            output.append(current)
+            current = v
+    if (current is not None):
+        output.append(current)
+    return output

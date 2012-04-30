@@ -1,0 +1,6 @@
+{
+  if (text == null) {
+    throw new ParseException("The text parameter in the Warning header is null",0);
+  }
+ else   this.text=text;
+}

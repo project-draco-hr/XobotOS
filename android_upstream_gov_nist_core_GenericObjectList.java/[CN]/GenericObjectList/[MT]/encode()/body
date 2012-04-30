@@ -1,0 +1,20 @@
+{
+  if (this.isEmpty())   return "";
+  StringBuffer encoding=new StringBuffer();
+  ListIterator iterator=this.listIterator();
+  if (iterator.hasNext()) {
+    while (true) {
+      Object obj=iterator.next();
+      if (obj instanceof GenericObject) {
+        GenericObject gobj=(GenericObject)obj;
+        encoding.append(gobj.encode());
+      }
+ else {
+        encoding.append(obj.toString());
+      }
+      if (iterator.hasNext())       encoding.append(separator);
+ else       break;
+    }
+  }
+  return encoding.toString();
+}

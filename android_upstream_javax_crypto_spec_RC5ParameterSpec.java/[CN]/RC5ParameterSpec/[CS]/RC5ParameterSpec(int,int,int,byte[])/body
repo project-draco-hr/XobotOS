@@ -1,0 +1,13 @@
+{
+  if (iv == null) {
+    throw new IllegalArgumentException("iv == null");
+  }
+  if (iv.length < 2 * (wordSize / 8)) {
+    throw new IllegalArgumentException("iv.length < 2 * (wordSize / 8)");
+  }
+  this.version=version;
+  this.rounds=rounds;
+  this.wordSize=wordSize;
+  this.iv=new byte[2 * (wordSize / 8)];
+  System.arraycopy(iv,0,this.iv,0,2 * (wordSize / 8));
+}

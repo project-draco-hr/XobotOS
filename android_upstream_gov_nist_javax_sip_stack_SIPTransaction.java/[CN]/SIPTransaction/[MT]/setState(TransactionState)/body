@@ -1,0 +1,14 @@
+{
+  if (currentState == TransactionState.COMPLETED) {
+    if (newState != TransactionState.TERMINATED && newState != TransactionState.CONFIRMED)     newState=TransactionState.COMPLETED;
+  }
+  if (currentState == TransactionState.CONFIRMED) {
+    if (newState != TransactionState.TERMINATED)     newState=TransactionState.CONFIRMED;
+  }
+  if (currentState != TransactionState.TERMINATED)   currentState=newState;
+ else   newState=currentState;
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("Transaction:setState " + newState + " "+ this+ " branchID = "+ this.getBranch()+ " isClient = "+ (this instanceof SIPClientTransaction));
+    sipStack.getStackLogger().logStackTrace();
+  }
+}

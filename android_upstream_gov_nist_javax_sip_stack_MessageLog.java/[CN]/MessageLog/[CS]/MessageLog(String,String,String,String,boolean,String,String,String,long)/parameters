@@ -1,0 +1,9 @@
+String message
+String source
+String destination
+String timeStamp
+boolean isSender
+String firstLine
+String tid
+String callId
+long timeStampHeaderValue

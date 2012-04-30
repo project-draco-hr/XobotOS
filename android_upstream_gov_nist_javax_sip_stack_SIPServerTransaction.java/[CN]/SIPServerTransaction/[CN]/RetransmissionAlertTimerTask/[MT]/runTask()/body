@@ -1,0 +1,8 @@
+{
+  SIPServerTransaction serverTransaction=SIPServerTransaction.this;
+  ticksLeft--;
+  if (ticksLeft == -1) {
+    serverTransaction.fireRetransmissionTimer();
+    this.ticksLeft=2 * ticks;
+  }
+}

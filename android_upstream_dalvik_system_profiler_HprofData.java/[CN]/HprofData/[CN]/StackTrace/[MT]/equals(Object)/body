@@ -1,0 +1,7 @@
+{
+  if (!(o instanceof StackTrace)) {
+    return false;
+  }
+  StackTrace s=(StackTrace)o;
+  return threadId == s.threadId && Arrays.equals(stackFrames,s.stackFrames);
+}

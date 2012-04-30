@@ -1,0 +1,19 @@
+{
+  final IMemberContainer type=_typeStack.peek().getTemplate();
+  final AnonymousClassTemplate template=type.findAnonymousClassTemplate(node);
+  if (template == null)   return false;
+  final OutputType output=getOutputType();
+  final OutputMode mode=output.getModeForMember(node);
+  if (mode == OutputMode.NOTHING)   return false;
+  ITypeEntry entry=new AnonymousClassEntry(node,template,output);
+  _outputProviderStack.push(template);
+  _typeStack.push(entry);
+  for (  final Object o : node.bodyDeclarations()) {
+    if (!(o instanceof ASTNode))     continue;
+    ASTNode member=(ASTNode)o;
+    member.accept(this);
+  }
+  _typeStack.pop();
+  _outputProviderStack.pop();
+  return false;
+}

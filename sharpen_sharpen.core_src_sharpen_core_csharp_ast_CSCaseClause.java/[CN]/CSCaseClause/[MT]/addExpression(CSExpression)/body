@@ -1,0 +1,6 @@
+{
+  if (null == expression) {
+    throw new IllegalArgumentException("expression");
+  }
+  _expressions.add(expression);
+}

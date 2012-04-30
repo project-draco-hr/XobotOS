@@ -1,0 +1,4 @@
+InetAddress ipAddress
+int port
+String transport
+SIPTransactionStack transactionStack

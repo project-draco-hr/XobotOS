@@ -1,0 +1,17 @@
+{
+  final String template=node.template();
+  final Matcher matcher=META_VARIABLE_PATTERN.matcher(template);
+  int last=0;
+  while (matcher.find()) {
+    write(template.substring(last,matcher.start()));
+    Object value=node.resolveVariable(matcher.group(1));
+    if (value instanceof CSNode) {
+      ((CSNode)value).accept(this);
+    }
+ else {
+      writeCommaSeparatedList((Iterable<CSNode>)value);
+    }
+    last=matcher.end();
+  }
+  write(template.substring(last));
+}

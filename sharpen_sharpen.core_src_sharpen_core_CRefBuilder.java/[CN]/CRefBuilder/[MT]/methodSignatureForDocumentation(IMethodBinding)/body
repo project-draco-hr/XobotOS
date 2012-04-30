@@ -1,0 +1,15 @@
+{
+  StringBuilder methodFQN=new StringBuilder();
+  if (belongsToCurrentType(method)) {
+    methodFQN.append(mappedMethodName(method));
+  }
+ else {
+    methodFQN.append(mappedQualifiedMethodName(method));
+  }
+  final String parameterList=parameterListSeparatedBy(method,", ");
+  methodFQN.append(genericTypeParametersFor(method));
+  methodFQN.append("(");
+  methodFQN.append(parameterList);
+  methodFQN.append(")");
+  return methodFQN.toString();
+}

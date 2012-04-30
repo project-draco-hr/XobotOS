@@ -1,0 +1,44 @@
+{
+  Looper looper=Looper.myLooper();
+  if (looper == null || (info.policy & THREAD_PENALTY_MASK) == PENALTY_DEATH) {
+    info.durationMillis=-1;
+    handleViolation(info);
+    return;
+  }
+  final ArrayList<ViolationInfo> records=violationsBeingTimed.get();
+  if (records.size() >= MAX_OFFENSES_PER_LOOP) {
+    return;
+  }
+  records.add(info);
+  if (records.size() > 1) {
+    return;
+  }
+  final IWindowManager windowManager=(info.policy & PENALTY_FLASH) != 0 ? sWindowManager.get() : null;
+  if (windowManager != null) {
+    try {
+      windowManager.showStrictModeViolation(true);
+    }
+ catch (    RemoteException unused) {
+    }
+  }
+  threadHandler.get().post(new Runnable(){
+    public void run(){
+      long loopFinishTime=SystemClock.uptimeMillis();
+      if (windowManager != null) {
+        try {
+          windowManager.showStrictModeViolation(false);
+        }
+ catch (        RemoteException unused) {
+        }
+      }
+      for (int n=0; n < records.size(); ++n) {
+        ViolationInfo v=records.get(n);
+        v.violationNumThisLoop=n + 1;
+        v.durationMillis=(int)(loopFinishTime - v.violationUptimeMillis);
+        handleViolation(v);
+      }
+      records.clear();
+    }
+  }
+);
+}

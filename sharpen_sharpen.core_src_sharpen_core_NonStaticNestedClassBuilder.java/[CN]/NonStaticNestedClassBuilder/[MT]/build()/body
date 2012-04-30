@@ -1,0 +1,8 @@
+{
+  _convertedType=processTypeDeclaration(_nestedType);
+  if (_convertedType == null)   return null;
+  _enclosingField=createEnclosingField();
+  patchConstructors();
+  _convertedType.addMember(_enclosingField);
+  return _convertedType;
+}

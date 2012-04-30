@@ -1,0 +1,139 @@
+{
+  if (_resolveFailed)   return false;
+  if (_resolved)   return true;
+  _binding=_node.resolveBinding();
+  ITypeBinding returnType=_binding.getReturnType();
+  ITypeBinding[] paramTypes=_binding.getParameterTypes();
+  _methodName=BindingUtils.qualifiedSignature(_binding);
+  final Signature signature=getNativeMethod().getSignature();
+  final Kind kind=_native.getKind();
+  MarshalInfo returnInfo=null;
+  if (isVoid(returnType) && (kind == Kind.CONSTRUCTOR)) {
+    ReturnInfo info=signature.getReturnInfo();
+    if ((info != null) && (info.marshal != null))     returnInfo=info.marshal.resolve(null);
+    if (returnInfo == null) {
+      Sharpen.Log(Level.SEVERE,"Missing marshal info for return type of constructor '%s'",_methodName);
+      _resolveFailed=true;
+    }
+  }
+ else   if (!isVoid(returnType) && !getNativeMethod().returnVoid()) {
+    ReturnInfo info=signature.getReturnInfo();
+    if (info != null) {
+      if (info.marshal != null)       returnInfo=info.marshal.resolve(returnType);
+ else       returnInfo=context.getMarshalInfo(returnType);
+    }
+ else {
+      returnInfo=context.getMarshalInfo(returnType);
+    }
+    if (returnInfo == null) {
+      Sharpen.Log(Level.SEVERE,"Missing marshal info for return type '%s' of method '%s'",BindingUtils.qualifiedName(returnType),_methodName);
+      _resolveFailed=true;
+    }
+  }
+  if (kind == Kind.CONSTRUCTOR) {
+    if (returnInfo == null) {
+      Sharpen.Log(Level.SEVERE,"Missing marshal info for return type '%s' of constructor '%s'",BindingUtils.qualifiedName(returnType),_methodName);
+      _resolveFailed=true;
+    }
+ else     if (!(returnInfo instanceof MarshalAsClass)) {
+      Sharpen.Log(Level.SEVERE,"Return type '%s' of constructor '%s' must have MarshalAsClass marshal info",BindingUtils.qualifiedName(returnType),_methodName);
+      _resolveFailed=true;
+    }
+  }
+  if (kind == Kind.DESTRUCTOR) {
+    if (_returnInfo != null) {
+      Sharpen.Log(Level.SEVERE,"Destructor '%s' cannot return a value.",_methodName);
+      _resolveFailed=true;
+    }
+ else     if (paramTypes.length != 1) {
+      Sharpen.Log(Level.SEVERE,"Destructor '%s' must take one single argument.",_methodName);
+      _resolveFailed=true;
+    }
+ else     if (_nativeHandle == null) {
+      Sharpen.Log(Level.SEVERE,"Destructor '%s' must have a native handle",_methodName);
+      _resolveFailed=true;
+    }
+  }
+  if (_resolveFailed)   return false;
+  if (returnInfo != null) {
+    if (!returnInfo.resolve(context,returnType)) {
+      Sharpen.Log(Level.SEVERE,"Cannot resolve return value in '%s'.",_methodName);
+      _resolveFailed=true;
+    }
+ else {
+      _returnInfo=new ElementInfo(returnType,returnInfo,Mode.OUT,null);
+    }
+  }
+  if (kind == Kind.DESTRUCTOR) {
+    _paramInfo=new ElementInfo[1];
+    if (_nativeHandle == null) {
+      Sharpen.Log(Level.SEVERE,"Missing 'native-handle' for destructor '%s'.",_methodName);
+      _resolveFailed=true;
+    }
+ else {
+      MarshalInfo info=new MarshalAsClass(paramTypes[0],null,_nativeHandle.getTemplate());
+      VariableDeclaration vdecl=(VariableDeclaration)_node.parameters().get(0);
+      IVariableBinding vbinding=vdecl.resolveBinding();
+      ITypeBinding vtype=vbinding.getType();
+      if (!info.resolve(context,vtype)) {
+        Sharpen.Log(Level.SEVERE,"Cannot resolve marshal info for destructor '%s'.",_methodName);
+        _resolveFailed=true;
+      }
+ else {
+        _paramInfo[0]=new ElementInfo(vtype,info,null,null);
+      }
+    }
+  }
+ else {
+    _paramInfo=new ElementInfo[paramTypes.length];
+    for (int i=0; i < paramTypes.length; i++) {
+      final ParameterInfo info=signature.getParameterInfo(i);
+      if ((info == null) || (info.mode == Mode.REMOVE))       continue;
+      MarshalInfo marshal;
+      if (info.marshal != null)       marshal=info.marshal.resolve(paramTypes[i]);
+ else       marshal=context.getMarshalInfo(paramTypes[i]);
+      if (marshal == null) {
+        Sharpen.Log(Level.SEVERE,"Missing marshal info for type '%s' in method '%s'",BindingUtils.qualifiedName(paramTypes[i]),_methodName);
+        _resolveFailed=true;
+        continue;
+      }
+      VariableDeclaration vdecl=(VariableDeclaration)_node.parameters().get(i);
+      IVariableBinding vbinding=vdecl.resolveBinding();
+      ITypeBinding vtype=vbinding.getType();
+      boolean isInstanceArg;
+      if ((kind == Kind.INSTANCE) || (kind == Kind.PROXY))       isInstanceArg=(i == 0) && !signature.implicitInstance();
+ else       isInstanceArg=false;
+      if (isInstanceArg) {
+        _paramInfo[0]=new ElementInfo(vtype,marshal,Mode.REF,null);
+        if (!marshal.resolve(context,vtype)) {
+          Sharpen.Log(Level.SEVERE,"Cannot resolve instance parameter of method '%s'.",_methodName);
+          _resolveFailed=true;
+        }
+      }
+ else {
+        _paramInfo[i]=new ElementInfo(vtype,marshal,info.mode,info.flags);
+        if (!marshal.resolve(context,vtype)) {
+          Sharpen.Log(Level.SEVERE,"Cannot resolve parameter %d of method '%s'.",i,_methodName);
+          _resolveFailed=true;
+        }
+      }
+    }
+  }
+  if (signature.implicitInstance()) {
+    if (_nativeHandle == null) {
+      Sharpen.Log(Level.SEVERE,"Cannot use <add-instance> without <native-handle> in '%s'",_methodName);
+      _resolveFailed=true;
+      return false;
+    }
+    String fieldName=_nativeHandle.getTemplate().getField();
+    _implicitInstance=findField(_binding,fieldName);
+    if (_implicitInstance == null) {
+      Sharpen.Log(Level.SEVERE,"No such field '%s' in type '%s'",fieldName,BindingUtils.qualifiedName(_binding.getDeclaringClass()));
+      _resolveFailed=true;
+      return false;
+    }
+  }
+  if (_resolveFailed)   return false;
+  _resolved=true;
+  return true;
+}

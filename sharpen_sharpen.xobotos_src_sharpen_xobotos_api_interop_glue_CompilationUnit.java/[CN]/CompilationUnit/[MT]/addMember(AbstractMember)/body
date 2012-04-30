@@ -1,0 +1,4 @@
+{
+  if (member == null)   throw new NullPointerException();
+  _members.add(member);
+}

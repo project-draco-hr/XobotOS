@@ -1,0 +1,4 @@
+Object obj
+HierarchicalStreamReader reader
+ConverterLookup converterLookup
+Mapper mapper

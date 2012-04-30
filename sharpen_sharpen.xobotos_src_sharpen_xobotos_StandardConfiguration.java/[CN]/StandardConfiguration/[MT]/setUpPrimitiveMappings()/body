@@ -1,0 +1,23 @@
+{
+  mapType("boolean","bool");
+  mapPrimitive("void");
+  mapPrimitive("char");
+  mapPrimitive("byte");
+  mapPrimitive("short");
+  mapPrimitive("int");
+  mapPrimitive("long");
+  mapPrimitive("float");
+  mapPrimitive("double");
+  mapType("ubyte","byte");
+  mapType("java.lang.Object","object");
+  mapType("java.lang.String","string");
+  mapType("java.lang.Character","char");
+  mapType("java.lang.Byte","byte");
+  mapType("java.lang.Boolean","bool");
+  mapType("java.lang.Short","short");
+  mapType("java.lang.Integer","int");
+  mapType("java.lang.Long","long");
+  mapType("java.lang.Float","float");
+  mapType("java.lang.Double","double");
+  mapType("java.lang.Void","object");
+}

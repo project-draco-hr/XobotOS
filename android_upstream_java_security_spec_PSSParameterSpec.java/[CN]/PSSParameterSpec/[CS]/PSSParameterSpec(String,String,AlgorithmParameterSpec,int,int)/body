@@ -1,0 +1,19 @@
+{
+  if (mdName == null) {
+    throw new NullPointerException("mdName == null");
+  }
+  if (mgfName == null) {
+    throw new NullPointerException("mgfName == null");
+  }
+  if (saltLen < 0) {
+    throw new IllegalArgumentException("saltLen < 0");
+  }
+  if (trailerField < 0) {
+    throw new IllegalArgumentException("trailerField < 0");
+  }
+  this.mdName=mdName;
+  this.mgfName=mgfName;
+  this.mgfSpec=mgfSpec;
+  this.saltLen=saltLen;
+  this.trailerField=trailerField;
+}

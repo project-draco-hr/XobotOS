@@ -1,0 +1,89 @@
+{
+  int j=mLineCount;
+  int off=j * mColumns;
+  int want=off + mColumns + TOP;
+  int[] lines=mLines;
+  if (want >= lines.length) {
+    int nlen=ArrayUtils.idealIntArraySize(want + 1);
+    int[] grow=new int[nlen];
+    System.arraycopy(lines,0,grow,0,lines.length);
+    mLines=grow;
+    lines=grow;
+    Directions[] grow2=new Directions[nlen];
+    System.arraycopy(mLineDirections,0,grow2,0,mLineDirections.length);
+    mLineDirections=grow2;
+  }
+  if (chooseHt != null) {
+    fm.ascent=above;
+    fm.descent=below;
+    fm.top=top;
+    fm.bottom=bottom;
+    for (int i=0; i < chooseHt.length; i++) {
+      if (chooseHt[i] instanceof LineHeightSpan.WithDensity) {
+        ((LineHeightSpan.WithDensity)chooseHt[i]).chooseHeight(text,start,end,chooseHtv[i],v,fm,paint);
+      }
+ else {
+        chooseHt[i].chooseHeight(text,start,end,chooseHtv[i],v,fm);
+      }
+    }
+    above=fm.ascent;
+    below=fm.descent;
+    top=fm.top;
+    bottom=fm.bottom;
+  }
+  if (j == 0) {
+    if (trackPad) {
+      mTopPadding=top - above;
+    }
+    if (includePad) {
+      above=top;
+    }
+  }
+  if (last) {
+    if (trackPad) {
+      mBottomPadding=bottom - below;
+    }
+    if (includePad) {
+      below=bottom;
+    }
+  }
+  int extra;
+  if (needMultiply) {
+    double ex=(below - above) * (spacingmult - 1) + spacingadd;
+    if (ex >= 0) {
+      extra=(int)(ex + EXTRA_ROUNDING);
+    }
+ else {
+      extra=-(int)(-ex + EXTRA_ROUNDING);
+    }
+  }
+ else {
+    extra=0;
+  }
+  lines[off + START]=start;
+  lines[off + TOP]=v;
+  lines[off + DESCENT]=below + extra;
+  v+=(below - above) + extra;
+  lines[off + mColumns + START]=end;
+  lines[off + mColumns + TOP]=v;
+  if (hasTabOrEmoji)   lines[off + TAB]|=TAB_MASK;
+  lines[off + DIR]|=dir << DIR_SHIFT;
+  Directions linedirs=DIRS_ALL_LEFT_TO_RIGHT;
+  if (easy) {
+    mLineDirections[j]=linedirs;
+  }
+ else {
+    mLineDirections[j]=AndroidBidi.directions(dir,chdirs,start - widthStart,chs,start - widthStart,end - start);
+  }
+  if (ellipsize != null) {
+    boolean firstLine=(j == 0);
+    boolean currentLineIsTheLastVisibleOne=(j + 1 == mMaximumVisibleLineCount);
+    boolean forceEllipsis=moreChars && (mLineCount + 1 == mMaximumVisibleLineCount);
+    boolean doEllipsis=(firstLine && !moreChars && ellipsize != TextUtils.TruncateAt.MARQUEE) || (!firstLine && (currentLineIsTheLastVisibleOne || !moreChars) && ellipsize == TextUtils.TruncateAt.END);
+    if (doEllipsis) {
+      calculateEllipsis(start,end,widths,widthStart,ellipsisWidth,ellipsize,j,textWidth,paint,forceEllipsis);
+    }
+  }
+  mLineCount++;
+  return v;
+}

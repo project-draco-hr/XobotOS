@@ -1,0 +1,13 @@
+{
+  try {
+    logger.removeHandler(consoleHandler);
+    if (logFileHandler != null) {
+      logFileHandler.close();
+      logger.removeHandler(logFileHandler);
+      logFileStream.close();
+    }
+  }
+ catch (  IOException e) {
+    ;
+  }
+}

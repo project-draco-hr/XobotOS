@@ -1,0 +1,5 @@
+{
+  MethodBinding method=my(BindingManager.class).resolveBinding(binding);
+  if (method != null)   return method.getMapping();
+  return null;
+}

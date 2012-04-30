@@ -1,0 +1,6 @@
+{
+  if (flags == Flags.ELEMENT)   return new CSTypeReference("System.IntPtr");
+ else   if (isManagedClass())   return new CSTypeReference(BindingUtils.qualifiedName(getType()));
+ else   if (_nativeHandle != null)   return _nativeHandle.getManagedType();
+ else   return new CSTypeReference("System.IntPtr");
+}

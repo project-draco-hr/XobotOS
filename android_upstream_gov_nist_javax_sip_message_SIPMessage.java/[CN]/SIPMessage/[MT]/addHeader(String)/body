@@ -1,0 +1,11 @@
+{
+  String hdrString=sipHeader.trim() + "\n";
+  try {
+    HeaderParser parser=ParserFactory.createParser(sipHeader);
+    SIPHeader sh=parser.parse();
+    this.attachHeader(sh,false);
+  }
+ catch (  ParseException ex) {
+    this.unrecognizedHeaders.add(hdrString);
+  }
+}

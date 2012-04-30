@@ -1,0 +1,11 @@
+{
+switch (e.type) {
+case START:
+    writeStartThread(e);
+  return;
+case END:
+writeStopThread(e);
+return;
+}
+throw new IllegalStateException(e.type.toString());
+}

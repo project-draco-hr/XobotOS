@@ -1,0 +1,11 @@
+{
+  SIPDate retval;
+  try {
+    retval=(SIPDate)super.clone();
+  }
+ catch (  CloneNotSupportedException e) {
+    throw new RuntimeException("Internal error");
+  }
+  if (javaCal != null)   retval.javaCal=(java.util.Calendar)javaCal.clone();
+  return retval;
+}

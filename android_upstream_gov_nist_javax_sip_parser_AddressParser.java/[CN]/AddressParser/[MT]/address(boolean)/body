@@ -1,0 +1,31 @@
+{
+  if (debug)   dbg_enter("address");
+  AddressImpl retval=null;
+  try {
+    int k=0;
+    while (lexer.hasMoreChars()) {
+      char la=lexer.lookAhead(k);
+      if (la == '<' || la == '\"' || la == ':' || la == '/')       break;
+ else       if (la == '\0')       throw createParseException("unexpected EOL");
+ else       k++;
+    }
+    char la=lexer.lookAhead(k);
+    if (la == '<' || la == '\"') {
+      retval=nameAddr();
+    }
+ else     if (la == ':' || la == '/') {
+      retval=new AddressImpl();
+      URLParser uriParser=new URLParser((Lexer)lexer);
+      GenericURI uri=uriParser.uriReference(inclParams);
+      retval.setAddressType(AddressImpl.ADDRESS_SPEC);
+      retval.setURI(uri);
+    }
+ else {
+      throw createParseException("Bad address spec");
+    }
+    return retval;
+  }
+  finally {
+    if (debug)     dbg_leave("address");
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return (Integer.parseInt(getParameter(ParameterNamesIms.PORT_C)));
+}

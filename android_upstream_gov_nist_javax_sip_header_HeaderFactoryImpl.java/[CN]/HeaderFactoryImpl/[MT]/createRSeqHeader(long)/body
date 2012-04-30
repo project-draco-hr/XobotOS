@@ -1,0 +1,6 @@
+{
+  if (sequenceNumber < 0)   throw new InvalidArgumentException("invalid sequenceNumber arg " + sequenceNumber);
+  RSeq rseq=new RSeq();
+  rseq.setSeqNumber(sequenceNumber);
+  return rseq;
+}

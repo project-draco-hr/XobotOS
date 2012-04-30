@@ -1,0 +1,6 @@
+{
+  if ((_include != null) && matches(_include,name))   return Match.POSITIVE;
+  if ((_exclude != null) && matches(_exclude,name))   return Match.NEGATIVE;
+  if (_mustMatch)   return Match.NO_MATCH;
+  return _include == null ? Match.POSITIVE : Match.NO_MATCH;
+}

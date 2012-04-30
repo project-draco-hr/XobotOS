@@ -1,0 +1,15 @@
+{
+  StringBuilder frames=new StringBuilder();
+  if (stackFrames.length > 0) {
+    frames.append('\n');
+    for (    StackTraceElement stackFrame : stackFrames) {
+      frames.append("\t at ");
+      frames.append(stackFrame);
+      frames.append('\n');
+    }
+  }
+ else {
+    frames.append("<empty>");
+  }
+  return "StackTrace[stackTraceId=" + stackTraceId + ", threadId="+ threadId+ ", frames="+ frames+ "]";
+}

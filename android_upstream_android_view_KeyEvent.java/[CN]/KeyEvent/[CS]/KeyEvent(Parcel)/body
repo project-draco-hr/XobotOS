@@ -1,0 +1,12 @@
+{
+  mDeviceId=in.readInt();
+  mSource=in.readInt();
+  mAction=in.readInt();
+  mKeyCode=in.readInt();
+  mRepeatCount=in.readInt();
+  mMetaState=in.readInt();
+  mScanCode=in.readInt();
+  mFlags=in.readInt();
+  mDownTime=in.readLong();
+  mEventTime=in.readLong();
+}

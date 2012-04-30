@@ -1,0 +1,6 @@
+{
+  if (newState == TransactionState.TERMINATED && this.isReliable() && (!getSIPStack().cacheServerConnections)) {
+    this.collectionTime=TIMER_J;
+  }
+  super.setState(newState);
+}

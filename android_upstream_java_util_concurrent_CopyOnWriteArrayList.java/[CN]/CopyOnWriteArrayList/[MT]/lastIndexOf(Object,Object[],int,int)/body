@@ -1,0 +1,17 @@
+{
+  if (o == null) {
+    for (int i=to - 1; i >= from; i--) {
+      if (data[i] == null) {
+        return i;
+      }
+    }
+  }
+ else {
+    for (int i=to - 1; i >= from; i--) {
+      if (o.equals(data[i])) {
+        return i;
+      }
+    }
+  }
+  return -1;
+}

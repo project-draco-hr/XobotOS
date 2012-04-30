@@ -1,0 +1,2 @@
+AbstractTypeReference type
+EnumSet<NativeVariable.Flags> flags

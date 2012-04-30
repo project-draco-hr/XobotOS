@@ -1,0 +1,25 @@
+{
+  if (buf == null) {
+    throw streamClosed();
+  }
+  Arrays.checkOffsetAndCount(buffer.length,offset,length);
+  int copiedBytes=0, copyLength=0, newOffset=offset;
+  if (pos < buf.length) {
+    copyLength=(buf.length - pos >= length) ? length : buf.length - pos;
+    System.arraycopy(buf,pos,buffer,newOffset,copyLength);
+    newOffset+=copyLength;
+    copiedBytes+=copyLength;
+    pos+=copyLength;
+  }
+  if (copyLength == length) {
+    return length;
+  }
+  int inCopied=in.read(buffer,newOffset,length - copiedBytes);
+  if (inCopied > 0) {
+    return inCopied + copiedBytes;
+  }
+  if (copiedBytes == 0) {
+    return inCopied;
+  }
+  return copiedBytes;
+}

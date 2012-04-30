@@ -1,0 +1,13 @@
+{
+  StringBuilder result=new StringBuilder(Modifier.toString(getModifiers()));
+  if (result.length() != 0)   result.append(' ');
+  result.append(declaringClass.getName());
+  result.append("(");
+  result.append(toString(parameterTypes));
+  result.append(")");
+  if (exceptionTypes != null && exceptionTypes.length != 0) {
+    result.append(" throws ");
+    result.append(toString(exceptionTypes));
+  }
+  return result.toString();
+}

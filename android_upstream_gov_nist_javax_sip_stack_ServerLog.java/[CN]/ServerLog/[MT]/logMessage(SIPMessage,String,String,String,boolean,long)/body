@@ -1,0 +1,12 @@
+{
+  checkLogFile();
+  CallID cid=(CallID)message.getCallId();
+  String callId=null;
+  if (cid != null)   callId=cid.getCallId();
+  String firstLine=message.getFirstLine().trim();
+  String encoded=(logContent ? message.encode() : message.encodeMessage());
+  String tid=message.getTransactionId();
+  TimeStampHeader tshdr=(TimeStampHeader)message.getHeader(TimeStampHeader.NAME);
+  long tsval=tshdr == null ? 0 : tshdr.getTime();
+  logMessage(encoded,from,to,sender,callId,firstLine,status,tid,time,tsval);
+}

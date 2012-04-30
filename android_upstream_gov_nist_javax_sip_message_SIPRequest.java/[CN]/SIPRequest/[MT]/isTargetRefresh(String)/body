@@ -1,0 +1,3 @@
+{
+  return targetRefreshMethods.contains(ucaseMethod);
+}

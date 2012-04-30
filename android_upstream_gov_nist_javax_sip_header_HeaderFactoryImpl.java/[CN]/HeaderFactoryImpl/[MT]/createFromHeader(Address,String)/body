@@ -1,0 +1,7 @@
+{
+  if (address == null)   throw new NullPointerException("null address arg");
+  From from=new From();
+  from.setAddress(address);
+  if (tag != null)   from.setTag(tag);
+  return from;
+}

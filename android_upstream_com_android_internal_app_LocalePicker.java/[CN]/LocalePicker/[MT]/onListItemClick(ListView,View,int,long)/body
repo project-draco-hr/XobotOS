@@ -1,0 +1,6 @@
+{
+  if (mListener != null) {
+    final Locale locale=((LocaleInfo)getListAdapter().getItem(position)).locale;
+    mListener.onLocaleSelected(locale);
+  }
+}

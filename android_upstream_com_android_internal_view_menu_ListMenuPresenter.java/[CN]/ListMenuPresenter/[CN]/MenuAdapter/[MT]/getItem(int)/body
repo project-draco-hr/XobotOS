@@ -1,0 +1,8 @@
+{
+  ArrayList<MenuItemImpl> items=mMenu.getNonActionItems();
+  position+=mItemIndexOffset;
+  if (mExpandedIndex >= 0 && position >= mExpandedIndex) {
+    position++;
+  }
+  return items.get(position);
+}

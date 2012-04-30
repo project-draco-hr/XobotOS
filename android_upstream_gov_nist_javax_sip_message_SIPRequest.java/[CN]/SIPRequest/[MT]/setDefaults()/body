@@ -1,0 +1,18 @@
+{
+  if (requestLine == null)   return;
+  String method=requestLine.getMethod();
+  if (method == null)   return;
+  GenericURI u=requestLine.getUri();
+  if (u == null)   return;
+  if (method.compareTo(Request.REGISTER) == 0 || method.compareTo(Request.INVITE) == 0) {
+    if (u instanceof SipUri) {
+      SipUri sipUri=(SipUri)u;
+      sipUri.setUserParam(DEFAULT_USER);
+      try {
+        sipUri.setTransportParam(DEFAULT_TRANSPORT);
+      }
+ catch (      ParseException ex) {
+      }
+    }
+  }
+}

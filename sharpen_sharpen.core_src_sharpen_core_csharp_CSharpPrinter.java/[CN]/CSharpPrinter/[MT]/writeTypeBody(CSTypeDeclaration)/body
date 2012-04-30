@@ -1,0 +1,10 @@
+{
+  writeLine();
+  enterBody();
+  CSTypeDeclaration saved=_currentType;
+  _currentType=node;
+  writeLineSeparatedList(node.members());
+  printPrecedingComments(node.startPosition() + node.sourceLength());
+  _currentType=saved;
+  leaveBody();
+}

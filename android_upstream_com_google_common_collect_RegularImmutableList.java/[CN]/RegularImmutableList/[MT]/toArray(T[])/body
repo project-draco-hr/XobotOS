@@ -1,0 +1,10 @@
+{
+  if (other.length < size) {
+    other=ObjectArrays.newArray(other,size);
+  }
+ else   if (other.length > size) {
+    other[size]=null;
+  }
+  Platform.unsafeArrayCopy(array,offset,other,0,size);
+  return other;
+}

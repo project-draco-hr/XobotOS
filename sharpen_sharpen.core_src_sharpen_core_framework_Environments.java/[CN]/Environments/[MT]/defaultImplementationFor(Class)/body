@@ -1,0 +1,7 @@
+{
+  if (!service.isInterface()) {
+    throw new IllegalArgumentException(service + " is not an interface.");
+  }
+  final String packageName=service.getPackage().getName();
+  return packageName + ".internal." + (service.getSimpleName() + "Impl");
+}

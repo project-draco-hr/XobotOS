@@ -1,0 +1,16 @@
+{
+  if (s == null) {
+    stringRep+=getIndentation();
+    stringRep+="<null>\n";
+    return;
+  }
+  if (s.compareTo("}") == 0 || s.compareTo("]") == 0) {
+    indentation--;
+  }
+  stringRep+=getIndentation();
+  stringRep+=s;
+  stringRep+="\n";
+  if (s.compareTo("{") == 0 || s.compareTo("[") == 0) {
+    indentation++;
+  }
+}

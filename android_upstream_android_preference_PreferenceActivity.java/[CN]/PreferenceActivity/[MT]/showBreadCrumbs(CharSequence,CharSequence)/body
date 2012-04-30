@@ -1,0 +1,21 @@
+{
+  if (mFragmentBreadCrumbs == null) {
+    View crumbs=findViewById(android.R.id.title);
+    try {
+      mFragmentBreadCrumbs=(FragmentBreadCrumbs)crumbs;
+    }
+ catch (    ClassCastException e) {
+      return;
+    }
+    if (mFragmentBreadCrumbs == null) {
+      if (title != null) {
+        setTitle(title);
+      }
+      return;
+    }
+    mFragmentBreadCrumbs.setMaxVisible(2);
+    mFragmentBreadCrumbs.setActivity(this);
+  }
+  mFragmentBreadCrumbs.setTitle(title,shortTitle);
+  mFragmentBreadCrumbs.setParentTitle(null,null,null);
+}

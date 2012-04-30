@@ -1,0 +1,3 @@
+{
+  return (ch >= 'A' && ch <= 'F') || (ch >= 'a' && ch <= 'f') || isDigit(ch);
+}

@@ -1,0 +1,5 @@
+{
+synchronized (mBluetoothInputProfileHandler) {
+    return mBluetoothInputProfileHandler.disconnectInputDeviceInternal(device);
+  }
+}

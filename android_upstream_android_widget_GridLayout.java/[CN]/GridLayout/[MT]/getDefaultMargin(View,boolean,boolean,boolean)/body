@@ -1,0 +1,3 @@
+{
+  return isAtEdge ? DEFAULT_CONTAINER_MARGIN : getDefaultMargin(c,horizontal,leading);
+}

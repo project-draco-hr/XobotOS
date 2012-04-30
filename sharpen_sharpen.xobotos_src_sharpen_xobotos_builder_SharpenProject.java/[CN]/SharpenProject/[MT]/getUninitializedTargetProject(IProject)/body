@@ -1,0 +1,3 @@
+{
+  return WorkspaceUtilities.getWorkspaceRoot().getProject(project.getName() + SharpenConstants.SHARPENED_PROJECT_SUFFIX);
+}

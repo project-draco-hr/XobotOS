@@ -1,0 +1,5 @@
+{
+  validateRange(minimum,preferred,0,24);
+  mDepthMin=minimum;
+  mDepthPref=preferred;
+}

@@ -1,0 +1,11 @@
+{
+  try {
+    if (mCloseGuard != null) {
+      mCloseGuard.warnIfOpen();
+    }
+    dispose();
+  }
+  finally {
+    super.finalize();
+  }
+}

@@ -1,0 +1,12 @@
+{
+  if (buffer == null) {
+    throw new IllegalArgumentException("CharArrayBuffer should not be null");
+  }
+  acquireReference();
+  try {
+    nativeCopyStringToBuffer(mWindowPtr,row - mStartPos,column,buffer);
+  }
+  finally {
+    releaseReference();
+  }
+}

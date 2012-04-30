@@ -1,0 +1,8 @@
+{
+  if (size > 0) {
+    return (size + (pos % size)) % size;
+  }
+ else {
+    return 0;
+  }
+}

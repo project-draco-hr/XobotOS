@@ -1,0 +1,6 @@
+{
+  if (args == null) {
+    args=EmptyArray.OBJECT;
+  }
+  return invokeNative(receiver,args,declaringClass,parameterTypes,returnType,slot,flag);
+}

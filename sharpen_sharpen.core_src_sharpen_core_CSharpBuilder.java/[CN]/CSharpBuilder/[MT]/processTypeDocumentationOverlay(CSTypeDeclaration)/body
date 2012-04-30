@@ -1,0 +1,4 @@
+{
+  String overlay=documentationOverlay().forType(qualifiedName(node));
+  return processDocumentationOverlay(node,overlay);
+}

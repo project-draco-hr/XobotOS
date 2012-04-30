@@ -1,0 +1,7 @@
+{
+  super(visibility);
+  this._name=name;
+  this._returnType=returnType;
+  this._flags=flags;
+  if (returnType == null)   throw new NullPointerException();
+}

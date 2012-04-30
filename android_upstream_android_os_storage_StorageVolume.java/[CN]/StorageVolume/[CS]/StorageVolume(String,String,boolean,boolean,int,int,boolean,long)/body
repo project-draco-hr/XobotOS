@@ -1,0 +1,10 @@
+{
+  mPath=path;
+  mDescription=description;
+  mRemovable=removable;
+  mEmulated=emulated;
+  mMtpReserveSpace=mtpReserveSpace;
+  mAllowMassStorage=allowMassStorage;
+  mStorageId=storageId;
+  mMaxFileSize=maxFileSize;
+}

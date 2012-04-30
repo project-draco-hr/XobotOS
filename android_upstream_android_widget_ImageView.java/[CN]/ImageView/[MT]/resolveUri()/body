@@ -1,0 +1,50 @@
+{
+  if (mDrawable != null) {
+    return;
+  }
+  Resources rsrc=getResources();
+  if (rsrc == null) {
+    return;
+  }
+  Drawable d=null;
+  if (mResource != 0) {
+    try {
+      d=rsrc.getDrawable(mResource);
+    }
+ catch (    Exception e) {
+      Log.w("ImageView","Unable to find resource: " + mResource,e);
+      mUri=null;
+    }
+  }
+ else   if (mUri != null) {
+    String scheme=mUri.getScheme();
+    if (ContentResolver.SCHEME_ANDROID_RESOURCE.equals(scheme)) {
+      try {
+        ContentResolver.OpenResourceIdResult r=mContext.getContentResolver().getResourceId(mUri);
+        d=r.r.getDrawable(r.id);
+      }
+ catch (      Exception e) {
+        Log.w("ImageView","Unable to open content: " + mUri,e);
+      }
+    }
+ else     if (ContentResolver.SCHEME_CONTENT.equals(scheme) || ContentResolver.SCHEME_FILE.equals(scheme)) {
+      try {
+        d=Drawable.createFromStream(mContext.getContentResolver().openInputStream(mUri),null);
+      }
+ catch (      Exception e) {
+        Log.w("ImageView","Unable to open content: " + mUri,e);
+      }
+    }
+ else {
+      d=Drawable.createFromPath(mUri.toString());
+    }
+    if (d == null) {
+      System.out.println("resolveUri failed on bad bitmap uri: " + mUri);
+      mUri=null;
+    }
+  }
+ else {
+    return;
+  }
+  updateDrawable(d);
+}

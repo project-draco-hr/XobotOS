@@ -1,0 +1,8 @@
+{
+  begin("glIsEnabled");
+  arg("cap",cap);
+  end();
+  boolean result=mgl11.glIsEnabled(cap);
+  checkError();
+  return result;
+}

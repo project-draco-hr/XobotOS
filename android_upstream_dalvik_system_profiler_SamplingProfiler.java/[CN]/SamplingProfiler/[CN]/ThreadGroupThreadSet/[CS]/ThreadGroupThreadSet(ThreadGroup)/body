@@ -1,0 +1,7 @@
+{
+  if (threadGroup == null) {
+    throw new NullPointerException("threadGroup == null");
+  }
+  this.threadGroup=threadGroup;
+  resize();
+}

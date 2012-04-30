@@ -1,0 +1,6 @@
+{
+  writeIndented("~");
+  write(_currentType.name());
+  writeLine("()");
+  node.body().accept(this);
+}

@@ -1,0 +1,5 @@
+{
+synchronized (packages) {
+    return packages.get(name);
+  }
+}

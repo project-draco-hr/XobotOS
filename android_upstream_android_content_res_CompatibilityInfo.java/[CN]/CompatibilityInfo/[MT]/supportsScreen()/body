@@ -1,0 +1,3 @@
+{
+  return (mCompatibilityFlags & NEEDS_SCREEN_COMPAT) == 0;
+}

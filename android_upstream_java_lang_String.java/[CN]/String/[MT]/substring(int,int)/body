@@ -1,0 +1,9 @@
+{
+  if (start == 0 && end == count) {
+    return this;
+  }
+  if (start >= 0 && start <= end && end <= count) {
+    return new String(offset + start,end - start,value);
+  }
+  throw startEndAndLength(start,end);
+}

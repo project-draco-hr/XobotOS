@@ -1,0 +1,3 @@
+InetAddress inetAddr
+int port
+String transport

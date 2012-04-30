@@ -1,0 +1,7 @@
+{
+  if (mAddr == null)   throw new NullPointerException("JAIN-SIP Exception, " + "Via, setMAddr(), the mAddr parameter is null.");
+  Host host=new Host();
+  host.setAddress(mAddr);
+  NameValue nameValue=new NameValue(ParameterNames.MADDR,host);
+  setParameter(nameValue);
+}

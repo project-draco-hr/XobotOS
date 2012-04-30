@@ -1,0 +1,4 @@
+{
+  _writer.write(node.getVariable().getName());
+  _writer.writeBlock("++");
+}

@@ -1,0 +1,10 @@
+{
+  Iterator<SIPHeader> li=this.headers.iterator();
+  LinkedList<String> retval=new LinkedList<String>();
+  while (li.hasNext()) {
+    SIPHeader sipHeader=(SIPHeader)li.next();
+    String name=sipHeader.getName();
+    retval.add(name);
+  }
+  return retval.listIterator();
+}

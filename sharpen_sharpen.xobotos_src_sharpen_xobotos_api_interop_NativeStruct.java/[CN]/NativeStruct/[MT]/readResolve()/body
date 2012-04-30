@@ -1,0 +1,5 @@
+{
+  if (_members == null)   throw new ConfigurationException("Missing <member> entries in NativeStruct");
+  if (_nativeType == null)   throw new ConfigurationException("Missing <native-type> in NativeStruct");
+  return this;
+}

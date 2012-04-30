@@ -1,0 +1,8 @@
+{
+  ContentType ct=getContentTypeHeader();
+  if (ct != null) {
+    String c=ct.getCharset();
+    return c != null ? c : contentEncodingCharset;
+  }
+ else   return contentEncodingCharset;
+}

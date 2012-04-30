@@ -1,0 +1,7 @@
+{
+  Boolean b=(Boolean)theFeatures.get(name);
+  if (b == null) {
+    throw new SAXNotRecognizedException("Unknown feature " + name);
+  }
+  return b.booleanValue();
+}

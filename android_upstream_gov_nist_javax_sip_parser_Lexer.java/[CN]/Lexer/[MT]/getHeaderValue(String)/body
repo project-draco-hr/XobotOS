@@ -1,0 +1,12 @@
+{
+  if (line == null)   return null;
+  String headerValue=null;
+  try {
+    int begin=line.indexOf(":");
+    headerValue=line.substring(begin + 1);
+  }
+ catch (  IndexOutOfBoundsException e) {
+    return null;
+  }
+  return headerValue;
+}

@@ -1,0 +1,3 @@
+{
+  mIncomingRingRegistrants.addUnique(h,what,obj);
+}

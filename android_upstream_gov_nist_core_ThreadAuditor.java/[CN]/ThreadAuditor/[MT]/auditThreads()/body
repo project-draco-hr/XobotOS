@@ -1,0 +1,16 @@
+{
+  String auditReport=null;
+  Iterator<ThreadHandle> it=threadHandles.values().iterator();
+  while (it.hasNext()) {
+    ThreadHandle threadHandle=(ThreadHandle)it.next();
+    if (!threadHandle.isThreadActive()) {
+      Thread thread=threadHandle.getThread();
+      if (auditReport == null) {
+        auditReport="Thread Auditor Report:\n";
+      }
+      auditReport+="   Thread [" + thread.getName() + "] has failed to respond to an audit request.\n";
+    }
+    threadHandle.setThreadActive(false);
+  }
+  return auditReport;
+}

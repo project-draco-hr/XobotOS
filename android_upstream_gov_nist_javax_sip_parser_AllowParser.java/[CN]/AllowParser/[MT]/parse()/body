@@ -1,0 +1,31 @@
+{
+  if (debug)   dbg_enter("AllowParser.parse");
+  AllowList list=new AllowList();
+  try {
+    headerName(TokenTypes.ALLOW);
+    Allow allow=new Allow();
+    allow.setHeaderName(SIPHeaderNames.ALLOW);
+    this.lexer.SPorHT();
+    this.lexer.match(TokenTypes.ID);
+    Token token=lexer.getNextToken();
+    allow.setMethod(token.getTokenValue());
+    list.add(allow);
+    this.lexer.SPorHT();
+    while (lexer.lookAhead(0) == ',') {
+      this.lexer.match(',');
+      this.lexer.SPorHT();
+      allow=new Allow();
+      this.lexer.match(TokenTypes.ID);
+      token=lexer.getNextToken();
+      allow.setMethod(token.getTokenValue());
+      list.add(allow);
+      this.lexer.SPorHT();
+    }
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return list;
+  }
+  finally {
+    if (debug)     dbg_leave("AllowParser.parse");
+  }
+}

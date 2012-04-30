@@ -1,0 +1,4 @@
+{
+  IPath outputLocation=binFolder.getFullPath();
+  _javaProject.setOutputLocation(outputLocation,null);
+}

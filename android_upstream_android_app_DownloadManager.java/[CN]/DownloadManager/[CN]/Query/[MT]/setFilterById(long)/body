@@ -1,0 +1,4 @@
+{
+  mIds=ids;
+  return this;
+}

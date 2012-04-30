@@ -1,0 +1,42 @@
+{
+  int start=0;
+  int end=header.length() - 1;
+  try {
+    while (header.charAt(start) <= 0x20)     start++;
+    while (header.charAt(end) <= 0x20)     end--;
+  }
+ catch (  ArrayIndexOutOfBoundsException e) {
+    throw new ParseException("Empty header.",0);
+  }
+  StringBuffer buffer=new StringBuffer(end + 1);
+  int i=start;
+  int lineStart=start;
+  boolean endOfLine=false;
+  while (i <= end) {
+    char c=header.charAt(i);
+    if (c == '\r' || c == '\n') {
+      if (!endOfLine) {
+        buffer.append(header.substring(lineStart,i));
+        endOfLine=true;
+      }
+    }
+ else {
+      if (endOfLine) {
+        endOfLine=false;
+        if (c == ' ' || c == '\t') {
+          buffer.append(' ');
+          lineStart=i + 1;
+        }
+ else {
+          lineStart=i;
+        }
+      }
+    }
+    i++;
+  }
+  buffer.append(header.substring(lineStart,i));
+  buffer.append('\n');
+  HeaderParser hp=ParserFactory.createParser(buffer.toString());
+  if (hp == null)   throw new ParseException("could not create parser",0);
+  return hp.parse();
+}

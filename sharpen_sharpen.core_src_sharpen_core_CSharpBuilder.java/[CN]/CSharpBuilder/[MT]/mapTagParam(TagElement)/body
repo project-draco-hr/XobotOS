@@ -1,0 +1,11 @@
+{
+  List fragments=element.fragments();
+  if (!(fragments.get(0) instanceof SimpleName))   return new CSDocTagNode("?");
+  SimpleName name=(SimpleName)fragments.get(0);
+  if (null == name.resolveBinding()) {
+    warning(name,"Parameter '" + name + "' not found.");
+  }
+  CSDocTagNode param=isPropertyNode(documentedNodeAttachedTo(element)) ? new CSDocTagNode("value") : newCSDocTag(fixIdentifierNameFor(identifier(name),element));
+  collectFragments(param,fragments,1);
+  return param;
+}

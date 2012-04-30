@@ -1,0 +1,6 @@
+Uri uri
+IContentObserver observer
+boolean notifyForDescendents
+Object observersLock
+int uid
+int pid

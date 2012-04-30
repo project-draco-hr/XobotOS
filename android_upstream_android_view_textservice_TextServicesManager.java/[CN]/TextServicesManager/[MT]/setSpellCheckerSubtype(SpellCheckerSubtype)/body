@@ -1,0 +1,15 @@
+{
+  try {
+    final int hashCode;
+    if (subtype == null) {
+      hashCode=0;
+    }
+ else {
+      hashCode=subtype.hashCode();
+    }
+    sService.setCurrentSpellCheckerSubtype(null,hashCode);
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"Error in setSpellCheckerSubtype:" + e);
+  }
+}

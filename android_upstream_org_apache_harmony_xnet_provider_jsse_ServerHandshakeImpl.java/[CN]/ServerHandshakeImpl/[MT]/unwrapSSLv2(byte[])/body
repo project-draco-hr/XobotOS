@@ -1,0 +1,21 @@
+{
+  io_stream.append(bytes);
+  io_stream.mark();
+  try {
+    clientHello=new ClientHello(io_stream);
+  }
+ catch (  IOException e) {
+    io_stream.reset();
+    return;
+  }
+  if (nonBlocking) {
+    delegatedTasks.add(new DelegatedTask(new Runnable(){
+      public void run(){
+        processClientHello();
+      }
+    }
+,this));
+    return;
+  }
+  processClientHello();
+}

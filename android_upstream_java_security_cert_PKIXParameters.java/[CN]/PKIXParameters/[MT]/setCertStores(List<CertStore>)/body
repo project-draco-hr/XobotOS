@@ -1,0 +1,9 @@
+{
+  if (certStores == null || certStores.isEmpty()) {
+    if (this.certStores != null && !this.certStores.isEmpty()) {
+      this.certStores=null;
+    }
+    return;
+  }
+  this.certStores=new ArrayList<CertStore>(certStores);
+}

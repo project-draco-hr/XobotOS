@@ -1,0 +1,10 @@
+{
+  if (matchObj == null)   return true;
+ else   if (!matchObj.getClass().equals(this.getClass()))   return false;
+ else   if (matchObj == this)   return true;
+  SIPRequest that=(SIPRequest)matchObj;
+  RequestLine rline=that.requestLine;
+  if (this.requestLine == null && rline != null)   return false;
+ else   if (this.requestLine == rline)   return super.match(matchObj);
+  return requestLine.match(that.requestLine) && super.match(matchObj);
+}

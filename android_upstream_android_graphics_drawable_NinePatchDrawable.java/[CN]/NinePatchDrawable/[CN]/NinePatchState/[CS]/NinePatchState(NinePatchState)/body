@@ -1,0 +1,7 @@
+{
+  mNinePatch=new NinePatch(state.mNinePatch);
+  mPadding=state.mPadding;
+  mDither=state.mDither;
+  mChangingConfigurations=state.mChangingConfigurations;
+  mTargetDensity=state.mTargetDensity;
+}

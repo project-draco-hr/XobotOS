@@ -1,0 +1,3 @@
+{
+  return resolveSizeAndState(size,measureSpec,0) & MEASURED_SIZE_MASK;
+}

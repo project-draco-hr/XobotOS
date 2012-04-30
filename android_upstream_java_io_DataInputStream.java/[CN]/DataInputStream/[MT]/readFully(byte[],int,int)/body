@@ -1,0 +1,3 @@
+{
+  Streams.readFully(in,dst,offset,byteCount);
+}

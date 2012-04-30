@@ -1,0 +1,8 @@
+{
+  checkValidCodePoint(codePoint);
+  int block=ofImpl(codePoint);
+  if (block == -1 || block >= BLOCKS.length) {
+    return null;
+  }
+  return BLOCKS[block];
+}

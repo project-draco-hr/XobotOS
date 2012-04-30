@@ -1,0 +1,16 @@
+{
+  writer.print(prefix);
+  writer.print("mId=");
+  writer.print(mId);
+  writer.print(" mListener=");
+  writer.println(mListener);
+  writer.print(prefix);
+  writer.print("mStarted=");
+  writer.print(mStarted);
+  writer.print(" mContentChanged=");
+  writer.print(mContentChanged);
+  writer.print(" mAbandoned=");
+  writer.print(mAbandoned);
+  writer.print(" mReset=");
+  writer.println(mReset);
+}

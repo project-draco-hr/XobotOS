@@ -1,0 +1,3 @@
+{
+  setJavaRepresentation(sign,numberLength,digits);
+}

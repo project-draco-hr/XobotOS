@@ -1,0 +1,4 @@
+{
+  RequestLineParser requestLineParser=new RequestLineParser(requestLine);
+  return (SipRequestLine)requestLineParser.parse();
+}

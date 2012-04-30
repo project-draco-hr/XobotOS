@@ -1,0 +1,10 @@
+{
+  String version=BinaryHprof.readMagic(in);
+  if (version == null) {
+    throw new MalformedHprofException("Could not find HPROF version");
+  }
+  if (TRACE) {
+    System.out.println("\tversion=" + version);
+  }
+  this.version=version;
+}

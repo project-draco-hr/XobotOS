@@ -1,0 +1,8 @@
+{
+  try {
+    _project.delete(true,true,null);
+  }
+ catch (  CoreException x) {
+    x.printStackTrace();
+  }
+}

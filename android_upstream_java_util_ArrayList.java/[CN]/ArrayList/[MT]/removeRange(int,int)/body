@@ -1,0 +1,21 @@
+{
+  if (fromIndex == toIndex) {
+    return;
+  }
+  Object[] a=array;
+  int s=size;
+  if (fromIndex >= s) {
+    throw new IndexOutOfBoundsException("fromIndex " + fromIndex + " >= size "+ size);
+  }
+  if (toIndex > s) {
+    throw new IndexOutOfBoundsException("toIndex " + toIndex + " > size "+ size);
+  }
+  if (fromIndex > toIndex) {
+    throw new IndexOutOfBoundsException("fromIndex " + fromIndex + " > toIndex "+ toIndex);
+  }
+  System.arraycopy(a,toIndex,a,fromIndex,s - toIndex);
+  int rangeSize=toIndex - fromIndex;
+  Arrays.fill(a,s - rangeSize,s,null);
+  size=s - rangeSize;
+  modCount++;
+}

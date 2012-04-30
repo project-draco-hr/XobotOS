@@ -1,0 +1,7 @@
+{
+  if (isInstanceFieldReference(name)) {
+    pushExpression(createEnclosingReferences(name));
+    return false;
+  }
+  return super.visit(name);
+}

@@ -1,0 +1,26 @@
+{
+  if (debug)   dbg_enter("parse");
+  try {
+    ViaList viaList=new ViaList();
+    this.lexer.match(TokenTypes.VIA);
+    this.lexer.SPorHT();
+    this.lexer.match(':');
+    this.lexer.SPorHT();
+    while (true) {
+      Via v=new Via();
+      parseVia(v);
+      viaList.add(v);
+      this.lexer.SPorHT();
+      if (this.lexer.lookAhead(0) == ',') {
+        this.lexer.consume(1);
+        this.lexer.SPorHT();
+      }
+      if (this.lexer.lookAhead(0) == '\n')       break;
+    }
+    this.lexer.match('\n');
+    return viaList;
+  }
+  finally {
+    if (debug)     dbg_leave("parse");
+  }
+}

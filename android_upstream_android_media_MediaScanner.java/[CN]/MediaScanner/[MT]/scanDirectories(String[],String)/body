@@ -1,0 +1,45 @@
+{
+  try {
+    long start=System.currentTimeMillis();
+    initialize(volumeName);
+    prescan(null,true);
+    long prescan=System.currentTimeMillis();
+    if (ENABLE_BULK_INSERTS) {
+      mAudioInserter=new FileInserter(mAudioUri,500);
+      mVideoInserter=new FileInserter(mVideoUri,500);
+      mImageInserter=new FileInserter(mImagesUri,500);
+      mFileInserter=new FileInserter(mFilesUri,500);
+    }
+    for (int i=0; i < directories.length; i++) {
+      processDirectory(directories[i],mClient);
+    }
+    if (ENABLE_BULK_INSERTS) {
+      mAudioInserter.flush();
+      mVideoInserter.flush();
+      mImageInserter.flush();
+      mFileInserter.flush();
+      mAudioInserter=null;
+      mVideoInserter=null;
+      mImageInserter=null;
+      mFileInserter=null;
+    }
+    long scan=System.currentTimeMillis();
+    postscan(directories);
+    long end=System.currentTimeMillis();
+    if (false) {
+      Log.d(TAG," prescan time: " + (prescan - start) + "ms\n");
+      Log.d(TAG,"    scan time: " + (scan - prescan) + "ms\n");
+      Log.d(TAG,"postscan time: " + (end - scan) + "ms\n");
+      Log.d(TAG,"   total time: " + (end - start) + "ms\n");
+    }
+  }
+ catch (  SQLException e) {
+    Log.e(TAG,"SQLException in MediaScanner.scan()",e);
+  }
+catch (  UnsupportedOperationException e) {
+    Log.e(TAG,"UnsupportedOperationException in MediaScanner.scan()",e);
+  }
+catch (  RemoteException e) {
+    Log.e(TAG,"RemoteException in MediaScanner.scan()",e);
+  }
+}

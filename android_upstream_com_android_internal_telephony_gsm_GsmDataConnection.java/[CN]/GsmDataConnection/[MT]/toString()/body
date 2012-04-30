@@ -1,0 +1,3 @@
+{
+  return "State=" + getCurrentState().getName() + " Apn="+ mApn+ " create="+ createTime+ " lastFail="+ lastFailTime+ " lastFailCause="+ lastFailCause;
+}

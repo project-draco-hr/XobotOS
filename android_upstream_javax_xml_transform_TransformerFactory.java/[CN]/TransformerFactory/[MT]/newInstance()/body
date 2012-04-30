@@ -1,0 +1,9 @@
+{
+  String className="org.apache.xalan.processor.TransformerFactoryImpl";
+  try {
+    return (TransformerFactory)Class.forName(className).newInstance();
+  }
+ catch (  Exception e) {
+    throw new NoClassDefFoundError(className);
+  }
+}

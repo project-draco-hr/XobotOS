@@ -1,0 +1,9 @@
+{
+  acquireReference();
+  try {
+    return nativeAllocRow(mWindowPtr);
+  }
+  finally {
+    releaseReference();
+  }
+}

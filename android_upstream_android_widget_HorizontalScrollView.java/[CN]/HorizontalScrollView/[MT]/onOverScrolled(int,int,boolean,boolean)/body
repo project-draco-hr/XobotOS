@@ -1,0 +1,14 @@
+{
+  if (!mScroller.isFinished()) {
+    mScrollX=scrollX;
+    mScrollY=scrollY;
+    invalidateParentIfNeeded();
+    if (clampedX) {
+      mScroller.springBack(mScrollX,mScrollY,0,getScrollRange(),0,0);
+    }
+  }
+ else {
+    super.scrollTo(scrollX,scrollY);
+  }
+  awakenScrollBars();
+}

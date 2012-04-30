@@ -1,0 +1,16 @@
+{
+synchronized (mLoadIndices) {
+    if (!mRequestedIndices.isEmpty()) {
+      Integer i=mRequestedIndices.iterator().next();
+      mRequestedIndices.remove(i);
+      mLoadIndices.remove(i);
+      return new int[]{i.intValue(),1};
+    }
+    if (!mLoadIndices.isEmpty()) {
+      Integer i=mLoadIndices.iterator().next();
+      mLoadIndices.remove(i);
+      return new int[]{i.intValue(),0};
+    }
+    return new int[]{-1,0};
+  }
+}

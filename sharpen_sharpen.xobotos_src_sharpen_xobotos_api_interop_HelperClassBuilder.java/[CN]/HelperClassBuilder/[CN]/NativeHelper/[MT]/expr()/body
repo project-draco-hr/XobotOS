@@ -1,0 +1,5 @@
+{
+  if (_members.size() > 0)   create();
+ else   reference();
+  return new StaticMemberAccess(_klassType,getName());
+}

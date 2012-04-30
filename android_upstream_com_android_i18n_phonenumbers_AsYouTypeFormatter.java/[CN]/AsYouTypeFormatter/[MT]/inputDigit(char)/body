@@ -1,0 +1,4 @@
+{
+  currentOutput=inputDigitWithOptionToRememberPosition(nextChar,false);
+  return currentOutput;
+}

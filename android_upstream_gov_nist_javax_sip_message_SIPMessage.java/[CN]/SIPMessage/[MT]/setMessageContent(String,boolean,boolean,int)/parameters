@@ -1,0 +1,4 @@
+String content
+boolean strict
+boolean computeContentLength
+int givenLength

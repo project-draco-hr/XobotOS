@@ -1,0 +1,3 @@
+{
+  return Character.getType(character) == Character.CURRENCY_SYMBOL;
+}

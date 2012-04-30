@@ -1,0 +1,3 @@
+{
+  this(iterator,start,end,(attributes == null ? new HashSet<Attribute>() : new HashSet<Attribute>(Arrays.asList(attributes))));
+}

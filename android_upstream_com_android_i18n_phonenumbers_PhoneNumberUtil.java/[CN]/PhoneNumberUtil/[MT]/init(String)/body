@@ -1,0 +1,7 @@
+{
+  currentFilePrefix=filePrefix;
+  for (  List<String> regionCodes : countryCallingCodeToRegionCodeMap.values()) {
+    supportedRegions.addAll(regionCodes);
+  }
+  nanpaRegions.addAll(countryCallingCodeToRegionCodeMap.get(NANPA_COUNTRY_CODE));
+}

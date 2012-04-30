@@ -1,0 +1,5 @@
+int objectId
+int threadId
+String threadName
+String groupName
+String parentGroupName

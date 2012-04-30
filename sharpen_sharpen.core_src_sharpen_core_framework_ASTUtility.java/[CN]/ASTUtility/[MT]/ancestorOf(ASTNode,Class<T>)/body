@@ -1,0 +1,9 @@
+{
+  ASTNode parent=node.getParent();
+  do {
+    if (ancestorType.isInstance(parent))     return (T)parent;
+    parent=parent.getParent();
+  }
+ while (parent != null);
+  throw new IllegalArgumentException(node + " has no ancestor of type " + ancestorType.getName());
+}

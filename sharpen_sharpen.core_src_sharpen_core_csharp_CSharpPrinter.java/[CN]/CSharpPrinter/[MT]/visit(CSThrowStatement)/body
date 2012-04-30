@@ -1,0 +1,11 @@
+{
+  printPrecedingComments(node);
+  if (null == node.expression()) {
+    writeIndentedLine("throw;");
+  }
+ else {
+    writeIndented("throw ");
+    node.expression().accept(this);
+    writeLine(";");
+  }
+}

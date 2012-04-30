@@ -1,0 +1,4 @@
+{
+  if (stackLogger.isLoggingEnabled())   stackLogger.logDebug("added transaction " + clientTransaction);
+  addTransactionHash(clientTransaction);
+}

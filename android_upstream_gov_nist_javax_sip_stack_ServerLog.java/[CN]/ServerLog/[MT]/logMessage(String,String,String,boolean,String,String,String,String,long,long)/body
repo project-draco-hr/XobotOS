@@ -1,0 +1,4 @@
+{
+  LogRecord log=this.sipStack.logRecordFactory.createLogRecord(message,from,to,time,sender,firstLine,tid,callId,timestampVal);
+  if (log != null)   logMessage(log.toString());
+}

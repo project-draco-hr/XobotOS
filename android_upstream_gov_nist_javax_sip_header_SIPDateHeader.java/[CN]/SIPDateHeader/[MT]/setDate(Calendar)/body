@@ -1,0 +1,3 @@
+{
+  if (dat != null)   date=new SIPDate(dat.getTime().getTime());
+}

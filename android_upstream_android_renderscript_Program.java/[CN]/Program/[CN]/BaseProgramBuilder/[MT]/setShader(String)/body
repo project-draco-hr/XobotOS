@@ -1,0 +1,4 @@
+{
+  mShader=s;
+  return this;
+}

@@ -1,0 +1,10 @@
+{
+  if (object == this) {
+    return true;
+  }
+  if (object instanceof HttpCookie) {
+    HttpCookie that=(HttpCookie)object;
+    return name.equalsIgnoreCase(that.getName()) && (domain != null ? domain.equalsIgnoreCase(that.domain) : that.domain == null) && Objects.equal(path,that.path);
+  }
+  return false;
+}

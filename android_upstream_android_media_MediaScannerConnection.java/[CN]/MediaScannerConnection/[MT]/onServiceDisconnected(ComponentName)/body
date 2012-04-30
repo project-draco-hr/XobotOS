@@ -1,0 +1,8 @@
+{
+  if (false) {
+    Log.v(TAG,"Disconnected from Media Scanner");
+  }
+synchronized (this) {
+    mService=null;
+  }
+}

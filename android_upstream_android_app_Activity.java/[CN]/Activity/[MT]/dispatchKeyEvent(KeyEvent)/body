@@ -1,0 +1,10 @@
+{
+  onUserInteraction();
+  Window win=getWindow();
+  if (win.superDispatchKeyEvent(event)) {
+    return true;
+  }
+  View decor=mDecor;
+  if (decor == null)   decor=win.getDecorView();
+  return event.dispatch(this,decor != null ? decor.getKeyDispatcherState() : null,this);
+}

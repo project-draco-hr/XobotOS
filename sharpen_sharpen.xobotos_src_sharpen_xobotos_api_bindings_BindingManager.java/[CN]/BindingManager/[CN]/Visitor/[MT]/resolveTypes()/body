@@ -1,0 +1,33 @@
+{
+  final IMarshalContext context=new IMarshalContext(){
+    @Override public NativeConfiguration getConfig(){
+      return _nativeConfig;
+    }
+    @Override public HelperClassBuilder getHelperClass(    ITypeBinding type){
+      return Visitor.this.getHelperClass(this,type);
+    }
+    @Override public MarshalInfo getMarshalInfo(    ITypeBinding type){
+      return Visitor.this.getMarshalInfo(this,type);
+    }
+  }
+;
+  boolean foundErrors=false;
+  for (  NativeTypeEntry entry : _nativeTypeList) {
+    final String name=BindingUtils.qualifiedName(entry.Binding);
+    if (DEBUG)     Sharpen.Debug("RESOLVE NATIVE TYPE: %s",name);
+    if (entry.Template instanceof NativeHandle)     entry.Builder=new NativeHandleBuilder(_nativeBuilder,entry.Binding,(NativeHandle)entry.Template);
+ else     if (entry.Template instanceof NativeStruct) {
+      entry.Builder=new StructHelperClass(_nativeBuilder,entry.Binding,(NativeStruct)entry.Template);
+      _needsHeader=true;
+    }
+ else {
+      if (DEBUG)       Sharpen.Debug("RESOLVE NATIVE TYPE EMPTY: %s",name);
+      continue;
+    }
+    boolean ok=entry.Builder.resolve(context);
+    if (DEBUG)     Sharpen.Debug("RESOLVE NATIVE TYPE DONE: %s - %s",name,ok);
+    if (!ok)     foundErrors=true;
+    _nativeBuilder.registerNativeType(entry.Builder);
+  }
+  return !foundErrors;
+}

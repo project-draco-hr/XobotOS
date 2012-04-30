@@ -1,0 +1,20 @@
+{
+  int size=in.readUint8();
+  certificate_types=new byte[size];
+  Streams.readFully(in,certificate_types);
+  size=in.readUint16();
+  int totalPrincipalsLength=0;
+  int principalLength=0;
+  ArrayList<X500Principal> principals=new ArrayList<X500Principal>();
+  while (totalPrincipalsLength < size) {
+    principalLength=in.readUint16();
+    principals.add(new X500Principal(in));
+    totalPrincipalsLength+=2;
+    totalPrincipalsLength+=principalLength;
+  }
+  certificate_authorities=principals.toArray(new X500Principal[principals.size()]);
+  this.length=3 + certificate_types.length + totalPrincipalsLength;
+  if (this.length != length) {
+    fatalAlert(AlertProtocol.DECODE_ERROR,"DECODE ERROR: incorrect CertificateRequest");
+  }
+}

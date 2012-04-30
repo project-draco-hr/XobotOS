@@ -1,0 +1,3 @@
+{
+  mDeviceProfileState.remove(address);
+}

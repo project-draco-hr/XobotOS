@@ -1,0 +1,24 @@
+{
+  SIPTransaction transaction=SIPTransaction.this;
+  SIPTransactionStack sipStack=transaction.getSIPStack();
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("LingerTimer: run() : " + getTransactionId());
+  }
+  if (transaction instanceof SIPClientTransaction) {
+    sipStack.removeTransaction(transaction);
+    transaction.close();
+  }
+ else   if (transaction instanceof ServerTransaction) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("removing" + transaction);
+    sipStack.removeTransaction(transaction);
+    if ((!sipStack.cacheServerConnections) && --transaction.encapsulatedChannel.useCount <= 0) {
+      transaction.close();
+    }
+ else {
+      if (sipStack.isLoggingEnabled() && (!sipStack.cacheServerConnections) && transaction.isReliable()) {
+        int useCount=transaction.encapsulatedChannel.useCount;
+        sipStack.getStackLogger().logDebug("Use Count = " + useCount);
+      }
+    }
+  }
+}

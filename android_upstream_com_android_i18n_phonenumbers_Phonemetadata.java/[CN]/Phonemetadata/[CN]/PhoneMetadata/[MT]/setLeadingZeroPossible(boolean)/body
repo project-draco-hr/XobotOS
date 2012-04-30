@@ -1,0 +1,5 @@
+{
+  hasLeadingZeroPossible=true;
+  leadingZeroPossible_=value;
+  return this;
+}

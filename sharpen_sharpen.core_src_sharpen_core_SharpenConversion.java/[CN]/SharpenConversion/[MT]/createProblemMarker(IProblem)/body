@@ -1,0 +1,20 @@
+{
+  if (!createProblemMarkers())   return;
+  try {
+    IMarker marker=_source.getCorrespondingResource().createMarker(Sharpen.PROBLEM_MARKER);
+    Map<String,Object> attributes=new HashMap<String,Object>();
+    attributes.put(IMarker.MESSAGE,problem.getMessage());
+    if (problem.getSourceLineNumber() > 0) {
+      attributes.put(IMarker.CHAR_START,new Integer(problem.getSourceStart()));
+      attributes.put(IMarker.CHAR_END,new Integer(problem.getSourceEnd()));
+      attributes.put(IMarker.LINE_NUMBER,problem.getSourceLineNumber());
+    }
+    attributes.put(IMarker.TRANSIENT,Boolean.TRUE);
+    attributes.put(IMarker.SEVERITY,problem.isError() ? IMarker.SEVERITY_ERROR : IMarker.SEVERITY_WARNING);
+    marker.setAttributes(attributes);
+    if (problem.isError())     _foundErrors=true;
+  }
+ catch (  CoreException e) {
+    e.printStackTrace();
+  }
+}

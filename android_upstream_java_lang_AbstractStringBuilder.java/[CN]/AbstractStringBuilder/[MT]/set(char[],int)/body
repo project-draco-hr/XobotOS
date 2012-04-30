@@ -1,0 +1,11 @@
+{
+  if (val == null) {
+    val=EmptyArray.CHAR;
+  }
+  if (val.length < len) {
+    throw new InvalidObjectException("count out of range");
+  }
+  shared=false;
+  value=val;
+  count=len;
+}

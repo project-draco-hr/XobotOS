@@ -1,0 +1,8 @@
+{
+  if (mIccCardStatus == null) {
+    return false;
+  }
+ else {
+    return mIccCardStatus.getCardState().isCardPresent();
+  }
+}

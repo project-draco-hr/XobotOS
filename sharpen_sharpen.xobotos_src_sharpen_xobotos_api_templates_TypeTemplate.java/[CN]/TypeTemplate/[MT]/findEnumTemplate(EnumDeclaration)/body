@@ -1,0 +1,3 @@
+{
+  return findMemberTemplate(node,EnumTemplate.DEFAULT,EnumTemplate.class);
+}

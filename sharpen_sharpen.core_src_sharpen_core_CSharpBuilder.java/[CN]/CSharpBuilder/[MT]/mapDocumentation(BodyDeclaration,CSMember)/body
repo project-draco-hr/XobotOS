@@ -1,0 +1,12 @@
+{
+  my(PreserveFullyQualifiedNamesState.class).using(true,new Runnable(){
+    public void run(){
+      if (processDocumentationOverlay(member)) {
+        return;
+      }
+      mapJavadoc(bodyDecl,member);
+      mapDeclaredExceptions(bodyDecl,member);
+    }
+  }
+);
+}

@@ -1,0 +1,6 @@
+{
+  if (isGone(c)) {
+    return 0;
+  }
+  return getMeasurement(c,horizontal) + getTotalMargin(c,horizontal);
+}

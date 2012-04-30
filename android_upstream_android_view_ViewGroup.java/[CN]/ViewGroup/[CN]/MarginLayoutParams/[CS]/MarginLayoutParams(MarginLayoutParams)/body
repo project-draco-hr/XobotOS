@@ -1,0 +1,10 @@
+{
+  this.width=source.width;
+  this.height=source.height;
+  this.leftMargin=source.leftMargin;
+  this.topMargin=source.topMargin;
+  this.rightMargin=source.rightMargin;
+  this.bottomMargin=source.bottomMargin;
+  this.startMargin=source.startMargin;
+  this.endMargin=source.endMargin;
+}

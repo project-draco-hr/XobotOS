@@ -1,0 +1,6 @@
+{
+  if (index < 0 || index >= MAX_INDEX) {
+    throw rangeException(index);
+  }
+  return 1 << index;
+}

@@ -1,0 +1,5 @@
+{
+  checkBufferAndFieldPosition(buffer,position);
+  buffer.append(dform.formatLong(value,position));
+  return buffer;
+}

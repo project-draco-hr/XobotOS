@@ -1,0 +1,7 @@
+{
+  mContext=newContext;
+  mFactory=original.mFactory;
+  mFactory2=original.mFactory2;
+  mPrivateFactory=original.mPrivateFactory;
+  mFilter=original.mFilter;
+}

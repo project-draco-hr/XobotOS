@@ -1,0 +1,15 @@
+{
+  if (mTransition != null) {
+    mTransition.removeChild(this,child);
+  }
+  if (child == mFocused) {
+    child.clearFocus();
+  }
+  if ((animate && child.getAnimation() != null) || (mTransitioningViews != null && mTransitioningViews.contains(child))) {
+    addDisappearingView(child);
+  }
+ else   if (child.mAttachInfo != null) {
+    child.dispatchDetachedFromWindow();
+  }
+  onViewRemoved(child);
+}

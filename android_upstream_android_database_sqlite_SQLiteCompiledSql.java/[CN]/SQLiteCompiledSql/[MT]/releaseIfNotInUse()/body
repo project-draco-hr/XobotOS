@@ -1,0 +1,5 @@
+{
+  if (!mInUse) {
+    releaseSqlStatement();
+  }
+}

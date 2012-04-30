@@ -1,0 +1,26 @@
+{
+  if (debug)   dbg_enter("parse");
+  try {
+    headerName(TokenTypes.P_VECTOR_CHARGING);
+    PChargingVector chargingVector=new PChargingVector();
+    try {
+      while (lexer.lookAhead(0) != '\n') {
+        this.parseParameter(chargingVector);
+        this.lexer.SPorHT();
+        char la=lexer.lookAhead(0);
+        if (la == '\n' || la == '\0')         break;
+        this.lexer.match(';');
+        this.lexer.SPorHT();
+      }
+    }
+ catch (    ParseException ex) {
+      throw ex;
+    }
+    super.parse(chargingVector);
+    if (chargingVector.getParameter(ParameterNamesIms.ICID_VALUE) == null)     throw new ParseException("Missing a required Parameter : " + ParameterNamesIms.ICID_VALUE,0);
+    return chargingVector;
+  }
+  finally {
+    if (debug)     dbg_leave("parse");
+  }
+}

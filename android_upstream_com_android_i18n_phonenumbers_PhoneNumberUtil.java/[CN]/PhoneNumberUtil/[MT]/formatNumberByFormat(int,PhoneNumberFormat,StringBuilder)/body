@@ -1,0 +1,16 @@
+{
+switch (numberFormat) {
+case E164:
+    formattedNumber.insert(0,countryCallingCode).insert(0,PLUS_SIGN);
+  return;
+case INTERNATIONAL:
+formattedNumber.insert(0," ").insert(0,countryCallingCode).insert(0,PLUS_SIGN);
+return;
+case RFC3966:
+formattedNumber.insert(0,"-").insert(0,countryCallingCode).insert(0,PLUS_SIGN);
+return;
+case NATIONAL:
+default :
+return;
+}
+}

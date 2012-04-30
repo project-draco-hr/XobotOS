@@ -1,0 +1,4 @@
+ObjectOutput objectOutput
+int wordSize
+ByteBuffer inputBuffer
+int index

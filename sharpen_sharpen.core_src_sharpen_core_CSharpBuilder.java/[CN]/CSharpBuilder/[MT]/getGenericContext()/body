@@ -1,0 +1,9 @@
+{
+  final IMethodBinding method;
+  if (_currentBodyDeclaration instanceof MethodDeclaration)   method=((MethodDeclaration)_currentBodyDeclaration).resolveBinding();
+ else   method=null;
+  if ((method != null) && method.isGenericMethod())   return new GenericContext(method);
+  if (_currentTypeDeclaration != null)   return GenericContext.create(_currentTypeDeclaration.resolveBinding());
+ else   if (method != null)   return GenericContext.create(method.getDeclaringClass());
+ else   return null;
+}

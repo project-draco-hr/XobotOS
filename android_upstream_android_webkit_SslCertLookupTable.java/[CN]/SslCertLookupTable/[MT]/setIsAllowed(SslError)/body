@@ -1,0 +1,10 @@
+{
+  String host;
+  try {
+    host=new URL(sslError.getUrl()).getHost();
+  }
+ catch (  MalformedURLException e) {
+    return;
+  }
+  table.putInt(host,sslError.getPrimaryError());
+}

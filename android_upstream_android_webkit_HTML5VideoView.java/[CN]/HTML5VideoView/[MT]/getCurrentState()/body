@@ -1,0 +1,8 @@
+{
+  if (isPlaying()) {
+    return STATE_PLAYING;
+  }
+ else {
+    return mCurrentState;
+  }
+}

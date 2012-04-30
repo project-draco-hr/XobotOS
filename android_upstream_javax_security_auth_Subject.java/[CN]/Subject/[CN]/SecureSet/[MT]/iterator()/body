@@ -1,0 +1,12 @@
+{
+  if (permission == _PRIVATE_CREDENTIALS) {
+    return new SecureIterator(elements.iterator()){
+      @Override public SST next(){
+        SST obj=iterator.next();
+        return obj;
+      }
+    }
+;
+  }
+  return new SecureIterator(elements.iterator());
+}

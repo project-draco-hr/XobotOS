@@ -1,0 +1,3 @@
+{
+  return VMClassLoader.defineClass(this,className,classRep,offset,length);
+}

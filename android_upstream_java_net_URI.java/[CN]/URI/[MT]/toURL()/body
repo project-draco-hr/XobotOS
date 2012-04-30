@@ -1,0 +1,6 @@
+{
+  if (!absolute) {
+    throw new IllegalArgumentException("URI is not absolute: " + toString());
+  }
+  return new URL(toString());
+}

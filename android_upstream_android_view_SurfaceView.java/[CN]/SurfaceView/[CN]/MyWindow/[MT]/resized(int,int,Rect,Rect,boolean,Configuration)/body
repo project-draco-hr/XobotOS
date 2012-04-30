@@ -1,0 +1,21 @@
+{
+  SurfaceView surfaceView=mSurfaceView.get();
+  if (surfaceView != null) {
+    if (localLOGV)     Log.v("SurfaceView",surfaceView + " got resized: w=" + w+ " h="+ h+ ", cur w="+ mCurWidth+ " h="+ mCurHeight);
+    surfaceView.mSurfaceLock.lock();
+    try {
+      if (reportDraw) {
+        surfaceView.mUpdateWindowNeeded=true;
+        surfaceView.mReportDrawNeeded=true;
+        surfaceView.mHandler.sendEmptyMessage(UPDATE_WINDOW_MSG);
+      }
+ else       if (surfaceView.mWinFrame.width() != w || surfaceView.mWinFrame.height() != h) {
+        surfaceView.mUpdateWindowNeeded=true;
+        surfaceView.mHandler.sendEmptyMessage(UPDATE_WINDOW_MSG);
+      }
+    }
+  finally {
+      surfaceView.mSurfaceLock.unlock();
+    }
+  }
+}

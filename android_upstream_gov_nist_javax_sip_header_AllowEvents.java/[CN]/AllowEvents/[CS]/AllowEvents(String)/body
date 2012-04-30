@@ -1,0 +1,4 @@
+{
+  super(ALLOW_EVENTS);
+  eventType=m;
+}

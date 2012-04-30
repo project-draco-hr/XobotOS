@@ -1,0 +1,12 @@
+{
+  if (isConnected) {
+    throw new IOException("Pipe already connected");
+  }
+  if (isClosed) {
+    throw new IOException("Pipe is closed");
+  }
+  if (buffer == null) {
+    buffer=new char[PIPE_SIZE];
+  }
+  isConnected=true;
+}

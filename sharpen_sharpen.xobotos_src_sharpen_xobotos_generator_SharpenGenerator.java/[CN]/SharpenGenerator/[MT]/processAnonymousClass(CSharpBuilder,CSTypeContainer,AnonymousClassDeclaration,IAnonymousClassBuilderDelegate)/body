@@ -1,0 +1,20 @@
+{
+  final TypeTemplate typeTemplate=_typeStack.peek().getTypeTemplate();
+  final AnonymousClassTemplate template=typeTemplate.findAnonymousClassTemplate(node);
+  if (template == null)   return null;
+  try {
+    _outputProviderStack.push(template);
+    final OutputType output=getOutputType();
+    final OutputMode mode=output.getModeForMember(node);
+    if (mode == OutputMode.NOTHING)     return null;
+    AnonymousClassBuilder builder=new AnonymousClassBuilder(template,output,node);
+    _typeStack.push(builder);
+    CSAnonymousClass type=builder.build(csharpBuilder,delegate);
+    if (type != null)     parent.addType(type.type());
+    _typeStack.pop();
+    return type;
+  }
+  finally {
+    _outputProviderStack.pop();
+  }
+}

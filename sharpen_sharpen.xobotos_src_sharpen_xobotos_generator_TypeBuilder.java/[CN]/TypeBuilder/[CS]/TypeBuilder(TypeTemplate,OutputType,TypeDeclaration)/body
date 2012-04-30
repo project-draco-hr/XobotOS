@@ -1,0 +1,4 @@
+{
+  super(template,CSTypeDeclaration.class,output,node);
+  this._template=template;
+}

@@ -1,0 +1,8 @@
+{
+  EnumBinding binding=getTemplate().getBinding();
+  if (binding != null) {
+    String baseType=binding.getBaseType();
+    if ((baseType != null) && !baseType.isEmpty())     member.baseType(new CSTypeReference(baseType));
+  }
+  return true;
+}

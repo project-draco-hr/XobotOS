@@ -1,0 +1,3 @@
+{
+  return getMethod().equals(Request.BYE);
+}

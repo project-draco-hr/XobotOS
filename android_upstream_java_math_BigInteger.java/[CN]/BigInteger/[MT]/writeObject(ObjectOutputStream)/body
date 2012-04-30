@@ -1,0 +1,6 @@
+{
+  BigInt bigInt=getBigInt();
+  signum=bigInt.sign();
+  magnitude=bigInt.bigEndianMagnitude();
+  out.defaultWriteObject();
+}

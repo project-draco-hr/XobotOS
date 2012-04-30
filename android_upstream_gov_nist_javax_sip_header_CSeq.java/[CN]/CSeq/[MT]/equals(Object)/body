@@ -1,0 +1,7 @@
+{
+  if (other instanceof CSeqHeader) {
+    final CSeqHeader o=(CSeqHeader)other;
+    return this.getSeqNumber() == o.getSeqNumber() && this.getMethod().equals(o.getMethod());
+  }
+  return false;
+}

@@ -1,0 +1,14 @@
+{
+  final CSExpression initializer=field.initializer();
+  if (field.isStatic()) {
+    CSConstructor ctor=type.ensureStaticConstructor();
+    if (!ctor.isStub())     ctor.body().addStatement(index,newAssignment(field,initializer));
+  }
+ else {
+    for (    CSConstructor ctor : ensureConstructorsFor(type)) {
+      if (ctor.isStatic() || ctor.isStub())       continue;
+      ctor.body().addStatement(index,newAssignment(field,initializer));
+    }
+  }
+  field.initializer(null);
+}

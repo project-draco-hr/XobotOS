@@ -1,0 +1,4 @@
+CSharpBuilder builder
+ITypeBinding expectedType
+ITypeBinding actualType
+CSExpression expression

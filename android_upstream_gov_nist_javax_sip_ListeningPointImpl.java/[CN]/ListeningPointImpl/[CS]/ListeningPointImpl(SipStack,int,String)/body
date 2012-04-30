@@ -1,0 +1,5 @@
+{
+  this.sipStack=(SipStackImpl)sipStack;
+  this.port=port;
+  this.transport=transport;
+}

@@ -1,0 +1,51 @@
+{
+  int startIdx=ptr;
+  try {
+    while (hasMoreChars()) {
+      char nextChar=lookAhead(0);
+      if (isAlphaDigit(nextChar)) {
+        consume(1);
+      }
+ else {
+        boolean isValidChar=false;
+switch (nextChar) {
+case '_':
+case '+':
+case '-':
+case '!':
+case '`':
+case '\'':
+case '.':
+case '/':
+case '}':
+case '{':
+case ']':
+case '[':
+case '^':
+case '|':
+case '~':
+case '%':
+case '#':
+case '@':
+case '$':
+case ':':
+case ';':
+case '?':
+case '\"':
+case '*':
+          isValidChar=true;
+      }
+      if (isValidChar) {
+        consume(1);
+      }
+ else {
+        break;
+      }
+    }
+  }
+  return buffer.substring(startIdx,ptr);
+}
+ catch (ParseException ex) {
+  return null;
+}
+}

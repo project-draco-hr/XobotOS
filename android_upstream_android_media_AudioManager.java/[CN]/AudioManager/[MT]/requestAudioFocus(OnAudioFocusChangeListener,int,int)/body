@@ -1,0 +1,16 @@
+{
+  int status=AUDIOFOCUS_REQUEST_FAILED;
+  if ((durationHint < AUDIOFOCUS_GAIN) || (durationHint > AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)) {
+    Log.e(TAG,"Invalid duration hint, audio focus request denied");
+    return status;
+  }
+  registerAudioFocusListener(l);
+  IAudioService service=getService();
+  try {
+    status=service.requestAudioFocus(streamType,durationHint,mICallBack,mAudioFocusDispatcher,getIdForAudioFocusListener(l),mContext.getPackageName());
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"Can't call requestAudioFocus() from AudioService due to " + e);
+  }
+  return status;
+}

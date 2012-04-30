@@ -1,0 +1,10 @@
+{
+  if (mScroller != null) {
+    if (mScroller.computeScrollOffset()) {
+      mScrollX=mScroller.getCurrX();
+      mScrollY=mScroller.getCurrY();
+      invalidateParentCaches();
+      postInvalidate();
+    }
+  }
+}

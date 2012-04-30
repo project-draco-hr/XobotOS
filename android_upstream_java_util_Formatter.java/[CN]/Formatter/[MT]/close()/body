@@ -1,0 +1,13 @@
+{
+  if (!closed) {
+    closed=true;
+    try {
+      if (out instanceof Closeable) {
+        ((Closeable)out).close();
+      }
+    }
+ catch (    IOException e) {
+      lastIOException=e;
+    }
+  }
+}

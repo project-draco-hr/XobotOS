@@ -1,0 +1,51 @@
+{
+  SIPRequest sipRequest=this.getOriginalRequest();
+  if (this.getState() != null)   throw new SipException("Request already sent");
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("sendRequest() " + sipRequest);
+  }
+  try {
+    sipRequest.checkHeaders();
+  }
+ catch (  ParseException ex) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logError("missing required header");
+    throw new SipException(ex.getMessage());
+  }
+  if (getMethod().equals(Request.SUBSCRIBE) && sipRequest.getHeader(ExpiresHeader.NAME) == null) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logWarning("Expires header missing in outgoing subscribe --" + " Notifier will assume implied value on event package");
+  }
+  try {
+    if (this.getOriginalRequest().getMethod().equals(Request.CANCEL) && sipStack.isCancelClientTransactionChecked()) {
+      SIPClientTransaction ct=(SIPClientTransaction)sipStack.findCancelTransaction(this.getOriginalRequest(),false);
+      if (ct == null) {
+        throw new SipException("Could not find original tx to cancel. RFC 3261 9.1");
+      }
+ else       if (ct.getState() == null) {
+        throw new SipException("State is null no provisional response yet -- cannot cancel RFC 3261 9.1");
+      }
+ else       if (!ct.getMethod().equals(Request.INVITE)) {
+        throw new SipException("Cannot cancel non-invite requests RFC 3261 9.1");
+      }
+    }
+ else     if (this.getOriginalRequest().getMethod().equals(Request.BYE) || this.getOriginalRequest().getMethod().equals(Request.NOTIFY)) {
+      SIPDialog dialog=sipStack.getDialog(this.getOriginalRequest().getDialogId(false));
+      if (this.getSipProvider().isAutomaticDialogSupportEnabled() && dialog != null) {
+        throw new SipException("Dialog is present and AutomaticDialogSupport is enabled for " + " the provider -- Send the Request using the Dialog.sendRequest(transaction)");
+      }
+    }
+    if (this.getMethod().equals(Request.INVITE)) {
+      SIPDialog dialog=this.getDefaultDialog();
+      if (dialog != null && dialog.isBackToBackUserAgent()) {
+        if (!dialog.takeAckSem()) {
+          throw new SipException("Failed to take ACK semaphore");
+        }
+      }
+    }
+    this.isMapped=true;
+    this.sendMessage(sipRequest);
+  }
+ catch (  IOException ex) {
+    this.setState(TransactionState.TERMINATED);
+    throw new SipException("IO Error sending request",ex);
+  }
+}

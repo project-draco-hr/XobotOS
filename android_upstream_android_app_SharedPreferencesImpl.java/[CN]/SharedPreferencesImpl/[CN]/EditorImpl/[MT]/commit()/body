@@ -1,0 +1,12 @@
+{
+  MemoryCommitResult mcr=commitToMemory();
+  SharedPreferencesImpl.this.enqueueDiskWrite(mcr,null);
+  try {
+    mcr.writtenToDiskLatch.await();
+  }
+ catch (  InterruptedException e) {
+    return false;
+  }
+  notifyListeners(mcr);
+  return mcr.writeToDiskResult;
+}

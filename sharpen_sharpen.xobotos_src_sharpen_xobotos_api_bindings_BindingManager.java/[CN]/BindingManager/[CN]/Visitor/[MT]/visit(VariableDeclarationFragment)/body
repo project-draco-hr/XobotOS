@@ -1,0 +1,12 @@
+{
+  final IVariableBinding vb=node.resolveBinding();
+  if (_currentMethod != null) {
+    VariableTemplate template=_currentMethod.Template.findVariableTemplate(node);
+    if (template != null) {
+      VariableBinding binding=template.getBinding();
+      if (binding != null)       _variableBindings.put(vb,binding);
+    }
+  }
+  createVariableDeclaration(vb);
+  return false;
+}

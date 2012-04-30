@@ -1,0 +1,3 @@
+def verbose_set(self, verbose):
+    'Set the verbose level.\n        '
+    self.verbose = verbose

@@ -1,0 +1,3 @@
+{
+  return IoBridge.read(fd,buffer,byteOffset,byteCount);
+}

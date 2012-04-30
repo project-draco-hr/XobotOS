@@ -1,0 +1,6 @@
+{
+  _writer.write("struct ");
+  _writer.write(node.getDefinition().getName());
+  _writer.writeLine(";");
+  _writer.writeLine();
+}

@@ -1,0 +1,7 @@
+{
+  Parcel p=Parcel.obtain();
+  getParameter(key,p);
+  int ret=p.readInt();
+  p.recycle();
+  return ret;
+}

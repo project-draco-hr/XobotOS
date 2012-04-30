@@ -1,0 +1,6 @@
+{
+  SHA1_MessageDigestImpl cloneObj=(SHA1_MessageDigestImpl)super.clone();
+  cloneObj.buffer=buffer.clone();
+  cloneObj.oneByte=oneByte.clone();
+  return cloneObj;
+}

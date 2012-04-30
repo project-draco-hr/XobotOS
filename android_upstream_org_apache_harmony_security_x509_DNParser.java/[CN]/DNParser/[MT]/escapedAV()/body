@@ -1,0 +1,33 @@
+{
+  beg=pos;
+  end=pos;
+  while (true) {
+    if (pos >= chars.length) {
+      return new String(chars,beg,end - beg);
+    }
+switch (chars[pos]) {
+case '+':
+case ',':
+case ';':
+      return new String(chars,beg,end - beg);
+case '\\':
+    chars[end++]=getEscaped();
+  pos++;
+break;
+case ' ':
+int cur=end;
+pos++;
+chars[end++]=' ';
+for (; pos < chars.length && chars[pos] == ' '; pos++) {
+chars[end++]=' ';
+}
+if (pos == chars.length || chars[pos] == ',' || chars[pos] == '+' || chars[pos] == ';') {
+return new String(chars,beg,cur - beg);
+}
+break;
+default :
+chars[end++]=chars[pos];
+pos++;
+}
+}
+}

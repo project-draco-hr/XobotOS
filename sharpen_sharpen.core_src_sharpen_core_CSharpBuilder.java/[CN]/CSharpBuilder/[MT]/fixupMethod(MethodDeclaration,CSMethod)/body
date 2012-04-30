@@ -1,0 +1,65 @@
+{
+  final IMethodBinding binding=node.resolveBinding();
+  final ITypeBinding declaringClass=binding.getDeclaringClass();
+  IMethodBinding overriden=getBaseMethod(binding,true,true);
+  ITypeBinding interfaceImpl=null;
+  if (overriden != null) {
+    if (Modifier.isStatic(binding.getModifiers())) {
+      method.setNewModifier(true);
+    }
+ else     if (Modifier.isPrivate(overriden.getModifiers())) {
+      method.setNewModifier(true);
+      if (method.modifier() == CSMethodModifier.Override)       method.modifier(CSMethodModifier.None);
+    }
+ else {
+      ITypeBinding declaringType=overriden.getDeclaringClass();
+      String overrideName=BindingUtils.qualifiedName(declaringType);
+      if (declaringType.isInterface())       interfaceImpl=declaringType;
+ else {
+        CSAttribute attr=new CSAttribute("Sharpen.OverridesMethod");
+        attr.addArgument(new CSStringLiteralExpression(toLiteralStringForm(overrideName)));
+        method.addAttribute(attr);
+      }
+    }
+  }
+  if ((interfaceImpl == null) && !declaringClass.isInterface()) {
+    overriden=getBaseMethod(binding,false,false);
+    if (overriden != null)     interfaceImpl=overriden.getDeclaringClass();
+  }
+  if ((interfaceImpl != null) && interfaceImpl.isInterface()) {
+    ITypeBinding parentType=null;
+    ASTNode parent=node.getParent();
+    if (parent instanceof TypeDeclaration)     parentType=((TypeDeclaration)parent).resolveBinding();
+ else     if (parent instanceof AnonymousClassDeclaration)     parentType=((AnonymousClassDeclaration)parent).resolveBinding();
+    if (parentType != null)     parentType=parentType.getSuperclass();
+    if (Modifier.isAbstract(node.getModifiers())) {
+      if (BindingUtils.findInterfaceInClassHierarchy(interfaceImpl,parentType))       method.modifier(CSMethodModifier.AbstractOverride);
+ else       method.modifier(CSMethodModifier.Abstract);
+    }
+ else {
+      if (BindingUtils.findInterfaceInClassHierarchy(interfaceImpl,parentType))       method.modifier(CSMethodModifier.Override);
+ else       if (_currentType.isSealed())       method.modifier(CSMethodModifier.None);
+ else       method.modifier(CSMethodModifier.Virtual);
+    }
+    CSAttribute attr=new CSAttribute("Sharpen.ImplementsInterface");
+    String overrideName=BindingUtils.qualifiedName(interfaceImpl);
+    attr.addArgument(new CSStringLiteralExpression(toLiteralStringForm(overrideName)));
+    method.addAttribute(attr);
+  }
+  if ((method.modifier() == CSMethodModifier.Virtual) && (method.visibility() == CSVisibility.Private))   method.modifier(CSMethodModifier.None);
+  if (_configuration.junitConversion() && isLegacyTestFixture(node.resolveBinding().getDeclaringClass())) {
+    if (method.name().startsWith("Test") && method.visibility() == CSVisibility.Public)     method.addAttribute(new CSAttribute("NUnit.Framework.Test"));
+    if (isLegacyTestFixtureClass(node.resolveBinding().getDeclaringClass().getSuperclass())) {
+      if (method.name().equals("SetUp")) {
+        method.addAttribute(new CSAttribute("NUnit.Framework.SetUp"));
+        method.modifier(CSMethodModifier.Virtual);
+        cleanBaseSetupCalls(method);
+      }
+ else       if (method.name().equals("TearDown")) {
+        method.addAttribute(new CSAttribute("NUnit.Framework.TearDown"));
+        method.modifier(CSMethodModifier.Virtual);
+        cleanBaseSetupCalls(method);
+      }
+    }
+  }
+}

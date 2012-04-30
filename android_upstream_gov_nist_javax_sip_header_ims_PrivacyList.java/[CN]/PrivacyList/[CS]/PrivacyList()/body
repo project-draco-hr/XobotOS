@@ -1,0 +1,3 @@
+{
+  super(Privacy.class,PrivacyHeader.NAME);
+}

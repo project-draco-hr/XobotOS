@@ -1,0 +1,15 @@
+{
+  type.addAttribute(new CSAttribute("Sharpen.NakedStub"));
+  type.visibility(CSVisibility.Public);
+  type.removeDocs();
+  if (node.isInterface())   return type;
+  for (  final Object member : node.bodyDeclarations()) {
+    if (!(member instanceof TypeDeclaration))     continue;
+    TypeDeclaration nested=(TypeDeclaration)member;
+    if (Modifier.isPrivate(nested.getModifiers()))     continue;
+    CSTypeDeclaration inner=builder.mapTypeDeclaration(nested);
+    CSTypeDeclaration innerType=generateNakedStub(builder,nested,inner);
+    type.addMember(innerType);
+  }
+  return type;
+}

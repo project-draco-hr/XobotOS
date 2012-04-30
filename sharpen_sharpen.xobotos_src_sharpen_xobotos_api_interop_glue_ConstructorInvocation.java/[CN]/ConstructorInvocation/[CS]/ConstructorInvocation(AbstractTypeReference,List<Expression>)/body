@@ -1,0 +1,4 @@
+{
+  super(args);
+  this._type=type;
+}

@@ -1,0 +1,3 @@
+{
+  return !"void".equals(node.getReturnType2().toString());
+}

@@ -1,0 +1,8 @@
+{
+  parcel.writeString(mManufacturer);
+  parcel.writeString(mModel);
+  parcel.writeString(mDescription);
+  parcel.writeString(mVersion);
+  parcel.writeString(mUri);
+  parcel.writeString(mSerial);
+}

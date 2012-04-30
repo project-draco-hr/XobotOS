@@ -1,0 +1,3 @@
+{
+  Log.w(TAG,"setAuxiliaryOutputFile(FileDescriptor) is no longer supported.");
+}

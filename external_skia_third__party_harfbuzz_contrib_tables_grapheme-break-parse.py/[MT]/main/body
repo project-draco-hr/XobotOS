@@ -1,0 +1,19 @@
+def main(infile, outfile):
+    ranges = unicode_file_parse(infile, property_to_harfbuzz)
+    ranges.sort()
+    print  >> outfile, '// Generated from Unicode Grapheme break tables\n'
+    print  >> outfile, '#ifndef GRAPHEME_BREAK_PROPERTY_H_'
+    print  >> outfile, '#define GRAPHEME_BREAK_PROPERTY_H_\n'
+    print  >> outfile, '#include <stdint.h>'
+    print  >> outfile, '#include "harfbuzz-external.h"\n'
+    print  >> outfile, 'struct grapheme_break_property {'
+    print  >> outfile, '  uint32_t range_start;'
+    print  >> outfile, '  uint32_t range_end;'
+    print  >> outfile, '  HB_GraphemeClass klass;'
+    print  >> outfile, '};\n'
+    print  >> outfile, 'static const struct grapheme_break_property grapheme_break_properties[] = {'
+    for (start, end, value) in ranges:
+        print  >> outfile, ('  {0x%x, 0x%x, %s},' % (start, end, value))
+    print  >> outfile, '};\n'
+    print  >> outfile, ('static const unsigned grapheme_break_properties_count = %d;\n' % len(ranges))
+    print  >> outfile, '#endif  // GRAPHEME_BREAK_PROPERTY_H_'

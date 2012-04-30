@@ -1,0 +1,12 @@
+{
+  if (node instanceof CSParameterDeclaration)   writeParameterAttributes((CSParameterDeclaration)node);
+  node.type().accept(this);
+  if (null != node.name()) {
+    write(" ");
+    write(node.name());
+  }
+  if (null != node.initializer()) {
+    write(" = ");
+    node.initializer().accept(this);
+  }
+}

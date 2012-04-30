@@ -1,0 +1,11 @@
+{
+synchronized (mLock) {
+    if (mOriginalValues != null) {
+      Collections.sort(mOriginalValues,comparator);
+    }
+ else {
+      Collections.sort(mObjects,comparator);
+    }
+  }
+  if (mNotifyOnChange)   notifyDataSetChanged();
+}

@@ -1,0 +1,5 @@
+{
+  writeMemberHeader(node);
+  writeFieldModifiers(node);
+  writeDeclaration(node.type(),node.name(),node.initializer());
+}

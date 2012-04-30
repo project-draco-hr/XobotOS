@@ -1,0 +1,4 @@
+{
+  if (eventType == null)   throw new NullPointerException(" the eventType is null");
+  this.eventType=eventType;
+}

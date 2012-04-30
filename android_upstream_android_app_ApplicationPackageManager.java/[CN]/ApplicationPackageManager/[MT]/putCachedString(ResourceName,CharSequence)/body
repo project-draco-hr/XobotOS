@@ -1,0 +1,5 @@
+{
+synchronized (sSync) {
+    sStringCache.put(name,new WeakReference<CharSequence>(cs));
+  }
+}

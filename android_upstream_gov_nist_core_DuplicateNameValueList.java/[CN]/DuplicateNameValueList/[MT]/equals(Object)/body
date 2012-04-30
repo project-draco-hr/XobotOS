@@ -1,0 +1,21 @@
+{
+  if (otherObject == null) {
+    return false;
+  }
+  if (!otherObject.getClass().equals(this.getClass())) {
+    return false;
+  }
+  DuplicateNameValueList other=(DuplicateNameValueList)otherObject;
+  if (nameValueMap.size() != other.nameValueMap.size()) {
+    return false;
+  }
+  Iterator<String> li=this.nameValueMap.keySet().iterator();
+  while (li.hasNext()) {
+    String key=(String)li.next();
+    Collection nv1=this.getNameValue(key);
+    Collection nv2=(Collection)other.nameValueMap.get(key);
+    if (nv2 == null)     return false;
+ else     if (!nv2.equals(nv1))     return false;
+  }
+  return true;
+}

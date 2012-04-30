@@ -1,0 +1,36 @@
+{
+  try {
+    SamplingProfilerIntegration.start();
+    registerZygoteSocket();
+    EventLog.writeEvent(LOG_BOOT_PROGRESS_PRELOAD_START,SystemClock.uptimeMillis());
+    preload();
+    EventLog.writeEvent(LOG_BOOT_PROGRESS_PRELOAD_END,SystemClock.uptimeMillis());
+    SamplingProfilerIntegration.writeZygoteSnapshot();
+    gc();
+    if (argv.length != 2) {
+      throw new RuntimeException(argv[0] + USAGE_STRING);
+    }
+    if (argv[1].equals("start-system-server")) {
+      startSystemServer();
+    }
+ else     if (!argv[1].equals("")) {
+      throw new RuntimeException(argv[0] + USAGE_STRING);
+    }
+    Log.i(TAG,"Accepting command socket connections");
+    if (ZYGOTE_FORK_MODE) {
+      runForkMode();
+    }
+ else {
+      runSelectLoopMode();
+    }
+    closeServerSocket();
+  }
+ catch (  MethodAndArgsCaller caller) {
+    caller.run();
+  }
+catch (  RuntimeException ex) {
+    Log.e(TAG,"Zygote died with exception",ex);
+    closeServerSocket();
+    throw ex;
+  }
+}

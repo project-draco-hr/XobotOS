@@ -1,0 +1,4 @@
+{
+  if (optionTag == null)   throw new NullPointerException("JAIN-SIP Exception, ProxyRequire, setOptionTag(), the optionTag parameter is null");
+  this.optionTag=optionTag;
+}

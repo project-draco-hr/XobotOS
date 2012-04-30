@@ -1,0 +1,8 @@
+{
+  setState(TransactionState.TERMINATED);
+  String host=getPeerAddress();
+  int port=getPeerPort();
+  String transport=getTransport();
+  IOExceptionEvent exceptionEvent=new IOExceptionEvent(this,host,port,transport);
+  getSipProvider().handleEvent(exceptionEvent,this);
+}

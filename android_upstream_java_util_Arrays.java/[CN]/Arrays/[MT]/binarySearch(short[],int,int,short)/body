@@ -1,0 +1,19 @@
+{
+  checkBinarySearchBounds(startIndex,endIndex,array.length);
+  int lo=startIndex;
+  int hi=endIndex - 1;
+  while (lo <= hi) {
+    int mid=(lo + hi) >>> 1;
+    short midVal=array[mid];
+    if (midVal < value) {
+      lo=mid + 1;
+    }
+ else     if (midVal > value) {
+      hi=mid - 1;
+    }
+ else {
+      return mid;
+    }
+  }
+  return ~lo;
+}

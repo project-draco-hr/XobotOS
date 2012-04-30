@@ -1,0 +1,3 @@
+{
+  super(Supported.class,SupportedHeader.NAME);
+}

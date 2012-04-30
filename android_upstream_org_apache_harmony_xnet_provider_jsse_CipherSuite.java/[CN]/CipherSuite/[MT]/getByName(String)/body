@@ -1,0 +1,3 @@
+{
+  return SUITES_BY_NAME.get(name);
+}

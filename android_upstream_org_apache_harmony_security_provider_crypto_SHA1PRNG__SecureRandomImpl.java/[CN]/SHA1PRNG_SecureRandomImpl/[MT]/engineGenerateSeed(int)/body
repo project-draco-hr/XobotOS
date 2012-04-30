@@ -1,0 +1,16 @@
+{
+  byte[] myBytes;
+  if (numBytes < 0) {
+    throw new NegativeArraySizeException(Integer.toString(numBytes));
+  }
+  if (numBytes == 0) {
+    return EmptyArray.BYTE;
+  }
+  if (myRandom == null) {
+    myRandom=new SHA1PRNG_SecureRandomImpl();
+    myRandom.engineSetSeed(RandomBitsSupplier.getRandomBits(DIGEST_LENGTH));
+  }
+  myBytes=new byte[numBytes];
+  myRandom.engineNextBytes(myBytes);
+  return myBytes;
+}

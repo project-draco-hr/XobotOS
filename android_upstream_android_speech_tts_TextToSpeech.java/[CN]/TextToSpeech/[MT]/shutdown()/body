@@ -1,0 +1,13 @@
+{
+  runActionNoReconnect(new Action<Void>(){
+    @Override public Void run(    ITextToSpeechService service) throws RemoteException {
+      service.setCallback(getPackageName(),null);
+      service.stop(getPackageName());
+      mServiceConnection.disconnect();
+      mServiceConnection=null;
+      mCurrentEngine=null;
+      return null;
+    }
+  }
+,null,"shutdown");
+}

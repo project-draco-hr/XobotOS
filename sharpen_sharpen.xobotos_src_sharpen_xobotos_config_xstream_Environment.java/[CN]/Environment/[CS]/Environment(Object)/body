@@ -1,0 +1,8 @@
+{
+  _variables=new HashMap<Class<?>,Object>();
+  for (  final Object obj : variables) {
+    Class<?> klass=obj.getClass();
+    if (_variables.containsKey(klass))     throw new ConfigurationException("Duplicate instance of class '%s'",klass);
+    _variables.put(obj.getClass(),obj);
+  }
+}

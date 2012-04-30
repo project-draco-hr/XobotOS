@@ -1,0 +1,11 @@
+{
+  try {
+    char c=lookAhead(0);
+    while (c == ' ' || c == '\t') {
+      consume(1);
+      c=lookAhead(0);
+    }
+  }
+ catch (  ParseException ex) {
+  }
+}

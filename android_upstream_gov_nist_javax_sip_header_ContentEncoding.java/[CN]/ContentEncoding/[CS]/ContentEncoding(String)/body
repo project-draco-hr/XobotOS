@@ -1,0 +1,4 @@
+{
+  super(CONTENT_ENCODING);
+  contentEncoding=enc;
+}

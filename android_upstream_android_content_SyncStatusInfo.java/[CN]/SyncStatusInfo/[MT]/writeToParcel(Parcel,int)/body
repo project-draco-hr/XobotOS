@@ -1,0 +1,27 @@
+{
+  parcel.writeInt(VERSION);
+  parcel.writeInt(authorityId);
+  parcel.writeLong(totalElapsedTime);
+  parcel.writeInt(numSyncs);
+  parcel.writeInt(numSourcePoll);
+  parcel.writeInt(numSourceServer);
+  parcel.writeInt(numSourceLocal);
+  parcel.writeInt(numSourceUser);
+  parcel.writeLong(lastSuccessTime);
+  parcel.writeInt(lastSuccessSource);
+  parcel.writeLong(lastFailureTime);
+  parcel.writeInt(lastFailureSource);
+  parcel.writeString(lastFailureMesg);
+  parcel.writeLong(initialFailureTime);
+  parcel.writeInt(pending ? 1 : 0);
+  parcel.writeInt(initialize ? 1 : 0);
+  if (periodicSyncTimes != null) {
+    parcel.writeInt(periodicSyncTimes.size());
+    for (    long periodicSyncTime : periodicSyncTimes) {
+      parcel.writeLong(periodicSyncTime);
+    }
+  }
+ else {
+    parcel.writeInt(-1);
+  }
+}

@@ -1,0 +1,11 @@
+{
+  if (decoder == null) {
+    decoder=cs.newDecoder();
+    decoder.onMalformedInput(CodingErrorAction.REPORT);
+    decoder.onUnmappableCharacter(CodingErrorAction.REPORT);
+  }
+  ByteBuffer in=ByteBuffer.wrap(replacement);
+  CharBuffer out=CharBuffer.allocate((int)(replacement.length * decoder.maxCharsPerByte()));
+  CoderResult result=decoder.decode(in,out,true);
+  return !result.isError();
+}

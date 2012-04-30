@@ -1,0 +1,13 @@
+{
+  if (boundary == null) {
+    return content.toString();
+  }
+ else {
+    if (this.contentDispositionHeader != null) {
+      return "--" + boundary + "\r\n"+ getContentTypeHeader()+ this.getContentDispositionHeader().toString()+ "\r\n"+ content.toString();
+    }
+ else {
+      return "--" + boundary + "\r\n"+ getContentTypeHeader()+ "\r\n"+ content.toString();
+    }
+  }
+}

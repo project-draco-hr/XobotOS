@@ -1,0 +1,56 @@
+{
+  Iterator<SIPServerTransaction> transactionIterator;
+  SIPServerTransaction nextTransaction;
+  SIPServerTransaction currentTransaction;
+  String key=requestReceived.getTransactionId();
+  requestReceived.setMessageChannel(requestMessageChannel);
+  currentTransaction=(SIPServerTransaction)serverTransactionTable.get(key);
+  if (currentTransaction == null || !currentTransaction.isMessagePartOfTransaction(requestReceived)) {
+    transactionIterator=serverTransactionTable.values().iterator();
+    currentTransaction=null;
+    if (!key.toLowerCase().startsWith(SIPConstants.BRANCH_MAGIC_COOKIE_LOWER_CASE)) {
+      while (transactionIterator.hasNext() && currentTransaction == null) {
+        nextTransaction=(SIPServerTransaction)transactionIterator.next();
+        if (nextTransaction.isMessagePartOfTransaction(requestReceived)) {
+          currentTransaction=nextTransaction;
+        }
+      }
+    }
+    if (currentTransaction == null) {
+      currentTransaction=findPendingTransaction(requestReceived);
+      if (currentTransaction != null) {
+        requestReceived.setTransaction(currentTransaction);
+        if (currentTransaction != null && currentTransaction.acquireSem())         return currentTransaction;
+ else         return null;
+      }
+      currentTransaction=createServerTransaction(requestMessageChannel);
+      if (currentTransaction != null) {
+        currentTransaction.setOriginalRequest(requestReceived);
+        requestReceived.setTransaction(currentTransaction);
+      }
+    }
+  }
+  if (stackLogger.isLoggingEnabled()) {
+    stackLogger.logDebug("newSIPServerRequest( " + requestReceived.getMethod() + ":"+ requestReceived.getTopmostVia().getBranch()+ "):"+ currentTransaction);
+  }
+  if (currentTransaction != null)   currentTransaction.setRequestInterface(sipMessageFactory.newSIPServerRequest(requestReceived,currentTransaction));
+  if (currentTransaction != null && currentTransaction.acquireSem()) {
+    return currentTransaction;
+  }
+ else   if (currentTransaction != null) {
+    try {
+      if (currentTransaction.isMessagePartOfTransaction(requestReceived) && currentTransaction.getMethod().equals(requestReceived.getMethod())) {
+        SIPResponse trying=requestReceived.createResponse(Response.TRYING);
+        trying.removeContent();
+        currentTransaction.getMessageChannel().sendMessage(trying);
+      }
+    }
+ catch (    Exception ex) {
+      if (isLoggingEnabled())       stackLogger.logError("Exception occured sending TRYING");
+    }
+    return null;
+  }
+ else {
+    return null;
+  }
+}

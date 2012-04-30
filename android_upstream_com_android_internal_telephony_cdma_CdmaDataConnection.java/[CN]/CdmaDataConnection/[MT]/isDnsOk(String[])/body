@@ -1,0 +1,8 @@
+{
+  if (NULL_IP.equals(domainNameServers[0]) && NULL_IP.equals(domainNameServers[1]) && !phone.isDnsCheckDisabled()) {
+    return false;
+  }
+ else {
+    return true;
+  }
+}

@@ -1,0 +1,40 @@
+{
+  while (this.isRunning) {
+    try {
+synchronized (this) {
+        while (sipStack.maxConnections != -1 && this.nConnections >= sipStack.maxConnections) {
+          try {
+            this.wait();
+            if (!this.isRunning)             return;
+          }
+ catch (          InterruptedException ex) {
+            break;
+          }
+        }
+        this.nConnections++;
+      }
+      Socket newsock=sock.accept();
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("Accepting new connection!");
+      incomingTlsMessageChannels.add(new TLSMessageChannel(newsock,sipStack,this));
+    }
+ catch (    SocketException ex) {
+      if (this.isRunning) {
+        sipStack.getStackLogger().logError("Fatal - SocketException occured while Accepting connection",ex);
+        this.isRunning=false;
+        break;
+      }
+    }
+catch (    SSLException ex) {
+      this.isRunning=false;
+      sipStack.getStackLogger().logError("Fatal - SSSLException occured while Accepting connection",ex);
+      break;
+    }
+catch (    IOException ex) {
+      sipStack.getStackLogger().logError("Problem Accepting Connection",ex);
+      continue;
+    }
+catch (    Exception ex) {
+      sipStack.getStackLogger().logError("Unexpected Exception!",ex);
+    }
+  }
+}

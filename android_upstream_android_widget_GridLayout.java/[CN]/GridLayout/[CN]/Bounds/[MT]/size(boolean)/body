@@ -1,0 +1,8 @@
+{
+  if (!min) {
+    if (canStretch(flexibility)) {
+      return MAX_SIZE;
+    }
+  }
+  return before + after;
+}

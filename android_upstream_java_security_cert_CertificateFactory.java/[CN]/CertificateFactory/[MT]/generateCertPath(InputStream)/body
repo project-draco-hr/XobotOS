@@ -1,0 +1,7 @@
+{
+  Iterator<String> it=getCertPathEncodings();
+  if (!it.hasNext()) {
+    throw new CertificateException("There are no CertPath encodings");
+  }
+  return spiImpl.engineGenerateCertPath(inStream,it.next());
+}

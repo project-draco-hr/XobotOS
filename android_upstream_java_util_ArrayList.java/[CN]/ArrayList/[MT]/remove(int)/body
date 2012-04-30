@@ -1,0 +1,13 @@
+{
+  Object[] a=array;
+  int s=size;
+  if (index >= s) {
+    throwIndexOutOfBoundsException(index,s);
+  }
+  @SuppressWarnings("unchecked") E result=(E)a[index];
+  System.arraycopy(a,index + 1,a,index,--s - index);
+  a[s]=null;
+  size=s;
+  modCount++;
+  return result;
+}

@@ -1,0 +1,6 @@
+{
+  if (protocols == null) {
+    return null;
+  }
+  return protocols.clone();
+}

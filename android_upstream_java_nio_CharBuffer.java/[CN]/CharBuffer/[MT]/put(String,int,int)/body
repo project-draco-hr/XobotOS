@@ -1,0 +1,12 @@
+{
+  if (start < 0 || end < start || end > str.length()) {
+    throw new IndexOutOfBoundsException("str.length()=" + str.length() + ", start="+ start+ ", end="+ end);
+  }
+  if (end - start > remaining()) {
+    throw new BufferOverflowException();
+  }
+  for (int i=start; i < end; i++) {
+    put(str.charAt(i));
+  }
+  return this;
+}

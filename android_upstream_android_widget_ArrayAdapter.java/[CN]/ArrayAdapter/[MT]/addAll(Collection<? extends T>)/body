@@ -1,0 +1,11 @@
+{
+synchronized (mLock) {
+    if (mOriginalValues != null) {
+      mOriginalValues.addAll(collection);
+    }
+ else {
+      mObjects.addAll(collection);
+    }
+  }
+  if (mNotifyOnChange)   notifyDataSetChanged();
+}

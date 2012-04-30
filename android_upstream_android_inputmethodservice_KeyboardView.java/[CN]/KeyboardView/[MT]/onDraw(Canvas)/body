@@ -1,0 +1,7 @@
+{
+  super.onDraw(canvas);
+  if (mDrawPending || mBuffer == null || mKeyboardChanged) {
+    onBufferDraw();
+  }
+  canvas.drawBitmap(mBuffer,0,0,null);
+}

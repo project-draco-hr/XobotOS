@@ -1,0 +1,5 @@
+def ReadFileIntoString(filepath):
+    'Returns the full contents of this file as a string.\n    '
+    with open(filepath, 'r') as file_handle:
+        contents = file_handle.read()
+    return contents

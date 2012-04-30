@@ -1,0 +1,12 @@
+def match_exact(lines=None, matches=None):
+    '\n    '
+    if (not is_List(lines)):
+        lines = string.split(lines, '\n')
+    if (not is_List(matches)):
+        matches = string.split(matches, '\n')
+    if (len(lines) != len(matches)):
+        return
+    for i in range(len(lines)):
+        if (lines[i] != matches[i]):
+            return
+    return 1

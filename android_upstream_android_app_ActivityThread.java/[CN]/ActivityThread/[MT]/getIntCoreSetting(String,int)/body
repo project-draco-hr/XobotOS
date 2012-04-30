@@ -1,0 +1,10 @@
+{
+synchronized (mPackages) {
+    if (mCoreSettings != null) {
+      return mCoreSettings.getInt(key,defaultValue);
+    }
+ else {
+      return defaultValue;
+    }
+  }
+}

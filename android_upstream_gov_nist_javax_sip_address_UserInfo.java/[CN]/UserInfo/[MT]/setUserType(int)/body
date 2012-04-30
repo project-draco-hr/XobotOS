@@ -1,0 +1,6 @@
+{
+  if (type != TELEPHONE_SUBSCRIBER && type != USER) {
+    throw new IllegalArgumentException("Parameter not in range");
+  }
+  userType=type;
+}

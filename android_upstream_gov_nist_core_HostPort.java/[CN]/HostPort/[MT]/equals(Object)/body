@@ -1,0 +1,8 @@
+{
+  if (other == null)   return false;
+  if (getClass() != other.getClass()) {
+    return false;
+  }
+  HostPort that=(HostPort)other;
+  return port == that.port && host.equals(that.host);
+}

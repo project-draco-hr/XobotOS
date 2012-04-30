@@ -1,0 +1,36 @@
+{
+  super(TAG_CHOICE);
+  if (type.length == 0) {
+    throw new IllegalArgumentException("ASN.1 choice type MUST have at least one alternative: " + getClass().getName());
+  }
+  TreeMap<BigInteger,BigInteger> map=new TreeMap<BigInteger,BigInteger>();
+  for (int index=0; index < type.length; index++) {
+    ASN1Type t=type[index];
+    if (t instanceof ASN1Any) {
+      throw new IllegalArgumentException("ASN.1 choice type MUST have alternatives with distinct tags: " + getClass().getName());
+    }
+ else     if (t instanceof ASN1Choice) {
+      int[][] choiceToAdd=((ASN1Choice)t).identifiers;
+      for (int j=0; j < choiceToAdd[0].length; j++) {
+        addIdentifier(map,choiceToAdd[0][j],index);
+      }
+      continue;
+    }
+    if (t.checkTag(t.id)) {
+      addIdentifier(map,t.id,index);
+    }
+    if (t.checkTag(t.constrId)) {
+      addIdentifier(map,t.constrId,index);
+    }
+  }
+  int size=map.size();
+  identifiers=new int[2][size];
+  Iterator<Map.Entry<BigInteger,BigInteger>> it=map.entrySet().iterator();
+  for (int i=0; i < size; i++) {
+    Map.Entry<BigInteger,BigInteger> entry=it.next();
+    BigInteger identifier=entry.getKey();
+    identifiers[0][i]=identifier.intValue();
+    identifiers[1][i]=entry.getValue().intValue();
+  }
+  this.type=type;
+}

@@ -1,0 +1,47 @@
+{
+  if (number.length() == 0) {
+    return 0;
+  }
+  StringBuilder fullNumber=new StringBuilder(number);
+  String possibleCountryIddPrefix="NonMatch";
+  if (defaultRegionMetadata != null) {
+    possibleCountryIddPrefix=defaultRegionMetadata.getInternationalPrefix();
+  }
+  CountryCodeSource countryCodeSource=maybeStripInternationalPrefixAndNormalize(fullNumber,possibleCountryIddPrefix);
+  if (keepRawInput) {
+    phoneNumber.setCountryCodeSource(countryCodeSource);
+  }
+  if (countryCodeSource != CountryCodeSource.FROM_DEFAULT_COUNTRY) {
+    if (fullNumber.length() < MIN_LENGTH_FOR_NSN) {
+      throw new NumberParseException(NumberParseException.ErrorType.TOO_SHORT_AFTER_IDD,"Phone number had an IDD, but after this was not " + "long enough to be a viable phone number.");
+    }
+    int potentialCountryCode=extractCountryCode(fullNumber,nationalNumber);
+    if (potentialCountryCode != 0) {
+      phoneNumber.setCountryCode(potentialCountryCode);
+      return potentialCountryCode;
+    }
+    throw new NumberParseException(NumberParseException.ErrorType.INVALID_COUNTRY_CODE,"Country calling code supplied was not recognised.");
+  }
+ else   if (defaultRegionMetadata != null) {
+    int defaultCountryCode=defaultRegionMetadata.getCountryCode();
+    String defaultCountryCodeString=String.valueOf(defaultCountryCode);
+    String normalizedNumber=fullNumber.toString();
+    if (normalizedNumber.startsWith(defaultCountryCodeString)) {
+      StringBuilder potentialNationalNumber=new StringBuilder(normalizedNumber.substring(defaultCountryCodeString.length()));
+      PhoneNumberDesc generalDesc=defaultRegionMetadata.getGeneralDesc();
+      Pattern validNumberPattern=regexCache.getPatternForRegex(generalDesc.getNationalNumberPattern());
+      maybeStripNationalPrefixAndCarrierCode(potentialNationalNumber,defaultRegionMetadata);
+      Pattern possibleNumberPattern=regexCache.getPatternForRegex(generalDesc.getPossibleNumberPattern());
+      if ((!validNumberPattern.matcher(fullNumber).matches() && validNumberPattern.matcher(potentialNationalNumber).matches()) || testNumberLengthAgainstPattern(possibleNumberPattern,fullNumber.toString()) == ValidationResult.TOO_LONG) {
+        nationalNumber.append(potentialNationalNumber);
+        if (keepRawInput) {
+          phoneNumber.setCountryCodeSource(CountryCodeSource.FROM_NUMBER_WITHOUT_PLUS_SIGN);
+        }
+        phoneNumber.setCountryCode(defaultCountryCode);
+        return defaultCountryCode;
+      }
+    }
+  }
+  phoneNumber.setCountryCode(0);
+  return 0;
+}

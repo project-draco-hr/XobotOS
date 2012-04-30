@@ -1,0 +1,6 @@
+{
+  CSExpression exp=mapExpression(node.getExpression());
+  CSExpression type=new CSTypeofExpression((CSTypeReferenceExpression)exp);
+  CSExpression mref=new CSMemberReferenceExpression(new CSTypeReference("System.Enum"),"GetValues");
+  pushExpression(new CSMethodInvocationExpression(mref,type));
+}

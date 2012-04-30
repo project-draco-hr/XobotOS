@@ -1,0 +1,11 @@
+{
+  if (arg.startsWith("@")) {
+    processResponseFile(arg);
+  }
+ else   if (arg.startsWith("-")) {
+    processOption(arg);
+  }
+ else {
+    processArgument(arg);
+  }
+}

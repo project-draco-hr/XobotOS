@@ -1,0 +1,5 @@
+{
+  if (password != null)   buffer.append(user).append(COLON).append(password);
+ else   buffer.append(user);
+  return buffer;
+}

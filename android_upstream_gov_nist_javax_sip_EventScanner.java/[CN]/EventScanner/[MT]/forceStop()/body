@@ -1,0 +1,7 @@
+{
+synchronized (this.eventMutex) {
+    this.isStopped=true;
+    this.refCount=0;
+    this.eventMutex.notify();
+  }
+}

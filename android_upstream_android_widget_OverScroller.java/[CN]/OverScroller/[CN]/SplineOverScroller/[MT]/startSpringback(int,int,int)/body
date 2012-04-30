@@ -1,0 +1,11 @@
+{
+  mFinished=false;
+  mState=CUBIC;
+  mStart=start;
+  mFinal=end;
+  final int delta=start - end;
+  mDeceleration=getDeceleration(delta);
+  mVelocity=-delta;
+  mOver=Math.abs(delta);
+  mDuration=(int)(1000.0 * Math.sqrt(-2.0 * delta / mDeceleration));
+}

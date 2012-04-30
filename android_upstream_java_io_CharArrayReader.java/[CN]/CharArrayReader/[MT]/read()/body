@@ -1,0 +1,9 @@
+{
+synchronized (lock) {
+    checkNotClosed();
+    if (pos == count) {
+      return -1;
+    }
+    return buf[pos++];
+  }
+}

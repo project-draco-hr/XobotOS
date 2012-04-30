@@ -1,0 +1,6 @@
+{
+  if (level == null) {
+    throw new NullPointerException("level == null");
+  }
+  this.level=level;
+}

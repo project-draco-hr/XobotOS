@@ -1,0 +1,3 @@
+def __init__(self):
+    self._copyright_pattern = re.compile('copyright', re.IGNORECASE)
+    self._attribute_pattern = re.compile('copyright.*\\D(\\d{4})\\W*(\\w.*[\\w.])', re.IGNORECASE)

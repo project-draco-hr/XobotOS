@@ -1,0 +1,5 @@
+def finish(self, popen, stdout=None, stderr='', status=0, **kw):
+    "\n        Finishes and waits for the process being run under control of\n        the specified popen argument.  Additional arguments are similar\n        to those of the run() method:\n\n                stdout  The expected standard output from\n                        the command.  A value of None means\n                        don't test standard output.\n\n                stderr  The expected error output from\n                        the command.  A value of None means\n                        don't test error output.\n\n                status  The expected exit status from the\n                        command.  A value of None means don't\n                        test exit status.\n        "
+    apply(TestCmd.finish, (self, popen), kw)
+    match = kw.get('match', self.match)
+    self._complete(self.stdout(), stdout, self.stderr(), stderr, status, match)

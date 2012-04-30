@@ -1,0 +1,8 @@
+{
+  if (!_ignoreExtends.value()) {
+    mapSuperClass(node,type);
+  }
+  if (!ignoreImplements(node)) {
+    mapSuperInterfaces(node,type);
+  }
+}

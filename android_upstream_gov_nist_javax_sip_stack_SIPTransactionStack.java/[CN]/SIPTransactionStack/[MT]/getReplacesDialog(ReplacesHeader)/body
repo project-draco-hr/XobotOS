@@ -1,0 +1,26 @@
+{
+  String cid=replacesHeader.getCallId();
+  String fromTag=replacesHeader.getFromTag();
+  String toTag=replacesHeader.getToTag();
+  StringBuffer dialogId=new StringBuffer(cid);
+  if (toTag != null) {
+    dialogId.append(":");
+    dialogId.append(toTag);
+  }
+  if (fromTag != null) {
+    dialogId.append(":");
+    dialogId.append(fromTag);
+  }
+  String did=dialogId.toString().toLowerCase();
+  if (stackLogger.isLoggingEnabled())   stackLogger.logDebug("Looking for dialog " + did);
+  Dialog replacesDialog=this.dialogTable.get(did);
+  if (replacesDialog == null) {
+    for (    SIPClientTransaction ctx : this.clientTransactionTable.values()) {
+      if (ctx.getDialog(did) != null) {
+        replacesDialog=ctx.getDialog(did);
+        break;
+      }
+    }
+  }
+  return replacesDialog;
+}

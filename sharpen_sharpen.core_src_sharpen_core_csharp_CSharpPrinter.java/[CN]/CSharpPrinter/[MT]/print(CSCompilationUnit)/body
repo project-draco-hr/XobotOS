@@ -1,0 +1,11 @@
+{
+  _lastPrintedCommentIndex=0;
+  _comments=node.comments();
+  try {
+    node.accept(this);
+  }
+  finally {
+    _currentType=null;
+    _comments=null;
+  }
+}

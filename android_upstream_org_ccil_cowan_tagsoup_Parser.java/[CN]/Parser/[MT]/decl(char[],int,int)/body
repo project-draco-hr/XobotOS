@@ -1,0 +1,43 @@
+{
+  String s=new String(buff,offset,length);
+  String name=null;
+  String systemid=null;
+  String publicid=null;
+  String[] v=split(s);
+  if (v.length > 0 && "DOCTYPE".equals(v[0])) {
+    if (theDoctypeIsPresent)     return;
+    theDoctypeIsPresent=true;
+    if (v.length > 1) {
+      name=v[1];
+      if (v.length > 3 && "SYSTEM".equals(v[2])) {
+        systemid=v[3];
+      }
+ else       if (v.length > 3 && "PUBLIC".equals(v[2])) {
+        publicid=v[3];
+        if (v.length > 4) {
+          systemid=v[4];
+        }
+ else {
+          systemid="";
+        }
+      }
+    }
+  }
+  publicid=trimquotes(publicid);
+  systemid=trimquotes(systemid);
+  if (name != null) {
+    publicid=cleanPublicid(publicid);
+    theLexicalHandler.startDTD(name,publicid,systemid);
+    theLexicalHandler.endDTD();
+    theDoctypeName=name;
+    theDoctypePublicId=publicid;
+    if (theScanner instanceof Locator) {
+      theDoctypeSystemId=((Locator)theScanner).getSystemId();
+      try {
+        theDoctypeSystemId=new URL(new URL(theDoctypeSystemId),systemid).toString();
+      }
+ catch (      Exception e) {
+      }
+    }
+  }
+}

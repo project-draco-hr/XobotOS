@@ -1,0 +1,7 @@
+{
+  if (key == null) {
+    throw new InvalidKeyException("key == null");
+  }
+  spiImpl.engineInit(key,params);
+  isInitMac=true;
+}

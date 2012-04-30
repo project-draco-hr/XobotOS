@@ -1,0 +1,7 @@
+{
+  ClassLoader classloader=VMStack.getCallingClassLoader();
+  if (classloader == null) {
+    classloader=ClassLoader.getSystemClassLoader();
+  }
+  return classloader.getPackages();
+}

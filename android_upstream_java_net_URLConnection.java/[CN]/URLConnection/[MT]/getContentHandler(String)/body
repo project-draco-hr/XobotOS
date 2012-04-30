@@ -1,0 +1,48 @@
+{
+  final String typeString=parseTypeString(type.replace('/','.'));
+  Object cHandler=contentHandlers.get(type);
+  if (cHandler != null) {
+    return (ContentHandler)cHandler;
+  }
+  if (contentHandlerFactory != null) {
+    cHandler=contentHandlerFactory.createContentHandler(type);
+    contentHandlers.put(type,cHandler);
+    return (ContentHandler)cHandler;
+  }
+  String packageList=System.getProperty("java.content.handler.pkgs");
+  if (packageList != null) {
+    for (    String packageName : packageList.split("\\|")) {
+      String className=packageName + "." + typeString;
+      try {
+        Class<?> klass=Class.forName(className,true,ClassLoader.getSystemClassLoader());
+        cHandler=klass.newInstance();
+      }
+ catch (      ClassNotFoundException e) {
+      }
+catch (      IllegalAccessException e) {
+      }
+catch (      InstantiationException e) {
+      }
+    }
+  }
+  if (cHandler == null) {
+    try {
+      String className="org.apache.harmony.awt.www.content." + typeString;
+      cHandler=Class.forName(className).newInstance();
+    }
+ catch (    ClassNotFoundException e) {
+    }
+catch (    IllegalAccessException e) {
+    }
+catch (    InstantiationException e) {
+    }
+  }
+  if (cHandler != null) {
+    if (!(cHandler instanceof ContentHandler)) {
+      throw new UnknownServiceException();
+    }
+    contentHandlers.put(type,cHandler);
+    return (ContentHandler)cHandler;
+  }
+  return defaultHandler;
+}

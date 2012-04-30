@@ -1,0 +1,13 @@
+{
+  if ((util == null) || (leniency == null)) {
+    throw new NullPointerException();
+  }
+  if (maxTries < 0) {
+    throw new IllegalArgumentException();
+  }
+  this.phoneUtil=util;
+  this.text=(text != null) ? text : "";
+  this.preferredRegion=country;
+  this.leniency=leniency;
+  this.maxTries=maxTries;
+}

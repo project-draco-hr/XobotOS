@@ -1,0 +1,3 @@
+{
+  return _configuration.shouldFullyQualifyTypeName(name) || _namespaces.contains(name) || _nameScope.contains(name);
+}

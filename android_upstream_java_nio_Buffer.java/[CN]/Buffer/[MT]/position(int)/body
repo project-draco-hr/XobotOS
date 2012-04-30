@@ -1,0 +1,4 @@
+{
+  positionImpl(newPosition);
+  return this;
+}

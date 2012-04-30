@@ -1,0 +1,17 @@
+{
+  if (debug)   dbg_enter("SIPIfMatch.parse");
+  SIPIfMatch sipIfMatch=new SIPIfMatch();
+  try {
+    headerName(TokenTypes.SIP_IF_MATCH);
+    this.lexer.SPorHT();
+    this.lexer.match(TokenTypes.ID);
+    Token token=lexer.getNextToken();
+    sipIfMatch.setETag(token.getTokenValue());
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return sipIfMatch;
+  }
+  finally {
+    if (debug)     dbg_leave("SIPIfMatch.parse");
+  }
+}

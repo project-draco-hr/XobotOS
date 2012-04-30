@@ -1,0 +1,14 @@
+{
+  int frames=stackTrace.stackFrames.length;
+  int[] stackFrameIds=new int[frames];
+  for (int i=0; i < frames; i++) {
+    stackFrameIds[i]=writeStackFrame(stackTrace.stackFrames[i]);
+  }
+  writeRecordHeader(BinaryHprof.Tag.STACK_TRACE,0,4 + 4 + 4+ (frames * BinaryHprof.ID_SIZE));
+  out.writeInt(stackTrace.stackTraceId);
+  out.writeInt(stackTrace.threadId);
+  out.writeInt(frames);
+  for (  int stackFrameId : stackFrameIds) {
+    writeId(stackFrameId);
+  }
+}

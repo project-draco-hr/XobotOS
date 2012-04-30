@@ -1,0 +1,9 @@
+{
+  if (!threadIdToThreadEvent.containsKey(stackTrace.threadId)) {
+    throw new IllegalArgumentException("Unknown thread id " + stackTrace.threadId);
+  }
+  int[] old=stackTraces.put(stackTrace,countCell);
+  if (old != null) {
+    throw new IllegalArgumentException("StackTrace already registered for id " + stackTrace.stackTraceId + ":\n"+ stackTrace);
+  }
+}

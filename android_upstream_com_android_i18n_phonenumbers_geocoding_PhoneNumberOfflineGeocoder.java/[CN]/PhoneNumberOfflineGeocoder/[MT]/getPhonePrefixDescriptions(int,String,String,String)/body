@@ -1,0 +1,10 @@
+{
+  String fileName=mappingFileProvider.getFileName(countryCallingCode,language,script,region);
+  if (fileName.length() == 0) {
+    return null;
+  }
+  if (!availablePhonePrefixMaps.containsKey(fileName)) {
+    loadAreaCodeMapFromFile(fileName);
+  }
+  return availablePhonePrefixMaps.get(fileName);
+}

@@ -1,0 +1,8 @@
+{
+  CSArrayCreationExpression expression=new CSArrayCreationExpression(mappedTypeReference(componentType(node.getType())));
+  if (!node.dimensions().isEmpty()) {
+    expression.length(mapExpression((Expression)node.dimensions().get(0)));
+  }
+  expression.initializer(mapArrayInitializer(node));
+  return expression;
+}

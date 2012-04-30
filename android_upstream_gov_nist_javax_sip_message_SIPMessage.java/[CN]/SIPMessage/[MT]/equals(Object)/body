@@ -1,0 +1,22 @@
+{
+  if (!other.getClass().equals(this.getClass())) {
+    return false;
+  }
+  SIPMessage otherMessage=(SIPMessage)other;
+  Collection<SIPHeader> values=this.nameTable.values();
+  Iterator<SIPHeader> it=values.iterator();
+  if (nameTable.size() != otherMessage.nameTable.size()) {
+    return false;
+  }
+  while (it.hasNext()) {
+    SIPHeader mine=(SIPHeader)it.next();
+    SIPHeader his=(SIPHeader)(otherMessage.nameTable.get(SIPHeaderNamesCache.toLowerCase(mine.getName())));
+    if (his == null) {
+      return false;
+    }
+ else     if (!his.equals(mine)) {
+      return false;
+    }
+  }
+  return true;
+}

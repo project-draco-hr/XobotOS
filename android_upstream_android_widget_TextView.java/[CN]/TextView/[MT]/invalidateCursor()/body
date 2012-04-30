@@ -1,0 +1,4 @@
+{
+  int where=getSelectionEnd();
+  invalidateCursor(where,where,where);
+}

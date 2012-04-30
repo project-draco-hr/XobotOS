@@ -1,0 +1,3 @@
+{
+  return (Float.parseFloat(getParameter(ParameterNamesIms.Q)));
+}

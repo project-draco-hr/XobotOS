@@ -1,0 +1,9 @@
+{
+  if (newState == TransactionState.TERMINATED && this.isReliable() && (!getSIPStack().cacheClientConnections)) {
+    this.collectionTime=TIMER_J;
+  }
+  if (super.getState() != TransactionState.COMPLETED && (newState == TransactionState.COMPLETED || newState == TransactionState.TERMINATED)) {
+    sipStack.decrementActiveClientTransactionCount();
+  }
+  super.setState(newState);
+}

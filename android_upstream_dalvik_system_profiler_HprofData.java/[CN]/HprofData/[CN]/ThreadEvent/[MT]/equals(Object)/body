@@ -1,0 +1,7 @@
+{
+  if (!(o instanceof ThreadEvent)) {
+    return false;
+  }
+  ThreadEvent event=(ThreadEvent)o;
+  return (this.type == event.type && this.objectId == event.objectId && this.threadId == event.threadId && equal(this.threadName,event.threadName) && equal(this.groupName,event.groupName) && equal(this.parentGroupName,event.parentGroupName));
+}

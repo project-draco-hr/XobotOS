@@ -1,0 +1,5 @@
+{
+  E result=a[location];
+  a[location]=object;
+  return result;
+}

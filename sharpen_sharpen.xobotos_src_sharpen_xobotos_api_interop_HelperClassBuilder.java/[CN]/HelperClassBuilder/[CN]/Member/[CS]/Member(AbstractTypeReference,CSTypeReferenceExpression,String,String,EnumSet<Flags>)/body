@@ -1,0 +1,7 @@
+{
+  this._flags=flags;
+  this._type=type;
+  this._managed=managed;
+  this._name=name;
+  this._managedName=managedName;
+}

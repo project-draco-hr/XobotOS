@@ -1,0 +1,63 @@
+{
+  CSTypeReferenceExpression mapped=my(CSharpDriver.class).mappedTypeReference(this,type);
+  if (mapped != null)   return mapped;
+  final ASTNode declaration=findDeclaringNode(type);
+  if (isMacroType(declaration)) {
+    return mappedMacroTypeReference(type,(TypeDeclaration)declaration);
+  }
+  final ITypeBinding expected=getExpectedType();
+  if (type.isTypeVariable()) {
+    return new CSTypeReference(type.getName());
+  }
+  if (type.isArray()) {
+    if ((expected != null) && expected.isArray())     pushExpectedType(expected.getElementType());
+ else     pushExpectedType(null);
+    CSTypeReferenceExpression array=mappedArrayTypeReference(type);
+    popExpectedType();
+    return array;
+  }
+  if (type.isWildcardType()) {
+    return mappedWildcardTypeReference(type);
+  }
+  if (isJavaLangClass(type)) {
+    return new CSTypeReference(mappedTypeName(type));
+  }
+  if (type.isCapture()) {
+    return mappedWildcardTypeReference(type.getWildcard());
+  }
+  final String fullName=BindingUtils.qualifiedName(type);
+  if (fullName.equals("java.lang.reflect.Constructor")) {
+    return new CSTypeReference("System.Reflection.ConstructorInfo");
+  }
+  if ((expected != null) && isGenericInstance(expected)) {
+    ITypeBinding underlying=getUnderlyingGenericType(type);
+    ITypeBinding underlyingExpected=getUnderlyingGenericType(expected);
+    if ((underlying != null) && underlying.equals(underlyingExpected)) {
+      pushExpectedType(null);
+      CSTypeReferenceExpression retval=mappedTypeReference(expected);
+      popExpectedType();
+      return retval;
+    }
+  }
+  final ITypeBinding declaring=type.getDeclaringClass();
+  final boolean hasMapping=_configuration.typeHasMapping(BindingUtils.typeMappingKey(type));
+  if (type.isNested() && !type.isAnonymous() && !hasMapping&& (declaring != null)) {
+    final String childName=identifier(type.getTypeDeclaration().getName());
+    CSTypeReferenceExpression parentRef;
+    if (declaring.isInterface()) {
+      final String parentName=extractedInterfaceName(declaring);
+      parentRef=new CSTypeReference(parentName);
+    }
+ else     if (extractIntoRawType(type)) {
+      final String parentName=mappedTypeName(declaring);
+      parentRef=new CSTypeReference(parentName);
+    }
+ else {
+      parentRef=mappedTypeReference(declaring);
+    }
+    final CSTypeReferenceExpression childRef=mappedSimpleTypeReference(type,childName);
+    CSNestedTypeReference nestedRef=new CSNestedTypeReference(parentRef,childRef);
+    return nestedRef;
+  }
+  return mappedSimpleTypeReference(type,mappedTypeName(type));
+}

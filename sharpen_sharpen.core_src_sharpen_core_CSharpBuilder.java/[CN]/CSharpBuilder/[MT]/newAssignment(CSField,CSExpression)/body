@@ -1,0 +1,3 @@
+{
+  return CSharpCode.newAssignment(CSharpCode.newReference(field),initializer);
+}

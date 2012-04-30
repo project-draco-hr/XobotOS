@@ -1,0 +1,11 @@
+{
+  if (objectInput.readBoolean()) {
+    setNationalNumberPattern(objectInput.readUTF());
+  }
+  if (objectInput.readBoolean()) {
+    setPossibleNumberPattern(objectInput.readUTF());
+  }
+  if (objectInput.readBoolean()) {
+    setExampleNumber(objectInput.readUTF());
+  }
+}

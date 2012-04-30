@@ -1,0 +1,4 @@
+{
+  String country=locale.getCountry();
+  return getFormatTypeFromCountryCode(country);
+}

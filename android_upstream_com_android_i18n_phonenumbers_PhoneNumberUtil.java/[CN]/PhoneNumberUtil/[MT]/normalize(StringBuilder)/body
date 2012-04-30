@@ -1,0 +1,4 @@
+{
+  String normalizedNumber=normalize(number.toString());
+  number.replace(0,number.length(),normalizedNumber);
+}

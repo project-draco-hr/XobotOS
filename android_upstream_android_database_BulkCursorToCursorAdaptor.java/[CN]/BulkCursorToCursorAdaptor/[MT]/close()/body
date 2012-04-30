@@ -1,0 +1,14 @@
+{
+  super.close();
+  if (mBulkCursor != null) {
+    try {
+      mBulkCursor.close();
+    }
+ catch (    RemoteException ex) {
+      Log.w(TAG,"Remote process exception when closing");
+    }
+ finally {
+      mBulkCursor=null;
+    }
+  }
+}

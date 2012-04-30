@@ -1,0 +1,3 @@
+{
+  _statements.add(index,stmt);
+}

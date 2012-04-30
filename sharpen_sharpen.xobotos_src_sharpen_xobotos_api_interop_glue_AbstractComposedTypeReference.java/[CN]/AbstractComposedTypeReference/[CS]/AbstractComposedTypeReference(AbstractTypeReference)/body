@@ -1,0 +1,4 @@
+{
+  if (elementType == null)   throw new java.lang.NullPointerException();
+  this._elementType=elementType;
+}

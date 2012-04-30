@@ -1,0 +1,4 @@
+{
+  mShapeState.mAlpha=alpha;
+  invalidateSelf();
+}

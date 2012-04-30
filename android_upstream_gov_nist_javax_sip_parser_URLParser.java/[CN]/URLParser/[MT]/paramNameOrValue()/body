@@ -1,0 +1,25 @@
+{
+  int startIdx=lexer.getPtr();
+  while (lexer.hasMoreChars()) {
+    char next=lexer.lookAhead(0);
+    boolean isValidChar=false;
+switch (next) {
+case '[':
+case ']':
+case '/':
+case ':':
+case '&':
+case '+':
+case '$':
+      isValidChar=true;
+  }
+  if (isValidChar || isUnreserved(next)) {
+    lexer.consume(1);
+  }
+ else   if (isEscaped()) {
+    lexer.consume(3);
+  }
+ else   break;
+}
+return lexer.getBuffer().substring(startIdx,lexer.getPtr());
+}

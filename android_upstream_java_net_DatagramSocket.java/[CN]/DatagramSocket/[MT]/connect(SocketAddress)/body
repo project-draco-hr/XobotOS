@@ -1,0 +1,20 @@
+{
+  if (peer == null) {
+    throw new IllegalArgumentException("peer == null");
+  }
+  if (!(peer instanceof InetSocketAddress)) {
+    throw new IllegalArgumentException("peer not an InetSocketAddress: " + peer.getClass());
+  }
+  InetSocketAddress isa=(InetSocketAddress)peer;
+  if (isa.getAddress() == null) {
+    throw new SocketException("Host is unresolved: " + isa.getHostName());
+  }
+synchronized (lock) {
+    checkOpen();
+    ensureBound();
+    this.address=isa.getAddress();
+    this.port=isa.getPort();
+    this.isConnected=true;
+    impl.connect(address,port);
+  }
+}

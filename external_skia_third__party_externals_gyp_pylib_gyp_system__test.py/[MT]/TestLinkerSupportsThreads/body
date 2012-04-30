@@ -1,0 +1,3 @@
+def TestLinkerSupportsThreads(cc_command='cc'):
+    'Test whether the linker supports the --threads flag.'
+    return TestCommands(['%(cc)s -Wl,--threads test.c'], files={'test.c': 'int main(){}', }, env={'cc': cc_command, })

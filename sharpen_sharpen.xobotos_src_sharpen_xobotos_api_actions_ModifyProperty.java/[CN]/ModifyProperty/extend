@@ -1,0 +1,1 @@
+ModifyMember<MethodDeclaration,CSProperty,PropertyTemplate,PropertyBuilder>

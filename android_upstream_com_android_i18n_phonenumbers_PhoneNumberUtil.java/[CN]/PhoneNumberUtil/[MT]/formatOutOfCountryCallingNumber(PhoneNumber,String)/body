@@ -1,0 +1,38 @@
+{
+  if (!isValidRegionCode(regionCallingFrom)) {
+    return format(number,PhoneNumberFormat.INTERNATIONAL);
+  }
+  int countryCallingCode=number.getCountryCode();
+  String regionCode=getRegionCodeForCountryCode(countryCallingCode);
+  String nationalSignificantNumber=getNationalSignificantNumber(number);
+  if (!hasValidRegionCode(regionCode,countryCallingCode,nationalSignificantNumber)) {
+    return nationalSignificantNumber;
+  }
+  if (countryCallingCode == NANPA_COUNTRY_CODE) {
+    if (isNANPACountry(regionCallingFrom)) {
+      return countryCallingCode + " " + format(number,PhoneNumberFormat.NATIONAL);
+    }
+  }
+ else   if (countryCallingCode == getCountryCodeForRegion(regionCallingFrom)) {
+    return format(number,PhoneNumberFormat.NATIONAL);
+  }
+  String formattedNationalNumber=formatNationalNumber(nationalSignificantNumber,regionCode,PhoneNumberFormat.INTERNATIONAL);
+  PhoneMetadata metadata=getMetadataForRegion(regionCallingFrom);
+  String internationalPrefix=metadata.getInternationalPrefix();
+  String internationalPrefixForFormatting="";
+  if (UNIQUE_INTERNATIONAL_PREFIX.matcher(internationalPrefix).matches()) {
+    internationalPrefixForFormatting=internationalPrefix;
+  }
+ else   if (metadata.hasPreferredInternationalPrefix()) {
+    internationalPrefixForFormatting=metadata.getPreferredInternationalPrefix();
+  }
+  StringBuilder formattedNumber=new StringBuilder(formattedNationalNumber);
+  maybeGetFormattedExtension(number,regionCode,PhoneNumberFormat.INTERNATIONAL,formattedNumber);
+  if (internationalPrefixForFormatting.length() > 0) {
+    formattedNumber.insert(0," ").insert(0,countryCallingCode).insert(0," ").insert(0,internationalPrefixForFormatting);
+  }
+ else {
+    formatNumberByFormat(countryCallingCode,PhoneNumberFormat.INTERNATIONAL,formattedNumber);
+  }
+  return formattedNumber.toString();
+}

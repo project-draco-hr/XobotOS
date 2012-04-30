@@ -1,0 +1,4 @@
+{
+  if (retryAfter < 0)   throw new InvalidArgumentException("invalid parameter " + retryAfter);
+  this.retryAfter=Integer.valueOf(retryAfter);
+}

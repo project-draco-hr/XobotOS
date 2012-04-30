@@ -1,0 +1,6 @@
+{
+  if (!mFirstLayoutDone) {
+    mFirstLayoutDone=true;
+    mWebViewCore.contentDraw();
+  }
+}

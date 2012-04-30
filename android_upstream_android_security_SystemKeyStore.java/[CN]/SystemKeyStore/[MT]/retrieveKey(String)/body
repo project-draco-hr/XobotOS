@@ -1,0 +1,7 @@
+{
+  File keyFile=getKeyFile(keyName);
+  if (!keyFile.exists()) {
+    return null;
+  }
+  return IoUtils.readFileAsByteArray(keyFile.toString());
+}

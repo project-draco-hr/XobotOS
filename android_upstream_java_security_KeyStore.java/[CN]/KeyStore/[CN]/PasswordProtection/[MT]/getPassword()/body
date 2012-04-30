@@ -1,0 +1,6 @@
+{
+  if (isDestroyed) {
+    throw new IllegalStateException("Password was destroyed");
+  }
+  return password;
+}

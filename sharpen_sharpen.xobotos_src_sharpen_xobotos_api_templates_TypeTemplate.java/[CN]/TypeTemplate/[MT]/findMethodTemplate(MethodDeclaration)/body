@@ -1,0 +1,5 @@
+{
+  if (node.isConstructor())   return findMemberTemplate(node,ConstructorTemplate.DEFAULT,ConstructorTemplate.class);
+ else   if (Filter.isDestructor(node))   return findMemberTemplate(node,DestructorTemplate.DEFAULT,DestructorTemplate.class);
+ else   return findMemberTemplate(node,MethodTemplate.DEFAULT,MethodTemplate.class);
+}

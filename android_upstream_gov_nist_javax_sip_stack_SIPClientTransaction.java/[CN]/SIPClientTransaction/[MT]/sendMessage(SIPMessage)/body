@@ -1,0 +1,61 @@
+{
+  try {
+    SIPRequest transactionRequest;
+    transactionRequest=(SIPRequest)messageToSend;
+    Via topVia=(Via)transactionRequest.getViaHeaders().getFirst();
+    try {
+      topVia.setBranch(getBranch());
+    }
+ catch (    java.text.ParseException ex) {
+    }
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("Sending Message " + messageToSend);
+      sipStack.getStackLogger().logDebug("TransactionState " + this.getState());
+    }
+    if (TransactionState.PROCEEDING == getState() || TransactionState.CALLING == getState()) {
+      if (transactionRequest.getMethod().equals(Request.ACK)) {
+        if (isReliable()) {
+          this.setState(TransactionState.TERMINATED);
+        }
+ else {
+          this.setState(TransactionState.COMPLETED);
+        }
+        super.sendMessage(transactionRequest);
+        return;
+      }
+    }
+    try {
+      lastRequest=transactionRequest;
+      if (getState() == null) {
+        setOriginalRequest(transactionRequest);
+        if (transactionRequest.getMethod().equals(Request.INVITE)) {
+          this.setState(TransactionState.CALLING);
+        }
+ else         if (transactionRequest.getMethod().equals(Request.ACK)) {
+          this.setState(TransactionState.TERMINATED);
+        }
+ else {
+          this.setState(TransactionState.TRYING);
+        }
+        if (!isReliable()) {
+          enableRetransmissionTimer();
+        }
+        if (isInviteTransaction()) {
+          enableTimeoutTimer(TIMER_B);
+        }
+ else {
+          enableTimeoutTimer(TIMER_F);
+        }
+      }
+      super.sendMessage(transactionRequest);
+    }
+ catch (    IOException e) {
+      this.setState(TransactionState.TERMINATED);
+      throw e;
+    }
+  }
+  finally {
+    this.isMapped=true;
+    this.startTransactionTimer();
+  }
+}

@@ -1,0 +1,9 @@
+{
+  checkThread();
+synchronized (WebView.class) {
+    Network.enablePlatformNotifications();
+    sNotificationsEnabled=true;
+    Context context=JniUtil.getContext();
+    if (context != null)     setupProxyListener(context);
+  }
+}

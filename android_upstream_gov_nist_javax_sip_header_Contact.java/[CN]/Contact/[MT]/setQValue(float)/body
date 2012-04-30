@@ -1,0 +1,4 @@
+{
+  if (qValue != -1 && (qValue < 0 || qValue > 1))   throw new InvalidArgumentException("JAIN-SIP Exception, Contact, setQValue(), " + "the qValue is not between 0 and 1");
+  this.parameters.set(Q,Float.valueOf(qValue));
+}

@@ -1,0 +1,9 @@
+{
+  try {
+    return ((session == null) ? mUri : session.getLocalProfile().getUriString());
+  }
+ catch (  Throwable e) {
+    Log.w(TAG,"getUri(): " + e);
+    return null;
+  }
+}

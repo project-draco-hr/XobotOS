@@ -1,0 +1,8 @@
+{
+  if (mOnLayoutChangeListeners == null) {
+    mOnLayoutChangeListeners=new ArrayList<OnLayoutChangeListener>();
+  }
+  if (!mOnLayoutChangeListeners.contains(listener)) {
+    mOnLayoutChangeListeners.add(listener);
+  }
+}

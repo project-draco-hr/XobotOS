@@ -1,0 +1,4 @@
+{
+  IClasspathEntry newLibraryEntry=JavaCore.newLibraryEntry(absolutePath,null,null);
+  addClasspathEntry(newLibraryEntry);
+}

@@ -1,0 +1,9 @@
+{
+  try {
+    mFactory.onDataSetChanged();
+  }
+ catch (  Exception ex) {
+    Thread t=Thread.currentThread();
+    Thread.getDefaultUncaughtExceptionHandler().uncaughtException(t,ex);
+  }
+}

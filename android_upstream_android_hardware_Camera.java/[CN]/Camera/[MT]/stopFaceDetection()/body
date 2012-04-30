@@ -1,0 +1,4 @@
+{
+  _stopFaceDetection();
+  mFaceDetectionRunning=false;
+}

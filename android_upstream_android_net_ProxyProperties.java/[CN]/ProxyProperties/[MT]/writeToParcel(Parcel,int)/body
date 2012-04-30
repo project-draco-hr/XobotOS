@@ -1,0 +1,12 @@
+{
+  if (mHost != null) {
+    dest.writeByte((byte)1);
+    dest.writeString(mHost);
+    dest.writeInt(mPort);
+  }
+ else {
+    dest.writeByte((byte)0);
+  }
+  dest.writeString(mExclusionList);
+  dest.writeStringArray(mParsedExclusionList);
+}

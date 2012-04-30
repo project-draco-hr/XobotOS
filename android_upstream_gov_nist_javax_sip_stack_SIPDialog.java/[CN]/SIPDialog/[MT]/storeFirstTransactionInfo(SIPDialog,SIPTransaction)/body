@@ -1,0 +1,21 @@
+{
+  dialog.firstTransaction=transaction;
+  dialog.firstTransactionSeen=true;
+  dialog.firstTransactionIsServerTransaction=transaction.isServerTransaction();
+  dialog.firstTransactionSecure=transaction.getRequest().getRequestURI().getScheme().equalsIgnoreCase("sips");
+  dialog.firstTransactionPort=transaction.getPort();
+  dialog.firstTransactionId=transaction.getBranchId();
+  dialog.firstTransactionMethod=transaction.getMethod();
+  if (dialog.isServer()) {
+    SIPServerTransaction st=(SIPServerTransaction)transaction;
+    SIPResponse response=st.getLastResponse();
+    dialog.contactHeader=response != null ? response.getContactHeader() : null;
+  }
+ else {
+    SIPClientTransaction ct=(SIPClientTransaction)transaction;
+    if (ct != null) {
+      SIPRequest sipRequest=ct.getOriginalRequest();
+      dialog.contactHeader=sipRequest.getContactHeader();
+    }
+  }
+}

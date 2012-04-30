@@ -1,0 +1,24 @@
+{
+  if (debug)   dbg_enter("host");
+  try {
+    String hostname;
+    if (lexer.lookAhead(0) == '[') {
+      hostname=ipv6Reference();
+    }
+ else     if (isIPv6Address(lexer.getRest())) {
+      int startPtr=lexer.getPtr();
+      lexer.consumeValidChars(new char[]{LexerCore.ALPHADIGIT_VALID_CHARS,':'});
+      hostname=new StringBuffer("[").append(lexer.getBuffer().substring(startPtr,lexer.getPtr())).append("]").toString();
+    }
+ else {
+      int startPtr=lexer.getPtr();
+      consumeDomainLabel();
+      hostname=lexer.getBuffer().substring(startPtr,lexer.getPtr());
+    }
+    if (hostname.length() == 0)     throw new ParseException(lexer.getBuffer() + ": Missing host name",lexer.getPtr());
+ else     return new Host(hostname);
+  }
+  finally {
+    if (debug)     dbg_leave("host");
+  }
+}

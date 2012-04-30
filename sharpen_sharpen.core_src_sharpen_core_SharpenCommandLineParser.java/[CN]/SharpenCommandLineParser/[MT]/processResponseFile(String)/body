@@ -1,0 +1,3 @@
+{
+  new SharpenCommandLineParser(IO.linesFromFile(arg.substring(1)),_cmdLine);
+}

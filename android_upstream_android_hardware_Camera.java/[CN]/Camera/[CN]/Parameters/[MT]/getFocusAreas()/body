@@ -1,0 +1,3 @@
+{
+  return splitArea(get(KEY_FOCUS_AREAS));
+}

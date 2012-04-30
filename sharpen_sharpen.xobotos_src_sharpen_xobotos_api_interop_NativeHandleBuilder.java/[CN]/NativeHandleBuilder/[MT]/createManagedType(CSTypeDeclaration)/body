@@ -1,0 +1,120 @@
+{
+  final CSTypeDeclaration type=new CSClass(_template.getName(),CSClassModifier.None);
+  if (_template.getParent() != null) {
+    type.addBaseType(_template.getParent().getManagedType());
+    if (_template.getField() != null) {
+      Sharpen.Log(Level.SEVERE,"Cannot use both 'parent' and 'field' in <native-handle> for type '%s'",BindingUtils.qualifiedName(getType()));
+      return false;
+    }
+  }
+ else {
+    type.addBaseType(new CSTypeReference("System.Runtime.InteropServices.SafeHandle"));
+    if (_template.getField() == null) {
+      Sharpen.Log(Level.SEVERE,"Missing 'field' in <native-handle> for type '%s'",BindingUtils.qualifiedName(getType()));
+      return false;
+    }
+  }
+  final CSTypeReference thisTypeRef=new CSTypeReference(_template.getName());
+  final CSTypeReference intPtr=new CSTypeReference("System.IntPtr");
+  final CSExpression handleRef=new CSReferenceExpression("handle");
+  final CSExpression thisHandleRef=new CSMemberReferenceExpression(new CSThisExpression(),"handle");
+  final CSExpression zeroRef=new CSReferenceExpression("System.IntPtr.Zero");
+{
+    CSConstructor ctor=new CSConstructor();
+    if (_template.getParent() == null) {
+      CSExpression base=new CSBaseExpression();
+      CSConstructorInvocationExpression cie=new CSConstructorInvocationExpression(base);
+      cie.addArgument(zeroRef);
+      cie.addArgument(new CSBoolLiteralExpression(true));
+      ctor.chainedConstructorInvocation(cie);
+    }
+    type.addMember(ctor);
+  }
+{
+    CSConstructor ctor=new CSConstructor();
+    ctor.addParameter("handle",intPtr);
+    if (_template.getParent() == null) {
+      CSExpression base=new CSBaseExpression();
+      CSConstructorInvocationExpression cie=new CSConstructorInvocationExpression(base);
+      cie.addArgument(zeroRef);
+      cie.addArgument(new CSBoolLiteralExpression(true));
+      ctor.chainedConstructorInvocation(cie);
+    }
+    ctor.body().addStatement(new CSInfixExpression("=",thisHandleRef,handleRef));
+    type.addMember(ctor);
+  }
+  if (_template.getParent() != null) {
+    parent.addMember(type);
+    return true;
+  }
+{
+    final CSMethod destructor=new CSMethod(_destructorName);
+    destructor.dllImport(getConfig().getDllImportAttribute());
+    destructor.modifier(CSMethodModifier.Extern);
+    destructor.visibility(CSVisibility.Private);
+    destructor.returnType(new CSTypeReference("void"));
+    destructor.addParameter(new CSVariableDeclaration("handle",intPtr));
+    type.addMember(destructor);
+  }
+{
+    CSProperty prop=new CSProperty("Handle",intPtr);
+    prop.visibility(CSVisibility.Internal);
+    CSBlock getter=new CSBlock();
+    getter.addStatement(new CSReturnStatement(-1,handleRef));
+    prop.getter(getter);
+    type.addMember(prop);
+  }
+{
+    CSField zero=new CSField("Zero",thisTypeRef,CSVisibility.Public);
+    zero.addModifier(CSFieldModifier.Static);
+    zero.addModifier(CSFieldModifier.Readonly);
+    zero.initializer(new CSConstructorInvocationExpression(thisTypeRef));
+    type.addMember(zero);
+  }
+{
+    CSMethod release=new CSMethod("ReleaseHandle");
+    release.returnType(new CSTypeReference("bool"));
+    release.modifier(CSMethodModifier.Override);
+    release.visibility(CSVisibility.Protected);
+    CSExpression dtor=new CSReferenceExpression(_destructorName);
+    CSMethodInvocationExpression mie=new CSMethodInvocationExpression(dtor);
+    mie.addArgument(handleRef);
+    CSExpression check=new CSInfixExpression("!=",handleRef,zeroRef);
+    CSIfStatement ifstm=new CSIfStatement(-1,check);
+    ifstm.trueBlock().addStatement(mie);
+    release.body().addStatement(ifstm);
+    release.body().addStatement(new CSInfixExpression("=",handleRef,zeroRef));
+    release.body().addStatement(new CSReturnStatement(-1,new CSBoolLiteralExpression(true)));
+    type.addMember(release);
+  }
+{
+    CSProperty isInvalid=new CSProperty("IsInvalid",new CSTypeReference("bool"));
+    isInvalid.visibility(CSVisibility.Public);
+    isInvalid.modifier(CSMethodModifier.Override);
+    CSBlock getter2=new CSBlock();
+    CSExpression check=new CSInfixExpression("==",handleRef,zeroRef);
+    getter2.addStatement(new CSReturnStatement(-1,check));
+    isInvalid.getter(getter2);
+    type.addMember(isInvalid);
+  }
+  if (_template.getProperty() != null) {
+    CSProperty accessor=new CSProperty(_template.getProperty(),new CSTypeReference(_template.getName()));
+    accessor.visibility(CSVisibility.Internal);
+    CSBlock getter3=new CSBlock();
+    getter3.addStatement(new CSReturnStatement(-1,new CSReferenceExpression(_template.getField())));
+    accessor.getter(getter3);
+    parent.addMember(accessor);
+  }
+  if (_template.getParent() == null) {
+    parent.addBaseType(new CSTypeReference("System.IDisposable"));
+    CSMethod dispose=new CSMethod("Dispose");
+    dispose.returnType(new CSTypeReference("void"));
+    dispose.visibility(CSVisibility.Public);
+    CSExpression fieldRef=new CSReferenceExpression(_template.getField());
+    CSExpression disposeRef=new CSMemberReferenceExpression(fieldRef,"Dispose");
+    dispose.body().addStatement(new CSMethodInvocationExpression(disposeRef));
+    parent.addMember(dispose);
+  }
+  parent.addMember(type);
+  return true;
+}

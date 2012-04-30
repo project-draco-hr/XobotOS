@@ -1,0 +1,9 @@
+{
+  ITypeBinding superc=tb.getSuperclass();
+  if (superc != null && !superc.equals(_objectType) && !superc.getQualifiedName().equals("java.lang.Enum<?>")) {
+    return superc;
+  }
+  ITypeBinding[] ints=tb.getInterfaces();
+  if (ints.length > 0)   return ints[0];
+  return null;
+}

@@ -1,0 +1,24 @@
+{
+  if (charCount < 0) {
+    throw new IllegalArgumentException("charCount < 0: " + charCount);
+  }
+synchronized (lock) {
+    long skipped=0;
+    int toRead=charCount < 512 ? (int)charCount : 512;
+    char[] charsSkipped=new char[toRead];
+    while (skipped < charCount) {
+      int read=read(charsSkipped,0,toRead);
+      if (read == -1) {
+        return skipped;
+      }
+      skipped+=read;
+      if (read < toRead) {
+        return skipped;
+      }
+      if (charCount - skipped < toRead) {
+        toRead=(int)(charCount - skipped);
+      }
+    }
+    return skipped;
+  }
+}

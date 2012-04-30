@@ -1,0 +1,100 @@
+{
+  initVelocityTrackerIfNotExists();
+  mVelocityTracker.addMovement(ev);
+  final int action=ev.getAction();
+switch (action & MotionEvent.ACTION_MASK) {
+case MotionEvent.ACTION_DOWN:
+{
+      mIsBeingDragged=getChildCount() != 0;
+      if (!mIsBeingDragged) {
+        return false;
+      }
+      if (!mScroller.isFinished()) {
+        mScroller.abortAnimation();
+        if (mFlingStrictSpan != null) {
+          mFlingStrictSpan.finish();
+          mFlingStrictSpan=null;
+        }
+      }
+      mLastMotionY=ev.getY();
+      mActivePointerId=ev.getPointerId(0);
+      break;
+    }
+case MotionEvent.ACTION_MOVE:
+  if (mIsBeingDragged) {
+    final int activePointerIndex=ev.findPointerIndex(mActivePointerId);
+    final float y=ev.getY(activePointerIndex);
+    final int deltaY=(int)(mLastMotionY - y);
+    mLastMotionY=y;
+    final int oldX=mScrollX;
+    final int oldY=mScrollY;
+    final int range=getScrollRange();
+    final int overscrollMode=getOverScrollMode();
+    final boolean canOverscroll=overscrollMode == OVER_SCROLL_ALWAYS || (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0);
+    if (overScrollBy(0,deltaY,0,mScrollY,0,range,0,mOverscrollDistance,true)) {
+      mVelocityTracker.clear();
+    }
+    onScrollChanged(mScrollX,mScrollY,oldX,oldY);
+    if (canOverscroll) {
+      final int pulledToY=oldY + deltaY;
+      if (pulledToY < 0) {
+        mEdgeGlowTop.onPull((float)deltaY / getHeight());
+        if (!mEdgeGlowBottom.isFinished()) {
+          mEdgeGlowBottom.onRelease();
+        }
+      }
+ else       if (pulledToY > range) {
+        mEdgeGlowBottom.onPull((float)deltaY / getHeight());
+        if (!mEdgeGlowTop.isFinished()) {
+          mEdgeGlowTop.onRelease();
+        }
+      }
+      if (mEdgeGlowTop != null && (!mEdgeGlowTop.isFinished() || !mEdgeGlowBottom.isFinished())) {
+        invalidate();
+      }
+    }
+  }
+break;
+case MotionEvent.ACTION_UP:
+if (mIsBeingDragged) {
+final VelocityTracker velocityTracker=mVelocityTracker;
+velocityTracker.computeCurrentVelocity(1000,mMaximumVelocity);
+int initialVelocity=(int)velocityTracker.getYVelocity(mActivePointerId);
+if (getChildCount() > 0) {
+  if ((Math.abs(initialVelocity) > mMinimumVelocity)) {
+    fling(-initialVelocity);
+  }
+ else {
+    if (mScroller.springBack(mScrollX,mScrollY,0,0,0,getScrollRange())) {
+      invalidate();
+    }
+  }
+}
+mActivePointerId=INVALID_POINTER;
+endDrag();
+}
+break;
+case MotionEvent.ACTION_CANCEL:
+if (mIsBeingDragged && getChildCount() > 0) {
+if (mScroller.springBack(mScrollX,mScrollY,0,0,0,getScrollRange())) {
+invalidate();
+}
+mActivePointerId=INVALID_POINTER;
+endDrag();
+}
+break;
+case MotionEvent.ACTION_POINTER_DOWN:
+{
+final int index=ev.getActionIndex();
+final float y=ev.getY(index);
+mLastMotionY=y;
+mActivePointerId=ev.getPointerId(index);
+break;
+}
+case MotionEvent.ACTION_POINTER_UP:
+onSecondaryPointerUp(ev);
+mLastMotionY=ev.getY(ev.findPointerIndex(mActivePointerId));
+break;
+}
+return true;
+}

@@ -1,0 +1,16 @@
+def _caller(tblist, skip):
+    string = ''
+    arr = []
+    for (file, line, name, text) in tblist:
+        if (file[(-10):] == 'TestCmd.py'):
+            break
+        arr = ([(file, line, name, text)] + arr)
+    atfrom = 'at'
+    for (file, line, name, text) in arr[skip:]:
+        if (name in ('?', '<module>')):
+            name = ''
+        else:
+            name = ((' (' + name) + ')')
+        string = (string + ('%s line %d of %s%s\n' % (atfrom, line, file, name)))
+        atfrom = '\tfrom'
+    return string

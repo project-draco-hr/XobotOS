@@ -1,0 +1,5 @@
+{
+  ICommand command=desc.newCommand();
+  command.setBuilderName(SharpenBuilder.BUILDER_ID);
+  return command;
+}

@@ -1,0 +1,4 @@
+{
+  if (headerName == null)   throw new NullPointerException("Null argument Provided!");
+  this.removeHeader(headerName,false);
+}

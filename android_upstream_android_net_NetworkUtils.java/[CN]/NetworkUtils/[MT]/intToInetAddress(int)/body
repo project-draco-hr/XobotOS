@@ -1,0 +1,9 @@
+{
+  byte[] addressBytes={(byte)(0xff & hostAddress),(byte)(0xff & (hostAddress >> 8)),(byte)(0xff & (hostAddress >> 16)),(byte)(0xff & (hostAddress >> 24))};
+  try {
+    return InetAddress.getByAddress(addressBytes);
+  }
+ catch (  UnknownHostException e) {
+    throw new AssertionError();
+  }
+}

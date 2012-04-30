@@ -1,0 +1,10 @@
+{
+  String key=tcpMessageChannel.getKey();
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug(Thread.currentThread() + " removing " + key);
+  }
+  if (tcpMessageChannels.get(key) == tcpMessageChannel) {
+    this.tcpMessageChannels.remove(key);
+  }
+  incomingTcpMessageChannels.remove(tcpMessageChannel);
+}

@@ -1,0 +1,3 @@
+{
+  setJField(object,declaringClass,type,slot,flag,TYPE_LONG,value);
+}

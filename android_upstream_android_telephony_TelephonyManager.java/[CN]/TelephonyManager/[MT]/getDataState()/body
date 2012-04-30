@@ -1,0 +1,11 @@
+{
+  try {
+    return getITelephony().getDataState();
+  }
+ catch (  RemoteException ex) {
+    return DATA_DISCONNECTED;
+  }
+catch (  NullPointerException ex) {
+    return DATA_DISCONNECTED;
+  }
+}

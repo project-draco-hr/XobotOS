@@ -1,0 +1,3 @@
+{
+  return getIField(object,declaringClass,type,slot,flag,TYPE_INTEGER);
+}

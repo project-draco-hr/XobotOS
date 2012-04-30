@@ -1,0 +1,4 @@
+{
+  checkNotConnected();
+  this.ifModifiedSince=newValue;
+}

@@ -1,0 +1,17 @@
+{
+  out.writeInt(mState);
+  out.writeInt(mRoaming ? 1 : 0);
+  out.writeString(mOperatorAlphaLong);
+  out.writeString(mOperatorAlphaShort);
+  out.writeString(mOperatorNumeric);
+  out.writeInt(mIsManualNetworkSelection ? 1 : 0);
+  out.writeInt(mRadioTechnology);
+  out.writeInt(mCssIndicator ? 1 : 0);
+  out.writeInt(mNetworkId);
+  out.writeInt(mSystemId);
+  out.writeInt(mCdmaRoamingIndicator);
+  out.writeInt(mCdmaDefaultRoamingIndicator);
+  out.writeInt(mCdmaEriIconIndex);
+  out.writeInt(mCdmaEriIconMode);
+  out.writeInt(mIsEmergencyOnly ? 1 : 0);
+}

@@ -1,0 +1,19 @@
+{
+  Matcher m=VALID_START_CHAR_PATTERN.matcher(number);
+  if (m.find()) {
+    number=number.substring(m.start());
+    Matcher trailingCharsMatcher=UNWANTED_END_CHAR_PATTERN.matcher(number);
+    if (trailingCharsMatcher.find()) {
+      number=number.substring(0,trailingCharsMatcher.start());
+      LOGGER.log(Level.FINER,"Stripped trailing characters: " + number);
+    }
+    Matcher secondNumber=SECOND_NUMBER_START_PATTERN.matcher(number);
+    if (secondNumber.find()) {
+      number=number.substring(0,secondNumber.start());
+    }
+    return number;
+  }
+ else {
+    return "";
+  }
+}

@@ -1,0 +1,16 @@
+{
+  if (other == null)   return false;
+  if (!other.getClass().equals(this.getClass())) {
+    return false;
+  }
+  CallIdentifier that=(CallIdentifier)other;
+  if (this.localId.compareTo(that.localId) != 0) {
+    return false;
+  }
+  if (this.host == that.host)   return true;
+  if ((this.host == null && that.host != null) || (this.host != null && that.host == null))   return false;
+  if (host.compareToIgnoreCase(that.host) != 0) {
+    return false;
+  }
+  return true;
+}

@@ -1,0 +1,3 @@
+{
+  return GenericObjectList.class.isAssignableFrom(other);
+}

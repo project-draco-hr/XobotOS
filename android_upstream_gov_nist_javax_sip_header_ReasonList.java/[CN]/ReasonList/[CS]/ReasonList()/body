@@ -1,0 +1,3 @@
+{
+  super(Reason.class,ReasonHeader.NAME);
+}

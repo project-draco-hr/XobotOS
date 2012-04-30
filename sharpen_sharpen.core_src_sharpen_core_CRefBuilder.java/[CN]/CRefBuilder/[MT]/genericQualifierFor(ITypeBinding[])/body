@@ -1,0 +1,4 @@
+{
+  if (typeParameters.length == 0)   return "";
+  return "{" + typesSeparatedBy(typeParameters,", ") + "}";
+}

@@ -1,0 +1,4 @@
+{
+  if (this.statusLine == null)   return null;
+ else   return this.statusLine.encode();
+}

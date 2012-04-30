@@ -1,0 +1,4 @@
+int oldstate
+int olddatastate
+int newstate
+int newdatastate

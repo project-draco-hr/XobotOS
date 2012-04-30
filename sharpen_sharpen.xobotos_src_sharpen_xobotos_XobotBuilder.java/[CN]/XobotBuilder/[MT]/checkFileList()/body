@@ -1,0 +1,42 @@
+{
+  final IPath sourcePath=_sourceFolder.getLocation();
+  final IPath outputPath=_outputFolder.getLocation();
+  final URI outputURI=outputPath.toFile().toURI();
+  final SourceInfo sourceInfo=_configFile.getSourceInfo();
+  final List<LocationFilter> excludeFilters=sourceInfo.getLocationFilters();
+  ArrayList<String> extraCSharpSources=new ArrayList<String>();
+  for (  final String dir : sourceInfo.getExtraCSharpSources()) {
+    File path=_project.getLocation().append(dir).toFile();
+    collectAllFiles(extraCSharpSources,path.toURI(),path,".cs");
+  }
+  for (  final Entry<ICompilationUnit,Boolean> entry : _sources.entrySet()) {
+    final ICompilationUnit unit=entry.getKey();
+    String unitName=getUnitName(unit);
+    String sourceName=unitName.replace('.','/') + ".java";
+    File sourceFile=sourcePath.append(sourceName).toFile();
+    String outputName=unitName.replace('.','/') + ".cs";
+    File outputFile=outputPath.append(outputName).toFile();
+    URI uri=outputURI.relativize(outputFile.toURI());
+    if (_api.compilationUnitDefinesBindings(unitName)) {
+      _mustParse.put(unit,true);
+    }
+    if (extraCSharpSources.contains(uri.getPath())) {
+      entry.setValue(false);
+      continue;
+    }
+    if (outputFile.exists() && (outputFile.lastModified() >= sourceFile.lastModified())) {
+      entry.setValue(false);
+      continue;
+    }
+    Match match=Match.NO_MATCH;
+    for (    final LocationFilter filter : excludeFilters) {
+      match=filter.matches(unitName);
+      if (match != Match.NO_MATCH)       break;
+    }
+    if (match != Match.NO_MATCH) {
+      entry.setValue(match == Match.POSITIVE);
+      continue;
+    }
+    entry.setValue(true);
+  }
+}

@@ -1,0 +1,10 @@
+{
+synchronized (mSoundEffectsLock) {
+    if (status != 0) {
+      mStatus=status;
+    }
+    if (sampleId == mLastSample) {
+      mSoundEffectsLock.notify();
+    }
+  }
+}

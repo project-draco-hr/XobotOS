@@ -1,0 +1,6 @@
+{
+  if (hostname == null)   return null;
+  if (inetAddress != null)   return inetAddress;
+  inetAddress=InetAddress.getByName(hostname);
+  return inetAddress;
+}

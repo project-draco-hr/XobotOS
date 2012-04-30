@@ -1,0 +1,9 @@
+{
+  if (DBG)   log("cleanUpAllConnections: tearDown=" + tearDown + " reason="+ reason);
+  for (  ApnContext apnContext : mApnContexts.values()) {
+    apnContext.setReason(reason);
+    cleanUpConnection(tearDown,apnContext);
+  }
+  stopNetStatPoll();
+  mRequestedApnType=Phone.APN_TYPE_DEFAULT;
+}

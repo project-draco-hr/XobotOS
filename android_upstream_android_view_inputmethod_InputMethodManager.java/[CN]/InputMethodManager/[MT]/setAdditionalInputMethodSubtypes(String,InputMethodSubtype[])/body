@@ -1,0 +1,10 @@
+{
+synchronized (mH) {
+    try {
+      mService.setAdditionalInputMethodSubtypes(imiId,subtypes);
+    }
+ catch (    RemoteException e) {
+      Log.w(TAG,"IME died: " + mCurId,e);
+    }
+  }
+}

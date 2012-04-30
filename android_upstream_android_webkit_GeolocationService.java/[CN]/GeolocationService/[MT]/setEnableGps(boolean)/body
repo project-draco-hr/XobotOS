@@ -1,0 +1,10 @@
+{
+  if (mIsGpsEnabled != enable) {
+    mIsGpsEnabled=enable;
+    if (mIsRunning) {
+      unregisterFromLocationUpdates();
+      registerForLocationUpdates();
+      maybeReportError("The last location provider is no longer available");
+    }
+  }
+}

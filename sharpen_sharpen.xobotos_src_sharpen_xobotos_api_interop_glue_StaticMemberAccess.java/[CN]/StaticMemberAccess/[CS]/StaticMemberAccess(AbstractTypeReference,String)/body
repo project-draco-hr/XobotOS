@@ -1,0 +1,5 @@
+{
+  this._type=type;
+  this._member=member;
+  if ((type == null) || (member == null))   throw new NullPointerException();
+}

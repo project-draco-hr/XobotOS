@@ -1,0 +1,5 @@
+{
+  CSField handle=new CSField(_handleName,new CSTypeReference("GCHandle"),CSVisibility.Public);
+  struct.addMember(handle);
+  free.body().addStatement(new CSMethodInvocationExpression(new CSMemberReferenceExpression(new CSReferenceExpression(_handleName),"Free")));
+}

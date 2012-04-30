@@ -1,0 +1,17 @@
+{
+  if ((mPrivateFlags & REQUEST_TRANSPARENT_REGIONS) != 0) {
+    mParent.requestTransparentRegion(this);
+  }
+  if ((mPrivateFlags & AWAKEN_SCROLL_BARS_ON_ATTACH) != 0) {
+    initialAwakenScrollBars();
+    mPrivateFlags&=~AWAKEN_SCROLL_BARS_ON_ATTACH;
+  }
+  jumpDrawablesToCurrentState();
+  resolveLayoutDirectionIfNeeded();
+  resolvePadding();
+  resolveTextDirection();
+  if (isFocused()) {
+    InputMethodManager imm=InputMethodManager.peekInstance();
+    imm.focusIn(this);
+  }
+}

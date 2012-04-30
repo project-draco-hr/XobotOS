@@ -1,0 +1,2 @@
+def __hash__(self):
+    return (((hash(self.bench) ^ hash(self.config)) ^ hash(self.time_type)) ^ hash(frozenset(self.settings.iteritems())))

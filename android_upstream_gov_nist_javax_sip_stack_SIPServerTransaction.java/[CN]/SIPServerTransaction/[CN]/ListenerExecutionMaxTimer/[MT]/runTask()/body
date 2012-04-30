@@ -1,0 +1,13 @@
+{
+  try {
+    if (serverTransaction.getState() == null) {
+      serverTransaction.terminate();
+      SIPTransactionStack sipStack=serverTransaction.getSIPStack();
+      sipStack.removePendingTransaction(serverTransaction);
+      sipStack.removeTransaction(serverTransaction);
+    }
+  }
+ catch (  Exception ex) {
+    sipStack.getStackLogger().logError("unexpected exception",ex);
+  }
+}

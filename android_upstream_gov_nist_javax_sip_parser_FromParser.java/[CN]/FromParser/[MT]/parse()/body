@@ -1,0 +1,10 @@
+{
+  From from=new From();
+  this.lexer.match(TokenTypes.FROM);
+  this.lexer.SPorHT();
+  this.lexer.match(':');
+  this.lexer.SPorHT();
+  super.parse(from);
+  this.lexer.match('\n');
+  return from;
+}

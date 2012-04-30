@@ -1,0 +1,10 @@
+{
+synchronized (lock) {
+    checkNotClosed();
+    if (pos >= buf.length) {
+      out.write(buf,0,buf.length);
+      pos=0;
+    }
+    buf[pos++]=(char)oneChar;
+  }
+}

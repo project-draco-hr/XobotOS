@@ -1,0 +1,120 @@
+{
+  Pipeline inputStream=this.rawInputStream;
+  try {
+    while (true) {
+      this.sizeCounter=this.maxMessageSize;
+      StringBuffer inputBuffer=new StringBuffer();
+      if (Debug.parserDebug)       Debug.println("Starting parse!");
+      String line1;
+      String line2=null;
+      while (true) {
+        try {
+          line1=readLine(inputStream);
+          if (line1.equals("\n")) {
+            if (Debug.parserDebug) {
+              Debug.println("Discarding blank line. ");
+            }
+            continue;
+          }
+ else           break;
+        }
+ catch (        IOException ex) {
+          Debug.printStackTrace(ex);
+          this.rawInputStream.stopTimer();
+          return;
+        }
+      }
+      inputBuffer.append(line1);
+      this.rawInputStream.startTimer();
+      Debug.println("Reading Input Stream");
+      while (true) {
+        try {
+          line2=readLine(inputStream);
+          inputBuffer.append(line2);
+          if (line2.trim().equals(""))           break;
+        }
+ catch (        IOException ex) {
+          this.rawInputStream.stopTimer();
+          Debug.printStackTrace(ex);
+          return;
+        }
+      }
+      this.rawInputStream.stopTimer();
+      inputBuffer.append(line2);
+      StringMsgParser smp=new StringMsgParser(sipMessageListener);
+      smp.readBody=false;
+      SIPMessage sipMessage=null;
+      try {
+        if (Debug.debug) {
+          Debug.println("About to parse : " + inputBuffer.toString());
+        }
+        sipMessage=smp.parseSIPMessage(inputBuffer.toString());
+        if (sipMessage == null) {
+          this.rawInputStream.stopTimer();
+          continue;
+        }
+      }
+ catch (      ParseException ex) {
+        Debug.logError("Detected a parse error",ex);
+        continue;
+      }
+      if (Debug.debug) {
+        Debug.println("Completed parsing message");
+      }
+      ContentLength cl=(ContentLength)sipMessage.getContentLength();
+      int contentLength=0;
+      if (cl != null) {
+        contentLength=cl.getContentLength();
+      }
+ else {
+        contentLength=0;
+      }
+      if (Debug.debug) {
+        Debug.println("contentLength " + contentLength);
+      }
+      if (contentLength == 0) {
+        sipMessage.removeContent();
+      }
+ else       if (maxMessageSize == 0 || contentLength < this.sizeCounter) {
+        byte[] message_body=new byte[contentLength];
+        int nread=0;
+        while (nread < contentLength) {
+          this.rawInputStream.startTimer();
+          try {
+            int readlength=inputStream.read(message_body,nread,contentLength - nread);
+            if (readlength > 0) {
+              nread+=readlength;
+            }
+ else {
+              break;
+            }
+          }
+ catch (          IOException ex) {
+            Debug.logError("Exception Reading Content",ex);
+            break;
+          }
+ finally {
+            this.rawInputStream.stopTimer();
+          }
+        }
+        sipMessage.setMessageContent(message_body);
+      }
+      if (sipMessageListener != null) {
+        try {
+          sipMessageListener.processMessage(sipMessage);
+        }
+ catch (        Exception ex) {
+          break;
+        }
+      }
+    }
+  }
+  finally {
+    try {
+      inputStream.close();
+    }
+ catch (    IOException e) {
+      InternalErrorHandler.handleException(e);
+    }
+  }
+}

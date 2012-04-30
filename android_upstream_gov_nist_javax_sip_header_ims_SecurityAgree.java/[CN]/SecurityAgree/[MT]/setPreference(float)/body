@@ -1,0 +1,4 @@
+{
+  if (q < 0.0f)   throw new InvalidArgumentException("JAIN-SIP " + "Exception, SecurityClient, setPreference(), the preference (q) parameter is <0");
+  setParameter(ParameterNamesIms.Q,q);
+}

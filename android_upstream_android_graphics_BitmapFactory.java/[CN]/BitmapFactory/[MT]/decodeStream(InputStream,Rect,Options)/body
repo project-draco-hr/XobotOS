@@ -1,0 +1,23 @@
+{
+  if (is == null) {
+    return null;
+  }
+  if (!is.markSupported()) {
+    is=new BufferedInputStream(is,16 * 1024);
+  }
+  is.mark(1024);
+  Bitmap bm;
+  if (is instanceof AssetManager.AssetInputStream) {
+    bm=nativeDecodeAsset(((AssetManager.AssetInputStream)is).getAssetInt(),outPadding,opts);
+  }
+ else {
+    byte[] tempStorage=null;
+    if (opts != null)     tempStorage=opts.inTempStorage;
+    if (tempStorage == null)     tempStorage=new byte[16 * 1024];
+    bm=nativeDecodeStream(is,tempStorage,outPadding,opts);
+  }
+  if (bm == null && opts != null && opts.inBitmap != null) {
+    throw new IllegalArgumentException("Problem decoding into existing bitmap");
+  }
+  return finishDecode(bm,outPadding,opts);
+}

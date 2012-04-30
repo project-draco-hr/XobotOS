@@ -1,0 +1,11 @@
+{
+  CSClass type=new CSClass(anonymousInnerClassName(),CSClassModifier.Sealed);
+  type.visibility(CSVisibility.Private);
+  type.anonymous(true);
+  ITypeBinding bt=anonymousBaseType();
+  CSTypeReferenceExpression tref=mappedTypeReference(bt);
+  type.addBaseType(tref);
+  for (  ITypeBinding tp : bt.getTypeParameters())   type.addTypeParameter(new CSTypeParameter(identifier(tp.getName())));
+  if (isNonStaticNestedType(bt))   requireEnclosingReference();
+  return type;
+}

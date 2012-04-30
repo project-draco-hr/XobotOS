@@ -1,0 +1,4 @@
+{
+  if (!isClass())   return null;
+  return new ExpressionStatement(new MethodInvocation(getHelper().DESTRUCTOR.expr(),getReference(obj)));
+}

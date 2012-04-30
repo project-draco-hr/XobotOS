@@ -1,0 +1,16 @@
+{
+  try {
+    java.io.FileReader reader=new java.io.FileReader(fname);
+    try {
+      ArrayList<String> lines=new ArrayList<String>();
+      collectLines(lines,new BufferedReader(reader));
+      return lines.toArray(new String[lines.size()]);
+    }
+  finally {
+      reader.close();
+    }
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+}

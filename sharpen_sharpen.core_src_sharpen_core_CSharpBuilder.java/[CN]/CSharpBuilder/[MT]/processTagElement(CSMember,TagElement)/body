@@ -1,0 +1,14 @@
+{
+  if (processSemanticallySignificantTagElement(member,element)) {
+    return;
+  }
+  if (!isConversionTag(element.getTagName())) {
+    member.addDoc(mapTagElement(element));
+  }
+ else   if (isAttributeAnnotation(element)) {
+    processAttribute(member,element);
+  }
+ else   if (isNewAnnotation(element)) {
+    member.setNewModifier(true);
+  }
+}

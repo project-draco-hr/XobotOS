@@ -1,0 +1,5 @@
+{
+  this._cond=cond;
+  this._thenBlock=new Block();
+  this._elseBlock=new Block();
+}

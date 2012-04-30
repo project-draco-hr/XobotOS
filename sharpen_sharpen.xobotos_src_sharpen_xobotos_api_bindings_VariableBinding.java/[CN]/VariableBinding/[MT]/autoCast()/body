@@ -1,0 +1,3 @@
+{
+  return _autoCast != null ? _autoCast.getExpression() : null;
+}

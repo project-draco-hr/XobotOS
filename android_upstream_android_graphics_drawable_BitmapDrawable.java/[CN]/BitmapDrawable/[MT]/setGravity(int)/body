@@ -1,0 +1,7 @@
+{
+  if (mBitmapState.mGravity != gravity) {
+    mBitmapState.mGravity=gravity;
+    mApplyGravity=true;
+    invalidateSelf();
+  }
+}

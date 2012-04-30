@@ -1,0 +1,4 @@
+{
+  FileDescriptor fd=socket.getFileDescriptor$();
+  return fd != null ? new ParcelFileDescriptor(fd) : null;
+}

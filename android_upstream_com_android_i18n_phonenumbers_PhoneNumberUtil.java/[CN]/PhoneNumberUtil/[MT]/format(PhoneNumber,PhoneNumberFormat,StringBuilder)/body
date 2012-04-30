@@ -1,0 +1,18 @@
+{
+  formattedNumber.setLength(0);
+  int countryCallingCode=number.getCountryCode();
+  String nationalSignificantNumber=getNationalSignificantNumber(number);
+  if (numberFormat == PhoneNumberFormat.E164) {
+    formattedNumber.append(nationalSignificantNumber);
+    formatNumberByFormat(countryCallingCode,PhoneNumberFormat.E164,formattedNumber);
+    return;
+  }
+  String regionCode=getRegionCodeForCountryCode(countryCallingCode);
+  if (!isValidRegionCode(regionCode)) {
+    formattedNumber.append(nationalSignificantNumber);
+    return;
+  }
+  formattedNumber.append(formatNationalNumber(nationalSignificantNumber,regionCode,numberFormat));
+  maybeGetFormattedExtension(number,regionCode,numberFormat,formattedNumber);
+  formatNumberByFormat(countryCallingCode,numberFormat,formattedNumber);
+}

@@ -1,0 +1,14 @@
+{
+  Subject subject=new Subject();
+  if (debug)   dbg_enter("SubjectParser.parse");
+  try {
+    headerName(TokenTypes.SUBJECT);
+    this.lexer.SPorHT();
+    String s=this.lexer.getRest();
+    subject.setSubject(s.trim());
+  }
+  finally {
+    if (debug)     dbg_leave("SubjectParser.parse");
+  }
+  return subject;
+}

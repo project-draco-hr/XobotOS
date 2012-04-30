@@ -1,0 +1,4 @@
+{
+  PProfileKey retval=(PProfileKey)super.clone();
+  return retval;
+}

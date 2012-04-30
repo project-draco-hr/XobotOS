@@ -1,0 +1,15 @@
+{
+  String[] packages=mPackageManager.getPackagesForUid(callerUid);
+  for (  String name : packages) {
+    try {
+      PackageInfo packageInfo=mPackageManager.getPackageInfo(name,0);
+      if (packageInfo != null && (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+        return true;
+      }
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+      return false;
+    }
+  }
+  return false;
+}

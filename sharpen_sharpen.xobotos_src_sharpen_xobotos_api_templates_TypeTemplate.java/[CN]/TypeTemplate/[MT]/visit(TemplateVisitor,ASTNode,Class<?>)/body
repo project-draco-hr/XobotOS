@@ -1,0 +1,14 @@
+{
+  if (member instanceof TypeDeclaration)   return visit(visitor,getTypes(),(TypeDeclaration)member);
+ else   if (member instanceof EnumDeclaration)   return visit(visitor,getEnums(),(EnumDeclaration)member);
+ else   if (member instanceof AnonymousClassDeclaration)   return visit(visitor,getAnonymousClasses(),(AnonymousClassDeclaration)member);
+ else   if (member instanceof FieldDeclaration)   return visit(visitor,getFields(),(FieldDeclaration)member);
+ else   if (member instanceof MethodDeclaration) {
+    MethodDeclaration method=(MethodDeclaration)member;
+    if ((templateType != null) && templateType.equals(PropertyTemplate.class))     return visit(visitor,getProperties(),method);
+    if (method.isConstructor())     return visit(visitor,getConstructors(),method);
+ else     if (Filter.isDestructor(method))     return visit(visitor,getDestructors(),method);
+ else     return visit(visitor,getMethods(),method);
+  }
+  return false;
+}

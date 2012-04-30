@@ -1,0 +1,12 @@
+{
+  int minSize=Math.min(this.longCount,bs.longCount);
+  int maxSize=Math.max(this.longCount,bs.longCount);
+  ensureCapacity(maxSize);
+  for (int i=0; i < minSize; ++i) {
+    bits[i]|=bs.bits[i];
+  }
+  if (bs.longCount > minSize) {
+    System.arraycopy(bs.bits,minSize,bits,minSize,maxSize - minSize);
+  }
+  longCount=maxSize;
+}

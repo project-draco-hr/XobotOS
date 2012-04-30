@@ -1,0 +1,8 @@
+{
+  if (isReferenceToRemovedType(node.getType())) {
+    pushExpression(new CSRemovedExpression(node.toString()));
+    return false;
+  }
+  pushTypeOfExpression(mappedTypeReference(node.getType()));
+  return false;
+}

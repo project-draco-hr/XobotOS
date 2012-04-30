@@ -1,0 +1,4 @@
+{
+  theWriter.println(attrName);
+  attrName=null;
+}

@@ -1,0 +1,6 @@
+{
+synchronized (mHandlerMap) {
+    mRegistrationComplete=true;
+    mHandlerMap.notifyAll();
+  }
+}

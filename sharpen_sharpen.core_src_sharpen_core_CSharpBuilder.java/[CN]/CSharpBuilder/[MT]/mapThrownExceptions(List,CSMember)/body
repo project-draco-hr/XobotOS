@@ -1,0 +1,5 @@
+{
+  for (  Object exception : thrownExceptions) {
+    mapThrownException((Name)exception,member);
+  }
+}

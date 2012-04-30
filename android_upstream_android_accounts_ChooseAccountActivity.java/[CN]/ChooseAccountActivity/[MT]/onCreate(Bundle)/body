@@ -1,0 +1,26 @@
+{
+  super.onCreate(savedInstanceState);
+  mAccounts=getIntent().getParcelableArrayExtra(AccountManager.KEY_ACCOUNTS);
+  mAccountManagerResponse=getIntent().getParcelableExtra(AccountManager.KEY_ACCOUNT_MANAGER_RESPONSE);
+  if (mAccounts == null) {
+    setResult(RESULT_CANCELED);
+    finish();
+    return;
+  }
+  getAuthDescriptions();
+  AccountInfo[] mAccountInfos=new AccountInfo[mAccounts.length];
+  for (int i=0; i < mAccounts.length; i++) {
+    mAccountInfos[i]=new AccountInfo(((Account)mAccounts[i]).name,getDrawableForType(((Account)mAccounts[i]).type));
+  }
+  setContentView(R.layout.choose_account);
+  ListView list=(ListView)findViewById(android.R.id.list);
+  list.setAdapter(new AccountArrayAdapter(this,android.R.layout.simple_list_item_1,mAccountInfos));
+  list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+  list.setTextFilterEnabled(true);
+  list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+    public void onItemClick(    AdapterView<?> parent,    View v,    int position,    long id){
+      onListItemClick((ListView)parent,v,position,id);
+    }
+  }
+);
+}

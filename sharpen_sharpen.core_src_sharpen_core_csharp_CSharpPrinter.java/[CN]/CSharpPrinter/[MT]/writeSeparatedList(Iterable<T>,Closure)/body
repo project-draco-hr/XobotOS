@@ -1,0 +1,9 @@
+{
+  Iterator<T> iterator=nodes.iterator();
+  if (!iterator.hasNext())   return;
+  iterator.next().accept(this);
+  while (iterator.hasNext()) {
+    separator.execute();
+    iterator.next().accept(this);
+  }
+}

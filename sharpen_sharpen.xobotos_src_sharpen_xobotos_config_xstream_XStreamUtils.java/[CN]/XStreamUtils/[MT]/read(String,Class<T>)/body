@@ -1,0 +1,11 @@
+{
+  try {
+    FileReader reader=new FileReader(fileName);
+    XStream xstream=prepareXStream();
+    xstream.setMode(XStream.ID_REFERENCES);
+    return klass.cast(xstream.fromXML(reader));
+  }
+ catch (  FileNotFoundException e) {
+    throw new RuntimeException("Cannot read configuration file: " + fileName);
+  }
+}

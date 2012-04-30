@@ -1,0 +1,6 @@
+{
+  if (mPtr != 0) {
+    nativeDispose(mPtr);
+    mPtr=0;
+  }
+}

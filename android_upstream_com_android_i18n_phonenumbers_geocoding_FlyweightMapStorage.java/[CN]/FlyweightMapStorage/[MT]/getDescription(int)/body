@@ -1,0 +1,3 @@
+{
+  return descriptionPool[readWordFromBuffer(descriptionIndexes,descIndexSizeInBytes,index)];
+}

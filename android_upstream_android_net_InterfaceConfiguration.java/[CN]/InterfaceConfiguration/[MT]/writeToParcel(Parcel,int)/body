@@ -1,0 +1,11 @@
+{
+  dest.writeString(hwAddr);
+  if (addr != null) {
+    dest.writeByte((byte)1);
+    dest.writeParcelable(addr,flags);
+  }
+ else {
+    dest.writeByte((byte)0);
+  }
+  dest.writeString(interfaceFlags);
+}

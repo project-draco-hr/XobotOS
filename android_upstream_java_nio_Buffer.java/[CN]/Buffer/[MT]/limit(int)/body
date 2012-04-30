@@ -1,0 +1,4 @@
+{
+  limitImpl(newLimit);
+  return this;
+}

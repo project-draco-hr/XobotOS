@@ -1,0 +1,10 @@
+{
+  Set<String> set=keySet();
+  Set<String> ret=new HashSet<String>();
+  for (  String key : set) {
+    if (handleGetObject(key) != null) {
+      ret.add(key);
+    }
+  }
+  return ret;
+}

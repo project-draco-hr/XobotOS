@@ -1,0 +1,6 @@
+{
+  if (defaultTimeZone == null) {
+    defaultTimeZone=ZoneInfoDB.getSystemDefault();
+  }
+  return (TimeZone)defaultTimeZone.clone();
+}

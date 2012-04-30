@@ -1,0 +1,3 @@
+String dllName
+CallingConvention cconv
+CharSet charSet

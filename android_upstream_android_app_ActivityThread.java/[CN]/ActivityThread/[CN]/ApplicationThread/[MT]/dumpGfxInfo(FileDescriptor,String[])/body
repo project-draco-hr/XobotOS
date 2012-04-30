@@ -1,0 +1,4 @@
+{
+  dumpGraphicsInfo(fd);
+  WindowManagerImpl.getDefault().dumpGfxInfo(fd);
+}

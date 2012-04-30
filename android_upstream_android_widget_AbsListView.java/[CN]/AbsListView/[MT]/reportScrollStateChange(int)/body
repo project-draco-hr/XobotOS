@@ -1,0 +1,8 @@
+{
+  if (newState != mLastScrollState) {
+    if (mOnScrollListener != null) {
+      mLastScrollState=newState;
+      mOnScrollListener.onScrollStateChanged(this,newState);
+    }
+  }
+}

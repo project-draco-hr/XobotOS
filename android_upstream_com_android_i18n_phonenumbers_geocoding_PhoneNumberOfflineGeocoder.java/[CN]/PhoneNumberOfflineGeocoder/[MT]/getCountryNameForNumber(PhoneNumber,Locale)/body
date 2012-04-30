@@ -1,0 +1,4 @@
+{
+  String regionCode=phoneUtil.getRegionCodeForNumber(number);
+  return (regionCode == null || regionCode.equals("ZZ")) ? "" : new Locale("",regionCode).getDisplayCountry(language);
+}

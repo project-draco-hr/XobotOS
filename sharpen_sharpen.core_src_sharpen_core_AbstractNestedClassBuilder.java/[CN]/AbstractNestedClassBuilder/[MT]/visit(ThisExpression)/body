@@ -1,0 +1,5 @@
+{
+  if (null == node.getQualifier())   return super.visit(node);
+  pushExpression(createEnclosingThisReference(node.getQualifier().resolveTypeBinding(),true));
+  return false;
+}

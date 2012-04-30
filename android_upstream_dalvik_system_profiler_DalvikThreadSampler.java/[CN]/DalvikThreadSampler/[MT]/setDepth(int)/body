@@ -1,0 +1,7 @@
+{
+  this.depth=depth;
+  this.mutableStackTraceElements=new StackTraceElement[depth + 1][];
+  for (int i=1; i < mutableStackTraceElements.length; i++) {
+    this.mutableStackTraceElements[i]=new StackTraceElement[i];
+  }
+}

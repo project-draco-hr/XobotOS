@@ -1,0 +1,3 @@
+{
+  return nativeGetDownTimeNanos(mNativePtr) / NS_PER_MS;
+}

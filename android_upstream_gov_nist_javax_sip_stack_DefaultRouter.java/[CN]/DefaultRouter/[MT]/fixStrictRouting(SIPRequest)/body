@@ -1,0 +1,14 @@
+{
+  RouteList routes=req.getRouteHeaders();
+  Route first=(Route)routes.getFirst();
+  SipUri firstUri=(SipUri)first.getAddress().getURI();
+  routes.removeFirst();
+  AddressImpl addr=new AddressImpl();
+  addr.setAddess(req.getRequestURI());
+  Route route=new Route(addr);
+  routes.add(route);
+  req.setRequestURI(firstUri);
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("post: fixStrictRouting" + req);
+  }
+}

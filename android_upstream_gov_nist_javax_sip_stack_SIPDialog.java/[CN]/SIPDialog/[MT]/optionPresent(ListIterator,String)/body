@@ -1,0 +1,7 @@
+{
+  while (l.hasNext()) {
+    OptionTag opt=(OptionTag)l.next();
+    if (opt != null && option.equalsIgnoreCase(opt.getOptionTag()))     return true;
+  }
+  return false;
+}

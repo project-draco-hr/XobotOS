@@ -1,0 +1,20 @@
+{
+  final int N=in.readInt();
+  if (N == 0) {
+    mExcessivePower=null;
+    return true;
+  }
+  if (N > 10000) {
+    Slog.w(TAG,"File corrupt: too many excessive power entries " + N);
+    return false;
+  }
+  mExcessivePower=new ArrayList<ExcessivePower>();
+  for (int i=0; i < N; i++) {
+    ExcessivePower ew=new ExcessivePower();
+    ew.type=in.readInt();
+    ew.overTime=in.readLong();
+    ew.usedTime=in.readLong();
+    mExcessivePower.add(ew);
+  }
+  return true;
+}

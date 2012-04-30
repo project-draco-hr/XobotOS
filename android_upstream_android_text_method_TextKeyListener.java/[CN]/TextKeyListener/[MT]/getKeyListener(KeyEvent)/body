@@ -1,0 +1,14 @@
+{
+  KeyCharacterMap kmap=event.getKeyCharacterMap();
+  int kind=kmap.getKeyboardType();
+  if (kind == KeyCharacterMap.ALPHA) {
+    return QwertyKeyListener.getInstance(mAutoText,mAutoCap);
+  }
+ else   if (kind == KeyCharacterMap.NUMERIC) {
+    return MultiTapKeyListener.getInstance(mAutoText,mAutoCap);
+  }
+ else   if (kind == KeyCharacterMap.FULL || kind == KeyCharacterMap.SPECIAL_FUNCTION) {
+    return QwertyKeyListener.getInstanceForFullKeyboard();
+  }
+  return NullKeyListener.getInstance();
+}

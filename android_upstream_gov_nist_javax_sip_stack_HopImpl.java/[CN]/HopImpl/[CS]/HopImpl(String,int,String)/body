@@ -1,0 +1,6 @@
+{
+  host=hostName;
+  if (host.indexOf(":") >= 0)   if (host.indexOf("[") < 0)   host="[" + host + "]";
+  port=portNumber;
+  transport=trans;
+}

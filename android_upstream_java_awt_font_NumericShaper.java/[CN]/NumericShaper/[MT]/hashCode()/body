@@ -1,0 +1,7 @@
+{
+  int result=17;
+  result=31 * result + fRanges;
+  result=31 * result + fDefaultContextIndex;
+  result=31 * result + (fContextual ? 1 : 0);
+  return result;
+}

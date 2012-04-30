@@ -1,0 +1,10 @@
+{
+  int count=VMStack.fillStackTraceElements(thread,mutableStackTraceElements[depth]);
+  if (count == 0) {
+    return null;
+  }
+  if (count < depth) {
+    System.arraycopy(mutableStackTraceElements[depth],0,mutableStackTraceElements[count],0,count);
+  }
+  return mutableStackTraceElements[count];
+}

@@ -1,0 +1,14 @@
+{
+  String s;
+  mSubtypeNameResId=source.readInt();
+  mSubtypeIconResId=source.readInt();
+  s=source.readString();
+  mSubtypeLocale=s != null ? s : "";
+  s=source.readString();
+  mSubtypeMode=s != null ? s : "";
+  s=source.readString();
+  mSubtypeExtraValue=s != null ? s : "";
+  mIsAuxiliary=(source.readInt() == 1);
+  mOverridesImplicitlyEnabledSubtype=(source.readInt() == 1);
+  mSubtypeHashCode=hashCodeInternal(mSubtypeLocale,mSubtypeMode,mSubtypeExtraValue,mIsAuxiliary,mOverridesImplicitlyEnabledSubtype);
+}

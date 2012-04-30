@@ -1,0 +1,4 @@
+SIPMessage sipMessage
+InetAddress address
+int port
+long time

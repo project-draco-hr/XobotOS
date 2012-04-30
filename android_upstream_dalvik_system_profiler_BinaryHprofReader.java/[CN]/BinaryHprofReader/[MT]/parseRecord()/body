@@ -1,0 +1,56 @@
+{
+  int tagOrEOF=in.read();
+  if (tagOrEOF == -1) {
+    return false;
+  }
+  byte tag=(byte)tagOrEOF;
+  int timeDeltaInMicroseconds=in.readInt();
+  int recordLength=in.readInt();
+  BinaryHprof.Tag hprofTag=BinaryHprof.Tag.get(tag);
+  if (TRACE) {
+    System.out.println("hprofTag=" + hprofTag);
+  }
+  if (hprofTag == null) {
+    skipRecord(hprofTag,recordLength);
+    return true;
+  }
+  String error=hprofTag.checkSize(recordLength);
+  if (error != null) {
+    throw new MalformedHprofException(error);
+  }
+switch (hprofTag) {
+case CONTROL_SETTINGS:
+    parseControlSettings();
+  return true;
+case STRING_IN_UTF8:
+parseStringInUtf8(recordLength);
+return true;
+case START_THREAD:
+parseStartThread();
+return true;
+case END_THREAD:
+parseEndThread();
+return true;
+case LOAD_CLASS:
+parseLoadClass();
+return true;
+case STACK_FRAME:
+parseStackFrame();
+return true;
+case STACK_TRACE:
+parseStackTrace(recordLength);
+return true;
+case CPU_SAMPLES:
+parseCpuSamples(recordLength);
+return true;
+case UNLOAD_CLASS:
+case ALLOC_SITES:
+case HEAP_SUMMARY:
+case HEAP_DUMP:
+case HEAP_DUMP_SEGMENT:
+case HEAP_DUMP_END:
+default :
+skipRecord(hprofTag,recordLength);
+return true;
+}
+}

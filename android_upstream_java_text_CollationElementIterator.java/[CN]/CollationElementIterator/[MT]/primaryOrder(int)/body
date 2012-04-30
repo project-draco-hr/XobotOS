@@ -1,0 +1,3 @@
+{
+  return CollationElementIteratorICU.primaryOrder(order);
+}

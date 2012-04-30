@@ -1,0 +1,7 @@
+{
+  PipedInputStream stream=target;
+  if (stream == null) {
+    throw new IOException("Pipe not connected");
+  }
+  stream.receive(oneByte);
+}

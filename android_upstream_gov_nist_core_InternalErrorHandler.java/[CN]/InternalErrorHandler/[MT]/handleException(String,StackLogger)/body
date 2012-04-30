@@ -1,0 +1,6 @@
+{
+  stackLogger.logStackTrace();
+  stackLogger.logError("Unexepcted INTERNAL ERROR FIXME!!");
+  stackLogger.logFatalError(emsg);
+  throw new RuntimeException(emsg);
+}

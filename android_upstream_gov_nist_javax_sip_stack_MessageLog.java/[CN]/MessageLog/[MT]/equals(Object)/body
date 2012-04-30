@@ -1,0 +1,9 @@
+{
+  if (!(other instanceof MessageLog)) {
+    return false;
+  }
+ else {
+    MessageLog otherLog=(MessageLog)other;
+    return otherLog.message.equals(message) && otherLog.timeStamp == timeStamp;
+  }
+}

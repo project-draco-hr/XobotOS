@@ -1,0 +1,16 @@
+{
+  byte[] slbytes=null;
+  if (statusLine != null) {
+    try {
+      slbytes=statusLine.encode().getBytes("UTF-8");
+    }
+ catch (    UnsupportedEncodingException ex) {
+      InternalErrorHandler.handleException(ex);
+    }
+  }
+  byte[] superbytes=super.encodeAsBytes(transport);
+  byte[] retval=new byte[slbytes.length + superbytes.length];
+  System.arraycopy(slbytes,0,retval,0,slbytes.length);
+  System.arraycopy(superbytes,0,retval,slbytes.length,superbytes.length);
+  return retval;
+}

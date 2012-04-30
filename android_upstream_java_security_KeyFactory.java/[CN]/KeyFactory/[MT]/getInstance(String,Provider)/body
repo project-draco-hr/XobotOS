@@ -1,0 +1,10 @@
+{
+  if (provider == null) {
+    throw new IllegalArgumentException();
+  }
+  if (algorithm == null) {
+    throw new NullPointerException();
+  }
+  Object spi=ENGINE.getInstance(algorithm,provider,null);
+  return new KeyFactory((KeyFactorySpi)spi,provider,algorithm);
+}

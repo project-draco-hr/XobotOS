@@ -1,0 +1,5 @@
+{
+  if (reasonPhrase == null)   throw new IllegalArgumentException("Bad reason phrase");
+  if (this.statusLine == null)   this.statusLine=new StatusLine();
+  this.statusLine.setReasonPhrase(reasonPhrase);
+}

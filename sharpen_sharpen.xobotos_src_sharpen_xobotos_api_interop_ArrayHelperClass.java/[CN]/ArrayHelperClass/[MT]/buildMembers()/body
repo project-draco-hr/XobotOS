@@ -1,0 +1,5 @@
+{
+  _lengthMember=addMember(new LengthMember());
+  _ptrMember=new PtrMember();
+  addMember(_ptrMember);
+}

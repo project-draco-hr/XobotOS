@@ -1,0 +1,4 @@
+{
+  setParentConstraints(size,size);
+  getLocations();
+}

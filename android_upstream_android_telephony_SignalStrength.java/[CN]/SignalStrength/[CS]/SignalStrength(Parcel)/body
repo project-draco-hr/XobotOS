@@ -1,0 +1,15 @@
+{
+  mGsmSignalStrength=in.readInt();
+  mGsmBitErrorRate=in.readInt();
+  mCdmaDbm=in.readInt();
+  mCdmaEcio=in.readInt();
+  mEvdoDbm=in.readInt();
+  mEvdoEcio=in.readInt();
+  mEvdoSnr=in.readInt();
+  mLteSignalStrength=in.readInt();
+  mLteRsrp=in.readInt();
+  mLteRsrq=in.readInt();
+  mLteRssnr=in.readInt();
+  mLteCqi=in.readInt();
+  isGsm=(in.readInt() != 0);
+}

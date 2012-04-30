@@ -1,0 +1,8 @@
+{
+  final PreferenceLayout pl=createPreferenceLayout(preference,null);
+  int insertPos=Collections.binarySearch(mPreferenceLayouts,pl);
+  if (insertPos < 0) {
+    insertPos=insertPos * -1 - 1;
+    mPreferenceLayouts.add(insertPos,pl);
+  }
+}

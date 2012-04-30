@@ -1,0 +1,8 @@
+{
+  if ((reasons != null) && (distributionPoint == null) && (cRLIssuer == null)) {
+    throw new IllegalArgumentException("DistributionPoint MUST NOT consist of only the reasons field");
+  }
+  this.distributionPoint=distributionPoint;
+  this.reasons=reasons;
+  this.cRLIssuer=cRLIssuer;
+}

@@ -1,0 +1,28 @@
+{
+  Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+  SyncResult syncResult=new SyncResult();
+  ContentProviderClient provider=null;
+  try {
+    if (isCanceled()) {
+      return;
+    }
+    provider=mContext.getContentResolver().acquireContentProviderClient(mAuthority);
+    if (provider != null) {
+      AbstractThreadedSyncAdapter.this.onPerformSync(mAccount,mExtras,mAuthority,provider,syncResult);
+    }
+ else {
+      syncResult.databaseError=true;
+    }
+  }
+  finally {
+    if (provider != null) {
+      provider.release();
+    }
+    if (!isCanceled()) {
+      mSyncContext.onFinished(syncResult);
+    }
+synchronized (mSyncThreadLock) {
+      mSyncThreads.remove(mThreadsKey);
+    }
+  }
+}

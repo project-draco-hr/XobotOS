@@ -1,0 +1,3 @@
+def rmtree(path):
+    print ('> rmtree %s' % path)
+    shutil.rmtree(path, ignore_errors=True)

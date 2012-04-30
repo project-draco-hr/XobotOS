@@ -1,0 +1,4 @@
+CharSequence text
+String defaultRegion
+Leniency leniency
+long maxTries

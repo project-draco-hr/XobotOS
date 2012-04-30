@@ -1,0 +1,8 @@
+{
+  if (listeningPoint == null) {
+    if (this.getSIPStack().isLoggingEnabled()) {
+      this.getSIPStack().getStackLogger().logError("getListeningPoint" + this + " returning null listeningpoint");
+    }
+  }
+  return listeningPoint;
+}

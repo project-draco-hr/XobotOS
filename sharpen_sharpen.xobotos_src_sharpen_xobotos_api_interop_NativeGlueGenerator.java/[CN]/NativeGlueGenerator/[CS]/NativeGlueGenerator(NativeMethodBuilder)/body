@@ -1,0 +1,5 @@
+{
+  this._builder=builder;
+  this._method=builder.getNativeMethod();
+  this._decl=builder.getMethod();
+}

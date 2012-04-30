@@ -1,0 +1,3 @@
+{
+  return getDirectionality((int)c);
+}

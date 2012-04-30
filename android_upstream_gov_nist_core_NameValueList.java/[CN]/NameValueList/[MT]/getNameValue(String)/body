@@ -1,0 +1,3 @@
+{
+  return (NameValue)this.hmap.get(name.toLowerCase());
+}

@@ -1,0 +1,4 @@
+{
+  Node<K,V> node=removeInternalByKey(key);
+  return node != null ? node.value : null;
+}

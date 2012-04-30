@@ -1,0 +1,31 @@
+{
+switch (kind) {
+case CLASS:
+case INTERFACE:
+case ANONYMOUS_CLASS:
+    if (node instanceof AnonymousClassDeclaration)     return kind == MemberKind.ANONYMOUS_CLASS;
+  if (!(node instanceof TypeDeclaration))   return false;
+TypeDeclaration tdecl=(TypeDeclaration)node;
+if (kind == MemberKind.CLASS) return !tdecl.isInterface();
+ else if (kind == MemberKind.INTERFACE) return tdecl.isInterface();
+ else return tdecl.resolveBinding().isAnonymous();
+case ENUM:
+return node instanceof EnumDeclaration;
+case METHOD:
+case CONSTRUCTOR:
+case DESTRUCTOR:
+if (!(node instanceof MethodDeclaration)) return false;
+MethodDeclaration mdecl=(MethodDeclaration)node;
+if (kind == MemberKind.DESTRUCTOR) return isDestructor(mdecl);
+ else if (kind == MemberKind.CONSTRUCTOR) return mdecl.isConstructor();
+ else return !isDestructor(mdecl) && !mdecl.isConstructor();
+case STATIC_CONSTRUCTOR:
+if (!(node instanceof Initializer)) return false;
+Initializer initializer=(Initializer)node;
+return Modifier.isStatic(initializer.getModifiers());
+case FIELD:
+return node instanceof FieldDeclaration;
+default :
+return false;
+}
+}

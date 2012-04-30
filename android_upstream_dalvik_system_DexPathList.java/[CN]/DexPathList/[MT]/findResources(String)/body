@@ -1,0 +1,10 @@
+{
+  ArrayList<URL> result=new ArrayList<URL>();
+  for (  Element element : dexElements) {
+    URL url=element.findResource(name);
+    if (url != null) {
+      result.add(url);
+    }
+  }
+  return Collections.enumeration(result);
+}

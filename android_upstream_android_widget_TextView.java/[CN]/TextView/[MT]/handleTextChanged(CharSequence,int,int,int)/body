@@ -1,0 +1,24 @@
+{
+  final InputMethodState ims=mInputMethodState;
+  if (ims == null || ims.mBatchEditNesting == 0) {
+    updateAfterEdit();
+  }
+  if (ims != null) {
+    ims.mContentChanged=true;
+    if (ims.mChangedStart < 0) {
+      ims.mChangedStart=start;
+      ims.mChangedEnd=start + before;
+    }
+ else {
+      ims.mChangedStart=Math.min(ims.mChangedStart,start);
+      ims.mChangedEnd=Math.max(ims.mChangedEnd,start + before - ims.mChangedDelta);
+    }
+    ims.mChangedDelta+=after - before;
+  }
+  sendOnTextChanged(buffer,start,before,after);
+  onTextChanged(buffer,start,before,after);
+  updateSpellCheckSpans(start,start + after);
+  if (before != after) {
+    hideCursorControllers();
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return nativeGetPointerId(mNativePtr,pointerIndex);
+}

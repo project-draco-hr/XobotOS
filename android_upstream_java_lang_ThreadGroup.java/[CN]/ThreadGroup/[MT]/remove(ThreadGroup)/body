@@ -1,0 +1,12 @@
+{
+synchronized (groups) {
+    for (Iterator<ThreadGroup> i=groups.iterator(); i.hasNext(); ) {
+      ThreadGroup threadGroup=i.next();
+      if (threadGroup.equals(g)) {
+        i.remove();
+        break;
+      }
+    }
+  }
+  destroyIfEmptyDaemon();
+}

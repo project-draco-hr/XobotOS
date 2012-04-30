@@ -1,0 +1,9 @@
+{
+  try {
+    forName(charsetName);
+    return true;
+  }
+ catch (  UnsupportedCharsetException ex) {
+    return false;
+  }
+}

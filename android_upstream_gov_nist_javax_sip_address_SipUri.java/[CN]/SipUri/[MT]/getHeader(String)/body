@@ -1,0 +1,3 @@
+{
+  return this.qheaders.getValue(name) != null ? this.qheaders.getValue(name).toString() : null;
+}

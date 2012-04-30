@@ -1,0 +1,3 @@
+Gesture gesture
+int bitmapSize
+boolean keepAspectRatio

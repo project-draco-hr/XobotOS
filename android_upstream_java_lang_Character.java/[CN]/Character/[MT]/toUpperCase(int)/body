@@ -1,0 +1,9 @@
+{
+  if ('a' <= codePoint && codePoint <= 'z') {
+    return (char)(codePoint - ('a' - 'A'));
+  }
+  if (codePoint < 181) {
+    return codePoint;
+  }
+  return toUpperCaseImpl(codePoint);
+}

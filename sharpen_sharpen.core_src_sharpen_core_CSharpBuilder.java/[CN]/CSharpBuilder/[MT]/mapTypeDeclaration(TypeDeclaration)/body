@@ -1,0 +1,7 @@
+{
+  CSTypeDeclaration type=typeDeclarationFor(node);
+  type.startPosition(node.getStartPosition());
+  type.sourceLength(node.getLength());
+  mapTypeParameters(node.typeParameters(),type);
+  return checkForMainType(node,type);
+}

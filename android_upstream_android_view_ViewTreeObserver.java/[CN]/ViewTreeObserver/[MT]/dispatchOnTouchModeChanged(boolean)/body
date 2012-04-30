@@ -1,0 +1,8 @@
+{
+  final CopyOnWriteArrayList<OnTouchModeChangeListener> listeners=mOnTouchModeChangeListeners;
+  if (listeners != null && listeners.size() > 0) {
+    for (    OnTouchModeChangeListener listener : listeners) {
+      listener.onTouchModeChanged(inTouchMode);
+    }
+  }
+}

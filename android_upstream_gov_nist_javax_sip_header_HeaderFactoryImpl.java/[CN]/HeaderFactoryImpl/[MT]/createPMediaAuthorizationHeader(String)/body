@@ -1,0 +1,6 @@
+{
+  if (token == null || token == "")   throw new InvalidArgumentException("The Media-Authorization-Token parameter is null or empty");
+  PMediaAuthorization mediaAuthorization=new PMediaAuthorization();
+  mediaAuthorization.setMediaAuthorizationToken(token);
+  return mediaAuthorization;
+}

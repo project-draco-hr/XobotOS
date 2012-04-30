@@ -1,0 +1,6 @@
+{
+  T result=readFragment(_rootScope.getFileName(),_klass);
+  resolveReferences();
+  _environment.add(result);
+  return result;
+}

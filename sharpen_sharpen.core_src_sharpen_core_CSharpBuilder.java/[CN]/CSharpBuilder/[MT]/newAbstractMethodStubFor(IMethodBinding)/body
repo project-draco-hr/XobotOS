@@ -1,0 +1,11 @@
+{
+  CSMethod stub=new CSMethod(mappedMethodName(method));
+  stub.modifier(CSMethodModifier.Abstract);
+  stub.visibility(mapVisibility(method));
+  stub.returnType(mappedTypeReference(method.getReturnType()));
+  ITypeBinding[] parameters=method.getParameterTypes();
+  for (int i=0; i < parameters.length; ++i) {
+    stub.addParameter(new CSVariableDeclaration("arg" + (i + 1),mappedTypeReference(parameters[i])));
+  }
+  return stub;
+}

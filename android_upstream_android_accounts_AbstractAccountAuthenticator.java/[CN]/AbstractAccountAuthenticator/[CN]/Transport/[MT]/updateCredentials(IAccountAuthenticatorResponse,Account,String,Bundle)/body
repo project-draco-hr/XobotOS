@@ -1,0 +1,19 @@
+{
+  if (Log.isLoggable(TAG,Log.VERBOSE)) {
+    Log.v(TAG,"updateCredentials: " + account + ", authTokenType "+ authTokenType);
+  }
+  checkBinderPermission();
+  try {
+    final Bundle result=AbstractAccountAuthenticator.this.updateCredentials(new AccountAuthenticatorResponse(response),account,authTokenType,loginOptions);
+    if (Log.isLoggable(TAG,Log.VERBOSE)) {
+      result.keySet();
+      Log.v(TAG,"updateCredentials: result " + AccountManager.sanitizeResult(result));
+    }
+    if (result != null) {
+      response.onResult(result);
+    }
+  }
+ catch (  Exception e) {
+    handleException(response,"updateCredentials",account.toString() + "," + authTokenType,e);
+  }
+}

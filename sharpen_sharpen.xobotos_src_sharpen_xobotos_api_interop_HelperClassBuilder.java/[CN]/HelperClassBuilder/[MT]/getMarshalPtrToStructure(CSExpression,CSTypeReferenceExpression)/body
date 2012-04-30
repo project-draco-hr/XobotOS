@@ -1,0 +1,5 @@
+{
+  CSExpression marshal=new CSReferenceExpression("Marshal.PtrToStructure");
+  CSExpression typeof=new CSTypeofExpression(type);
+  return new CSCastExpression(type,new CSMethodInvocationExpression(marshal,ptr,typeof));
+}

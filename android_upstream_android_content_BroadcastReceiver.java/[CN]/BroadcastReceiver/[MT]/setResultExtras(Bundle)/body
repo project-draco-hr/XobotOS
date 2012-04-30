@@ -1,0 +1,4 @@
+{
+  checkSynchronousHint();
+  mPendingResult.mResultExtras=extras;
+}

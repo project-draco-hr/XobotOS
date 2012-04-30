@@ -1,0 +1,5 @@
+{
+  float oldX=getX();
+  float oldY=getY();
+  nativeOffsetLocation(mNativePtr,x - oldX,y - oldY);
+}

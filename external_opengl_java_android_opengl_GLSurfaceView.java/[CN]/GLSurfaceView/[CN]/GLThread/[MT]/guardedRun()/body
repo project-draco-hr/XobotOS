@@ -1,0 +1,196 @@
+{
+  mEglHelper=new EglHelper();
+  mHaveEglContext=false;
+  mHaveEglSurface=false;
+  try {
+    GL10 gl=null;
+    boolean createEglContext=false;
+    boolean createEglSurface=false;
+    boolean lostEglContext=false;
+    boolean sizeChanged=false;
+    boolean wantRenderNotification=false;
+    boolean doRenderNotification=false;
+    boolean askedToReleaseEglContext=false;
+    int w=0;
+    int h=0;
+    Runnable event=null;
+    while (true) {
+synchronized (sGLThreadManager) {
+        while (true) {
+          if (mShouldExit) {
+            return;
+          }
+          if (!mEventQueue.isEmpty()) {
+            event=mEventQueue.remove(0);
+            break;
+          }
+          if (mPaused != mRequestPaused) {
+            mPaused=mRequestPaused;
+            sGLThreadManager.notifyAll();
+            if (LOG_PAUSE_RESUME) {
+              Log.i("GLThread","mPaused is now " + mPaused + " tid="+ getId());
+            }
+          }
+          if (mShouldReleaseEglContext) {
+            if (LOG_SURFACE) {
+              Log.i("GLThread","releasing EGL context because asked to tid=" + getId());
+            }
+            stopEglSurfaceLocked();
+            stopEglContextLocked();
+            mShouldReleaseEglContext=false;
+            askedToReleaseEglContext=true;
+          }
+          if (lostEglContext) {
+            stopEglSurfaceLocked();
+            stopEglContextLocked();
+            lostEglContext=false;
+          }
+          if (mHaveEglSurface && mPaused) {
+            if (LOG_SURFACE) {
+              Log.i("GLThread","releasing EGL surface because paused tid=" + getId());
+            }
+            stopEglSurfaceLocked();
+            if (!mPreserveEGLContextOnPause || sGLThreadManager.shouldReleaseEGLContextWhenPausing()) {
+              stopEglContextLocked();
+              if (LOG_SURFACE) {
+                Log.i("GLThread","releasing EGL context because paused tid=" + getId());
+              }
+            }
+            if (sGLThreadManager.shouldTerminateEGLWhenPausing()) {
+              mEglHelper.finish();
+              if (LOG_SURFACE) {
+                Log.i("GLThread","terminating EGL because paused tid=" + getId());
+              }
+            }
+          }
+          if ((!mHasSurface) && (!mWaitingForSurface)) {
+            if (LOG_SURFACE) {
+              Log.i("GLThread","noticed surfaceView surface lost tid=" + getId());
+            }
+            if (mHaveEglSurface) {
+              stopEglSurfaceLocked();
+            }
+            mWaitingForSurface=true;
+            sGLThreadManager.notifyAll();
+          }
+          if (mHasSurface && mWaitingForSurface) {
+            if (LOG_SURFACE) {
+              Log.i("GLThread","noticed surfaceView surface acquired tid=" + getId());
+            }
+            mWaitingForSurface=false;
+            sGLThreadManager.notifyAll();
+          }
+          if (doRenderNotification) {
+            if (LOG_SURFACE) {
+              Log.i("GLThread","sending render notification tid=" + getId());
+            }
+            wantRenderNotification=false;
+            doRenderNotification=false;
+            mRenderComplete=true;
+            sGLThreadManager.notifyAll();
+          }
+          if (readyToDraw()) {
+            if (!mHaveEglContext) {
+              if (askedToReleaseEglContext) {
+                askedToReleaseEglContext=false;
+              }
+ else               if (sGLThreadManager.tryAcquireEglContextLocked(this)) {
+                try {
+                  mEglHelper.start();
+                }
+ catch (                RuntimeException t) {
+                  sGLThreadManager.releaseEglContextLocked(this);
+                  throw t;
+                }
+                mHaveEglContext=true;
+                createEglContext=true;
+                sGLThreadManager.notifyAll();
+              }
+            }
+            if (mHaveEglContext && !mHaveEglSurface) {
+              mHaveEglSurface=true;
+              createEglSurface=true;
+              sizeChanged=true;
+            }
+            if (mHaveEglSurface) {
+              if (mSizeChanged) {
+                sizeChanged=true;
+                w=mWidth;
+                h=mHeight;
+                wantRenderNotification=true;
+                if (LOG_SURFACE) {
+                  Log.i("GLThread","noticing that we want render notification tid=" + getId());
+                }
+                if (DRAW_TWICE_AFTER_SIZE_CHANGED) {
+                }
+ else {
+                  mRequestRender=false;
+                }
+                mSizeChanged=false;
+              }
+ else {
+                mRequestRender=false;
+              }
+              sGLThreadManager.notifyAll();
+              break;
+            }
+          }
+          if (LOG_THREADS) {
+            Log.i("GLThread","waiting tid=" + getId() + " mHaveEglContext: "+ mHaveEglContext+ " mHaveEglSurface: "+ mHaveEglSurface+ " mPaused: "+ mPaused+ " mHasSurface: "+ mHasSurface+ " mWaitingForSurface: "+ mWaitingForSurface+ " mWidth: "+ mWidth+ " mHeight: "+ mHeight+ " mRequestRender: "+ mRequestRender+ " mRenderMode: "+ mRenderMode);
+          }
+          sGLThreadManager.wait();
+        }
+      }
+      if (event != null) {
+        event.run();
+        event=null;
+        continue;
+      }
+      if (createEglSurface) {
+        if (LOG_SURFACE) {
+          Log.w("GLThread","egl createSurface");
+        }
+        gl=(GL10)mEglHelper.createSurface(getHolder());
+        if (gl == null) {
+          break;
+        }
+        sGLThreadManager.checkGLDriver(gl);
+        createEglSurface=false;
+      }
+      if (createEglContext) {
+        if (LOG_RENDERER) {
+          Log.w("GLThread","onSurfaceCreated");
+        }
+        mRenderer.onSurfaceCreated(gl,mEglHelper.mEglConfig);
+        createEglContext=false;
+      }
+      if (sizeChanged) {
+        if (LOG_RENDERER) {
+          Log.w("GLThread","onSurfaceChanged(" + w + ", "+ h+ ")");
+        }
+        mEglHelper.purgeBuffers();
+        mRenderer.onSurfaceChanged(gl,w,h);
+        sizeChanged=false;
+      }
+      if (LOG_RENDERER_DRAW_FRAME) {
+        Log.w("GLThread","onDrawFrame tid=" + getId());
+      }
+      mRenderer.onDrawFrame(gl);
+      if (!mEglHelper.swap()) {
+        if (LOG_SURFACE) {
+          Log.i("GLThread","egl context lost tid=" + getId());
+        }
+        lostEglContext=true;
+      }
+      if (wantRenderNotification) {
+        doRenderNotification=true;
+      }
+    }
+  }
+  finally {
+synchronized (sGLThreadManager) {
+      stopEglSurfaceLocked();
+      stopEglContextLocked();
+    }
+  }
+}

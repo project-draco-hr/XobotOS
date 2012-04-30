@@ -1,0 +1,14 @@
+{
+  if (anotherCalendar == null) {
+    throw new NullPointerException();
+  }
+  long timeInMillis=getTimeInMillis();
+  long anotherTimeInMillis=anotherCalendar.getTimeInMillis();
+  if (timeInMillis > anotherTimeInMillis) {
+    return 1;
+  }
+  if (timeInMillis == anotherTimeInMillis) {
+    return 0;
+  }
+  return -1;
+}

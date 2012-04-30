@@ -1,0 +1,8 @@
+{
+  int size=objectInput.readInt();
+  for (int i=0; i < size; i++) {
+    PhoneMetadata metadata=new PhoneMetadata();
+    metadata.readExternal(objectInput);
+    metadata_.add(metadata);
+  }
+}

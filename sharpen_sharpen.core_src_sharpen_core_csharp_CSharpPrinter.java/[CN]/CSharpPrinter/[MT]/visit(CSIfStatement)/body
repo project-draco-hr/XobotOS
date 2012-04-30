@@ -1,0 +1,11 @@
+{
+  printPrecedingComments(node);
+  writeIndented("if (");
+  node.expression().accept(this);
+  writeLine(")");
+  node.trueBlock().accept(this);
+  if (!node.falseBlock().isEmpty()) {
+    writeIndentedLine("else");
+    node.falseBlock().accept(this);
+  }
+}

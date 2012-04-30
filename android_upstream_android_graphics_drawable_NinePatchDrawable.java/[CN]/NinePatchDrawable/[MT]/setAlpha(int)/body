@@ -1,0 +1,4 @@
+{
+  getPaint().setAlpha(alpha);
+  invalidateSelf();
+}

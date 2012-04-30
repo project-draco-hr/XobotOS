@@ -1,0 +1,5 @@
+int layer
+Region invalRegion
+boolean showVisualIndicator
+boolean isPictureAfterFirstLayout
+boolean registerPageSwapCallback

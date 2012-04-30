@@ -1,0 +1,10 @@
+{
+  if (isUnreachable())   return;
+  boolean hasDefault=false;
+  boolean reachable=false;
+  for (  CSCaseClause clause : node.caseClauses()) {
+    if (clause.isDefault())     hasDefault=true;
+    reachable|=run(clause.body());
+  }
+  if (!reachable && hasDefault)   setUnreachable();
+}

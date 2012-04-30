@@ -1,0 +1,8 @@
+{
+  if (doubleCount > remaining()) {
+    throw new BufferOverflowException();
+  }
+  System.arraycopy(src,srcOffset,backingArray,offset + position,doubleCount);
+  position+=doubleCount;
+  return this;
+}

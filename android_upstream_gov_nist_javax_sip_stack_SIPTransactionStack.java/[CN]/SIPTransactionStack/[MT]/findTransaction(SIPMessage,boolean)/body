@@ -1,0 +1,49 @@
+{
+  SIPTransaction retval=null;
+  try {
+    if (isServer) {
+      Via via=sipMessage.getTopmostVia();
+      if (via.getBranch() != null) {
+        String key=sipMessage.getTransactionId();
+        retval=(SIPTransaction)serverTransactionTable.get(key);
+        if (stackLogger.isLoggingEnabled())         getStackLogger().logDebug("serverTx: looking for key " + key + " existing="+ serverTransactionTable);
+        if (key.startsWith(SIPConstants.BRANCH_MAGIC_COOKIE_LOWER_CASE)) {
+          return retval;
+        }
+      }
+      Iterator<SIPServerTransaction> it=serverTransactionTable.values().iterator();
+      while (it.hasNext()) {
+        SIPServerTransaction sipServerTransaction=(SIPServerTransaction)it.next();
+        if (sipServerTransaction.isMessagePartOfTransaction(sipMessage)) {
+          retval=sipServerTransaction;
+          return retval;
+        }
+      }
+    }
+ else {
+      Via via=sipMessage.getTopmostVia();
+      if (via.getBranch() != null) {
+        String key=sipMessage.getTransactionId();
+        if (stackLogger.isLoggingEnabled())         getStackLogger().logDebug("clientTx: looking for key " + key);
+        retval=(SIPTransaction)clientTransactionTable.get(key);
+        if (key.startsWith(SIPConstants.BRANCH_MAGIC_COOKIE_LOWER_CASE)) {
+          return retval;
+        }
+      }
+      Iterator<SIPClientTransaction> it=clientTransactionTable.values().iterator();
+      while (it.hasNext()) {
+        SIPClientTransaction clientTransaction=(SIPClientTransaction)it.next();
+        if (clientTransaction.isMessagePartOfTransaction(sipMessage)) {
+          retval=clientTransaction;
+          return retval;
+        }
+      }
+    }
+  }
+  finally {
+    if (this.getStackLogger().isLoggingEnabled()) {
+      this.getStackLogger().logDebug("findTransaction: returning  : " + retval);
+    }
+  }
+  return retval;
+}

@@ -1,0 +1,97 @@
+{
+  if ((!allowInterleaving) && clientTransactionId.getRequest().getMethod().equals(Request.INVITE)) {
+    new Thread((new ReInviteSender(clientTransactionId))).start();
+    return;
+  }
+  SIPRequest dialogRequest=((SIPClientTransaction)clientTransactionId).getOriginalRequest();
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("dialog.sendRequest " + " dialog = " + this + "\ndialogRequest = \n"+ dialogRequest);
+  if (clientTransactionId == null)   throw new NullPointerException("null parameter");
+  if (dialogRequest.getMethod().equals(Request.ACK) || dialogRequest.getMethod().equals(Request.CANCEL))   throw new SipException("Bad Request Method. " + dialogRequest.getMethod());
+  if (byeSent && isTerminatedOnBye() && !dialogRequest.getMethod().equals(Request.BYE)) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logError("BYE already sent for " + this);
+    throw new SipException("Cannot send request; BYE already sent");
+  }
+  if (dialogRequest.getTopmostVia() == null) {
+    Via via=((SIPClientTransaction)clientTransactionId).getOutgoingViaHeader();
+    dialogRequest.addHeader(via);
+  }
+  if (!this.getCallId().getCallId().equalsIgnoreCase(dialogRequest.getCallId().getCallId())) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logError("CallID " + this.getCallId());
+      sipStack.getStackLogger().logError("RequestCallID = " + dialogRequest.getCallId().getCallId());
+      sipStack.getStackLogger().logError("dialog =  " + this);
+    }
+    throw new SipException("Bad call ID in request");
+  }
+  ((SIPClientTransaction)clientTransactionId).setDialog(this,this.dialogId);
+  this.addTransaction((SIPTransaction)clientTransactionId);
+  ((SIPClientTransaction)clientTransactionId).isMapped=true;
+  From from=(From)dialogRequest.getFrom();
+  To to=(To)dialogRequest.getTo();
+  if (this.getLocalTag() != null && from.getTag() != null && !from.getTag().equals(this.getLocalTag()))   throw new SipException("From tag mismatch expecting  " + this.getLocalTag());
+  if (this.getRemoteTag() != null && to.getTag() != null && !to.getTag().equals(this.getRemoteTag())) {
+    if (sipStack.isLoggingEnabled())     this.sipStack.getStackLogger().logWarning("To header tag mismatch expecting " + this.getRemoteTag());
+  }
+  if (this.getLocalTag() == null && dialogRequest.getMethod().equals(Request.NOTIFY)) {
+    if (!this.getMethod().equals(Request.SUBSCRIBE))     throw new SipException("Trying to send NOTIFY without SUBSCRIBE Dialog!");
+    this.setLocalTag(from.getTag());
+  }
+  try {
+    if (this.getLocalTag() != null)     from.setTag(this.getLocalTag());
+    if (this.getRemoteTag() != null)     to.setTag(this.getRemoteTag());
+  }
+ catch (  ParseException ex) {
+    InternalErrorHandler.handleException(ex);
+  }
+  Hop hop=((SIPClientTransaction)clientTransactionId).getNextHop();
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("Using hop = " + hop.getHost() + " : "+ hop.getPort());
+  }
+  try {
+    MessageChannel messageChannel=sipStack.createRawMessageChannel(this.getSipProvider().getListeningPoint(hop.getTransport()).getIPAddress(),this.firstTransactionPort,hop);
+    MessageChannel oldChannel=((SIPClientTransaction)clientTransactionId).getMessageChannel();
+    oldChannel.uncache();
+    if (!sipStack.cacheClientConnections) {
+      oldChannel.useCount--;
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("oldChannel: useCount " + oldChannel.useCount);
+    }
+    if (messageChannel == null) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("Null message channel using outbound proxy !");
+      Hop outboundProxy=sipStack.getRouter(dialogRequest).getOutboundProxy();
+      if (outboundProxy == null)       throw new SipException("No route found! hop=" + hop);
+      messageChannel=sipStack.createRawMessageChannel(this.getSipProvider().getListeningPoint(outboundProxy.getTransport()).getIPAddress(),this.firstTransactionPort,outboundProxy);
+      if (messageChannel != null)       ((SIPClientTransaction)clientTransactionId).setEncapsulatedChannel(messageChannel);
+    }
+ else {
+      ((SIPClientTransaction)clientTransactionId).setEncapsulatedChannel(messageChannel);
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logDebug("using message channel " + messageChannel);
+      }
+    }
+    if (messageChannel != null)     messageChannel.useCount++;
+    if ((!sipStack.cacheClientConnections) && oldChannel != null && oldChannel.useCount <= 0)     oldChannel.close();
+  }
+ catch (  Exception ex) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logException(ex);
+    throw new SipException("Could not create message channel",ex);
+  }
+  try {
+    localSequenceNumber++;
+    dialogRequest.getCSeq().setSeqNumber(getLocalSeqNumber());
+  }
+ catch (  InvalidArgumentException ex) {
+    sipStack.getStackLogger().logFatalError(ex.getMessage());
+  }
+  try {
+    ((SIPClientTransaction)clientTransactionId).sendMessage(dialogRequest);
+    if (dialogRequest.getMethod().equals(Request.BYE)) {
+      this.byeSent=true;
+      if (isTerminatedOnBye()) {
+        this.setState(DialogState._TERMINATED);
+      }
+    }
+  }
+ catch (  IOException ex) {
+    throw new SipException("error sending message",ex);
+  }
+}

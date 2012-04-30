@@ -1,0 +1,3 @@
+IMethodBinding methodBinding
+boolean overrideOnly
+boolean allowStatic

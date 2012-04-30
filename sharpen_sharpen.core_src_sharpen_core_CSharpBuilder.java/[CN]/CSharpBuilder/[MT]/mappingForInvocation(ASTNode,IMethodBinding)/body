@@ -1,0 +1,15 @@
+{
+  Configuration.MemberMapping mapping=effectiveMappingFor(binding);
+  if (null == mapping) {
+    if (isIndexer(binding)) {
+      mapping=new MemberMapping(null,MemberKind.Indexer);
+    }
+ else     if (isTaggedMethodInvocation(binding,SharpenAnnotations.SHARPEN_EVENT)) {
+      mapping=new MemberMapping(binding.getName(),MemberKind.Property);
+    }
+ else     if (isTaggedMethodInvocation(binding,SharpenAnnotations.SHARPEN_PROPERTY)) {
+      mapping=new MemberMapping(propertyName(binding),MemberKind.Property);
+    }
+  }
+  return mapping;
+}

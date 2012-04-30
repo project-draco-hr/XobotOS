@@ -1,0 +1,3 @@
+{
+  WorkspaceUtilities.writeFile(file,contents,charset,monitor);
+}

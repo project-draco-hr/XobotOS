@@ -1,0 +1,23 @@
+{
+  if (debug)   dbg_enter("global_phone_number");
+  try {
+    TelephoneNumber tn=new TelephoneNumber();
+    tn.setGlobal(true);
+    NameValueList nv=null;
+    this.lexer.match(PLUS);
+    String b=base_phone_number();
+    tn.setPhoneNumber(b);
+    if (lexer.hasMoreChars()) {
+      char tok=lexer.lookAhead(0);
+      if (tok == ';' && inBrackets) {
+        this.lexer.consume(1);
+        nv=tel_parameters();
+        tn.setParameters(nv);
+      }
+    }
+    return tn;
+  }
+  finally {
+    if (debug)     dbg_leave("global_phone_number");
+  }
+}

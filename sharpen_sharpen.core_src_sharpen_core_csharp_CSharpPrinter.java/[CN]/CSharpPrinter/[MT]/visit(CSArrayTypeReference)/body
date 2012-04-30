@@ -1,0 +1,6 @@
+{
+  node.elementType().accept(this);
+  for (int i=0; i < node.dimensions(); ++i) {
+    write("[]");
+  }
+}

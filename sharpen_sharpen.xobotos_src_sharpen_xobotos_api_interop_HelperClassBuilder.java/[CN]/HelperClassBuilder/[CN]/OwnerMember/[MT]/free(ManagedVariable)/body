@@ -1,0 +1,3 @@
+{
+  return createManagedAssert(new CSInfixExpression("!=",getReference(obj),MANAGED_MAGIC));
+}

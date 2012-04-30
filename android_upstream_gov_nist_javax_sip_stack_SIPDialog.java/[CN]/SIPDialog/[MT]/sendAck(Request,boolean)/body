@@ -1,0 +1,74 @@
+{
+  SIPRequest ackRequest=(SIPRequest)request;
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("sendAck" + this);
+  if (!ackRequest.getMethod().equals(Request.ACK))   throw new SipException("Bad request method -- should be ACK");
+  if (this.getState() == null || this.getState().getValue() == EARLY_STATE) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logError("Bad Dialog State for " + this + " dialogID = "+ this.getDialogId());
+    }
+    throw new SipException("Bad dialog state " + this.getState());
+  }
+  if (!this.getCallId().getCallId().equals(((SIPRequest)request).getCallId().getCallId())) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logError("CallID " + this.getCallId());
+      sipStack.getStackLogger().logError("RequestCallID = " + ackRequest.getCallId().getCallId());
+      sipStack.getStackLogger().logError("dialog =  " + this);
+    }
+    throw new SipException("Bad call ID in request");
+  }
+  try {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("setting from tag For outgoing ACK= " + this.getLocalTag());
+      sipStack.getStackLogger().logDebug("setting To tag for outgoing ACK = " + this.getRemoteTag());
+      sipStack.getStackLogger().logDebug("ack = " + ackRequest);
+    }
+    if (this.getLocalTag() != null)     ackRequest.getFrom().setTag(this.getLocalTag());
+    if (this.getRemoteTag() != null)     ackRequest.getTo().setTag(this.getRemoteTag());
+  }
+ catch (  ParseException ex) {
+    throw new SipException(ex.getMessage());
+  }
+  Hop hop=sipStack.getNextHop(ackRequest);
+  if (hop == null)   throw new SipException("No route!");
+  try {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("hop = " + hop);
+    ListeningPointImpl lp=(ListeningPointImpl)this.sipProvider.getListeningPoint(hop.getTransport());
+    if (lp == null)     throw new SipException("No listening point for this provider registered at " + hop);
+    InetAddress inetAddress=InetAddress.getByName(hop.getHost());
+    MessageChannel messageChannel=lp.getMessageProcessor().createMessageChannel(inetAddress,hop.getPort());
+    boolean releaseAckSem=false;
+    long cseqNo=((SIPRequest)request).getCSeq().getSeqNumber();
+    if (!this.isAckSent(cseqNo)) {
+      releaseAckSem=true;
+    }
+    this.setLastAckSent(ackRequest);
+    messageChannel.sendMessage(ackRequest);
+    this.isAcknowledged=true;
+    this.highestSequenceNumberAcknowledged=Math.max(this.highestSequenceNumberAcknowledged,((SIPRequest)ackRequest).getCSeq().getSeqNumber());
+    if (releaseAckSem && this.isBackToBackUserAgent) {
+      this.releaseAckSem();
+    }
+ else {
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logDebug("Not releasing ack sem for " + this + " isAckSent "+ releaseAckSem);
+      }
+    }
+  }
+ catch (  IOException ex) {
+    if (throwIOExceptionAsSipException)     throw new SipException("Could not send ack",ex);
+    this.raiseIOException(hop.getHost(),hop.getPort(),hop.getTransport());
+  }
+catch (  SipException ex) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logException(ex);
+    throw ex;
+  }
+catch (  Exception ex) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logException(ex);
+    throw new SipException("Could not create message channel",ex);
+  }
+  if (this.dialogDeleteTask != null) {
+    this.dialogDeleteTask.cancel();
+    this.dialogDeleteTask=null;
+  }
+  this.ackSeen=true;
+}

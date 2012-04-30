@@ -1,0 +1,24 @@
+{
+  if (debug)   dbg_enter("MimeVersionParser.parse");
+  MimeVersion mimeVersion=new MimeVersion();
+  try {
+    headerName(TokenTypes.MIME_VERSION);
+    mimeVersion.setHeaderName(SIPHeaderNames.MIME_VERSION);
+    try {
+      String majorVersion=this.lexer.number();
+      mimeVersion.setMajorVersion(Integer.parseInt(majorVersion));
+      this.lexer.match('.');
+      String minorVersion=this.lexer.number();
+      mimeVersion.setMinorVersion(Integer.parseInt(minorVersion));
+    }
+ catch (    InvalidArgumentException ex) {
+      throw createParseException(ex.getMessage());
+    }
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return mimeVersion;
+  }
+  finally {
+    if (debug)     dbg_leave("MimeVersionParser.parse");
+  }
+}

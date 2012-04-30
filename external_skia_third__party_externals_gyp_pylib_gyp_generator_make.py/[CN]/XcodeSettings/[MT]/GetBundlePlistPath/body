@@ -1,0 +1,8 @@
+def GetBundlePlistPath(self):
+    "Returns the qualified path to the bundle's plist file. E.g.\n    Chromium.app/Contents/Info.plist. Only valid for bundles."
+    assert self._IsBundle()
+    assert (self.spec['type'] != 'loadable_modules'), ('Info.plist files for loadable_modules not yet supported by the make generator (target %s)' % self.spec['target_name'])
+    if (self.spec['type'] == 'executable'):
+        return os.path.join(self.GetBundleContentsFolderPath(), 'Info.plist')
+    else:
+        return os.path.join(self.GetBundleContentsFolderPath(), 'Resources', 'Info.plist')

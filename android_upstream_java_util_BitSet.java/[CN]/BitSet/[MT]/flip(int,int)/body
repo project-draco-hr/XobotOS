@@ -1,0 +1,26 @@
+{
+  checkRange(fromIndex,toIndex);
+  if (fromIndex == toIndex) {
+    return;
+  }
+  int firstArrayIndex=fromIndex / 64;
+  int lastArrayIndex=(toIndex - 1) / 64;
+  if (lastArrayIndex >= bits.length) {
+    ensureCapacity(lastArrayIndex + 1);
+  }
+  long lowMask=ALL_ONES << fromIndex;
+  long highMask=ALL_ONES >>> -toIndex;
+  if (firstArrayIndex == lastArrayIndex) {
+    bits[firstArrayIndex]^=(lowMask & highMask);
+  }
+ else {
+    int i=firstArrayIndex;
+    bits[i++]^=lowMask;
+    while (i < lastArrayIndex) {
+      bits[i++]^=ALL_ONES;
+    }
+    bits[i++]^=highMask;
+  }
+  longCount=Math.max(longCount,lastArrayIndex + 1);
+  shrinkSize();
+}

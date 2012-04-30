@@ -1,0 +1,3 @@
+{
+  return Modifier.isStatic(node.getModifiers()) ? new CSTypeofExpression(new CSTypeReference(_currentType.name())) : new CSThisExpression();
+}

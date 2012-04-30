@@ -1,0 +1,4 @@
+{
+  this.transaction=transaction;
+  this.nRetransmissions=0;
+}

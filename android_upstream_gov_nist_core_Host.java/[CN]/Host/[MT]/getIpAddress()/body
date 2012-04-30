@@ -1,0 +1,17 @@
+{
+  String rawIpAddress=null;
+  if (hostname == null)   return null;
+  if (addressType == HOSTNAME) {
+    try {
+      if (inetAddress == null)       inetAddress=InetAddress.getByName(hostname);
+      rawIpAddress=inetAddress.getHostAddress();
+    }
+ catch (    UnknownHostException ex) {
+      dbgPrint("Could not resolve hostname " + ex);
+    }
+  }
+ else {
+    rawIpAddress=hostname;
+  }
+  return rawIpAddress;
+}

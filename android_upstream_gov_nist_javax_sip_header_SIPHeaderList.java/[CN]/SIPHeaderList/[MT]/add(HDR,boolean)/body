@@ -1,0 +1,4 @@
+{
+  if (top)   this.addFirst(sipheader);
+ else   this.add(sipheader);
+}

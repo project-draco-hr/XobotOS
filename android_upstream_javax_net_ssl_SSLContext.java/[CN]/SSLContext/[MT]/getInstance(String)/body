@@ -1,0 +1,7 @@
+{
+  if (protocol == null) {
+    throw new NullPointerException("protocol is null");
+  }
+  Engine.SpiAndProvider sap=ENGINE.getInstance(protocol,null);
+  return new SSLContext((SSLContextSpi)sap.spi,sap.provider,protocol);
+}

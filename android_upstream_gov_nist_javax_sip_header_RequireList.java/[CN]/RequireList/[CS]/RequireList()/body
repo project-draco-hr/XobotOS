@@ -1,0 +1,3 @@
+{
+  super(Require.class,RequireHeader.NAME);
+}

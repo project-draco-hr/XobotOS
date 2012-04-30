@@ -1,0 +1,3 @@
+def GetFlavor(params):
+    "Returns |params.flavor| if it's set, the system's default flavor else."
+    return params.get('flavor', ('mac' if (sys.platform == 'darwin') else 'linux'))

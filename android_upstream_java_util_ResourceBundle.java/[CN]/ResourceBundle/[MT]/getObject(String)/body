@@ -1,0 +1,13 @@
+{
+  ResourceBundle last, theParent=this;
+  do {
+    Object result=theParent.handleGetObject(key);
+    if (result != null) {
+      return result;
+    }
+    last=theParent;
+    theParent=theParent.parent;
+  }
+ while (theParent != null);
+  throw missingResourceException(last.getClass().getName(),key);
+}

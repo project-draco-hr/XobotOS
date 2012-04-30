@@ -1,0 +1,4 @@
+{
+  this._parent=parent;
+  this._child=child;
+}

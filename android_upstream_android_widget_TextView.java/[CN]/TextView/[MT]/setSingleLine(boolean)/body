@@ -1,0 +1,4 @@
+{
+  setInputTypeSingleLine(singleLine);
+  applySingleLine(singleLine,true,true);
+}

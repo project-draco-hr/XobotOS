@@ -1,0 +1,15 @@
+def run(self, options=None, arguments=None, stdout=None, stderr='', status=0, **kw):
+    'Runs the program under test, checking that the test succeeded.\n\n        The arguments are the same as the base TestCmd.run() method,\n        with the addition of:\n\n                options Extra options that get appended to the beginning\n                        of the arguments.\n\n                stdout  The expected standard output from\n                        the command.  A value of None means\n                        don\'t test standard output.\n\n                stderr  The expected error output from\n                        the command.  A value of None means\n                        don\'t test error output.\n\n                status  The expected exit status from the\n                        command.  A value of None means don\'t\n                        test exit status.\n\n        By default, this expects a successful exit (status = 0), does\n        not test standard output (stdout = None), and expects that error\n        output is empty (stderr = "").\n        '
+    if options:
+        if (arguments is None):
+            arguments = options
+        else:
+            arguments = ((options + ' ') + arguments)
+    kw['arguments'] = arguments
+    try:
+        match = kw['match']
+        del kw['match']
+    except KeyError:
+        match = self.match
+    apply(TestCmd.run, [self], kw)
+    self._complete(self.stdout(), stdout, self.stderr(), stderr, status, match)

@@ -1,0 +1,10 @@
+{
+  final ByRef<TRESULT> result=new ByRef<TRESULT>();
+  using(value,new Runnable(){
+    public void run(){
+      result.value=producer.produce();
+    }
+  }
+);
+  return result.value;
+}

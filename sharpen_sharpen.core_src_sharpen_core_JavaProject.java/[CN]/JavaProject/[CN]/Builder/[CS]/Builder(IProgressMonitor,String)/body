@@ -1,0 +1,4 @@
+{
+  this.progressMonitor=pm;
+  this.project=new JavaProject(projectName);
+}

@@ -1,0 +1,30 @@
+{
+  Service s=mServices.get(data.token);
+  if (s != null) {
+    try {
+      if (data.args != null) {
+        data.args.setExtrasClassLoader(s.getClassLoader());
+      }
+      int res;
+      if (!data.taskRemoved) {
+        res=s.onStartCommand(data.args,data.flags,data.startId);
+      }
+ else {
+        s.onTaskRemoved(data.args);
+        res=Service.START_TASK_REMOVED_COMPLETE;
+      }
+      QueuedWork.waitToFinish();
+      try {
+        ActivityManagerNative.getDefault().serviceDoneExecuting(data.token,1,data.startId,res);
+      }
+ catch (      RemoteException e) {
+      }
+      ensureJitEnabled();
+    }
+ catch (    Exception e) {
+      if (!mInstrumentation.onException(s,e)) {
+        throw new RuntimeException("Unable to start service " + s + " with "+ data.args+ ": "+ e.toString(),e);
+      }
+    }
+  }
+}

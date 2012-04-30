@@ -1,0 +1,15 @@
+{
+  try {
+    if (guard != null) {
+      guard.warnIfOpen();
+    }
+  }
+  finally {
+    try {
+      super.finalize();
+    }
+ catch (    Throwable t) {
+      throw new AssertionError(t);
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  if (sentProtocol != null)   return sentProtocol.encode();
+  return null;
+}

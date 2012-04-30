@@ -1,0 +1,3 @@
+{
+  return removeOrRetain(collection,false,0,elements.length) != 0;
+}

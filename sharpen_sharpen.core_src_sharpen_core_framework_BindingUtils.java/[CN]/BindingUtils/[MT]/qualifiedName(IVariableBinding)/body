@@ -1,0 +1,7 @@
+{
+  ITypeBinding declaringClass=binding.getDeclaringClass();
+  if (null == declaringClass) {
+    return binding.getName();
+  }
+  return qualifiedName(declaringClass) + "." + binding.getName();
+}

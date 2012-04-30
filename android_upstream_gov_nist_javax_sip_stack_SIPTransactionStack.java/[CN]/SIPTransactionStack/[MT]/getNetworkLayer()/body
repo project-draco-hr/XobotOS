@@ -1,0 +1,8 @@
+{
+  if (networkLayer == null) {
+    return DefaultNetworkLayer.SINGLETON;
+  }
+ else {
+    return networkLayer;
+  }
+}

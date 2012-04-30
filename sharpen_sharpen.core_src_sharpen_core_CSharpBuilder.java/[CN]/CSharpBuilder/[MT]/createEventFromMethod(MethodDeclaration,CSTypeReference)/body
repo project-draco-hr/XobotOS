@@ -1,0 +1,6 @@
+{
+  String eventName=methodName(node);
+  CSEvent event=new CSEvent(eventName,eventHandlerType);
+  _currentType.addMember(event);
+  return event;
+}

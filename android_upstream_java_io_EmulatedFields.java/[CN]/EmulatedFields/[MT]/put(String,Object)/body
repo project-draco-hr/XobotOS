@@ -1,0 +1,9 @@
+{
+  Class<?> valueClass=null;
+  if (value != null) {
+    valueClass=value.getClass();
+  }
+  ObjectSlot slot=findMandatorySlot(name,valueClass);
+  slot.fieldValue=value;
+  slot.defaulted=false;
+}

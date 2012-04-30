@@ -1,0 +1,4 @@
+{
+  addressType=HOSTNAME;
+  stripAddressScopeZones=Boolean.getBoolean("gov.nist.core.STRIP_ADDR_SCOPES");
+}

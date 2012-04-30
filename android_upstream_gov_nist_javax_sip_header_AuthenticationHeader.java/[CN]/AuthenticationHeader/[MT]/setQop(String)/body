@@ -1,0 +1,4 @@
+{
+  if (qop == null)   throw new NullPointerException("null arg");
+  setParameter(ParameterNames.QOP,qop);
+}

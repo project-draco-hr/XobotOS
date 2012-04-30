@@ -1,0 +1,3 @@
+{
+  return this.hlist.removeAll(collection);
+}

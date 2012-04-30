@@ -1,0 +1,10 @@
+{
+  NameValue nameValue=uriParms.getNameValue(MADDR);
+  Host host=new Host();
+  host.setAddress(mAddr);
+  if (nameValue != null)   nameValue.setValueAsObject(host);
+ else {
+    nameValue=new NameValue(MADDR,host);
+    uriParms.set(nameValue);
+  }
+}

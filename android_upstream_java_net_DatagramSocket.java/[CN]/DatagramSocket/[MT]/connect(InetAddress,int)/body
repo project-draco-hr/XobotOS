@@ -1,0 +1,11 @@
+{
+  if (address == null) {
+    throw new IllegalArgumentException("address == null");
+  }
+  try {
+    connect(new InetSocketAddress(address,port));
+  }
+ catch (  SocketException connectException) {
+    pendingConnectException=connectException;
+  }
+}

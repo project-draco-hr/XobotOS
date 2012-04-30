@@ -1,0 +1,5 @@
+{
+  Matcher possibleNumberPatternMatcher=regexCache.getPatternForRegex(numberDesc.getPossibleNumberPattern()).matcher(nationalNumber);
+  Matcher nationalNumberPatternMatcher=regexCache.getPatternForRegex(numberDesc.getNationalNumberPattern()).matcher(nationalNumber);
+  return possibleNumberPatternMatcher.matches() && nationalNumberPatternMatcher.matches();
+}

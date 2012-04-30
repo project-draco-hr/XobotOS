@@ -1,0 +1,27 @@
+{
+  final int totalWork=PARSING_PRICE * sources.size();
+  final IProgressMonitor subMonitor=new SubProgressMonitor(monitor,totalWork);
+  final ArrayList<CompilationUnitPair> pairs=new ArrayList<CompilationUnitPair>(sources.size());
+  ASTRequestor requestor=new ASTRequestor(){
+    @Override public void acceptAST(    ICompilationUnit source,    CompilationUnit ast){
+      pairs.add(new CompilationUnitPair(source,ast));
+      subMonitor.subTask(String.format("Parsing (%d/%d): %s",pairs.size(),sources.size(),getUnitName(source)));
+      subMonitor.worked(PARSING_PRICE);
+    }
+  }
+;
+  final ASTParser _parser=ASTParser.newParser(AST.JLS3);
+  _parser.setKind(ASTParser.K_COMPILATION_UNIT);
+  _parser.setProject(sources.get(0).getJavaProject());
+  _parser.setResolveBindings(true);
+  final ICompilationUnit[] sourceArray=sources.toArray(new ICompilationUnit[0]);
+  Sharpen.Log(Level.INFO,"Parsing %d compilation units.",sources.size());
+  try {
+    subMonitor.beginTask("parsing compile units",totalWork);
+    _parser.createASTs(sourceArray,new String[0],requestor,null);
+  }
+  finally {
+    subMonitor.done();
+  }
+  return pairs;
+}

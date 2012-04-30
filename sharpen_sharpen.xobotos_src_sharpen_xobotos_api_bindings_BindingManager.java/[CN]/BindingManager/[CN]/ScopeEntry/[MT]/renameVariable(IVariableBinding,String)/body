@@ -1,0 +1,19 @@
+{
+  String renamed=null;
+  if (_blockVariables.contains(name)) {
+    int count=1;
+    while (_blockVariables.contains(name + "_" + count)) {
+      count++;
+    }
+    name=name + "_" + count;
+    renamed=name;
+  }
+  _localBlockVariables.add(name);
+  _blockVariables.add(name);
+  ScopeEntry parent=_parent;
+  while (parent != null) {
+    parent._blockVariables.add(name);
+    parent=parent._parent;
+  }
+  return renamed;
+}

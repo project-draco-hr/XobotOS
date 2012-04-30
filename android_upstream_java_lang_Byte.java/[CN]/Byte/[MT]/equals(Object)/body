@@ -1,0 +1,3 @@
+{
+  return (object == this) || ((object instanceof Byte) && (((Byte)object).value == value));
+}

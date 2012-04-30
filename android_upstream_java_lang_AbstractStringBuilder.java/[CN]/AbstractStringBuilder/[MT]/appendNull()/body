@@ -1,0 +1,10 @@
+{
+  int newCount=count + 4;
+  if (newCount > value.length) {
+    enlargeBuffer(newCount);
+  }
+  value[count++]='n';
+  value[count++]='u';
+  value[count++]='l';
+  value[count++]='l';
+}

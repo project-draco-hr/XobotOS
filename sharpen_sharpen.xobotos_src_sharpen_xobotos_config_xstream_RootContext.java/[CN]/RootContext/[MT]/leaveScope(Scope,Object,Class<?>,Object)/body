@@ -1,0 +1,7 @@
+{
+  if (result != null)   postProcess(scope,parent,klass,result);
+  if (scope != null) {
+    _stack.peek().assign(result);
+    _stack.pop();
+  }
+}

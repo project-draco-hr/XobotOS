@@ -1,0 +1,3 @@
+{
+  return node.getName().getIdentifier().equals("ordinal") && node.getExpression() != null && node.getExpression().resolveTypeBinding().isEnum();
+}

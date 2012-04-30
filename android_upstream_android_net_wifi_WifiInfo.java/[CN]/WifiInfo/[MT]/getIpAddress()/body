@@ -1,0 +1,4 @@
+{
+  if (mIpAddress == null || mIpAddress instanceof Inet6Address)   return 0;
+  return NetworkUtils.inetAddressToInt(mIpAddress);
+}

@@ -1,0 +1,9 @@
+{
+  if (mStringBlocks == null) {
+synchronized (this) {
+      if (mStringBlocks == null) {
+        makeStringBlocks(true);
+      }
+    }
+  }
+}

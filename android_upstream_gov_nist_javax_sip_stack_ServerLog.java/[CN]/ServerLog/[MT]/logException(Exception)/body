@@ -1,0 +1,7 @@
+{
+  if (traceLevel >= TRACE_EXCEPTION) {
+    checkLogFile();
+    ex.printStackTrace();
+    if (printWriter != null)     ex.printStackTrace(printWriter);
+  }
+}

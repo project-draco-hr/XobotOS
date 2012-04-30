@@ -1,0 +1,8 @@
+{
+  int oldPolicyMask=getThreadPolicyMask();
+  int newPolicyMask=oldPolicyMask & ~(DETECT_DISK_READ);
+  if (newPolicyMask != oldPolicyMask) {
+    setThreadPolicyMask(newPolicyMask);
+  }
+  return new ThreadPolicy(oldPolicyMask);
+}

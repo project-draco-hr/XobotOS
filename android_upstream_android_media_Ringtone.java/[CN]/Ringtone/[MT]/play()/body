@@ -1,0 +1,16 @@
+{
+  if (mAudio == null) {
+    try {
+      openMediaPlayer();
+    }
+ catch (    Exception ex) {
+      Log.e(TAG,"play() caught ",ex);
+      mAudio=null;
+    }
+  }
+  if (mAudio != null) {
+    if (mAudioManager.getStreamVolume(mStreamType) != 0) {
+      mAudio.start();
+    }
+  }
+}

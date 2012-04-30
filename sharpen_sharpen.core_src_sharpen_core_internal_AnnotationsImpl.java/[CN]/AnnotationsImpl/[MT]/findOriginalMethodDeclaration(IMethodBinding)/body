@@ -1,0 +1,5 @@
+{
+  IMethodBinding definition=BindingUtils.findMethodDefininition(binding,_ast.getAST());
+  if (null == definition)   return null;
+  return _bindings.findDeclaringNode(definition);
+}

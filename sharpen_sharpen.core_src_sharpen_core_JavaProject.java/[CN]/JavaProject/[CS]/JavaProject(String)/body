@@ -1,0 +1,8 @@
+{
+  super(projectName);
+  _javaProject=JavaCore.create(_project);
+  setJavaNature();
+  initializeClassPath();
+  createOutputFolder(getBinFolder());
+  addSystemLibraries();
+}

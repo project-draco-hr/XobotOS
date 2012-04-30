@@ -1,0 +1,4 @@
+{
+  ensureMatch();
+  return new MatchResultImpl(input,matchOffsets);
+}

@@ -1,0 +1,8 @@
+{
+  if (isInBatchEditMode()) {
+    return;
+  }
+  initDrawables();
+  initHandles();
+  hideInsertionPointCursorController();
+}

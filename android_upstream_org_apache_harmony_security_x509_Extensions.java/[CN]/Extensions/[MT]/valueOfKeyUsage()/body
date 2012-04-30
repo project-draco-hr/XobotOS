@@ -1,0 +1,8 @@
+{
+  Extension extension=getExtensionByOID("2.5.29.15");
+  KeyUsage kUsage;
+  if ((extension == null) || ((kUsage=extension.getKeyUsageValue()) == null)) {
+    return null;
+  }
+  return kUsage.getKeyUsage();
+}

@@ -1,0 +1,13 @@
+{
+  ensureTransformationInfo();
+  mTransformationInfo.mAlpha=alpha;
+  invalidateParentCaches();
+  if (onSetAlpha((int)(alpha * 255))) {
+    mPrivateFlags|=ALPHA_SET;
+    invalidate(true);
+  }
+ else {
+    mPrivateFlags&=~ALPHA_SET;
+    invalidate(false);
+  }
+}

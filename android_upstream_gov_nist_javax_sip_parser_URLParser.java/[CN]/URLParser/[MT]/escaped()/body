@@ -1,0 +1,20 @@
+{
+  if (debug)   dbg_enter("escaped");
+  try {
+    StringBuffer retval=new StringBuffer();
+    char next=lexer.lookAhead(0);
+    char next1=lexer.lookAhead(1);
+    char next2=lexer.lookAhead(2);
+    if (next == '%' && Lexer.isHexDigit(next1) && Lexer.isHexDigit(next2)) {
+      lexer.consume(3);
+      retval.append(next);
+      retval.append(next1);
+      retval.append(next2);
+    }
+ else     throw createParseException("escaped");
+    return retval.toString();
+  }
+  finally {
+    if (debug)     dbg_leave("escaped");
+  }
+}

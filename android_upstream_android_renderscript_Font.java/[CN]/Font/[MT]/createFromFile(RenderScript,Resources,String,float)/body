@@ -1,0 +1,10 @@
+{
+  rs.validate();
+  int dpi=res.getDisplayMetrics().densityDpi;
+  int fontId=rs.nFontCreateFromFile(path,pointSize,dpi);
+  if (fontId == 0) {
+    throw new RSRuntimeException("Unable to create font from file " + path);
+  }
+  Font rsFont=new Font(fontId,rs);
+  return rsFont;
+}

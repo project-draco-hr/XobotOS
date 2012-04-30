@@ -1,0 +1,12 @@
+{
+  mIsBeingDragged=false;
+  recycleVelocityTracker();
+  if (mEdgeGlowTop != null) {
+    mEdgeGlowTop.onRelease();
+    mEdgeGlowBottom.onRelease();
+  }
+  if (mScrollStrictSpan != null) {
+    mScrollStrictSpan.finish();
+    mScrollStrictSpan=null;
+  }
+}

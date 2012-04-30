@@ -1,0 +1,7 @@
+{
+  WebViewCore.CursorData result=cursorDataNoPosition();
+  Point position=nativeCursorPosition();
+  result.mX=position.x;
+  result.mY=position.y;
+  return result;
+}

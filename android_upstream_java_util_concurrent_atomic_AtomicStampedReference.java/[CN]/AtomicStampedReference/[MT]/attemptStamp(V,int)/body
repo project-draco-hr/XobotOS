@@ -1,0 +1,4 @@
+{
+  Pair<V> current=pair;
+  return expectedReference == current.reference && (newStamp == current.stamp || casPair(current,Pair.of(expectedReference,newStamp)));
+}

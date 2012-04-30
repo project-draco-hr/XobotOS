@@ -1,0 +1,6 @@
+{
+  Authority retval=(Authority)super.clone();
+  if (this.hostPort != null)   retval.hostPort=(HostPort)this.hostPort.clone();
+  if (this.userInfo != null)   retval.userInfo=(UserInfo)this.userInfo.clone();
+  return retval;
+}

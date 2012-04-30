@@ -1,0 +1,11 @@
+{
+  if (PUB_PAGES.matcher(candidate).find() || SLASH_SEPARATED_DATES.matcher(candidate).find()) {
+    return null;
+  }
+  String rawString=candidate.toString();
+  PhoneNumberMatch match=parseAndVerify(rawString,offset);
+  if (match != null) {
+    return match;
+  }
+  return extractInnerMatch(rawString,offset);
+}

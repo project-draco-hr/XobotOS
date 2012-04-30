@@ -1,0 +1,4 @@
+{
+  project.addNature(natureId);
+  return this;
+}

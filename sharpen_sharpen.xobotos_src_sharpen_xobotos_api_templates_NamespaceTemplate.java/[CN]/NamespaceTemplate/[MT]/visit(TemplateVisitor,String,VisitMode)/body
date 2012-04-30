@@ -1,0 +1,57 @@
+{
+  final String[] elements=name.split("\\.");
+  String part="";
+  String rest=name;
+  boolean found=false;
+  if (!isRoot()) {
+    for (int i=0; i < elements.length - 1; i++) {
+      part=buildName(elements,0,i);
+      rest=buildName(elements,i + 1,elements.length - 1);
+      Match match=matches(part);
+      if (match == Match.NO_MATCH)       continue;
+ else       if (match == Match.NEGATIVE)       return false;
+      found=true;
+      break;
+    }
+    if (!found)     return false;
+  }
+ else {
+    Match match=matches(name);
+    if (match != Match.POSITIVE)     return false;
+  }
+  found=false;
+  if (isRoot() || isRecursive() || (rest.indexOf('.') < 0)) {
+    List<CompilationUnitTemplate> unitList=getCompilationUnits();
+    if (unitList != null) {
+      for (      final CompilationUnitTemplate template : unitList) {
+        Match match=template.matches(rest);
+        if (match == Match.NO_MATCH)         continue;
+ else         if (match == Match.NEGATIVE)         return false;
+        template.visit(visitor,mode);
+        found=true;
+        if (mode == VisitMode.FirstMatch)         break;
+      }
+    }
+ else {
+      found=true;
+    }
+    if (isRoot() && !found) {
+      return false;
+    }
+    if (!isRecursive() && (mode == VisitMode.FirstMatch)) {
+      visitor.accept(this);
+      return true;
+    }
+  }
+  if (found && (mode == VisitMode.FirstMatch)) {
+    visitor.accept(this);
+    return true;
+  }
+  for (  final NamespaceTemplate template : getNamespaces()) {
+    if (!template.visit(visitor,rest,mode))     continue;
+    found=true;
+    if (mode == VisitMode.FirstMatch)     break;
+  }
+  if (found)   visitor.accept(this);
+  return found;
+}

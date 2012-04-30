@@ -1,0 +1,4 @@
+{
+  final Expression singleArgument=arguments.get(0);
+  pushExpression(new CSIndexedExpression(target,mapExpression(singleArgument)));
+}

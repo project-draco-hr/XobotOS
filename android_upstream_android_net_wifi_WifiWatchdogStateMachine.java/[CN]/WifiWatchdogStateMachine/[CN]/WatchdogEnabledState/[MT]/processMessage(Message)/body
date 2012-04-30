@@ -1,0 +1,43 @@
+{
+switch (msg.what) {
+case EVENT_WATCHDOG_TOGGLED:
+    if (!isWatchdogEnabled())     transitionTo(mWatchdogDisabledState);
+  return HANDLED;
+case EVENT_NETWORK_STATE_CHANGE:
+Intent stateChangeIntent=(Intent)msg.obj;
+NetworkInfo networkInfo=(NetworkInfo)stateChangeIntent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+switch (networkInfo.getState()) {
+case CONNECTED:
+cancelNetworkNotification();
+WifiInfo wifiInfo=(WifiInfo)stateChangeIntent.getParcelableExtra(WifiManager.EXTRA_WIFI_INFO);
+if (wifiInfo == null) {
+loge("Connected --> WifiInfo object null!");
+return HANDLED;
+}
+if (wifiInfo.getSSID() == null || wifiInfo.getBSSID() == null) {
+loge("Received wifiInfo object with null elts: " + wifiInfoToStr(wifiInfo));
+return HANDLED;
+}
+initConnection(wifiInfo);
+mConnectionInfo=wifiInfo;
+updateBssids();
+transitionTo(mDnsCheckingState);
+mNetEventCounter++;
+break;
+default :
+mNetEventCounter++;
+transitionTo(mNotConnectedState);
+break;
+}
+return HANDLED;
+case EVENT_WIFI_RADIO_STATE_CHANGE:
+if ((Integer)msg.obj == WifiManager.WIFI_STATE_DISABLING) {
+if (DBG) log("WifiStateDisabling -- Resetting WatchdogState");
+resetWatchdogState();
+mNetEventCounter++;
+transitionTo(mNotConnectedState);
+}
+return HANDLED;
+}
+return NOT_HANDLED;
+}

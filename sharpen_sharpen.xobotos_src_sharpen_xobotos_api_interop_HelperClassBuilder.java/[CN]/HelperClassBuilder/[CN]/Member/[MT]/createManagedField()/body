@@ -1,0 +1,4 @@
+{
+  if (hasValue())   throw new IllegalStateException();
+  return new CSField(_managedName,_managed,CSVisibility.Public);
+}

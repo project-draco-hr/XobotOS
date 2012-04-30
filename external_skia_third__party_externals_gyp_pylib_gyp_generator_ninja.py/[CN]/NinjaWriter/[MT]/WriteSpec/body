@@ -1,0 +1,28 @@
+def WriteSpec(self, spec, config):
+    'The main entry point for NinjaWriter: write the build rules for a spec.\n\n    Returns the path to the build output, or None.'
+    self.name = spec['target_name']
+    self.toolset = spec['toolset']
+    if (spec['type'] == 'settings'):
+        print (("WARNING: %s uses invalid type 'settings'.  " % self.name) + "Please fix the source gyp file to use type 'none'.")
+        print 'See http://code.google.com/p/chromium/issues/detail?id=96629 .'
+        spec['type'] = 'none'
+    prebuild = []
+    if ('dependencies' in spec):
+        for dep in spec['dependencies']:
+            if (dep in self.target_outputs):
+                prebuild.append(self.target_outputs[dep][0])
+        prebuild = self.WriteCollapsedDependencies('predepends', prebuild)
+    extra_sources = []
+    sources_predepends = self.WriteActionsRulesCopies(spec, extra_sources, prebuild)
+    link_deps = []
+    sources = (spec.get('sources', []) + extra_sources)
+    if sources:
+        link_deps = self.WriteSources(config, sources, (sources_predepends or prebuild))
+        link_deps += [self.GypPathToNinja(f) for f in sources if f.endswith('.o')]
+    output = None
+    final_deps = (link_deps or sources_predepends or prebuild)
+    if final_deps:
+        output = self.WriteTarget(spec, config, final_deps)
+        if ((self.name != output) and (self.toolset == 'target')):
+            self.ninja.build(self.name, 'phony', output)
+    return output

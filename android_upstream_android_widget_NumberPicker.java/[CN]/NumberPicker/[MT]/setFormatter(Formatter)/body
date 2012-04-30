@@ -1,0 +1,8 @@
+{
+  if (formatter == mFormatter) {
+    return;
+  }
+  mFormatter=formatter;
+  initializeSelectorWheelIndices();
+  updateInputTextView();
+}

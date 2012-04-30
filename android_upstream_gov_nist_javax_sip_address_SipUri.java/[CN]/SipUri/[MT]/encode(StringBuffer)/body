@@ -1,0 +1,13 @@
+{
+  buffer.append(scheme).append(COLON);
+  if (authority != null)   authority.encode(buffer);
+  if (!uriParms.isEmpty()) {
+    buffer.append(SEMICOLON);
+    uriParms.encode(buffer);
+  }
+  if (!qheaders.isEmpty()) {
+    buffer.append(QUESTION);
+    qheaders.encode(buffer);
+  }
+  return buffer;
+}

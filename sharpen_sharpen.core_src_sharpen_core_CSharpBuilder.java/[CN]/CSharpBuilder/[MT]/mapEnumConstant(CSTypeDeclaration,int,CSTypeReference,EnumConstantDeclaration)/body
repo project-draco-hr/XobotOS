@@ -1,0 +1,46 @@
+{
+  final String name=identifier(node.getName());
+  final CSReferenceExpression idRef=new CSReferenceExpression(name + "_ID");
+  CSExpression initializer;
+  AnonymousClassDeclaration anon=node.getAnonymousClassDeclaration();
+  if (anon != null) {
+    CSAnonymousClassBuilder anonBuilder=mapAnonymousClass(anon);
+    if (anonBuilder == null)     initializer=new CSNullLiteralExpression();
+ else {
+      initializer=anonBuilder.createConstructorInvocation();
+      CSConstructor ctor=anonBuilder.constructor();
+      CSConstructorInvocationExpression cie;
+      if (ctor.chainedConstructorInvocation() == null) {
+        cie=new CSConstructorInvocationExpression(new CSBaseExpression());
+        cie.addArgument(idRef);
+        ctor.chainedConstructorInvocation(cie);
+      }
+ else {
+        CSConstructorInvocationExpression oldCie=ctor.chainedConstructorInvocation();
+        cie=new CSConstructorInvocationExpression(new CSBaseExpression());
+        ctor.chainedConstructorInvocation(cie);
+        cie.addArgument(idRef);
+        for (        CSExpression arg : oldCie.arguments())         cie.addArgument(arg);
+      }
+    }
+  }
+ else {
+    CSConstructorInvocationExpression cie=new CSConstructorInvocationExpression(typeRef);
+    cie.addArgument(idRef);
+    for (    Object o : node.arguments()) {
+      Expression expr=(Expression)o;
+      cie.addArgument(mapExpression(expr));
+    }
+    initializer=cie;
+  }
+  CSField field=new CSField(name,typeRef,CSVisibility.Public);
+  field.initializer(initializer);
+  field.addModifier(CSFieldModifier.Static);
+  field.addModifier(CSFieldModifier.Readonly);
+  klass.addMember(field);
+  CSTypeReference intRef=new CSTypeReference("int");
+  CSField idField=new CSField(name + "_ID",intRef,CSVisibility.Public);
+  idField.initializer(new CSNumberLiteralExpression(Integer.toString(id)));
+  idField.addModifier(CSFieldModifier.Const);
+  klass.addMember(idField);
+}

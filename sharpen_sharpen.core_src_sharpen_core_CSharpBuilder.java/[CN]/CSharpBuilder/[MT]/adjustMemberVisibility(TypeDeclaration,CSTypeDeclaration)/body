@@ -1,0 +1,9 @@
+{
+  ITypeBinding binding=node.resolveBinding();
+  for (  final CSMember member : type.members()) {
+    if (member instanceof CSMethod)     continue;
+    if (binding.isNested() && Modifier.isPrivate(binding.getModifiers())) {
+      if (member.visibility() == CSVisibility.Private)       member.visibility(CSVisibility.Internal);
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  int debugFlags=enableDebugger ? DEBUG_ENABLE_DEBUGGER : 0;
+  return forkAndSpecialize(uid,gid,gids,debugFlags,rlimits);
+}

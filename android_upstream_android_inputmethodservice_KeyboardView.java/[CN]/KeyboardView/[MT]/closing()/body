@@ -1,0 +1,10 @@
+{
+  if (mPreviewPopup.isShowing()) {
+    mPreviewPopup.dismiss();
+  }
+  removeMessages();
+  dismissPopupKeyboard();
+  mBuffer=null;
+  mCanvas=null;
+  mMiniKeyboardCache.clear();
+}

@@ -1,0 +1,5 @@
+{
+  super(db,query);
+  mOffsetIndex=offsetIndex;
+  bindAllArgsAsStrings(bindArgs);
+}

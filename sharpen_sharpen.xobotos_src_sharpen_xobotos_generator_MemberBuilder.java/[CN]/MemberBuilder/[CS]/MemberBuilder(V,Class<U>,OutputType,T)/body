@@ -1,0 +1,7 @@
+{
+  this._template=template;
+  this._memberType=memberType;
+  this._outputType=output;
+  this._node=node;
+  _members=new HashMap<ASTNode,MemberBuilder<?,?,?>>();
+}

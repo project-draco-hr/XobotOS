@@ -1,0 +1,6 @@
+BluetoothHealthAppConfiguration config
+BluetoothDevice device
+int prevState
+int newState
+ParcelFileDescriptor fd
+int channelId

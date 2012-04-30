@@ -1,0 +1,11 @@
+{
+  final ClassDefinition klass=node.getDefinition();
+  _writer.write("class ");
+  _writer.writeLine(klass.getName());
+  _writer.writeLine("{");
+  writeDeclarationList(klass,Visibility.PUBLIC);
+  writeDeclarationList(klass,Visibility.PROTECTED);
+  writeDeclarationList(klass,Visibility.PRIVATE);
+  _writer.writeLine("};");
+  _writer.writeLine();
+}

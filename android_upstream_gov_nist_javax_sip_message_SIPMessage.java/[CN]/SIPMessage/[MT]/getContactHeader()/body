@@ -1,0 +1,9 @@
+{
+  ContactList clist=this.getContactHeaders();
+  if (clist != null) {
+    return (Contact)clist.getFirst();
+  }
+ else {
+    return null;
+  }
+}

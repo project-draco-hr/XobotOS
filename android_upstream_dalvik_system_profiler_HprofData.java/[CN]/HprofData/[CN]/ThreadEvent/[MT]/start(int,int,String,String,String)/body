@@ -1,0 +1,3 @@
+{
+  return new ThreadEvent(ThreadEventType.START,objectId,threadId,threadName,groupName,parentGroupName);
+}

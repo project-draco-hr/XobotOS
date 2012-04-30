@@ -1,0 +1,11 @@
+{
+  try {
+    if (arguments != null) {
+      arguments.setAllowFds(false);
+    }
+    return ActivityManagerNative.getDefault().startInstrumentation(className,profileFile,0,arguments,null);
+  }
+ catch (  RemoteException e) {
+  }
+  return false;
+}

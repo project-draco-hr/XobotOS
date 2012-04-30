@@ -1,0 +1,12 @@
+{
+  out.writeString(mTag);
+  out.writeLong(mTimeMillis);
+  if (mFileDescriptor != null) {
+    out.writeInt(mFlags & ~HAS_BYTE_ARRAY);
+    mFileDescriptor.writeToParcel(out,flags);
+  }
+ else {
+    out.writeInt(mFlags | HAS_BYTE_ARRAY);
+    out.writeByteArray(mData);
+  }
+}

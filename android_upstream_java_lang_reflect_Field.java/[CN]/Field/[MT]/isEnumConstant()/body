@@ -1,0 +1,4 @@
+{
+  int flags=getFieldModifiers(declaringClass,slot);
+  return (flags & Modifier.ENUM) != 0;
+}

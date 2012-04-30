@@ -1,0 +1,65 @@
+{
+  this.messageChannels=new LinkedList();
+  if (sipStack.threadPoolSize != -1) {
+    for (int i=0; i < sipStack.threadPoolSize; i++) {
+      UDPMessageChannel channel=new UDPMessageChannel(sipStack,this);
+      this.messageChannels.add(channel);
+    }
+  }
+  ThreadAuditor.ThreadHandle threadHandle=sipStack.getThreadAuditor().addCurrentThread();
+  while (this.isRunning) {
+    try {
+      threadHandle.ping();
+      int bufsize=sock.getReceiveBufferSize();
+      byte message[]=new byte[bufsize];
+      DatagramPacket packet=new DatagramPacket(message,bufsize);
+      sock.receive(packet);
+      if (sipStack.stackDoesCongestionControl) {
+        if (this.messageQueue.size() >= HIGHWAT) {
+          if (sipStack.isLoggingEnabled()) {
+            sipStack.getStackLogger().logDebug("Dropping message -- queue length exceeded");
+          }
+          continue;
+        }
+ else         if (this.messageQueue.size() > LOWAT && this.messageQueue.size() < HIGHWAT) {
+          float threshold=((float)(messageQueue.size() - LOWAT)) / ((float)(HIGHWAT - LOWAT));
+          boolean decision=Math.random() > 1.0 - threshold;
+          if (decision) {
+            if (sipStack.isLoggingEnabled()) {
+              sipStack.getStackLogger().logDebug("Dropping message with probability  " + (1.0 - threshold));
+            }
+            continue;
+          }
+        }
+      }
+      if (sipStack.threadPoolSize != -1) {
+synchronized (this.messageQueue) {
+          this.messageQueue.add(packet);
+          this.messageQueue.notify();
+        }
+      }
+ else {
+        new UDPMessageChannel(sipStack,this,packet);
+      }
+    }
+ catch (    SocketTimeoutException ex) {
+    }
+catch (    SocketException ex) {
+      if (sipStack.isLoggingEnabled())       getSIPStack().getStackLogger().logDebug("UDPMessageProcessor: Stopping");
+      isRunning=false;
+synchronized (this.messageQueue) {
+        this.messageQueue.notifyAll();
+      }
+    }
+catch (    IOException ex) {
+      isRunning=false;
+      ex.printStackTrace();
+      if (sipStack.isLoggingEnabled())       getSIPStack().getStackLogger().logDebug("UDPMessageProcessor: Got an IO Exception");
+    }
+catch (    Exception ex) {
+      if (sipStack.isLoggingEnabled())       getSIPStack().getStackLogger().logDebug("UDPMessageProcessor: Unexpected Exception - quitting");
+      InternalErrorHandler.handleException(ex);
+      return;
+    }
+  }
+}

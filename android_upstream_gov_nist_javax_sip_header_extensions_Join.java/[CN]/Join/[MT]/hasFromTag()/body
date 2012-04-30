@@ -1,0 +1,3 @@
+{
+  return hasParameter(ParameterNames.FROM_TAG);
+}

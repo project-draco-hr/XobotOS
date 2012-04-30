@@ -1,0 +1,6 @@
+def CheckChangeOnCommit(input_api, output_api):
+    report = []
+    license = ('.*? Copyright \\(c\\) %(year)s Google Inc\\. All rights reserved\\.\\n.*? Use of this source code is governed by a BSD-style license that can be\\n.*? found in the LICENSE file\\.\\n' % {'year': input_api.time.strftime('%Y'), })
+    report.extend(input_api.canned_checks.PanProjectChecks(input_api, output_api, license_header=license))
+    report.extend(input_api.canned_checks.CheckTreeIsOpen(input_api, output_api, 'http://gyp-status.appspot.com/status', 'http://gyp-status.appspot.com/current'))
+    return report

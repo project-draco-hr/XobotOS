@@ -1,0 +1,9 @@
+{
+synchronized (mLock) {
+    if (mCursor != null) {
+      unregisterObserverProxyLocked();
+      mCursor.deactivate();
+    }
+    closeWindowForNonWindowedCursorLocked();
+  }
+}

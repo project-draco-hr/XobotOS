@@ -1,0 +1,3 @@
+{
+  return lineNumber == NATIVE_LINE_NUMBER;
+}

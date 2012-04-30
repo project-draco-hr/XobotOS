@@ -1,0 +1,5 @@
+{
+  long hi=readUint32();
+  long lo=readUint32();
+  return (hi << 32) | lo;
+}

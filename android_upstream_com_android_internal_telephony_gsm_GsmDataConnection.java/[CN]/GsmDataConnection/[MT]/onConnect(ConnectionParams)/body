@@ -1,0 +1,21 @@
+{
+  mApn=cp.apn;
+  if (DBG)   log("Connecting to carrier: '" + mApn.carrier + "' APN: '"+ mApn.apn+ "' proxy: '"+ mApn.proxy+ "' port: '"+ mApn.port);
+  createTime=-1;
+  lastFailTime=-1;
+  lastFailCause=FailCause.NONE;
+  Message msg=obtainMessage(EVENT_SETUP_DATA_CONNECTION_DONE,cp);
+  msg.obj=cp;
+  int authType=mApn.authType;
+  if (authType == -1) {
+    authType=(mApn.user != null) ? RILConstants.SETUP_DATA_AUTH_PAP_CHAP : RILConstants.SETUP_DATA_AUTH_NONE;
+  }
+  String protocol;
+  if (phone.getServiceState().getRoaming()) {
+    protocol=mApn.roamingProtocol;
+  }
+ else {
+    protocol=mApn.protocol;
+  }
+  phone.mCM.setupDataCall(Integer.toString(getRadioTechnology(RILConstants.SETUP_DATA_TECH_GSM)),Integer.toString(mProfileId),mApn.apn,mApn.user,mApn.password,Integer.toString(authType),protocol,msg);
+}

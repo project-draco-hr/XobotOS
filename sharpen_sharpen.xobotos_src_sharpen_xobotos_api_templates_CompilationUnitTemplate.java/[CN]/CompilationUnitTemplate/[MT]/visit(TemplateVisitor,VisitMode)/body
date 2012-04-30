@@ -1,0 +1,6 @@
+{
+  visitor.accept(this);
+  if (mode == VisitMode.AllUnits)   return;
+  visitList(visitor,mode,getTypes());
+  visitList(visitor,mode,getEnums());
+}

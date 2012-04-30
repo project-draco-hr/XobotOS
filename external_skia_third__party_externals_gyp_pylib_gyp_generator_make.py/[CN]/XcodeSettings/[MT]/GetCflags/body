@@ -1,0 +1,51 @@
+def GetCflags(self, configname):
+    'Returns flags that need to be added to .c, .cc, .m, and .mm\n    compilations.'
+    self.configname = configname
+    cflags = []
+    sdk_root = self._SdkPath()
+    if ('SDKROOT' in self._Settings()):
+        cflags.append(('-isysroot %s' % sdk_root))
+    if self._Test('GCC_CW_ASM_SYNTAX', 'YES', default='YES'):
+        cflags.append('-fasm-blocks')
+    if ('GCC_DYNAMIC_NO_PIC' in self._Settings()):
+        if (self._Settings()['GCC_DYNAMIC_NO_PIC'] == 'YES'):
+            cflags.append('-mdynamic-no-pic')
+    else:
+        pass
+    if self._Test('GCC_ENABLE_PASCAL_STRINGS', 'YES', default='YES'):
+        cflags.append('-mpascal-strings')
+    self._Appendf(cflags, 'GCC_OPTIMIZATION_LEVEL', '-O%s', default='s')
+    if self._Test('GCC_GENERATE_DEBUGGING_SYMBOLS', 'YES', default='YES'):
+        dbg_format = self._Settings().get('DEBUG_INFORMATION_FORMAT', 'dwarf')
+        if (dbg_format == 'dwarf'):
+            cflags.append('-gdwarf-2')
+        elif (dbg_format == 'stabs'):
+            raise NotImplementedError('stabs debug format is not supported yet.')
+        elif (dbg_format == 'dwarf-with-dsym'):
+            cflags.append('-gdwarf-2')
+        else:
+            raise NotImplementedError(('Unknown debug format %s' % dbg_format))
+    if self._Test('GCC_SYMBOLS_PRIVATE_EXTERN', 'YES', default='NO'):
+        cflags.append('-fvisibility=hidden')
+    if self._Test('GCC_TREAT_WARNINGS_AS_ERRORS', 'YES', default='NO'):
+        cflags.append('-Werror')
+    if self._Test('GCC_WARN_ABOUT_MISSING_NEWLINE', 'YES', default='NO'):
+        cflags.append('-Wnewline-eof')
+    self._Appendf(cflags, 'MACOSX_DEPLOYMENT_TARGET', '-mmacosx-version-min=%s')
+    self._WarnUnimplemented('ARCHS')
+    if self._Test('COPY_PHASE_STRIP', 'YES', default='NO'):
+        self._WarnUnimplemented('COPY_PHASE_STRIP')
+    self._WarnUnimplemented('GCC_DEBUGGING_SYMBOLS')
+    self._WarnUnimplemented('GCC_ENABLE_OBJC_EXCEPTIONS')
+    self._WarnUnimplemented('GCC_ENABLE_OBJC_GC')
+    self._WarnUnimplemented('INFOPLIST_PREPROCESS')
+    self._WarnUnimplemented('INFOPLIST_PREPROCESSOR_DEFINITIONS')
+    cflags.append('-arch i386')
+    cflags += self._Settings().get('OTHER_CFLAGS', [])
+    cflags += self._Settings().get('WARNING_CFLAGS', [])
+    config = self.spec['configurations'][self.configname]
+    framework_dirs = config.get('mac_framework_dirs', [])
+    for directory in framework_dirs:
+        cflags.append(('-F ' + os.path.join(sdk_root, directory)))
+    self.configname = None
+    return cflags

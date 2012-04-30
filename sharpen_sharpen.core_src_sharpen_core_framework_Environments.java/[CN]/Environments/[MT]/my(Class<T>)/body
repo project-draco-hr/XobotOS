@@ -1,0 +1,7 @@
+{
+  final Environment environment=current();
+  if (null == environment) {
+    throw new IllegalStateException();
+  }
+  return environment.provide(service);
+}

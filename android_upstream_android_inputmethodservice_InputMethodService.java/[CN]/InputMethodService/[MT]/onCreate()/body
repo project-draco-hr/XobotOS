@@ -1,0 +1,10 @@
+{
+  mTheme=Resources.selectSystemTheme(mTheme,getApplicationInfo().targetSdkVersion,android.R.style.Theme_InputMethod,android.R.style.Theme_Holo_InputMethod,android.R.style.Theme_DeviceDefault_InputMethod);
+  super.setTheme(mTheme);
+  super.onCreate();
+  mImm=(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+  mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  mWindow=new SoftInputWindow(this,mTheme,mDispatcherState);
+  initViews();
+  mWindow.getWindow().setLayout(MATCH_PARENT,WRAP_CONTENT);
+}

@@ -1,0 +1,5 @@
+{
+  NetworkUpdateResult result=addOrUpdateNetworkNative(config);
+  sendConfiguredNetworksChangedBroadcast();
+  return result.getNetworkId();
+}

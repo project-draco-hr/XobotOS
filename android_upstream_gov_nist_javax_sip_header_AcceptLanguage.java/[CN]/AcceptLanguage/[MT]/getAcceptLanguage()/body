@@ -1,0 +1,10 @@
+{
+  if (this.languageRange == null)   return null;
+ else {
+    int dash=languageRange.indexOf('-');
+    if (dash >= 0) {
+      return new Locale(languageRange.substring(0,dash),languageRange.substring(dash + 1));
+    }
+ else     return new Locale(this.languageRange);
+  }
+}

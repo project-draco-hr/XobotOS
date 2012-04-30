@@ -1,0 +1,13 @@
+{
+  if (listener == null)   throw new IllegalArgumentException("listener is null");
+synchronized (mAccountsUpdatedListeners) {
+    if (!mAccountsUpdatedListeners.containsKey(listener)) {
+      Log.e(TAG,"Listener was not previously added");
+      return;
+    }
+    mAccountsUpdatedListeners.remove(listener);
+    if (mAccountsUpdatedListeners.isEmpty()) {
+      mContext.unregisterReceiver(mAccountsChangedBroadcastReceiver);
+    }
+  }
+}

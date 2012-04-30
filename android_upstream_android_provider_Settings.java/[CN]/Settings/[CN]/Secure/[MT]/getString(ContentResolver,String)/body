@@ -1,0 +1,6 @@
+{
+  if (sNameValueCache == null) {
+    sNameValueCache=new NameValueCache(SYS_PROP_SETTING_VERSION,CONTENT_URI,CALL_METHOD_GET_SECURE);
+  }
+  return sNameValueCache.getString(resolver,name);
+}

@@ -1,0 +1,4 @@
+{
+  if (_isShared)   return new CSNestedTypeReference(BindingManager.MANAGED_SHARED_HELPER,_managedHelperRef);
+ else   return _managedHelperRef;
+}

@@ -1,0 +1,3 @@
+{
+  this(NEVER_NEEDS_COMPAT,DisplayMetrics.DENSITY_DEVICE,1.0f,1.0f);
+}

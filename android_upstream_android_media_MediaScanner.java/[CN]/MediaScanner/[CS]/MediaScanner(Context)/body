@@ -1,0 +1,8 @@
+{
+  native_setup();
+  mContext=c;
+  mBitmapOptions.inSampleSize=1;
+  mBitmapOptions.inJustDecodeBounds=true;
+  setDefaultRingtoneFileNames();
+  mExternalStoragePath=Environment.getExternalStorageDirectory().getAbsolutePath();
+}

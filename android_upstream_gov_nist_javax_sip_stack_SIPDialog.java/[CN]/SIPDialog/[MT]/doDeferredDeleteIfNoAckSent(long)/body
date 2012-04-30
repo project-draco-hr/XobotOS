@@ -1,0 +1,9 @@
+{
+  if (sipStack.getTimer() == null) {
+    this.setState(TERMINATED_STATE);
+  }
+ else   if (dialogDeleteIfNoAckSentTask == null) {
+    dialogDeleteIfNoAckSentTask=new DialogDeleteIfNoAckSentTask(seqno);
+    sipStack.getTimer().schedule(dialogDeleteIfNoAckSentTask,SIPTransaction.TIMER_J * SIPTransactionStack.BASE_TIMER_INTERVAL);
+  }
+}

@@ -1,0 +1,32 @@
+{
+  final int totalWork=GENERATING_PRICE * builders.size();
+  IProgressMonitor subMonitor=new SubProgressMonitor(monitor,totalWork);
+  subMonitor.beginTask("Converting",totalWork);
+  Sharpen.Log(Level.INFO,"Converting %d files",builders.size());
+  int i=0;
+  int errorCount=0;
+  for (  final CompilationUnitBuilder builder : builders) {
+    if (monitor.isCanceled())     return null;
+    final String message=String.format("Generating (%d/%d): %s",++i,builders.size(),builder.getName());
+    subMonitor.subTask(message);
+    try {
+      if (!builder.build()) {
+        Sharpen.Log(Level.SEVERE,"Generator did not produce any output for %s",builder.getName());
+        ++errorCount;
+      }
+    }
+ catch (    Exception e) {
+      Sharpen.Log(e,"Exception while generating %s",builder.getName());
+      ++errorCount;
+    }
+ finally {
+      subMonitor.worked(GENERATING_PRICE);
+    }
+  }
+  if (errorCount > 0) {
+    Sharpen.Log(Level.SEVERE,"Converting finished, found %d errors.",errorCount);
+    _foundErrors=true;
+  }
+  subMonitor.done();
+  return !_foundErrors;
+}

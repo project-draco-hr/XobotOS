@@ -1,0 +1,23 @@
+def _DetectVisualStudioVersions():
+    'Collect the list of installed visual studio versions.\n\n  Returns:\n    A list of visual studio versions installed in descending order of\n    usage preference.\n    Base this on the registry and a quick check if devenv.exe exists.\n    Only versions 8-10 are considered.\n    Possibilities are:\n      2005(e) - Visual Studio 2005 (8)\n      2008(e) - Visual Studio 2008 (9)\n      2010(e) - Visual Studio 2010 (10)\n    Where (e) is e for express editions of MSVS and blank otherwise.\n  '
+    version_to_year = {'8.0': '2005', '9.0': '2008', '10.0': '2010', }
+    versions = []
+    for version in ('9.0', '8.0', '10.0'):
+        keys = [('HKLM\\SOFTWARE\\Microsoft\\DevDiv\\VS\\Servicing\\%s' % version), ('HKLM\\SOFTWARE\\Wow6432Node\\Microsoft\\DevDiv\\VS\\Servicing\\%s' % version)]
+        for index in range(len(keys)):
+            if (not _RegistryKeyExists(keys[index])):
+                continue
+            if _RegistryKeyExists((keys[index] + '\\expbsln')):
+                versions.append(_CreateVersion((version_to_year[version] + 'e')))
+            else:
+                versions.append(_CreateVersion(version_to_year[version]))
+        keys = [('HKLM\\Software\\Microsoft\\VisualStudio\\%s' % version), ('HKLM\\Software\\Wow6432Node\\Microsoft\\VisualStudio\\%s' % version), ('HKLM\\Software\\Microsoft\\VCExpress\\%s' % version), ('HKLM\\Software\\Wow6432Node\\Microsoft\\VCExpress\\%s' % version)]
+        for index in range(len(keys)):
+            path = _RegistryGetValue(keys[index], 'InstallDir')
+            if (not path):
+                continue
+            if os.path.exists(os.path.join(path, 'devenv.exe')):
+                versions.append(_CreateVersion(version_to_year[version]))
+            elif os.path.exists(os.path.join(path, 'vcexpress.exe')):
+                versions.append(_CreateVersion((version_to_year[version] + 'e')))
+    return versions

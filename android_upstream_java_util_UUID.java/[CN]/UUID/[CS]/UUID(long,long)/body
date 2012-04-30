@@ -1,0 +1,5 @@
+{
+  this.mostSigBits=mostSigBits;
+  this.leastSigBits=leastSigBits;
+  init();
+}

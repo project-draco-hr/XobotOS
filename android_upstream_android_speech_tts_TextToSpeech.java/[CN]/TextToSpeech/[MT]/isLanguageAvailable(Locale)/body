@@ -1,0 +1,8 @@
+{
+  return runAction(new Action<Integer>(){
+    @Override public Integer run(    ITextToSpeechService service) throws RemoteException {
+      return service.isLanguageAvailable(loc.getISO3Language(),loc.getISO3Country(),loc.getVariant());
+    }
+  }
+,LANG_NOT_SUPPORTED,"isLanguageAvailable");
+}

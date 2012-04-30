@@ -1,0 +1,16 @@
+{
+  if (other == null)   return false;
+  if (other.getClass() != getClass()) {
+    return false;
+  }
+  Authority otherAuth=(Authority)other;
+  if (!this.hostPort.equals(otherAuth.hostPort)) {
+    return false;
+  }
+  if (this.userInfo != null && otherAuth.userInfo != null) {
+    if (!this.userInfo.equals(otherAuth.userInfo)) {
+      return false;
+    }
+  }
+  return true;
+}

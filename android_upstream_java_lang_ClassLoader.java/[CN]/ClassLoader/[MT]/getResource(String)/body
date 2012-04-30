@@ -1,0 +1,7 @@
+{
+  URL resource=parent.getResource(resName);
+  if (resource == null) {
+    resource=findResource(resName);
+  }
+  return resource;
+}

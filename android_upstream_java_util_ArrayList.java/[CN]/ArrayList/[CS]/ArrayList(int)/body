@@ -1,0 +1,6 @@
+{
+  if (capacity < 0) {
+    throw new IllegalArgumentException();
+  }
+  array=(capacity == 0 ? EmptyArray.OBJECT : new Object[capacity]);
+}

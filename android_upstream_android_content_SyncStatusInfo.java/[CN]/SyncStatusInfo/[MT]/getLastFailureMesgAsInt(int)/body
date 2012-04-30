@@ -1,0 +1,11 @@
+{
+  try {
+    if (lastFailureMesg != null) {
+      return Integer.parseInt(lastFailureMesg);
+    }
+  }
+ catch (  NumberFormatException e) {
+    Log.d(TAG,"error parsing lastFailureMesg of " + lastFailureMesg,e);
+  }
+  return def;
+}

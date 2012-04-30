@@ -1,0 +1,6 @@
+{
+  mContext.unregisterReceiver(mConnectivityReceiver);
+  if (DEBUG)   Log.d(TAG," --- unregister receivers");
+  mWifiLock.release();
+  mConnected=false;
+}

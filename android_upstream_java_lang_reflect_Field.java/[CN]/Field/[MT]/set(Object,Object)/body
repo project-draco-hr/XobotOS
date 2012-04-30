@@ -1,0 +1,3 @@
+{
+  setField(object,declaringClass,type,slot,flag,value);
+}

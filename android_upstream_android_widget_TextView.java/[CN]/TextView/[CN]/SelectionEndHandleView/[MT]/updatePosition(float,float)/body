@@ -1,0 +1,6 @@
+{
+  int offset=getOffsetForPosition(x,y);
+  final int selectionStart=getSelectionStart();
+  if (offset <= selectionStart)   offset=selectionStart + 1;
+  positionAtCursorOffset(offset,false);
+}

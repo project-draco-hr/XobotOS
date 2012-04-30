@@ -1,0 +1,59 @@
+{
+  offsetChildrenTopAndBottom(amount);
+  final int listBottom=getHeight() - mListPadding.bottom;
+  final int listTop=mListPadding.top;
+  final AbsListView.RecycleBin recycleBin=mRecycler;
+  if (amount < 0) {
+    int numChildren=getChildCount();
+    View last=getChildAt(numChildren - 1);
+    while (last.getBottom() < listBottom) {
+      final int lastVisiblePosition=mFirstPosition + numChildren - 1;
+      if (lastVisiblePosition < mItemCount - 1) {
+        last=addViewBelow(last,lastVisiblePosition);
+        numChildren++;
+      }
+ else {
+        break;
+      }
+    }
+    if (last.getBottom() < listBottom) {
+      offsetChildrenTopAndBottom(listBottom - last.getBottom());
+    }
+    View first=getChildAt(0);
+    while (first.getBottom() < listTop) {
+      AbsListView.LayoutParams layoutParams=(LayoutParams)first.getLayoutParams();
+      if (recycleBin.shouldRecycleViewType(layoutParams.viewType)) {
+        detachViewFromParent(first);
+        recycleBin.addScrapView(first,mFirstPosition);
+      }
+ else {
+        removeViewInLayout(first);
+      }
+      first=getChildAt(0);
+      mFirstPosition++;
+    }
+  }
+ else {
+    View first=getChildAt(0);
+    while ((first.getTop() > listTop) && (mFirstPosition > 0)) {
+      first=addViewAbove(first,mFirstPosition);
+      mFirstPosition--;
+    }
+    if (first.getTop() > listTop) {
+      offsetChildrenTopAndBottom(listTop - first.getTop());
+    }
+    int lastIndex=getChildCount() - 1;
+    View last=getChildAt(lastIndex);
+    while (last.getTop() > listBottom) {
+      AbsListView.LayoutParams layoutParams=(LayoutParams)last.getLayoutParams();
+      if (recycleBin.shouldRecycleViewType(layoutParams.viewType)) {
+        detachViewFromParent(last);
+        recycleBin.addScrapView(last,mFirstPosition + lastIndex);
+      }
+ else {
+        removeViewInLayout(last);
+      }
+      last=getChildAt(--lastIndex);
+    }
+  }
+}

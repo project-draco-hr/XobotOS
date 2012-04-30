@@ -1,0 +1,15 @@
+{
+  LinkedList<String> retval=new LinkedList<String>();
+  Iterator<SIPHeader> li=headers.iterator();
+  while (li.hasNext()) {
+    SIPHeader sipHeader=(SIPHeader)li.next();
+    if (sipHeader instanceof SIPHeaderList) {
+      SIPHeaderList<?> shl=(SIPHeaderList<?>)sipHeader;
+      retval.addAll(shl.getHeadersAsEncodedStrings());
+    }
+ else {
+      retval.add(sipHeader.encode());
+    }
+  }
+  return retval;
+}

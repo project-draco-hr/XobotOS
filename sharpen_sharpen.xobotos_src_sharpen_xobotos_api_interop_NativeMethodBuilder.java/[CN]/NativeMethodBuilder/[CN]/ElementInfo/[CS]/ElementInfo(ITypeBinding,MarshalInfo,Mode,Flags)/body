@@ -1,0 +1,6 @@
+{
+  this.type=type;
+  this.marshal=marshal;
+  this.mode=mode;
+  this.flags=flags;
+}

@@ -1,0 +1,12 @@
+{
+  if (name.isEmpty() || name.length() > Manifest.LINE_LENGTH_LIMIT - 2) {
+    throw new IllegalArgumentException(name);
+  }
+  for (int i=0; i < name.length(); i++) {
+    char ch=name.charAt(i);
+    if (!((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '_' || ch == '-' || (ch >= '0' && ch <= '9'))) {
+      throw new IllegalArgumentException(name);
+    }
+  }
+  this.name=name;
+}

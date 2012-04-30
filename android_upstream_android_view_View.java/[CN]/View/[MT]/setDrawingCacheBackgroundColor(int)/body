@@ -1,0 +1,6 @@
+{
+  if (color != mDrawingCacheBackgroundColor) {
+    mDrawingCacheBackgroundColor=color;
+    mPrivateFlags&=~DRAWING_CACHE_VALID;
+  }
+}

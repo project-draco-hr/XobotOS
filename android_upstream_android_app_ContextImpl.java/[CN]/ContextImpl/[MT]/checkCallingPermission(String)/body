@@ -1,0 +1,10 @@
+{
+  if (permission == null) {
+    throw new IllegalArgumentException("permission is null");
+  }
+  int pid=Binder.getCallingPid();
+  if (pid != Process.myPid()) {
+    return checkPermission(permission,pid,Binder.getCallingUid());
+  }
+  return PackageManager.PERMISSION_DENIED;
+}

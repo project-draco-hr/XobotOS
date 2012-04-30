@@ -1,0 +1,6 @@
+{
+  if (!(obj instanceof File)) {
+    return false;
+  }
+  return path.equals(((File)obj).getPath());
+}

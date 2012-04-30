@@ -1,0 +1,5 @@
+{
+  CallInfo retval=(CallInfo)super.clone();
+  if (this.info != null)   retval.info=(GenericURI)this.info.clone();
+  return retval;
+}

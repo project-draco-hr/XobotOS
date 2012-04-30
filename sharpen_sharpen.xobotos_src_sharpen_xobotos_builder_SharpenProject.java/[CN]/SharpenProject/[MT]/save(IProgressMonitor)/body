@@ -1,0 +1,3 @@
+{
+  WorkspaceUtilities.writeFile(getSettingsFile(),toEncodedXml(),WorkspaceUtilities.DEFAULT_CHARSET,monitor);
+}

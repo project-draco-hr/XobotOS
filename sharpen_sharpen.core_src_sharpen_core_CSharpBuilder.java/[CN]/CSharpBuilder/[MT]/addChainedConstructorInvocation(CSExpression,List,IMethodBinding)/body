@@ -1,0 +1,4 @@
+{
+  CSConstructorInvocationExpression cie=mapChainedConstructorInvocation(target,arguments,binding);
+  ((CSConstructor)_currentMethod).chainedConstructorInvocation(cie);
+}

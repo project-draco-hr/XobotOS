@@ -1,0 +1,19 @@
+{
+synchronized (threadRefs) {
+synchronized (groups) {
+      if (isDestroyed) {
+        throw new IllegalThreadStateException("Thread group was already destroyed: " + (this.name != null ? this.name : "n/a"));
+      }
+      if (threads.iterator().hasNext()) {
+        throw new IllegalThreadStateException("Thread group still contains threads: " + (this.name != null ? this.name : "n/a"));
+      }
+      while (!groups.isEmpty()) {
+        groups.get(0).destroy();
+      }
+      if (parent != null) {
+        parent.remove(this);
+      }
+      this.isDestroyed=true;
+    }
+  }
+}

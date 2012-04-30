@@ -1,0 +1,5 @@
+{
+  if (_kind == Kind.DESTRUCTOR)   return true;
+ else   if (_kind == Kind.CONSTRUCTOR)   return false;
+  return _returnVoid;
+}

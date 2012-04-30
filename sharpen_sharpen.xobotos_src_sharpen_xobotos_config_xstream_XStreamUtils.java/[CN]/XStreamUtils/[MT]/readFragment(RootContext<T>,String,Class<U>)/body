@@ -1,0 +1,14 @@
+{
+  try {
+    String fullName=root.getProjectRoot().getPath() + File.separatorChar + fileName;
+    FileReader reader=new FileReader(fullName);
+    XStream xstream=prepareXStream();
+    xstream.setMarshallingStrategy(root.getMarshallingStrategy());
+    U result=klass.cast(xstream.fromXML(reader));
+    if (result == null)     throw new RuntimeException("Cannot read configuration file: " + fileName);
+    return result;
+  }
+ catch (  FileNotFoundException e) {
+    throw new RuntimeException("Cannot read configuration file: " + fileName);
+  }
+}

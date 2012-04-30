@@ -1,0 +1,3 @@
+{
+  cancelSync(null,uri != null ? uri.getAuthority() : null);
+}

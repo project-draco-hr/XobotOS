@@ -1,0 +1,4 @@
+{
+  mapProperty(qualifiedMethodName,unqualify(qualifiedMethodName));
+  _mappedEvents.put(qualifiedMethodName,eventArgsTypeName);
+}

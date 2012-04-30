@@ -1,0 +1,6 @@
+{
+  HostPort retval=new HostPort();
+  retval.setHost(new Host(this.getHost()));
+  retval.setPort(this.getPort());
+  return retval;
+}

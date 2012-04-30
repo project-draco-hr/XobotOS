@@ -1,0 +1,4 @@
+{
+  readFully(scratch,0,SizeOf.INT);
+  return Memory.peekInt(scratch,0,ByteOrder.BIG_ENDIAN);
+}

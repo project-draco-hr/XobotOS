@@ -1,0 +1,24 @@
+{
+  try {
+    if (mCrashing)     return;
+    mCrashing=true;
+    if (mApplicationObject == null) {
+      Slog.e(TAG,"*** FATAL EXCEPTION IN SYSTEM PROCESS: " + t.getName(),e);
+    }
+ else {
+      Slog.e(TAG,"FATAL EXCEPTION: " + t.getName(),e);
+    }
+    ActivityManagerNative.getDefault().handleApplicationCrash(mApplicationObject,new ApplicationErrorReport.CrashInfo(e));
+  }
+ catch (  Throwable t2) {
+    try {
+      Slog.e(TAG,"Error reporting crash",t2);
+    }
+ catch (    Throwable t3) {
+    }
+  }
+ finally {
+    Process.killProcess(Process.myPid());
+    System.exit(10);
+  }
+}

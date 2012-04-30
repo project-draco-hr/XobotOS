@@ -1,0 +1,11 @@
+{
+  this();
+  if (os == null) {
+    throw new NullPointerException("os == null");
+  }
+  if (formatter == null) {
+    throw new NullPointerException("formatter == null");
+  }
+  this.os=os;
+  internalSetFormatter(formatter);
+}

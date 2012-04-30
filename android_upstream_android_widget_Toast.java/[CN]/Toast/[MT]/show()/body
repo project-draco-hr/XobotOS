@@ -1,0 +1,14 @@
+{
+  if (mNextView == null) {
+    throw new RuntimeException("setView must have been called");
+  }
+  INotificationManager service=getService();
+  String pkg=mContext.getPackageName();
+  TN tn=mTN;
+  tn.mNextView=mNextView;
+  try {
+    service.enqueueToast(pkg,tn,mDuration);
+  }
+ catch (  RemoteException e) {
+  }
+}

@@ -1,0 +1,23 @@
+{
+  int optind;
+  for (optind=0; optind < argv.length; optind++) {
+    String arg=argv[optind];
+    String value=null;
+    if (arg.charAt(0) != '-')     break;
+    int eqsign=arg.indexOf('=');
+    if (eqsign != -1) {
+      value=arg.substring(eqsign + 1,arg.length());
+      arg=arg.substring(0,eqsign + 1);
+    }
+    if (options.containsKey(arg)) {
+      if (value == null)       options.put(arg,Boolean.TRUE);
+ else       options.put(arg,value);
+    }
+ else {
+      System.err.print("Unknown option ");
+      System.err.println(arg);
+      System.exit(1);
+    }
+  }
+  return optind;
+}

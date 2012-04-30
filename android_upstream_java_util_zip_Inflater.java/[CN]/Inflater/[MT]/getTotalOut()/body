@@ -1,0 +1,4 @@
+{
+  checkOpen();
+  return (int)Math.min(getTotalOutImpl(streamHandle),(long)Integer.MAX_VALUE);
+}

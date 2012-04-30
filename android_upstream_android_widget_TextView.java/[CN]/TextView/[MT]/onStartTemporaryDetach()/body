@@ -1,0 +1,5 @@
+{
+  super.onStartTemporaryDetach();
+  if (!mDispatchTemporaryDetach)   mTemporaryDetach=true;
+  hideControllers();
+}

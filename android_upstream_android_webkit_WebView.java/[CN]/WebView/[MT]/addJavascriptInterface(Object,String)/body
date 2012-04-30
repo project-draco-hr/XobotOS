@@ -1,0 +1,10 @@
+{
+  checkThread();
+  if (obj == null) {
+    return;
+  }
+  WebViewCore.JSInterfaceData arg=new WebViewCore.JSInterfaceData();
+  arg.mObject=obj;
+  arg.mInterfaceName=interfaceName;
+  mWebViewCore.sendMessage(EventHub.ADD_JS_INTERFACE,arg);
+}

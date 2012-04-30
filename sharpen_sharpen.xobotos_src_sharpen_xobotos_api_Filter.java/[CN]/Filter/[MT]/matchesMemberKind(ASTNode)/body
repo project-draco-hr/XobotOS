@@ -1,0 +1,4 @@
+{
+  if (_kind == null)   return true;
+  return matchesMemberKind(node,_kind);
+}

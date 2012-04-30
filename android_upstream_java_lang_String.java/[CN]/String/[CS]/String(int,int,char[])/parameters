@@ -1,0 +1,3 @@
+int offset
+int charCount
+char[] chars

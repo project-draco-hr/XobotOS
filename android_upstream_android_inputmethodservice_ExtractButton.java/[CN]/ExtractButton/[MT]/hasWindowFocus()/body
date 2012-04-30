@@ -1,0 +1,3 @@
+{
+  return isEnabled() && getVisibility() == VISIBLE ? true : false;
+}

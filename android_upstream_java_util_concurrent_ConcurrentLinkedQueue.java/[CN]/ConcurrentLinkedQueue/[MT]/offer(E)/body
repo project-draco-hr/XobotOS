@@ -1,0 +1,15 @@
+{
+  checkNotNull(e);
+  final Node<E> newNode=new Node<E>(e);
+  for (Node<E> t=tail, p=t; ; ) {
+    Node<E> q=p.next;
+    if (q == null) {
+      if (p.casNext(null,newNode)) {
+        if (p != t)         casTail(t,newNode);
+        return true;
+      }
+    }
+ else     if (p == q)     p=(t != (t=tail)) ? t : head;
+ else     p=(p != t && t != (t=tail)) ? t : q;
+  }
+}

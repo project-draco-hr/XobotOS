@@ -1,0 +1,8 @@
+{
+  if (!topFlag) {
+    this.addAll(objList);
+  }
+ else {
+    this.addAll(0,objList);
+  }
+}

@@ -1,0 +1,5 @@
+{
+  ArrayList<T> list=new ArrayList<T>();
+  for (  T node : nodes)   list.add(node);
+  return list;
+}

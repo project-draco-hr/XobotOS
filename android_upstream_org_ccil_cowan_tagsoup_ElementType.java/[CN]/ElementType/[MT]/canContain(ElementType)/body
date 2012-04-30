@@ -1,0 +1,3 @@
+{
+  return (theModel & other.theMemberOf) != 0;
+}

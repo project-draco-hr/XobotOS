@@ -1,0 +1,4 @@
+{
+  if (encoding == null)   throw new NullPointerException(" encoding parameter is null");
+  contentCoding=encoding;
+}

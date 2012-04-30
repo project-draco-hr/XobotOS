@@ -1,0 +1,4 @@
+Class<T> declaringClass
+Class<?>[] ptypes
+Class<?>[] extypes
+int slot

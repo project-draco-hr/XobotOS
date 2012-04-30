@@ -1,0 +1,10 @@
+{
+  if (_resolveFailed)   return false;
+  if (_native.getKind() == Kind.DESTRUCTOR)   return true;
+  NativeGlueGenerator generator=new NativeGlueGenerator(this);
+  if (!generator.resolve())   return false;
+  Method method=generator.generate();
+  if (method == null)   return false;
+  unit.addMethod(method);
+  return true;
+}

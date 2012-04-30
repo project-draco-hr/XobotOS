@@ -1,0 +1,6 @@
+{
+  if (streamHandler == null) {
+    return "unknown protocol(" + protocol + ")://"+ host+ file;
+  }
+  return streamHandler.toExternalForm(this);
+}

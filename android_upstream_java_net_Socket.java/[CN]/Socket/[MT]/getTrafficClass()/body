@@ -1,0 +1,4 @@
+{
+  checkOpenAndCreate(true);
+  return (Integer)impl.getOption(SocketOptions.IP_TOS);
+}

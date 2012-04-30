@@ -1,0 +1,14 @@
+{
+  if (systemScope == null) {
+    String className=Security.getProperty("system.scope");
+    if (className != null) {
+      try {
+        systemScope=(IdentityScope)Class.forName(className).newInstance();
+      }
+ catch (      Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  return systemScope;
+}

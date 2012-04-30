@@ -1,0 +1,5 @@
+{
+  Arrays.checkOffsetAndCount(buf.length,offset,byteCount);
+  tbytes+=byteCount;
+  crc=updateImpl(buf,offset,byteCount,crc);
+}

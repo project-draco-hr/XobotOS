@@ -1,0 +1,11 @@
+{
+  if (done) {
+    return;
+  }
+  def.finish();
+  while (!def.finished()) {
+    int byteCount=def.deflate(buf);
+    out.write(buf,0,byteCount);
+  }
+  done=true;
+}

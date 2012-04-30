@@ -1,0 +1,17 @@
+def _GetMSBuildAttributes(spec, config, build_file):
+    config_type = _GetMSVSConfigurationType(spec, build_file)
+    msvs_attributes = _GetMSVSAttributes(spec, config, config_type)
+    msbuild_attributes = {}
+    for a in msvs_attributes:
+        if (a in ['IntermediateDirectory', 'OutputDirectory']):
+            directory = MSVSSettings.ConvertVCMacrosToMSBuild(msvs_attributes[a])
+            if (not directory.endswith('\\')):
+                directory += '\\'
+            msbuild_attributes[a] = directory
+        elif (a == 'CharacterSet'):
+            msbuild_attributes[a] = {'0': 'MultiByte', '1': 'Unicode', }[msvs_attributes[a]]
+        elif (a == 'ConfigurationType'):
+            msbuild_attributes[a] = {'1': 'Application', '2': 'DynamicLibrary', '4': 'StaticLibrary', '10': 'Utility', }[msvs_attributes[a]]
+        else:
+            print ('Warning: Do not know how to convert MSVS attribute ' + a)
+    return msbuild_attributes

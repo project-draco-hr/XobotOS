@@ -1,0 +1,4 @@
+{
+  if (productTokens == null || productTokens.isEmpty())   return null;
+ else   return productTokens.listIterator();
+}

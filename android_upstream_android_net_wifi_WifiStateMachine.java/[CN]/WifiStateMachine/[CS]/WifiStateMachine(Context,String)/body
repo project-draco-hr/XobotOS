@@ -1,0 +1,69 @@
+{
+  super(TAG);
+  mContext=context;
+  mInterfaceName=wlanInterface;
+  mNetworkInfo=new NetworkInfo(ConnectivityManager.TYPE_WIFI,0,NETWORKTYPE,"");
+  mBatteryStats=IBatteryStats.Stub.asInterface(ServiceManager.getService("batteryinfo"));
+  IBinder b=ServiceManager.getService(Context.NETWORKMANAGEMENT_SERVICE);
+  mNwService=INetworkManagementService.Stub.asInterface(b);
+  mWifiMonitor=new WifiMonitor(this);
+  mDhcpInfoInternal=new DhcpInfoInternal();
+  mWifiInfo=new WifiInfo();
+  mSupplicantStateTracker=new SupplicantStateTracker(context,this,getHandler());
+  mWpsStateMachine=new WpsStateMachine(context,this,getHandler());
+  mLinkProperties=new LinkProperties();
+  mNetworkInfo.setIsAvailable(false);
+  mLinkProperties.clear();
+  mLastBssid=null;
+  mLastNetworkId=WifiConfiguration.INVALID_NETWORK_ID;
+  mLastSignalLevel=-1;
+  mAlarmManager=(AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
+  Intent scanIntent=new Intent(ACTION_START_SCAN,null);
+  mScanIntent=PendingIntent.getBroadcast(mContext,SCAN_REQUEST,scanIntent,0);
+  mDefaultFrameworkScanIntervalMs=mContext.getResources().getInteger(com.android.internal.R.integer.config_wifi_framework_scan_interval);
+  mDefaultSupplicantScanIntervalMs=mContext.getResources().getInteger(com.android.internal.R.integer.config_wifi_supplicant_scan_interval);
+  mContext.registerReceiver(new BroadcastReceiver(){
+    @Override public void onReceive(    Context context,    Intent intent){
+      ArrayList<String> available=intent.getStringArrayListExtra(ConnectivityManager.EXTRA_AVAILABLE_TETHER);
+      sendMessage(CMD_TETHER_INTERFACE,available);
+    }
+  }
+,new IntentFilter(ConnectivityManager.ACTION_TETHER_STATE_CHANGED));
+  mContext.registerReceiver(new BroadcastReceiver(){
+    @Override public void onReceive(    Context context,    Intent intent){
+      startScan(false);
+    }
+  }
+,new IntentFilter(ACTION_START_SCAN));
+  mScanResultCache=new LruCache<String,ScanResult>(SCAN_RESULT_CACHE_SIZE);
+  PowerManager powerManager=(PowerManager)mContext.getSystemService(Context.POWER_SERVICE);
+  mWakeLock=powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,TAG);
+  addState(mDefaultState);
+  addState(mInitialState,mDefaultState);
+  addState(mDriverUnloadingState,mDefaultState);
+  addState(mDriverUnloadedState,mDefaultState);
+  addState(mDriverFailedState,mDriverUnloadedState);
+  addState(mDriverLoadingState,mDefaultState);
+  addState(mDriverLoadedState,mDefaultState);
+  addState(mSupplicantStartingState,mDefaultState);
+  addState(mSupplicantStartedState,mDefaultState);
+  addState(mDriverStartingState,mSupplicantStartedState);
+  addState(mDriverStartedState,mSupplicantStartedState);
+  addState(mScanModeState,mDriverStartedState);
+  addState(mConnectModeState,mDriverStartedState);
+  addState(mConnectingState,mConnectModeState);
+  addState(mConnectedState,mConnectModeState);
+  addState(mDisconnectingState,mConnectModeState);
+  addState(mDisconnectedState,mConnectModeState);
+  addState(mWaitForWpsCompletionState,mConnectModeState);
+  addState(mDriverStoppingState,mSupplicantStartedState);
+  addState(mDriverStoppedState,mSupplicantStartedState);
+  addState(mSupplicantStoppingState,mDefaultState);
+  addState(mSoftApStartingState,mDefaultState);
+  addState(mSoftApStartedState,mDefaultState);
+  addState(mTetheredState,mSoftApStartedState);
+  addState(mWaitForP2pDisableState,mDefaultState);
+  setInitialState(mInitialState);
+  if (DBG)   setDbg(true);
+  start();
+}

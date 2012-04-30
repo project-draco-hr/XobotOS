@@ -1,0 +1,8 @@
+{
+  if (getMode() == Mode.IN)   return null;
+  CSExpression expr=getReference(obj);
+  if (isClass()) {
+    expr=new CSMethodInvocationExpression(getHelper().NATIVE_TO_MANAGED.expr(),expr);
+  }
+  return new CSExpressionStatement(-1,new CSInfixExpression("=",getReference(arg),expr));
+}

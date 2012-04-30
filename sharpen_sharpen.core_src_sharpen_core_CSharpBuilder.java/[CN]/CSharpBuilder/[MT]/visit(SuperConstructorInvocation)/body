@@ -1,0 +1,7 @@
+{
+  if (null != node.getExpression()) {
+    notImplemented(node);
+  }
+  addChainedConstructorInvocation(new CSBaseExpression(),node.arguments(),node.resolveConstructorBinding());
+  return false;
+}

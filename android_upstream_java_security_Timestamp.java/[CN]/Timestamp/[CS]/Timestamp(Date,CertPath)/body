@@ -1,0 +1,10 @@
+{
+  if (timestamp == null) {
+    throw new NullPointerException("timestamp == null");
+  }
+  if (signerCertPath == null) {
+    throw new NullPointerException("signerCertPath == null");
+  }
+  this.timestamp=new Date(timestamp.getTime());
+  this.signerCertPath=signerCertPath;
+}

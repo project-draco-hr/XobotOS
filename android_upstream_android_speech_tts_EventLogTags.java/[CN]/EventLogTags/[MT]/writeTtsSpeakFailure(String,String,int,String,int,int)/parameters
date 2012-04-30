@@ -1,0 +1,6 @@
+String engine
+String caller
+int length
+String locale
+int rate
+int pitch

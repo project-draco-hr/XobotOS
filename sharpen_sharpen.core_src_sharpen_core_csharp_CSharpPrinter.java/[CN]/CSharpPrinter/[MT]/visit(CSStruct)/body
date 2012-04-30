@@ -1,0 +1,7 @@
+{
+  CSStructLayout layout=node.getStructLayout();
+  if (layout != null) {
+    writeStructLayout(layout);
+  }
+  writeType(node);
+}

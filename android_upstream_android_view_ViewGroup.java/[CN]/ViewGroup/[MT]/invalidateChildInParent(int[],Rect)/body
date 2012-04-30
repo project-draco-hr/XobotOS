@@ -1,0 +1,37 @@
+{
+  if (ViewDebug.TRACE_HIERARCHY) {
+    ViewDebug.trace(this,ViewDebug.HierarchyTraceType.INVALIDATE_CHILD_IN_PARENT);
+  }
+  if ((mPrivateFlags & DRAWN) == DRAWN || (mPrivateFlags & DRAWING_CACHE_VALID) == DRAWING_CACHE_VALID) {
+    if ((mGroupFlags & (FLAG_OPTIMIZE_INVALIDATE | FLAG_ANIMATION_DONE)) != FLAG_OPTIMIZE_INVALIDATE) {
+      dirty.offset(location[CHILD_LEFT_INDEX] - mScrollX,location[CHILD_TOP_INDEX] - mScrollY);
+      final int left=mLeft;
+      final int top=mTop;
+      if ((mGroupFlags & FLAG_CLIP_CHILDREN) != FLAG_CLIP_CHILDREN || dirty.intersect(0,0,mRight - left,mBottom - top) || (mPrivateFlags & DRAW_ANIMATION) == DRAW_ANIMATION) {
+        mPrivateFlags&=~DRAWING_CACHE_VALID;
+        location[CHILD_LEFT_INDEX]=left;
+        location[CHILD_TOP_INDEX]=top;
+        if (mLayerType != LAYER_TYPE_NONE) {
+          mLocalDirtyRect.union(dirty);
+        }
+        return mParent;
+      }
+    }
+ else {
+      mPrivateFlags&=~DRAWN & ~DRAWING_CACHE_VALID;
+      location[CHILD_LEFT_INDEX]=mLeft;
+      location[CHILD_TOP_INDEX]=mTop;
+      if ((mGroupFlags & FLAG_CLIP_CHILDREN) == FLAG_CLIP_CHILDREN) {
+        dirty.set(0,0,mRight - mLeft,mBottom - mTop);
+      }
+ else {
+        dirty.union(0,0,mRight - mLeft,mBottom - mTop);
+      }
+      if (mLayerType != LAYER_TYPE_NONE) {
+        mLocalDirtyRect.union(dirty);
+      }
+      return mParent;
+    }
+  }
+  return null;
+}

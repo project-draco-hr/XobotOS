@@ -1,0 +1,6 @@
+{
+  if (contentHandlerFactory != null) {
+    throw new Error("Factory already set");
+  }
+  contentHandlerFactory=contentFactory;
+}

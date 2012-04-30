@@ -1,0 +1,8 @@
+{
+  if (session != mSession) {
+    ((SipSessionGroup.SipSessionImpl)session).setListener(null);
+    mMyWakeLock.release(session);
+    return true;
+  }
+  return !mRunning;
+}

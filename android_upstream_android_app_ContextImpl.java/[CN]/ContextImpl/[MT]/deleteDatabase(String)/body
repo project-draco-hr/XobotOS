@@ -1,0 +1,9 @@
+{
+  try {
+    File f=validateFilePath(name,false);
+    return f.delete();
+  }
+ catch (  Exception e) {
+  }
+  return false;
+}

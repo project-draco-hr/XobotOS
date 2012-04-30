@@ -1,0 +1,7 @@
+def run_built_executable(self, name, *args, **kw):
+    '\n    Runs an executable built by Make.\n    '
+    configuration = self.configuration_dirname()
+    libdir = os.path.join('out', configuration, 'lib')
+    os.environ['LD_LIBRARY_PATH'] = (((libdir + '.host:') + libdir) + '.target')
+    program = [self.built_file_path(name, type=self.EXECUTABLE, **kw)]
+    return self.run(program=program, *args, **kw)

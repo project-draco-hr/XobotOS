@@ -1,0 +1,9 @@
+{
+  numberFormat=NumberFormat.getInstance(locale);
+  numberFormat.setParseIntegerOnly(true);
+  numberFormat.setGroupingUsed(false);
+  calendar=new GregorianCalendar(locale);
+  calendar.add(Calendar.YEAR,-80);
+  creationYear=calendar.get(Calendar.YEAR);
+  defaultCenturyStart=calendar.getTime();
+}

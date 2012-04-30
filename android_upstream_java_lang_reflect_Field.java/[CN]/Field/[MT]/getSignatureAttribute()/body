@@ -1,0 +1,7 @@
+{
+  Object[] annotation=getSignatureAnnotation(declaringClass,slot);
+  if (annotation == null) {
+    return null;
+  }
+  return StringUtils.combineStrings(annotation);
+}

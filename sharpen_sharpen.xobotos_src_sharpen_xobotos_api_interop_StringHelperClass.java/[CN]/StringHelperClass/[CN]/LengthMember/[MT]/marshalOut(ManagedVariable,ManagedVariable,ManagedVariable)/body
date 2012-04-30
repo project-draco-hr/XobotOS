@@ -1,0 +1,3 @@
+{
+  return createManagedAssert(new CSInfixExpression("!=",getReference(obj),new CSMemberReferenceExpression(arg.getReference(),"Length")));
+}

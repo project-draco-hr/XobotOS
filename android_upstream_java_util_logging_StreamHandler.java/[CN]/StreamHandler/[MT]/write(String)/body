@@ -1,0 +1,8 @@
+{
+  try {
+    this.writer.write(s);
+  }
+ catch (  Exception e) {
+    getErrorManager().error("Exception occurred when writing to the output stream",e,ErrorManager.WRITE_FAILURE);
+  }
+}

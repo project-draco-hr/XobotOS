@@ -1,0 +1,4 @@
+{
+  Arrays.checkOffsetAndCount(buf.length,offset,byteCount);
+  adler=updateImpl(buf,offset,byteCount,adler);
+}

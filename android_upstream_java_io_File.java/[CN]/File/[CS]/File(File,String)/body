@@ -1,0 +1,3 @@
+{
+  this(dir == null ? null : dir.getPath(),name);
+}

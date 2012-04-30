@@ -1,0 +1,44 @@
+{
+  if (getOverallState() == State.CONNECTED) {
+    int maxPdpReset=Settings.Secure.getInt(mResolver,Settings.Secure.PDP_WATCHDOG_MAX_PDP_RESET_FAIL_COUNT,DEFAULT_MAX_PDP_RESET_FAIL);
+    if (mPdpResetCount < maxPdpReset) {
+      mPdpResetCount++;
+      EventLog.writeEvent(EventLogTags.PDP_RADIO_RESET,mSentSinceLastRecv);
+      if (DBG)       log("doRecovery() cleanup all connections mPdpResetCount < max");
+      cleanUpAllConnections(true,Phone.REASON_PDP_RESET);
+    }
+ else {
+      mPdpResetCount=0;
+switch (mRecoveryAction) {
+case REREGISTER:
+        EventLog.writeEvent(EventLogTags.PDP_REREGISTER_NETWORK,mSentSinceLastRecv);
+      if (DBG)       log("doRecovery() re-register getting preferred network type");
+    mPhone.getServiceStateTracker().reRegisterNetwork(null);
+  mRecoveryAction=RecoveryAction.RADIO_RESTART;
+break;
+case RADIO_RESTART:
+EventLog.writeEvent(EventLogTags.PDP_RADIO_RESET,mSentSinceLastRecv);
+if (DBG) log("restarting radio");
+mRecoveryAction=RecoveryAction.RADIO_RESET;
+restartRadio();
+break;
+case RADIO_RESET:
+EventLog.writeEvent(EventLogTags.PDP_RADIO_RESET,-1);
+if (DBG) log("restarting radio with reset indication");
+SystemProperties.set("gsm.radioreset","true");
+try {
+Thread.sleep(1000);
+}
+ catch (InterruptedException e) {
+}
+restartRadio();
+break;
+default :
+throw new RuntimeException("doRecovery: Invalid mRecoveryAction " + mRecoveryAction);
+}
+}
+}
+ else {
+if (DBG) log("doRecovery(): ignore, we're not connected");
+}
+}

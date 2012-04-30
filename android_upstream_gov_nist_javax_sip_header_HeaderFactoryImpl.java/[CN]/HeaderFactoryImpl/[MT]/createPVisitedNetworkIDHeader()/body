@@ -1,0 +1,4 @@
+{
+  PVisitedNetworkID visitedNetworkID=new PVisitedNetworkID();
+  return visitedNetworkID;
+}

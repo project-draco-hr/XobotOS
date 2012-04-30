@@ -1,0 +1,18 @@
+{
+  CSTypeReference eventHandlerType=new CSTypeReference(getEventHandlerTypeName(node));
+  CSEvent event=createEventFromMethod(node,eventHandlerType);
+  mapMetaMemberAttributes(node,event);
+  if (_currentType.isInterface())   return;
+  VariableDeclarationFragment field=getEventBackingField(node);
+  CSField backingField=(CSField)_currentType.getMember(field.getName().toString());
+  backingField.type(eventHandlerType);
+  backingField.initializer(null);
+  backingField.removeModifier(CSFieldModifier.Readonly);
+  final CSBlock addBlock=createEventBlock(backingField,"System.Delegate.Combine");
+  String onAddMethod=getEventOnAddMethod(node);
+  if (onAddMethod != null) {
+    addBlock.addStatement(new CSMethodInvocationExpression(new CSReferenceExpression(onAddMethod)));
+  }
+  event.setAddBlock(addBlock);
+  event.setRemoveBlock(createEventBlock(backingField,"System.Delegate.Remove"));
+}

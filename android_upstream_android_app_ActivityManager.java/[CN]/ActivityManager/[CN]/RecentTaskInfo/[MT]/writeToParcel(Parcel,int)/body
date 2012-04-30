@@ -1,0 +1,13 @@
+{
+  dest.writeInt(id);
+  dest.writeInt(persistentId);
+  if (baseIntent != null) {
+    dest.writeInt(1);
+    baseIntent.writeToParcel(dest,0);
+  }
+ else {
+    dest.writeInt(0);
+  }
+  ComponentName.writeToParcel(origActivity,dest);
+  TextUtils.writeToParcel(description,dest,Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
+}

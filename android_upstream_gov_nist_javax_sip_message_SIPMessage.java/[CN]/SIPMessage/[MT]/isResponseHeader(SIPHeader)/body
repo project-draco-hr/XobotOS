@@ -1,0 +1,3 @@
+{
+  return sipHeader instanceof ErrorInfo || sipHeader instanceof ProxyAuthenticate || sipHeader instanceof Server|| sipHeader instanceof Unsupported|| sipHeader instanceof RetryAfter|| sipHeader instanceof Warning|| sipHeader instanceof WWWAuthenticate|| sipHeader instanceof SIPETag|| sipHeader instanceof RSeq;
+}

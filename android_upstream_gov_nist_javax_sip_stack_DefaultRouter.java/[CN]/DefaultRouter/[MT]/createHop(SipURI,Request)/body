@@ -1,0 +1,18 @@
+{
+  String transport=sipUri.isSecure() ? SIPConstants.TLS : sipUri.getTransportParam();
+  if (transport == null) {
+    ViaHeader via=(ViaHeader)request.getHeader(ViaHeader.NAME);
+    transport=via.getTransport();
+  }
+  int port;
+  if (sipUri.getPort() != -1) {
+    port=sipUri.getPort();
+  }
+ else {
+    if (transport.equalsIgnoreCase(SIPConstants.TLS))     port=5061;
+ else     port=5060;
+  }
+  String host=sipUri.getMAddrParam() != null ? sipUri.getMAddrParam() : sipUri.getHost();
+  AddressResolver addressResolver=this.sipStack.getAddressResolver();
+  return addressResolver.resolveAddress(new HopImpl(host,port,transport));
+}

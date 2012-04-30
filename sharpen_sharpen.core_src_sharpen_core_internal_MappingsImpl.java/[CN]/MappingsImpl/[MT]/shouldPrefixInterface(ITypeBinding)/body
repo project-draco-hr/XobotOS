@@ -1,0 +1,3 @@
+{
+  return _configuration.nativeInterfaces() && type.isInterface() && !type.isAnnotation()&& !hasMapping(type);
+}

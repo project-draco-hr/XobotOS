@@ -1,0 +1,10 @@
+{
+  messageContent=null;
+  messageContentBytes=null;
+  messageContentObject=null;
+  try {
+    this.contentLengthHeader.setContentLength(0);
+  }
+ catch (  InvalidArgumentException ex) {
+  }
+}

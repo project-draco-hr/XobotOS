@@ -1,0 +1,19 @@
+def fail_test(self=None, condition=1, function=None, skip=0):
+    'Cause the test to fail.\n\n    By default, the fail_test() method reports that the test FAILED\n    and exits with a status of 1.  If a condition argument is supplied,\n    the test fails only if the condition is true.\n    '
+    if (not condition):
+        return
+    if (not (function is None)):
+        function()
+    of = ''
+    desc = ''
+    sep = ' '
+    if (not (self is None)):
+        if self.program:
+            of = (' of ' + self.program)
+            sep = '\n\t'
+        if self.description:
+            desc = ((' [' + self.description) + ']')
+            sep = '\n\t'
+    at = _caller(traceback.extract_stack(), skip)
+    sys.stderr.write((((('FAILED test' + of) + desc) + sep) + at))
+    sys.exit(1)

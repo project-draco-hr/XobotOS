@@ -1,0 +1,17 @@
+{
+  if (mServer == null) {
+    return false;
+  }
+  if (LOGD)   Log.d(TAG,"forceRefresh() from cache miss");
+  final SntpClient client=new SntpClient();
+  if (client.requestTime(mServer,(int)mTimeout)) {
+    mHasCache=true;
+    mCachedNtpTime=client.getNtpTime();
+    mCachedNtpElapsedRealtime=client.getNtpTimeReference();
+    mCachedNtpCertainty=client.getRoundTripTime() / 2;
+    return true;
+  }
+ else {
+    return false;
+  }
+}

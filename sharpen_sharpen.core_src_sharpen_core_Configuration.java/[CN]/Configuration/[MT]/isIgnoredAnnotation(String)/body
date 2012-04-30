@@ -1,0 +1,3 @@
+{
+  return typeName.equals("java.lang.Override");
+}

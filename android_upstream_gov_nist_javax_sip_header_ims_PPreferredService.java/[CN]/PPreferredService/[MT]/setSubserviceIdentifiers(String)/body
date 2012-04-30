@@ -1,0 +1,3 @@
+{
+  this.subServiceIds=".".concat(subservices);
+}

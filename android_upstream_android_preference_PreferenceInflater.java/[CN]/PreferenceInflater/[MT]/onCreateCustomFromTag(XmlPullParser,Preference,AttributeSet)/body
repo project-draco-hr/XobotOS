@@ -1,0 +1,31 @@
+{
+  final String tag=parser.getName();
+  if (tag.equals(INTENT_TAG_NAME)) {
+    Intent intent=null;
+    try {
+      intent=Intent.parseIntent(getContext().getResources(),parser,attrs);
+    }
+ catch (    IOException e) {
+      XmlPullParserException ex=new XmlPullParserException("Error parsing preference");
+      ex.initCause(e);
+      throw ex;
+    }
+    if (intent != null) {
+      parentPreference.setIntent(intent);
+    }
+    return true;
+  }
+ else   if (tag.equals(EXTRA_TAG_NAME)) {
+    getContext().getResources().parseBundleExtra(EXTRA_TAG_NAME,attrs,parentPreference.getExtras());
+    try {
+      XmlUtils.skipCurrentTag(parser);
+    }
+ catch (    IOException e) {
+      XmlPullParserException ex=new XmlPullParserException("Error parsing preference");
+      ex.initCause(e);
+      throw ex;
+    }
+    return true;
+  }
+  return false;
+}

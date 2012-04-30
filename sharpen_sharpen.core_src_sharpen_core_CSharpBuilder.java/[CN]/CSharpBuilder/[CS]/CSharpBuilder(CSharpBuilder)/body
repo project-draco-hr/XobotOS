@@ -1,0 +1,14 @@
+{
+  _configuration=other._configuration;
+  _pair=other._pair;
+  _ast=other._ast;
+  _resolver=other._resolver;
+  _compilationUnit=other._compilationUnit;
+  _currentType=other._currentType;
+  _currentBlock=other._currentBlock;
+  _currentExpression=other._currentExpression;
+  _currentMethod=other._currentMethod;
+  _currentBodyDeclaration=other._currentBodyDeclaration;
+  _objectType=other._objectType;
+  _classType=other._classType;
+}

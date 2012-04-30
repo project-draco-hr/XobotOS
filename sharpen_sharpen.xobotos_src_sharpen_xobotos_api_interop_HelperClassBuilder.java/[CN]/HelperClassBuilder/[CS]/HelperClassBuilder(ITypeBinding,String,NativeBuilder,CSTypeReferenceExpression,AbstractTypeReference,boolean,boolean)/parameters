@@ -1,0 +1,7 @@
+ITypeBinding type
+String name
+NativeBuilder builder
+CSTypeReferenceExpression managedType
+AbstractTypeReference nativeType
+boolean needsHeader
+boolean isShared

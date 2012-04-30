@@ -1,0 +1,4 @@
+{
+  mShapeState.mIntrinsicHeight=height;
+  invalidateSelf();
+}

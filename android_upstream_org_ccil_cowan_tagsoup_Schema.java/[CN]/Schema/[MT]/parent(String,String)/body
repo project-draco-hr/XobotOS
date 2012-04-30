@@ -1,0 +1,11 @@
+{
+  ElementType child=getElementType(name);
+  ElementType parent=getElementType(parentName);
+  if (child == null) {
+    throw new Error("No child " + name + " for parent "+ parentName);
+  }
+  if (parent == null) {
+    throw new Error("No parent " + parentName + " for child "+ name);
+  }
+  child.setParent(parent);
+}

@@ -1,0 +1,6 @@
+{
+  if (param == null) {
+    throw new NullPointerException();
+  }
+  return null;
+}

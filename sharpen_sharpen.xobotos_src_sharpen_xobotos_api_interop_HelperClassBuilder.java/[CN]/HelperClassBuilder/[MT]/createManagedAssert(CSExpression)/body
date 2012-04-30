@@ -1,0 +1,8 @@
+{
+  CSExpression exType=new CSReferenceExpression("System.InvalidOperationException");
+  CSStatement stm=new CSThrowStatement(-1,new CSConstructorInvocationExpression(exType));
+  if (expr == null)   return stm;
+  CSIfStatement ifStm=new CSIfStatement(-1,expr);
+  ifStm.trueBlock().addStatement(stm);
+  return ifStm;
+}

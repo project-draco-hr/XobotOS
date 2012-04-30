@@ -1,0 +1,12 @@
+{
+  if (mMenuInflater == null) {
+    initActionBar();
+    if (mActionBar != null) {
+      mMenuInflater=new MenuInflater(mActionBar.getThemedContext());
+    }
+ else {
+      mMenuInflater=new MenuInflater(this);
+    }
+  }
+  return mMenuInflater;
+}

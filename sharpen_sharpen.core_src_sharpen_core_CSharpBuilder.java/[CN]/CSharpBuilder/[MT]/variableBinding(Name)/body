@@ -1,0 +1,6 @@
+{
+  if (node.resolveBinding() instanceof IVariableBinding) {
+    return (IVariableBinding)node.resolveBinding();
+  }
+  return null;
+}

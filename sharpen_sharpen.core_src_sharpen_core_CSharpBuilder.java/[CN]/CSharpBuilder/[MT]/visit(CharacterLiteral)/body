@@ -1,0 +1,8 @@
+{
+  CSExpression expr=new CSCharLiteralExpression(node.getEscapedValue());
+  if (expectingType("byte")) {
+    expr=new CSCastExpression(new CSTypeReference("byte"),new CSParenthesizedExpression(expr));
+  }
+  pushExpression(expr);
+  return false;
+}

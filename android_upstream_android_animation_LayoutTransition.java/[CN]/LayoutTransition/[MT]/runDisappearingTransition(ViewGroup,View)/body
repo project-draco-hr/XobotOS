@@ -1,0 +1,34 @@
+{
+  Animator currentAnimation=currentAppearingAnimations.get(child);
+  if (currentAnimation != null) {
+    currentAnimation.cancel();
+  }
+  if (mDisappearingAnim == null) {
+    if (mListeners != null) {
+      for (      TransitionListener listener : mListeners) {
+        listener.endTransition(LayoutTransition.this,parent,child,DISAPPEARING);
+      }
+    }
+    return;
+  }
+  Animator anim=mDisappearingAnim.clone();
+  anim.setStartDelay(mDisappearingDelay);
+  anim.setDuration(mDisappearingDuration);
+  anim.setTarget(child);
+  if (mListeners != null) {
+    anim.addListener(new AnimatorListenerAdapter(){
+      @Override public void onAnimationEnd(      Animator anim){
+        currentDisappearingAnimations.remove(child);
+        for (        TransitionListener listener : mListeners) {
+          listener.endTransition(LayoutTransition.this,parent,child,DISAPPEARING);
+        }
+      }
+    }
+);
+  }
+  if (anim instanceof ObjectAnimator) {
+    ((ObjectAnimator)anim).setCurrentPlayTime(0);
+  }
+  currentDisappearingAnimations.put(child,anim);
+  anim.start();
+}

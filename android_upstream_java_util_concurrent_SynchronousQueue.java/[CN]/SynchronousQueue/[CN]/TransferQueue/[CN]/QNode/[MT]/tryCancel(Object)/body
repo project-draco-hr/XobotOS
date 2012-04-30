@@ -1,0 +1,3 @@
+{
+  UNSAFE.compareAndSwapObject(this,itemOffset,cmp,this);
+}

@@ -1,0 +1,11 @@
+{
+  if (this.retransmissionAlertTimerTask != null && this.retransmissionAlertEnabled) {
+    this.retransmissionAlertTimerTask.cancel();
+    this.retransmissionAlertEnabled=false;
+    String dialogId=this.retransmissionAlertTimerTask.dialogId;
+    if (dialogId != null) {
+      sipStack.retransmissionAlertTransactions.remove(dialogId);
+    }
+    this.retransmissionAlertTimerTask=null;
+  }
+}

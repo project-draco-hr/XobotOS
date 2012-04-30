@@ -1,0 +1,14 @@
+{
+  if (debug)   dbg_enter("mark");
+  try {
+    char next=lexer.lookAhead(0);
+    if (isMark(next)) {
+      lexer.consume(1);
+      return new String(new char[]{next});
+    }
+ else     throw createParseException("mark");
+  }
+  finally {
+    if (debug)     dbg_leave("mark");
+  }
+}

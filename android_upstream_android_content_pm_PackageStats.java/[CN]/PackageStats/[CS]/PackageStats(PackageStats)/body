@@ -1,0 +1,11 @@
+{
+  packageName=pStats.packageName;
+  codeSize=pStats.codeSize;
+  dataSize=pStats.dataSize;
+  cacheSize=pStats.cacheSize;
+  externalCodeSize=pStats.externalCodeSize;
+  externalDataSize=pStats.externalDataSize;
+  externalCacheSize=pStats.externalCacheSize;
+  externalMediaSize=pStats.externalMediaSize;
+  externalObbSize=pStats.externalObbSize;
+}

@@ -1,0 +1,2 @@
+def send_recv(self, input='', maxsize=None):
+    return (self.send(input), self.recv(maxsize), self.recv_err(maxsize))

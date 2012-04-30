@@ -1,0 +1,10 @@
+{
+  String fileName=System.mapLibraryName(libraryName);
+  for (  File directory : nativeLibraryDirectories) {
+    File file=new File(directory,fileName);
+    if (file.exists() && file.isFile() && file.canRead()) {
+      return file.getPath();
+    }
+  }
+  return null;
+}

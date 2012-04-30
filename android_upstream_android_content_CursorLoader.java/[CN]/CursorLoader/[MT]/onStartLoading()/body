@@ -1,0 +1,8 @@
+{
+  if (mCursor != null) {
+    deliverResult(mCursor);
+  }
+  if (takeContentChanged() || mCursor == null) {
+    forceLoad();
+  }
+}

@@ -1,0 +1,8 @@
+{
+  for (  PropertyChangeListener p : listeners) {
+    if (!(p instanceof PropertyChangeListenerProxy) || Objects.equal(propertyName,((PropertyChangeListenerProxy)p).getPropertyName())) {
+      return true;
+    }
+  }
+  return false;
+}

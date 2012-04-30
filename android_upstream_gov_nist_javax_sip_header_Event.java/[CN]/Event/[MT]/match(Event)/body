@@ -1,0 +1,8 @@
+{
+  if (matchTarget.eventType == null && this.eventType != null)   return false;
+ else   if (matchTarget.eventType != null && this.eventType == null)   return false;
+ else   if (this.eventType == null && matchTarget.eventType == null)   return false;
+ else   if (getEventId() == null && matchTarget.getEventId() != null)   return false;
+ else   if (getEventId() != null && matchTarget.getEventId() == null)   return false;
+  return matchTarget.eventType.equalsIgnoreCase(this.eventType) && ((this.getEventId() == matchTarget.getEventId()) || this.getEventId().equalsIgnoreCase(matchTarget.getEventId()));
+}

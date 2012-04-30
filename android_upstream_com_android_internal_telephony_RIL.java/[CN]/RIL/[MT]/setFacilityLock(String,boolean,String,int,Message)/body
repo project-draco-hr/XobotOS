@@ -1,0 +1,3 @@
+{
+  setFacilityLockForApp(facility,lockState,password,serviceClass,null,response);
+}

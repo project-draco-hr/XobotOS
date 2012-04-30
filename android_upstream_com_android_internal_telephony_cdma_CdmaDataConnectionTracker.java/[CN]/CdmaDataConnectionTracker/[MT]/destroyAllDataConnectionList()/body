@@ -1,0 +1,5 @@
+{
+  if (mDataConnections != null) {
+    mDataConnections.clear();
+  }
+}

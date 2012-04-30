@@ -1,0 +1,5 @@
+{
+  super("enum constant " + enumType.getName() + "."+ constantName+ " is missing");
+  this.enumType=enumType;
+  this.constantName=constantName;
+}

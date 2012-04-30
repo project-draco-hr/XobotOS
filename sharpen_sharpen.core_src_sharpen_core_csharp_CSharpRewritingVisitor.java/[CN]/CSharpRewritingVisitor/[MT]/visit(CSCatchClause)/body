@@ -1,0 +1,7 @@
+{
+  CSVariableDeclaration ex=node.exception();
+  if (ex != null) {
+    ex.accept(this);
+  }
+  node.body().accept(this);
+}

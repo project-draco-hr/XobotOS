@@ -1,0 +1,16 @@
+{
+  int start=fromReq.indexOf(ViaHeader.NAME);
+  boolean found=false;
+  while (start != -1) {
+    int end=fromReq.indexOf("\r\n",start);
+    if (end != -1) {
+      buf.append(fromReq.subSequence(start - 2,end));
+      found=true;
+      start=fromReq.indexOf(ViaHeader.NAME,end);
+    }
+ else {
+      return false;
+    }
+  }
+  return found;
+}

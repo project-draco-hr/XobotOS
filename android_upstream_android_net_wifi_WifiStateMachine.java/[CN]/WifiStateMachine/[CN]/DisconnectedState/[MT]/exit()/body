@@ -1,0 +1,6 @@
+{
+  if (mEnableBackgroundScan) {
+    WifiNative.enableBackgroundScanCommand(false);
+  }
+  setScanAlarm(false);
+}

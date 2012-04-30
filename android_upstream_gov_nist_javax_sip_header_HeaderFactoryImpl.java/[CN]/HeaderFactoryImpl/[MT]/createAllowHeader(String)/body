@@ -1,0 +1,6 @@
+{
+  if (method == null)   throw new NullPointerException("null arg method");
+  Allow allow=new Allow();
+  allow.setMethod(method);
+  return allow;
+}

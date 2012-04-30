@@ -1,0 +1,7 @@
+{
+  IVariableBinding binding=node.resolveFieldBinding();
+  String name=mappedFieldName(binding);
+  if (name == null)   name=identifier(node.getName());
+  pushExpression(new CSMemberReferenceExpression(new CSBaseExpression(),name));
+  return false;
+}

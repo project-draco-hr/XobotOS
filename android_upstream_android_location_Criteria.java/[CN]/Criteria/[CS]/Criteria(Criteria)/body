@@ -1,0 +1,11 @@
+{
+  mHorizontalAccuracy=criteria.mHorizontalAccuracy;
+  mVerticalAccuracy=criteria.mVerticalAccuracy;
+  mSpeedAccuracy=criteria.mSpeedAccuracy;
+  mBearingAccuracy=criteria.mBearingAccuracy;
+  mPowerRequirement=criteria.mPowerRequirement;
+  mAltitudeRequired=criteria.mAltitudeRequired;
+  mBearingRequired=criteria.mBearingRequired;
+  mSpeedRequired=criteria.mSpeedRequired;
+  mCostAllowed=criteria.mCostAllowed;
+}

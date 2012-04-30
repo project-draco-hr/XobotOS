@@ -1,0 +1,6 @@
+{
+  if (factory != null) {
+    throw new SocketException("Factory already set");
+  }
+  factory=fac;
+}

@@ -1,0 +1,7 @@
+{
+  if (size < 1) {
+    throw new IllegalArgumentException("size < 1");
+  }
+  checkOpen();
+  impl.setOption(SocketOptions.SO_RCVBUF,Integer.valueOf(size));
+}

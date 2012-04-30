@@ -1,0 +1,9 @@
+{
+  for (int i=0; i < directories.length; i++) {
+    String directory=directories[i];
+    if (path.startsWith(directory)) {
+      return true;
+    }
+  }
+  return false;
+}

@@ -1,0 +1,10 @@
+{
+  T oldValue=_value;
+  _value=value;
+  try {
+    block.run();
+  }
+  finally {
+    _value=oldValue;
+  }
+}

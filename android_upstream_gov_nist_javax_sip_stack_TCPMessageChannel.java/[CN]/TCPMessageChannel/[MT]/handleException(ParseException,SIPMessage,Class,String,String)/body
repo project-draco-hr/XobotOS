@@ -1,0 +1,33 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logException(ex);
+  if ((hdrClass != null) && (hdrClass.equals(From.class) || hdrClass.equals(To.class) || hdrClass.equals(CSeq.class)|| hdrClass.equals(Via.class)|| hdrClass.equals(CallID.class)|| hdrClass.equals(RequestLine.class)|| hdrClass.equals(StatusLine.class))) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("Encountered Bad Message \n" + sipMessage.toString());
+    }
+    String msgString=sipMessage.toString();
+    if (!msgString.startsWith("SIP/") && !msgString.startsWith("ACK ")) {
+      String badReqRes=createBadReqRes(msgString,ex);
+      if (badReqRes != null) {
+        if (sipStack.isLoggingEnabled()) {
+          sipStack.getStackLogger().logDebug("Sending automatic 400 Bad Request:");
+          sipStack.getStackLogger().logDebug(badReqRes);
+        }
+        try {
+          this.sendMessage(badReqRes.getBytes(),this.getPeerInetAddress(),this.getPeerPort(),false);
+        }
+ catch (        IOException e) {
+          this.sipStack.getStackLogger().logException(e);
+        }
+      }
+ else {
+        if (sipStack.isLoggingEnabled()) {
+          sipStack.getStackLogger().logDebug("Could not formulate automatic 400 Bad Request");
+        }
+      }
+    }
+    throw ex;
+  }
+ else {
+    sipMessage.addUnparsed(header);
+  }
+}

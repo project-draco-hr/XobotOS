@@ -1,0 +1,4 @@
+{
+  this.currentLexer=new Hashtable();
+  this.currentLexerName="charLexer";
+}

@@ -1,0 +1,4 @@
+{
+  checkJoinOrLeave(groupAddr);
+  impl.join(groupAddr);
+}

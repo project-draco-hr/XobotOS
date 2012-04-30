@@ -1,0 +1,4 @@
+INativeMarshalContext context
+AbstractTypeReference type
+String name
+NativeVariable.Flags flags

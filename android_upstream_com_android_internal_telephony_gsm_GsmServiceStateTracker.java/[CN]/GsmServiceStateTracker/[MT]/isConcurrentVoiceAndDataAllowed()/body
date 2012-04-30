@@ -1,0 +1,3 @@
+{
+  return (mRadioTechnology >= ServiceState.RADIO_TECHNOLOGY_UMTS);
+}

@@ -1,0 +1,10 @@
+{
+  if (this == object) {
+    return true;
+  }
+  if (!(object instanceof DateFormatSymbols)) {
+    return false;
+  }
+  DateFormatSymbols rhs=(DateFormatSymbols)object;
+  return localPatternChars.equals(rhs.localPatternChars) && Arrays.equals(ampms,rhs.ampms) && Arrays.equals(eras,rhs.eras)&& Arrays.equals(months,rhs.months)&& Arrays.equals(shortMonths,rhs.shortMonths)&& Arrays.equals(shortWeekdays,rhs.shortWeekdays)&& Arrays.equals(weekdays,rhs.weekdays)&& timeZoneStringsEqual(this,rhs);
+}

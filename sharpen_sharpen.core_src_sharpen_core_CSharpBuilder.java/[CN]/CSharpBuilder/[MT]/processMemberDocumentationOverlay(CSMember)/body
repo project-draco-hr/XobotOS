@@ -1,0 +1,4 @@
+{
+  String overlay=documentationOverlay().forMember(currentTypeQName(),node.signature());
+  return processDocumentationOverlay(node,overlay);
+}

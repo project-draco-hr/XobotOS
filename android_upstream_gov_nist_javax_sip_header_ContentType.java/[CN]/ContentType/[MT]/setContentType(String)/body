@@ -1,0 +1,5 @@
+{
+  if (contentType == null)   throw new NullPointerException("null arg");
+  if (mediaRange == null)   mediaRange=new MediaRange();
+  mediaRange.setType(contentType);
+}

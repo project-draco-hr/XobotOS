@@ -1,0 +1,5 @@
+{
+  RestoreSet set=new RestoreSet("Local disk image","flash",RESTORE_TOKEN);
+  RestoreSet[] array={set};
+  return array;
+}

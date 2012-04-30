@@ -1,0 +1,33 @@
+{
+  final ListAdapter adapter=mAdapter;
+  if (adapter == null) {
+    return mListPadding.top + mListPadding.bottom;
+  }
+  int returnedHeight=mListPadding.top + mListPadding.bottom;
+  final int dividerHeight=((mDividerHeight > 0) && mDivider != null) ? mDividerHeight : 0;
+  int prevHeightWithoutPartialChild=0;
+  int i;
+  View child;
+  endPosition=(endPosition == NO_POSITION) ? adapter.getCount() - 1 : endPosition;
+  final AbsListView.RecycleBin recycleBin=mRecycler;
+  final boolean recyle=recycleOnMeasure();
+  final boolean[] isScrap=mIsScrap;
+  for (i=startPosition; i <= endPosition; ++i) {
+    child=obtainView(i,isScrap);
+    measureScrapChild(child,i,widthMeasureSpec);
+    if (i > 0) {
+      returnedHeight+=dividerHeight;
+    }
+    if (recyle && recycleBin.shouldRecycleViewType(((LayoutParams)child.getLayoutParams()).viewType)) {
+      recycleBin.addScrapView(child,-1);
+    }
+    returnedHeight+=child.getMeasuredHeight();
+    if (returnedHeight >= maxHeight) {
+      return (disallowPartialChildPosition >= 0) && (i > disallowPartialChildPosition) && (prevHeightWithoutPartialChild > 0)&& (returnedHeight != maxHeight) ? prevHeightWithoutPartialChild : maxHeight;
+    }
+    if ((disallowPartialChildPosition >= 0) && (i >= disallowPartialChildPosition)) {
+      prevHeightWithoutPartialChild=returnedHeight;
+    }
+  }
+  return returnedHeight;
+}

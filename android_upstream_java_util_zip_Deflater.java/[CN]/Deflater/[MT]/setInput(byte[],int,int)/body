@@ -1,0 +1,11 @@
+{
+  checkOpen();
+  Arrays.checkOffsetAndCount(buf.length,offset,byteCount);
+  inLength=byteCount;
+  inRead=0;
+  if (inputBuffer == null) {
+    setLevelsImpl(compressLevel,strategy,streamHandle);
+  }
+  inputBuffer=buf;
+  setInputImpl(buf,offset,byteCount,streamHandle);
+}

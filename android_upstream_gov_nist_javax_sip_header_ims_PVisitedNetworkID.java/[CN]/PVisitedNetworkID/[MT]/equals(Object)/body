@@ -1,0 +1,7 @@
+{
+  if (other instanceof PVisitedNetworkIDHeader) {
+    PVisitedNetworkIDHeader o=(PVisitedNetworkIDHeader)other;
+    return (this.getVisitedNetworkID().equals(o.getVisitedNetworkID()) && this.equalParameters((Parameters)o));
+  }
+  return false;
+}

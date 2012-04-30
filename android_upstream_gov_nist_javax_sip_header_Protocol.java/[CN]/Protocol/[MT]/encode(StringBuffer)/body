@@ -1,0 +1,4 @@
+{
+  buffer.append(protocolName.toUpperCase()).append(SLASH).append(protocolVersion).append(SLASH).append(transport.toUpperCase());
+  return buffer;
+}

@@ -1,0 +1,23 @@
+{
+  if (language == null || country == null || variant == null) {
+    throw new NullPointerException();
+  }
+  if (language.isEmpty() && country.isEmpty()) {
+    languageCode="";
+    countryCode="";
+    variantCode=variant;
+    return;
+  }
+  languageCode=language.toLowerCase(Locale.US);
+  if (languageCode.equals("he")) {
+    languageCode="iw";
+  }
+ else   if (languageCode.equals("id")) {
+    languageCode="in";
+  }
+ else   if (languageCode.equals("yi")) {
+    languageCode="ji";
+  }
+  countryCode=country.toUpperCase(Locale.US);
+  variantCode=variant;
+}

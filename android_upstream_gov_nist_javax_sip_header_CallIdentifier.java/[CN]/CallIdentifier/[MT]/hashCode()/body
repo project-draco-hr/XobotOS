@@ -1,0 +1,6 @@
+{
+  if (this.localId == null) {
+    throw new UnsupportedOperationException("Hash code called before id is set");
+  }
+  return this.localId.hashCode();
+}

@@ -1,0 +1,4 @@
+{
+  PAssertedService retval=(PAssertedService)super.clone();
+  return retval;
+}

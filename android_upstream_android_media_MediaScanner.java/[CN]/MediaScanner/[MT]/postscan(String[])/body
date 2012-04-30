@@ -1,0 +1,38 @@
+{
+  Iterator<FileCacheEntry> iterator=mFileCache.values().iterator();
+  while (iterator.hasNext()) {
+    FileCacheEntry entry=iterator.next();
+    String path=entry.mPath;
+    boolean fileMissing=false;
+    if (!entry.mSeenInFileSystem && !MtpConstants.isAbstractObject(entry.mFormat)) {
+      if (inScanDirectory(path,directories)) {
+        fileMissing=true;
+      }
+ else {
+        File testFile=new File(path);
+        if (!testFile.exists()) {
+          fileMissing=true;
+        }
+      }
+    }
+    if (fileMissing) {
+      ContentValues values=new ContentValues();
+      values.put(Files.FileColumns.DATA,"");
+      values.put(Files.FileColumns.DATE_MODIFIED,0);
+      mMediaProvider.update(ContentUris.withAppendedId(mFilesUri,entry.mRowId),values,null,null);
+      MediaFile.MediaFileType mediaFileType=MediaFile.getFileType(path);
+      int fileType=(mediaFileType == null ? 0 : mediaFileType.fileType);
+      if (!MediaFile.isPlayListFileType(fileType)) {
+        mMediaProvider.delete(ContentUris.withAppendedId(mFilesUri,entry.mRowId),null,null);
+        iterator.remove();
+      }
+    }
+  }
+  if (mProcessPlaylists) {
+    processPlayLists();
+  }
+  if (mOriginalCount == 0 && mImagesUri.equals(Images.Media.getContentUri("external")))   pruneDeadThumbnailFiles();
+  mPlayLists=null;
+  mFileCache=null;
+  mMediaProvider=null;
+}

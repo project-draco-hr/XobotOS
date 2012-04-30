@@ -1,0 +1,154 @@
+{
+  if (_resolveFailed)   return false;
+  final NamingStrategy ns=my(Configuration.class).getNamingStrategy();
+  final CSTypeReferenceExpression pinvokeReturnType;
+  final CSTypeReferenceExpression mappedReturnType;
+  if (_returnInfo != null) {
+    mappedReturnType=_returnInfo.getManagedType();
+    pinvokeReturnType=_returnInfo.getPInvokeReturnType();
+    method.returnType(mappedReturnType);
+  }
+ else {
+    pinvokeReturnType=null;
+    mappedReturnType=null;
+  }
+  CSTypeReferenceExpression[] mappedParamTypes=new CSTypeReferenceExpression[_paramInfo.length];
+  for (int i=0; i < _paramInfo.length; i++) {
+    if (_paramInfo[i] == null)     continue;
+    mappedParamTypes[i]=_paramInfo[i].getManagedType();
+    method.parameters().get(i).type(mappedParamTypes[i]);
+  }
+  final CSDllImport dllImport=_builder.getConfig().getDllImportAttribute();
+  final List<CSExpression> args=new ArrayList<CSExpression>();
+  final CSMethod pinvoke=new CSMethod(_nativeFunctionName);
+  pinvoke.dllImport(dllImport);
+  pinvoke.modifier(CSMethodModifier.Extern);
+  pinvoke.visibility(CSVisibility.Private);
+  if (_returnInfo != null) {
+    pinvoke.returnType(pinvokeReturnType);
+  }
+ else {
+    pinvoke.returnType(new CSTypeReference("void"));
+  }
+  if (_native.returnVoid())   method.returnType(new CSTypeReference("void"));
+  if (_native.getKind() == Kind.DESTRUCTOR) {
+    final String name=method.parameters().get(0).name();
+    CSExpression pref=new CSReferenceExpression(name);
+    CSExpression mr=new CSMemberReferenceExpression(pref,"Dispose");
+    method.body().addStatement(new CSMethodInvocationExpression(mr));
+    return true;
+  }
+  if (_implicitInstance != null) {
+    CSExpression fref=new CSReferenceExpression(_implicitInstance.getName());
+    CSTypeReferenceExpression ftype=_nativeHandle.getManagedType();
+    pinvoke.addParameter(new CSVariableDeclaration("_instance",ftype));
+    args.add(fref);
+  }
+  final List<CSVariableDeclaration> decls=new ArrayList<CSVariableDeclaration>();
+  final List<CSStatement> preStatements=new ArrayList<CSStatement>();
+  final List<CSStatement> postStatements=new ArrayList<CSStatement>();
+  final List<CSStatement> cleanupStatements=new ArrayList<CSStatement>();
+  for (int i=0, pos=0; i < _paramInfo.length; i++) {
+    if (_paramInfo[i] == null) {
+      method.removeParameter(pos);
+      continue;
+    }
+    final String name=ns.identifier(method.parameters().get(pos).name());
+    CSExpression pref=new CSReferenceExpression(name);
+    IManagedMarshalContext context=new IManagedMarshalContext(){
+      @Override public void addDeclaration(      CSVariableDeclaration decl,      CSStatement cleanup){
+        decls.add(decl);
+        if (cleanup != null)         cleanupStatements.add(cleanup);
+      }
+      @Override public void addPreStatement(      CSStatement statement){
+        preStatements.add(statement);
+      }
+      @Override public void addPostStatement(      CSStatement statement){
+        postStatements.add(statement);
+      }
+      @Override public ManagedVariable addParameter(      String suffix,      CSTypeReferenceExpression type,      CSExpression arg,      CSAttribute... attrs){
+        final String pname=suffix != null ? name + suffix : name;
+        CSVariableDeclaration vdecl=pinvoke.addParameter(pname,type,attrs);
+        args.add(arg);
+        return new ManagedVariable(vdecl);
+      }
+      @Override public String getVariableName(      String suffix){
+        return suffix != null ? name + "_" + suffix : name;
+      }
+    }
+;
+    _paramInfo[i].marshal.marshal(context,pref,_paramInfo[i].mode,_paramInfo[i].flags);
+    pos++;
+  }
+  final CSExpression[] arglist=args.toArray(new CSExpression[0]);
+  CSExpression mie=new CSMethodInvocationExpression(new CSReferenceExpression(pinvoke.name()),arglist);
+  final CSExpression outExpr;
+  final ByRef<ManagedVariable> retval=new ByRef<ManagedVariable>();
+  if (_returnInfo != null) {
+    IManagedReturnContext context=new IManagedReturnContext(){
+      @Override public void addStatement(      CSStatement statement){
+        postStatements.add(statement);
+      }
+      @Override public ManagedVariable createVariable(      String name,      CSTypeReferenceExpression type,      CSExpression init){
+        final String vname="_retval_" + name;
+        ManagedVariable var=new ManagedVariable(vname,type);
+        if (init != null)         var.getDeclaration().initializer(init);
+        postStatements.add(var.getDeclarationStatement());
+        return var;
+      }
+      @Override public ManagedVariable createRetval(      CSExpression init){
+        retval.value=new ManagedVariable("_retval",mappedReturnType);
+        retval.value.getDeclaration().initializer(init);
+        postStatements.add(retval.value.getDeclarationStatement());
+        return retval.value;
+      }
+    }
+;
+    outExpr=_returnInfo.marshal.marshalRetval(context,mie);
+    if (retval.value != null) {
+      if (outExpr != null)       throw new IllegalStateException();
+    }
+ else     if (outExpr == null) {
+      throw new IllegalStateException();
+    }
+  }
+ else {
+    outExpr=null;
+  }
+  for (  CSVariableDeclaration decl : decls)   method.body().addStatement(new CSDeclarationStatement(-1,decl));
+  final CSBlock block;
+  if (cleanupStatements.size() > 0) {
+    CSTryStatement tryBlock=new CSTryStatement(-1);
+    CSBlock finallyBlock=new CSBlock();
+    for (    CSStatement stm : cleanupStatements) {
+      finallyBlock.addStatement(stm);
+    }
+    tryBlock.finallyBlock(finallyBlock);
+    method.body().addStatement(tryBlock);
+    block=tryBlock.body();
+  }
+ else {
+    block=method.body();
+  }
+  for (  CSStatement stm : preStatements)   block.addStatement(stm);
+  if (_returnInfo != null) {
+    if (postStatements.size() > 0) {
+      if (retval.value == null) {
+        retval.value=new ManagedVariable("_retval",mappedReturnType);
+        retval.value.getDeclaration().initializer(outExpr);
+        block.addStatement(retval.value.getDeclarationStatement());
+      }
+      for (      CSStatement stmt : postStatements)       block.addStatement(stmt);
+      block.addStatement(new CSReturnStatement(-1,retval.value.getReference()));
+    }
+ else {
+      block.addStatement(new CSReturnStatement(-1,outExpr));
+    }
+  }
+ else {
+    block.addStatement(mie);
+    for (    CSStatement stmt : postStatements)     block.addStatement(stmt);
+  }
+  parent.addMember(pinvoke);
+  return true;
+}

@@ -1,0 +1,6 @@
+Object o
+Class<?> declaringClass
+Class<?> type
+int slot
+boolean noAccessCheck
+Object value

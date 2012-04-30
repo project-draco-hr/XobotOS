@@ -1,0 +1,30 @@
+def parse(settings, lines):
+    'Parses bench output into a useful data structure.\n    \n    ({str:str}, __iter__ -> str) -> [BenchDataPoint]'
+    benches = []
+    current_bench = None
+    setting_re = '([^\\s=]+)(?:=(\\S+))?'
+    settings_re = (('skia bench:((?:\\s+' + setting_re) + ')*)')
+    bench_re = 'running bench (?:\\[\\d+ \\d+\\] )?\\s*(\\S+)'
+    time_re = '(?:(\\w*)msecs = )?\\s*(\\d+\\.\\d+)'
+    config_re = (('(\\S+): ((?:' + time_re) + '\\s+)+)')
+    for line in lines:
+        settingsMatch = re.search(settings_re, line)
+        if settingsMatch:
+            settings = dict(settings)
+            for settingMatch in re.finditer(setting_re, settingsMatch.group(1)):
+                if settingMatch.group(2):
+                    settings[settingMatch.group(1)] = settingMatch.group(2)
+                else:
+                    settings[settingMatch.group(1)] = True
+        new_bench = re.search(bench_re, line)
+        if new_bench:
+            current_bench = new_bench.group(1)
+        if current_bench:
+            for new_config in re.finditer(config_re, line):
+                current_config = new_config.group(1)
+                times = new_config.group(2)
+                for new_time in re.finditer(time_re, times):
+                    current_time_type = new_time.group(1)
+                    current_time = float(new_time.group(2))
+                    benches.append(BenchDataPoint(current_bench, current_config, current_time_type, current_time, settings))
+    return benches

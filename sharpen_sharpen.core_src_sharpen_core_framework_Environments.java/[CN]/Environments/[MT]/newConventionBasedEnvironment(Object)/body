@@ -1,0 +1,3 @@
+{
+  return newCachingEnvironmentFor(compose(newClosedEnvironment(bindings),new ConventionBasedEnvironment()));
+}

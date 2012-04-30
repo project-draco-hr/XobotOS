@@ -1,0 +1,15 @@
+{
+  PublicKey certPK=certificate.getPublicKey();
+  if (publicKey != null) {
+    if (!checkKeysEqual(publicKey,certPK)) {
+      throw new KeyManagementException("Cert's public key does not match Identity's public key");
+    }
+  }
+ else {
+    publicKey=certPK;
+  }
+  if (certificates == null) {
+    certificates=new Vector<Certificate>();
+  }
+  certificates.add(certificate);
+}

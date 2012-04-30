@@ -1,0 +1,6 @@
+{
+  super.onContentChanged();
+  if (mPreferenceManager != null) {
+    postBindPreferences();
+  }
+}

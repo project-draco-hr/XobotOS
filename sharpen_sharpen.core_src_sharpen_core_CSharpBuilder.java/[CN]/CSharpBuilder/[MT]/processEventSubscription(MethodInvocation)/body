@@ -1,0 +1,7 @@
+{
+  final MethodDeclaration addListener=declaringNode(node.resolveMethodBinding());
+  assertValidEventAddListener(node,addListener);
+  final MethodInvocation eventInvocation=(MethodInvocation)node.getExpression();
+  final MethodDeclaration eventDeclaration=declaringNode(eventInvocation.resolveMethodBinding());
+  mapEventSubscription(node,getEventArgsType(eventDeclaration),getEventHandlerTypeName(eventDeclaration));
+}

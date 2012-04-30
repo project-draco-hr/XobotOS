@@ -1,0 +1,7 @@
+{
+  if (contains(object)) {
+    return false;
+  }
+  add(object);
+  return true;
+}

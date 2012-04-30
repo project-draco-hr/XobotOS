@@ -1,0 +1,4 @@
+{
+  exception=getRootCause(exception);
+  onError(getErrorCode(exception),exception.toString());
+}

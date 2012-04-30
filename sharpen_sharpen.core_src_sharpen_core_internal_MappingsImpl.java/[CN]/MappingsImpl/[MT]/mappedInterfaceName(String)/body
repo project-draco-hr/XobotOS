@@ -1,0 +1,4 @@
+{
+  int pos=name.lastIndexOf('.');
+  return name.substring(0,pos) + "." + interfaceName(name.substring(pos + 1));
+}

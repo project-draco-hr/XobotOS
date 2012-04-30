@@ -1,0 +1,9 @@
+{
+  if (a == null) {
+    out=new StringBuilder();
+  }
+ else {
+    out=a;
+  }
+  locale=l;
+}

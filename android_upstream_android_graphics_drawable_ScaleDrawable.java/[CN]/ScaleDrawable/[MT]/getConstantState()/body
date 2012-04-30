@@ -1,0 +1,7 @@
+{
+  if (mScaleState.canConstantState()) {
+    mScaleState.mChangingConfigurations=getChangingConfigurations();
+    return mScaleState;
+  }
+  return null;
+}

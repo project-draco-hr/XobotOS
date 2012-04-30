@@ -1,0 +1,7 @@
+{
+  super.close();
+synchronized (this) {
+    mQuery.close();
+    mDriver.cursorClosed();
+  }
+}

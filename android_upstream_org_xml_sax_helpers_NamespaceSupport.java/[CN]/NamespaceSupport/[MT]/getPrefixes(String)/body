@@ -1,0 +1,11 @@
+{
+  ArrayList<String> prefixes=new ArrayList<String>();
+  Enumeration allPrefixes=getPrefixes();
+  while (allPrefixes.hasMoreElements()) {
+    String prefix=(String)allPrefixes.nextElement();
+    if (uri.equals(getURI(prefix))) {
+      prefixes.add(prefix);
+    }
+  }
+  return Collections.enumeration(prefixes);
+}

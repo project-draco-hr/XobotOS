@@ -1,0 +1,6 @@
+{
+  if (mContext != null) {
+    mContext.unbindService(InitializerServiceConnection.this);
+    mContext=null;
+  }
+}

@@ -1,0 +1,3 @@
+{
+  setLeftStripDrawable(getResources().getDrawable(resId));
+}

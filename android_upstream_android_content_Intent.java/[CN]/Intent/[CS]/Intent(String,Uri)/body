@@ -1,0 +1,4 @@
+{
+  setAction(action);
+  mData=uri;
+}

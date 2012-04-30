@@ -1,0 +1,4 @@
+{
+  ObjectSlot slot=findMandatorySlot(name,boolean.class);
+  return slot.defaulted ? defaultValue : ((Boolean)slot.fieldValue).booleanValue();
+}

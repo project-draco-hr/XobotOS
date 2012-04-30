@@ -1,0 +1,15 @@
+{
+  if (mHead == null) {
+    mHead=mTail=op;
+  }
+ else {
+    op.prev=mTail;
+    mTail.next=op;
+    mTail=op;
+  }
+  op.enterAnim=mEnterAnim;
+  op.exitAnim=mExitAnim;
+  op.popEnterAnim=mPopEnterAnim;
+  op.popExitAnim=mPopExitAnim;
+  mNumOp++;
+}

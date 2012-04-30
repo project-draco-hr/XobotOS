@@ -1,0 +1,166 @@
+{
+  EventObject sipEvent=eventWrapper.sipEvent;
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("sipEvent = " + sipEvent + "source = "+ sipEvent.getSource());
+  SipListener sipListener=null;
+  if (!(sipEvent instanceof IOExceptionEvent)) {
+    sipListener=((SipProviderImpl)sipEvent.getSource()).getSipListener();
+  }
+ else {
+    sipListener=sipStack.getSipListener();
+  }
+  if (sipEvent instanceof RequestEvent) {
+    try {
+      SIPRequest sipRequest=(SIPRequest)((RequestEvent)sipEvent).getRequest();
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logDebug("deliverEvent : " + sipRequest.getFirstLine() + " transaction "+ eventWrapper.transaction+ " sipEvent.serverTx = "+ ((RequestEvent)sipEvent).getServerTransaction());
+      }
+      SIPServerTransaction tx=(SIPServerTransaction)sipStack.findTransaction(sipRequest,true);
+      if (tx != null && !tx.passToListener()) {
+        if (sipRequest.getMethod().equals(Request.ACK) && tx.isInviteTransaction() && (tx.getLastResponse().getStatusCode() / 100 == 2 || sipStack.isNon2XXAckPassedToListener())) {
+          if (sipStack.isLoggingEnabled())           sipStack.getStackLogger().logDebug("Detected broken client sending ACK with same branch! Passing...");
+        }
+ else {
+          if (sipStack.isLoggingEnabled())           sipStack.getStackLogger().logDebug("transaction already exists! " + tx);
+          return;
+        }
+      }
+ else       if (sipStack.findPendingTransaction(sipRequest) != null) {
+        if (sipStack.isLoggingEnabled())         sipStack.getStackLogger().logDebug("transaction already exists!!");
+        return;
+      }
+ else {
+        SIPServerTransaction st=(SIPServerTransaction)eventWrapper.transaction;
+        sipStack.putPendingTransaction(st);
+      }
+      sipRequest.setTransaction(eventWrapper.transaction);
+      try {
+        if (sipStack.isLoggingEnabled()) {
+          sipStack.getStackLogger().logDebug("Calling listener " + sipRequest.getFirstLine());
+          sipStack.getStackLogger().logDebug("Calling listener " + eventWrapper.transaction);
+        }
+        if (sipListener != null)         sipListener.processRequest((RequestEvent)sipEvent);
+        if (sipStack.isLoggingEnabled()) {
+          sipStack.getStackLogger().logDebug("Done processing Message " + sipRequest.getFirstLine());
+        }
+        if (eventWrapper.transaction != null) {
+          SIPDialog dialog=(SIPDialog)eventWrapper.transaction.getDialog();
+          if (dialog != null)           dialog.requestConsumed();
+        }
+      }
+ catch (      Exception ex) {
+        sipStack.getStackLogger().logException(ex);
+      }
+    }
+  finally {
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logDebug("Done processing Message " + ((SIPRequest)(((RequestEvent)sipEvent).getRequest())).getFirstLine());
+      }
+      if (eventWrapper.transaction != null && ((SIPServerTransaction)eventWrapper.transaction).passToListener()) {
+        ((SIPServerTransaction)eventWrapper.transaction).releaseSem();
+      }
+      if (eventWrapper.transaction != null)       sipStack.removePendingTransaction((SIPServerTransaction)eventWrapper.transaction);
+      if (eventWrapper.transaction.getOriginalRequest().getMethod().equals(Request.ACK)) {
+        eventWrapper.transaction.setState(TransactionState.TERMINATED);
+      }
+    }
+  }
+ else   if (sipEvent instanceof ResponseEvent) {
+    try {
+      ResponseEvent responseEvent=(ResponseEvent)sipEvent;
+      SIPResponse sipResponse=(SIPResponse)responseEvent.getResponse();
+      SIPDialog sipDialog=((SIPDialog)responseEvent.getDialog());
+      try {
+        if (sipStack.isLoggingEnabled()) {
+          sipStack.getStackLogger().logDebug("Calling listener for " + sipResponse.getFirstLine());
+        }
+        if (sipListener != null) {
+          SIPTransaction tx=eventWrapper.transaction;
+          if (tx != null) {
+            tx.setPassToListener();
+          }
+          sipListener.processResponse((ResponseEvent)sipEvent);
+        }
+        if ((sipDialog != null && (sipDialog.getState() == null || !sipDialog.getState().equals(DialogState.TERMINATED))) && (sipResponse.getStatusCode() == Response.CALL_OR_TRANSACTION_DOES_NOT_EXIST || sipResponse.getStatusCode() == Response.REQUEST_TIMEOUT)) {
+          if (sipStack.isLoggingEnabled()) {
+            sipStack.getStackLogger().logDebug("Removing dialog on 408 or 481 response");
+          }
+          sipDialog.doDeferredDelete();
+        }
+        if (sipResponse.getCSeq().getMethod().equals(Request.INVITE) && sipDialog != null && sipResponse.getStatusCode() == 200) {
+          if (sipStack.isLoggingEnabled()) {
+            sipStack.getStackLogger().logDebug("Warning! unacknowledged dialog. " + sipDialog.getState());
+          }
+          sipDialog.doDeferredDeleteIfNoAckSent(sipResponse.getCSeq().getSeqNumber());
+        }
+      }
+ catch (      Exception ex) {
+        sipStack.getStackLogger().logException(ex);
+      }
+      SIPClientTransaction ct=(SIPClientTransaction)eventWrapper.transaction;
+      if (ct != null && TransactionState.COMPLETED == ct.getState() && ct.getOriginalRequest() != null && !ct.getOriginalRequest().getMethod().equals(Request.INVITE)) {
+        ct.clearState();
+      }
+    }
+  finally {
+      if (eventWrapper.transaction != null && eventWrapper.transaction.passToListener()) {
+        eventWrapper.transaction.releaseSem();
+      }
+    }
+  }
+ else   if (sipEvent instanceof TimeoutEvent) {
+    try {
+      if (sipListener != null)       sipListener.processTimeout((TimeoutEvent)sipEvent);
+    }
+ catch (    Exception ex) {
+      sipStack.getStackLogger().logException(ex);
+    }
+  }
+ else   if (sipEvent instanceof DialogTimeoutEvent) {
+    try {
+      if (sipListener != null && sipListener instanceof SipListenerExt) {
+        ((SipListenerExt)sipListener).processDialogTimeout((DialogTimeoutEvent)sipEvent);
+      }
+    }
+ catch (    Exception ex) {
+      sipStack.getStackLogger().logException(ex);
+    }
+  }
+ else   if (sipEvent instanceof IOExceptionEvent) {
+    try {
+      if (sipListener != null)       sipListener.processIOException((IOExceptionEvent)sipEvent);
+    }
+ catch (    Exception ex) {
+      sipStack.getStackLogger().logException(ex);
+    }
+  }
+ else   if (sipEvent instanceof TransactionTerminatedEvent) {
+    try {
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logDebug("About to deliver transactionTerminatedEvent");
+        sipStack.getStackLogger().logDebug("tx = " + ((TransactionTerminatedEvent)sipEvent).getClientTransaction());
+        sipStack.getStackLogger().logDebug("tx = " + ((TransactionTerminatedEvent)sipEvent).getServerTransaction());
+      }
+      if (sipListener != null)       sipListener.processTransactionTerminated((TransactionTerminatedEvent)sipEvent);
+    }
+ catch (    AbstractMethodError ame) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logWarning("Unable to call sipListener.processTransactionTerminated");
+    }
+catch (    Exception ex) {
+      sipStack.getStackLogger().logException(ex);
+    }
+  }
+ else   if (sipEvent instanceof DialogTerminatedEvent) {
+    try {
+      if (sipListener != null)       sipListener.processDialogTerminated((DialogTerminatedEvent)sipEvent);
+    }
+ catch (    AbstractMethodError ame) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logWarning("Unable to call sipListener.processDialogTerminated");
+    }
+catch (    Exception ex) {
+      sipStack.getStackLogger().logException(ex);
+    }
+  }
+ else {
+    sipStack.getStackLogger().logFatalError("bad event" + sipEvent);
+  }
+}

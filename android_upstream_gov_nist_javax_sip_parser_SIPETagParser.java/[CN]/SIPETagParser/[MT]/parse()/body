@@ -1,0 +1,17 @@
+{
+  if (debug)   dbg_enter("SIPEtag.parse");
+  SIPETag sipEtag=new SIPETag();
+  try {
+    headerName(TokenTypes.SIP_ETAG);
+    this.lexer.SPorHT();
+    this.lexer.match(TokenTypes.ID);
+    Token token=lexer.getNextToken();
+    sipEtag.setETag(token.getTokenValue());
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return sipEtag;
+  }
+  finally {
+    if (debug)     dbg_leave("SIPEtag.parse");
+  }
+}

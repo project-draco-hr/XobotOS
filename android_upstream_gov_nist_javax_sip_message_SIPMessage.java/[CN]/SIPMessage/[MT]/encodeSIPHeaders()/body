@@ -1,0 +1,9 @@
+{
+  StringBuffer encoding=new StringBuffer();
+  Iterator<SIPHeader> it=this.headers.iterator();
+  while (it.hasNext()) {
+    SIPHeader siphdr=(SIPHeader)it.next();
+    if (!(siphdr instanceof ContentLength))     siphdr.encode(encoding);
+  }
+  return contentLengthHeader.encode(encoding).append(NEWLINE).toString();
+}

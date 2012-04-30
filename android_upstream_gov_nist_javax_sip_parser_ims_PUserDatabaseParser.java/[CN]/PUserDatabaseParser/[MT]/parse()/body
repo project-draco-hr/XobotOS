@@ -1,0 +1,15 @@
+{
+  if (debug)   dbg_enter("PUserDatabase.parse");
+  try {
+    this.lexer.match(TokenTypes.P_USER_DATABASE);
+    this.lexer.SPorHT();
+    this.lexer.match(':');
+    this.lexer.SPorHT();
+    PUserDatabase userDatabase=new PUserDatabase();
+    this.parseheader(userDatabase);
+    return userDatabase;
+  }
+  finally {
+    if (debug)     dbg_leave("PUserDatabase.parse");
+  }
+}

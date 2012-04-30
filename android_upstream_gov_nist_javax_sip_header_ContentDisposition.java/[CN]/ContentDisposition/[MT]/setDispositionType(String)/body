@@ -1,0 +1,4 @@
+{
+  if (dispositionType == null)   throw new NullPointerException("JAIN-SIP Exception" + ", ContentDisposition, setDispositionType(), the dispositionType parameter is null");
+  this.dispositionType=dispositionType;
+}

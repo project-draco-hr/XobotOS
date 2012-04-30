@@ -1,0 +1,3 @@
+{
+  mCM.setCdmaSubscriptionSource(cdmaSubscriptionType,response);
+}

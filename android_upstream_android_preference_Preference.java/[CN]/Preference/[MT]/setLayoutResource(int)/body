@@ -1,0 +1,6 @@
+{
+  if (layoutResId != mLayoutResId) {
+    mHasSpecifiedLayout=true;
+  }
+  mLayoutResId=layoutResId;
+}

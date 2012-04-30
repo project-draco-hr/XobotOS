@@ -1,0 +1,12 @@
+{
+  if (other.hasNationalNumberPattern()) {
+    setNationalNumberPattern(other.getNationalNumberPattern());
+  }
+  if (other.hasPossibleNumberPattern()) {
+    setPossibleNumberPattern(other.getPossibleNumberPattern());
+  }
+  if (other.hasExampleNumber()) {
+    setExampleNumber(other.getExampleNumber());
+  }
+  return this;
+}

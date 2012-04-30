@@ -1,0 +1,35 @@
+{
+  if (!isConnected) {
+    throw new IOException("Not connected");
+  }
+  if (buffer == null) {
+    throw new IOException("InputStream is closed");
+  }
+  lastReader=Thread.currentThread();
+  try {
+    int attempts=3;
+    while (in == -1) {
+      if (isClosed) {
+        return -1;
+      }
+      if ((attempts-- <= 0) && lastWriter != null && !lastWriter.isAlive()) {
+        throw new IOException("Pipe broken");
+      }
+      notifyAll();
+      wait(1000);
+    }
+  }
+ catch (  InterruptedException e) {
+    throw new InterruptedIOException();
+  }
+  int result=buffer[out++] & 0xff;
+  if (out == buffer.length) {
+    out=0;
+  }
+  if (out == in) {
+    in=-1;
+    out=0;
+  }
+  notifyAll();
+  return result;
+}

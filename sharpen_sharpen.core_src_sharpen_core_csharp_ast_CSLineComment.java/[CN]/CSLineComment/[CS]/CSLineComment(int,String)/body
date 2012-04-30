@@ -1,0 +1,4 @@
+{
+  _startPosition=startPosition;
+  _text=text;
+}

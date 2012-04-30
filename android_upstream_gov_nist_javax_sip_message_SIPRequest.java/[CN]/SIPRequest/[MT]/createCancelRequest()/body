@@ -1,0 +1,25 @@
+{
+  if (!this.getMethod().equals(Request.INVITE))   throw new SipException("Attempt to create CANCEL for " + this.getMethod());
+  SIPRequest cancel=new SIPRequest();
+  cancel.setRequestLine((RequestLine)this.requestLine.clone());
+  cancel.setMethod(Request.CANCEL);
+  cancel.setHeader((Header)this.callIdHeader.clone());
+  cancel.setHeader((Header)this.toHeader.clone());
+  cancel.setHeader((Header)cSeqHeader.clone());
+  try {
+    cancel.getCSeq().setMethod(Request.CANCEL);
+  }
+ catch (  ParseException e) {
+    e.printStackTrace();
+  }
+  cancel.setHeader((Header)this.fromHeader.clone());
+  cancel.addFirst((Header)this.getTopmostVia().clone());
+  cancel.setHeader((Header)this.maxForwardsHeader.clone());
+  if (this.getRouteHeaders() != null) {
+    cancel.setHeader((SIPHeaderList<?>)this.getRouteHeaders().clone());
+  }
+  if (MessageFactoryImpl.getDefaultUserAgentHeader() != null) {
+    cancel.setHeader(MessageFactoryImpl.getDefaultUserAgentHeader());
+  }
+  return cancel;
+}

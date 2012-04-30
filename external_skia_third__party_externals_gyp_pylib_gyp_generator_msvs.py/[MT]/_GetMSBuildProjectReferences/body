@@ -1,0 +1,11 @@
+def _GetMSBuildProjectReferences(project):
+    references = []
+    if project.dependencies:
+        group = ['ItemGroup']
+        for dependency in project.dependencies:
+            guid = dependency.guid
+            project_dir = os.path.split(project.path)[0]
+            relative_path = gyp.common.RelativePath(dependency.path, project_dir)
+            group.append(['ProjectReference', {'Include': relative_path, }, ['Project', guid], ['ReferenceOutputAssembly', 'false']])
+        references.append(group)
+    return references

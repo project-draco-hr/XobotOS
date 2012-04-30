@@ -1,0 +1,5 @@
+{
+  String usrtype=(String)uriParms.getValue(USER);
+  if (usrtype == null)   return false;
+  return usrtype.equalsIgnoreCase(PHONE);
+}

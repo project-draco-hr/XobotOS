@@ -1,0 +1,3 @@
+{
+  this(context,resolveDialogTheme(context,0));
+}

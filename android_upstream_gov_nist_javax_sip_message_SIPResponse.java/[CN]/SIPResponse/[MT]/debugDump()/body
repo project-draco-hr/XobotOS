@@ -1,0 +1,12 @@
+{
+  String superstring=super.debugDump();
+  stringRepresentation="";
+  sprint(SIPResponse.class.getCanonicalName());
+  sprint("{");
+  if (statusLine != null) {
+    sprint(statusLine.debugDump());
+  }
+  sprint(superstring);
+  sprint("}");
+  return stringRepresentation;
+}

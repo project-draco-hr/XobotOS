@@ -1,0 +1,14 @@
+{
+  if (DEBUG) {
+    Log.d(LOG_TAG,"Selection string: " + selectionString);
+  }
+  mIsLastSelectionStringNull=(selectionString == null);
+  if (mScheduledEventStack.isEmpty()) {
+    return;
+  }
+  AccessibilityEvent event=mScheduledEventStack.pop();
+  if (event != null) {
+    event.getText().add(selectionString);
+    sendAccessibilityEvent(event);
+  }
+}

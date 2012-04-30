@@ -1,0 +1,5 @@
+{
+  thePublicid=publicid;
+  theSystemid=systemid;
+  theLastLine=theLastColumn=theCurrentLine=theCurrentColumn=0;
+}

@@ -1,0 +1,11 @@
+{
+  int utfSize=readUnsignedShort();
+  if (utfSize == 0) {
+    return "";
+  }
+  byte[] buf=new byte[utfSize];
+  if (read(buf,0,buf.length) != buf.length) {
+    throw new EOFException();
+  }
+  return ModifiedUtf8.decode(buf,new char[utfSize],0,utfSize);
+}

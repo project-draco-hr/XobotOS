@@ -1,0 +1,3 @@
+{
+  pair=Pair.of(initialRef,initialStamp);
+}

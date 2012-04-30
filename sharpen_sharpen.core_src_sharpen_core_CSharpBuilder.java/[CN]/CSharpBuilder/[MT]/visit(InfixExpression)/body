@@ -1,0 +1,63 @@
+{
+  final Expression left=node.getLeftOperand();
+  final Expression right=node.getRightOperand();
+  final ITypeBinding leftType=left.resolveTypeBinding();
+  final ITypeBinding rightType=right.resolveTypeBinding();
+  CSExpression mappedLeft=mapExpression(left);
+  CSExpression mappedRight=mapExpression(right);
+  final String type=left.resolveTypeBinding().getQualifiedName();
+  final InfixExpression.Operator op=node.getOperator();
+  final ITypeBinding byteType=my(IBindingManager.class).getByteType();
+  final ITypeBinding longType=my(IBindingManager.class).getLongType();
+  if (op == InfixExpression.Operator.RIGHT_SHIFT_UNSIGNED) {
+    if (leftType.equals(byteType)) {
+      pushExpression(new CSInfixExpression(">>",mappedLeft,mappedRight));
+    }
+ else {
+      CSExpression cast=new CSCastExpression(new CSTypeReference("u" + type),mappedLeft);
+      cast=new CSParenthesizedExpression(cast);
+      CSExpression shiftResult=new CSInfixExpression(">>",cast,mappedRight);
+      shiftResult=new CSParenthesizedExpression(shiftResult);
+      pushExpression(new CSCastExpression(new CSTypeReference(type),shiftResult));
+    }
+    return false;
+  }
+ else   if ((op == InfixExpression.Operator.RIGHT_SHIFT_SIGNED) || (op == InfixExpression.Operator.LEFT_SHIFT)) {
+    if (rightType.equals(longType))     mappedRight=new CSCastExpression(new CSTypeReference("int"),mappedRight);
+  }
+ else   if ((op == InfixExpression.Operator.EQUALS) || (op == InfixExpression.Operator.NOT_EQUALS)) {
+    if (isZeroLiteral(right)) {
+      CSExpression mapped=my(CSharpDriver.class).mappedNullPointer(left);
+      if (mapped != null)       mappedRight=mapped;
+      if (leftType.isTypeVariable())       mappedLeft=new CSCastExpression(OBJECT_TYPE_REFERENCE,mappedLeft);
+    }
+ else     if (isZeroLiteral(left)) {
+      CSExpression mapped=my(CSharpDriver.class).mappedNullPointer(right);
+      if (mapped != null)       mappedLeft=mapped;
+      if (rightType.isTypeVariable())       mappedRight=new CSCastExpression(OBJECT_TYPE_REFERENCE,mappedRight);
+    }
+    if ((leftType.equals(_objectType) && isTypeVariable(rightType)) || ((rightType.equals(_objectType) && isTypeVariable(leftType)))) {
+      CSTypeReference helperRef=new CSTypeReference("Sharpen.Util");
+      CSMemberReferenceExpression mr=new CSMemberReferenceExpression(helperRef,"Equals");
+      CSMethodInvocationExpression mie=new CSMethodInvocationExpression(mr);
+      if (isTypeVariable(leftType)) {
+        mie.addArgument(mappedLeft);
+        mie.addArgument(mappedRight);
+      }
+ else {
+        mie.addArgument(mappedRight);
+        mie.addArgument(mappedLeft);
+      }
+      pushExpression(mie);
+      return false;
+    }
+  }
+  if (leftType.equals(byteType) && ((op == InfixExpression.Operator.LESS) || (op == InfixExpression.Operator.LESS_EQUALS))) {
+    mappedLeft=new CSCastExpression(new CSTypeReference("sbyte"),mappedLeft);
+    mappedLeft=new CSParenthesizedExpression(mappedLeft);
+  }
+  String operator=node.getOperator().toString();
+  pushExpression(new CSInfixExpression(operator,mappedLeft,mappedRight));
+  pushExtendedOperands(operator,node);
+  return false;
+}

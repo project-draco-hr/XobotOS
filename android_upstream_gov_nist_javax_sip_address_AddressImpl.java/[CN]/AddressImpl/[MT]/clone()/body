@@ -1,0 +1,5 @@
+{
+  AddressImpl retval=(AddressImpl)super.clone();
+  if (this.address != null)   retval.address=(GenericURI)this.address.clone();
+  return retval;
+}

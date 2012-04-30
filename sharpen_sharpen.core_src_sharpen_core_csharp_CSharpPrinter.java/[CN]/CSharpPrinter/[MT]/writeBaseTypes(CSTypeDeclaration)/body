@@ -1,0 +1,6 @@
+{
+  List<CSTypeReferenceExpression> baseTypes=node.baseTypes();
+  if (baseTypes.isEmpty())   return;
+  write(" : ");
+  writeCommaSeparatedList(baseTypes);
+}

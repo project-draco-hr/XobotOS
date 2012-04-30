@@ -1,0 +1,10 @@
+{
+  LoadTask task=mTask;
+  if (task != null) {
+    try {
+      task.done.await();
+    }
+ catch (    InterruptedException e) {
+    }
+  }
+}

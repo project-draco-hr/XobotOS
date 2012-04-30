@@ -1,0 +1,18 @@
+{
+  SIPDialogErrorEvent newErrorEvent;
+  Iterator<SIPDialogEventListener> listenerIterator;
+  SIPDialogEventListener nextListener;
+  newErrorEvent=new SIPDialogErrorEvent(this,dialogTimeoutError);
+synchronized (eventListeners) {
+    listenerIterator=eventListeners.iterator();
+    while (listenerIterator.hasNext()) {
+      nextListener=(SIPDialogEventListener)listenerIterator.next();
+      nextListener.dialogErrorEvent(newErrorEvent);
+    }
+  }
+  eventListeners.clear();
+  if (dialogTimeoutError != SIPDialogErrorEvent.DIALOG_ACK_NOT_SENT_TIMEOUT && dialogTimeoutError != SIPDialogErrorEvent.DIALOG_ACK_NOT_RECEIVED_TIMEOUT && dialogTimeoutError != SIPDialogErrorEvent.DIALOG_REINVITE_TIMEOUT) {
+    delete();
+  }
+  stopTimer();
+}

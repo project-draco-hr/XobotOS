@@ -1,0 +1,18 @@
+{
+  imsi=null;
+  msisdn=null;
+  voiceMailNum=null;
+  countVoiceMessages=0;
+  mncLength=UNINITIALIZED;
+  iccid=null;
+  spnDisplayCondition=-1;
+  efMWIS=null;
+  efCPHS_MWI=null;
+  spdiNetworks=null;
+  pnnHomeName=null;
+  adnCache.reset();
+  phone.setSystemProperty(PROPERTY_ICC_OPERATOR_NUMERIC,null);
+  phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ALPHA,null);
+  phone.setSystemProperty(PROPERTY_ICC_OPERATOR_ISO_COUNTRY,null);
+  recordsRequested=false;
+}

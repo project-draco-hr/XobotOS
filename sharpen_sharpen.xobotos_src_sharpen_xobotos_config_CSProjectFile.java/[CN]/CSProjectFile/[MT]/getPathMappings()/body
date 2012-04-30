@@ -1,0 +1,5 @@
+{
+  List<NameMapping> list=new ArrayList<NameMapping>();
+  if (_pathMappings != null)   list.addAll(_pathMappings);
+  return Collections.unmodifiableList(list);
+}

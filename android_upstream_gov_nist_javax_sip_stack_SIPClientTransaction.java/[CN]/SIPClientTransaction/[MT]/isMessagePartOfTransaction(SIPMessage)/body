@@ -1,0 +1,33 @@
+{
+  ViaList viaHeaders=messageToTest.getViaHeaders();
+  boolean transactionMatches;
+  String messageBranch=((Via)viaHeaders.getFirst()).getBranch();
+  boolean rfc3261Compliant=getBranch() != null && messageBranch != null && getBranch().toLowerCase().startsWith(SIPConstants.BRANCH_MAGIC_COOKIE_LOWER_CASE) && messageBranch.toLowerCase().startsWith(SIPConstants.BRANCH_MAGIC_COOKIE_LOWER_CASE);
+  transactionMatches=false;
+  if (TransactionState.COMPLETED == this.getState()) {
+    if (rfc3261Compliant) {
+      transactionMatches=getBranch().equalsIgnoreCase(((Via)viaHeaders.getFirst()).getBranch()) && getMethod().equals(messageToTest.getCSeq().getMethod());
+    }
+ else {
+      transactionMatches=getBranch().equals(messageToTest.getTransactionId());
+    }
+  }
+ else   if (!isTerminated()) {
+    if (rfc3261Compliant) {
+      if (viaHeaders != null) {
+        if (getBranch().equalsIgnoreCase(((Via)viaHeaders.getFirst()).getBranch())) {
+          transactionMatches=getOriginalRequest().getCSeq().getMethod().equals(messageToTest.getCSeq().getMethod());
+        }
+      }
+    }
+ else {
+      if (getBranch() != null) {
+        transactionMatches=getBranch().equalsIgnoreCase(messageToTest.getTransactionId());
+      }
+ else {
+        transactionMatches=getOriginalRequest().getTransactionId().equalsIgnoreCase(messageToTest.getTransactionId());
+      }
+    }
+  }
+  return transactionMatches;
+}

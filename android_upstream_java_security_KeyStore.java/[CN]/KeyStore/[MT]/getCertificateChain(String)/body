@@ -1,0 +1,6 @@
+{
+  if (!isInit) {
+    throwNotInitialized();
+  }
+  return implSpi.engineGetCertificateChain(alias);
+}

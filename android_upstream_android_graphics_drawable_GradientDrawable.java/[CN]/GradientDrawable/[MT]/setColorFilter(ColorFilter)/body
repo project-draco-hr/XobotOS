@@ -1,0 +1,6 @@
+{
+  if (cf != mColorFilter) {
+    mColorFilter=cf;
+    invalidateSelf();
+  }
+}

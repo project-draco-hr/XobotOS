@@ -1,0 +1,14 @@
+{
+  if (this.getLastAckSent() != null) {
+    if (getLastAckSent().getHeader(TimeStampHeader.NAME) != null && sipStack.generateTimeStampHeader) {
+      TimeStamp ts=new TimeStamp();
+      try {
+        ts.setTimeStamp(System.currentTimeMillis());
+        getLastAckSent().setHeader(ts);
+      }
+ catch (      InvalidArgumentException e) {
+      }
+    }
+    this.sendAck(getLastAckSent(),false);
+  }
+}

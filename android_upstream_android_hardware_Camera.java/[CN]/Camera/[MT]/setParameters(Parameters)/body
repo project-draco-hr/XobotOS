@@ -1,0 +1,3 @@
+{
+  native_setParameters(params.flatten());
+}

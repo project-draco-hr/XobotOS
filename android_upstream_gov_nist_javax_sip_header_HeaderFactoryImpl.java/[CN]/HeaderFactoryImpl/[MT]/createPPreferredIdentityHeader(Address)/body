@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("null address!");
+  PPreferredIdentity preferredIdentity=new PPreferredIdentity();
+  preferredIdentity.setAddress(address);
+  return preferredIdentity;
+}

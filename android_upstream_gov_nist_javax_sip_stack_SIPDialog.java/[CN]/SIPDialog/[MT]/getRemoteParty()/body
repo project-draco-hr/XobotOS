@@ -1,0 +1,6 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("gettingRemoteParty " + this.remoteParty);
+  }
+  return this.remoteParty;
+}

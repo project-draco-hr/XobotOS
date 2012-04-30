@@ -1,0 +1,4 @@
+{
+  if (host == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Charging-Vector, setICIDGeneratedAt(), the host parameter is null.");
+  setParameter(ParameterNamesIms.ICID_GENERATED_AT,host);
+}

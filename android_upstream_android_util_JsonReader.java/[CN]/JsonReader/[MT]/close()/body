@@ -1,0 +1,7 @@
+{
+  value=null;
+  token=null;
+  stack.clear();
+  stack.add(JsonScope.CLOSED);
+  in.close();
+}

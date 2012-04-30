@@ -1,0 +1,12 @@
+{
+  dbg_enter("SecuriryVerify parse");
+  try {
+    headerName(TokenTypes.SECURITY_VERIFY);
+    SecurityVerify secVerify=new SecurityVerify();
+    SecurityVerifyList secVerifyList=(SecurityVerifyList)super.parse(secVerify);
+    return secVerifyList;
+  }
+  finally {
+    dbg_leave("SecuriryVerify parse");
+  }
+}

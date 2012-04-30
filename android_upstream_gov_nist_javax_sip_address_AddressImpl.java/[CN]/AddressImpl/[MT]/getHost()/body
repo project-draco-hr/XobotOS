@@ -1,0 +1,5 @@
+{
+  if (!(address instanceof SipUri))   throw new RuntimeException("address is not a SipUri");
+  SipUri uri=(SipUri)address;
+  return uri.getHostPort().getHost().getHostname();
+}

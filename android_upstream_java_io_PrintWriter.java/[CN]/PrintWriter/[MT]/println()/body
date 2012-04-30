@@ -1,0 +1,8 @@
+{
+synchronized (lock) {
+    print(System.lineSeparator());
+    if (autoFlush) {
+      flush();
+    }
+  }
+}

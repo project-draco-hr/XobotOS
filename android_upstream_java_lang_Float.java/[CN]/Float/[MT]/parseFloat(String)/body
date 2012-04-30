@@ -1,0 +1,3 @@
+{
+  return StringToReal.parseFloat(string);
+}

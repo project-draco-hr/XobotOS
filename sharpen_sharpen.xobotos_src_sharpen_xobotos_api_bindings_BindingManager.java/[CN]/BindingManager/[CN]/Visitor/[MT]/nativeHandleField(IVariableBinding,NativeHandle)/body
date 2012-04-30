@@ -1,0 +1,11 @@
+{
+  _variableBindings.put(binding,new VariableBinding(){
+    @Override public boolean isPointer(){
+      return false;
+    }
+    @Override public NativeHandle getNativeHandle(){
+      return handle;
+    }
+  }
+);
+}

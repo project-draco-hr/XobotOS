@@ -1,0 +1,10 @@
+{
+  if (version == 0) {
+    return name + "=" + value;
+  }
+  StringBuilder result=new StringBuilder().append(name).append("=").append("\"").append(value).append("\"");
+  appendAttribute(result,"Path",path);
+  appendAttribute(result,"Domain",domain);
+  appendAttribute(result,"Port",portList);
+  return result.toString();
+}

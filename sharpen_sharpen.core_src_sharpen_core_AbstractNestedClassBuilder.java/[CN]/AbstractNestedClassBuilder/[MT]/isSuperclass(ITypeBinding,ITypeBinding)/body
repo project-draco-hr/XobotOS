@@ -1,0 +1,11 @@
+{
+  ITypeBinding superClass=type.getSuperclass().getTypeDeclaration();
+  candidate=candidate.getTypeDeclaration();
+  while (null != superClass) {
+    if (superClass == candidate) {
+      return true;
+    }
+    superClass=superClass.getSuperclass();
+  }
+  return false;
+}

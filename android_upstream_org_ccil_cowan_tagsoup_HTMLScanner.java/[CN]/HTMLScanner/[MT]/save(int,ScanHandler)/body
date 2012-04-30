@@ -1,0 +1,14 @@
+{
+  if (theSize >= theOutputBuffer.length - 20) {
+    if (theState == S_PCDATA || theState == S_CDATA) {
+      h.pcdata(theOutputBuffer,0,theSize);
+      theSize=0;
+    }
+ else {
+      char[] newOutputBuffer=new char[theOutputBuffer.length * 2];
+      System.arraycopy(theOutputBuffer,0,newOutputBuffer,0,theSize + 1);
+      theOutputBuffer=newOutputBuffer;
+    }
+  }
+  theOutputBuffer[theSize++]=(char)ch;
+}

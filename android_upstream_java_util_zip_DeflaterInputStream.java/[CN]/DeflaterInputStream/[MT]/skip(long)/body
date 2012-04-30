@@ -1,0 +1,4 @@
+{
+  byteCount=Math.min(Integer.MAX_VALUE,byteCount);
+  return Streams.skipByReading(this,byteCount);
+}

@@ -1,0 +1,11 @@
+{
+  Class<?> cls=osClass.forClass();
+  if (cls == null) {
+    String className=osClass.getName();
+    cls=PRIMITIVE_CLASSES.get(className);
+    if (cls == null) {
+      cls=Class.forName(className,true,callerClassLoader);
+    }
+  }
+  return cls;
+}

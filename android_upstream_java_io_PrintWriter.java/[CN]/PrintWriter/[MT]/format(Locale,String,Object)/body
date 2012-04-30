@@ -1,0 +1,10 @@
+{
+  if (format == null) {
+    throw new NullPointerException("format == null");
+  }
+  new Formatter(this,l).format(format,args);
+  if (autoFlush) {
+    flush();
+  }
+  return this;
+}

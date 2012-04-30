@@ -1,0 +1,4 @@
+def builder_call(self):
+    '\n    Returns the actual SCons builder call to build this target.\n    '
+    name = self.full_product_name()
+    return ('env.%s(env.File(%r), input_files)' % (self.builder_name, name))

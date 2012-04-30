@@ -1,0 +1,9 @@
+{
+  String regionCode=getRegionCodeForNumber(number);
+  String nationalSignificantNumber=getNationalSignificantNumber(number);
+  if (!hasValidRegionCode(regionCode,number.getCountryCode(),nationalSignificantNumber)) {
+    return true;
+  }
+  PhoneMetadata metadata=getMetadataForRegion(regionCode);
+  return !isNumberMatchingDesc(nationalSignificantNumber,metadata.getNoInternationalDialling());
+}

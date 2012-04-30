@@ -1,0 +1,11 @@
+{
+  name=orig.name;
+  if (name != null)   name=name.trim();
+  packageName=orig.packageName;
+  labelRes=orig.labelRes;
+  nonLocalizedLabel=orig.nonLocalizedLabel;
+  if (nonLocalizedLabel != null)   nonLocalizedLabel=nonLocalizedLabel.toString().trim();
+  icon=orig.icon;
+  logo=orig.logo;
+  metaData=orig.metaData;
+}

@@ -1,0 +1,38 @@
+{
+  if ((int)Math.abs(deltaY) > mTouchSlop && mSwipeGestureType == GESTURE_NONE) {
+    final int swipeGestureType=deltaY < 0 ? GESTURE_SLIDE_UP : GESTURE_SLIDE_DOWN;
+    cancelLongPress();
+    requestDisallowInterceptTouchEvent(true);
+    if (mAdapter == null)     return;
+    final int adapterCount=getCount();
+    int activeIndex;
+    if (mStackMode == ITEMS_SLIDE_UP) {
+      activeIndex=(swipeGestureType == GESTURE_SLIDE_DOWN) ? 0 : 1;
+    }
+ else {
+      activeIndex=(swipeGestureType == GESTURE_SLIDE_DOWN) ? 1 : 0;
+    }
+    boolean endOfStack=mLoopViews && adapterCount == 1 && ((mStackMode == ITEMS_SLIDE_UP && swipeGestureType == GESTURE_SLIDE_UP) || (mStackMode == ITEMS_SLIDE_DOWN && swipeGestureType == GESTURE_SLIDE_DOWN));
+    boolean beginningOfStack=mLoopViews && adapterCount == 1 && ((mStackMode == ITEMS_SLIDE_DOWN && swipeGestureType == GESTURE_SLIDE_UP) || (mStackMode == ITEMS_SLIDE_UP && swipeGestureType == GESTURE_SLIDE_DOWN));
+    int stackMode;
+    if (mLoopViews && !beginningOfStack && !endOfStack) {
+      stackMode=StackSlider.NORMAL_MODE;
+    }
+ else     if (mCurrentWindowStartUnbounded + activeIndex == -1 || beginningOfStack) {
+      activeIndex++;
+      stackMode=StackSlider.BEGINNING_OF_STACK_MODE;
+    }
+ else     if (mCurrentWindowStartUnbounded + activeIndex == adapterCount - 1 || endOfStack) {
+      stackMode=StackSlider.END_OF_STACK_MODE;
+    }
+ else {
+      stackMode=StackSlider.NORMAL_MODE;
+    }
+    mTransitionIsSetup=stackMode == StackSlider.NORMAL_MODE;
+    View v=getViewAtRelativeIndex(activeIndex);
+    if (v == null)     return;
+    setupStackSlider(v,stackMode);
+    mSwipeGestureType=swipeGestureType;
+    cancelHandleClick();
+  }
+}

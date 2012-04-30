@@ -1,0 +1,130 @@
+def GenerateOutput(target_list, target_dicts, data, params):
+    options = params['options']
+    flavor = GetFlavor(params)
+    generator_flags = params.get('generator_flags', {})
+    builddir_name = generator_flags.get('output_dir', 'out')
+    android_ndk_version = generator_flags.get('android_ndk_version', None)
+
+    def CalculateMakefilePath(build_file, base_name):
+        'Determine where to write a Makefile for a given gyp file.'
+        base_path = gyp.common.RelativePath(os.path.dirname(build_file), options.depth)
+        output_file = os.path.join(options.depth, base_path, base_name)
+        if options.generator_output:
+            output_file = os.path.join(options.generator_output, output_file)
+        base_path = gyp.common.RelativePath(os.path.dirname(build_file), options.toplevel_dir)
+        return (base_path, output_file)
+    default_configuration = None
+    toolsets = set([target_dicts[target]['toolset'] for target in target_list])
+    for target in target_list:
+        spec = target_dicts[target]
+        if (spec['default_configuration'] != 'Default'):
+            default_configuration = spec['default_configuration']
+            break
+    if (not default_configuration):
+        default_configuration = 'Default'
+    srcdir = '.'
+    makefile_name = ('Makefile' + options.suffix)
+    makefile_path = os.path.join(options.toplevel_dir, makefile_name)
+    if options.generator_output:
+        global srcdir_prefix
+        makefile_path = os.path.join(options.generator_output, makefile_path)
+        srcdir = gyp.common.RelativePath(srcdir, options.generator_output)
+        srcdir_prefix = '$(srcdir)/'
+    flock_command = 'flock'
+    header_params = {'builddir': builddir_name, 'default_configuration': default_configuration, 'flock': flock_command, 'flock_index': 1, 'link_commands': LINK_COMMANDS_LINUX, 'mac_commands': '', 'srcdir': srcdir, }
+    if (flavor == 'mac'):
+        flock_command = './gyp-mac-tool flock'
+        header_params.update({'flock': flock_command, 'flock_index': 2, 'link_commands': LINK_COMMANDS_MAC, 'mac_commands': SHARED_HEADER_MAC_COMMANDS, })
+    if (flavor == 'android'):
+        header_params.update({'link_commands': LINK_COMMANDS_ANDROID, })
+    header_params.update(RunSystemTests(flavor))
+    (build_file, _, _) = gyp.common.ParseQualifiedTarget(target_list[0])
+    make_global_settings_dict = data[build_file].get('make_global_settings', {})
+    make_global_settings = ''
+    for (key, value) in make_global_settings_dict:
+        if (value[0] != '$'):
+            value = ('$(abspath %s)' % value)
+        if (key == 'LINK'):
+            make_global_settings += ('%s ?= %s %s\n' % (flock_command, key, value))
+        elif (key in ['CC', 'CXX']):
+            make_global_settings += ('ifneq (,$(filter $(origin %s), undefined default))\n' % key)
+            if (key in os.environ):
+                value = os.environ[key]
+            make_global_settings += ('  %s = %s\n' % (key, value))
+            make_global_settings += 'endif\n'
+        else:
+            make_global_settings += ('%s ?= %s\n' % (key, value))
+    header_params['make_global_settings'] = make_global_settings
+    ensure_directory_exists(makefile_path)
+    root_makefile = open(makefile_path, 'w')
+    root_makefile.write((SHARED_HEADER % header_params))
+    if android_ndk_version:
+        root_makefile.write('# Define LOCAL_PATH for build of Android applications.\nLOCAL_PATH := $(call my-dir)\n\n')
+    for toolset in toolsets:
+        root_makefile.write(('TOOLSET := %s\n' % toolset))
+        WriteRootHeaderSuffixRules(root_makefile)
+    if (flavor == 'mac'):
+        mactool_path = os.path.join(os.path.dirname(makefile_path), 'gyp-mac-tool')
+        if os.path.exists(mactool_path):
+            os.remove(mactool_path)
+        CopyMacTool(mactool_path)
+        os.chmod(mactool_path, 493)
+    needed_targets = set()
+    for build_file in params['build_files']:
+        for target in gyp.common.AllTargets(target_list, target_dicts, build_file):
+            needed_targets.add(target)
+    num_outputs = 0
+    build_files = set()
+    include_list = set()
+    for qualified_target in target_list:
+        (build_file, target, toolset) = gyp.common.ParseQualifiedTarget(qualified_target)
+        this_make_global_settings = data[build_file].get('make_global_settings', {})
+        assert (make_global_settings_dict == this_make_global_settings), 'make_global_settings needs to be the same for all targets.'
+        build_files.add(gyp.common.RelativePath(build_file, options.toplevel_dir))
+        included_files = data[build_file]['included_files']
+        for included_file in included_files:
+            relative_include_file = gyp.common.RelativePath(gyp.common.UnrelativePath(included_file, build_file), options.toplevel_dir)
+            abs_include_file = os.path.abspath(relative_include_file)
+            if (params['home_dot_gyp'] and abs_include_file.startswith(params['home_dot_gyp'])):
+                build_files.add(abs_include_file)
+            else:
+                build_files.add(relative_include_file)
+        (base_path, output_file) = CalculateMakefilePath(build_file, ((((target + '.') + toolset) + options.suffix) + '.mk'))
+        spec = target_dicts[qualified_target]
+        configs = spec['configurations']
+        if (flavor == 'mac'):
+            global_xcode_settings = data[build_file].get('xcode_settings', {})
+            for configname in configs.keys():
+                config = configs[configname]
+                if ('xcode_settings' in config):
+                    new_settings = global_xcode_settings.copy()
+                    new_settings.update(config['xcode_settings'])
+                    config['xcode_settings'] = new_settings
+        writer = MakefileWriter(generator_flags, flavor)
+        writer.Write(qualified_target, base_path, output_file, spec, configs, part_of_all=(qualified_target in needed_targets))
+        num_outputs += writer.NumOutputs()
+        mkfile_rel_path = gyp.common.RelativePath(output_file, os.path.dirname(makefile_path))
+        include_list.add(mkfile_rel_path)
+    depth_rel_path = gyp.common.RelativePath(options.depth, os.getcwd())
+    for build_file in build_files:
+        build_file = os.path.join(depth_rel_path, build_file)
+        gyp_targets = [target_dicts[target]['target_name'] for target in target_list if (target.startswith(build_file) and (target in needed_targets))]
+        if (not gyp_targets):
+            continue
+        (base_path, output_file) = CalculateMakefilePath(build_file, (os.path.splitext(os.path.basename(build_file))[0] + '.Makefile'))
+        makefile_rel_path = gyp.common.RelativePath(os.path.dirname(makefile_path), os.path.dirname(output_file))
+        writer.WriteSubMake(output_file, makefile_rel_path, gyp_targets, builddir_name)
+    root_makefile.write('\n')
+    for include_file in sorted(include_list):
+        root_makefile.write((('ifeq ($(strip $(foreach prefix,$(NO_LOAD),\\\n    $(findstring $(join ^,$(prefix)),\\\n                 $(join ^,' + include_file) + ')))),)\n'))
+        root_makefile.write((('  include ' + include_file) + '\n'))
+        root_makefile.write('endif\n')
+    root_makefile.write('\n')
+    if generator_flags.get('auto_regeneration', True):
+        WriteAutoRegenerationRule(params, root_makefile, makefile_name, build_files)
+    all_deps = ''
+    for i in range(1001, num_outputs, 1000):
+        all_deps += ('\n  ifneq ($(word %(start)d,$(d_files)),)\n    $(shell cat $(wordlist %(start)d,%(end)d,$(d_files)) >> $(depsdir)/all.deps)\n  endif' % {'start': i, 'end': (i + 999), })
+    all_deps += ("\n  ifneq ($(word %(last)d,$(d_files)),)\n    $(error Found unprocessed dependency files (gyp didn't generate enough rules!))\n  endif\n" % {'last': ((((num_outputs / 1000) + 1) * 1000) + 1), })
+    root_makefile.write((SHARED_FOOTER % {'generate_all_deps': all_deps, }))
+    root_makefile.close()

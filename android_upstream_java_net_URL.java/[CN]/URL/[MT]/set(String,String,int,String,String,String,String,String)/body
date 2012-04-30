@@ -1,0 +1,11 @@
+{
+  String file=path;
+  if (query != null && !query.isEmpty()) {
+    file+="?" + query;
+  }
+  set(protocol,host,port,file,ref);
+  this.authority=authority;
+  this.userInfo=userInfo;
+  this.path=path;
+  this.query=query;
+}

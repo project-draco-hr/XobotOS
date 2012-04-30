@@ -1,0 +1,29 @@
+{
+  SortedSet<String> descriptionsSet=new TreeSet<String>();
+  numOfEntries=sortedAreaCodeMap.size();
+  prefixSizeInBytes=getOptimalNumberOfBytesForValue(sortedAreaCodeMap.lastKey());
+  phoneNumberPrefixes=ByteBuffer.allocate(numOfEntries * prefixSizeInBytes);
+  int index=0;
+  for (  Entry<Integer,String> entry : sortedAreaCodeMap.entrySet()) {
+    int prefix=entry.getKey();
+    storeWordInBuffer(phoneNumberPrefixes,prefixSizeInBytes,index++,prefix);
+    possibleLengths.add((int)Math.log10(prefix) + 1);
+    descriptionsSet.add(entry.getValue());
+  }
+  descIndexSizeInBytes=getOptimalNumberOfBytesForValue(descriptionsSet.size() - 1);
+  descriptionIndexes=ByteBuffer.allocate(numOfEntries * descIndexSizeInBytes);
+  descriptionPool=new String[descriptionsSet.size()];
+  descriptionsSet.toArray(descriptionPool);
+  index=0;
+  for (int i=0; i < numOfEntries; i++) {
+    int prefix=readWordFromBuffer(phoneNumberPrefixes,prefixSizeInBytes,i);
+    String description=sortedAreaCodeMap.get(prefix);
+    int positionInDescriptionPool=Arrays.binarySearch(descriptionPool,description,new Comparator<String>(){
+      public int compare(      String o1,      String o2){
+        return o1.compareTo(o2);
+      }
+    }
+);
+    storeWordInBuffer(descriptionIndexes,descIndexSizeInBytes,index++,positionInDescriptionPool);
+  }
+}

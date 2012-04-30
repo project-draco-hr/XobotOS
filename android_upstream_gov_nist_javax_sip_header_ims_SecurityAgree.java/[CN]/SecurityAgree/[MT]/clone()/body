@@ -1,0 +1,5 @@
+{
+  SecurityAgree retval=(SecurityAgree)super.clone();
+  if (this.secMechanism != null)   retval.secMechanism=this.secMechanism;
+  return retval;
+}

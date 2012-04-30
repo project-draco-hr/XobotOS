@@ -1,0 +1,7 @@
+{
+  if (params == null) {
+    throw new NullPointerException("Layout parameters cannot be null");
+  }
+  mLayoutParams=params;
+  requestLayout();
+}

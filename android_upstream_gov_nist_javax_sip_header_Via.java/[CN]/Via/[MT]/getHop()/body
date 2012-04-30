@@ -1,0 +1,4 @@
+{
+  HopImpl hop=new HopImpl(sentBy.getHost().getHostname(),sentBy.getPort(),sentProtocol.getTransport());
+  return hop;
+}

@@ -1,0 +1,5 @@
+{
+  CallInfoList retval=new CallInfoList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

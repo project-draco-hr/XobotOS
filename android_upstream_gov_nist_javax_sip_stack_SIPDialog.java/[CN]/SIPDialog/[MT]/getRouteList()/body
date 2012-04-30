@@ -1,0 +1,21 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("getRouteList " + this);
+  ListIterator li;
+  RouteList retval=new RouteList();
+  retval=new RouteList();
+  if (this.routeList != null) {
+    li=routeList.listIterator();
+    while (li.hasNext()) {
+      Route route=(Route)li.next();
+      retval.add((Route)route.clone());
+    }
+  }
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("----- ");
+    sipStack.getStackLogger().logDebug("getRouteList for " + this);
+    if (retval != null)     sipStack.getStackLogger().logDebug("RouteList = " + retval.encode());
+    if (routeList != null)     sipStack.getStackLogger().logDebug("myRouteList = " + routeList.encode());
+    sipStack.getStackLogger().logDebug("----- ");
+  }
+  return retval;
+}

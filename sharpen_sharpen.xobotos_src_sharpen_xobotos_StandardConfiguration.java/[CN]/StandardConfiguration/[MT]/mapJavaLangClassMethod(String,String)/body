@@ -1,0 +1,3 @@
+{
+  mapMethod("java.lang.Class." + methodName,newMethodName);
+}

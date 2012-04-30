@@ -1,0 +1,7 @@
+{
+  ReadWriteDirectByteBuffer buf=new ReadWriteDirectByteBuffer(other.block,other.capacity(),other.offset);
+  buf.limit=other.limit;
+  buf.position=other.position();
+  buf.mark=markOfOther;
+  return buf;
+}

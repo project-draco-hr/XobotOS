@@ -1,0 +1,7 @@
+self
+actual_stdout
+expected_stdout
+actual_stderr
+expected_stderr
+status
+match

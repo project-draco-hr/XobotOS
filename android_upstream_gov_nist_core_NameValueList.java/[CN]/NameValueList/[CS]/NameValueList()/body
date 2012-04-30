@@ -1,0 +1,4 @@
+{
+  this.separator=";";
+  this.hmap=new LinkedHashMap<String,NameValue>();
+}

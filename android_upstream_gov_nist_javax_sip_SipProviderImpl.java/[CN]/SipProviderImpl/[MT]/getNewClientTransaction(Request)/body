@@ -1,0 +1,92 @@
+{
+  if (request == null)   throw new NullPointerException("null request");
+  if (!sipStack.isAlive())   throw new TransactionUnavailableException("Stack is stopped");
+  SIPRequest sipRequest=(SIPRequest)request;
+  if (sipRequest.getTransaction() != null)   throw new TransactionUnavailableException("Transaction already assigned to request");
+  if (sipRequest.getMethod().equals(Request.ACK)) {
+    throw new TransactionUnavailableException("Cannot create client transaction for  " + Request.ACK);
+  }
+  if (sipRequest.getTopmostVia() == null) {
+    ListeningPointImpl lp=(ListeningPointImpl)this.getListeningPoint("udp");
+    Via via=lp.getViaHeader();
+    request.setHeader(via);
+  }
+  try {
+    sipRequest.checkHeaders();
+  }
+ catch (  ParseException ex) {
+    throw new TransactionUnavailableException(ex.getMessage(),ex);
+  }
+  if (sipRequest.getTopmostVia().getBranch() != null && sipRequest.getTopmostVia().getBranch().startsWith(SIPConstants.BRANCH_MAGIC_COOKIE) && sipStack.findTransaction((SIPRequest)request,false) != null) {
+    throw new TransactionUnavailableException("Transaction already exists!");
+  }
+  if (request.getMethod().equalsIgnoreCase(Request.CANCEL)) {
+    SIPClientTransaction ct=(SIPClientTransaction)sipStack.findCancelTransaction((SIPRequest)request,false);
+    if (ct != null) {
+      ClientTransaction retval=sipStack.createClientTransaction((SIPRequest)request,ct.getMessageChannel());
+      ((SIPTransaction)retval).addEventListener(this);
+      sipStack.addTransaction((SIPClientTransaction)retval);
+      if (ct.getDialog() != null) {
+        ((SIPClientTransaction)retval).setDialog((SIPDialog)ct.getDialog(),sipRequest.getDialogId(false));
+      }
+      return retval;
+    }
+  }
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("could not find existing transaction for " + ((SIPRequest)request).getFirstLine() + " creating a new one ");
+  Hop hop=null;
+  try {
+    hop=sipStack.getNextHop((SIPRequest)request);
+    if (hop == null)     throw new TransactionUnavailableException("Cannot resolve next hop -- transaction unavailable");
+  }
+ catch (  SipException ex) {
+    throw new TransactionUnavailableException("Cannot resolve next hop -- transaction unavailable",ex);
+  }
+  String transport=hop.getTransport();
+  ListeningPointImpl listeningPoint=(ListeningPointImpl)this.getListeningPoint(transport);
+  String dialogId=sipRequest.getDialogId(false);
+  SIPDialog dialog=sipStack.getDialog(dialogId);
+  if (dialog != null && dialog.getState() == DialogState.TERMINATED) {
+    sipStack.removeDialog(dialog);
+  }
+  try {
+    String branchId=null;
+    if (sipRequest.getTopmostVia().getBranch() == null || !sipRequest.getTopmostVia().getBranch().startsWith(SIPConstants.BRANCH_MAGIC_COOKIE) || sipStack.checkBranchId()) {
+      branchId=Utils.getInstance().generateBranchId();
+      sipRequest.getTopmostVia().setBranch(branchId);
+    }
+    Via topmostVia=sipRequest.getTopmostVia();
+    if (topmostVia.getTransport() == null)     topmostVia.setTransport(transport);
+    if (topmostVia.getPort() == -1)     topmostVia.setPort(listeningPoint.getPort());
+    branchId=sipRequest.getTopmostVia().getBranch();
+    SIPClientTransaction ct=(SIPClientTransaction)sipStack.createMessageChannel(sipRequest,listeningPoint.getMessageProcessor(),hop);
+    if (ct == null)     throw new TransactionUnavailableException("Cound not create tx");
+    ct.setNextHop(hop);
+    ct.setOriginalRequest(sipRequest);
+    ct.setBranch(branchId);
+    if (sipStack.isDialogCreated(request.getMethod())) {
+      if (dialog != null)       ct.setDialog(dialog,sipRequest.getDialogId(false));
+ else       if (this.isAutomaticDialogSupportEnabled()) {
+        SIPDialog sipDialog=sipStack.createDialog(ct);
+        ct.setDialog(sipDialog,sipRequest.getDialogId(false));
+      }
+    }
+ else {
+      if (dialog != null) {
+        ct.setDialog(dialog,sipRequest.getDialogId(false));
+      }
+    }
+    ct.addEventListener(this);
+    return (ClientTransaction)ct;
+  }
+ catch (  IOException ex) {
+    throw new TransactionUnavailableException("Could not resolve next hop or listening point unavailable! ",ex);
+  }
+catch (  java.text.ParseException ex) {
+    InternalErrorHandler.handleException(ex);
+    throw new TransactionUnavailableException("Unexpected Exception FIXME! ",ex);
+  }
+catch (  InvalidArgumentException ex) {
+    InternalErrorHandler.handleException(ex);
+    throw new TransactionUnavailableException("Unexpected Exception FIXME! ",ex);
+  }
+}

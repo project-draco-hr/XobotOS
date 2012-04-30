@@ -1,0 +1,13 @@
+{
+  mDrawLayersIsScheduled=false;
+  if (mDrawIsScheduled || mLastDrawData == null) {
+    removeMessages(EventHub.WEBKIT_DRAW);
+    webkitDraw();
+    return;
+  }
+  if (nativeUpdateLayers(mLastDrawData.mBaseLayer)) {
+    webkitDraw();
+  }
+  mWebView.mPrivateHandler.removeMessages(WebView.INVAL_RECT_MSG_ID);
+  mWebView.mPrivateHandler.sendMessageAtFrontOfQueue(mWebView.mPrivateHandler.obtainMessage(WebView.INVAL_RECT_MSG_ID));
+}

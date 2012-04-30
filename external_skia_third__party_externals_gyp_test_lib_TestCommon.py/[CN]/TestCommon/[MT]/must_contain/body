@@ -1,0 +1,11 @@
+def must_contain(self, file, required, mode='rb'):
+    'Ensures that the specified file contains the required text.\n        '
+    file_contents = self.read(file, mode)
+    contains = (string.find(file_contents, required) != (-1))
+    if (not contains):
+        print ("File `%s' does not contain required string." % file)
+        print self.banner('Required string ')
+        print required
+        print self.banner(('%s contents ' % file))
+        print file_contents
+        self.fail_test((not contains))

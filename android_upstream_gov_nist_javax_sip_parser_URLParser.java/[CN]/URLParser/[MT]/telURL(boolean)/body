@@ -1,0 +1,8 @@
+{
+  lexer.match(TokenTypes.TEL);
+  lexer.match(':');
+  TelephoneNumber tn=this.parseTelephoneNumber(inBrackets);
+  TelURLImpl telUrl=new TelURLImpl();
+  telUrl.setTelephoneNumber(tn);
+  return telUrl;
+}

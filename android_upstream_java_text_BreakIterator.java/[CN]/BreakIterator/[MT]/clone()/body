@@ -1,0 +1,10 @@
+{
+  try {
+    BreakIterator cloned=(BreakIterator)super.clone();
+    cloned.wrapped=(NativeBreakIterator)wrapped.clone();
+    return cloned;
+  }
+ catch (  CloneNotSupportedException e) {
+    throw new AssertionError(e);
+  }
+}

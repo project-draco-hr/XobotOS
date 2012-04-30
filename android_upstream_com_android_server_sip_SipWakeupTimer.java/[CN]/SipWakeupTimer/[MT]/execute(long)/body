@@ -1,0 +1,16 @@
+{
+  if (DEBUG_TIMER)   Log.d(TAG,"time's up, triggerTime = " + showTime(triggerTime) + ": "+ mEventQueue.size());
+  if (stopped() || mEventQueue.isEmpty())   return;
+  for (  MyEvent event : mEventQueue) {
+    if (event.mTriggerTime != triggerTime)     continue;
+    if (DEBUG_TIMER)     Log.d(TAG,"execute " + event);
+    event.mLastTriggerTime=triggerTime;
+    event.mTriggerTime+=event.mPeriod;
+    mExecutor.execute(event.mCallback);
+  }
+  if (DEBUG_TIMER) {
+    Log.d(TAG,"after timeout execution");
+    printQueue();
+  }
+  scheduleNext();
+}

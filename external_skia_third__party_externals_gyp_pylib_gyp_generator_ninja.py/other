@@ -1,0 +1,10 @@
+import gyp
+import gyp.common
+import gyp.system_test
+import os.path
+import pprint
+import subprocess
+import sys
+import gyp.ninja_syntax as ninja_syntax
+generator_default_variables = {'OS': 'linux', 'EXECUTABLE_PREFIX': '', 'EXECUTABLE_SUFFIX': '', 'STATIC_LIB_PREFIX': '', 'STATIC_LIB_SUFFIX': '.a', 'SHARED_LIB_PREFIX': 'lib', 'SHARED_LIB_SUFFIX': '.so', 'INTERMEDIATE_DIR': '$!INTERMEDIATE_DIR', 'SHARED_INTERMEDIATE_DIR': '$!PRODUCT_DIR/gen', 'PRODUCT_DIR': '$!PRODUCT_DIR', 'SHARED_LIB_DIR': '$!PRODUCT_DIR/lib', 'LIB_DIR': '', 'RULE_INPUT_ROOT': '${root}', 'RULE_INPUT_PATH': '${source}', 'RULE_INPUT_EXT': '${ext}', 'RULE_INPUT_NAME': '${name}', }
+generator_supports_multiple_toolsets = False

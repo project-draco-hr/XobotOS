@@ -1,0 +1,10 @@
+{
+switch (expression.getNodeType()) {
+case ASTNode.PREFIX_EXPRESSION:
+    return constValue((PrefixExpression)expression);
+case ASTNode.SIMPLE_NAME:
+case ASTNode.QUALIFIED_NAME:
+  return constValue((Name)expression);
+}
+return null;
+}

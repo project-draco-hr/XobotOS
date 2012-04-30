@@ -1,0 +1,16 @@
+{
+  if (provider == null) {
+    throw new IllegalArgumentException();
+  }
+  if (algorithm == null) {
+    throw new NullPointerException();
+  }
+  Object spi=ENGINE.getInstance(algorithm,provider,null);
+  if (spi instanceof MessageDigest) {
+    MessageDigest result=(MessageDigest)spi;
+    result.algorithm=algorithm;
+    result.provider=provider;
+    return result;
+  }
+  return new MessageDigestImpl((MessageDigestSpi)spi,provider,algorithm);
+}

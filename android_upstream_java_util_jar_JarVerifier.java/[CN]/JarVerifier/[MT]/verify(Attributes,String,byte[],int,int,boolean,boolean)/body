@@ -1,0 +1,31 @@
+{
+  String algorithms=attributes.getValue("Digest-Algorithms");
+  if (algorithms == null) {
+    algorithms="SHA SHA1";
+  }
+  StringTokenizer tokens=new StringTokenizer(algorithms);
+  while (tokens.hasMoreTokens()) {
+    String algorithm=tokens.nextToken();
+    String hash=attributes.getValue(algorithm + entry);
+    if (hash == null) {
+      continue;
+    }
+    MessageDigest md;
+    try {
+      md=MessageDigest.getInstance(algorithm);
+    }
+ catch (    NoSuchAlgorithmException e) {
+      continue;
+    }
+    if (ignoreSecondEndline && data[end - 1] == '\n' && data[end - 2] == '\n') {
+      md.update(data,start,end - 1 - start);
+    }
+ else {
+      md.update(data,start,end - start);
+    }
+    byte[] b=md.digest();
+    byte[] hashBytes=hash.getBytes(Charsets.ISO_8859_1);
+    return MessageDigest.isEqual(b,Base64.decode(hashBytes));
+  }
+  return ignorable;
+}

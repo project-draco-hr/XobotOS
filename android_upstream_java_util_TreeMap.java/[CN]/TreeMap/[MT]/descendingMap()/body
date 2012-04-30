@@ -1,0 +1,3 @@
+{
+  return new BoundedMap(false,null,NO_BOUND,null,NO_BOUND);
+}

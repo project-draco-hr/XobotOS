@@ -1,0 +1,17 @@
+{
+  getASTNode().accept(new ASTVisitor(){
+    @Override public boolean visit(    ConstructorInvocation node){
+      addChainedConstructorInvocation(new CSThisExpression(),node.arguments(),node.resolveConstructorBinding());
+      return false;
+    }
+    @Override public boolean visit(    SuperConstructorInvocation node){
+      addChainedConstructorInvocation(new CSBaseExpression(),node.arguments(),node.resolveConstructorBinding());
+      return false;
+    }
+    private void addChainedConstructorInvocation(    CSExpression target,    List<?> args,    IMethodBinding binding){
+      CSConstructorInvocationExpression cie=builder.mapChainedConstructorInvocation(target,args,binding);
+      ctor.chainedConstructorInvocation(cie);
+    }
+  }
+);
+}

@@ -1,0 +1,16 @@
+{
+  indent(levels);
+  System.out.println(this.toString());
+  ++levels;
+synchronized (threadRefs) {
+    for (    Thread thread : threads) {
+      indent(levels);
+      System.out.println(thread);
+    }
+  }
+synchronized (groups) {
+    for (    ThreadGroup group : groups) {
+      group.list(levels);
+    }
+  }
+}

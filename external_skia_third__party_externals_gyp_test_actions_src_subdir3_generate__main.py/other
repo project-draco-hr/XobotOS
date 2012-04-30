@@ -1,0 +1,4 @@
+import sys
+contents = '\n#include <stdio.h>\n\nint main(int argc, char *argv[])\n{\n  printf("Hello from generate_main.py\\n");\n  return 0;\n}\n'
+open(sys.argv[1], 'w').write(contents)
+sys.exit(0)

@@ -1,0 +1,3 @@
+{
+  return my(Mappings.class).extractedInterfaceName(type);
+}

@@ -1,0 +1,37 @@
+{
+  boolean changed=false;
+  if (DBG) {
+    Log.d("View",this + " View.setFrame(" + left+ ","+ top+ ","+ right+ ","+ bottom+ ")");
+  }
+  if (mLeft != left || mRight != right || mTop != top || mBottom != bottom) {
+    changed=true;
+    int drawn=mPrivateFlags & DRAWN;
+    int oldWidth=mRight - mLeft;
+    int oldHeight=mBottom - mTop;
+    int newWidth=right - left;
+    int newHeight=bottom - top;
+    boolean sizeChanged=(newWidth != oldWidth) || (newHeight != oldHeight);
+    invalidate(sizeChanged);
+    mLeft=left;
+    mTop=top;
+    mRight=right;
+    mBottom=bottom;
+    mPrivateFlags|=HAS_BOUNDS;
+    if (sizeChanged) {
+      if ((mPrivateFlags & PIVOT_EXPLICITLY_SET) == 0) {
+        if (mTransformationInfo != null) {
+          mTransformationInfo.mMatrixDirty=true;
+        }
+      }
+      onSizeChanged(newWidth,newHeight,oldWidth,oldHeight);
+    }
+    if ((mViewFlags & VISIBILITY_MASK) == VISIBLE) {
+      mPrivateFlags|=DRAWN;
+      invalidate(sizeChanged);
+      invalidateParentCaches();
+    }
+    mPrivateFlags|=drawn;
+    mBackgroundSizeChanged=true;
+  }
+  return changed;
+}

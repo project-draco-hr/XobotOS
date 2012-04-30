@@ -1,0 +1,3 @@
+{
+  getUidStatsLocked(uid).noteUserActivityLocked(event);
+}

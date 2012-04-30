@@ -1,0 +1,7 @@
+{
+  if (null == binding) {
+    my(Configuration.class).getWarningHandler().warning(node,"Unresolved cref target");
+    return node.toString();
+  }
+  return documentationNameFor(binding);
+}

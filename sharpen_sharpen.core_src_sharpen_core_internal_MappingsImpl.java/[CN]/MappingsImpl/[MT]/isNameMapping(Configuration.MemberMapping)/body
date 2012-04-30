@@ -1,0 +1,3 @@
+{
+  return null != mapping && null != mapping.name;
+}

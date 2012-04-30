@@ -1,0 +1,7 @@
+{
+  if (mTimer.reset(BatteryStatsImpl.this,true)) {
+    mTimer=null;
+    return true;
+  }
+  return false;
+}

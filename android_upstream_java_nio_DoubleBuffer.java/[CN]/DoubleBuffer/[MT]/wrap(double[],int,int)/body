@@ -1,0 +1,7 @@
+{
+  Arrays.checkOffsetAndCount(array.length,start,doubleCount);
+  DoubleBuffer buf=new ReadWriteDoubleArrayBuffer(array);
+  buf.position=start;
+  buf.limit=start + doubleCount;
+  return buf;
+}

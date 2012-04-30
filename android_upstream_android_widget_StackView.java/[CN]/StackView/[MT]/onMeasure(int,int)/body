@@ -1,0 +1,45 @@
+{
+  int widthSpecSize=MeasureSpec.getSize(widthMeasureSpec);
+  int heightSpecSize=MeasureSpec.getSize(heightMeasureSpec);
+  final int widthSpecMode=MeasureSpec.getMode(widthMeasureSpec);
+  final int heightSpecMode=MeasureSpec.getMode(heightMeasureSpec);
+  boolean haveChildRefSize=(mReferenceChildWidth != -1 && mReferenceChildHeight != -1);
+  float factorY=1 / (1 - PERSPECTIVE_SHIFT_FACTOR_Y);
+  if (heightSpecMode == MeasureSpec.UNSPECIFIED) {
+    heightSpecSize=haveChildRefSize ? Math.round(mReferenceChildHeight * (1 + factorY)) + mPaddingTop + mPaddingBottom : 0;
+  }
+ else   if (heightSpecMode == MeasureSpec.AT_MOST) {
+    if (haveChildRefSize) {
+      int height=Math.round(mReferenceChildHeight * (1 + factorY)) + mPaddingTop + mPaddingBottom;
+      if (height <= heightSpecSize) {
+        heightSpecSize=height;
+      }
+ else {
+        heightSpecSize|=MEASURED_STATE_TOO_SMALL;
+      }
+    }
+ else {
+      heightSpecSize=0;
+    }
+  }
+  float factorX=1 / (1 - PERSPECTIVE_SHIFT_FACTOR_X);
+  if (widthSpecMode == MeasureSpec.UNSPECIFIED) {
+    widthSpecSize=haveChildRefSize ? Math.round(mReferenceChildWidth * (1 + factorX)) + mPaddingLeft + mPaddingRight : 0;
+  }
+ else   if (heightSpecMode == MeasureSpec.AT_MOST) {
+    if (haveChildRefSize) {
+      int width=mReferenceChildWidth + mPaddingLeft + mPaddingRight;
+      if (width <= widthSpecSize) {
+        widthSpecSize=width;
+      }
+ else {
+        widthSpecSize|=MEASURED_STATE_TOO_SMALL;
+      }
+    }
+ else {
+      widthSpecSize=0;
+    }
+  }
+  setMeasuredDimension(widthSpecSize,heightSpecSize);
+  measureChildren();
+}

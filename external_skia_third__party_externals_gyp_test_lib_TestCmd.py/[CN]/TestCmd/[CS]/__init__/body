@@ -1,0 +1,51 @@
+def __init__(self, description=None, program=None, interpreter=None, workdir=None, subdir=None, verbose=None, match=None, diff=None, combine=0, universal_newlines=1):
+    self._cwd = os.getcwd()
+    self.description_set(description)
+    self.program_set(program)
+    self.interpreter_set(interpreter)
+    if (verbose is None):
+        try:
+            verbose = max(0, int(os.environ.get('TESTCMD_VERBOSE', 0)))
+        except ValueError:
+            verbose = 0
+    self.verbose_set(verbose)
+    self.combine = combine
+    self.universal_newlines = universal_newlines
+    if (match is not None):
+        self.match_function = match
+    else:
+        self.match_function = match_re
+    if (diff is not None):
+        self.diff_function = diff
+    else:
+        try:
+            difflib
+        except NameError:
+            pass
+        else:
+            self.diff_function = simple_diff
+    self._dirlist = []
+    self._preserve = {'pass_test': 0, 'fail_test': 0, 'no_result': 0, }
+    if (os.environ.has_key('PRESERVE') and (not (os.environ['PRESERVE'] is ''))):
+        self._preserve['pass_test'] = os.environ['PRESERVE']
+        self._preserve['fail_test'] = os.environ['PRESERVE']
+        self._preserve['no_result'] = os.environ['PRESERVE']
+    else:
+        try:
+            self._preserve['pass_test'] = os.environ['PRESERVE_PASS']
+        except KeyError:
+            pass
+        try:
+            self._preserve['fail_test'] = os.environ['PRESERVE_FAIL']
+        except KeyError:
+            pass
+        try:
+            self._preserve['no_result'] = os.environ['PRESERVE_NO_RESULT']
+        except KeyError:
+            pass
+    self._stdout = []
+    self._stderr = []
+    self.status = None
+    self.condition = 'no_result'
+    self.workdir_set(workdir)
+    self.subdir(subdir)

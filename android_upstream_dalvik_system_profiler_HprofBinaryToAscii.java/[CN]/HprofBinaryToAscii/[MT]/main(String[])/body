@@ -1,0 +1,3 @@
+{
+  System.exit(convert(args) ? 0 : 1);
+}

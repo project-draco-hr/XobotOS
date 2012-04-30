@@ -1,0 +1,12 @@
+{
+  if (isImplicitelyTypedArrayInitializer(node)) {
+    CSArrayCreationExpression ace=new CSArrayCreationExpression(mappedTypeReference(node.resolveTypeBinding().getComponentType()));
+    pushExpectedType(node.resolveTypeBinding().getElementType());
+    ace.initializer(mapArrayInitializer(node));
+    popExpectedType();
+    pushExpression(ace);
+    return false;
+  }
+  pushExpression(mapArrayInitializer(node));
+  return false;
+}

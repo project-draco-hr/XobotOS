@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(PDP_NETWORK_DROP,cid,networkType);
+}

@@ -1,0 +1,5 @@
+{
+  super.onInitializeAccessibilityEvent(event);
+  event.setItemCount(getTabCount());
+  event.setCurrentItemIndex(mSelectedTab);
+}

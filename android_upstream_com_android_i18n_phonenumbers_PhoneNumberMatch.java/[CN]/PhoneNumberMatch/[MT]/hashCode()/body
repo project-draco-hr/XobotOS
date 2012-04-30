@@ -1,0 +1,3 @@
+{
+  return Arrays.hashCode(new Object[]{start,rawString,number});
+}

@@ -1,0 +1,5 @@
+{
+  MultiValueMapImpl obj=new MultiValueMapImpl<V>();
+  obj.map=(HashMap<Object,ArrayList<V>>)this.map.clone();
+  return obj;
+}

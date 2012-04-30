@@ -1,0 +1,2 @@
+SIPRequest cancelRequest
+boolean isServer

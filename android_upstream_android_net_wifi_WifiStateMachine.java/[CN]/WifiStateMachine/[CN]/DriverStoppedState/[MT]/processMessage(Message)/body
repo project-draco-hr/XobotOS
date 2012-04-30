@@ -1,0 +1,22 @@
+{
+  if (DBG)   log(getName() + message.toString() + "\n");
+switch (message.what) {
+case WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT:
+    StateChangeResult stateChangeResult=(StateChangeResult)message.obj;
+  SupplicantState state=stateChangeResult.state;
+if (SupplicantState.isDriverActive(state)) {
+  transitionTo(mDriverStartedState);
+}
+break;
+case CMD_START_DRIVER:
+mWakeLock.acquire();
+WifiNative.startDriverCommand();
+mWakeLock.release();
+transitionTo(mDriverStartingState);
+break;
+default :
+return NOT_HANDLED;
+}
+EventLog.writeEvent(EVENTLOG_WIFI_EVENT_HANDLED,message.what);
+return HANDLED;
+}

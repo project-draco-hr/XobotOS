@@ -1,0 +1,10 @@
+{
+  try {
+    this.uriString=uriString;
+    int i=uriString.indexOf(":");
+    scheme=uriString.substring(0,i);
+  }
+ catch (  Exception e) {
+    throw new ParseException("GenericURI, Bad URI format",0);
+  }
+}

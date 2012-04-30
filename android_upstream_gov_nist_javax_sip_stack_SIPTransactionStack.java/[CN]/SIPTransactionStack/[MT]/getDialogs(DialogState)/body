@@ -1,0 +1,15 @@
+{
+  HashSet<Dialog> matchingDialogs=new HashSet<Dialog>();
+  if (DialogState.EARLY.equals(state)) {
+    matchingDialogs.addAll(this.earlyDialogTable.values());
+  }
+ else {
+    Collection<SIPDialog> dialogs=dialogTable.values();
+    for (    SIPDialog dialog : dialogs) {
+      if (dialog.getState() != null && dialog.getState().equals(state)) {
+        matchingDialogs.add(dialog);
+      }
+    }
+  }
+  return matchingDialogs;
+}

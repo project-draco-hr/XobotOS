@@ -1,0 +1,13 @@
+{
+  while (true) {
+    CoderResult result=encoder.encode(chars,bytes,false);
+    if (result.isOverflow()) {
+      flushBytes(false);
+      continue;
+    }
+ else     if (result.isError()) {
+      result.throwException();
+    }
+    break;
+  }
+}

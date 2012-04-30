@@ -1,0 +1,6 @@
+{
+  buffer.append(this.headerName).append(COLON).append(SP);
+  this.encodeBody(buffer);
+  buffer.append(NEWLINE);
+  return buffer;
+}

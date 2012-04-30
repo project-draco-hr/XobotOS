@@ -1,0 +1,3 @@
+{
+  onCallEnded(call.isInCall() ? Connection.DisconnectCause.NORMAL : Connection.DisconnectCause.INCOMING_MISSED);
+}

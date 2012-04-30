@@ -1,0 +1,6 @@
+{
+  if (stackTraces == null) {
+    throw new NullPointerException("stackTraces == null");
+  }
+  this.stackTraces=stackTraces;
+}

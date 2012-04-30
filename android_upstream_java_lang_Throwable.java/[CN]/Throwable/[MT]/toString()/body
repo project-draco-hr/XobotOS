@@ -1,0 +1,8 @@
+{
+  String msg=getLocalizedMessage();
+  String name=getClass().getName();
+  if (msg == null) {
+    return name;
+  }
+  return name + ": " + msg;
+}

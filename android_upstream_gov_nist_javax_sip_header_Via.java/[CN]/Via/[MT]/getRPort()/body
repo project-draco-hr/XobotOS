@@ -1,0 +1,5 @@
+{
+  String strRport=getParameter(ParameterNames.RPORT);
+  if (strRport != null && !strRport.equals(""))   return Integer.valueOf(strRport).intValue();
+ else   return -1;
+}

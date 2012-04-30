@@ -1,0 +1,7 @@
+{
+  final ObbListenerDelegate delegate=new ObbListenerDelegate(listener);
+synchronized (mListeners) {
+    mListeners.put(delegate.nonce,delegate);
+  }
+  return delegate.nonce;
+}

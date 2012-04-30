@@ -1,0 +1,5 @@
+{
+  super(SIPHeaderNames.SUBSCRIPTION_STATE);
+  expires=-1;
+  retryAfter=-1;
+}

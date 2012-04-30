@@ -1,0 +1,7 @@
+{
+  super.publish(record);
+  flush();
+  if (limit > 0 && output.getLength() >= limit) {
+    findNextGeneration();
+  }
+}

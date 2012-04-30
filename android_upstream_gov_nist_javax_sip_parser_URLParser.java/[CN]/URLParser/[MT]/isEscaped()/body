@@ -1,0 +1,8 @@
+{
+  try {
+    return lexer.lookAhead(0) == '%' && Lexer.isHexDigit(lexer.lookAhead(1)) && Lexer.isHexDigit(lexer.lookAhead(2));
+  }
+ catch (  Exception ex) {
+    return false;
+  }
+}

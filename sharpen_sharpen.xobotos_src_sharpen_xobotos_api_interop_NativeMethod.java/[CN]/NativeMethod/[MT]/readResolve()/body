@@ -1,0 +1,21 @@
+{
+  if (_signature == null)   _signature=new Signature();
+  if (_kind == null)   _kind=Kind.STATIC;
+switch (_kind) {
+case STATIC:
+case PROXY:
+    break;
+case CONSTRUCTOR:
+  if (_nativeClass != null)   throw new ConfigurationException("Cannot use <class> for constructors");
+break;
+case INSTANCE:
+if (_nativeClass != null) throw new ConfigurationException("Cannot use <class> for instance methods");
+break;
+case DESTRUCTOR:
+if (_nativeClass != null) throw new ConfigurationException("Cannot use <class> for destructors");
+break;
+default :
+throw new ConfigurationException("Invalid native method kind.");
+}
+return this;
+}

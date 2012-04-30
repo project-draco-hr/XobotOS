@@ -1,0 +1,4 @@
+{
+  pushExpression(new CSIndexedExpression(mapExpression(node.getArray()),mapExpression(node.getIndex())));
+  return false;
+}

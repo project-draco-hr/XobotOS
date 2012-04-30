@@ -1,0 +1,23 @@
+{
+  super(TAG);
+  mContext=context;
+  mContentResolver=context.getContentResolver();
+  mWifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+  mDnsPinger=new DnsPinger(mContext,"WifiWatchdogStateMachine.DnsPinger",this.getHandler().getLooper(),this.getHandler(),ConnectivityManager.TYPE_WIFI);
+  setupNetworkReceiver();
+  registerForSettingsChanges();
+  registerForWatchdogToggle();
+  addState(mDefaultState);
+  addState(mWatchdogDisabledState,mDefaultState);
+  addState(mWatchdogEnabledState,mDefaultState);
+  addState(mNotConnectedState,mWatchdogEnabledState);
+  addState(mConnectedState,mWatchdogEnabledState);
+  addState(mDnsCheckingState,mConnectedState);
+  addState(mDnsCheckFailureState,mConnectedState);
+  addState(mDelayWalledGardenState,mConnectedState);
+  addState(mWalledGardenState,mConnectedState);
+  addState(mBlacklistedApState,mConnectedState);
+  addState(mOnlineWatchState,mConnectedState);
+  setInitialState(mWatchdogDisabledState);
+  updateSettings();
+}

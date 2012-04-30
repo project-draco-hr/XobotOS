@@ -1,0 +1,5 @@
+{
+  boolean result=!map.isEmpty();
+  map.clear();
+  return result;
+}

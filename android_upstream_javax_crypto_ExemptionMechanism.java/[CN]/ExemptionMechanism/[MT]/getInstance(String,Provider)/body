@@ -1,0 +1,10 @@
+{
+  if (algorithm == null) {
+    throw new NullPointerException();
+  }
+  if (provider == null) {
+    throw new IllegalArgumentException("provider == null");
+  }
+  Object spi=ENGINE.getInstance(algorithm,provider,null);
+  return new ExemptionMechanism((ExemptionMechanismSpi)spi,provider,algorithm);
+}

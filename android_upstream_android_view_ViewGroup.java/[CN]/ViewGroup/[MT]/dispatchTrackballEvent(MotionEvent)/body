@@ -1,0 +1,19 @@
+{
+  if (mInputEventConsistencyVerifier != null) {
+    mInputEventConsistencyVerifier.onTrackballEvent(event,1);
+  }
+  if ((mPrivateFlags & (FOCUSED | HAS_BOUNDS)) == (FOCUSED | HAS_BOUNDS)) {
+    if (super.dispatchTrackballEvent(event)) {
+      return true;
+    }
+  }
+ else   if (mFocused != null && (mFocused.mPrivateFlags & HAS_BOUNDS) == HAS_BOUNDS) {
+    if (mFocused.dispatchTrackballEvent(event)) {
+      return true;
+    }
+  }
+  if (mInputEventConsistencyVerifier != null) {
+    mInputEventConsistencyVerifier.onUnhandledEvent(event,1);
+  }
+  return false;
+}

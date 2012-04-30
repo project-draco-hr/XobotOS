@@ -1,0 +1,6 @@
+{
+  node.type().accept(this);
+  if (null != node.expression()) {
+    node.expression().accept(this);
+  }
+}

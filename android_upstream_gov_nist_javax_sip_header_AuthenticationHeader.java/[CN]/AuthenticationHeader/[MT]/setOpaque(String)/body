@@ -1,0 +1,4 @@
+{
+  if (opaque == null)   throw new NullPointerException("null arg");
+  setParameter(ParameterNames.OPAQUE,opaque);
+}

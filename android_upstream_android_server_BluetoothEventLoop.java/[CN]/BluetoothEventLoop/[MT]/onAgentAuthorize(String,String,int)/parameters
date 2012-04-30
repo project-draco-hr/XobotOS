@@ -1,0 +1,3 @@
+String objectPath
+String deviceUuid
+int nativeData

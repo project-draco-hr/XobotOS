@@ -1,0 +1,5 @@
+{
+  if (y < 0)   throw new IllegalArgumentException("Illegal year : " + y);
+  javaCal=null;
+  year=y;
+}

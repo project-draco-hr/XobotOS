@@ -1,0 +1,8 @@
+{
+  OpenSSLSocketImpl s=(OpenSSLSocketImpl)getDelegate().createSocket(host,port,localAddr,localPort);
+  s.setHandshakeTimeout(mHandshakeTimeoutMillis);
+  if (mSecure) {
+    verifyHostname(s,host);
+  }
+  return s;
+}

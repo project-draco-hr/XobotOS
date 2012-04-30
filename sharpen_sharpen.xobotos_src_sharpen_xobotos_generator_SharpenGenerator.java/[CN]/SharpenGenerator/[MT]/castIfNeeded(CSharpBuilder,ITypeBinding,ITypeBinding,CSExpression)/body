@@ -1,0 +1,18 @@
+{
+  final AbstractTypeBinding expectedBinding=my(BindingManager.class).resolveBinding(expectedType);
+  final AbstractTypeBinding actualBinding=my(BindingManager.class).resolveBinding(actualType);
+  if ((actualBinding instanceof EnumBinding) && expectedType.isPrimitive()) {
+    final EnumBinding enumBinding=(EnumBinding)actualBinding;
+    final String baseType=enumBinding.getBaseType();
+    if ((baseType != null) && expectedType.getName().equals(baseType))     return new CSCastExpression(new CSTypeReference(baseType),expression);
+  }
+  if ((expectedBinding instanceof EnumBinding) && actualType.isPrimitive()) {
+    final EnumBinding enumBinding=(EnumBinding)expectedBinding;
+    final String baseType=enumBinding.getBaseType();
+    if ((baseType != null) && actualType.getName().equals(baseType)) {
+      CSTypeReferenceExpression tr=builder.mappedTypeReference(expectedType);
+      return new CSCastExpression(tr,expression);
+    }
+  }
+  return null;
+}

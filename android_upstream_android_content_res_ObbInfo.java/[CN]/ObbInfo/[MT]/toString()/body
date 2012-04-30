@@ -1,0 +1,13 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append("ObbInfo{");
+  sb.append(Integer.toHexString(System.identityHashCode(this)));
+  sb.append(" packageName=");
+  sb.append(packageName);
+  sb.append(",version=");
+  sb.append(version);
+  sb.append(",flags=");
+  sb.append(flags);
+  sb.append('}');
+  return sb.toString();
+}

@@ -1,0 +1,3 @@
+{
+  super.copy2DRangeFrom(xoff,yoff,w,h,d);
+}

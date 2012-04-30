@@ -1,0 +1,11 @@
+def WriteMacInfoPlist(self, info_plist, bundle_deps, spec):
+    'Write Makefile code for bundle Info.plist files.'
+    assert (' ' not in info_plist), ('Spaces in resource filenames not supported (%s)' % info_plist)
+    info_plist = self.Absolutify(info_plist)
+    path = generator_default_variables['PRODUCT_DIR']
+    dest_plist = os.path.join(path, self.xcode_settings.GetBundlePlistPath())
+    dest_plist = QuoteSpaces(dest_plist)
+    extra_settings = self.xcode_settings.GetPerTargetSettings()
+    self.WriteXcodeEnv(dest_plist, spec, additional_settings=extra_settings)
+    self.WriteDoCmd([dest_plist], [info_plist], 'mac_tool,,,copy-info-plist', part_of_all=True)
+    bundle_deps.append(dest_plist)

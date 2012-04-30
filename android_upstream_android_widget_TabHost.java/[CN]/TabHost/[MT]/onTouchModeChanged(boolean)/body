@@ -1,0 +1,7 @@
+{
+  if (!isInTouchMode) {
+    if (mCurrentView != null && (!mCurrentView.hasFocus() || mCurrentView.isFocused())) {
+      mTabWidget.getChildTabViewAt(mCurrentTab).requestFocus();
+    }
+  }
+}

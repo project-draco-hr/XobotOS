@@ -1,0 +1,13 @@
+{
+  if (DEBUG)   Log.v(TAG,"remove: " + fragment + " nesting="+ fragment.mBackStackNesting);
+  final boolean inactive=!fragment.isInBackStack();
+  if (!fragment.mDetached || inactive) {
+    mAdded.remove(fragment);
+    if (fragment.mHasMenu && fragment.mMenuVisible) {
+      mNeedMenuInvalidate=true;
+    }
+    fragment.mAdded=false;
+    fragment.mRemoving=true;
+    moveToState(fragment,inactive ? Fragment.INITIALIZING : Fragment.CREATED,transition,transitionStyle);
+  }
+}

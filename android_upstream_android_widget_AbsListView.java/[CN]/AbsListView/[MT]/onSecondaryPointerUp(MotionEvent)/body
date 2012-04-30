@@ -1,0 +1,11 @@
+{
+  final int pointerIndex=(ev.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
+  final int pointerId=ev.getPointerId(pointerIndex);
+  if (pointerId == mActivePointerId) {
+    final int newPointerIndex=pointerIndex == 0 ? 1 : 0;
+    mMotionX=(int)ev.getX(newPointerIndex);
+    mMotionY=(int)ev.getY(newPointerIndex);
+    mMotionCorrection=0;
+    mActivePointerId=ev.getPointerId(newPointerIndex);
+  }
+}

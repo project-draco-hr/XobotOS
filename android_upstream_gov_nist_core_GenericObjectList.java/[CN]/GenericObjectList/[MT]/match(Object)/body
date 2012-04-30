@@ -1,0 +1,19 @@
+{
+  if (!this.getClass().equals(other.getClass()))   return false;
+  GenericObjectList that=(GenericObjectList)other;
+  ListIterator hisIterator=that.listIterator();
+  outer:   while (hisIterator.hasNext()) {
+    Object hisobj=hisIterator.next();
+    Object myobj=null;
+    ListIterator myIterator=this.listIterator();
+    while (myIterator.hasNext()) {
+      myobj=myIterator.next();
+      if (myobj instanceof GenericObject)       System.out.println("Trying to match  = " + ((GenericObject)myobj).encode());
+      if (GenericObject.isMySubclass(myobj.getClass()) && ((GenericObject)myobj).match(hisobj))       break outer;
+ else       if (GenericObjectList.isMySubclass(myobj.getClass()) && ((GenericObjectList)myobj).match(hisobj))       break outer;
+    }
+    System.out.println(((GenericObject)hisobj).encode());
+    return false;
+  }
+  return true;
+}

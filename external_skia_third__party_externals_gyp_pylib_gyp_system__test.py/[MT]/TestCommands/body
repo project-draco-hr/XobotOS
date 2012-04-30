@@ -1,0 +1,17 @@
+def TestCommands(commands, files={}, env={}):
+    "Run commands in a temporary directory, returning true if they all succeed.\n  Return false on failures or if any commands produce output.\n\n  Arguments:\n    commands: an array of shell-interpretable commands, e.g. ['ls -l', 'pwd']\n              each will be expanded with Python %-expansion using env first.\n    files: a dictionary mapping filename to contents;\n           files will be created in the temporary directory before running\n           the command.\n    env: a dictionary of strings to expand commands with.\n  "
+    tempdir = tempfile.mkdtemp()
+    try:
+        for (name, contents) in files.items():
+            f = open(os.path.join(tempdir, name), 'wb')
+            f.write(contents)
+            f.close()
+        for command in commands:
+            proc = subprocess.Popen((command % env), shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=tempdir)
+            output = proc.communicate()[0]
+            if ((proc.returncode != 0) or output):
+                return False
+        return True
+    finally:
+        shutil.rmtree(tempdir)
+    return False

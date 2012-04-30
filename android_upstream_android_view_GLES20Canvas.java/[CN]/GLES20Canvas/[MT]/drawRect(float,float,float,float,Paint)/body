@@ -1,0 +1,5 @@
+{
+  int modifiers=setupModifiers(paint);
+  nDrawRect(mRenderer,left,top,right,bottom,paint.mNativePaint);
+  if (modifiers != MODIFIER_NONE)   nResetModifiers(mRenderer,modifiers);
+}

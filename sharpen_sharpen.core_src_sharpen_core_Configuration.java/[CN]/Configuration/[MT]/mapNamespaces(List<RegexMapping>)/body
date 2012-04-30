@@ -1,0 +1,3 @@
+{
+  _namespaceMappings.addAll(namespaceMappings);
+}

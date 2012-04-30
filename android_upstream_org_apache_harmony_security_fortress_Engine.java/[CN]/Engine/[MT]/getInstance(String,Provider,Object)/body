@@ -1,0 +1,10 @@
+{
+  if (algorithm == null) {
+    throw new NoSuchAlgorithmException("algorithm == null");
+  }
+  Provider.Service service=provider.getService(serviceName,algorithm);
+  if (service == null) {
+    throw notFound(serviceName,algorithm);
+  }
+  return service.newInstance(param);
+}

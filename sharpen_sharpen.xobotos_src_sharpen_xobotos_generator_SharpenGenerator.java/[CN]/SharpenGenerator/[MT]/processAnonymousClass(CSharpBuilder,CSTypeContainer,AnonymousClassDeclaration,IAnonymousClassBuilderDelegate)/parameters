@@ -1,0 +1,4 @@
+CSharpBuilder csharpBuilder
+CSTypeContainer parent
+AnonymousClassDeclaration node
+IAnonymousClassBuilderDelegate delegate

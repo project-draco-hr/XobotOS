@@ -1,0 +1,6 @@
+{
+  if (termIOI == null || termIOI.length() == 0) {
+    removeParameter(ParameterNamesIms.TERM_IOI);
+  }
+ else   setParameter(ParameterNamesIms.TERM_IOI,termIOI);
+}

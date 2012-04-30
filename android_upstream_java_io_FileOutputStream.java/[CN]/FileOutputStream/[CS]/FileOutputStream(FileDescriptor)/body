@@ -1,0 +1,9 @@
+{
+  if (fd == null) {
+    throw new NullPointerException("fd == null");
+  }
+  this.fd=fd;
+  this.shouldClose=false;
+  this.mode=O_WRONLY;
+  this.channel=NioUtils.newFileChannel(this,fd,mode);
+}

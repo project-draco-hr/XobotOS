@@ -1,0 +1,5 @@
+{
+  IFolder folder=getFolder(name);
+  folder.create(false,true,monitor);
+  return folder;
+}

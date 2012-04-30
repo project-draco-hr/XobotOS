@@ -1,0 +1,3 @@
+{
+  return (ContactList)this.getSIPHeaderListLowerCase(CONTACT_LOWERCASE);
+}

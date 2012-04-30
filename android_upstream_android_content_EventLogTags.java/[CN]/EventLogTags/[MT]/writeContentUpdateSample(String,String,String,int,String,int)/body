@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(CONTENT_UPDATE_SAMPLE,uri,operation,selection,time,blockingPackage,samplePercent);
+}

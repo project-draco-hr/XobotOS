@@ -1,0 +1,23 @@
+{
+  Context context=getContext();
+  if (mListView != null) {
+    mListView.setAdapter(null);
+  }
+  mListView=new ListView(context);
+  bind(mListView);
+  final CharSequence title=getTitle();
+  Dialog dialog=mDialog=new Dialog(context,context.getThemeResId());
+  if (TextUtils.isEmpty(title)) {
+    dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+  }
+ else {
+    dialog.setTitle(title);
+  }
+  dialog.setContentView(mListView);
+  dialog.setOnDismissListener(this);
+  if (state != null) {
+    dialog.onRestoreInstanceState(state);
+  }
+  getPreferenceManager().addPreferencesScreen(dialog);
+  dialog.show();
+}

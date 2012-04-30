@@ -1,0 +1,16 @@
+{
+  try {
+    acquireTimerTaskSem();
+    try {
+      if (this.timerTask != null) {
+        this.timerTask.cancel();
+        this.timerTask=null;
+      }
+    }
+  finally {
+      releaseTimerTaskSem();
+    }
+  }
+ catch (  Exception ex) {
+  }
+}

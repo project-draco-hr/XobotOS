@@ -1,0 +1,6 @@
+{
+  ContentType ct=new ContentType(type,subType);
+  this.setHeader(ct);
+  this.setMessageContent(messageContent);
+  computeContentLength(messageContent);
+}

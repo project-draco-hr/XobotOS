@@ -1,0 +1,23 @@
+{
+  if (this.getState() == null || this.getState().equals(DialogState.TERMINATED))   throw new DialogDoesNotExistException("Dialog not initialized or terminated");
+  if ((RSeq)relResponse.getHeader(RSeqHeader.NAME) == null) {
+    throw new SipException("Missing RSeq Header");
+  }
+  try {
+    SIPResponse sipResponse=(SIPResponse)relResponse;
+    SIPRequest sipRequest=(SIPRequest)this.createRequest(Request.PRACK,(SIPResponse)relResponse);
+    String toHeaderTag=sipResponse.getTo().getTag();
+    sipRequest.setToTag(toHeaderTag);
+    RAck rack=new RAck();
+    RSeq rseq=(RSeq)relResponse.getHeader(RSeqHeader.NAME);
+    rack.setMethod(sipResponse.getCSeq().getMethod());
+    rack.setCSequenceNumber((int)sipResponse.getCSeq().getSeqNumber());
+    rack.setRSequenceNumber(rseq.getSeqNumber());
+    sipRequest.setHeader(rack);
+    return (Request)sipRequest;
+  }
+ catch (  Exception ex) {
+    InternalErrorHandler.handleException(ex);
+    return null;
+  }
+}

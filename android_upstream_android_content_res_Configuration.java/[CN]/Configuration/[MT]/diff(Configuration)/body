@@ -1,0 +1,52 @@
+{
+  int changed=0;
+  if (delta.fontScale > 0 && fontScale != delta.fontScale) {
+    changed|=ActivityInfo.CONFIG_FONT_SCALE;
+  }
+  if (delta.mcc != 0 && mcc != delta.mcc) {
+    changed|=ActivityInfo.CONFIG_MCC;
+  }
+  if (delta.mnc != 0 && mnc != delta.mnc) {
+    changed|=ActivityInfo.CONFIG_MNC;
+  }
+  if (delta.locale != null && (locale == null || !locale.equals(delta.locale))) {
+    changed|=ActivityInfo.CONFIG_LOCALE;
+  }
+  if (delta.touchscreen != TOUCHSCREEN_UNDEFINED && touchscreen != delta.touchscreen) {
+    changed|=ActivityInfo.CONFIG_TOUCHSCREEN;
+  }
+  if (delta.keyboard != KEYBOARD_UNDEFINED && keyboard != delta.keyboard) {
+    changed|=ActivityInfo.CONFIG_KEYBOARD;
+  }
+  if (delta.keyboardHidden != KEYBOARDHIDDEN_UNDEFINED && keyboardHidden != delta.keyboardHidden) {
+    changed|=ActivityInfo.CONFIG_KEYBOARD_HIDDEN;
+  }
+  if (delta.hardKeyboardHidden != HARDKEYBOARDHIDDEN_UNDEFINED && hardKeyboardHidden != delta.hardKeyboardHidden) {
+    changed|=ActivityInfo.CONFIG_KEYBOARD_HIDDEN;
+  }
+  if (delta.navigation != NAVIGATION_UNDEFINED && navigation != delta.navigation) {
+    changed|=ActivityInfo.CONFIG_NAVIGATION;
+  }
+  if (delta.navigationHidden != NAVIGATIONHIDDEN_UNDEFINED && navigationHidden != delta.navigationHidden) {
+    changed|=ActivityInfo.CONFIG_KEYBOARD_HIDDEN;
+  }
+  if (delta.orientation != ORIENTATION_UNDEFINED && orientation != delta.orientation) {
+    changed|=ActivityInfo.CONFIG_ORIENTATION;
+  }
+  if (delta.screenLayout != SCREENLAYOUT_SIZE_UNDEFINED && screenLayout != delta.screenLayout) {
+    changed|=ActivityInfo.CONFIG_SCREEN_LAYOUT;
+  }
+  if (delta.uiMode != (UI_MODE_TYPE_UNDEFINED | UI_MODE_NIGHT_UNDEFINED) && uiMode != delta.uiMode) {
+    changed|=ActivityInfo.CONFIG_UI_MODE;
+  }
+  if (delta.screenWidthDp != SCREEN_WIDTH_DP_UNDEFINED && screenWidthDp != delta.screenWidthDp) {
+    changed|=ActivityInfo.CONFIG_SCREEN_SIZE;
+  }
+  if (delta.screenHeightDp != SCREEN_HEIGHT_DP_UNDEFINED && screenHeightDp != delta.screenHeightDp) {
+    changed|=ActivityInfo.CONFIG_SCREEN_SIZE;
+  }
+  if (delta.smallestScreenWidthDp != SMALLEST_SCREEN_WIDTH_DP_UNDEFINED && smallestScreenWidthDp != delta.smallestScreenWidthDp) {
+    changed|=ActivityInfo.CONFIG_SMALLEST_SCREEN_SIZE;
+  }
+  return changed;
+}

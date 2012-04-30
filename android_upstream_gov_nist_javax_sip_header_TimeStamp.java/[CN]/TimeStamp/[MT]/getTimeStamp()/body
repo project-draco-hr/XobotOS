@@ -1,0 +1,3 @@
+{
+  return this.timeStampFloat == -1 ? Float.valueOf(timeStamp).floatValue() : this.timeStampFloat;
+}

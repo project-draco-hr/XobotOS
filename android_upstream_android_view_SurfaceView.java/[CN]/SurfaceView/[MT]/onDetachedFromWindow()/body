@@ -1,0 +1,22 @@
+{
+  if (mGlobalListenersAdded) {
+    ViewTreeObserver observer=getViewTreeObserver();
+    observer.removeOnScrollChangedListener(mScrollChangedListener);
+    observer.removeOnPreDrawListener(mDrawListener);
+    mGlobalListenersAdded=false;
+  }
+  mRequestedVisible=false;
+  updateWindow(false,false);
+  mHaveFrame=false;
+  if (mWindow != null) {
+    try {
+      mSession.remove(mWindow);
+    }
+ catch (    RemoteException ex) {
+    }
+    mWindow=null;
+  }
+  mSession=null;
+  mLayout.token=null;
+  super.onDetachedFromWindow();
+}

@@ -1,0 +1,5 @@
+{
+  final CSConstructor constructor=new CSConstructor();
+  constructor.visibility(CSVisibility.Public);
+  return constructor;
+}

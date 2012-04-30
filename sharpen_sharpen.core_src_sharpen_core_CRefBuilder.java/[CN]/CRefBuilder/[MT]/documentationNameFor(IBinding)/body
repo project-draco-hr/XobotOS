@@ -1,0 +1,13 @@
+{
+switch (binding.getKind()) {
+case IBinding.METHOD:
+    return methodSignatureForDocumentation((IMethodBinding)binding);
+case IBinding.TYPE:
+  return mappedTypeName((ITypeBinding)binding);
+case IBinding.VARIABLE:
+return mappedQualifiedFieldName((IVariableBinding)binding);
+case IBinding.PACKAGE:
+return mappedNamespace(((IPackageBinding)binding).getName());
+}
+throw new IllegalArgumentException("Binding type not supported: " + binding);
+}

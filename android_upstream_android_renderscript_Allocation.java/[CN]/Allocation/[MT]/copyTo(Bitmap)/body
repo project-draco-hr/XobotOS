@@ -1,0 +1,6 @@
+{
+  mRS.validate();
+  validateBitmapFormat(b);
+  validateBitmapSize(b);
+  mRS.nAllocationCopyToBitmap(getID(),b);
+}

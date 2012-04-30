@@ -1,0 +1,6 @@
+{
+  final String from=consumeNext();
+  final String to=consumeNext();
+  final Configuration.NameMapping nameMapping=new Configuration.NameMapping(from,to);
+  return nameMapping;
+}

@@ -1,0 +1,8 @@
+{
+  lastCheckTime=SystemClock.elapsedRealtime();
+  signalUnstable=false;
+  checkGuard++;
+  unstableSignalChecks=false;
+  pingInfoMap.clear();
+  triggerSingleDnsCheck();
+}

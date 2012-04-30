@@ -1,0 +1,5 @@
+{
+  node.variable().accept(this);
+  node.expression().accept(this);
+  node.body().accept(this);
+}

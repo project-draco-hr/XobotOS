@@ -1,0 +1,9 @@
+{
+  if ('A' <= codePoint && codePoint <= 'Z') {
+    return true;
+  }
+  if (codePoint < 128) {
+    return false;
+  }
+  return isUpperCaseImpl(codePoint);
+}

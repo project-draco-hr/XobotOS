@@ -1,0 +1,17 @@
+{
+  Boolean b=(Boolean)theFeatures.get(name);
+  if (b == null) {
+    throw new SAXNotRecognizedException("Unknown feature " + name);
+  }
+  if (value)   theFeatures.put(name,Boolean.TRUE);
+ else   theFeatures.put(name,Boolean.FALSE);
+  if (name.equals(namespacesFeature))   namespaces=value;
+ else   if (name.equals(ignoreBogonsFeature))   ignoreBogons=value;
+ else   if (name.equals(bogonsEmptyFeature))   bogonsEmpty=value;
+ else   if (name.equals(rootBogonsFeature))   rootBogons=value;
+ else   if (name.equals(defaultAttributesFeature))   defaultAttributes=value;
+ else   if (name.equals(translateColonsFeature))   translateColons=value;
+ else   if (name.equals(restartElementsFeature))   restartElements=value;
+ else   if (name.equals(ignorableWhitespaceFeature))   ignorableWhitespace=value;
+ else   if (name.equals(CDATAElementsFeature))   CDATAElements=value;
+}

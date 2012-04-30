@@ -1,0 +1,9 @@
+{
+  if (activity == null) {
+    throw new NullPointerException();
+  }
+  enforceResumed(activity);
+  mNfcActivityManager.setNdefPushMessage(activity,null);
+  mNfcActivityManager.setNdefPushMessageCallback(activity,null);
+  mNfcActivityManager.setOnNdefPushCompleteCallback(activity,null);
+}

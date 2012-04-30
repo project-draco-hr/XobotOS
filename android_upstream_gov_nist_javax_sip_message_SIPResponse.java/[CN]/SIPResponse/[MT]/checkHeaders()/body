@@ -1,0 +1,20 @@
+{
+  if (getCSeq() == null) {
+    throw new ParseException(CSeq.NAME + " Is missing ",0);
+  }
+  if (getTo() == null) {
+    throw new ParseException(To.NAME + " Is missing ",0);
+  }
+  if (getFrom() == null) {
+    throw new ParseException(From.NAME + " Is missing ",0);
+  }
+  if (getViaHeaders() == null) {
+    throw new ParseException(Via.NAME + " Is missing ",0);
+  }
+  if (getCallId() == null) {
+    throw new ParseException(CallID.NAME + " Is missing ",0);
+  }
+  if (getStatusCode() > 699) {
+    throw new ParseException("Unknown error code!" + getStatusCode(),0);
+  }
+}

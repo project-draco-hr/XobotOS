@@ -1,0 +1,4 @@
+{
+  if (ealg == null)   throw new NullPointerException("JAIN-SIP " + "Exception, SecurityClient, setEncryptionAlgorithm(), the encryption-algorithm parameter is null");
+  setParameter(ParameterNamesIms.EALG,ealg);
+}

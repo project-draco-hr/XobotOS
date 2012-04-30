@@ -1,0 +1,6 @@
+{
+  preFork();
+  int pid=nativeFork();
+  postFork();
+  return pid;
+}

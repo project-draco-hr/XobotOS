@@ -1,0 +1,5 @@
+{
+  IOExceptionEvent ioError=new IOExceptionEvent(this,host,port,protocol);
+  sipProvider.handleEvent(ioError,null);
+  setState(SIPDialog.TERMINATED_STATE);
+}

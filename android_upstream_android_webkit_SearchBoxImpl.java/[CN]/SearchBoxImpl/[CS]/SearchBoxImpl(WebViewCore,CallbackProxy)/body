@@ -1,0 +1,6 @@
+{
+  mListeners=new ArrayList<SearchBoxListener>();
+  mWebViewCore=webViewCore;
+  mCallbackProxy=callbackProxy;
+  mEventCallbacks=new HashMap<Integer,SearchBoxListener>();
+}

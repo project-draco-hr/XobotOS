@@ -1,0 +1,43 @@
+{
+  if (name.equalsIgnoreCase("title") || name.startsWith("title;")) {
+    mTitle=value;
+  }
+ else   if (name.equalsIgnoreCase("artist") || name.startsWith("artist;")) {
+    mArtist=value.trim();
+  }
+ else   if (name.equalsIgnoreCase("albumartist") || name.startsWith("albumartist;") || name.equalsIgnoreCase("band")|| name.startsWith("band;")) {
+    mAlbumArtist=value.trim();
+  }
+ else   if (name.equalsIgnoreCase("album") || name.startsWith("album;")) {
+    mAlbum=value.trim();
+  }
+ else   if (name.equalsIgnoreCase("composer") || name.startsWith("composer;")) {
+    mComposer=value.trim();
+  }
+ else   if (mProcessGenres && (name.equalsIgnoreCase("genre") || name.startsWith("genre;"))) {
+    mGenre=getGenreName(value);
+  }
+ else   if (name.equalsIgnoreCase("year") || name.startsWith("year;")) {
+    mYear=parseSubstring(value,0,0);
+  }
+ else   if (name.equalsIgnoreCase("tracknumber") || name.startsWith("tracknumber;")) {
+    int num=parseSubstring(value,0,0);
+    mTrack=(mTrack / 1000) * 1000 + num;
+  }
+ else   if (name.equalsIgnoreCase("discnumber") || name.equals("set") || name.startsWith("set;")) {
+    int num=parseSubstring(value,0,0);
+    mTrack=(num * 1000) + (mTrack % 1000);
+  }
+ else   if (name.equalsIgnoreCase("duration")) {
+    mDuration=parseSubstring(value,0,0);
+  }
+ else   if (name.equalsIgnoreCase("writer") || name.startsWith("writer;")) {
+    mWriter=value.trim();
+  }
+ else   if (name.equalsIgnoreCase("compilation")) {
+    mCompilation=parseSubstring(value,0,0);
+  }
+ else   if (name.equalsIgnoreCase("isdrm")) {
+    mIsDrm=(parseSubstring(value,0,0) == 1);
+  }
+}

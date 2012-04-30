@@ -1,0 +1,23 @@
+{
+  while (klass != null) {
+    for (    final Field field : klass.getDeclaredFields()) {
+      AttributeReference annotation=field.getAnnotation(AttributeReference.class);
+      if (annotation == null)       continue;
+      String attr=reader.getAttribute(annotation.value());
+      if (attr == null)       continue;
+      if (attr.startsWith("/")) {
+        _referenceEntries.add(new ReferenceEntry(attr,field,obj));
+        continue;
+      }
+      Object reference=lookupReference(attr);
+      try {
+        field.setAccessible(true);
+        field.set(obj,reference);
+      }
+ catch (      Exception e) {
+        throw new ConfigurationException("Cannot set field '%s'",field);
+      }
+    }
+    klass=klass.getSuperclass();
+  }
+}

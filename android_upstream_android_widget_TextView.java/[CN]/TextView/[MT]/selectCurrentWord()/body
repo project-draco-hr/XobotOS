@@ -1,0 +1,42 @@
+{
+  if (!canSelectText()) {
+    return false;
+  }
+  if (hasPasswordTransformationMethod()) {
+    return selectAll();
+  }
+  int klass=mInputType & InputType.TYPE_MASK_CLASS;
+  int variation=mInputType & InputType.TYPE_MASK_VARIATION;
+  if (klass == InputType.TYPE_CLASS_NUMBER || klass == InputType.TYPE_CLASS_PHONE || klass == InputType.TYPE_CLASS_DATETIME || variation == InputType.TYPE_TEXT_VARIATION_URI || variation == InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS || variation == InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS || variation == InputType.TYPE_TEXT_VARIATION_FILTER) {
+    return selectAll();
+  }
+  long lastTouchOffsets=getLastTouchOffsets();
+  final int minOffset=extractRangeStartFromLong(lastTouchOffsets);
+  final int maxOffset=extractRangeEndFromLong(lastTouchOffsets);
+  if (minOffset < 0 || minOffset >= mText.length())   return false;
+  if (maxOffset < 0 || maxOffset >= mText.length())   return false;
+  int selectionStart, selectionEnd;
+  URLSpan[] urlSpans=((Spanned)mText).getSpans(minOffset,maxOffset,URLSpan.class);
+  if (urlSpans.length >= 1) {
+    URLSpan urlSpan=urlSpans[0];
+    selectionStart=((Spanned)mText).getSpanStart(urlSpan);
+    selectionEnd=((Spanned)mText).getSpanEnd(urlSpan);
+  }
+ else {
+    if (mWordIterator == null) {
+      mWordIterator=new WordIterator();
+    }
+    mWordIterator.setCharSequence(mText,minOffset,maxOffset);
+    selectionStart=mWordIterator.getBeginning(minOffset);
+    if (selectionStart == BreakIterator.DONE)     return false;
+    selectionEnd=mWordIterator.getEnd(maxOffset);
+    if (selectionEnd == BreakIterator.DONE)     return false;
+    if (selectionStart == selectionEnd) {
+      long range=getCharRange(selectionStart);
+      selectionStart=extractRangeStartFromLong(range);
+      selectionEnd=extractRangeEndFromLong(range);
+    }
+  }
+  Selection.setSelection((Spannable)mText,selectionStart,selectionEnd);
+  return selectionEnd > selectionStart;
+}

@@ -1,0 +1,6 @@
+{
+  if (_path == null)   throw new ConfigurationException("<csproject-file> is missing <path> element!");
+  if (_templateFile == null)   throw new ConfigurationException("<csproject-file> is missing <template-file> element!");
+  if (_fileListFile == null)   throw new ConfigurationException("<csproject-file> is missing <filelist-file> element!");
+  return this;
+}

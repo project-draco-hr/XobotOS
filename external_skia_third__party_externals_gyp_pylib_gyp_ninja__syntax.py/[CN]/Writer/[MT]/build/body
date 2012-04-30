@@ -1,0 +1,14 @@
+def build(self, outputs, rule, inputs=None, implicit=None, order_only=None, variables=None):
+    outputs = self._as_list(outputs)
+    all_inputs = self._as_list(inputs)[:]
+    if implicit:
+        all_inputs.append('|')
+        all_inputs.extend(self._as_list(implicit))
+    if order_only:
+        all_inputs.append('||')
+        all_inputs.extend(self._as_list(order_only))
+    self._line(('build %s: %s %s' % (' '.join(outputs), rule, ' '.join(all_inputs))))
+    if variables:
+        for (key, val) in variables:
+            self.variable(key, val, indent=1)
+    return outputs

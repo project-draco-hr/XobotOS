@@ -1,0 +1,13 @@
+{
+  if (state == State.NOT_READY) {
+    lastMatch=find(searchIndex);
+    if (lastMatch == null) {
+      state=State.DONE;
+    }
+ else {
+      searchIndex=lastMatch.end();
+      state=State.READY;
+    }
+  }
+  return state == State.READY;
+}

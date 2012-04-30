@@ -1,0 +1,6 @@
+{
+  if (callInfo == null)   throw new NullPointerException("null arg callInfo");
+  CallInfo c=new CallInfo();
+  c.setInfo(callInfo);
+  return c;
+}

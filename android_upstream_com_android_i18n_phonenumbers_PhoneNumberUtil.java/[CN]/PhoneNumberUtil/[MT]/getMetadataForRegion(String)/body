@@ -1,0 +1,11 @@
+{
+  if (!isValidRegionCode(regionCode)) {
+    return null;
+  }
+synchronized (regionToMetadataMap) {
+    if (!regionToMetadataMap.containsKey(regionCode)) {
+      loadMetadataForRegionFromFile(currentFilePrefix,regionCode);
+    }
+  }
+  return regionToMetadataMap.get(regionCode);
+}

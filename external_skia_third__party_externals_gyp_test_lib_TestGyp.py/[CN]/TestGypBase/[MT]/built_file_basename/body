@@ -1,0 +1,10 @@
+def built_file_basename(self, name, type=None, **kw):
+    "\n    Returns the base name of the specified file name, of the specified type.\n\n    A bare=True keyword argument specifies that prefixes and suffixes shouldn't\n    be applied.\n    "
+    if (not kw.get('bare')):
+        if (type == self.EXECUTABLE):
+            name = (name + self._exe)
+        elif (type == self.STATIC_LIB):
+            name = ((self.lib_ + name) + self._lib)
+        elif (type == self.SHARED_LIB):
+            name = ((self.dll_ + name) + self._dll)
+    return name

@@ -1,0 +1,14 @@
+{
+  IResource resource=delta.getResource();
+switch (delta.getKind()) {
+case IResourceDelta.ADDED:
+    changed(resource);
+  break;
+case IResourceDelta.REMOVED:
+break;
+case IResourceDelta.CHANGED:
+changed(resource);
+break;
+}
+return true;
+}

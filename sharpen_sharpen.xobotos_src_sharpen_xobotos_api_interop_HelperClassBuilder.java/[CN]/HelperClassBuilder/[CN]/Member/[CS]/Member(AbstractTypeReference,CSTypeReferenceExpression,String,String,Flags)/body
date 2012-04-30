@@ -1,0 +1,3 @@
+{
+  this(type,managed,name,managedName,buildSet(Flags.class,flags));
+}

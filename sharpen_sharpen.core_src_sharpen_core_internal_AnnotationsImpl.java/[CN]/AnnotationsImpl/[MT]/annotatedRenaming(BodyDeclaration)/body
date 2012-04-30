@@ -1,0 +1,5 @@
+{
+  TagElement renameTag=JavadocUtility.getJavadocTag(node,SharpenAnnotations.SHARPEN_RENAME);
+  if (null == renameTag)   return null;
+  return JavadocUtility.singleTextFragmentFrom(renameTag);
+}

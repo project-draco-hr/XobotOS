@@ -1,0 +1,15 @@
+{
+  if (DBG)   log("onVoiceCallEnded");
+  if (isConnected()) {
+    if (!mPhone.getServiceStateTracker().isConcurrentVoiceAndDataAllowed()) {
+      startNetStatPoll();
+      notifyDataConnection(Phone.REASON_VOICE_CALL_ENDED);
+    }
+ else {
+      resetPollStats();
+    }
+  }
+ else {
+    setupDataOnReadyApns(Phone.REASON_VOICE_CALL_ENDED);
+  }
+}

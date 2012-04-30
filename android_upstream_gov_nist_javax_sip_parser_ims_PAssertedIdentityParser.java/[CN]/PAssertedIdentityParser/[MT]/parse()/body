@@ -1,0 +1,26 @@
+{
+  if (debug)   dbg_enter("AssertedIdentityParser.parse");
+  PAssertedIdentityList assertedIdList=new PAssertedIdentityList();
+  try {
+    headerName(TokenTypes.P_ASSERTED_IDENTITY);
+    PAssertedIdentity pai=new PAssertedIdentity();
+    pai.setHeaderName(SIPHeaderNamesIms.P_ASSERTED_IDENTITY);
+    super.parse(pai);
+    assertedIdList.add(pai);
+    this.lexer.SPorHT();
+    while (lexer.lookAhead(0) == ',') {
+      this.lexer.match(',');
+      this.lexer.SPorHT();
+      pai=new PAssertedIdentity();
+      super.parse(pai);
+      assertedIdList.add(pai);
+      this.lexer.SPorHT();
+    }
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return assertedIdList;
+  }
+  finally {
+    if (debug)     dbg_leave("AssertedIdentityParser.parse");
+  }
+}

@@ -1,0 +1,10 @@
+{
+  InputStream inputStream=null;
+  try {
+    inputStream=new BufferedInputStream(new FileInputStream(file));
+    return read(inputStream);
+  }
+  finally {
+    closeQuietly(inputStream);
+  }
+}

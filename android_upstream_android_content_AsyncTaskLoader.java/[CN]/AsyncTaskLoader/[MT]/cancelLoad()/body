@@ -1,0 +1,31 @@
+{
+  if (DEBUG)   Slog.v(TAG,"cancelLoad: mTask=" + mTask);
+  if (mTask != null) {
+    if (mCancellingTask != null) {
+      if (DEBUG)       Slog.v(TAG,"cancelLoad: still waiting for cancelled task; dropping next");
+      if (mTask.waiting) {
+        mTask.waiting=false;
+        mHandler.removeCallbacks(mTask);
+      }
+      mTask=null;
+      return false;
+    }
+ else     if (mTask.waiting) {
+      if (DEBUG)       Slog.v(TAG,"cancelLoad: task is waiting, dropping it");
+      mTask.waiting=false;
+      mHandler.removeCallbacks(mTask);
+      mTask=null;
+      return false;
+    }
+ else {
+      boolean cancelled=mTask.cancel(false);
+      if (DEBUG)       Slog.v(TAG,"cancelLoad: cancelled=" + cancelled);
+      if (cancelled) {
+        mCancellingTask=mTask;
+      }
+      mTask=null;
+      return cancelled;
+    }
+  }
+  return false;
+}

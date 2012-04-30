@@ -1,0 +1,85 @@
+'\nTestCommon.py:  a testing framework for commands and scripts\n                with commonly useful error handling\n\nThe TestCommon module provides a simple, high-level interface for writing\ntests of executable commands and scripts, especially commands and scripts\nthat interact with the file system.  All methods throw exceptions and\nexit on failure, with useful error messages.  This makes a number of\nexplicit checks unnecessary, making the test scripts themselves simpler\nto write and easier to read.\n\nThe TestCommon class is a subclass of the TestCmd class.  In essence,\nTestCommon is a wrapper that handles common TestCmd error conditions in\nuseful ways.  You can use TestCommon directly, or subclass it for your\nprogram and add additional (or override) methods to tailor it to your\nprogram\'s specific needs.  Alternatively, the TestCommon class serves\nas a useful example of how to define your own TestCmd subclass.\n\nAs a subclass of TestCmd, TestCommon provides access to all of the\nvariables and methods from the TestCmd module.  Consequently, you can\nuse any variable or method documented in the TestCmd module without\nhaving to explicitly import TestCmd.\n\nA TestCommon environment object is created via the usual invocation:\n\n    import TestCommon\n    test = TestCommon.TestCommon()\n\nYou can use all of the TestCmd keyword arguments when instantiating a\nTestCommon object; see the TestCmd documentation for details.\n\nHere is an overview of the methods and keyword arguments that are\nprovided by the TestCommon class:\n\n    test.must_be_writable(\'file1\', [\'file2\', ...])\n\n    test.must_contain(\'file\', \'required text\n\')\n\n    test.must_contain_all_lines(output, lines, [\'title\', find])\n\n    test.must_contain_any_line(output, lines, [\'title\', find])\n\n    test.must_exist(\'file1\', [\'file2\', ...])\n\n    test.must_match(\'file\', "expected contents\n")\n\n    test.must_not_be_writable(\'file1\', [\'file2\', ...])\n\n    test.must_not_contain(\'file\', \'banned text\n\')\n\n    test.must_not_contain_any_line(output, lines, [\'title\', find])\n\n    test.must_not_exist(\'file1\', [\'file2\', ...])\n\n    test.run(options = "options to be prepended to arguments",\n             stdout = "expected standard output from the program",\n             stderr = "expected error output from the program",\n             status = expected_status,\n             match = match_function)\n\nThe TestCommon module also provides the following variables\n\n    TestCommon.python_executable\n    TestCommon.exe_suffix\n    TestCommon.obj_suffix\n    TestCommon.shobj_prefix\n    TestCommon.shobj_suffix\n    TestCommon.lib_prefix\n    TestCommon.lib_suffix\n    TestCommon.dll_prefix\n    TestCommon.dll_suffix\n\n'
+__author__ = 'Steven Knight <knight at baldmt dot com>'
+__revision__ = 'TestCommon.py 0.37.D001 2010/01/11 16:55:50 knight'
+__version__ = '0.37'
+import copy
+import os
+import os.path
+import stat
+import string
+import sys
+import types
+import UserList
+from TestCmd import *
+from TestCmd import __all__
+__all__.extend(['TestCommon', 'exe_suffix', 'obj_suffix', 'shobj_prefix', 'shobj_suffix', 'lib_prefix', 'lib_suffix', 'dll_prefix', 'dll_suffix'])
+if (sys.platform == 'win32'):
+    exe_suffix = '.exe'
+    obj_suffix = '.obj'
+    shobj_suffix = '.obj'
+    shobj_prefix = ''
+    lib_prefix = ''
+    lib_suffix = '.lib'
+    dll_prefix = ''
+    dll_suffix = '.dll'
+elif (sys.platform == 'cygwin'):
+    exe_suffix = '.exe'
+    obj_suffix = '.o'
+    shobj_suffix = '.os'
+    shobj_prefix = ''
+    lib_prefix = 'lib'
+    lib_suffix = '.a'
+    dll_prefix = ''
+    dll_suffix = '.dll'
+elif (string.find(sys.platform, 'irix') != (-1)):
+    exe_suffix = ''
+    obj_suffix = '.o'
+    shobj_suffix = '.o'
+    shobj_prefix = ''
+    lib_prefix = 'lib'
+    lib_suffix = '.a'
+    dll_prefix = 'lib'
+    dll_suffix = '.so'
+elif (string.find(sys.platform, 'darwin') != (-1)):
+    exe_suffix = ''
+    obj_suffix = '.o'
+    shobj_suffix = '.os'
+    shobj_prefix = ''
+    lib_prefix = 'lib'
+    lib_suffix = '.a'
+    dll_prefix = 'lib'
+    dll_suffix = '.dylib'
+elif (string.find(sys.platform, 'sunos') != (-1)):
+    exe_suffix = ''
+    obj_suffix = '.o'
+    shobj_suffix = '.os'
+    shobj_prefix = 'so_'
+    lib_prefix = 'lib'
+    lib_suffix = '.a'
+    dll_prefix = 'lib'
+    dll_suffix = '.dylib'
+else:
+    exe_suffix = ''
+    obj_suffix = '.o'
+    shobj_suffix = '.os'
+    shobj_prefix = ''
+    lib_prefix = 'lib'
+    lib_suffix = '.a'
+    dll_prefix = 'lib'
+    dll_suffix = '.so'
+if (os.name == 'posix'):
+
+    def _failed(self, status=0):
+        if ((self.status is None) or (status is None)):
+            return None
+        return (_status(self) != status)
+
+    def _status(self):
+        return self.status
+elif (os.name == 'nt'):
+
+    def _failed(self, status=0):
+        return ((not ((self.status is None) or (status is None))) and (self.status != status))
+
+    def _status(self):
+        return self.status

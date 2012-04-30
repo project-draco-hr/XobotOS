@@ -1,0 +1,5 @@
+{
+  this.encapsulatedChannel=messageChannel;
+  this.peerInetAddress=messageChannel.getPeerInetAddress();
+  this.peerPort=messageChannel.getPeerPort();
+}

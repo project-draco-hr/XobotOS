@@ -1,0 +1,6 @@
+{
+  if (byteCount < 0) {
+    throw new IllegalArgumentException("byteCount < 0");
+  }
+  return Streams.skipByReading(this,byteCount);
+}

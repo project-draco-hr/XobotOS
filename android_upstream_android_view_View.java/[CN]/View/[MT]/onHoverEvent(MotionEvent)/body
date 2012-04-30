@@ -1,0 +1,28 @@
+{
+  final int action=event.getAction();
+  if (!mSendingHoverAccessibilityEvents) {
+    if ((action == MotionEvent.ACTION_HOVER_ENTER || action == MotionEvent.ACTION_HOVER_MOVE) && !hasHoveredChild() && pointInView(event.getX(),event.getY())) {
+      mSendingHoverAccessibilityEvents=true;
+      sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER);
+    }
+  }
+ else {
+    if (action == MotionEvent.ACTION_HOVER_EXIT || (action == MotionEvent.ACTION_HOVER_MOVE && !pointInView(event.getX(),event.getY()))) {
+      mSendingHoverAccessibilityEvents=false;
+      sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT);
+    }
+  }
+  if (isHoverable()) {
+switch (action) {
+case MotionEvent.ACTION_HOVER_ENTER:
+      setHovered(true);
+    break;
+case MotionEvent.ACTION_HOVER_EXIT:
+  setHovered(false);
+break;
+}
+dispatchGenericMotionEventInternal(event);
+return true;
+}
+return false;
+}

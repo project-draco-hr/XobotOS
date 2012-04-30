@@ -1,0 +1,4 @@
+ApplicationInfo appInfo
+int screenLayout
+int sw
+boolean forceCompat

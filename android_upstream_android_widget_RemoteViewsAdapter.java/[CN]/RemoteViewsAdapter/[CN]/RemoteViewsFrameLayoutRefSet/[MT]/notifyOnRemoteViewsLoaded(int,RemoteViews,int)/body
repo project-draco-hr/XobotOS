@@ -1,0 +1,12 @@
+{
+  if (view == null)   return;
+  final Integer pos=position;
+  if (mReferences.containsKey(pos)) {
+    final LinkedList<RemoteViewsFrameLayout> refs=mReferences.get(pos);
+    for (    final RemoteViewsFrameLayout ref : refs) {
+      ref.onRemoteViewsLoaded(view);
+    }
+    refs.clear();
+    mReferences.remove(pos);
+  }
+}

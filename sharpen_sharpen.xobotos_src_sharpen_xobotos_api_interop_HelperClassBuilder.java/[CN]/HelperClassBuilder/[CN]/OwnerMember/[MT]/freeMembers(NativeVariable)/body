@@ -1,0 +1,3 @@
+{
+  return createAssert(new BinaryOperator("==",getReference(obj),NATIVE_MAGIC));
+}

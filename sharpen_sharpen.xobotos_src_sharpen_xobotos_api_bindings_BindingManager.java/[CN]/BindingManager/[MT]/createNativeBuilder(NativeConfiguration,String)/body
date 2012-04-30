@@ -1,0 +1,22 @@
+{
+  if (_sharedNativeBuilder == null) {
+    _sharedNativeBuilder=new NativeBuilder(config,"XobotOS.MarshalGlue");
+    _sharedManagedBuilder=new CSCompilationUnit();
+    _sharedManagedBuilder.namespace("XobotOS.Runtime");
+    _sharedTypedef=new CSClass("MarshalGlue",CSClassModifier.Static);
+    _sharedTypedef.visibility(CSVisibility.Internal);
+    _sharedManagedBuilder.addType(_sharedTypedef);
+    _sharedManagedBuilder.addUsing(new CSUsing("System.Runtime.InteropServices"));
+    _stringHelper=new StringHelperClass(_sharedNativeBuilder,_stringType);
+    _stringMarshal=new MarshalAsNativeType(_stringType,_stringHelper);
+    _sharedNativeBuilder.registerNativeType(_stringHelper);
+    createSharedArrayHelper(_charType,_charMarshal);
+    createSharedArrayHelper(_byteType,_byteMarshal);
+    createSharedArrayHelper(_intType,new MarshalAsPrimitive(_intType,"int","int"));
+    createSharedArrayHelper(_longType,new MarshalAsPrimitive(_longType,"long","long"));
+    createSharedArrayHelper(_floatType,new MarshalAsPrimitive(_floatType,"float","float"));
+  }
+  NativeBuilder builder=new NativeBuilder(config,name);
+  builder.getCompilationUnit().getIncludeSection().addInclude(_sharedNativeBuilder.getHeaderInclude());
+  return builder;
+}

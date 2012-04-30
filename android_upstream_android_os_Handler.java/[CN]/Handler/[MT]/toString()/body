@@ -1,0 +1,3 @@
+{
+  return "Handler (" + getClass().getName() + ") {"+ Integer.toHexString(System.identityHashCode(this))+ "}";
+}

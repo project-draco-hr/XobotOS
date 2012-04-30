@@ -1,0 +1,20 @@
+{
+  boolean retval=false;
+  try {
+    if (sipStack.getStackLogger().isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("acquireSem [[[[" + this);
+      sipStack.getStackLogger().logStackTrace();
+    }
+    retval=this.semaphore.tryAcquire(1000,TimeUnit.MILLISECONDS);
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("acquireSem() returning : " + retval);
+    return retval;
+  }
+ catch (  Exception ex) {
+    sipStack.getStackLogger().logError("Unexpected exception acquiring sem",ex);
+    InternalErrorHandler.handleException(ex);
+    return false;
+  }
+ finally {
+    this.isSemaphoreAquired=retval;
+  }
+}

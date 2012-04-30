@@ -1,0 +1,9 @@
+{
+  if (Modifier.isAbstract(modifiers)) {
+    return CSClassModifier.Abstract;
+  }
+  if (Modifier.isFinal(modifiers)) {
+    return CSClassModifier.Sealed;
+  }
+  return CSClassModifier.None;
+}

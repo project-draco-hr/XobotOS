@@ -1,0 +1,5 @@
+{
+  if (!(obj instanceof NameMapping))   return false;
+  NameMapping other=(NameMapping)obj;
+  return from.equals(other.from) && to.equals(other.to);
+}

@@ -1,0 +1,33 @@
+{
+  if (!this.isServer()) {
+    throw new SipException("Not a Server Dialog");
+  }
+  SIPResponse sipResponse=(SIPResponse)relResponse;
+  if (relResponse.getStatusCode() == 100)   throw new SipException("Cannot send 100 as a reliable provisional response");
+  if (relResponse.getStatusCode() / 100 > 2)   throw new SipException("Response code is not a 1xx response - should be in the range 101 to 199 ");
+  if (sipResponse.getToTag() == null) {
+    throw new SipException("Badly formatted response -- To tag mandatory for Reliable Provisional Response");
+  }
+  ListIterator requireList=(ListIterator)relResponse.getHeaders(RequireHeader.NAME);
+  boolean found=false;
+  if (requireList != null) {
+    while (requireList.hasNext() && !found) {
+      RequireHeader rh=(RequireHeader)requireList.next();
+      if (rh.getOptionTag().equalsIgnoreCase("100rel")) {
+        found=true;
+      }
+    }
+  }
+  if (!found) {
+    Require require=new Require("100rel");
+    relResponse.addHeader(require);
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("Require header with optionTag 100rel is needed -- adding one");
+    }
+  }
+  SIPServerTransaction serverTransaction=(SIPServerTransaction)this.getFirstTransaction();
+  this.setLastResponse(serverTransaction,sipResponse);
+  this.setDialogId(sipResponse.getDialogId(true));
+  serverTransaction.sendReliableProvisionalResponse(relResponse);
+  this.startRetransmitTimer(serverTransaction,relResponse);
+}

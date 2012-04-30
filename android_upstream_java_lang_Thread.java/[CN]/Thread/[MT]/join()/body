@@ -1,0 +1,11 @@
+{
+  VMThread t=vmThread;
+  if (t == null) {
+    return;
+  }
+synchronized (t) {
+    while (isAlive()) {
+      t.wait();
+    }
+  }
+}

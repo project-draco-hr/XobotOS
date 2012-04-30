@@ -1,0 +1,6 @@
+{
+  if (node instanceof CSTypeDeclaration) {
+    return processTypeDocumentationOverlay((CSTypeDeclaration)node);
+  }
+  return processMemberDocumentationOverlay((CSMember)node);
+}

@@ -1,0 +1,14 @@
+{
+  guard.close();
+synchronized (this) {
+    if (channel != null) {
+      channel.close();
+    }
+    if (shouldClose) {
+      IoUtils.close(fd);
+    }
+ else {
+      fd=new FileDescriptor();
+    }
+  }
+}

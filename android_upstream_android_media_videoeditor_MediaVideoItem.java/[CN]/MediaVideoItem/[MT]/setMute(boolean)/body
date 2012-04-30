@@ -1,0 +1,10 @@
+{
+  mMANativeHelper.setGeneratePreview(true);
+  mMuted=muted;
+  if (mBeginTransition != null) {
+    mBeginTransition.invalidate();
+  }
+  if (mEndTransition != null) {
+    mEndTransition.invalidate();
+  }
+}

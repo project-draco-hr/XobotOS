@@ -1,0 +1,6 @@
+{
+  for (  IncludeDirective entry : _includes) {
+    if (entry.getName().equals(include.getName()))     return;
+  }
+  _includes.add(include);
+}

@@ -1,0 +1,4 @@
+{
+  mContext=context;
+  mService=IDevicePolicyManager.Stub.asInterface(ServiceManager.getService(Context.DEVICE_POLICY_SERVICE));
+}

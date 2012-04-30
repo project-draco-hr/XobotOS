@@ -1,0 +1,3 @@
+{
+  return findNumbers(text,defaultRegion,Leniency.VALID,Long.MAX_VALUE);
+}

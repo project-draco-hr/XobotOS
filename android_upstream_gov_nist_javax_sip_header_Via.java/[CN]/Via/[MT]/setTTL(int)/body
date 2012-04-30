@@ -1,0 +1,4 @@
+{
+  if (ttl < 0 && ttl != -1)   throw new InvalidArgumentException("JAIN-SIP Exception" + ", Via, setTTL(), the ttl parameter is < 0");
+  setParameter(new NameValue(ParameterNames.TTL,Integer.valueOf(ttl)));
+}

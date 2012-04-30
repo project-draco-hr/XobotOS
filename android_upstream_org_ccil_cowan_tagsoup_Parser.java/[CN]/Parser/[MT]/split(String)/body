@@ -1,0 +1,38 @@
+{
+  val=val.trim();
+  if (val.length() == 0) {
+    return new String[0];
+  }
+ else {
+    ArrayList l=new ArrayList();
+    int s=0;
+    int e=0;
+    boolean sq=false;
+    boolean dq=false;
+    char lastc=0;
+    int len=val.length();
+    for (e=0; e < len; e++) {
+      char c=val.charAt(e);
+      if (!dq && c == '\'' && lastc != '\\') {
+        sq=!sq;
+        if (s < 0)         s=e;
+      }
+ else       if (!sq && c == '\"' && lastc != '\\') {
+        dq=!dq;
+        if (s < 0)         s=e;
+      }
+ else       if (!sq && !dq) {
+        if (Character.isWhitespace(c)) {
+          if (s >= 0)           l.add(val.substring(s,e));
+          s=-1;
+        }
+ else         if (s < 0 && c != ' ') {
+          s=e;
+        }
+      }
+      lastc=c;
+    }
+    l.add(val.substring(s,e));
+    return (String[])l.toArray(new String[0]);
+  }
+}

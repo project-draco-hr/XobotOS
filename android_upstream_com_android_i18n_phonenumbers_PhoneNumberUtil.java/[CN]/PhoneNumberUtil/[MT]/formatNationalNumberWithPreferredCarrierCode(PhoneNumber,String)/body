@@ -1,0 +1,3 @@
+{
+  return formatNationalNumberWithCarrierCode(number,number.hasPreferredDomesticCarrierCode() ? number.getPreferredDomesticCarrierCode() : fallbackCarrierCode);
+}

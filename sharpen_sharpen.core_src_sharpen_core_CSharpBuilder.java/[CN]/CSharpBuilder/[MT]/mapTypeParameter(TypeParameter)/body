@@ -1,0 +1,9 @@
+{
+  CSTypeParameter tp=new CSTypeParameter(identifier(item.getName()));
+  ITypeBinding tb=item.resolveBinding();
+  if (tb != null) {
+    ITypeBinding superc=mapTypeParameterExtendedType(tb);
+    if (superc != null)     tp.superClass(mappedTypeReference(superc));
+  }
+  return tp;
+}

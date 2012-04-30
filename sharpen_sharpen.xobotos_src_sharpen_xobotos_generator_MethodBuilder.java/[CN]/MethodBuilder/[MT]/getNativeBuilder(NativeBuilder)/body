@@ -1,0 +1,4 @@
+{
+  final IMethodBinding binding=getASTNode().resolveBinding();
+  return my(BindingManager.class).resolveNativeBinding(binding);
+}

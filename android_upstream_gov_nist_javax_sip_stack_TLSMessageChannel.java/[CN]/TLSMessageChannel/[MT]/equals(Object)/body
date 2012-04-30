@@ -1,0 +1,8 @@
+{
+  if (!this.getClass().equals(other.getClass()))   return false;
+ else {
+    TLSMessageChannel that=(TLSMessageChannel)other;
+    if (this.mySock != that.mySock)     return false;
+ else     return true;
+  }
+}

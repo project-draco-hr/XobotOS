@@ -1,0 +1,10 @@
+{
+  if (name == null) {
+    throw new NullPointerException("name == null");
+  }
+  Field result=getPublicFieldRecursive(name);
+  if (result == null) {
+    throw new NoSuchFieldException(name);
+  }
+  return result;
+}

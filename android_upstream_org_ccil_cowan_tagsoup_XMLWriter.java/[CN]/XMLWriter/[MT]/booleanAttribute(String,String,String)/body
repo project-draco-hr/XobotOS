@@ -1,0 +1,12 @@
+{
+  String name=localName;
+  if (name == null) {
+    int i=qName.indexOf(':');
+    if (i != -1)     name=qName.substring(i + 1,qName.length());
+  }
+  if (!name.equals(value))   return false;
+  for (int j=0; j < booleans.length; j++) {
+    if (name.equals(booleans[j]))     return true;
+  }
+  return false;
+}

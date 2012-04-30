@@ -1,0 +1,8 @@
+{
+  if (DEBUG) {
+    int nameResId=newSubtype.getNameResId();
+    String mode=newSubtype.getMode();
+    String output="changeInputMethodSubtype:" + (nameResId == 0 ? "<none>" : getString(nameResId)) + ","+ mode+ ","+ newSubtype.getLocale()+ ","+ newSubtype.getExtraValue();
+    Log.v(TAG,"--- " + output);
+  }
+}

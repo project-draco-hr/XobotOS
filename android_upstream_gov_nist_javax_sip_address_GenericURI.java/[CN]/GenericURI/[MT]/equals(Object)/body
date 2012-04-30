@@ -1,0 +1,8 @@
+{
+  if (this == that)   return true;
+ else   if (that instanceof URI) {
+    final URI o=(URI)that;
+    return this.toString().equalsIgnoreCase(o.toString());
+  }
+  return false;
+}

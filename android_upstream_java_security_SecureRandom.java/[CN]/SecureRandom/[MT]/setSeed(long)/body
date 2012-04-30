@@ -1,0 +1,8 @@
+{
+  if (seed == 0) {
+    return;
+  }
+  byte[] byteSeed=new byte[SizeOf.LONG];
+  Memory.pokeLong(byteSeed,0,seed,ByteOrder.BIG_ENDIAN);
+  setSeed(byteSeed);
+}

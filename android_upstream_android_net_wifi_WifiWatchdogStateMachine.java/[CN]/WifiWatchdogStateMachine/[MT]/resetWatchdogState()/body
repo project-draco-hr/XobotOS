@@ -1,0 +1,11 @@
+{
+  if (DBG) {
+    log("Resetting watchdog state...");
+  }
+  mConnectionInfo=null;
+  mDisableAPNextFailure=false;
+  mLastWalledGardenCheckTime=null;
+  mNumCheckFailures=0;
+  mBssids.clear();
+  cancelNetworkNotification();
+}

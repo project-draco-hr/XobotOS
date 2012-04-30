@@ -1,0 +1,21 @@
+{
+  String branch;
+  if (method.equals(Request.ACK)) {
+    if (statusLine.getStatusCode() >= 300) {
+      branch=getTopmostVia().getBranch();
+    }
+ else {
+      branch=Utils.getInstance().generateBranchId();
+    }
+  }
+ else   if (method.equals(Request.CANCEL)) {
+    branch=getTopmostVia().getBranch();
+  }
+ else   return;
+  try {
+    via.setBranch(branch);
+  }
+ catch (  ParseException e) {
+    e.printStackTrace();
+  }
+}

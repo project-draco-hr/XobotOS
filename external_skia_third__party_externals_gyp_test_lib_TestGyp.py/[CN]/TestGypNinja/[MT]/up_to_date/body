@@ -1,0 +1,3 @@
+def up_to_date(self, gyp_file, target=None, **kw):
+    kw['stdout'] = 'ninja: no work to do.\n'
+    return self.build(gyp_file, target, **kw)

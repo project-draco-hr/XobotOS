@@ -1,0 +1,13 @@
+{
+  if (suggestions == null) {
+    mSuggestions=EMPTY;
+    mSuggestionsAvailable=false;
+  }
+ else {
+    mSuggestions=suggestions;
+    mSuggestionsAvailable=true;
+  }
+  mSuggestionsAttributes=suggestionsAttributes;
+  mCookie=cookie;
+  mSequence=sequence;
+}

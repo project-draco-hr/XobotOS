@@ -1,0 +1,7 @@
+def ExpandInputRoot(self, template, expansion):
+    if ('%(INPUT_ROOT)s' not in template):
+        return template
+    path = (template % {'INPUT_ROOT': expansion, })
+    if (not os.path.dirname(path)):
+        path = os.path.join('.', path)
+    return path

@@ -1,0 +1,9 @@
+{
+  mRS.validate();
+  if (va != null) {
+    mRS.nScriptBindAllocation(getID(),va.getID(),slot);
+  }
+ else {
+    mRS.nScriptBindAllocation(getID(),0,slot);
+  }
+}

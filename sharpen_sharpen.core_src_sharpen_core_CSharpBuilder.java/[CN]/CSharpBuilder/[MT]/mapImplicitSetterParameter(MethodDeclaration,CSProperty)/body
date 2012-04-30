@@ -1,0 +1,7 @@
+{
+  final String parameterName=parameter(node,0).getName().toString();
+  if (parameterName.equals("value")) {
+    return;
+  }
+  property.setter().addStatement(0,newVariableDeclarationExpression(parameterName,property.type(),new CSReferenceExpression("value")));
+}

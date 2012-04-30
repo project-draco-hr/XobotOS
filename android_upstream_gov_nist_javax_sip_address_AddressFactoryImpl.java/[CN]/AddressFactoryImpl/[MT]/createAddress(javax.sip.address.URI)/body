@@ -1,0 +1,6 @@
+{
+  if (uri == null)   throw new NullPointerException("null address");
+  AddressImpl addressImpl=new AddressImpl();
+  addressImpl.setURI(uri);
+  return addressImpl;
+}

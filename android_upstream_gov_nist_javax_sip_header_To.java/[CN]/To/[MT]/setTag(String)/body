@@ -1,0 +1,4 @@
+{
+  Parser.checkToken(t);
+  this.setParameter(ParameterNames.TAG,t);
+}

@@ -1,0 +1,13 @@
+{
+  Arrays.checkOffsetAndCount(buffer.length,offset,len);
+synchronized (lock) {
+    checkNotClosed();
+    if (pos < this.count) {
+      int bytesRead=pos + len > this.count ? this.count - pos : len;
+      System.arraycopy(this.buf,pos,buffer,offset,bytesRead);
+      pos+=bytesRead;
+      return bytesRead;
+    }
+    return -1;
+  }
+}

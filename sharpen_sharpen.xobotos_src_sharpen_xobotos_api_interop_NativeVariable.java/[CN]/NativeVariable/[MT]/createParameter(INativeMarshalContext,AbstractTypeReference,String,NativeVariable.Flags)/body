@@ -1,0 +1,7 @@
+{
+  EnumSet<NativeVariable.Flags> e=HelperClassBuilder.buildSet(NativeVariable.Flags.class,flags);
+  AbstractTypeReference effective=getEffectiveType(type,e);
+  NativeVariable var=context.createParameter(name,effective);
+  var._flags.addAll(e);
+  return var;
+}

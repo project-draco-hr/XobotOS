@@ -1,0 +1,5 @@
+{
+  UserAgent retval=(UserAgent)super.clone();
+  if (productTokens != null)   retval.productTokens=new LinkedList(productTokens);
+  return retval;
+}

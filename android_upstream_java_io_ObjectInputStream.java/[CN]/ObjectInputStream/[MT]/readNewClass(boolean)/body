@@ -1,0 +1,11 @@
+{
+  ObjectStreamClass classDesc=readClassDesc();
+  if (classDesc == null) {
+    throw missingClassDescriptor();
+  }
+  Class<?> localClass=classDesc.forClass();
+  if (localClass != null) {
+    registerObjectRead(localClass,nextHandle(),unshared);
+  }
+  return localClass;
+}

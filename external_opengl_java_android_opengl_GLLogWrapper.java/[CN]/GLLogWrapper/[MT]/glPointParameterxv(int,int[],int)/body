@@ -1,0 +1,9 @@
+{
+  begin("glPointParameterxv");
+  arg("pname",pname);
+  arg("params",params.toString());
+  arg("offset",offset);
+  end();
+  mgl11.glPointParameterxv(pname,params,offset);
+  checkError();
+}

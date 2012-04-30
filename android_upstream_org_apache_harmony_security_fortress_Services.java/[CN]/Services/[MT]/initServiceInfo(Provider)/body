@@ -1,0 +1,18 @@
+{
+  for (  Provider.Service serv : p.getServices()) {
+    String type=serv.getType();
+    if (secureRandom == null && type.equals("SecureRandom")) {
+      secureRandom=serv;
+    }
+    String key=type + "." + serv.getAlgorithm().toUpperCase(Locale.US);
+    if (!services.containsKey(key)) {
+      services.put(key,serv);
+    }
+    for (    String alias : Engine.door.getAliases(serv)) {
+      key=type + "." + alias.toUpperCase(Locale.US);
+      if (!services.containsKey(key)) {
+        services.put(key,serv);
+      }
+    }
+  }
+}

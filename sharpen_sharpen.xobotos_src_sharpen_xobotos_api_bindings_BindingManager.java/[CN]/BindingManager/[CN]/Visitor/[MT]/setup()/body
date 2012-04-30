@@ -1,0 +1,5 @@
+{
+  if (_nativeTypeContainer == null)   return;
+  _nativeBuilder=createNativeBuilder(_nativeConfig,_name);
+  _unit.addUsing(new CSUsing("System.Runtime.InteropServices"));
+}

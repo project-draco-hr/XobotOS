@@ -1,0 +1,16 @@
+{
+  if (string == null) {
+    return 0;
+  }
+  Integer identifier=stringToId.get(string);
+  if (identifier != null) {
+    return identifier;
+  }
+  int id=nextStringId++;
+  stringToId.put(string,id);
+  byte[] bytes=string.getBytes("UTF-8");
+  writeRecordHeader(BinaryHprof.Tag.STRING_IN_UTF8,0,BinaryHprof.ID_SIZE + bytes.length);
+  out.writeInt(id);
+  out.write(bytes,0,bytes.length);
+  return id;
+}

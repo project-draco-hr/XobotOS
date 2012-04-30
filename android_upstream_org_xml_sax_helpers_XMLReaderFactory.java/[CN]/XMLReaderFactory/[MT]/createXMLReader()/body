@@ -1,0 +1,34 @@
+{
+  String className=null;
+  ClassLoader loader=NewInstance.getClassLoader();
+  try {
+    className=System.getProperty(property);
+  }
+ catch (  RuntimeException e) {
+  }
+  if (className == null) {
+    try {
+      String service="META-INF/services/" + property;
+      InputStream in;
+      BufferedReader reader;
+      if (loader == null)       in=ClassLoader.getSystemResourceAsStream(service);
+ else       in=loader.getResourceAsStream(service);
+      if (in != null) {
+        reader=new BufferedReader(new InputStreamReader(in,Charsets.UTF_8));
+        className=reader.readLine();
+        in.close();
+      }
+    }
+ catch (    Exception e) {
+    }
+  }
+  if (className == null) {
+  }
+  if (className != null)   return loadClass(loader,className);
+  try {
+    return new ParserAdapter(ParserFactory.makeParser());
+  }
+ catch (  Exception e) {
+    throw new SAXException("Can't create default XMLReader; " + "is system property org.xml.sax.driver set?");
+  }
+}

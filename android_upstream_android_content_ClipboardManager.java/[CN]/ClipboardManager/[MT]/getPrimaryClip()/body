@@ -1,0 +1,8 @@
+{
+  try {
+    return getService().getPrimaryClip(mContext.getPackageName());
+  }
+ catch (  RemoteException e) {
+    return null;
+  }
+}

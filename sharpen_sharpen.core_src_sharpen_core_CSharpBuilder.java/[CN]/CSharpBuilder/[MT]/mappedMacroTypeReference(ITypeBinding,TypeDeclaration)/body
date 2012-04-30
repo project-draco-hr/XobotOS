@@ -1,0 +1,11 @@
+{
+  final CSMacro macro=new CSMacro(JavadocUtility.singleTextFragmentFrom(javadocTagFor(typeDeclaration,SharpenAnnotations.SHARPEN_MACRO)));
+  final ITypeBinding[] typeArguments=typeUsage.getTypeArguments();
+  if (typeArguments.length > 0) {
+    final ITypeBinding[] typeParameters=typeUsage.getTypeDeclaration().getTypeParameters();
+    for (int i=0; i < typeParameters.length; i++) {
+      macro.addVariable(typeParameters[i].getName(),mappedTypeReference(typeArguments[i]));
+    }
+  }
+  return new CSMacroTypeReference(macro);
+}

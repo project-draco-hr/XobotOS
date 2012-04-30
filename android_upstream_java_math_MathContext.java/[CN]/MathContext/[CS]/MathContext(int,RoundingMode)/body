@@ -1,0 +1,5 @@
+{
+  this.precision=precision;
+  this.roundingMode=roundingMode;
+  checkValid();
+}

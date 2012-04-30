@@ -1,0 +1,3 @@
+{
+  return "ReceiverData{intent=" + intent + " packageName="+ info.packageName+ " resultCode="+ getResultCode()+ " resultData="+ getResultData()+ " resultExtras="+ getResultExtras(false)+ "}";
+}

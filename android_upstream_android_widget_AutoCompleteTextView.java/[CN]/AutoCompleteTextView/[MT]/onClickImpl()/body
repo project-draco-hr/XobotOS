@@ -1,0 +1,5 @@
+{
+  if (isPopupShowing()) {
+    ensureImeVisible(true);
+  }
+}

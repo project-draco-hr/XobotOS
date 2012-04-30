@@ -1,0 +1,23 @@
+{
+  mSpinners.removeAllViews();
+  char[] order=DateFormat.getDateFormatOrder(getContext());
+  final int spinnerCount=order.length;
+  for (int i=0; i < spinnerCount; i++) {
+switch (order[i]) {
+case DateFormat.DATE:
+      mSpinners.addView(mDaySpinner);
+    setImeOptions(mDaySpinner,spinnerCount,i);
+  break;
+case DateFormat.MONTH:
+mSpinners.addView(mMonthSpinner);
+setImeOptions(mMonthSpinner,spinnerCount,i);
+break;
+case DateFormat.YEAR:
+mSpinners.addView(mYearSpinner);
+setImeOptions(mYearSpinner,spinnerCount,i);
+break;
+default :
+throw new IllegalArgumentException();
+}
+}
+}

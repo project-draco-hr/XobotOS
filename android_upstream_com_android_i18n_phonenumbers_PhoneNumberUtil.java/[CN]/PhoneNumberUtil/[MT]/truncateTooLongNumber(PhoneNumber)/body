@@ -1,0 +1,18 @@
+{
+  if (isValidNumber(number)) {
+    return true;
+  }
+  PhoneNumber numberCopy=new PhoneNumber();
+  numberCopy.mergeFrom(number);
+  long nationalNumber=number.getNationalNumber();
+  do {
+    nationalNumber/=10;
+    numberCopy.setNationalNumber(nationalNumber);
+    if (isPossibleNumberWithReason(numberCopy) == ValidationResult.TOO_SHORT || nationalNumber == 0) {
+      return false;
+    }
+  }
+ while (!isValidNumber(numberCopy));
+  number.setNationalNumber(nationalNumber);
+  return true;
+}

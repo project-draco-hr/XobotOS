@@ -1,0 +1,7 @@
+{
+  X500Principal result=issuer;
+  if (result == null) {
+    issuer=result=tbsCert.getIssuer().getX500Principal();
+  }
+  return result;
+}

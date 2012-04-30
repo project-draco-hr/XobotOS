@@ -1,0 +1,7 @@
+{
+  StringBuffer retval=new StringBuffer(LESS_THAN).append(errorInfo.toString()).append(GREATER_THAN);
+  if (!parameters.isEmpty()) {
+    retval.append(SEMICOLON).append(parameters.encode());
+  }
+  return retval.toString();
+}

@@ -1,0 +1,4 @@
+{
+  if (!needParens())   return this;
+  return new ParenthesizedExpression(this);
+}

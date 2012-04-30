@@ -1,0 +1,3 @@
+{
+  mService=IUiModeManager.Stub.asInterface(ServiceManager.getService(Context.UI_MODE_SERVICE));
+}

@@ -1,0 +1,8 @@
+{
+  if (certificates != null) {
+    if (!certificates.contains(certificate)) {
+      throw new KeyManagementException("Certificate not found");
+    }
+    certificates.removeElement(certificate);
+  }
+}

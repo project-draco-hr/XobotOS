@@ -1,0 +1,12 @@
+{
+  if (ident.mType == TYPE_WIMAX) {
+    return true;
+  }
+ else   if (matchesMobile(ident)) {
+switch (getNetworkClass(ident.mSubType)) {
+case NETWORK_CLASS_4_G:
+      return true;
+  }
+}
+return false;
+}

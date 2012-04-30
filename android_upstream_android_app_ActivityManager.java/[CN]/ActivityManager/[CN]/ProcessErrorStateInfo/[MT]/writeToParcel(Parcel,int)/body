@@ -1,0 +1,10 @@
+{
+  dest.writeInt(condition);
+  dest.writeString(processName);
+  dest.writeInt(pid);
+  dest.writeInt(uid);
+  dest.writeString(tag);
+  dest.writeString(shortMsg);
+  dest.writeString(longMsg);
+  dest.writeString(stackTrace);
+}

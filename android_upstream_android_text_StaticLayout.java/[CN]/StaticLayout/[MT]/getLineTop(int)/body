@@ -1,0 +1,7 @@
+{
+  int top=mLines[mColumns * line + TOP];
+  if (mMaximumVisibleLineCount > 0 && line >= mMaximumVisibleLineCount && line != mLineCount) {
+    top+=getBottomPadding();
+  }
+  return top;
+}

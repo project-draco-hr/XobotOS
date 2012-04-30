@@ -1,0 +1,8 @@
+{
+  mSeekBar.incrementProgressBy(amount);
+  if (!isSamplePlaying()) {
+    startSample();
+  }
+  postSetVolume(mSeekBar.getProgress());
+  mVolumeBeforeMute=-1;
+}

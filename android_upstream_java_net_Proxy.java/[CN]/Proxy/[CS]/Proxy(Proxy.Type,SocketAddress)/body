@@ -1,0 +1,7 @@
+{
+  if (type == Type.DIRECT || sa == null) {
+    throw new IllegalArgumentException("Illegal Proxy.Type or SocketAddress argument");
+  }
+  this.type=type;
+  address=sa;
+}

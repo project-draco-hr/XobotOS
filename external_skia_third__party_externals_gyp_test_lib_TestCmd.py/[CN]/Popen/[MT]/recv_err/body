@@ -1,0 +1,2 @@
+def recv_err(self, maxsize=None):
+    return self._recv('stderr', maxsize)

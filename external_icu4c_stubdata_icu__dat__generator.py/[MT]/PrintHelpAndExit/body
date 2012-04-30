@@ -1,0 +1,6 @@
+def PrintHelpAndExit():
+    print 'Usage:'
+    print '  icu_dat_generator.py [-v|--verbose] [-h|--help]'
+    print 'Example:'
+    print '  $ANDROID_BUILD_TOP/external/icu4c/stubdata$ ./icu_dat_generator.py'
+    sys.exit(1)

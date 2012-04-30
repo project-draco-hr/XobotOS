@@ -1,0 +1,13 @@
+{
+  int samplesCount=samples.size();
+  if (samplesCount == 0) {
+    return;
+  }
+  writeRecordHeader(BinaryHprof.Tag.CPU_SAMPLES,0,4 + 4 + (samplesCount * (4 + 4)));
+  out.writeInt(totalSamples);
+  out.writeInt(samplesCount);
+  for (  HprofData.Sample sample : samples) {
+    out.writeInt(sample.count);
+    out.writeInt(sample.stackTrace.stackTraceId);
+  }
+}

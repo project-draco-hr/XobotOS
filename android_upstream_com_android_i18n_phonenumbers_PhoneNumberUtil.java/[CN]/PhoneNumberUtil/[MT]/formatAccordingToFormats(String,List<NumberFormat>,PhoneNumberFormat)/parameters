@@ -1,0 +1,3 @@
+String nationalNumber
+List<NumberFormat> availableFormats
+PhoneNumberFormat numberFormat

@@ -1,0 +1,3 @@
+{
+  this(base,display,paint,width,align,TextDirectionHeuristics.FIRSTSTRONG_LTR,spacingmult,spacingadd,includepad,ellipsize,ellipsizedWidth);
+}

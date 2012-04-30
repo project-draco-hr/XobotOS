@@ -1,0 +1,3 @@
+String regionCode
+int countryCallingCode
+String number

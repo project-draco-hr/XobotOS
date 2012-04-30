@@ -1,0 +1,3 @@
+{
+  this(bucketDuration,initialSize,FIELD_ALL);
+}

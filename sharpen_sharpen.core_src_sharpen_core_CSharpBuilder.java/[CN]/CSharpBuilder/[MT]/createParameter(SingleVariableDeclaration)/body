@@ -1,0 +1,3 @@
+{
+  return createVariableDeclaration(declaration.resolveBinding(),null);
+}

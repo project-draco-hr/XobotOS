@@ -1,0 +1,4 @@
+{
+  this.multipartMimeContentTypeHeader=contentTypeHeader;
+  this.boundary=contentTypeHeader.getParameter(BOUNDARY);
+}

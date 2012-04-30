@@ -1,0 +1,4 @@
+{
+  logUnexpectedCdmaMethodCall("getCdmaPrlVersion");
+  return null;
+}

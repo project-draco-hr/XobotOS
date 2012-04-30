@@ -1,0 +1,35 @@
+{
+  if (spec == null) {
+    throw new MalformedURLException();
+  }
+  if (handler != null) {
+    streamHandler=handler;
+  }
+  spec=spec.trim();
+  protocol=UrlUtils.getSchemePrefix(spec);
+  int schemeSpecificPartStart=protocol != null ? (protocol.length() + 1) : 0;
+  if (protocol != null && context != null && !protocol.equals(context.protocol)) {
+    context=null;
+  }
+  if (context != null) {
+    set(context.protocol,context.getHost(),context.getPort(),context.getAuthority(),context.getUserInfo(),context.getPath(),context.getQuery(),context.getRef());
+    if (streamHandler == null) {
+      streamHandler=context.streamHandler;
+    }
+  }
+ else   if (protocol == null) {
+    throw new MalformedURLException("Protocol not found: " + spec);
+  }
+  if (streamHandler == null) {
+    setupStreamHandler();
+    if (streamHandler == null) {
+      throw new MalformedURLException("Unknown protocol: " + protocol);
+    }
+  }
+  try {
+    streamHandler.parseURL(this,spec,schemeSpecificPartStart,spec.length());
+  }
+ catch (  Exception e) {
+    throw new MalformedURLException(e.toString());
+  }
+}

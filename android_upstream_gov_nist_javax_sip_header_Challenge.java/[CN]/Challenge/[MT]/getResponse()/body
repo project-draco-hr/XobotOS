@@ -1,0 +1,3 @@
+{
+  return (String)authParams.getValue(RESPONSE);
+}

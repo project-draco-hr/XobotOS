@@ -1,0 +1,3 @@
+{
+  return getKeyCharacterMap().isPrintingKey(mKeyCode);
+}

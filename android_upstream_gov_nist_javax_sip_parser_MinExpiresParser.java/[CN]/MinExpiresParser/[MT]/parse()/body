@@ -1,0 +1,21 @@
+{
+  if (debug)   dbg_enter("MinExpiresParser.parse");
+  MinExpires minExpires=new MinExpires();
+  try {
+    headerName(TokenTypes.MIN_EXPIRES);
+    minExpires.setHeaderName(SIPHeaderNames.MIN_EXPIRES);
+    String number=this.lexer.number();
+    try {
+      minExpires.setExpires(Integer.parseInt(number));
+    }
+ catch (    InvalidArgumentException ex) {
+      throw createParseException(ex.getMessage());
+    }
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return minExpires;
+  }
+  finally {
+    if (debug)     dbg_leave("MinExpiresParser.parse");
+  }
+}

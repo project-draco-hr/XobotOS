@@ -1,0 +1,11 @@
+{
+  this.tag=(byte)tag;
+  if (size > 0) {
+    this.minimumSize=size;
+    this.maximumSize=size;
+  }
+ else {
+    this.minimumSize=-size;
+    this.maximumSize=0;
+  }
+}

@@ -1,0 +1,4 @@
+{
+  checkNotConnected();
+  return Collections.emptyMap();
+}

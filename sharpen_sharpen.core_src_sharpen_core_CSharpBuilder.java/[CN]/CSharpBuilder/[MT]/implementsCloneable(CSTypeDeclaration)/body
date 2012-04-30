@@ -1,0 +1,8 @@
+{
+  for (  CSTypeReferenceExpression typeRef : node.baseTypes()) {
+    if (typeRef.getTypeName().equals("System.ICloneable")) {
+      return true;
+    }
+  }
+  return false;
+}

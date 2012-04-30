@@ -1,0 +1,5 @@
+{
+  Pair<V> pair=this.pair;
+  stampHolder[0]=pair.stamp;
+  return pair.reference;
+}

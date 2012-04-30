@@ -1,0 +1,60 @@
+{
+  final ITypeBinding typeBinding=node.resolveBinding();
+  final CSTypeContainer current=getCurrentType(typeBinding);
+  final String typeName=typeName(node);
+  final String valueName=info.valueField();
+  return my(CSharpDriver.class).processExtractedEnumDeclaration(this,current,node,new ITypeBuilderDelegate(){
+    CSConstructor _ctor;
+    CSField _valueField;
+    int _nextId;
+    public CSTypeDeclaration create(){
+      CSClass klass=new CSClass(typeName,CSClassModifier.None);
+      klass.startPosition(node.getStartPosition());
+      klass.sourceLength(node.getLength());
+      return klass;
+    }
+    public void map(    CSTypeDeclaration klass){
+      CSTypeReference intRef=new CSTypeReference("int");
+      _valueField=new CSField(valueName,intRef,CSVisibility.Public);
+      _valueField.addModifier(CSFieldModifier.Readonly);
+      klass.addMember(_valueField);
+      _ctor=new CSConstructor();
+      _ctor.visibility(CSVisibility.Protected);
+      _ctor.addParameter(valueName,intRef);
+      CSExpression paramRef=new CSReferenceExpression(valueName);
+      CSExpression valueRef=new CSMemberReferenceExpression(new CSThisExpression(),valueName);
+      CSExpression init=new CSInfixExpression("=",valueRef,paramRef);
+      _ctor.body().addStatement(init);
+      klass.addMember(_ctor);
+      klass.visibility(mapVisibility(typeBinding));
+    }
+    public void mapMembers(    CSTypeDeclaration klass,    final IMemberFilter filter){
+      List<EnumConstantDeclaration> constants=node.enumConstants();
+      for (      final EnumConstantDeclaration ec : constants) {
+        int id=++_nextId;
+        CSTypeReference typeRef=new CSTypeReference(typeName);
+        CSharpBuilder.this.mapEnumConstant(klass,id,typeRef,ec);
+      }
+      CSharpBuilder.this.mapMembers(node,klass,new IMemberFilter(){
+        public boolean includeMember(        ASTNode member){
+          if ((filter != null) && !filter.includeMember(member))           return false;
+          return true;
+        }
+      }
+);
+    }
+    public void document(    CSTypeDeclaration klass){
+      CSharpBuilder.this.mapDocumentation(node,klass);
+    }
+    public void fixup(    CSTypeDeclaration type){
+      CSClass klass=(CSClass)type;
+      for (      CSMember member : klass.members()) {
+        if (member instanceof CSMethod) {
+          CSMethod method=(CSMethod)member;
+          if (method.isAbstract())           klass.modifier(CSClassModifier.Abstract);
+        }
+      }
+    }
+  }
+);
+}

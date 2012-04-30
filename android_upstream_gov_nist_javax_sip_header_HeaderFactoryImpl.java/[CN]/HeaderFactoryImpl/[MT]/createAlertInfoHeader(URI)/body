@@ -1,0 +1,6 @@
+{
+  if (alertInfo == null)   throw new NullPointerException("null arg alertInfo");
+  AlertInfo a=new AlertInfo();
+  a.setAlertInfo(alertInfo);
+  return a;
+}

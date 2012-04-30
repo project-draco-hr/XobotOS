@@ -1,0 +1,8 @@
+{
+  for (  SelectionKey key : keyList) {
+    if (key != null && key.isValid()) {
+      return true;
+    }
+  }
+  return false;
+}

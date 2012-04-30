@@ -1,0 +1,4 @@
+{
+  Map.Entry<E,Object> entry=backingMap.pollFirstEntry();
+  return (entry == null) ? null : entry.getKey();
+}

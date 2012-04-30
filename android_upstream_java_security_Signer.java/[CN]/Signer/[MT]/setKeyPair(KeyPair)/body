@@ -1,0 +1,10 @@
+{
+  if (pair == null) {
+    throw new NullPointerException();
+  }
+  if (pair.getPrivate() == null || pair.getPublic() == null) {
+    throw new InvalidParameterException();
+  }
+  setPublicKey(pair.getPublic());
+  this.privateKey=pair.getPrivate();
+}

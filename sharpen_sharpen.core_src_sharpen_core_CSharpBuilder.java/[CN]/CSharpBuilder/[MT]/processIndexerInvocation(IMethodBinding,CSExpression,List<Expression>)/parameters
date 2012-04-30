@@ -1,0 +1,3 @@
+IMethodBinding binding
+CSExpression target
+List<Expression> arguments

@@ -1,0 +1,4 @@
+{
+  CSExpression fieldReference=new CSMemberReferenceExpression(new CSThisExpression(),fieldName);
+  return new CSInfixExpression("=",fieldReference,fieldValue);
+}

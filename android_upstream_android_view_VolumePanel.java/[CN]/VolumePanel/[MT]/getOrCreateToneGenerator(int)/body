@@ -1,0 +1,15 @@
+{
+synchronized (this) {
+    if (mToneGenerators[streamType] == null) {
+      try {
+        mToneGenerators[streamType]=new ToneGenerator(streamType,MAX_VOLUME);
+      }
+ catch (      RuntimeException e) {
+        if (LOGD) {
+          Log.d(TAG,"ToneGenerator constructor failed with " + "RuntimeException: " + e);
+        }
+      }
+    }
+    return mToneGenerators[streamType];
+  }
+}

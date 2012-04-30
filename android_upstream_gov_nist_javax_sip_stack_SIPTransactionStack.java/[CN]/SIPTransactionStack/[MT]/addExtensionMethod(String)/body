@@ -1,0 +1,8 @@
+{
+  if (extensionMethod.equals(Request.NOTIFY)) {
+    if (stackLogger.isLoggingEnabled())     stackLogger.logDebug("NOTIFY Supported Natively");
+  }
+ else {
+    dialogCreatingMethods.add(extensionMethod.trim().toUpperCase());
+  }
+}

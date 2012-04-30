@@ -1,0 +1,7 @@
+{
+  if (!eventArgsTypeName.endsWith("EventArgs")) {
+    warning(node,SharpenAnnotations.SHARPEN_EVENT + " type name must end with 'EventArgs'");
+    return eventArgsTypeName + "EventHandler";
+  }
+  return "System.EventHandler<" + eventArgsTypeName + ">";
+}

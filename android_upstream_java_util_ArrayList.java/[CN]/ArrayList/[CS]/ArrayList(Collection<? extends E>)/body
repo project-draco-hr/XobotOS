@@ -1,0 +1,10 @@
+{
+  Object[] a=collection.toArray();
+  if (a.getClass() != Object[].class) {
+    Object[] newArray=new Object[a.length];
+    System.arraycopy(a,0,newArray,0,a.length);
+    a=newArray;
+  }
+  array=a;
+  size=a.length;
+}

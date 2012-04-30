@@ -1,0 +1,10 @@
+{
+  if (handledExtends(node,type))   return;
+  if (null == node.getSuperclassType())   return;
+  final ITypeBinding superClassBinding=node.getSuperclassType().resolveBinding();
+  if (null == superClassBinding)   unresolvedTypeBinding(node.getSuperclassType());
+  if (!isLegacyTestFixtureClass(superClassBinding))   type.addBaseType(mappedTypeReference(superClassBinding));
+ else {
+    type.addAttribute(new CSAttribute("NUnit.Framework.TestFixture"));
+  }
+}

@@ -1,0 +1,4 @@
+{
+  final IMethodBinding bind=method.getMethodDeclaration();
+  return genericQualifierFor(bind.getTypeParameters());
+}

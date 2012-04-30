@@ -1,0 +1,4 @@
+{
+  boolean haslr=this.hasParameter(LR);
+  return haslr ? "true" : null;
+}

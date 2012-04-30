@@ -1,0 +1,13 @@
+{
+  if (!(other instanceof RouteList))   return false;
+  RouteList that=(RouteList)other;
+  if (this.size() != that.size())   return false;
+  ListIterator<Route> it=this.listIterator();
+  ListIterator<Route> it1=that.listIterator();
+  while (it.hasNext()) {
+    Route route=(Route)it.next();
+    Route route1=(Route)it1.next();
+    if (!route.equals(route1))     return false;
+  }
+  return true;
+}

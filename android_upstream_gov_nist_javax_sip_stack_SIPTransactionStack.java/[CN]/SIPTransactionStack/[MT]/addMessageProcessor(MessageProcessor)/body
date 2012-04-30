@@ -1,0 +1,5 @@
+{
+synchronized (messageProcessors) {
+    messageProcessors.add(newMessageProcessor);
+  }
+}

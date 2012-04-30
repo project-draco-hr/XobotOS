@@ -1,0 +1,8 @@
+{
+  _currentType.push(node);
+  _mappedMethodDeclarations.clear();
+  for (  MethodDeclaration meth : node.getMethods()) {
+    if (SharpenAnnotations.hasIgnoreAnnotation(meth))     continue;
+    _mappedMethodDeclarations.add(my(Mappings.class).mappedMethodName(meth.resolveBinding()));
+  }
+}

@@ -1,0 +1,6 @@
+{
+  if (this.authority != null) {
+    UserInfo userInfo=authority.getUserInfo();
+    if (userInfo != null)     userInfo.clearPassword();
+  }
+}

@@ -1,0 +1,18 @@
+{
+  if (debug)   dbg_enter("PServedUser.parse");
+  try {
+    this.lexer.match(TokenTypes.P_SERVED_USER);
+    this.lexer.SPorHT();
+    this.lexer.match(':');
+    this.lexer.SPorHT();
+    PServedUser servedUser=new PServedUser();
+    this.lexer.SPorHT();
+    String servedUsername=lexer.byteStringNoSemicolon();
+    servedUser.setAddress(new AddressFactoryImpl().createAddress(servedUsername));
+    super.parse(servedUser);
+    return servedUser;
+  }
+  finally {
+    if (debug)     dbg_leave("PServedUser.parse");
+  }
+}

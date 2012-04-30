@@ -1,0 +1,14 @@
+def _line(self, text, indent=0):
+    "Write 'text' word-wrapped at self.width characters."
+    leading_space = ('  ' * indent)
+    while (len(text) > self.width):
+        available_space = ((self.width - len(leading_space)) - len(' $'))
+        space = text.rfind(' ', 0, available_space)
+        if (space < 0):
+            space = text.find(' ', available_space)
+        if (space < 0):
+            break
+        self.output.write(((leading_space + text[0:space]) + ' $\n'))
+        text = text[(space + 1):]
+        leading_space = ('  ' * (indent + 2))
+    self.output.write(((leading_space + text) + '\n'))

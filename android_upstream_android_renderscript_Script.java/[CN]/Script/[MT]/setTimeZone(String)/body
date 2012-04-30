@@ -1,0 +1,9 @@
+{
+  mRS.validate();
+  try {
+    mRS.nScriptSetTimeZone(getID(),timeZone.getBytes("UTF-8"));
+  }
+ catch (  java.io.UnsupportedEncodingException e) {
+    throw new RuntimeException(e);
+  }
+}

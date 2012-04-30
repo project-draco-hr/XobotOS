@@ -1,0 +1,19 @@
+{
+  SyncThread info=null;
+synchronized (mSyncThreadLock) {
+    for (    SyncThread current : mSyncThreads.values()) {
+      if (current.mSyncContext.getSyncContextBinder() == syncContext.asBinder()) {
+        info=current;
+        break;
+      }
+    }
+  }
+  if (info != null) {
+    if (mAllowParallelSyncs) {
+      onSyncCanceled(info);
+    }
+ else {
+      onSyncCanceled();
+    }
+  }
+}

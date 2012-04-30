@@ -1,0 +1,11 @@
+{
+  if (month < Calendar.JANUARY || month > Calendar.DECEMBER) {
+    throw new IllegalArgumentException("Invalid month: " + month);
+  }
+  if (dayOfWeek < Calendar.SUNDAY || dayOfWeek > Calendar.SATURDAY) {
+    throw new IllegalArgumentException("Invalid day of week: " + dayOfWeek);
+  }
+  if (time < 0 || time >= 24 * 3600000) {
+    throw new IllegalArgumentException("Invalid time: " + time);
+  }
+}

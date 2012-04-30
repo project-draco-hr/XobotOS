@@ -1,0 +1,4 @@
+{
+  ViaHeader viaHeader=(ViaHeader)request.getHeader(ViaHeader.NAME);
+  viaHeader.removeParameter("branch");
+}

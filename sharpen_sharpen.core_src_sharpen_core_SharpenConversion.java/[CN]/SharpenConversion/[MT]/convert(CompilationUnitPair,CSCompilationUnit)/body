@@ -1,0 +1,13 @@
+{
+  final Environment environment=Environments.addConventionBasedEnvironment(_driver,pair,pair.ast,_configuration,_resolver,compilationUnit);
+  Environments.runWith(environment,new Runnable(){
+    public void run(){
+      CSharpBuilder builder=new CSharpBuilder();
+      builder.run();
+      for (      IProblem problem : pair.getProblems()) {
+        createProblemMarker(problem);
+      }
+    }
+  }
+);
+}

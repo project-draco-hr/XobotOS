@@ -1,0 +1,9 @@
+{
+  if (_removeMembers == null)   return false;
+  for (  final Filter filter : _removeMembers) {
+    Match match=filter.matches(node);
+    if (match == Match.NEGATIVE)     return false;
+ else     if (match == Match.POSITIVE)     return true;
+  }
+  return false;
+}

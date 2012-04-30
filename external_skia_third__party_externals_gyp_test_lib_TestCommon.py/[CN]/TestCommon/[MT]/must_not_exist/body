@@ -1,0 +1,7 @@
+def must_not_exist(self, *files):
+    'Ensures that the specified file(s) must not exist.\n        An individual file be specified as a list of directory names, in\n        which case the pathname will be constructed by concatenating them.\n        Exits FAILED if any of the files exists.\n        '
+    files = map((lambda x: ((is_List(x) and apply(os.path.join, x)) or x)), files)
+    existing = filter(os.path.exists, files)
+    if existing:
+        print ("Unexpected files exist: `%s'" % string.join(existing, "', `"))
+        self.fail_test(existing)

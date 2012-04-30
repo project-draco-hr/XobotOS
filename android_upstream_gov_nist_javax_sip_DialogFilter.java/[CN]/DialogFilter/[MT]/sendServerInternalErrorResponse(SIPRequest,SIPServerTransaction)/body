@@ -1,0 +1,22 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("Sending 500 response for out of sequence message");
+  SIPResponse sipResponse=sipRequest.createResponse(Response.SERVER_INTERNAL_ERROR);
+  sipResponse.setReasonPhrase("Request out of order");
+  if (MessageFactoryImpl.getDefaultServerHeader() != null) {
+    ServerHeader serverHeader=MessageFactoryImpl.getDefaultServerHeader();
+    sipResponse.setHeader(serverHeader);
+  }
+  try {
+    RetryAfter retryAfter=new RetryAfter();
+    retryAfter.setRetryAfter(10);
+    sipResponse.setHeader(retryAfter);
+    sipStack.addTransactionPendingAck(transaction);
+    transaction.sendResponse(sipResponse);
+    transaction.releaseSem();
+  }
+ catch (  Exception ex) {
+    sipStack.getStackLogger().logError("Problem sending response",ex);
+    transaction.releaseSem();
+    sipStack.removeTransaction(transaction);
+  }
+}

@@ -1,0 +1,6 @@
+{
+  if (!phoneUtil.isValidNumber(number)) {
+    return "";
+  }
+  return getDescriptionForValidNumber(number,languageCode);
+}

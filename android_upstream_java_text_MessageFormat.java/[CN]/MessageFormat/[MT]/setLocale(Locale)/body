@@ -1,0 +1,22 @@
+{
+  this.locale=locale;
+  for (int i=0; i <= maxOffset; i++) {
+    Format format=formats[i];
+    if (format instanceof DecimalFormat) {
+      try {
+        formats[i]=new DecimalFormat(((DecimalFormat)format).toPattern(),new DecimalFormatSymbols(locale));
+      }
+ catch (      NullPointerException npe) {
+        formats[i]=null;
+      }
+    }
+ else     if (format instanceof SimpleDateFormat) {
+      try {
+        formats[i]=new SimpleDateFormat(((SimpleDateFormat)format).toPattern(),locale);
+      }
+ catch (      NullPointerException npe) {
+        formats[i]=null;
+      }
+    }
+  }
+}

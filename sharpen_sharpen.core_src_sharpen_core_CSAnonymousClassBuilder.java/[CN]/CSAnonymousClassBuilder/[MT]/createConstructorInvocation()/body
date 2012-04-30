@@ -1,0 +1,10 @@
+{
+  CSExpression typeRef=new CSReferenceExpression(_type.name());
+  CSConstructorInvocationExpression invocation=new CSConstructorInvocationExpression(typeRef);
+  if (isEnclosingReferenceRequired()) {
+    invocation.addArgument(new CSThisExpression());
+  }
+  addCapturedVariables(invocation);
+  addBaseConstructorArguments(invocation);
+  return invocation;
+}

@@ -1,0 +1,5 @@
+{
+  _writer.writeIndentation();
+  node.getExpression().accept(this);
+  _writer.writeLine(";");
+}

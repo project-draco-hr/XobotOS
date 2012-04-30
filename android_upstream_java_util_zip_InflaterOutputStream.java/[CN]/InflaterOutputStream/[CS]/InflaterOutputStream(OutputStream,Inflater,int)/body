@@ -1,0 +1,11 @@
+{
+  super(out);
+  if (out == null || inf == null) {
+    throw new NullPointerException();
+  }
+  if (bufferSize <= 0) {
+    throw new IllegalArgumentException();
+  }
+  this.inf=inf;
+  this.buf=new byte[bufferSize];
+}

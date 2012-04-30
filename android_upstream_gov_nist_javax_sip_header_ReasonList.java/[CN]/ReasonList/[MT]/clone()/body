@@ -1,0 +1,5 @@
+{
+  ReasonList retval=new ReasonList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

@@ -1,0 +1,16 @@
+{
+  if (hovered) {
+    if ((mPrivateFlags & HOVERED) == 0) {
+      mPrivateFlags|=HOVERED;
+      refreshDrawableState();
+      onHoverChanged(true);
+    }
+  }
+ else {
+    if ((mPrivateFlags & HOVERED) != 0) {
+      mPrivateFlags&=~HOVERED;
+      refreshDrawableState();
+      onHoverChanged(false);
+    }
+  }
+}

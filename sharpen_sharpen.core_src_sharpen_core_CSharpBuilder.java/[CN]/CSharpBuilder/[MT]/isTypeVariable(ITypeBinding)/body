@@ -1,0 +1,8 @@
+{
+  if (type.isTypeVariable())   return true;
+  if (type.isWildcardType()) {
+    ITypeBinding bound=type.getBound();
+    if (bound != null)     return isTypeVariable(bound);
+  }
+  return false;
+}

@@ -1,0 +1,6 @@
+{
+  if (!_variables.containsKey(name)) {
+    throw new IllegalStateException("Variable '" + name + "' is not set!");
+  }
+  return _variables.get(name);
+}

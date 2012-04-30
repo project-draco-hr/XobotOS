@@ -1,0 +1,9 @@
+{
+  if (header == null)   throw new NullPointerException("null arg!");
+  try {
+    this.attachHeader((SIPHeader)header,false,true);
+  }
+ catch (  SIPDuplicateHeaderException ex) {
+    throw new SipException("Cannot add header - header already exists");
+  }
+}

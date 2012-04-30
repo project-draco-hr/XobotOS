@@ -1,0 +1,8 @@
+{
+  if (stackFrames == null) {
+    throw new NullPointerException("stackFrames == null");
+  }
+  this.stackTraceId=stackTraceId;
+  this.threadId=threadId;
+  this.stackFrames=stackFrames;
+}

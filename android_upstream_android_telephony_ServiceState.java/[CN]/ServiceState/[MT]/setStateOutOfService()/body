@@ -1,0 +1,3 @@
+{
+  setNullState(STATE_OUT_OF_SERVICE);
+}

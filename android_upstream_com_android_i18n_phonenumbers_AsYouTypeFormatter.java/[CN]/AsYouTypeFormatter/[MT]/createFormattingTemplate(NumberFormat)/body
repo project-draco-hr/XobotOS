@@ -1,0 +1,15 @@
+{
+  String numberPattern=format.getPattern();
+  if (numberPattern.indexOf('|') != -1) {
+    return false;
+  }
+  numberPattern=CHARACTER_CLASS_PATTERN.matcher(numberPattern).replaceAll("\\\\d");
+  numberPattern=STANDALONE_DIGIT_PATTERN.matcher(numberPattern).replaceAll("\\\\d");
+  formattingTemplate.setLength(0);
+  String tempTemplate=getFormattingTemplate(numberPattern,format.getFormat());
+  if (tempTemplate.length() > 0) {
+    formattingTemplate.append(tempTemplate);
+    return true;
+  }
+  return false;
+}

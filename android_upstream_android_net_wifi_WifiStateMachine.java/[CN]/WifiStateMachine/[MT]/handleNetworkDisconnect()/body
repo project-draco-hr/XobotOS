@@ -1,0 +1,30 @@
+{
+  if (DBG)   log("Stopping DHCP and clearing IP");
+  if (mDhcpStateMachine != null) {
+    mDhcpStateMachine.sendMessage(DhcpStateMachine.CMD_STOP_DHCP);
+    mDhcpStateMachine.quit();
+    mDhcpStateMachine=null;
+  }
+  try {
+    mNwService.clearInterfaceAddresses(mInterfaceName);
+    mNwService.disableIpv6(mInterfaceName);
+  }
+ catch (  Exception e) {
+    loge("Failed to clear addresses or disable ipv6" + e);
+  }
+  mWifiInfo.setInetAddress(null);
+  mWifiInfo.setBSSID(null);
+  mWifiInfo.setSSID(null);
+  mWifiInfo.setNetworkId(WifiConfiguration.INVALID_NETWORK_ID);
+  mWifiInfo.setRssi(MIN_RSSI);
+  mWifiInfo.setLinkSpeed(-1);
+  mWifiInfo.setExplicitConnect(false);
+  setNetworkDetailedState(DetailedState.DISCONNECTED);
+  sendNetworkStateChangeBroadcast(mLastBssid);
+  mLinkProperties.clear();
+  if (!WifiConfigStore.isUsingStaticIp(mLastNetworkId)) {
+    WifiConfigStore.clearIpConfiguration(mLastNetworkId);
+  }
+  mLastBssid=null;
+  mLastNetworkId=WifiConfiguration.INVALID_NETWORK_ID;
+}

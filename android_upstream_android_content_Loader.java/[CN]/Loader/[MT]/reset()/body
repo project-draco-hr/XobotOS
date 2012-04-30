@@ -1,0 +1,7 @@
+{
+  onReset();
+  mReset=true;
+  mStarted=false;
+  mAbandoned=false;
+  mContentChanged=false;
+}

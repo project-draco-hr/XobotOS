@@ -1,0 +1,10 @@
+{
+  if (sentBy == null)   sentBy=new HostPort();
+  try {
+    Host h=new Host(host);
+    sentBy.setHost(h);
+  }
+ catch (  Exception e) {
+    throw new NullPointerException(" host parameter is null");
+  }
+}

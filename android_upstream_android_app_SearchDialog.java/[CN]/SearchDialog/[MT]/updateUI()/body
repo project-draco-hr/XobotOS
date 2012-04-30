@@ -1,0 +1,24 @@
+{
+  if (mSearchable != null) {
+    mDecor.setVisibility(View.VISIBLE);
+    updateSearchAutoComplete();
+    updateSearchAppIcon();
+    updateSearchBadge();
+    int inputType=mSearchable.getInputType();
+    if ((inputType & InputType.TYPE_MASK_CLASS) == InputType.TYPE_CLASS_TEXT) {
+      inputType&=~InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE;
+      if (mSearchable.getSuggestAuthority() != null) {
+        inputType|=InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE;
+      }
+    }
+    mSearchAutoComplete.setInputType(inputType);
+    mSearchAutoCompleteImeOptions=mSearchable.getImeOptions();
+    mSearchAutoComplete.setImeOptions(mSearchAutoCompleteImeOptions);
+    if (mSearchable.getVoiceSearchEnabled()) {
+      mSearchAutoComplete.setPrivateImeOptions(IME_OPTION_NO_MICROPHONE);
+    }
+ else {
+      mSearchAutoComplete.setPrivateImeOptions(null);
+    }
+  }
+}

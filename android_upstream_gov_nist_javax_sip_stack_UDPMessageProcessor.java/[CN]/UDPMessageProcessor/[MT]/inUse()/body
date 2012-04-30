@@ -1,0 +1,5 @@
+{
+synchronized (messageQueue) {
+    return messageQueue.size() != 0;
+  }
+}

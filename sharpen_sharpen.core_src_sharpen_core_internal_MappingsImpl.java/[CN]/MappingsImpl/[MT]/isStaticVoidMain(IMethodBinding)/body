@@ -1,0 +1,3 @@
+{
+  return isStatic(binding) && "main".equals(binding.getName());
+}

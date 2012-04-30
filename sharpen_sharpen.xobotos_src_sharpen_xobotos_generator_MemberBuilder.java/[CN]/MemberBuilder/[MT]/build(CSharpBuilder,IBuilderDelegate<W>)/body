@@ -1,0 +1,20 @@
+{
+  _member=_template.createCustomMember(_node);
+  if (_member != null)   return _member;
+  W member=delegate.create();
+  if (member == null)   return null;
+  this._member=_memberType.cast(member);
+  if (CSMember.class.isInstance(member) && _outputType.removeDocs())   ((CSMember)member).removeDocs();
+  delegate.map(member);
+  if (!buildInternal(builder,delegate,_member)) {
+    _member=null;
+    return null;
+  }
+  delegate.document(member);
+  delegate.fixup(member);
+  if (!applyActions(_member)) {
+    _member=null;
+    return null;
+  }
+  return _member;
+}

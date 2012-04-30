@@ -1,0 +1,22 @@
+{
+  Reader r=s.getCharacterStream();
+  InputStream i=s.getByteStream();
+  String encoding=s.getEncoding();
+  String publicid=s.getPublicId();
+  String systemid=s.getSystemId();
+  if (r == null) {
+    if (i == null)     i=getInputStream(publicid,systemid);
+    if (encoding == null) {
+      r=theAutoDetector.autoDetectingReader(i);
+    }
+ else {
+      try {
+        r=new InputStreamReader(i,encoding);
+      }
+ catch (      UnsupportedEncodingException e) {
+        r=new InputStreamReader(i);
+      }
+    }
+  }
+  return r;
+}

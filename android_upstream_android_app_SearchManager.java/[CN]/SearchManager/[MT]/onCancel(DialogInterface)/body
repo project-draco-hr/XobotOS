@@ -1,0 +1,5 @@
+{
+  if (mCancelListener != null) {
+    mCancelListener.onCancel();
+  }
+}

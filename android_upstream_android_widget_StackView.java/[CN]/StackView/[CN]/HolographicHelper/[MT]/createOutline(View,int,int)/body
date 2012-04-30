@@ -1,0 +1,30 @@
+{
+  mHolographicPaint.setColor(color);
+  if (type == RES_OUT) {
+    mBlurPaint.setMaskFilter(mSmallBlurMaskFilter);
+  }
+ else   if (type == CLICK_FEEDBACK) {
+    mBlurPaint.setMaskFilter(mLargeBlurMaskFilter);
+  }
+  if (v.getMeasuredWidth() == 0 || v.getMeasuredHeight() == 0) {
+    return null;
+  }
+  Bitmap bitmap=Bitmap.createBitmap(v.getMeasuredWidth(),v.getMeasuredHeight(),Bitmap.Config.ARGB_8888);
+  mCanvas.setBitmap(bitmap);
+  float rotationX=v.getRotationX();
+  float rotation=v.getRotation();
+  float translationY=v.getTranslationY();
+  float translationX=v.getTranslationX();
+  v.setRotationX(0);
+  v.setRotation(0);
+  v.setTranslationY(0);
+  v.setTranslationX(0);
+  v.draw(mCanvas);
+  v.setRotationX(rotationX);
+  v.setRotation(rotation);
+  v.setTranslationY(translationY);
+  v.setTranslationX(translationX);
+  drawOutline(mCanvas,bitmap);
+  mCanvas.setBitmap(null);
+  return bitmap;
+}

@@ -1,0 +1,6 @@
+{
+  final IMethodBinding binding=node.resolveBinding();
+  metaMember.visibility(mapVisibility(binding));
+  metaMember.modifier(mapMethodModifier(node));
+  mapDocumentation(node,metaMember);
+}

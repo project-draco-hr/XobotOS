@@ -1,0 +1,7 @@
+{
+  if (byteCount > mLength - mOffset) {
+    byteCount=mLength - mOffset;
+  }
+  mOffset+=byteCount;
+  return byteCount;
+}

@@ -1,0 +1,4 @@
+{
+  if (_nativeType == null)   throw new ConfigurationException("Missing <native-type> in MarshalAsEnum");
+  return super.readResolve();
+}

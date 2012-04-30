@@ -1,0 +1,6 @@
+{
+  super(ipAddress,port,"tls",sipStack);
+  this.sipStack=sipStack;
+  this.tlsMessageChannels=new Hashtable<String,TLSMessageChannel>();
+  this.incomingTlsMessageChannels=new ArrayList<TLSMessageChannel>();
+}

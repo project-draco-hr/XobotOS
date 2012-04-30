@@ -1,0 +1,3 @@
+{
+  theLexicalHandler.comment(buff,offset,length);
+}

@@ -1,0 +1,23 @@
+{
+  if (closed) {
+    throw new IOException("Stream is closed");
+  }
+  if (eos) {
+    return -1;
+  }
+  Arrays.checkOffsetAndCount(buffer.length,offset,byteCount);
+  int bytesRead;
+  try {
+    bytesRead=super.read(buffer,offset,byteCount);
+  }
+  finally {
+    eos=eof;
+  }
+  if (bytesRead != -1) {
+    crc.update(buffer,offset,bytesRead);
+  }
+  if (eos) {
+    verifyCrc();
+  }
+  return bytesRead;
+}

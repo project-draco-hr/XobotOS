@@ -1,0 +1,14 @@
+{
+  final IMethodBinding binding=node.resolveBinding();
+  final ITypeBinding returnType=binding.getReturnType();
+  if ((returnType == null) || binding.getDeclaringClass().isInterface())   return;
+  for (  final ITypeBinding iface : BindingUtils.getAllInterfaces(binding.getDeclaringClass())) {
+    IMethodBinding ifaceMethod=BindingUtils.findOverriddenMethodInType(iface,binding);
+    if (ifaceMethod == null)     continue;
+    ITypeBinding ifaceReturnType=ifaceMethod.getReturnType();
+    if (!returnType.equals(ifaceReturnType)) {
+      CSMethod proxy=createInterfaceProxy(node,method,ifaceMethod);
+      typeDecl.addMember(proxy);
+    }
+  }
+}

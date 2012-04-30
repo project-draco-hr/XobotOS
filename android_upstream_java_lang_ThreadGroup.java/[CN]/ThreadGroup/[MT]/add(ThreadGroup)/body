@@ -1,0 +1,8 @@
+{
+synchronized (groups) {
+    if (isDestroyed) {
+      throw new IllegalThreadStateException();
+    }
+    groups.add(g);
+  }
+}

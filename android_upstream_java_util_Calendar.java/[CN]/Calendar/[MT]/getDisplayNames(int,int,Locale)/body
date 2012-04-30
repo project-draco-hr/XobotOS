@@ -1,0 +1,12 @@
+{
+  checkStyle(style);
+  complete();
+  Map<String,Integer> result=new HashMap<String,Integer>();
+  if (style == SHORT || style == ALL_STYLES) {
+    insertValuesInMap(result,getDisplayNameArray(field,SHORT,locale));
+  }
+  if (style == LONG || style == ALL_STYLES) {
+    insertValuesInMap(result,getDisplayNameArray(field,LONG,locale));
+  }
+  return result.isEmpty() ? null : result;
+}

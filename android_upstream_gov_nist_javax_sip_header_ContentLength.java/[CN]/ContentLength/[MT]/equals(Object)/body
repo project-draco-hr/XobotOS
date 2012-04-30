@@ -1,0 +1,7 @@
+{
+  if (other instanceof ContentLengthHeader) {
+    final ContentLengthHeader o=(ContentLengthHeader)other;
+    return this.getContentLength() == o.getContentLength();
+  }
+  return false;
+}

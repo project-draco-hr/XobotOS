@@ -1,0 +1,8 @@
+{
+  while (klass != null) {
+    ReferenceById annotation=klass.getAnnotation(ReferenceById.class);
+    if (annotation != null)     return annotation;
+    klass=klass.getSuperclass();
+  }
+  return null;
+}

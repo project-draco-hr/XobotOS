@@ -1,0 +1,3 @@
+def TestArSupportsT(ar_command='ar', cc_command='cc'):
+    "Test whether 'ar' supports the 'T' flag."
+    return TestCommands(['%(cc)s -c test.c', '%(ar)s crsT test.a test.o', '%(cc)s test.a'], files={'test.c': 'int main(){}', }, env={'ar': ar_command, 'cc': cc_command, })

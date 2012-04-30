@@ -1,0 +1,4 @@
+{
+  if (meth == null)   throw new NullPointerException("JAIN-SIP Exception, CSeq" + ", setMethod(), the meth parameter is null");
+  this.method=SIPRequest.getCannonicalName(meth);
+}

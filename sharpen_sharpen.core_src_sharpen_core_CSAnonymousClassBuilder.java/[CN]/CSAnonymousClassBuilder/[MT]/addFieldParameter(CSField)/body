@@ -1,0 +1,6 @@
+{
+  _type.addMember(field);
+  String parameterName=field.name();
+  _constructor.addParameter(parameterName,field.type());
+  addToConstructor(createFieldAssignment(field.name(),parameterName));
+}

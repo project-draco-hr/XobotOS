@@ -1,0 +1,35 @@
+{
+  final View.TransformationInfo info=mView.mTransformationInfo;
+switch (propertyConstant) {
+case TRANSLATION_X:
+    info.mTranslationX=value;
+  break;
+case TRANSLATION_Y:
+info.mTranslationY=value;
+break;
+case ROTATION:
+info.mRotation=value;
+break;
+case ROTATION_X:
+info.mRotationX=value;
+break;
+case ROTATION_Y:
+info.mRotationY=value;
+break;
+case SCALE_X:
+info.mScaleX=value;
+break;
+case SCALE_Y:
+info.mScaleY=value;
+break;
+case X:
+info.mTranslationX=value - mView.mLeft;
+break;
+case Y:
+info.mTranslationY=value - mView.mTop;
+break;
+case ALPHA:
+info.mAlpha=value;
+break;
+}
+}

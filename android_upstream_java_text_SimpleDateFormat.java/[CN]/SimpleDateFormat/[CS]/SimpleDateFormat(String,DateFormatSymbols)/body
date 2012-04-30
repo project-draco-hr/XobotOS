@@ -1,0 +1,6 @@
+{
+  this(Locale.getDefault());
+  validatePattern(template);
+  pattern=template;
+  formatData=(DateFormatSymbols)value.clone();
+}

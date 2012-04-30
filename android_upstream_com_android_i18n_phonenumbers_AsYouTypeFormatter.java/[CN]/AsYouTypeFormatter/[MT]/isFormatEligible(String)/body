@@ -1,0 +1,3 @@
+{
+  return ELIGIBLE_FORMAT_PATTERN.matcher(format).matches();
+}

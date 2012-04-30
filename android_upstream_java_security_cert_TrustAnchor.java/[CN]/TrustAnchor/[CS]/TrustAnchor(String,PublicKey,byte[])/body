@@ -1,0 +1,23 @@
+{
+  if (caName == null) {
+    throw new NullPointerException("caName == null");
+  }
+  this.caName=caName;
+  if (caPublicKey == null) {
+    throw new NullPointerException("caPublicKey == null");
+  }
+  this.caPublicKey=caPublicKey;
+  if (nameConstraints != null) {
+    this.nameConstraints=new byte[nameConstraints.length];
+    System.arraycopy(nameConstraints,0,this.nameConstraints,0,this.nameConstraints.length);
+    processNameConstraints();
+  }
+ else {
+    this.nameConstraints=null;
+  }
+  this.trustedCert=null;
+  if (caName.isEmpty()) {
+    throw new IllegalArgumentException("caName.isEmpty()");
+  }
+  this.caPrincipal=new X500Principal(this.caName);
+}

@@ -1,0 +1,6 @@
+{
+  long time=System.currentTimeMillis();
+  byte[] bytes=sipMessage.encodeAsBytes(this.getTransport());
+  sendMessage(bytes,receiverAddress,receiverPort,sipMessage instanceof SIPRequest);
+  logMessage(sipMessage,receiverAddress,receiverPort,time);
+}

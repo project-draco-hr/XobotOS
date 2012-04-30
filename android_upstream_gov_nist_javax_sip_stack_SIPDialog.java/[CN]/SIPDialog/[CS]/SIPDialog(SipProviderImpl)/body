@@ -1,0 +1,9 @@
+{
+  this.terminateOnBye=true;
+  this.routeList=new RouteList();
+  this.dialogState=NULL_STATE;
+  localSequenceNumber=0;
+  remoteSequenceNumber=-1;
+  this.sipProvider=provider;
+  eventListeners=new CopyOnWriteArraySet<SIPDialogEventListener>();
+}

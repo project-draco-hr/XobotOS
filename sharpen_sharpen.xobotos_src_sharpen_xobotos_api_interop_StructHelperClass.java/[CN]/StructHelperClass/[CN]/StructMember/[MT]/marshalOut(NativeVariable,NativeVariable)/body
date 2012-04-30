@@ -1,0 +1,10 @@
+{
+  if (getMode() == Mode.IN)   return null;
+  if (isClass()) {
+    Expression srcAddr=new DereferenceExpression(getReference(src));
+    return new ExpressionStatement(new MethodInvocation(getHelper().MARSHAL_OUT.expr(),srcAddr,getReference(dest)));
+  }
+ else {
+    return new AssignmentStatement(getReference(dest),getReference(src));
+  }
+}

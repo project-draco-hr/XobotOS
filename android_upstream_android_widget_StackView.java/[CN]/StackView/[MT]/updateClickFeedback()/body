@@ -1,0 +1,11 @@
+{
+  if (!mClickFeedbackIsValid) {
+    View v=getViewAtRelativeIndex(1);
+    if (v != null) {
+      mClickFeedback.setImageBitmap(sHolographicHelper.createClickOutline(v,mClickColor));
+      mClickFeedback.setTranslationX(v.getTranslationX());
+      mClickFeedback.setTranslationY(v.getTranslationY());
+    }
+    mClickFeedbackIsValid=true;
+  }
+}

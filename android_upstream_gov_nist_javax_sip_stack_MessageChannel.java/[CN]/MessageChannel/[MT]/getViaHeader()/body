@@ -1,0 +1,11 @@
+{
+  Via channelViaHeader;
+  channelViaHeader=new Via();
+  try {
+    channelViaHeader.setTransport(getTransport());
+  }
+ catch (  ParseException ex) {
+  }
+  channelViaHeader.setSentBy(getHostPort());
+  return channelViaHeader;
+}

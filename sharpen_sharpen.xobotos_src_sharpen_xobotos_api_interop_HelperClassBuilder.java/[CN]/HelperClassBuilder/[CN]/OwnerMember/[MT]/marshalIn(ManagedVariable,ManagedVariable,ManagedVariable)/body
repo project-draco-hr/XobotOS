@@ -1,0 +1,3 @@
+{
+  return new CSExpressionStatement(-1,new CSInfixExpression("=",getReference(obj),MANAGED_MAGIC));
+}

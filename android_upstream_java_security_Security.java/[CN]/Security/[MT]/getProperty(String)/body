@@ -1,0 +1,10 @@
+{
+  if (key == null) {
+    throw new NullPointerException("key == null");
+  }
+  String property=secprops.getProperty(key);
+  if (property != null) {
+    property=property.trim();
+  }
+  return property;
+}

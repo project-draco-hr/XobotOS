@@ -1,0 +1,13 @@
+{
+  String encodedAuthority=authority.getEncoded();
+  if (encodedAuthority != null) {
+    builder.append("//").append(encodedAuthority);
+  }
+  String encodedPath=path.getEncoded();
+  if (encodedPath != null) {
+    builder.append(encodedPath);
+  }
+  if (!query.isEmpty()) {
+    builder.append('?').append(query.getEncoded());
+  }
+}

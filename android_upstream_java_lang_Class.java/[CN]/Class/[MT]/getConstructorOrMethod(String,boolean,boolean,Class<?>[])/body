@@ -1,0 +1,21 @@
+{
+  if (recursive && !publicOnly) {
+    throw new AssertionError();
+  }
+  if (name == null) {
+    throw new NullPointerException("name == null");
+  }
+  if (parameterTypes == null) {
+    parameterTypes=EmptyArray.CLASS;
+  }
+  for (  Class<?> c : parameterTypes) {
+    if (c == null) {
+      throw new NoSuchMethodException("parameter type is null");
+    }
+  }
+  Member result=recursive ? getPublicConstructorOrMethodRecursive(name,parameterTypes) : Class.getDeclaredConstructorOrMethod(this,name,parameterTypes);
+  if (result == null || publicOnly && (result.getModifiers() & Modifier.PUBLIC) == 0) {
+    throw new NoSuchMethodException(name + " " + Arrays.toString(parameterTypes));
+  }
+  return result;
+}

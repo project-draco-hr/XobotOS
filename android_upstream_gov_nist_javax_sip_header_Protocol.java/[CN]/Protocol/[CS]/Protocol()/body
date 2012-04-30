@@ -1,0 +1,5 @@
+{
+  protocolName="SIP";
+  protocolVersion="2.0";
+  transport="UDP";
+}

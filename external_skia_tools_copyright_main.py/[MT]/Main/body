@@ -1,0 +1,25 @@
+def Main(root_directory):
+    'Run everything.\n\n    @param root_directory root directory within which to modify all files\n    '
+    filepaths = GetAllFilepaths(root_directory)
+    for filepath in filepaths:
+        parser = fileparser.CreateParser(filepath)
+        if (not parser):
+            ReportWarning(('cannot find a parser for file %s, skipping...' % filepath))
+            continue
+        old_file_contents = ReadFileIntoString(filepath)
+        comment_blocks = parser.FindAllCommentBlocks(old_file_contents)
+        if (not comment_blocks):
+            ReportWarning(('cannot find any comment blocks in file %s' % filepath))
+        old_copyright_block = parser.FindCopyrightBlock(comment_blocks)
+        if (not old_copyright_block):
+            ReportWarning(('cannot find copyright block in file %s' % filepath))
+        (year, holder) = parser.GetCopyrightBlockAttributes(old_copyright_block)
+        if (holder and (not ConfirmAllowedCopyrightHolder(holder))):
+            ReportWarning(('unrecognized copyright holder "%s" in file %s, skipping...' % (holder, filepath)))
+            continue
+        new_copyright_block = parser.CreateCopyrightBlock(year, holder)
+        if old_copyright_block:
+            new_file_contents = old_file_contents.replace(old_copyright_block, new_copyright_block, 1)
+        else:
+            new_file_contents = (new_copyright_block + old_file_contents)
+        WriteStringToFile(new_file_contents, filepath)

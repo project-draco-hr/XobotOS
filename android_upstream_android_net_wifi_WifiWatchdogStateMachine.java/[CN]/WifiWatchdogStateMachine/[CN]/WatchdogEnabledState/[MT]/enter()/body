@@ -1,0 +1,5 @@
+{
+  resetWatchdogState();
+  mContext.registerReceiver(mBroadcastReceiver,mIntentFilter);
+  if (DBG)   log("WifiWatchdogService enabled");
+}

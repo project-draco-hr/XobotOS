@@ -1,0 +1,7 @@
+{
+  long time=in.readLong();
+  if (TRACE) {
+    System.out.println("\ttime=" + Long.toHexString(time) + " "+ new Date(time));
+  }
+  hprofData.setStartMillis(time);
+}

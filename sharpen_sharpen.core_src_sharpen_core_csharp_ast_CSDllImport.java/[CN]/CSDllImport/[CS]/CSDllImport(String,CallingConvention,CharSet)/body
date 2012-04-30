@@ -1,0 +1,5 @@
+{
+  this._dllName=dllName;
+  this._cconv=cconv;
+  this._charSet=charSet;
+}

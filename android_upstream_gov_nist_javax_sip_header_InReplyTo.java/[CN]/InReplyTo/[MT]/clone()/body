@@ -1,0 +1,5 @@
+{
+  InReplyTo retval=(InReplyTo)super.clone();
+  if (this.callId != null)   retval.callId=(CallIdentifier)this.callId.clone();
+  return retval;
+}

@@ -1,0 +1,5 @@
+'\nCheck that duplicate targets in a directory gives an error.\n'
+import TestGyp
+test = TestGyp.TestGyp()
+test.run_gyp('all.gyp', chdir='src', status=1, stderr=None)
+test.pass_test()

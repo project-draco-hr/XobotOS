@@ -1,0 +1,9 @@
+{
+  if (key == null) {
+    throw new NullPointerException();
+  }
+  if (key.isEmpty()) {
+    throw new IllegalArgumentException();
+  }
+  return (String)getProperties().remove(key);
+}

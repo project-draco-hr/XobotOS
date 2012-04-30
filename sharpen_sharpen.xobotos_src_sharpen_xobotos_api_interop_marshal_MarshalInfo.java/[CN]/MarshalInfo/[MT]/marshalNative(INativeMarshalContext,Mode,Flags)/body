@@ -1,0 +1,6 @@
+{
+  final AbstractTypeReference type=getNativeType(mode,flags);
+  final NativeVariable param=context.createParameter(null,type);
+  final Expression expr=marshalNativeArg(param.getReference(),mode,flags);
+  context.addArgument(expr);
+}

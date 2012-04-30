@@ -1,0 +1,32 @@
+{
+  int count=0;
+  StringBuilder buffer=new StringBuilder();
+  if (!languageCode.isEmpty()) {
+    String displayLanguage=getDisplayLanguage(locale);
+    buffer.append(displayLanguage.isEmpty() ? languageCode : displayLanguage);
+    ++count;
+  }
+  if (!countryCode.isEmpty()) {
+    if (count == 1) {
+      buffer.append(" (");
+    }
+    String displayCountry=getDisplayCountry(locale);
+    buffer.append(displayCountry.isEmpty() ? countryCode : displayCountry);
+    ++count;
+  }
+  if (!variantCode.isEmpty()) {
+    if (count == 1) {
+      buffer.append(" (");
+    }
+ else     if (count == 2) {
+      buffer.append(",");
+    }
+    String displayVariant=getDisplayVariant(locale);
+    buffer.append(displayVariant.isEmpty() ? variantCode : displayVariant);
+    ++count;
+  }
+  if (count > 1) {
+    buffer.append(")");
+  }
+  return buffer.toString();
+}

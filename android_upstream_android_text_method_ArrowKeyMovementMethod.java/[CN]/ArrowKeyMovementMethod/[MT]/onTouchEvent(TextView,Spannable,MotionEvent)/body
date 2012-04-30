@@ -1,0 +1,45 @@
+{
+  int initialScrollX=-1;
+  int initialScrollY=-1;
+  final int action=event.getAction();
+  if (action == MotionEvent.ACTION_UP) {
+    initialScrollX=Touch.getInitialScrollX(widget,buffer);
+    initialScrollY=Touch.getInitialScrollY(widget,buffer);
+  }
+  boolean handled=Touch.onTouchEvent(widget,buffer,event);
+  if (widget.isFocused() && !widget.didTouchFocusSelect()) {
+    if (action == MotionEvent.ACTION_DOWN) {
+      if (isSelecting(buffer)) {
+        int offset=widget.getOffsetForPosition(event.getX(),event.getY());
+        buffer.setSpan(LAST_TAP_DOWN,offset,offset,Spannable.SPAN_POINT_POINT);
+        widget.getParent().requestDisallowInterceptTouchEvent(true);
+      }
+    }
+ else     if (action == MotionEvent.ACTION_MOVE) {
+      if (isSelecting(buffer) && handled) {
+        widget.cancelLongPress();
+        int offset=widget.getOffsetForPosition(event.getX(),event.getY());
+        Selection.extendSelection(buffer,offset);
+        return true;
+      }
+    }
+ else     if (action == MotionEvent.ACTION_UP) {
+      if ((initialScrollY >= 0 && initialScrollY != widget.getScrollY()) || (initialScrollX >= 0 && initialScrollX != widget.getScrollX())) {
+        widget.moveCursorToVisibleOffset();
+        return true;
+      }
+      int offset=widget.getOffsetForPosition(event.getX(),event.getY());
+      if (isSelecting(buffer)) {
+        buffer.removeSpan(LAST_TAP_DOWN);
+        Selection.extendSelection(buffer,offset);
+      }
+ else       if (!widget.shouldIgnoreActionUpEvent()) {
+        Selection.setSelection(buffer,offset);
+      }
+      MetaKeyKeyListener.adjustMetaAfterKeypress(buffer);
+      MetaKeyKeyListener.resetLockedMeta(buffer);
+      return true;
+    }
+  }
+  return handled;
+}

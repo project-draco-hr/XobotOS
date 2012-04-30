@@ -1,0 +1,15 @@
+{
+  if (algorithm == null) {
+    throw new NullPointerException();
+  }
+  Engine.SpiAndProvider sap=ENGINE.getInstance(algorithm,null);
+  Object spi=sap.spi;
+  Provider provider=sap.provider;
+  if (spi instanceof KeyPairGenerator) {
+    KeyPairGenerator result=(KeyPairGenerator)spi;
+    result.algorithm=algorithm;
+    result.provider=provider;
+    return result;
+  }
+  return new KeyPairGeneratorImpl((KeyPairGeneratorSpi)spi,provider,algorithm);
+}

@@ -1,0 +1,6 @@
+{
+  Integer socket=mStreams.remove(stream);
+  if (socket != null) {
+    nativeRemove(socket);
+  }
+}

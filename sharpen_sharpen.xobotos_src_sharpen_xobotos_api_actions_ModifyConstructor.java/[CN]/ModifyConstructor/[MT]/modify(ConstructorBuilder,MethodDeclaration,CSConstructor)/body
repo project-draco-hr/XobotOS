@@ -1,0 +1,4 @@
+{
+  if (_removeChainedInvocation)   ctor.chainedConstructorInvocation(null);
+  super.modify(builder,node,ctor);
+}

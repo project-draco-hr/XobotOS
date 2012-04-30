@@ -1,0 +1,7 @@
+{
+  if (!printNativeType(_config,_unit,_sourceName))   return false;
+  if (_header != null) {
+    if (!printNativeType(_config,_header,_headerName))     return false;
+  }
+  return true;
+}

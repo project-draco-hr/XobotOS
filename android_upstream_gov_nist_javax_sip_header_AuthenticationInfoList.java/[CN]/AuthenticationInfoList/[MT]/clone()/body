@@ -1,0 +1,5 @@
+{
+  AuthenticationInfoList retval=new AuthenticationInfoList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

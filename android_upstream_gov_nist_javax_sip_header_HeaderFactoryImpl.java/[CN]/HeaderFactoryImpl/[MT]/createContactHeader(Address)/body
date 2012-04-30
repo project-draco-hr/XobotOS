@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("null arg address");
+  Contact contact=new Contact();
+  contact.setAddress(address);
+  return contact;
+}

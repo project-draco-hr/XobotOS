@@ -1,0 +1,5 @@
+{
+  mIMM=mgr;
+  mTargetView=null;
+  mDummyMode=!fullEditor;
+}

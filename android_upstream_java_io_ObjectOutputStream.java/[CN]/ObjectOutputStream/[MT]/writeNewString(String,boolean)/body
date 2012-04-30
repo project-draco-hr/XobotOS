@@ -1,0 +1,24 @@
+{
+  long count=ModifiedUtf8.countBytes(object,false);
+  byte[] buffer;
+  int offset=0;
+  if (count <= 0xffff) {
+    buffer=new byte[1 + SizeOf.SHORT + (int)count];
+    buffer[offset++]=TC_STRING;
+    Memory.pokeShort(buffer,offset,(short)count,ByteOrder.BIG_ENDIAN);
+    offset+=SizeOf.SHORT;
+  }
+ else {
+    buffer=new byte[1 + SizeOf.LONG + (int)count];
+    buffer[offset++]=TC_LONGSTRING;
+    Memory.pokeLong(buffer,offset,count,ByteOrder.BIG_ENDIAN);
+    offset+=SizeOf.LONG;
+  }
+  ModifiedUtf8.encode(buffer,offset,object);
+  output.write(buffer,0,buffer.length);
+  int handle=nextHandle();
+  if (!unshared) {
+    objectsWritten.put(object,handle);
+  }
+  return handle;
+}

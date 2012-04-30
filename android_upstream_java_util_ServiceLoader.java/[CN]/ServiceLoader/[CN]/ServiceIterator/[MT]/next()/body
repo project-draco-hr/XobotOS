@@ -1,0 +1,12 @@
+{
+  if (!hasNext()) {
+    throw new NoSuchElementException();
+  }
+  String className=queue.remove();
+  try {
+    return service.cast(classLoader.loadClass(className).newInstance());
+  }
+ catch (  Exception e) {
+    throw new ServiceConfigurationError("Couldn't instantiate class " + className,e);
+  }
+}

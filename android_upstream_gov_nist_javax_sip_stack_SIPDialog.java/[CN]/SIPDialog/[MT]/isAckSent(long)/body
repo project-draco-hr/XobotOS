@@ -1,0 +1,14 @@
+{
+  if (this.getLastTransaction() == null)   return true;
+  if (this.getLastTransaction() instanceof ClientTransaction) {
+    if (this.getLastAckSent() == null) {
+      return false;
+    }
+ else {
+      return cseqNo <= ((SIPRequest)this.getLastAckSent()).getCSeq().getSeqNumber();
+    }
+  }
+ else {
+    return true;
+  }
+}

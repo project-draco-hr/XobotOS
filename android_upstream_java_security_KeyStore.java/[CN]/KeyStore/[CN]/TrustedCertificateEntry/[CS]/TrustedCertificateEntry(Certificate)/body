@@ -1,0 +1,6 @@
+{
+  if (trustCertificate == null) {
+    throw new NullPointerException("trustCertificate == null");
+  }
+  this.trustCertificate=trustCertificate;
+}

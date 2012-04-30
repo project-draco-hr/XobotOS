@@ -1,0 +1,6 @@
+{
+  if (secureRandom == null) {
+    secureRandom=new SecureRandom();
+  }
+  init(opmode,key,secureRandom);
+}

@@ -1,0 +1,19 @@
+{
+  _writer.writeIndentation();
+  _writer.write("for(");
+  if (node.getVariable() != null) {
+    node.getVariable().getType().accept(this);
+    _writer.write(" ");
+    _writer.write(node.getVariable().getName());
+    _writer.write(" = ");
+  }
+  node.getInitializer().accept(this);
+  _writer.writeBlock(";");
+  _writer.writeSpace();
+  node.getCheck().accept(this);
+  _writer.writeBlock(";");
+  _writer.writeSpace();
+  node.getUpdate().accept(this);
+  _writer.writeLine(")");
+  node.getBody().accept(this);
+}

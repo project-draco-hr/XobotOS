@@ -1,0 +1,9 @@
+{
+  begin("glGetTexEnviv");
+  arg("env",env);
+  arg("pname",pname);
+  arg("params",params.toString());
+  end();
+  mgl11.glGetTexEnviv(env,pname,params);
+  checkError();
+}

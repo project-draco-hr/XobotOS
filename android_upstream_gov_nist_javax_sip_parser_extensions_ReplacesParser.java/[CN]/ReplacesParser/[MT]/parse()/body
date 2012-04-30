@@ -1,0 +1,16 @@
+{
+  if (debug)   dbg_enter("parse");
+  try {
+    headerName(TokenTypes.REPLACES_TO);
+    Replaces replaces=new Replaces();
+    this.lexer.SPorHT();
+    String callId=lexer.byteStringNoSemicolon();
+    this.lexer.SPorHT();
+    super.parse(replaces);
+    replaces.setCallId(callId);
+    return replaces;
+  }
+  finally {
+    if (debug)     dbg_leave("parse");
+  }
+}

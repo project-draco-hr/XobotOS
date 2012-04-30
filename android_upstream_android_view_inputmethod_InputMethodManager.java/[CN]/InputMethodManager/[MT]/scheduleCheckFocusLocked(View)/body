@@ -1,0 +1,6 @@
+{
+  Handler vh=view.getHandler();
+  if (vh != null && !vh.hasMessages(ViewRootImpl.CHECK_FOCUS)) {
+    vh.sendMessage(vh.obtainMessage(ViewRootImpl.CHECK_FOCUS));
+  }
+}

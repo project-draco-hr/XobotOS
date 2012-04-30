@@ -1,0 +1,4 @@
+Class<?> declaringClass
+Class<?> type
+String name
+int slot

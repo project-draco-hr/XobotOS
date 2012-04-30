@@ -1,0 +1,7 @@
+{
+  final List arguments=node.arguments();
+  if (arguments.size() != 1) {
+    unsupportedConstruct(node,SharpenAnnotations.SHARPEN_UNWRAP + " only works against single argument methods.");
+  }
+  pushExpression(mapExpression((Expression)arguments.get(0)));
+}

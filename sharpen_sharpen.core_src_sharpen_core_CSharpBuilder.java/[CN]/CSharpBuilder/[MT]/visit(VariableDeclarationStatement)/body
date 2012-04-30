@@ -1,0 +1,7 @@
+{
+  for (  Object f : node.fragments()) {
+    VariableDeclarationFragment variable=(VariableDeclarationFragment)f;
+    addStatement(new CSDeclarationStatement(node.getStartPosition(),createVariableDeclaration(variable)));
+  }
+  return false;
+}

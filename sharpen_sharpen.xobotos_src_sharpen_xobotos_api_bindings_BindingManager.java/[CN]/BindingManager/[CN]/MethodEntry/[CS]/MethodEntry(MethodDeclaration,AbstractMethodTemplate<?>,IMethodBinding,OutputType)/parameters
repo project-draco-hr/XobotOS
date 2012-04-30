@@ -1,0 +1,4 @@
+MethodDeclaration node
+AbstractMethodTemplate<?> template
+IMethodBinding baseMethod
+OutputType output

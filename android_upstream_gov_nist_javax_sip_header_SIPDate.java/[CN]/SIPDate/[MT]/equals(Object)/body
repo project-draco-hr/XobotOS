@@ -1,0 +1,5 @@
+{
+  if (that.getClass() != this.getClass())   return false;
+  SIPDate other=(SIPDate)that;
+  return this.wkday == other.wkday && this.day == other.day && this.month == other.month && this.year == other.year && this.hour == other.hour && this.minute == other.minute && this.second == other.second;
+}

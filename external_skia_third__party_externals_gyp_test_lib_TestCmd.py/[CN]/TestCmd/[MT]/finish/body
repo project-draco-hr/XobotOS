@@ -1,0 +1,12 @@
+def finish(self, popen, **kw):
+    '\n        Finishes and waits for the process being run under control of\n        the specified popen argument, recording the exit status,\n        standard output and error output.\n        '
+    popen.stdin.close()
+    self.status = popen.wait()
+    if (not self.status):
+        self.status = 0
+    self._stdout.append(popen.stdout.read())
+    if popen.stderr:
+        stderr = popen.stderr.read()
+    else:
+        stderr = ''
+    self._stderr.append(stderr)

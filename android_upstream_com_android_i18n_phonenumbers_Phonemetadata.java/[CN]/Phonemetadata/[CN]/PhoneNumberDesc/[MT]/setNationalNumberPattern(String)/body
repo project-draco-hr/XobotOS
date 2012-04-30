@@ -1,0 +1,5 @@
+{
+  hasNationalNumberPattern=true;
+  nationalNumberPattern_=value;
+  return this;
+}

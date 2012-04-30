@@ -1,0 +1,10 @@
+{
+  String name=logger.getName();
+  if (loggers.get(name) != null) {
+    return false;
+  }
+  addToFamilyTree(logger,name);
+  loggers.put(name,logger);
+  logger.setManager(this);
+  return true;
+}

@@ -1,0 +1,20 @@
+'\nVerify the settings that cause a set of programs to be created in\na specific build directory, and that no intermediate built files\nget created outside of that build directory hierarchy even when\nreferred to with deeply-nested ../../.. paths.\n'
+import TestGyp
+test = TestGyp.TestGyp(formats=['!make', '!ninja'])
+test.run_gyp('prog1.gyp', '--depth=..', chdir='src')
+test.relocate('src', 'relocate/src')
+test.subdir('relocate/builddir')
+test.writable('relocate', False)
+test.writable('relocate/builddir', True)
+test.build('prog1.gyp', SYMROOT=None, chdir='relocate/src')
+expect1 = 'Hello from prog1.c\nHello from func1.c\n'
+expect2 = 'Hello from subdir2/prog2.c\nHello from func2.c\n'
+expect3 = 'Hello from subdir2/subdir3/prog3.c\nHello from func3.c\n'
+expect4 = 'Hello from subdir2/subdir3/subdir4/prog4.c\nHello from func4.c\n'
+expect5 = 'Hello from subdir2/subdir3/subdir4/subdir5/prog5.c\nHello from func5.c\n'
+run_builddir('prog1', expect1)
+run_builddir('prog2', expect2)
+run_builddir('prog3', expect3)
+run_builddir('prog4', expect4)
+run_builddir('prog5', expect5)
+test.pass_test()

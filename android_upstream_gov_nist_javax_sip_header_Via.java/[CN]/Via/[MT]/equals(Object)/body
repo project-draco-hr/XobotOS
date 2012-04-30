@@ -1,0 +1,8 @@
+{
+  if (other == this)   return true;
+  if (other instanceof ViaHeader) {
+    final ViaHeader o=(ViaHeader)other;
+    return getProtocol().equalsIgnoreCase(o.getProtocol()) && getTransport().equalsIgnoreCase(o.getTransport()) && getHost().equalsIgnoreCase(o.getHost())&& getPort() == o.getPort() && equalParameters(o);
+  }
+  return false;
+}

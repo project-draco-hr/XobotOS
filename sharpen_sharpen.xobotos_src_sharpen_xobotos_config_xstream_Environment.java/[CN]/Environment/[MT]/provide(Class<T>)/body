@@ -1,0 +1,6 @@
+{
+  for (  final Class<?> type : _variables.keySet()) {
+    if (klass.isAssignableFrom(type))     return klass.cast(_variables.get(type));
+  }
+  throw new ConfigurationException("No instance of class '%s' available in current environment",klass);
+}

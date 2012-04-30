@@ -1,0 +1,5 @@
+{
+  StringBuilder nationalNumber=new StringBuilder((number.hasItalianLeadingZero() && number.isItalianLeadingZero() && isLeadingZeroPossible(number.getCountryCode())) ? "0" : "");
+  nationalNumber.append(number.getNationalNumber());
+  return nationalNumber.toString();
+}

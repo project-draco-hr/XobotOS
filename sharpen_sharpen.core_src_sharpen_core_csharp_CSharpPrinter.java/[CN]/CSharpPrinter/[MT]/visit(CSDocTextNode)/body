@@ -1,0 +1,3 @@
+{
+  writeXmlDoc(xmlEscape(node.text()));
+}

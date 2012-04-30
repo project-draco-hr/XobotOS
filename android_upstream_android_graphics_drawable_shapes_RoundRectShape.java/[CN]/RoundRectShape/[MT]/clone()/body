@@ -1,0 +1,9 @@
+{
+  RoundRectShape shape=(RoundRectShape)super.clone();
+  shape.mOuterRadii=mOuterRadii != null ? mOuterRadii.clone() : null;
+  shape.mInnerRadii=mInnerRadii != null ? mInnerRadii.clone() : null;
+  shape.mInset=new RectF(mInset);
+  shape.mInnerRect=new RectF(mInnerRect);
+  shape.mPath=new Path(mPath);
+  return shape;
+}

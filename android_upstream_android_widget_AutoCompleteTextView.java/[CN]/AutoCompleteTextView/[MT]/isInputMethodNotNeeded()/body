@@ -1,0 +1,3 @@
+{
+  return mPopup.getInputMethodMode() == ListPopupWindow.INPUT_METHOD_NOT_NEEDED;
+}

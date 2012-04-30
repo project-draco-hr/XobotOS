@@ -1,0 +1,7 @@
+{
+  InputStream localIn=in;
+  if (buf == null || localIn == null) {
+    throw streamClosed();
+  }
+  return count - pos + localIn.available();
+}

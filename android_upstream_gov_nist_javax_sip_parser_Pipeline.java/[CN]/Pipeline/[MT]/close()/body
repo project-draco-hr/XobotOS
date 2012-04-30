@@ -1,0 +1,7 @@
+{
+  this.isClosed=true;
+synchronized (this.buffList) {
+    this.buffList.notifyAll();
+  }
+  this.pipe.close();
+}

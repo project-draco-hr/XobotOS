@@ -1,0 +1,40 @@
+{
+  if (name.equals(lexicalHandlerProperty)) {
+    if (value == null) {
+      theLexicalHandler=this;
+    }
+ else     if (value instanceof LexicalHandler) {
+      theLexicalHandler=(LexicalHandler)value;
+    }
+ else {
+      throw new SAXNotSupportedException("Your lexical handler is not a LexicalHandler");
+    }
+  }
+ else   if (name.equals(scannerProperty)) {
+    if (value instanceof Scanner) {
+      theScanner=(Scanner)value;
+    }
+ else {
+      throw new SAXNotSupportedException("Your scanner is not a Scanner");
+    }
+  }
+ else   if (name.equals(schemaProperty)) {
+    if (value instanceof Schema) {
+      theSchema=(Schema)value;
+    }
+ else {
+      throw new SAXNotSupportedException("Your schema is not a Schema");
+    }
+  }
+ else   if (name.equals(autoDetectorProperty)) {
+    if (value instanceof AutoDetector) {
+      theAutoDetector=(AutoDetector)value;
+    }
+ else {
+      throw new SAXNotSupportedException("Your auto-detector is not an AutoDetector");
+    }
+  }
+ else {
+    throw new SAXNotRecognizedException("Unknown property " + name);
+  }
+}

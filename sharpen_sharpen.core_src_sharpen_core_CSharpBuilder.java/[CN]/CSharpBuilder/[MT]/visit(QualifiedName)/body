@@ -1,0 +1,15 @@
+{
+  if (isTypeReference(node)) {
+    pushTypeReference(node.resolveTypeBinding());
+  }
+ else {
+    String primitiveTypeRef=checkForPrimitiveTypeReference(node);
+    if (primitiveTypeRef != null) {
+      pushTypeOfExpression(new CSTypeReference(primitiveTypeRef));
+    }
+ else {
+      handleRegularQualifiedName(node);
+    }
+  }
+  return false;
+}

@@ -1,0 +1,14 @@
+{
+switch (visibility) {
+case PUBLIC:
+    return CSVisibility.Public;
+case PROTECTED:
+  return CSVisibility.Protected;
+case PRIVATE:
+return CSVisibility.Private;
+case PROTECTED_INTERNAL:
+return CSVisibility.ProtectedInternal;
+default :
+return CSVisibility.Internal;
+}
+}

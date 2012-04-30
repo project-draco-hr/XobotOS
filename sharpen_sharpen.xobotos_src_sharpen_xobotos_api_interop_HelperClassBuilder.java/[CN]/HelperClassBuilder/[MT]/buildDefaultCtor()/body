@@ -1,0 +1,4 @@
+{
+  Constructor ctor=new Constructor(_klassType,Visibility.PRIVATE);
+  _klass.addMember(ctor.getDeclaration());
+}

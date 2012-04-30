@@ -1,0 +1,16 @@
+{
+  Object[] toAdd=collection.toArray();
+  Object[] newElements=new Object[elements.length + toAdd.length];
+  System.arraycopy(elements,0,newElements,0,elements.length);
+  int addedCount=0;
+  for (  Object o : toAdd) {
+    if (indexOf(o,newElements,0,elements.length + addedCount) == -1) {
+      newElements[elements.length + addedCount++]=o;
+    }
+  }
+  if (addedCount < toAdd.length) {
+    newElements=Arrays.copyOfRange(newElements,0,elements.length + addedCount);
+  }
+  elements=newElements;
+  return addedCount;
+}

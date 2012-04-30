@@ -1,0 +1,13 @@
+{
+  if (object == null) {
+    throw new NullPointerException();
+  }
+  StringBuffer buffer=new StringBuffer();
+  ArrayList<FieldContainer> fields=new ArrayList<FieldContainer>();
+  formatImpl((Object[])object,buffer,new FieldPosition(0),fields);
+  AttributedString as=new AttributedString(buffer.toString());
+  for (  FieldContainer fc : fields) {
+    as.addAttribute(fc.attribute,fc.value,fc.start,fc.end);
+  }
+  return as.getIterator();
+}

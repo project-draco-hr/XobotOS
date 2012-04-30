@@ -1,0 +1,9 @@
+{
+  super.onClick();
+  boolean newValue=!isChecked();
+  mSendClickAccessibilityEvent=true;
+  if (!callChangeListener(newValue)) {
+    return;
+  }
+  setChecked(newValue);
+}

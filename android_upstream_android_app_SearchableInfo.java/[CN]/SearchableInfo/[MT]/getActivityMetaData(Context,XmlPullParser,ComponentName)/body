@@ -1,0 +1,49 @@
+{
+  SearchableInfo result=null;
+  Context activityContext=createActivityContext(context,cName);
+  if (activityContext == null)   return null;
+  try {
+    int tagType=xml.next();
+    while (tagType != XmlPullParser.END_DOCUMENT) {
+      if (tagType == XmlPullParser.START_TAG) {
+        if (xml.getName().equals(MD_XML_ELEMENT_SEARCHABLE)) {
+          AttributeSet attr=Xml.asAttributeSet(xml);
+          if (attr != null) {
+            try {
+              result=new SearchableInfo(activityContext,attr,cName);
+            }
+ catch (            IllegalArgumentException ex) {
+              Log.w(LOG_TAG,"Invalid searchable metadata for " + cName.flattenToShortString() + ": "+ ex.getMessage());
+              return null;
+            }
+          }
+        }
+ else         if (xml.getName().equals(MD_XML_ELEMENT_SEARCHABLE_ACTION_KEY)) {
+          if (result == null) {
+            return null;
+          }
+          AttributeSet attr=Xml.asAttributeSet(xml);
+          if (attr != null) {
+            try {
+              result.addActionKey(new ActionKeyInfo(activityContext,attr));
+            }
+ catch (            IllegalArgumentException ex) {
+              Log.w(LOG_TAG,"Invalid action key for " + cName.flattenToShortString() + ": "+ ex.getMessage());
+              return null;
+            }
+          }
+        }
+      }
+      tagType=xml.next();
+    }
+  }
+ catch (  XmlPullParserException e) {
+    Log.w(LOG_TAG,"Reading searchable metadata for " + cName.flattenToShortString(),e);
+    return null;
+  }
+catch (  IOException e) {
+    Log.w(LOG_TAG,"Reading searchable metadata for " + cName.flattenToShortString(),e);
+    return null;
+  }
+  return result;
+}

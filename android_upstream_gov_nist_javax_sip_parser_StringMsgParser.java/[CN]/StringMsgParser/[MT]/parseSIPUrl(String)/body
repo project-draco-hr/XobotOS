@@ -1,0 +1,8 @@
+{
+  try {
+    return new URLParser(url).sipURL(true);
+  }
+ catch (  ClassCastException ex) {
+    throw new ParseException(url + " Not a SIP URL ",0);
+  }
+}

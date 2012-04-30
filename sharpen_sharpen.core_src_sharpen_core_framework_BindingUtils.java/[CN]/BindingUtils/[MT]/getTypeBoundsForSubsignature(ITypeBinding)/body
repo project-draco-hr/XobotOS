@@ -1,0 +1,14 @@
+{
+  ITypeBinding[] typeBounds=typeParameter.getTypeBounds();
+  int count=typeBounds.length;
+  if (count == 0)   return Collections.EMPTY_SET;
+  Set result=new HashSet(typeBounds.length);
+  for (int i=0; i < typeBounds.length; i++) {
+    ITypeBinding bound=typeBounds[i];
+    if ("java.lang.Object".equals(typeBounds[0].getQualifiedName()))     continue;
+ else     if (containsTypeVariables(bound))     result.add(bound.getErasure());
+ else     if (bound.isRawType())     result.add(bound.getTypeDeclaration());
+ else     result.add(bound);
+  }
+  return result;
+}

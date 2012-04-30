@@ -1,0 +1,9 @@
+{
+  StringBuffer retval=new StringBuffer();
+  ListIterator<ExtensionHeaderImpl> it=this.listIterator();
+  while (it.hasNext()) {
+    ExtensionHeaderImpl eh=(ExtensionHeaderImpl)it.next();
+    retval.append(eh.encode());
+  }
+  return retval.toString();
+}

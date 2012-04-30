@@ -1,0 +1,6 @@
+{
+  String mergeKey=sipRequest.getMergeId();
+  if (mergeKey != null) {
+    this.mergeTable.put(mergeKey,sipTransaction);
+  }
+}

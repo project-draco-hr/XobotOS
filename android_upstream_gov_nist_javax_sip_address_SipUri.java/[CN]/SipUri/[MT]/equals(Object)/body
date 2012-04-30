@@ -1,0 +1,57 @@
+{
+  if (that == this)   return true;
+  if (that instanceof SipURI) {
+    final SipURI a=this;
+    final SipURI b=(SipURI)that;
+    if (a.isSecure() ^ b.isSecure())     return false;
+    if (a.getUser() == null ^ b.getUser() == null)     return false;
+    if (a.getUserPassword() == null ^ b.getUserPassword() == null)     return false;
+    if (a.getUser() != null && !RFC2396UrlDecoder.decode(a.getUser()).equals(RFC2396UrlDecoder.decode(b.getUser())))     return false;
+    if (a.getUserPassword() != null && !RFC2396UrlDecoder.decode(a.getUserPassword()).equals(RFC2396UrlDecoder.decode(b.getUserPassword())))     return false;
+    if (a.getHost() == null ^ b.getHost() == null)     return false;
+    if (a.getHost() != null && !a.getHost().equalsIgnoreCase(b.getHost()))     return false;
+    if (a.getPort() != b.getPort())     return false;
+    for (Iterator i=a.getParameterNames(); i.hasNext(); ) {
+      String pname=(String)i.next();
+      String p1=a.getParameter(pname);
+      String p2=b.getParameter(pname);
+      if (p1 != null && p2 != null && !RFC2396UrlDecoder.decode(p1).equalsIgnoreCase(RFC2396UrlDecoder.decode(p2)))       return false;
+    }
+    if (a.getTransportParam() == null ^ b.getTransportParam() == null)     return false;
+    if (a.getUserParam() == null ^ b.getUserParam() == null)     return false;
+    if (a.getTTLParam() == -1 ^ b.getTTLParam() == -1)     return false;
+    if (a.getMethodParam() == null ^ b.getMethodParam() == null)     return false;
+    if (a.getMAddrParam() == null ^ b.getMAddrParam() == null)     return false;
+    if (a.getHeaderNames().hasNext() && !b.getHeaderNames().hasNext())     return false;
+    if (!a.getHeaderNames().hasNext() && b.getHeaderNames().hasNext())     return false;
+    if (a.getHeaderNames().hasNext() && b.getHeaderNames().hasNext()) {
+      HeaderFactory headerFactory=null;
+      try {
+        headerFactory=SipFactory.getInstance().createHeaderFactory();
+      }
+ catch (      PeerUnavailableException e) {
+        Debug.logError("Cannot get the header factory to parse the header of the sip uris to compare",e);
+        return false;
+      }
+      for (Iterator i=a.getHeaderNames(); i.hasNext(); ) {
+        String hname=(String)i.next();
+        String h1=a.getHeader(hname);
+        String h2=b.getHeader(hname);
+        if (h1 == null && h2 != null)         return false;
+        if (h2 == null && h1 != null)         return false;
+        if (h1 == null && h2 == null)         continue;
+        try {
+          Header header1=headerFactory.createHeader(hname,RFC2396UrlDecoder.decode(h1));
+          Header header2=headerFactory.createHeader(hname,RFC2396UrlDecoder.decode(h2));
+          if (!header1.equals(header2))           return false;
+        }
+ catch (        ParseException e) {
+          Debug.logError("Cannot parse one of the header of the sip uris to compare " + a + " "+ b,e);
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  return false;
+}

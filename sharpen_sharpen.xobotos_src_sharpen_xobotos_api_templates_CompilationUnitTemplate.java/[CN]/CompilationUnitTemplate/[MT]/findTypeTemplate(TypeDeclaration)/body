@@ -1,0 +1,13 @@
+{
+  if (!(node.getParent() instanceof CompilationUnit))   return null;
+  final CompilationUnit parent=(CompilationUnit)node.getParent();
+  final ByRef<TypeTemplate> result=new ByRef<TypeTemplate>();
+  TemplateVisitor visitor=new TemplateVisitor(){
+    @Override public void accept(    TypeTemplate type){
+      result.value=type;
+    }
+  }
+;
+  if (!visit(visitor,parent,node))   return null;
+  return result.value != null ? result.value : TypeTemplate.DEFAULT;
+}

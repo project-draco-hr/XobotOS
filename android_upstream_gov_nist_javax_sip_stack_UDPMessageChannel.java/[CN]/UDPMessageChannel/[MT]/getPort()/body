@@ -1,0 +1,3 @@
+{
+  return ((UDPMessageProcessor)messageProcessor).getPort();
+}

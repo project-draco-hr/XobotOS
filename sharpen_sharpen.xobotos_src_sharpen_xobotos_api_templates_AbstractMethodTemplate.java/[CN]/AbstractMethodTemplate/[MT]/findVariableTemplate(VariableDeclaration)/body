@@ -1,0 +1,9 @@
+{
+  if (_variables == null)   return null;
+  for (  final VariableTemplate template : _variables) {
+    Match match=template.matches(node);
+    if (match == Match.POSITIVE)     return template;
+ else     if (match == Match.NEGATIVE)     return null;
+  }
+  return null;
+}

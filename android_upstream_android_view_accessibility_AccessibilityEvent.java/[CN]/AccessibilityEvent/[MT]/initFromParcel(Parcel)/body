@@ -1,0 +1,17 @@
+{
+  if (parcel.readInt() == 1) {
+    mConnection=IAccessibilityServiceConnection.Stub.asInterface(parcel.readStrongBinder());
+  }
+  setSealed(parcel.readInt() == 1);
+  mEventType=parcel.readInt();
+  mPackageName=TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(parcel);
+  mEventTime=parcel.readLong();
+  readAccessibilityRecordFromParcel(this,parcel);
+  final int recordCount=parcel.readInt();
+  for (int i=0; i < recordCount; i++) {
+    AccessibilityRecord record=AccessibilityRecord.obtain();
+    record.setConnection(mConnection);
+    readAccessibilityRecordFromParcel(record,parcel);
+    mRecords.add(record);
+  }
+}

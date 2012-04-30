@@ -1,0 +1,7 @@
+{
+  if (hasValue())   throw new IllegalStateException();
+  AbstractTypeReference fieldType=_type;
+  if (isByRef())   fieldType=new PointerType(fieldType);
+  if (isPointer())   fieldType=new PointerType(fieldType);
+  return new Field(fieldType,_name,Visibility.PRIVATE);
+}

@@ -1,0 +1,4 @@
+{
+  Boolean val=Boolean.valueOf(value);
+  this.parameters.set(name,val);
+}

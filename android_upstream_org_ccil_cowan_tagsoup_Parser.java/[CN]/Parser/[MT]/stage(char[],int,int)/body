@@ -1,0 +1,5 @@
+{
+  if (theNewElement == null)   return;
+  rectify(theNewElement);
+  etag_basic(buff,offset,length);
+}

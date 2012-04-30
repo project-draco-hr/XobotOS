@@ -1,0 +1,3 @@
+{
+  return new CSMemberReferenceExpression(var.getReference(),_managedName);
+}

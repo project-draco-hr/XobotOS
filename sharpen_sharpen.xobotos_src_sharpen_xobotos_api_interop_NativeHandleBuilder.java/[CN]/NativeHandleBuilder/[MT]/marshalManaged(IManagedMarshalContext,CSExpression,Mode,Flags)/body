@@ -1,0 +1,21 @@
+{
+  final CSTypeReferenceExpression pinvokeType;
+  if (flags == Flags.ELEMENT)   pinvokeType=new CSTypeReference("System.IntPtr");
+ else   pinvokeType=getManagedType();
+  final CSExpression arg;
+  if (flags == Flags.ELEMENT) {
+    CSExpression infix=new CSInfixExpression("!=",expr,new CSNullLiteralExpression());
+    CSExpression handleRef=new CSMemberReferenceExpression(expr,"Handle");
+    CSExpression zeroRef=new CSReferenceExpression("System.IntPtr.Zero");
+    arg=new CSConditionalExpression(infix,handleRef,zeroRef);
+  }
+ else   if (flags == Flags.ALLOW_NULL) {
+    CSExpression infix=new CSInfixExpression("!=",expr,new CSNullLiteralExpression());
+    CSExpression zeroRef=new CSMemberReferenceExpression(getManagedType(),"Zero");
+    arg=new CSConditionalExpression(infix,expr,zeroRef);
+  }
+ else {
+    arg=expr;
+  }
+  context.addParameter(null,pinvokeType,arg);
+}

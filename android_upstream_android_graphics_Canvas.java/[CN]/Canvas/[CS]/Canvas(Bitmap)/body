@@ -1,0 +1,10 @@
+{
+  if (!bitmap.isMutable()) {
+    throw new IllegalStateException("Immutable bitmap passed to Canvas constructor");
+  }
+  throwIfRecycled(bitmap);
+  mNativeCanvas=initRaster(bitmap.ni());
+  mFinalizer=new CanvasFinalizer(mNativeCanvas);
+  mBitmap=bitmap;
+  mDensity=bitmap.mDensity;
+}

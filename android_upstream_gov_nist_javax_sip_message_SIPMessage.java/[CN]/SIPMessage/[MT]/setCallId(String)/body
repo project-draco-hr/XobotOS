@@ -1,0 +1,6 @@
+{
+  if (callIdHeader == null) {
+    this.setHeader(new CallID());
+  }
+  callIdHeader.setCallId(callId);
+}

@@ -1,0 +1,4 @@
+{
+  CSTypeReferenceExpression type=mappedVariableType(binding);
+  return createVariableDeclaration(binding,type,initializer);
+}

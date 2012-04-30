@@ -1,0 +1,3 @@
+{
+  return buffer.substring(ptr,ptr + nchars);
+}

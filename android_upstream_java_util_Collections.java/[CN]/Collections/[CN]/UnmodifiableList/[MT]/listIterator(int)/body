@@ -1,0 +1,33 @@
+{
+  return new ListIterator<E>(){
+    ListIterator<E> iterator=list.listIterator(location);
+    @Override public void add(    E object){
+      throw new UnsupportedOperationException();
+    }
+    @Override public boolean hasNext(){
+      return iterator.hasNext();
+    }
+    @Override public boolean hasPrevious(){
+      return iterator.hasPrevious();
+    }
+    @Override public E next(){
+      return iterator.next();
+    }
+    @Override public int nextIndex(){
+      return iterator.nextIndex();
+    }
+    @Override public E previous(){
+      return iterator.previous();
+    }
+    @Override public int previousIndex(){
+      return iterator.previousIndex();
+    }
+    @Override public void remove(){
+      throw new UnsupportedOperationException();
+    }
+    @Override public void set(    E object){
+      throw new UnsupportedOperationException();
+    }
+  }
+;
+}

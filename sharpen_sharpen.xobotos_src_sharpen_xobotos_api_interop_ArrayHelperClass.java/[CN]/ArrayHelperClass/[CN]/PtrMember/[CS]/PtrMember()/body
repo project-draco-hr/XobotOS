@@ -1,0 +1,4 @@
+{
+  super(_elementInfo,"ptr","ptr",Flags.FUNCTION,Flags.POINTER);
+  this._handleName="handle_array_ptr";
+}

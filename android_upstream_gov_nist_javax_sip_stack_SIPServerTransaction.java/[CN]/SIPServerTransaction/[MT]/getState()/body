@@ -1,0 +1,4 @@
+{
+  if (this.isInviteTransaction() && TransactionState.TRYING == super.getState())   return TransactionState.PROCEEDING;
+ else   return super.getState();
+}

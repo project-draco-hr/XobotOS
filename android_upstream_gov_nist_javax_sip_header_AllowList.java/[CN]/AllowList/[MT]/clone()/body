@@ -1,0 +1,5 @@
+{
+  AllowList retval=new AllowList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

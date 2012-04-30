@@ -1,0 +1,11 @@
+{
+  if (!TextUtils.isEmpty(charsetName) && !TextUtils.isEmpty(vendor)) {
+    if (isShiftJis(charsetName)) {
+      final String vendorShiftJis=sVendorShiftJisMap.get(vendor);
+      if (vendorShiftJis != null) {
+        return vendorShiftJis;
+      }
+    }
+  }
+  return charsetName;
+}

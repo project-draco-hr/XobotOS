@@ -1,0 +1,4 @@
+{
+  if (_valueField == null)   throw new ConfigurationException("<extract-enum> is missing <value-field>");
+  return this;
+}

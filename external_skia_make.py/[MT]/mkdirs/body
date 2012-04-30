@@ -1,0 +1,4 @@
+def mkdirs(path):
+    print ('> mkdirs %s' % path)
+    if (not os.path.isdir(path)):
+        os.makedirs(path)

@@ -1,0 +1,14 @@
+{
+  if (node instanceof AnonymousClassDeclaration) {
+    AnonymousClassDeclaration anon=(AnonymousClassDeclaration)node;
+    if (_removeAnonymousClasses)     return OutputMode.NOTHING;
+    if (_removeNonPublic && Modifier.isPrivate(anon.resolveBinding().getModifiers()))     return OutputMode.NAKED_STUB;
+  }
+  if (node instanceof BodyDeclaration) {
+    BodyDeclaration body=(BodyDeclaration)node;
+    if (_removeFields && (body instanceof FieldDeclaration))     return OutputMode.NOTHING;
+    if (_removeNonPublic && Modifier.isPrivate(body.getModifiers()))     return OutputMode.NOTHING;
+    if (_abstract)     return OutputMode.ABSTRACT_STUB;
+  }
+  return OutputMode.STUB;
+}

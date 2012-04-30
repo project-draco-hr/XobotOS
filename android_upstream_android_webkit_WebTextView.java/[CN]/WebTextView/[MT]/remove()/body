@@ -1,0 +1,14 @@
+{
+  InputMethodManager imm=InputMethodManager.getInstance(mContext);
+  if (imm.isActive(this)) {
+    imm.hideSoftInputFromWindow(getWindowToken(),0);
+  }
+  mInsideRemove=true;
+  boolean isFocused=hasFocus();
+  mWebView.removeView(this);
+  if (isFocused) {
+    mWebView.requestFocus();
+  }
+  mInsideRemove=false;
+  mHandler.removeCallbacksAndMessages(null);
+}

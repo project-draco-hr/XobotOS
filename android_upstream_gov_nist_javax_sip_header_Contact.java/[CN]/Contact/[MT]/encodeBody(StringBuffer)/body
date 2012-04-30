@@ -1,0 +1,20 @@
+{
+  if (wildCardFlag) {
+    buffer.append('*');
+  }
+ else {
+    if (address.getAddressType() == AddressImpl.NAME_ADDR) {
+      address.encode(buffer);
+    }
+ else {
+      buffer.append('<');
+      address.encode(buffer);
+      buffer.append('>');
+    }
+    if (!parameters.isEmpty()) {
+      buffer.append(SEMICOLON);
+      parameters.encode(buffer);
+    }
+  }
+  return buffer;
+}

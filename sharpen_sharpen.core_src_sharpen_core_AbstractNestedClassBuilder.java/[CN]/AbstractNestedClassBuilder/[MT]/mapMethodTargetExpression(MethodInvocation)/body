@@ -1,0 +1,6 @@
+{
+  if (null == node.getExpression()) {
+    return createEnclosingTargetReferences(node.getName());
+  }
+  return super.mapMethodTargetExpression(node);
+}

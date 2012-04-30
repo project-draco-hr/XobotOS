@@ -1,0 +1,6 @@
+{
+  if (encoding == null)   throw new NullPointerException("the encoding parameter is null");
+  AcceptEncoding acceptEncoding=new AcceptEncoding();
+  acceptEncoding.setEncoding(encoding);
+  return acceptEncoding;
+}

@@ -1,0 +1,5 @@
+{
+  if (isSourceFile(resource)) {
+    _changes.add((ICompilationUnit)JavaCore.create(resource));
+  }
+}

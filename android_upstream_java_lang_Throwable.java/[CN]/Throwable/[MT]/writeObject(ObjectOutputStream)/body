@@ -1,0 +1,4 @@
+{
+  getInternalStackTrace();
+  out.defaultWriteObject();
+}

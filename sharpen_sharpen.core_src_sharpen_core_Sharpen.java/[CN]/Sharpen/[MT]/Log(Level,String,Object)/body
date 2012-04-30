@@ -1,0 +1,3 @@
+{
+  _logger.log(level,String.format(message,args));
+}

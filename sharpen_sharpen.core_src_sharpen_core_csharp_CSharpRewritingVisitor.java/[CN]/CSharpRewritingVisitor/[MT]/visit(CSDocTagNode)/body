@@ -1,0 +1,4 @@
+{
+  visitList(node.attributes());
+  visitList(node.fragments());
+}

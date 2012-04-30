@@ -1,0 +1,11 @@
+{
+  try {
+    Job.getJobManager().join(buildFamily,null);
+  }
+ catch (  InterruptedException e) {
+    e.printStackTrace();
+  }
+catch (  Exception e) {
+    e.printStackTrace();
+  }
+}

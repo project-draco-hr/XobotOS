@@ -1,0 +1,6 @@
+{
+  if (this.messageContentObject != null)   return messageContentObject;
+ else   if (this.messageContent != null)   return this.messageContent;
+ else   if (this.messageContentBytes != null)   return this.messageContentBytes;
+ else   return null;
+}

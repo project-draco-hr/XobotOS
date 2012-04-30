@@ -1,0 +1,5 @@
+{
+  if (an && null != _exception) {
+    _exception.name(null);
+  }
+}

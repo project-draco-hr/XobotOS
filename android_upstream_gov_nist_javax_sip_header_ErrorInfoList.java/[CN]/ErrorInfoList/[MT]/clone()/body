@@ -1,0 +1,5 @@
+{
+  ErrorInfoList retval=new ErrorInfoList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

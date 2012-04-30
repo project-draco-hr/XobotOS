@@ -1,0 +1,15 @@
+{
+  m.putInt("GsmSignalStrength",mGsmSignalStrength);
+  m.putInt("GsmBitErrorRate",mGsmBitErrorRate);
+  m.putInt("CdmaDbm",mCdmaDbm);
+  m.putInt("CdmaEcio",mCdmaEcio);
+  m.putInt("EvdoDbm",mEvdoDbm);
+  m.putInt("EvdoEcio",mEvdoEcio);
+  m.putInt("EvdoSnr",mEvdoSnr);
+  m.putInt("LteSignalStrength",mLteSignalStrength);
+  m.putInt("LteRsrp",mLteRsrp);
+  m.putInt("LteRsrq",mLteRsrq);
+  m.putInt("LteRssnr",mLteRssnr);
+  m.putInt("LteCqi",mLteCqi);
+  m.putBoolean("isGsm",Boolean.valueOf(isGsm));
+}

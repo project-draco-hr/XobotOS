@@ -1,0 +1,38 @@
+{
+  headerListTable=new Hashtable<Class<?>,Class<?>>();
+  headerListTable.put(ExtensionHeaderImpl.class,ExtensionHeaderList.class);
+  headerListTable.put(Contact.class,ContactList.class);
+  headerListTable.put(ContentEncoding.class,ContentEncodingList.class);
+  headerListTable.put(Via.class,ViaList.class);
+  headerListTable.put(WWWAuthenticate.class,WWWAuthenticateList.class);
+  headerListTable.put(Accept.class,AcceptList.class);
+  headerListTable.put(AcceptEncoding.class,AcceptEncodingList.class);
+  headerListTable.put(AcceptLanguage.class,AcceptLanguageList.class);
+  headerListTable.put(ProxyRequire.class,ProxyRequireList.class);
+  headerListTable.put(Route.class,RouteList.class);
+  headerListTable.put(Require.class,RequireList.class);
+  headerListTable.put(Warning.class,WarningList.class);
+  headerListTable.put(Unsupported.class,UnsupportedList.class);
+  headerListTable.put(AlertInfo.class,AlertInfoList.class);
+  headerListTable.put(CallInfo.class,CallInfoList.class);
+  headerListTable.put(ProxyAuthenticate.class,ProxyAuthenticateList.class);
+  headerListTable.put(ProxyAuthorization.class,ProxyAuthorizationList.class);
+  headerListTable.put(Authorization.class,AuthorizationList.class);
+  headerListTable.put(Allow.class,AllowList.class);
+  headerListTable.put(RecordRoute.class,RecordRouteList.class);
+  headerListTable.put(ContentLanguage.class,ContentLanguageList.class);
+  headerListTable.put(ErrorInfo.class,ErrorInfoList.class);
+  headerListTable.put(Supported.class,SupportedList.class);
+  headerListTable.put(InReplyTo.class,InReplyToList.class);
+  headerListTable.put(PAssociatedURI.class,PAssociatedURIList.class);
+  headerListTable.put(PMediaAuthorization.class,PMediaAuthorizationList.class);
+  headerListTable.put(Path.class,PathList.class);
+  headerListTable.put(Privacy.class,PrivacyList.class);
+  headerListTable.put(ServiceRoute.class,ServiceRouteList.class);
+  headerListTable.put(PVisitedNetworkID.class,PVisitedNetworkIDList.class);
+  headerListTable.put(SecurityClient.class,SecurityClientList.class);
+  headerListTable.put(SecurityServer.class,SecurityServerList.class);
+  headerListTable.put(SecurityVerify.class,SecurityVerifyList.class);
+  headerListTable.put(PAssertedIdentity.class,PAssertedIdentityList.class);
+  initialized=true;
+}

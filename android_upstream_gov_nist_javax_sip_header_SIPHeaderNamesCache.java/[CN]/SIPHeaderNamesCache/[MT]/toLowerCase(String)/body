@@ -1,0 +1,9 @@
+{
+  String lowerCase=(String)lowercaseMap.get(headerName);
+  if (lowerCase == null) {
+    return headerName.toLowerCase();
+  }
+ else {
+    return lowerCase;
+  }
+}

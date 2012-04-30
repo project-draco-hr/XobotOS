@@ -1,0 +1,29 @@
+{
+  BlockGuard.getThreadPolicy().onNetwork();
+  Object cachedResult=addressCache.get(host);
+  if (cachedResult != null) {
+    if (cachedResult instanceof InetAddress[]) {
+      return (InetAddress[])cachedResult;
+    }
+ else {
+      throw new UnknownHostException((String)cachedResult);
+    }
+  }
+  try {
+    StructAddrinfo hints=new StructAddrinfo();
+    hints.ai_flags=AI_ADDRCONFIG;
+    hints.ai_family=AF_UNSPEC;
+    hints.ai_socktype=SOCK_STREAM;
+    InetAddress[] addresses=Libcore.os.getaddrinfo(host,hints);
+    for (    InetAddress address : addresses) {
+      address.hostName=host;
+    }
+    addressCache.put(host,addresses);
+    return addresses;
+  }
+ catch (  GaiException gaiException) {
+    String detailMessage="Unable to resolve host \"" + host + "\": "+ Libcore.os.gai_strerror(gaiException.error);
+    addressCache.putUnknownHost(host,detailMessage);
+    throw gaiException.rethrowAsUnknownHostException(detailMessage);
+  }
+}

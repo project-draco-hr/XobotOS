@@ -1,0 +1,7 @@
+{
+  if (!trySwitchToFirstTouchState(event)) {
+    mDragging=false;
+    stopTargetAnimation();
+    ping();
+  }
+}

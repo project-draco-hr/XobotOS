@@ -1,0 +1,4 @@
+{
+  super(type,name,builder,new CSArrayTypeReference(elementInfo.getManagedType(),1),computeArrayType(elementInfo),isShared,isShared);
+  this._elementInfo=elementInfo;
+}

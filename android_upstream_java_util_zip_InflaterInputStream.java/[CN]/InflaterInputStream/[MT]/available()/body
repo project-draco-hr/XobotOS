@@ -1,0 +1,7 @@
+{
+  checkClosed();
+  if (eof) {
+    return 0;
+  }
+  return 1;
+}

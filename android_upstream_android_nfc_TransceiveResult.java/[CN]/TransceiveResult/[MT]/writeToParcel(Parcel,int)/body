@@ -1,0 +1,7 @@
+{
+  dest.writeInt(mResult);
+  if (mResult == RESULT_SUCCESS) {
+    dest.writeInt(mResponseData.length);
+    dest.writeByteArray(mResponseData);
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return (mForcedUseForComm == AudioSystem.FORCE_SPEAKER);
+}

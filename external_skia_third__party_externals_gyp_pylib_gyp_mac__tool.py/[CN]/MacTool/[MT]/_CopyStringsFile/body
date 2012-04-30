@@ -1,0 +1,7 @@
+def _CopyStringsFile(self, source, dest):
+    'Copies a .strings file using iconv to reconvert the input into UTF-16.'
+    input_code = (self._DetectInputEncoding(source) or 'UTF-8')
+    fp = open(dest, 'w')
+    args = ['/usr/bin/iconv', '--from-code', input_code, '--to-code', 'UTF-16', source]
+    subprocess.call(args, stdout=fp)
+    fp.close()

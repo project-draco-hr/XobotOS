@@ -1,0 +1,6 @@
+{
+  if (!type.isInterface())   throw new IllegalArgumentException();
+  final String mappedTypeName=mappedTypeName(type);
+  if (hasMapping(type))   return mappedTypeName;
+  return mappedTypeName + "Class";
+}

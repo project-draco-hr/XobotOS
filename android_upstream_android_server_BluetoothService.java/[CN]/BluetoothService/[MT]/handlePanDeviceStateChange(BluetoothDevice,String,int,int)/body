@@ -1,0 +1,5 @@
+{
+synchronized (mBluetoothPanProfileHandler) {
+    mBluetoothPanProfileHandler.handlePanDeviceStateChange(device,iface,state,role);
+  }
+}

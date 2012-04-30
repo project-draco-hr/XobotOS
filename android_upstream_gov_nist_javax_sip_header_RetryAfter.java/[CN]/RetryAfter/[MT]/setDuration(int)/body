@@ -1,0 +1,4 @@
+{
+  if (duration < 0)   throw new InvalidArgumentException("the duration parameter is <0");
+  this.setParameter(DURATION,duration);
+}

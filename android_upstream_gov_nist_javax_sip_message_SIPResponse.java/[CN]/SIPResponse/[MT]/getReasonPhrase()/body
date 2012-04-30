@@ -1,0 +1,4 @@
+{
+  if (statusLine == null || statusLine.getReasonPhrase() == null)   return "";
+ else   return statusLine.getReasonPhrase();
+}

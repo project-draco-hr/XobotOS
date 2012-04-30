@@ -1,0 +1,4 @@
+{
+  sslServerSocketFactory=(SSLServerSocketFactory)SSLServerSocketFactory.getDefault();
+  sslSocketFactory=(SSLSocketFactory)SSLSocketFactory.getDefault();
+}

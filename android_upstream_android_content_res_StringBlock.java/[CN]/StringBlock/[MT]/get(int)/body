@@ -1,0 +1,79 @@
+{
+synchronized (this) {
+    if (mStrings != null) {
+      CharSequence res=mStrings[idx];
+      if (res != null) {
+        return res;
+      }
+    }
+ else     if (mSparseStrings != null) {
+      CharSequence res=mSparseStrings.get(idx);
+      if (res != null) {
+        return res;
+      }
+    }
+ else {
+      final int num=nativeGetSize(mNative);
+      if (mUseSparse && num > 250) {
+        mSparseStrings=new SparseArray<CharSequence>();
+      }
+ else {
+        mStrings=new CharSequence[num];
+      }
+    }
+    String str=nativeGetString(mNative,idx);
+    CharSequence res=str;
+    int[] style=nativeGetStyle(mNative,idx);
+    if (localLOGV)     Log.v(TAG,"Got string: " + str);
+    if (localLOGV)     Log.v(TAG,"Got styles: " + style);
+    if (style != null) {
+      if (mStyleIDs == null) {
+        mStyleIDs=new StyleIDs();
+      }
+      for (int styleIndex=0; styleIndex < style.length; styleIndex+=3) {
+        int styleId=style[styleIndex];
+        if (styleId == mStyleIDs.boldId || styleId == mStyleIDs.italicId || styleId == mStyleIDs.underlineId || styleId == mStyleIDs.ttId || styleId == mStyleIDs.bigId || styleId == mStyleIDs.smallId || styleId == mStyleIDs.subId || styleId == mStyleIDs.supId || styleId == mStyleIDs.strikeId || styleId == mStyleIDs.listItemId || styleId == mStyleIDs.marqueeId) {
+          continue;
+        }
+        String styleTag=nativeGetString(mNative,styleId);
+        if (styleTag.equals("b")) {
+          mStyleIDs.boldId=styleId;
+        }
+ else         if (styleTag.equals("i")) {
+          mStyleIDs.italicId=styleId;
+        }
+ else         if (styleTag.equals("u")) {
+          mStyleIDs.underlineId=styleId;
+        }
+ else         if (styleTag.equals("tt")) {
+          mStyleIDs.ttId=styleId;
+        }
+ else         if (styleTag.equals("big")) {
+          mStyleIDs.bigId=styleId;
+        }
+ else         if (styleTag.equals("small")) {
+          mStyleIDs.smallId=styleId;
+        }
+ else         if (styleTag.equals("sup")) {
+          mStyleIDs.supId=styleId;
+        }
+ else         if (styleTag.equals("sub")) {
+          mStyleIDs.subId=styleId;
+        }
+ else         if (styleTag.equals("strike")) {
+          mStyleIDs.strikeId=styleId;
+        }
+ else         if (styleTag.equals("li")) {
+          mStyleIDs.listItemId=styleId;
+        }
+ else         if (styleTag.equals("marquee")) {
+          mStyleIDs.marqueeId=styleId;
+        }
+      }
+      res=applyStyles(str,style,mStyleIDs);
+    }
+    if (mStrings != null)     mStrings[idx]=res;
+ else     mSparseStrings.put(idx,res);
+    return res;
+  }
+}

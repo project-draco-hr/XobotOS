@@ -1,0 +1,6 @@
+{
+  if (language == null)   throw new NullPointerException("null arg");
+  AcceptLanguage acceptLanguage=new AcceptLanguage();
+  acceptLanguage.setAcceptLanguage(language);
+  return acceptLanguage;
+}

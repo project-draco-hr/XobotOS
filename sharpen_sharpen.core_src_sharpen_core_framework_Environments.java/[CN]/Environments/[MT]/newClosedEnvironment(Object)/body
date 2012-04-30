@@ -1,0 +1,13 @@
+{
+  return new Environment(){
+    public <T>T provide(    Class<T> service){
+      for (      Object binding : bindings) {
+        if (service.isInstance(binding)) {
+          return service.cast(binding);
+        }
+      }
+      return null;
+    }
+  }
+;
+}

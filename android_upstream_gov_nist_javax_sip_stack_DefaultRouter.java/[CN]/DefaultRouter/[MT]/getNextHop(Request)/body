@@ -1,0 +1,48 @@
+{
+  SIPRequest sipRequest=(SIPRequest)request;
+  RequestLine requestLine=sipRequest.getRequestLine();
+  if (requestLine == null) {
+    return defaultRoute;
+  }
+  javax.sip.address.URI requestURI=requestLine.getUri();
+  if (requestURI == null)   throw new IllegalArgumentException("Bad message: Null requestURI");
+  RouteList routes=sipRequest.getRouteHeaders();
+  if (routes != null) {
+    Route route=(Route)routes.getFirst();
+    URI uri=route.getAddress().getURI();
+    if (uri.isSipURI()) {
+      SipURI sipUri=(SipURI)uri;
+      if (!sipUri.hasLrParam()) {
+        fixStrictRouting(sipRequest);
+        if (sipStack.isLoggingEnabled())         sipStack.getStackLogger().logDebug("Route post processing fixed strict routing");
+      }
+      Hop hop=createHop(sipUri,request);
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("NextHop based on Route:" + hop);
+      return hop;
+    }
+ else {
+      throw new SipException("First Route not a SIP URI");
+    }
+  }
+ else   if (requestURI.isSipURI() && ((SipURI)requestURI).getMAddrParam() != null) {
+    Hop hop=createHop((SipURI)requestURI,request);
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Using request URI maddr to route the request = " + hop.toString());
+    return hop;
+  }
+ else   if (defaultRoute != null) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Using outbound proxy to route the request = " + defaultRoute.toString());
+    return defaultRoute;
+  }
+ else   if (requestURI.isSipURI()) {
+    Hop hop=createHop((SipURI)requestURI,request);
+    if (hop != null && sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Used request-URI for nextHop = " + hop.toString());
+ else     if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("returning null hop -- loop detected");
+    }
+    return hop;
+  }
+ else {
+    InternalErrorHandler.handleException("Unexpected non-sip URI",this.sipStack.getStackLogger());
+    return null;
+  }
+}

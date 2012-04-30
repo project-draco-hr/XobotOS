@@ -1,0 +1,4 @@
+{
+  mDepthMask=enable;
+  return this;
+}

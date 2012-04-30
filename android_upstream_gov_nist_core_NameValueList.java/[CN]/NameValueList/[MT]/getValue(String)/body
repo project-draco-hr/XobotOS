@@ -1,0 +1,5 @@
+{
+  NameValue nv=this.getNameValue(name.toLowerCase());
+  if (nv != null)   return nv.getValueAsObject();
+ else   return null;
+}

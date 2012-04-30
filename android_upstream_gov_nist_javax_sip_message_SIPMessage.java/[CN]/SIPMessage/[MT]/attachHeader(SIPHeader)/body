@@ -1,0 +1,14 @@
+{
+  if (h == null)   throw new IllegalArgumentException("null header!");
+  try {
+    if (h instanceof SIPHeaderList) {
+      SIPHeaderList<?> hl=(SIPHeaderList<?>)h;
+      if (hl.isEmpty()) {
+        return;
+      }
+    }
+    attachHeader(h,false,false);
+  }
+ catch (  SIPDuplicateHeaderException ex) {
+  }
+}

@@ -1,0 +1,5 @@
+{
+  if (mContext != 0) {
+    rsnObjDestroy(mContext,id);
+  }
+}

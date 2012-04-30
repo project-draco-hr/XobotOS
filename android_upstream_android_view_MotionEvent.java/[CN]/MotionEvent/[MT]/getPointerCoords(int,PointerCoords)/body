@@ -1,0 +1,3 @@
+{
+  nativeGetPointerCoords(mNativePtr,pointerIndex,HISTORY_CURRENT,outPointerCoords);
+}

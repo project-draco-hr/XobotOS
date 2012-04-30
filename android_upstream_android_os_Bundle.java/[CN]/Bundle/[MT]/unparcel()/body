@@ -1,0 +1,15 @@
+{
+  if (mParcelledData == null) {
+    return;
+  }
+  int N=mParcelledData.readInt();
+  if (N < 0) {
+    return;
+  }
+  if (mMap == null) {
+    mMap=new HashMap<String,Object>();
+  }
+  mParcelledData.readMapInternal(mMap,N,mClassLoader);
+  mParcelledData.recycle();
+  mParcelledData=null;
+}

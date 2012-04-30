@@ -1,0 +1,5 @@
+{
+  if (!this.getClass().equals(other.getClass()))   return false;
+  SIPRequest that=(SIPRequest)other;
+  return requestLine.equals(that.requestLine) && super.equals(other);
+}

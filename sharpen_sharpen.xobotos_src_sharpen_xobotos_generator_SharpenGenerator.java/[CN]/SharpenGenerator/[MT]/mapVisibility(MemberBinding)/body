@@ -1,0 +1,5 @@
+{
+  Visibility visibility=binding.getVisibility();
+  if (visibility != null)   return APIDefinition.mapVisibility(visibility);
+  return null;
+}

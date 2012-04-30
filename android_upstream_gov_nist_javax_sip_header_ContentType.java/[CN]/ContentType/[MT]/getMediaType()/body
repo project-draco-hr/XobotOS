@@ -1,0 +1,3 @@
+{
+  return mediaRange.type;
+}

@@ -1,0 +1,15 @@
+{
+  if (theNewElement != null)   return;
+  String name=makeName(buff,offset,length);
+  if (name == null)   return;
+  ElementType type=theSchema.getElementType(name);
+  if (type == null) {
+    if (ignoreBogons)     return;
+    int bogonModel=bogonsEmpty ? Schema.M_EMPTY : Schema.M_ANY;
+    int bogonMemberOf=rootBogons ? Schema.M_ANY : (Schema.M_ANY & ~Schema.M_ROOT);
+    theSchema.elementType(name,bogonModel,bogonMemberOf,0);
+    if (!rootBogons)     theSchema.parent(name,theSchema.rootElementType().name());
+    type=theSchema.getElementType(name);
+  }
+  theNewElement=new Element(type,defaultAttributes);
+}

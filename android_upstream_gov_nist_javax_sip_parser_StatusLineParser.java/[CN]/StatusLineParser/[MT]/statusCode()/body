@@ -1,0 +1,14 @@
+{
+  String scode=this.lexer.number();
+  if (debug)   dbg_enter("statusCode");
+  try {
+    int retval=Integer.parseInt(scode);
+    return retval;
+  }
+ catch (  NumberFormatException ex) {
+    throw new ParseException(lexer.getBuffer() + ":" + ex.getMessage(),lexer.getPtr());
+  }
+ finally {
+    if (debug)     dbg_leave("statusCode");
+  }
+}

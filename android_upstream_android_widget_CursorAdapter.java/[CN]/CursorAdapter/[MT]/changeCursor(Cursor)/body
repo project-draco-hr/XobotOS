@@ -1,0 +1,6 @@
+{
+  Cursor old=swapCursor(cursor);
+  if (old != null) {
+    old.close();
+  }
+}

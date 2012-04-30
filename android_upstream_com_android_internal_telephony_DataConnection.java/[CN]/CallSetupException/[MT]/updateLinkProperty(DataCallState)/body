@@ -1,0 +1,19 @@
+{
+  UpdateLinkPropertyResult result=new UpdateLinkPropertyResult(mLinkProperties);
+  if (newState == null)   return result;
+  DataCallState.SetupResult setupResult;
+  result.newLp=new LinkProperties();
+  result.setupResult=setLinkProperties(newState,result.newLp);
+  if (result.setupResult != DataCallState.SetupResult.SUCCESS) {
+    if (DBG)     log("updateLinkProperty failed : " + result.setupResult);
+    return result;
+  }
+  result.newLp.setHttpProxy(mLinkProperties.getHttpProxy());
+  if (DBG && (!result.oldLp.equals(result.newLp))) {
+    if (DBG)     log("updateLinkProperty old != new");
+    if (VDBG)     log("updateLinkProperty old LP=" + result.oldLp);
+    if (VDBG)     log("updateLinkProperty new LP=" + result.newLp);
+  }
+  mLinkProperties=result.newLp;
+  return result;
+}

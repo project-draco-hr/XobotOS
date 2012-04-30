@@ -1,0 +1,9 @@
+{
+  ArrayList<CSConstructor> ctors=new ArrayList<CSConstructor>();
+  for (  CSMember member : _members) {
+    if (member instanceof CSConstructor) {
+      ctors.add((CSConstructor)member);
+    }
+  }
+  return Collections.unmodifiableList(ctors);
+}

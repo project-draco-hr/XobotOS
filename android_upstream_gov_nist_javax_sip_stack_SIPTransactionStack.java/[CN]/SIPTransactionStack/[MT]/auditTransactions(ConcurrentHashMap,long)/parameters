@@ -1,0 +1,2 @@
+ConcurrentHashMap transactionsMap
+long a_nLeakedTransactionTimer

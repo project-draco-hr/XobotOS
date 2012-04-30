@@ -1,0 +1,19 @@
+{
+  SIPRequest newRequest=new SIPRequest();
+  newRequest.setRequestLine((RequestLine)this.requestLine.clone());
+  newRequest.setMethod(Request.ACK);
+  newRequest.setHeader((Header)this.callIdHeader.clone());
+  newRequest.setHeader((Header)this.maxForwardsHeader.clone());
+  newRequest.setHeader((Header)this.fromHeader.clone());
+  newRequest.setHeader((Header)responseToHeader.clone());
+  newRequest.addFirst((Header)this.getTopmostVia().clone());
+  newRequest.setHeader((Header)cSeqHeader.clone());
+  newRequest.getCSeq().setMethod(Request.ACK);
+  if (this.getRouteHeaders() != null) {
+    newRequest.setHeader((SIPHeaderList)this.getRouteHeaders().clone());
+  }
+  if (MessageFactoryImpl.getDefaultUserAgentHeader() != null) {
+    newRequest.setHeader(MessageFactoryImpl.getDefaultUserAgentHeader());
+  }
+  return newRequest;
+}

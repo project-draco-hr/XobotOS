@@ -1,0 +1,27 @@
+{
+  if (str == null || str.charAt(0) != '(' || str.charAt(str.length() - 1) != ')') {
+    Log.e(TAG,"Invalid area string=" + str);
+    return null;
+  }
+  ArrayList<Area> result=new ArrayList<Area>();
+  int endIndex, fromIndex=1;
+  int[] array=new int[5];
+  do {
+    endIndex=str.indexOf("),(",fromIndex);
+    if (endIndex == -1)     endIndex=str.length() - 1;
+    splitInt(str.substring(fromIndex,endIndex),array);
+    Rect rect=new Rect(array[0],array[1],array[2],array[3]);
+    result.add(new Area(rect,array[4]));
+    fromIndex=endIndex + 3;
+  }
+ while (endIndex != str.length() - 1);
+  if (result.size() == 0)   return null;
+  if (result.size() == 1) {
+    Area area=result.get(0);
+    Rect rect=area.rect;
+    if (rect.left == 0 && rect.top == 0 && rect.right == 0 && rect.bottom == 0 && area.weight == 0) {
+      return null;
+    }
+  }
+  return result;
+}

@@ -1,0 +1,3 @@
+short[] src
+int srcOffset
+int shortCount

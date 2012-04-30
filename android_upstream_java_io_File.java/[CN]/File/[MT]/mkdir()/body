@@ -1,0 +1,9 @@
+{
+  try {
+    Libcore.os.mkdir(path,S_IRWXU);
+    return true;
+  }
+ catch (  ErrnoException errnoException) {
+    return false;
+  }
+}

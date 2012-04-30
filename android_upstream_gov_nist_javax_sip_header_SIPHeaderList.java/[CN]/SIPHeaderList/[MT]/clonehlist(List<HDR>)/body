@@ -1,0 +1,9 @@
+{
+  if (hlistToClone != null) {
+    for (Iterator<HDR> it=(Iterator<HDR>)hlistToClone.iterator(); it.hasNext(); ) {
+      Header h=it.next();
+      this.hlist.add((HDR)h.clone());
+    }
+  }
+  return this;
+}

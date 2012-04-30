@@ -1,0 +1,3 @@
+byte[] ipaddress
+String hostName
+int scope_id

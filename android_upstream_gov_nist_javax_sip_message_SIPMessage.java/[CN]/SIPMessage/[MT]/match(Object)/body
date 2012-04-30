@@ -1,0 +1,42 @@
+{
+  if (other == null)   return true;
+  if (!other.getClass().equals(this.getClass()))   return false;
+  SIPMessage matchObj=(SIPMessage)other;
+  Iterator<SIPHeader> li=matchObj.getHeaders();
+  while (li.hasNext()) {
+    SIPHeader hisHeaders=(SIPHeader)li.next();
+    List<SIPHeader> myHeaders=this.getHeaderList(hisHeaders.getHeaderName());
+    if (myHeaders == null || myHeaders.size() == 0)     return false;
+    if (hisHeaders instanceof SIPHeaderList) {
+      ListIterator<?> outerIterator=((SIPHeaderList<?>)hisHeaders).listIterator();
+      while (outerIterator.hasNext()) {
+        SIPHeader hisHeader=(SIPHeader)outerIterator.next();
+        if (hisHeader instanceof ContentLength)         continue;
+        ListIterator<?> innerIterator=myHeaders.listIterator();
+        boolean found=false;
+        while (innerIterator.hasNext()) {
+          SIPHeader myHeader=(SIPHeader)innerIterator.next();
+          if (myHeader.match(hisHeader)) {
+            found=true;
+            break;
+          }
+        }
+        if (!found)         return false;
+      }
+    }
+ else {
+      SIPHeader hisHeader=hisHeaders;
+      ListIterator<SIPHeader> innerIterator=myHeaders.listIterator();
+      boolean found=false;
+      while (innerIterator.hasNext()) {
+        SIPHeader myHeader=(SIPHeader)innerIterator.next();
+        if (myHeader.match(hisHeader)) {
+          found=true;
+          break;
+        }
+      }
+      if (!found)       return false;
+    }
+  }
+  return true;
+}

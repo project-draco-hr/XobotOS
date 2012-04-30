@@ -1,0 +1,12 @@
+{
+  DumpComponentInfo data=new DumpComponentInfo();
+  try {
+    data.fd=ParcelFileDescriptor.dup(fd);
+    data.token=servicetoken;
+    data.args=args;
+    queueOrSendMessage(H.DUMP_SERVICE,data);
+  }
+ catch (  IOException e) {
+    Slog.w(TAG,"dumpService failed",e);
+  }
+}

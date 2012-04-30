@@ -1,0 +1,14 @@
+{
+  if (getWindowVisibility() == View.GONE)   return;
+  final boolean dropDownAlwaysVisible=mPopup.isDropDownAlwaysVisible();
+  final boolean enoughToFilter=enoughToFilter();
+  if ((count > 0 || dropDownAlwaysVisible) && enoughToFilter) {
+    if (hasFocus() && hasWindowFocus() && mPopupCanBeUpdated) {
+      showDropDown();
+    }
+  }
+ else   if (!dropDownAlwaysVisible && isPopupShowing()) {
+    dismissDropDown();
+    mPopupCanBeUpdated=true;
+  }
+}

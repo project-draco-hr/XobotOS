@@ -1,0 +1,6 @@
+{
+  if (ccfAddress == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Charging-Function-Addresses, setChargingCollectionFunctionAddress(), the ccfAddress parameter is null.");
+  if (!this.delete(ccfAddress,ParameterNamesIms.CCF)) {
+    throw new ParseException("CCF Address Not Removed",0);
+  }
+}

@@ -1,0 +1,36 @@
+{
+  ArrayList<Element> elements=new ArrayList<Element>();
+  for (  File file : files) {
+    ZipFile zip=null;
+    DexFile dex=null;
+    String name=file.getName();
+    if (name.endsWith(DEX_SUFFIX)) {
+      try {
+        dex=loadDexFile(file,optimizedDirectory);
+      }
+ catch (      IOException ex) {
+        System.logE("Unable to load dex file: " + file,ex);
+      }
+    }
+ else     if (name.endsWith(APK_SUFFIX) || name.endsWith(JAR_SUFFIX) || name.endsWith(ZIP_SUFFIX)) {
+      try {
+        zip=new ZipFile(file);
+      }
+ catch (      IOException ex) {
+        System.logE("Unable to open zip file: " + file,ex);
+      }
+      try {
+        dex=loadDexFile(file,optimizedDirectory);
+      }
+ catch (      IOException ignored) {
+      }
+    }
+ else {
+      System.logW("Unknown file type for: " + file);
+    }
+    if ((zip != null) || (dex != null)) {
+      elements.add(new Element(file,zip,dex));
+    }
+  }
+  return elements.toArray(new Element[elements.size()]);
+}

@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("null address!");
+  Path path=new Path();
+  path.setAddress(address);
+  return path;
+}

@@ -1,0 +1,15 @@
+{
+  String encodedHdr=null;
+  try {
+    encodedHdr=this.encode();
+  }
+ catch (  Exception ex) {
+    return null;
+  }
+  StringBuffer buffer=new StringBuffer(encodedHdr);
+  while (buffer.length() > 0 && buffer.charAt(0) != ':') {
+    buffer.deleteCharAt(0);
+  }
+  if (buffer.length() > 0)   buffer.deleteCharAt(0);
+  return buffer.toString().trim();
+}

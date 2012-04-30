@@ -1,0 +1,20 @@
+{
+  dbg_enter("AddressParametersParser.parse");
+  try {
+    AddressParser addressParser=new AddressParser(this.getLexer());
+    AddressImpl addr=addressParser.address(false);
+    addressParametersHeader.setAddress(addr);
+    lexer.SPorHT();
+    char la=this.lexer.lookAhead(0);
+    if (this.lexer.hasMoreChars() && la != '\0' && la != '\n' && this.lexer.startsId()) {
+      super.parseNameValueList(addressParametersHeader);
+    }
+ else     super.parse(addressParametersHeader);
+  }
+ catch (  ParseException ex) {
+    throw ex;
+  }
+ finally {
+    dbg_leave("AddressParametersParser.parse");
+  }
+}

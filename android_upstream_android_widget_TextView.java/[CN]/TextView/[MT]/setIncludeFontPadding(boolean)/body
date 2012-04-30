@@ -1,0 +1,10 @@
+{
+  if (mIncludePad != includepad) {
+    mIncludePad=includepad;
+    if (mLayout != null) {
+      nullLayouts();
+      requestLayout();
+      invalidate();
+    }
+  }
+}

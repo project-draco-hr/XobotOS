@@ -1,0 +1,21 @@
+{
+  StringBuffer s=new StringBuffer();
+  if (debug)   dbg_enter("local_number");
+  try {
+    int lc=0;
+    while (lexer.hasMoreChars()) {
+      char la=lexer.lookAhead(0);
+      if (la == '*' || la == '#' || la == '-' || la == '.' || la == '(' || la == ')' || Lexer.isHexDigit(la)) {
+        lexer.consume(1);
+        s.append(la);
+        lc++;
+      }
+ else       if (lc > 0)       break;
+ else       throw createParseException("unexepcted " + la);
+    }
+    return s.toString();
+  }
+  finally {
+    if (debug)     dbg_leave("local_number");
+  }
+}

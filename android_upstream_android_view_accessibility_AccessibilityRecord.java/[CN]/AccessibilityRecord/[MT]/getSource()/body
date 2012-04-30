@@ -1,0 +1,8 @@
+{
+  enforceSealed();
+  if (mSourceWindowId == View.NO_ID || mSourceViewId == View.NO_ID || mConnection == null) {
+    return null;
+  }
+  AccessibilityInteractionClient client=AccessibilityInteractionClient.getInstance();
+  return client.findAccessibilityNodeInfoByAccessibilityId(mConnection,mSourceWindowId,mSourceViewId);
+}

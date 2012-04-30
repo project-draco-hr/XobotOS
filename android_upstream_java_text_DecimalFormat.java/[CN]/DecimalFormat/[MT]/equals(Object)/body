@@ -1,0 +1,10 @@
+{
+  if (this == object) {
+    return true;
+  }
+  if (!(object instanceof DecimalFormat)) {
+    return false;
+  }
+  DecimalFormat other=(DecimalFormat)object;
+  return (this.dform == null ? other.dform == null : this.dform.equals(other.dform)) && getDecimalFormatSymbols().equals(other.getDecimalFormatSymbols());
+}

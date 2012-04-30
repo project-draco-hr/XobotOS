@@ -1,0 +1,10 @@
+{
+  if (Log.isLoggable(TAG,Log.VERBOSE)) {
+    Log.v(TAG,"AccountAuthenticatorResponse.onRequestContinued");
+  }
+  try {
+    mAccountAuthenticatorResponse.onRequestContinued();
+  }
+ catch (  RemoteException e) {
+  }
+}

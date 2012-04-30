@@ -1,0 +1,14 @@
+"\nVerify handling of build variants.\n\nTODO:  Right now, only the SCons generator supports this, so the\ntest case is SCons-specific.  In particular, it relise on SCons'\nability to rebuild in response to changes on the command line.  It\nmay be simpler to just drop this feature if the other generators\ncan't be made to behave the same way.\n"
+import TestGyp
+test = TestGyp.TestGyp(formats=['scons'])
+test.run_gyp('variants.gyp', chdir='src')
+test.relocate('src', 'relocate/src')
+test.build('variants.gyp', chdir='relocate/src')
+test.run_built_executable('variants', chdir='relocate/src', stdout='Hello, world!\n')
+test.sleep()
+test.build('variants.gyp', 'VARIANT1=1', chdir='relocate/src')
+test.run_built_executable('variants', chdir='relocate/src', stdout='Hello from VARIANT1\n')
+test.sleep()
+test.build('variants.gyp', 'VARIANT2=1', chdir='relocate/src')
+test.run_built_executable('variants', chdir='relocate/src', stdout='Hello from VARIANT2\n')
+test.pass_test()

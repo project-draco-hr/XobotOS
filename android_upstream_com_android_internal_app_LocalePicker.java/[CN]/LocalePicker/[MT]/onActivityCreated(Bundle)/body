@@ -1,0 +1,5 @@
+{
+  super.onActivityCreated(savedInstanceState);
+  final ArrayAdapter<LocaleInfo> adapter=constructAdapter(getActivity());
+  setListAdapter(adapter);
+}

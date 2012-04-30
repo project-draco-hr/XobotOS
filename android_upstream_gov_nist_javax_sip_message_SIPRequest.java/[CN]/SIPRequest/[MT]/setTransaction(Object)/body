@@ -1,0 +1,3 @@
+{
+  this.transactionPointer=transaction;
+}

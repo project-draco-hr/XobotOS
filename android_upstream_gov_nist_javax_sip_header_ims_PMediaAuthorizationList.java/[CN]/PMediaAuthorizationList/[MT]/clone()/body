@@ -1,0 +1,4 @@
+{
+  PMediaAuthorizationList retval=new PMediaAuthorizationList();
+  return retval.clonehlist(this.hlist);
+}

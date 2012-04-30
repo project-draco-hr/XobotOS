@@ -1,0 +1,30 @@
+{
+  final IMethodBinding methodBinding=node.resolveBinding();
+  final ITypeBinding parameterType=p.getType().resolveBinding();
+  final IVariableBinding vb=p.resolveBinding();
+  final ITypeBinding[] ta=vb.getType().getTypeArguments();
+  if (isGenericRuntimeParameterIdiom(methodBinding,parameterType)) {
+    CSTypeofExpression to=new CSTypeofExpression(genericRuntimeTypeIdiomType(parameterType));
+    CSTypeReference str=new CSTypeReference("System.Type");
+    CSVariableDeclaration vdecl=new CSVariableDeclaration(identifier(p.getName()),str,to);
+    method.body().addStatement(new CSDeclarationStatement(p.getStartPosition(),vdecl));
+    return;
+  }
+  final List<CSTypeReferenceExpression> args=new ArrayList<CSTypeReferenceExpression>();
+  if (ta.length > 0)   mapWildcardType(methodBinding,method,args,parameterType);
+ else   if (baseType != null)   mapWildcardType(methodBinding,method,args,baseType);
+  if (isJavaLangClass(parameterType) && (args.size() == 1)) {
+    CSExpression typeof=new CSTypeofExpression(args.get(0));
+    CSTypeReference str=new CSTypeReference("System.Type");
+    CSVariableDeclaration vdecl=createVariableDeclaration(vb,str,typeof);
+    method.body().addStatement(new CSDeclarationStatement(p.getStartPosition(),vdecl));
+  }
+ else   if (args.size() > 0) {
+    CSTypeReference tr=new CSTypeReference(mappedTypeName(parameterType.getTypeDeclaration()));
+    for (    CSTypeReferenceExpression arg : args)     tr.addTypeArgument(arg);
+    method.addParameter(createVariableDeclaration(vb,tr,null));
+  }
+ else {
+    method.addParameter(createVariableDeclaration(vb,null));
+  }
+}

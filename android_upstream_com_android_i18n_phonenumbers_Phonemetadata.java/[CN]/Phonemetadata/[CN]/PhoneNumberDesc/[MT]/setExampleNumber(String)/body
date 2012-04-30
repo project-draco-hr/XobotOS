@@ -1,0 +1,5 @@
+{
+  hasExampleNumber=true;
+  exampleNumber_=value;
+  return this;
+}

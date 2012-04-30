@@ -1,0 +1,75 @@
+{
+  output.writeByte(TC_ARRAY);
+  writeClassDesc(arrayClDesc,false);
+  int handle=nextHandle();
+  if (!unshared) {
+    objectsWritten.put(array,handle);
+  }
+  if (componentType.isPrimitive()) {
+    if (componentType == int.class) {
+      int[] intArray=(int[])array;
+      output.writeInt(intArray.length);
+      for (int i=0; i < intArray.length; i++) {
+        output.writeInt(intArray[i]);
+      }
+    }
+ else     if (componentType == byte.class) {
+      byte[] byteArray=(byte[])array;
+      output.writeInt(byteArray.length);
+      output.write(byteArray,0,byteArray.length);
+    }
+ else     if (componentType == char.class) {
+      char[] charArray=(char[])array;
+      output.writeInt(charArray.length);
+      for (int i=0; i < charArray.length; i++) {
+        output.writeChar(charArray[i]);
+      }
+    }
+ else     if (componentType == short.class) {
+      short[] shortArray=(short[])array;
+      output.writeInt(shortArray.length);
+      for (int i=0; i < shortArray.length; i++) {
+        output.writeShort(shortArray[i]);
+      }
+    }
+ else     if (componentType == boolean.class) {
+      boolean[] booleanArray=(boolean[])array;
+      output.writeInt(booleanArray.length);
+      for (int i=0; i < booleanArray.length; i++) {
+        output.writeBoolean(booleanArray[i]);
+      }
+    }
+ else     if (componentType == long.class) {
+      long[] longArray=(long[])array;
+      output.writeInt(longArray.length);
+      for (int i=0; i < longArray.length; i++) {
+        output.writeLong(longArray[i]);
+      }
+    }
+ else     if (componentType == float.class) {
+      float[] floatArray=(float[])array;
+      output.writeInt(floatArray.length);
+      for (int i=0; i < floatArray.length; i++) {
+        output.writeFloat(floatArray[i]);
+      }
+    }
+ else     if (componentType == double.class) {
+      double[] doubleArray=(double[])array;
+      output.writeInt(doubleArray.length);
+      for (int i=0; i < doubleArray.length; i++) {
+        output.writeDouble(doubleArray[i]);
+      }
+    }
+ else {
+      throw new InvalidClassException("Wrong base type in " + arrayClass.getName());
+    }
+  }
+ else {
+    Object[] objectArray=(Object[])array;
+    output.writeInt(objectArray.length);
+    for (int i=0; i < objectArray.length; i++) {
+      writeObject(objectArray[i]);
+    }
+  }
+  return handle;
+}

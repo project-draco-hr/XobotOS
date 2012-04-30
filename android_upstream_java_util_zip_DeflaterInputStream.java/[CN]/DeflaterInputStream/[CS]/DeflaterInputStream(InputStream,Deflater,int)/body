@@ -1,0 +1,11 @@
+{
+  super(in);
+  if (in == null || deflater == null) {
+    throw new NullPointerException();
+  }
+  if (bufferSize <= 0) {
+    throw new IllegalArgumentException();
+  }
+  this.def=deflater;
+  this.buf=new byte[bufferSize];
+}

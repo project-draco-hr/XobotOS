@@ -1,0 +1,3 @@
+{
+  return readIntFile("/sys/class/net/" + name + "/mtu");
+}

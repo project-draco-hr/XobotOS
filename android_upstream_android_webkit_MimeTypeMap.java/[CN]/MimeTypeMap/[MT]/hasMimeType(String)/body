@@ -1,0 +1,3 @@
+{
+  return MimeUtils.hasMimeType(mimeType);
+}

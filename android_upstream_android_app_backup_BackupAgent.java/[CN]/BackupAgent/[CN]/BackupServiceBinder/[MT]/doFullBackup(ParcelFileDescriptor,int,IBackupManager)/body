@@ -1,0 +1,31 @@
+{
+  long ident=Binder.clearCallingIdentity();
+  if (DEBUG)   Log.v(TAG,"doFullBackup() invoked");
+  try {
+    BackupAgent.this.onFullBackup(new FullBackupDataOutput(data));
+  }
+ catch (  IOException ex) {
+    Log.d(TAG,"onBackup (" + BackupAgent.this.getClass().getName() + ") threw",ex);
+    throw new RuntimeException(ex);
+  }
+catch (  RuntimeException ex) {
+    Log.d(TAG,"onBackup (" + BackupAgent.this.getClass().getName() + ") threw",ex);
+    throw ex;
+  }
+ finally {
+    try {
+      FileOutputStream out=new FileOutputStream(data.getFileDescriptor());
+      byte[] buf=new byte[4];
+      out.write(buf);
+    }
+ catch (    IOException e) {
+      Log.e(TAG,"Unable to finalize backup stream!");
+    }
+    Binder.restoreCallingIdentity(ident);
+    try {
+      callbackBinder.opComplete(token);
+    }
+ catch (    RemoteException e) {
+    }
+  }
+}

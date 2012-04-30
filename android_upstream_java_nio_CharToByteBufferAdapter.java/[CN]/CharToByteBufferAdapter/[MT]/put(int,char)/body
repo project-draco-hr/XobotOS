@@ -1,0 +1,5 @@
+{
+  checkIndex(index);
+  byteBuffer.putChar(index * SizeOf.CHAR,c);
+  return this;
+}

@@ -1,0 +1,54 @@
+{
+  StringBuffer retval=new StringBuffer();
+  if (debug)   dbg_enter("ipv6Reference");
+  try {
+    if (stripAddressScopeZones) {
+      while (lexer.hasMoreChars()) {
+        char la=lexer.lookAhead(0);
+        if (LexerCore.isHexDigit(la) || la == '.' || la == ':' || la == '[') {
+          lexer.consume(1);
+          retval.append(la);
+        }
+ else         if (la == ']') {
+          lexer.consume(1);
+          retval.append(la);
+          return retval.toString();
+        }
+ else         if (la == '%') {
+          lexer.consume(1);
+          String rest=lexer.getRest();
+          if (rest == null || rest.length() == 0) {
+            break;
+          }
+          int stripLen=rest.indexOf(']');
+          if (stripLen == -1) {
+            break;
+          }
+          lexer.consume(stripLen + 1);
+          retval.append("]");
+          return retval.toString();
+        }
+ else         break;
+      }
+    }
+ else {
+      while (lexer.hasMoreChars()) {
+        char la=lexer.lookAhead(0);
+        if (LexerCore.isHexDigit(la) || la == '.' || la == ':' || la == '[') {
+          lexer.consume(1);
+          retval.append(la);
+        }
+ else         if (la == ']') {
+          lexer.consume(1);
+          retval.append(la);
+          return retval.toString();
+        }
+ else         break;
+      }
+    }
+    throw new ParseException(lexer.getBuffer() + ": Illegal Host name ",lexer.getPtr());
+  }
+  finally {
+    if (debug)     dbg_leave("ipv6Reference");
+  }
+}

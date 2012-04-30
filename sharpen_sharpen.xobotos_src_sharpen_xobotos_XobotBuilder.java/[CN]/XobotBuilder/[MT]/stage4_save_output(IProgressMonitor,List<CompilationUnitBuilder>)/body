@@ -1,0 +1,43 @@
+{
+  final int count=builders.size();
+  final int totalWork=OUTPUT_PRICE * count;
+  IProgressMonitor subMonitor=new SubProgressMonitor(monitor,totalWork);
+  subMonitor.beginTask("Writing output",totalWork);
+  Sharpen.Log(Level.INFO,"Writing output ...");
+  int i=0;
+  boolean foundErrors=false;
+  for (  final CompilationUnitBuilder builder : builders) {
+    final ICompilationUnit source=builder.getPair().source;
+    final CSCompilationUnit unit=builder.getCompilationUnit();
+    final String pathName=builder.getName();
+    final String message=String.format("Saving (%d/%d): %s",++i,count,pathName);
+    subMonitor.subTask(message);
+    try {
+      if (!builder.writeOutput()) {
+        Sharpen.Log(Level.SEVERE,"Failed to save output file: %s",pathName);
+        foundErrors=true;
+        continue;
+      }
+      if (unit.ignore() || unit.types().isEmpty())       continue;
+      final StringWriter writer=new StringWriter();
+      writer.write(_config.header());
+      CSharpPrinter printer=new CSharpPrinter();
+      printer.setWriter(writer);
+      printer.print(unit);
+      if (writer.getBuffer().length() > 0)       saveConvertedFile(source,unit,writer);
+    }
+ catch (    CoreException e) {
+      Sharpen.Log(e,"Cannot save output file: %s",pathName);
+      foundErrors=true;
+    }
+ finally {
+      subMonitor.worked(OUTPUT_PRICE);
+    }
+  }
+  if (foundErrors) {
+    Sharpen.Log(Level.SEVERE,"Errors while writing output!");
+    _foundErrors=true;
+  }
+  subMonitor.done();
+  return !foundErrors;
+}

@@ -1,0 +1,10 @@
+{
+  createPopupWindow();
+  mPopupWindow.setWindowLayoutType(WindowManager.LayoutParams.TYPE_APPLICATION_SUB_PANEL);
+  mPopupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+  mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+  initContentView();
+  LayoutParams wrapContent=new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+  mContentView.setLayoutParams(wrapContent);
+  mPopupWindow.setContentView(mContentView);
+}

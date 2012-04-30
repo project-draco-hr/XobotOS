@@ -1,0 +1,3 @@
+def ConfirmAllowedCopyrightHolder(holder):
+    'Returns True if this is one of our allowed copyright holders.\n\n    @param holder copyright holder as a string\n    '
+    return (holder in ALLOWED_COPYRIGHT_HOLDERS)

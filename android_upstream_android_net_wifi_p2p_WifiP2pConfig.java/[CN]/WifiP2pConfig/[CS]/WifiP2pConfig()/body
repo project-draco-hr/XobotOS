@@ -1,0 +1,4 @@
+{
+  wps=new WpsInfo();
+  wps.setup=WpsInfo.PBC;
+}

@@ -1,0 +1,5 @@
+{
+  if (stackLogger.isLoggingEnabled())   stackLogger.logDebug("added transaction " + serverTransaction);
+  serverTransaction.map();
+  addTransactionHash(serverTransaction);
+}

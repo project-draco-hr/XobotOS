@@ -1,0 +1,35 @@
+{
+  if (!engineContainsAlias(alias)) {
+    return null;
+  }
+  if (engineIsCertificateEntry(alias)) {
+    return new KeyStore.TrustedCertificateEntry(engineGetCertificate(alias));
+  }
+  char[] passW=null;
+  if (protParam != null) {
+    if (protParam instanceof KeyStore.PasswordProtection) {
+      try {
+        passW=((KeyStore.PasswordProtection)protParam).getPassword();
+      }
+ catch (      IllegalStateException ee) {
+        throw new KeyStoreException("Password was destroyed",ee);
+      }
+    }
+ else     if (protParam instanceof KeyStore.CallbackHandlerProtection) {
+      passW=getPasswordFromCallBack(protParam);
+    }
+ else {
+      throw new UnrecoverableEntryException("ProtectionParameter object is not " + "PasswordProtection: " + protParam);
+    }
+  }
+  if (engineIsKeyEntry(alias)) {
+    Key key=engineGetKey(alias,passW);
+    if (key instanceof PrivateKey) {
+      return new KeyStore.PrivateKeyEntry((PrivateKey)key,engineGetCertificateChain(alias));
+    }
+    if (key instanceof SecretKey) {
+      return new KeyStore.SecretKeyEntry((SecretKey)key);
+    }
+  }
+  throw new NoSuchAlgorithmException("Unknown KeyStore.Entry object");
+}

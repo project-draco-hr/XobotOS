@@ -1,0 +1,16 @@
+{
+  int nextPage=-1;
+  if (direction == FOCUS_UP) {
+    nextPage=Math.max(0,mSelectedPosition - getChildCount());
+  }
+ else   if (direction == FOCUS_DOWN) {
+    nextPage=Math.min(mItemCount - 1,mSelectedPosition + getChildCount());
+  }
+  if (nextPage >= 0) {
+    setSelectionInt(nextPage);
+    invokeOnItemScrollListener();
+    awakenScrollBars();
+    return true;
+  }
+  return false;
+}

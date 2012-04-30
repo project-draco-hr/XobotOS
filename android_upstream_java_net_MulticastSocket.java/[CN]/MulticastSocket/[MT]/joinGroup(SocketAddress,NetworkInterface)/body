@@ -1,0 +1,4 @@
+{
+  checkJoinOrLeave(groupAddress,netInterface);
+  impl.joinGroup(groupAddress,netInterface);
+}

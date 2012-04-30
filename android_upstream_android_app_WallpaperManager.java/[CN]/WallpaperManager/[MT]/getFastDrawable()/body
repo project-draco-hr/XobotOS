@@ -1,0 +1,7 @@
+{
+  Bitmap bm=sGlobals.peekWallpaperBitmap(mContext,true);
+  if (bm != null) {
+    return new FastBitmapDrawable(bm);
+  }
+  return null;
+}

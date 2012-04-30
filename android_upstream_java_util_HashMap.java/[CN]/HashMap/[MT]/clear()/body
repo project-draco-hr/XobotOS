@@ -1,0 +1,8 @@
+{
+  if (size != 0) {
+    Arrays.fill(table,null);
+    entryForNullKey=null;
+    modCount++;
+    size=0;
+  }
+}

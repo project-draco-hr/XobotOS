@@ -1,0 +1,12 @@
+{
+  String identifier=node.getLabel().getIdentifier();
+  _currentContinueLabel=new CSLabelStatement(continueLabel(identifier));
+  try {
+    node.getBody().accept(this);
+  }
+  finally {
+    _currentContinueLabel=null;
+  }
+  addStatement(new CSLabelStatement(breakLabel(identifier)));
+  return false;
+}

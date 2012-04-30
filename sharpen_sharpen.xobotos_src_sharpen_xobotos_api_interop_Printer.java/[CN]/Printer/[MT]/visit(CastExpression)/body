@@ -1,0 +1,6 @@
+{
+  _writer.write("(");
+  node.getType().accept(this);
+  _writer.writeBlock(")");
+  node.getExpression().accept(this);
+}

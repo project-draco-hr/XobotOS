@@ -1,0 +1,6 @@
+{
+  if (uriParms != null) {
+    return (String)uriParms.getValue(TRANSPORT);
+  }
+ else   return null;
+}

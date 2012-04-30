@@ -1,0 +1,5 @@
+{
+  checkRadix(radix);
+  this.integerRadix=radix;
+  return this;
+}

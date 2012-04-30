@@ -1,0 +1,6 @@
+{
+  preFork();
+  int pid=nativeForkSystemServer(uid,gid,gids,debugFlags,rlimits,permittedCapabilities,effectiveCapabilities);
+  postFork();
+  return pid;
+}

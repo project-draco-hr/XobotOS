@@ -1,0 +1,17 @@
+{
+  elementLevel++;
+  nsSupport.pushContext();
+  if (forceDTD && !hasOutputDTD)   startDTD(localName == null ? qName : localName,"","");
+  write('<');
+  writeName(uri,localName,qName,true);
+  writeAttributes(atts);
+  if (elementLevel == 1) {
+    forceNSDecls();
+  }
+  writeNSDecls();
+  write('>');
+  if (htmlMode && (qName.equals("script") || qName.equals("style"))) {
+    cdataElement=true;
+  }
+  super.startElement(uri,localName,qName,atts);
+}

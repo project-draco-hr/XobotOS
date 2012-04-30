@@ -1,0 +1,4 @@
+{
+  MethodEntry entry=_methodHash.get(method.getMethodDeclaration());
+  return entry != null ? entry.BaseMethod : null;
+}

@@ -1,0 +1,15 @@
+{
+  if (s == null) {
+    throw new NullPointerException();
+  }
+  servicesChanged();
+  if (serviceTable != null) {
+    serviceTable.remove(s.type,s.algorithm.toUpperCase(Locale.US));
+  }
+  if (aliasTable != null && s.aliases != null) {
+    for (    String alias : s.getAliases()) {
+      aliasTable.remove(s.type,alias.toUpperCase(Locale.US));
+    }
+  }
+  serviceInfoFromProperties(s);
+}

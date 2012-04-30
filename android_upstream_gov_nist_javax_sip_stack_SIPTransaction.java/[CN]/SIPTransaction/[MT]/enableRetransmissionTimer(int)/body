@@ -1,0 +1,9 @@
+{
+  if (isInviteTransaction() && (this instanceof SIPClientTransaction)) {
+    retransmissionTimerTicksLeft=tickCount;
+  }
+ else {
+    retransmissionTimerTicksLeft=Math.min(tickCount,MAXIMUM_RETRANSMISSION_TICK_COUNT);
+  }
+  retransmissionTimerLastTickCount=retransmissionTimerTicksLeft;
+}

@@ -1,0 +1,10 @@
+{
+  int startIdx=ptr;
+  while (true) {
+    char la=lookAhead(0);
+    if (la == delim)     break;
+ else     if (la == '\0')     throw new ParseException("EOL reached",0);
+    consume(1);
+  }
+  return buffer.substring(startIdx,ptr);
+}

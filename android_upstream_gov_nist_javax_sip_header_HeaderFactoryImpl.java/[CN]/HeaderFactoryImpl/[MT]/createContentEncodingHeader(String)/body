@@ -1,0 +1,6 @@
+{
+  if (encoding == null)   throw new NullPointerException("null encoding");
+  ContentEncoding c=new ContentEncoding();
+  c.setEncoding(encoding);
+  return c;
+}

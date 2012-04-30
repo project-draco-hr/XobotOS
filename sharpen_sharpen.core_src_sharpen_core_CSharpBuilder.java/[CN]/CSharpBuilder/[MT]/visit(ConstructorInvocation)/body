@@ -1,0 +1,4 @@
+{
+  addChainedConstructorInvocation(new CSThisExpression(),node.arguments(),node.resolveConstructorBinding());
+  return false;
+}

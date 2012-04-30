@@ -1,0 +1,16 @@
+{
+  super.onAttachedToWindow();
+  final ViewTreeObserver treeObserver=getViewTreeObserver();
+  treeObserver.addOnTouchModeChangeListener(this);
+  if (mTextFilterEnabled && mPopup != null && !mGlobalLayoutListenerAddedFilter) {
+    treeObserver.addOnGlobalLayoutListener(this);
+  }
+  if (mAdapter != null && mDataSetObserver == null) {
+    mDataSetObserver=new AdapterDataSetObserver();
+    mAdapter.registerDataSetObserver(mDataSetObserver);
+    mDataChanged=true;
+    mOldItemCount=mItemCount;
+    mItemCount=mAdapter.getCount();
+  }
+  mIsAttached=true;
+}

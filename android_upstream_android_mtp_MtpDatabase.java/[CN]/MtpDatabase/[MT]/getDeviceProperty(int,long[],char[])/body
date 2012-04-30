@@ -1,0 +1,24 @@
+{
+switch (property) {
+case MtpConstants.DEVICE_PROPERTY_SYNCHRONIZATION_PARTNER:
+case MtpConstants.DEVICE_PROPERTY_DEVICE_FRIENDLY_NAME:
+    String value=mDeviceProperties.getString(Integer.toString(property),"");
+  int length=value.length();
+if (length > 255) {
+  length=255;
+}
+value.getChars(0,length,outStringValue,0);
+outStringValue[length]=0;
+return MtpConstants.RESPONSE_OK;
+case MtpConstants.DEVICE_PROPERTY_IMAGE_SIZE:
+Display display=((WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+int width=display.getMaximumSizeDimension();
+int height=display.getMaximumSizeDimension();
+String imageSize=Integer.toString(width) + "x" + Integer.toString(height);
+imageSize.getChars(0,imageSize.length(),outStringValue,0);
+outStringValue[imageSize.length()]=0;
+return MtpConstants.RESPONSE_OK;
+default :
+return MtpConstants.RESPONSE_DEVICE_PROP_NOT_SUPPORTED;
+}
+}

@@ -1,0 +1,8 @@
+{
+  SIPDialog dialog=SIPDialog.this;
+  if (eventListeners != null) {
+    eventListeners.clear();
+  }
+  timerTaskLock=null;
+  sipStack.removeDialog(dialog);
+}

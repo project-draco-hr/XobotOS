@@ -1,0 +1,9 @@
+def bounds_slope(regressions):
+    'Finds the extreme up and down slopes of a set of linear regressions.\n    \n    ({Label:LinearRegression}) -> (max_up_slope, min_down_slope)'
+    max_up_slope = 0
+    min_down_slope = 0
+    for regression in regressions.itervalues():
+        min_slope = regression.find_min_slope()
+        max_up_slope = max(max_up_slope, min_slope)
+        min_down_slope = min(min_down_slope, min_slope)
+    return (max_up_slope, min_down_slope)

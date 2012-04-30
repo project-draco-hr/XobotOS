@@ -1,0 +1,4 @@
+{
+  _writer.write(node.getOperator());
+  node.getExpression().accept(this);
+}

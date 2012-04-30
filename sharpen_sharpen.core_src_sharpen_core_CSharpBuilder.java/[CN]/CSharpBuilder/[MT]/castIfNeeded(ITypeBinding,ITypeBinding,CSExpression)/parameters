@@ -1,0 +1,3 @@
+ITypeBinding expectedType
+ITypeBinding actualType
+CSExpression expression

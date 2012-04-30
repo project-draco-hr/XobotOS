@@ -1,0 +1,9 @@
+{
+  if (selectorIndex > mMaxValue) {
+    return mMinValue + (selectorIndex - mMaxValue) % (mMaxValue - mMinValue) - 1;
+  }
+ else   if (selectorIndex < mMinValue) {
+    return mMaxValue - (mMinValue - selectorIndex) % (mMaxValue - mMinValue) + 1;
+  }
+  return selectorIndex;
+}

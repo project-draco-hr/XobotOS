@@ -1,0 +1,10 @@
+{
+  ITypeBinding binding=node.resolveBinding();
+  CompilationUnit unit=ASTUtility.ancestorOf(node,CompilationUnit.class);
+  IJavaElement element=unit.getJavaElement();
+  if (element == null)   return Match.NO_MATCH;
+  String name=element.getElementName();
+  if (name.endsWith(".java"))   name=name.substring(0,name.length() - 5);
+  if (!name.equals(binding.getName()))   return Match.NO_MATCH;
+  return super.matches(node);
+}

@@ -1,0 +1,4 @@
+{
+  if (callId == null)   throw new NullPointerException("Null callId argument ");
+  this.cachedCredentials.removeAuthenticationHeader(callId);
+}

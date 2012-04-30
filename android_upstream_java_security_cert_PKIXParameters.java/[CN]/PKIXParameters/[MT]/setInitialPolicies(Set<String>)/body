@@ -1,0 +1,9 @@
+{
+  if (initialPolicies == null || initialPolicies.isEmpty()) {
+    if (this.initialPolicies != null && !this.initialPolicies.isEmpty()) {
+      this.initialPolicies=null;
+    }
+    return;
+  }
+  this.initialPolicies=new HashSet<String>(initialPolicies);
+}

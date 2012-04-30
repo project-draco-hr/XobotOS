@@ -1,0 +1,20 @@
+def ComputeOutputFileName(self, spec):
+    'Compute the filename of the final output for the current target.'
+    DEFAULT_PREFIX = {'loadable_module': 'lib', 'shared_library': 'lib', }
+    prefix = spec.get('product_prefix', DEFAULT_PREFIX.get(spec['type'], ''))
+    DEFAULT_EXTENSION = {'static_library': 'a', 'loadable_module': 'so', 'shared_library': 'so', }
+    extension = spec.get('product_extension', DEFAULT_EXTENSION.get(spec['type'], ''))
+    if extension:
+        extension = ('.' + extension)
+    if ('product_name' in spec):
+        target = spec['product_name']
+    else:
+        target = spec['target_name']
+        if (prefix == 'lib'):
+            target = StripPrefix(target, 'lib')
+    if (spec['type'] in ('static_library', 'loadable_module', 'shared_library', 'executable')):
+        return ('%s%s%s' % (prefix, target, extension))
+    elif (spec['type'] == 'none'):
+        return ('%s.stamp' % target)
+    else:
+        raise 'Unhandled output type', spec['type']

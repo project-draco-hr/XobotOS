@@ -1,0 +1,3 @@
+{
+  return (ExpiresHeader)getHeaderLowerCase(EXPIRES_LOWERCASE);
+}

@@ -1,0 +1,7 @@
+{
+  if (contentType == null || contentSubType == null)   throw new NullPointerException("null contentType or subType");
+  ContentType c=new ContentType();
+  c.setContentType(contentType);
+  c.setContentSubType(contentSubType);
+  return c;
+}

@@ -1,0 +1,13 @@
+{
+  int countryCode=number.getCountryCode();
+  List<String> regions=countryCallingCodeToRegionCodeMap.get(countryCode);
+  if (regions == null) {
+    return null;
+  }
+  if (regions.size() == 1) {
+    return regions.get(0);
+  }
+ else {
+    return getRegionCodeForNumberFromRegionList(number,regions);
+  }
+}

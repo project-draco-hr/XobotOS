@@ -1,0 +1,4 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("setRemoteSeqno " + this + "/"+ rCseq);
+  this.remoteSequenceNumber=rCseq;
+}

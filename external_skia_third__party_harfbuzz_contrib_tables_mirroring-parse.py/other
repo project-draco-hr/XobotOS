@@ -1,0 +1,6 @@
+import sys
+if (__name__ == '__main__'):
+    if (len(sys.argv) != 3):
+        print ('Usage: %s <input .txt> <output .h>' % sys.argv[0])
+    else:
+        main(file(sys.argv[1], 'r'), file(sys.argv[2], 'w+'))

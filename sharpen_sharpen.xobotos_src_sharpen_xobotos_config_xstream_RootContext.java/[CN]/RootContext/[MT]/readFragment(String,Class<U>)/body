@@ -1,0 +1,3 @@
+{
+  return XStreamUtils.readFragment(this,fileName,klass);
+}

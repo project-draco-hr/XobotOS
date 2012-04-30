@@ -1,0 +1,14 @@
+{
+  StringBuilder normalizedNumber=new StringBuilder(number.length());
+  char[] numberAsCharArray=number.toCharArray();
+  for (  char character : numberAsCharArray) {
+    Character newDigit=normalizationReplacements.get(Character.toUpperCase(character));
+    if (newDigit != null) {
+      normalizedNumber.append(newDigit);
+    }
+ else     if (!removeNonMatches) {
+      normalizedNumber.append(character);
+    }
+  }
+  return normalizedNumber.toString();
+}

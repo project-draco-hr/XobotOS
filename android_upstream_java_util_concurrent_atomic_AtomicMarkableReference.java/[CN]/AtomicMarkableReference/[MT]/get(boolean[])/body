@@ -1,0 +1,5 @@
+{
+  Pair<V> pair=this.pair;
+  markHolder[0]=pair.mark;
+  return pair.reference;
+}

@@ -1,0 +1,7 @@
+{
+  dest.writeInt(efid);
+  dest.writeInt(recordNumber);
+  dest.writeString(alphaTag);
+  dest.writeString(number);
+  dest.writeStringArray(emails);
+}

@@ -1,0 +1,5 @@
+{
+  super(name,type);
+  _visibility=visibility;
+  _initializer=initializer;
+}

@@ -1,0 +1,11 @@
+{
+  if (!isValid() || width <= 0 || height <= 0)   return;
+  mWidth=width;
+  mHeight=height;
+  if (width != mLayerWidth || height != mLayerHeight) {
+    int[] layerInfo=new int[2];
+    GLES20Canvas.nResizeLayer(mLayer,width,height,layerInfo);
+    mLayerWidth=layerInfo[0];
+    mLayerHeight=layerInfo[1];
+  }
+}

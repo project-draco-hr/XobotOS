@@ -1,0 +1,9 @@
+{
+  final int previousTop=fmi.top;
+  final int previousAscent=fmi.ascent;
+  final int previousDescent=fmi.descent;
+  final int previousBottom=fmi.bottom;
+  final int previousLeading=fmi.leading;
+  wp.getFontMetricsInt(fmi);
+  updateMetrics(fmi,previousTop,previousAscent,previousDescent,previousBottom,previousLeading);
+}

@@ -1,0 +1,19 @@
+{
+  boolean consumed=mPopup.onKeyUp(keyCode,event);
+  if (consumed) {
+switch (keyCode) {
+case KeyEvent.KEYCODE_ENTER:
+case KeyEvent.KEYCODE_DPAD_CENTER:
+case KeyEvent.KEYCODE_TAB:
+      if (event.hasNoModifiers()) {
+        performCompletion();
+      }
+    return true;
+}
+}
+if (isPopupShowing() && keyCode == KeyEvent.KEYCODE_TAB && event.hasNoModifiers()) {
+performCompletion();
+return true;
+}
+return super.onKeyUp(keyCode,event);
+}

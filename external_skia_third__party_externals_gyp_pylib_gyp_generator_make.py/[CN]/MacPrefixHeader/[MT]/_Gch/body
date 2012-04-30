@@ -1,0 +1,4 @@
+def _Gch(self, lang):
+    'Returns the actual file name of the prefix header for language |lang|.'
+    assert self.compile_headers
+    return (self.compiled_headers[lang] + '.gch')

@@ -1,0 +1,4 @@
+{
+  if (parameters == null)   return null;
+  return getParameter(ParameterNames.FROM_TAG);
+}

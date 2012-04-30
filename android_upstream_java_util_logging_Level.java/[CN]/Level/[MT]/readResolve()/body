@@ -1,0 +1,17 @@
+{
+synchronized (levels) {
+    for (    Level level : levels) {
+      if (value != level.value) {
+        continue;
+      }
+      if (!name.equals(level.name)) {
+        continue;
+      }
+      if (Objects.equal(resourceBundleName,level.resourceBundleName)) {
+        return level;
+      }
+    }
+    levels.add(this);
+    return this;
+  }
+}

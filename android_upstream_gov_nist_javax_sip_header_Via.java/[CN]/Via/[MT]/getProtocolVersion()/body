@@ -1,0 +1,4 @@
+{
+  if (sentProtocol == null)   return null;
+ else   return sentProtocol.getProtocolVersion();
+}

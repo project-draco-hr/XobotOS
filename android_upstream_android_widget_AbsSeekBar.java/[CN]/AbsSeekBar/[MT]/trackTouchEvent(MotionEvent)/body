@@ -1,0 +1,20 @@
+{
+  final int width=getWidth();
+  final int available=width - mPaddingLeft - mPaddingRight;
+  int x=(int)event.getX();
+  float scale;
+  float progress=0;
+  if (x < mPaddingLeft) {
+    scale=0.0f;
+  }
+ else   if (x > width - mPaddingRight) {
+    scale=1.0f;
+  }
+ else {
+    scale=(float)(x - mPaddingLeft) / (float)available;
+    progress=mTouchProgressOffset;
+  }
+  final int max=getMax();
+  progress+=scale * max;
+  setProgress((int)progress,true);
+}

@@ -1,0 +1,11 @@
+{
+  if (false) {
+    Log.d(TAG,"removeProximityAlert: intent = " + intent);
+  }
+  try {
+    mService.removeProximityAlert(intent);
+  }
+ catch (  RemoteException ex) {
+    Log.e(TAG,"removeProximityAlert: RemoteException",ex);
+  }
+}

@@ -1,0 +1,4 @@
+{
+  checkIndex(index);
+  return byteBuffer.getFloat(index * SizeOf.FLOAT);
+}

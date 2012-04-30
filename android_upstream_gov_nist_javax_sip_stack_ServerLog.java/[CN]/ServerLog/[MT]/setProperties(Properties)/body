@@ -1,0 +1,40 @@
+{
+  this.configurationProperties=configurationProperties;
+  this.description=configurationProperties.getProperty("javax.sip.STACK_NAME");
+  this.stackIpAddress=configurationProperties.getProperty("javax.sip.IP_ADDRESS");
+  this.logFileName=configurationProperties.getProperty("gov.nist.javax.sip.SERVER_LOG");
+  String logLevel=configurationProperties.getProperty("gov.nist.javax.sip.TRACE_LEVEL");
+  String logContent=configurationProperties.getProperty("gov.nist.javax.sip.LOG_MESSAGE_CONTENT");
+  this.logContent=(logContent != null && logContent.equals("true"));
+  if (logLevel != null) {
+    if (logLevel.equals("LOG4J")) {
+    }
+ else {
+      try {
+        int ll;
+        if (logLevel.equals("DEBUG")) {
+          ll=TRACE_DEBUG;
+        }
+ else         if (logLevel.equals("INFO")) {
+          ll=TRACE_MESSAGES;
+        }
+ else         if (logLevel.equals("ERROR")) {
+          ll=TRACE_EXCEPTION;
+        }
+ else         if (logLevel.equals("NONE") || logLevel.equals("OFF")) {
+          ll=TRACE_NONE;
+        }
+ else {
+          ll=Integer.parseInt(logLevel);
+        }
+        this.setTraceLevel(ll);
+      }
+ catch (      NumberFormatException ex) {
+        System.out.println("ServerLog: WARNING Bad integer " + logLevel);
+        System.out.println("logging dislabled ");
+        this.setTraceLevel(0);
+      }
+    }
+  }
+  checkLogFile();
+}

@@ -1,0 +1,5 @@
+{
+  final MethodBinding methodBinding=my(BindingManager.class).resolveBinding(binding);
+  if (methodBinding == null)   return null;
+  return mapVisibility(methodBinding);
+}

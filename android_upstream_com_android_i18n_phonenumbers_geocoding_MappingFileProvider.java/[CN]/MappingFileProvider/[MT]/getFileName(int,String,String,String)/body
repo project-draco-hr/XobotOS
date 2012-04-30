@@ -1,0 +1,19 @@
+{
+  if (language.length() == 0) {
+    return "";
+  }
+  int index=Arrays.binarySearch(countryCallingCodes,countryCallingCode);
+  if (index < 0) {
+    return "";
+  }
+  Set<String> setOfLangs=availableLanguages.get(index);
+  if (setOfLangs.size() > 0) {
+    String languageCode=findBestMatchingLanguageCode(setOfLangs,language,script,region);
+    if (languageCode.length() > 0) {
+      StringBuilder fileName=new StringBuilder();
+      fileName.append(countryCallingCode).append('_').append(languageCode);
+      return fileName.toString();
+    }
+  }
+  return "";
+}

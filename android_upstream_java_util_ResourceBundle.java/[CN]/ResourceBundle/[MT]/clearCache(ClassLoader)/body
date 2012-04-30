@@ -1,0 +1,6 @@
+{
+  if (loader == null) {
+    throw new NullPointerException();
+  }
+  cache.remove(loader);
+}

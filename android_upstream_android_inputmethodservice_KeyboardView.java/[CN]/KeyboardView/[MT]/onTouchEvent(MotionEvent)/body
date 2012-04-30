@@ -1,0 +1,6 @@
+{
+  if (mAccessibilityManager.isTouchExplorationEnabled()) {
+    return true;
+  }
+  return onTouchEventInternal(event);
+}

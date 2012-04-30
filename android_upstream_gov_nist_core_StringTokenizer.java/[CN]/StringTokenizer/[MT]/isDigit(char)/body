@@ -1,0 +1,8 @@
+{
+  if (ch <= 127) {
+    return (ch <= '9' && ch >= '0');
+  }
+ else {
+    return Character.isDigit(ch);
+  }
+}

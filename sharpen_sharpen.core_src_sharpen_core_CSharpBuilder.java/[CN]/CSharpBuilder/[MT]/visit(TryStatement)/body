@@ -1,0 +1,22 @@
+{
+  CSTryStatement stmt=new CSTryStatement(node.getStartPosition());
+  visitBlock(stmt.body(),node.getBody());
+  for (  Object o : node.catchClauses()) {
+    CatchClause clause=(CatchClause)o;
+    if (!_configuration.isIgnoredExceptionType(qualifiedName(clause.getException().getType().resolveBinding()))) {
+      stmt.addCatchClause(mapCatchClause(clause));
+    }
+  }
+  if (null != node.getFinally()) {
+    CSBlock finallyBlock=new CSBlock();
+    visitBlock(finallyBlock,node.getFinally());
+    stmt.finallyBlock(finallyBlock);
+  }
+  if (null != stmt.finallyBlock() || !stmt.catchClauses().isEmpty()) {
+    addStatement(stmt);
+  }
+ else {
+    _currentBlock.addAll(stmt.body());
+  }
+  return false;
+}

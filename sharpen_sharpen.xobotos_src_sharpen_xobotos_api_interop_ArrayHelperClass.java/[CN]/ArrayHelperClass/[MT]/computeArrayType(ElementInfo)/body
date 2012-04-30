@@ -1,0 +1,9 @@
+{
+  if (!info.isClass())   return new TemplateTypeReference("NativeArray",info.getNativeType());
+  AbstractNativeTypeBuilder builder=info.getTypeBuilder();
+  if (builder instanceof HelperClassBuilder) {
+    HelperClassBuilder helper=(HelperClassBuilder)builder;
+    if (helper.isByRef())     return new TemplateTypeReference("NativePtrArray",helper.getRealNativeType());
+  }
+  return new TemplateTypeReference("NativeArray",builder.getNativeType());
+}

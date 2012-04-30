@@ -1,0 +1,13 @@
+{
+  int index=Arrays.binarySearch(identifiers[0],in.tag);
+  if (index < 0) {
+    throw new ASN1Exception("Failed to decode ASN.1 choice type.  No alternatives were found for " + getClass().getName());
+  }
+  index=identifiers[1][index];
+  in.content=type[index].decode(in);
+  in.choiceIndex=index;
+  if (in.isVerify) {
+    return null;
+  }
+  return getDecodedObject(in);
+}

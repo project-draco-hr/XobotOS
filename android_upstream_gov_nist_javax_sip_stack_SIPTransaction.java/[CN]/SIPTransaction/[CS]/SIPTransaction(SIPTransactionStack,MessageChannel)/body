@@ -1,0 +1,20 @@
+{
+  sipStack=newParentStack;
+  this.semaphore=new Semaphore(1,true);
+  encapsulatedChannel=newEncapsulatedChannel;
+  this.peerPort=newEncapsulatedChannel.getPeerPort();
+  this.peerAddress=newEncapsulatedChannel.getPeerAddress();
+  this.peerInetAddress=newEncapsulatedChannel.getPeerInetAddress();
+  this.peerPacketSourcePort=newEncapsulatedChannel.getPeerPacketSourcePort();
+  this.peerPacketSourceAddress=newEncapsulatedChannel.getPeerPacketSourceAddress();
+  this.peerProtocol=newEncapsulatedChannel.getPeerProtocol();
+  if (this.isReliable()) {
+    encapsulatedChannel.useCount++;
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("use count for encapsulated channel" + this + " "+ encapsulatedChannel.useCount);
+  }
+  this.currentState=null;
+  disableRetransmissionTimer();
+  disableTimeoutTimer();
+  eventListeners=Collections.synchronizedSet(new HashSet<SIPTransactionEventListener>());
+  addEventListener(newParentStack);
+}

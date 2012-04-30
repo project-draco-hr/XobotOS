@@ -1,0 +1,10 @@
+{
+  try {
+    CopyOnWriteArrayList result=(CopyOnWriteArrayList)super.clone();
+    result.elements=result.elements.clone();
+    return result;
+  }
+ catch (  CloneNotSupportedException e) {
+    throw new AssertionError(e);
+  }
+}

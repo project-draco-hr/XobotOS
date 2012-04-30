@@ -1,0 +1,6 @@
+{
+  if (priority == null)   throw new NullPointerException("bad priority arg");
+  Priority p=new Priority();
+  p.setPriority(priority);
+  return p;
+}

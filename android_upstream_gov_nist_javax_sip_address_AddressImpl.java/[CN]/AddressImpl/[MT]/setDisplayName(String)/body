@@ -1,0 +1,4 @@
+{
+  this.displayName=displayName;
+  this.addressType=NAME_ADDR;
+}

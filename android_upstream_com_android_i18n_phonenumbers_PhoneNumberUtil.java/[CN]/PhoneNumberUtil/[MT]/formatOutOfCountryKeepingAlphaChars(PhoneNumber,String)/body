@@ -1,0 +1,47 @@
+{
+  String rawInput=number.getRawInput();
+  if (rawInput.length() == 0) {
+    return formatOutOfCountryCallingNumber(number,regionCallingFrom);
+  }
+  int countryCode=number.getCountryCode();
+  String regionCode=getRegionCodeForCountryCode(countryCode);
+  if (!hasValidRegionCode(regionCode,countryCode,rawInput)) {
+    return rawInput;
+  }
+  rawInput=normalizeHelper(rawInput,ALL_PLUS_NUMBER_GROUPING_SYMBOLS,true);
+  String nationalNumber=getNationalSignificantNumber(number);
+  if (nationalNumber.length() > 3) {
+    int firstNationalNumberDigit=rawInput.indexOf(nationalNumber.substring(0,3));
+    if (firstNationalNumberDigit != -1) {
+      rawInput=rawInput.substring(firstNationalNumberDigit);
+    }
+  }
+  PhoneMetadata metadata=getMetadataForRegion(regionCallingFrom);
+  if (countryCode == NANPA_COUNTRY_CODE) {
+    if (isNANPACountry(regionCallingFrom)) {
+      return countryCode + " " + rawInput;
+    }
+  }
+ else   if (countryCode == getCountryCodeForRegion(regionCallingFrom)) {
+    List<NumberFormat> availableFormats=new ArrayList<NumberFormat>(metadata.numberFormatSize());
+    for (    NumberFormat format : metadata.numberFormats()) {
+      NumberFormat newFormat=new NumberFormat();
+      newFormat.mergeFrom(format);
+      newFormat.setPattern("(\\d+)(.*)");
+      newFormat.setFormat("$1$2");
+      availableFormats.add(newFormat);
+    }
+    return formatAccordingToFormats(rawInput,availableFormats,PhoneNumberFormat.NATIONAL);
+  }
+  String internationalPrefix=metadata.getInternationalPrefix();
+  String internationalPrefixForFormatting=UNIQUE_INTERNATIONAL_PREFIX.matcher(internationalPrefix).matches() ? internationalPrefix : metadata.getPreferredInternationalPrefix();
+  StringBuilder formattedNumber=new StringBuilder(rawInput);
+  maybeGetFormattedExtension(number,regionCode,PhoneNumberFormat.INTERNATIONAL,formattedNumber);
+  if (internationalPrefixForFormatting.length() > 0) {
+    formattedNumber.insert(0," ").insert(0,countryCode).insert(0," ").insert(0,internationalPrefixForFormatting);
+  }
+ else {
+    formatNumberByFormat(countryCode,PhoneNumberFormat.INTERNATIONAL,formattedNumber);
+  }
+  return formattedNumber.toString();
+}

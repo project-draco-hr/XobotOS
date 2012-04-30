@@ -1,0 +1,10 @@
+{
+  try {
+    saveSqlAsLastSqlStatement();
+    acquireAndLock(WRITE);
+    return native_executeInsert();
+  }
+  finally {
+    releaseAndUnlock();
+  }
+}

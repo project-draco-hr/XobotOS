@@ -1,0 +1,7 @@
+{
+  node.body().accept(this);
+  visitList(node.catchClauses());
+  if (null != node.finallyBlock()) {
+    node.finallyBlock().accept(this);
+  }
+}

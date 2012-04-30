@@ -1,0 +1,4 @@
+{
+  if (authority == null)   return null;
+  return authority.getPassword();
+}

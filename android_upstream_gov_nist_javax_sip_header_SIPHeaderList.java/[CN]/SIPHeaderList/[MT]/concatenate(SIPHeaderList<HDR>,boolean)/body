@@ -1,0 +1,8 @@
+{
+  if (!topFlag) {
+    this.addAll(other);
+  }
+ else {
+    this.addAll(0,other);
+  }
+}

@@ -1,0 +1,10 @@
+{
+  Set pairs=map.entrySet();
+  Iterator pairsIterator=pairs.iterator();
+  while (pairsIterator.hasNext()) {
+    Map.Entry keyValuePair=(Map.Entry)(pairsIterator.next());
+    ArrayList list=(ArrayList)(keyValuePair.getValue());
+    list.clear();
+  }
+  map.clear();
+}

@@ -1,0 +1,6 @@
+{
+  if (callId == null)   throw new NullPointerException("null callId arg");
+  InReplyTo inReplyTo=new InReplyTo();
+  inReplyTo.setCallId(callId);
+  return inReplyTo;
+}

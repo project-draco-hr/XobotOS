@@ -1,0 +1,4 @@
+{
+  this.callId=proxyDomain;
+  this.userName=userName;
+}

@@ -1,0 +1,12 @@
+{
+  if ((ipaddress[0] & 0xff) == 10) {
+    return true;
+  }
+ else   if (((ipaddress[0] & 0xff) == 172) && ((ipaddress[1] & 0xf0) == 16)) {
+    return true;
+  }
+ else   if (((ipaddress[0] & 0xff) == 192) && ((ipaddress[1] & 0xff) == 168)) {
+    return true;
+  }
+  return false;
+}

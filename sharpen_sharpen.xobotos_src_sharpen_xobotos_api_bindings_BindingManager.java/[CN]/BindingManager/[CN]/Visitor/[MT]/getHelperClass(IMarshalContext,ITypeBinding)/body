@@ -1,0 +1,24 @@
+{
+  if (type.isClass()) {
+    AbstractNativeTypeBuilder builder=getNativeTypeBuilder(type);
+    if (builder != null)     return (HelperClassBuilder)builder;
+  }
+  if (type.equals(_stringType))   return _stringHelper;
+  if (type.isArray()) {
+    ITypeBinding elementType=type.getElementType();
+    ArrayHelperClass helper=_sharedArrayHelpers.get(elementType);
+    if (helper != null)     return helper;
+    helper=_arrayHelpers.get(elementType);
+    if (helper != null)     return helper;
+    MarshalInfo marshal=getMarshalInfo(context,elementType);
+    if (marshal == null)     return null;
+    ElementInfo element=new ElementInfo(elementType,marshal,null,Flags.ELEMENT);
+    String name="Array_" + elementType.getName();
+    helper=new ArrayHelperClass(type,name,_nativeBuilder,element,false);
+    _arrayHelpers.put(elementType,helper);
+    if (!helper.resolve(context))     return null;
+    _nativeBuilder.registerNativeType(helper);
+    return helper;
+  }
+  return null;
+}

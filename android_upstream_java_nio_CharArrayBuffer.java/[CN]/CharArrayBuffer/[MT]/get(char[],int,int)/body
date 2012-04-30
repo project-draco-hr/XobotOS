@@ -1,0 +1,8 @@
+{
+  if (charCount > remaining()) {
+    throw new BufferUnderflowException();
+  }
+  System.arraycopy(backingArray,offset + position,dst,srcOffset,charCount);
+  position+=charCount;
+  return this;
+}

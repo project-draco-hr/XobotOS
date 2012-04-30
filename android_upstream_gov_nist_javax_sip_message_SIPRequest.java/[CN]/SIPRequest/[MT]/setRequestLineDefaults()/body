@@ -1,0 +1,10 @@
+{
+  String method=requestLine.getMethod();
+  if (method == null) {
+    CSeq cseq=(CSeq)this.getCSeq();
+    if (cseq != null) {
+      method=getCannonicalName(cseq.getMethod());
+      requestLine.setMethod(method);
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  mPopup.setInputMethodMode(visible ? ListPopupWindow.INPUT_METHOD_NEEDED : ListPopupWindow.INPUT_METHOD_NOT_NEEDED);
+  showDropDown();
+}

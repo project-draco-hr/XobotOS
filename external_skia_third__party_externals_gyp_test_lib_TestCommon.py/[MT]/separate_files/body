@@ -1,0 +1,9 @@
+def separate_files(flist):
+    existing = []
+    missing = []
+    for f in flist:
+        if os.path.exists(f):
+            existing.append(f)
+        else:
+            missing.append(f)
+    return (existing, missing)

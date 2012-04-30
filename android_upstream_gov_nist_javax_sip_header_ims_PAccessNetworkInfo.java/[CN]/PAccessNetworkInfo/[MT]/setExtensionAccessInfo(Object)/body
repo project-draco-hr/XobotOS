@@ -1,0 +1,4 @@
+{
+  if (extendAccessInfo == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setExtendAccessInfo(), the extendAccessInfo parameter is null.");
+  this.extendAccessInfo=extendAccessInfo;
+}

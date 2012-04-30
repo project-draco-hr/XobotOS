@@ -1,0 +1,6 @@
+{
+  if (locale == null) {
+    throw new NullPointerException();
+  }
+  return new DecimalFormatSymbols(locale);
+}

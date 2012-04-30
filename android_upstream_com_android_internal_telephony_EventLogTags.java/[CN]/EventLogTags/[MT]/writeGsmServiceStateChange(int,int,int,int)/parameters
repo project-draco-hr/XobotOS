@@ -1,0 +1,4 @@
+int oldstate
+int oldgprsstate
+int newstate
+int newgprsstate

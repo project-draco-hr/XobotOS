@@ -1,0 +1,3 @@
+{
+  return this.hmap.get(key.toString().toLowerCase());
+}

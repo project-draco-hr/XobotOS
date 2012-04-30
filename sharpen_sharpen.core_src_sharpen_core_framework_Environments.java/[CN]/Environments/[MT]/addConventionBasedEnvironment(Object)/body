@@ -1,0 +1,4 @@
+{
+  if (current() == null)   return newConventionBasedEnvironment(bindings);
+  return newCachingEnvironmentFor(compose(newClosedEnvironment(bindings),current(),new ConventionBasedEnvironment()));
+}

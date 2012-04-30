@@ -1,0 +1,6 @@
+{
+  final CSConstructor template=new CSConstructor();
+  visitBodyDeclarationBlock(node,node.getBody(),template);
+  final CSBlock body=template.body();
+  return body;
+}

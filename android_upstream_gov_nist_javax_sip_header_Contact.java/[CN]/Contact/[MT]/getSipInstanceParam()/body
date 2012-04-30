@@ -1,0 +1,3 @@
+{
+  return (String)parameters.getValue(ParameterNames.SIP_INSTANCE);
+}

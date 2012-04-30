@@ -1,0 +1,3 @@
+{
+  return (ContentType)getHeaderLowerCase(CONTENT_TYPE_LOWERCASE);
+}

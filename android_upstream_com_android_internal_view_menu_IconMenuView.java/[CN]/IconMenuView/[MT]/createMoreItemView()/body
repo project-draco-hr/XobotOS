@@ -1,0 +1,14 @@
+{
+  Context context=getContext();
+  LayoutInflater inflater=LayoutInflater.from(context);
+  final IconMenuItemView itemView=(IconMenuItemView)inflater.inflate(com.android.internal.R.layout.icon_menu_item_layout,null);
+  Resources r=context.getResources();
+  itemView.initialize(r.getText(com.android.internal.R.string.more_item_label),mMoreIcon);
+  itemView.setOnClickListener(new OnClickListener(){
+    public void onClick(    View v){
+      mMenu.changeMenuMode();
+    }
+  }
+);
+  return itemView;
+}

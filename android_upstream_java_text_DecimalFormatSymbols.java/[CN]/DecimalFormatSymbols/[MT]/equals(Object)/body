@@ -1,0 +1,10 @@
+{
+  if (this == object) {
+    return true;
+  }
+  if (!(object instanceof DecimalFormatSymbols)) {
+    return false;
+  }
+  DecimalFormatSymbols obj=(DecimalFormatSymbols)object;
+  return currency.equals(obj.currency) && currencySymbol.equals(obj.currencySymbol) && decimalSeparator == obj.decimalSeparator && digit == obj.digit && exponentSeparator.equals(obj.exponentSeparator) && groupingSeparator == obj.groupingSeparator && infinity.equals(obj.infinity) && intlCurrencySymbol.equals(obj.intlCurrencySymbol) && minusSign == obj.minusSign && monetarySeparator == obj.monetarySeparator && NaN.equals(obj.NaN) && patternSeparator == obj.patternSeparator && perMill == obj.perMill && percent == obj.percent && zeroDigit == obj.zeroDigit;
+}

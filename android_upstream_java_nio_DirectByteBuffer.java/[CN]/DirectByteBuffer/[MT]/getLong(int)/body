@@ -1,0 +1,4 @@
+{
+  checkIndex(index,SizeOf.LONG);
+  return this.block.peekLong(offset + index,order);
+}

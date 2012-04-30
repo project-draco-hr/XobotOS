@@ -1,0 +1,5 @@
+{
+  final IPackageFragmentRoot sourceFolder=createSourceFolder(path);
+  _sourceFolders.add(sourceFolder);
+  return sourceFolder;
+}

@@ -1,0 +1,7 @@
+{
+  if (mFinalizer != null) {
+    mFinalizer.destroy();
+    mFinalizer=null;
+  }
+  mLayer=0;
+}

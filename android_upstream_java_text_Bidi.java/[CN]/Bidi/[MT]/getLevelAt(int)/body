@@ -1,0 +1,8 @@
+{
+  try {
+    return offsetLevel[offset] & ~UBIDI_LEVEL_OVERRIDE;
+  }
+ catch (  RuntimeException e) {
+    return baseLevel;
+  }
+}

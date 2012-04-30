@@ -1,0 +1,27 @@
+{
+synchronized (PhoneProxy.lockForRadioTechnologyChange) {
+    super.dispose();
+    log("dispose");
+    mIccRecords.unregisterForRecordsLoaded(this);
+    mCM.unregisterForAvailable(this);
+    mCM.unregisterForOffOrNotAvailable(this);
+    mCM.unregisterForOn(this);
+    mCM.unregisterForNVReady(this);
+    mSST.unregisterForNetworkAttached(this);
+    mCM.unSetOnSuppServiceNotification(this);
+    removeCallbacks(mExitEcmRunnable);
+    mPendingMmis.clear();
+    mCT.dispose();
+    mDataConnectionTracker.dispose();
+    mSST.dispose();
+    mSMS.dispose();
+    mIccFileHandler.dispose();
+    mIccRecords.dispose();
+    mIccCard.dispose();
+    mRuimPhoneBookInterfaceManager.dispose();
+    mRuimSmsInterfaceManager.dispose();
+    mSubInfo.dispose();
+    mEriManager.dispose();
+    mCcatService.dispose();
+  }
+}

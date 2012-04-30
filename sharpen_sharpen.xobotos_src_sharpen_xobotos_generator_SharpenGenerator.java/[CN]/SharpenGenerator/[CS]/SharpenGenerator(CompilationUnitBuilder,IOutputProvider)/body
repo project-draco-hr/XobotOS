@@ -1,0 +1,5 @@
+{
+  this._builder=builder;
+  if (defaultOutput != null)   _outputProviderStack.push(defaultOutput);
+  _outputProviderStack.push(builder.getTemplate());
+}

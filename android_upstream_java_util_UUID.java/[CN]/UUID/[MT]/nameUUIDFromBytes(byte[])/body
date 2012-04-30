@@ -1,0 +1,12 @@
+{
+  if (name == null) {
+    throw new NullPointerException();
+  }
+  try {
+    MessageDigest md=MessageDigest.getInstance("MD5");
+    return makeUuid(md.digest(name),3);
+  }
+ catch (  NoSuchAlgorithmException e) {
+    throw new AssertionError(e);
+  }
+}

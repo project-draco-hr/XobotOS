@@ -1,0 +1,11 @@
+{
+  if (DEBUG)   Sharpen.Debug("REGISTER TYPE: %s",BindingUtils.qualifiedName(binding));
+  if (binding == _nativeTypeContainer) {
+    for (    HelperClassBuilder helper : _arrayHelpers.values()) {
+      if (DEBUG)       Sharpen.Debug("REGISTER TYPE - HELPER: %s",helper.getName());
+      helper.createManagedType(type);
+    }
+  }
+  NativeTypeEntry entry=_nativeTypes.get(binding.getTypeDeclaration());
+  if ((entry != null) && (entry.Builder != null))   entry.Builder.createManagedType(type);
+}

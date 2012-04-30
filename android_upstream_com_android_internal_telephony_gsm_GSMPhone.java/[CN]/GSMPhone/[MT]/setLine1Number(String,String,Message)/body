@@ -1,0 +1,3 @@
+{
+  mIccRecords.setMsisdnNumber(alphaTag,number,onComplete);
+}

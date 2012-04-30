@@ -1,0 +1,6 @@
+{
+  mRingPath=null;
+  mPathIsDirty=true;
+  mGradientState.setShape(shape);
+  invalidateSelf();
+}

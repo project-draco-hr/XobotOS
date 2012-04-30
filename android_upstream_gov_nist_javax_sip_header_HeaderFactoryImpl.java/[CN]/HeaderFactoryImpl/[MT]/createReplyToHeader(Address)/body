@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("null address");
+  ReplyTo replyTo=new ReplyTo();
+  replyTo.setAddress(address);
+  return replyTo;
+}

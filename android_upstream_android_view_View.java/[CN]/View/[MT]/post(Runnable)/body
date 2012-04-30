@@ -1,0 +1,12 @@
+{
+  Handler handler;
+  AttachInfo attachInfo=mAttachInfo;
+  if (attachInfo != null) {
+    handler=attachInfo.mHandler;
+  }
+ else {
+    ViewRootImpl.getRunQueue().post(action);
+    return true;
+  }
+  return handler.post(action);
+}

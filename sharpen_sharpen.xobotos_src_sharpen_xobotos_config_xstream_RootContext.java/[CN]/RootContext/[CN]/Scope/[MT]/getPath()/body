@@ -1,0 +1,5 @@
+{
+  if (_parent == null)   return "/";
+  if (_fileName != null)   return _parent.getPath();
+  return _parent.getPath() + "/" + _name;
+}

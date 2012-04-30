@@ -1,0 +1,6 @@
+{
+  if (threads == null) {
+    throw new NullPointerException("threads == null");
+  }
+  this.threads=threads;
+}

@@ -1,0 +1,3 @@
+{
+  this.nameValueMap.put(nv.getName().toLowerCase(),nv);
+}

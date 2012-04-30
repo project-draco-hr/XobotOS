@@ -1,0 +1,6 @@
+{
+  if (_needsHeader) {
+    for (    AbstractMember member : _nativeHeaders)     header.addMember(member);
+  }
+  return true;
+}

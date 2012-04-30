@@ -1,0 +1,9 @@
+{
+  if (mode != ENCRYPT_MODE && mode != DECRYPT_MODE) {
+    throw new IllegalStateException();
+  }
+  if (outputOffset < 0) {
+    throw new IllegalArgumentException("outputOffset < 0");
+  }
+  return spiImpl.engineDoFinal(null,0,0,output,outputOffset);
+}

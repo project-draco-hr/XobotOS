@@ -1,0 +1,33 @@
+{
+  if (config == null)   return null;
+  List<String> args=new ArrayList<String>();
+  WpsInfo wps=config.wps;
+  args.add(config.deviceAddress);
+switch (wps.setup) {
+case WpsInfo.PBC:
+    args.add("pbc");
+  break;
+case WpsInfo.DISPLAY:
+args.add("pin");
+args.add("display");
+break;
+case WpsInfo.KEYPAD:
+args.add(wps.pin);
+args.add("keypad");
+break;
+case WpsInfo.LABEL:
+args.add(wps.pin);
+args.add("label");
+default :
+break;
+}
+if (joinExistingGroup) args.add("join");
+int groupOwnerIntent=config.groupOwnerIntent;
+if (groupOwnerIntent < 0 || groupOwnerIntent > 15) {
+groupOwnerIntent=3;
+}
+args.add("go_intent=" + groupOwnerIntent);
+String command="P2P_CONNECT ";
+for (String s : args) command+=s + " ";
+return doStringCommand(command);
+}

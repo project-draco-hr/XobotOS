@@ -1,0 +1,17 @@
+{
+  writeMetaMemberHeader(node);
+  node.type().accept(this);
+  write(" ");
+  if (node.isIndexer()) {
+    write("this[");
+    writeCommaSeparatedList(node.parameters());
+    writeLine("]");
+  }
+ else {
+    writeLine(node.name());
+  }
+  enterBody();
+  writeOptionalMemberBlock("get",node.getter(),node.isAbstract());
+  writeOptionalMemberBlock("set",node.setter(),node.isAbstract());
+  leaveBody();
+}

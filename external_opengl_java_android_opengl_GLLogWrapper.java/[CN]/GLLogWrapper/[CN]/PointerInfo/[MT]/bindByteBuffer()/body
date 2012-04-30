@@ -1,0 +1,3 @@
+{
+  mTempByteBuffer=mPointer == null ? null : toByteBuffer(-1,mPointer);
+}

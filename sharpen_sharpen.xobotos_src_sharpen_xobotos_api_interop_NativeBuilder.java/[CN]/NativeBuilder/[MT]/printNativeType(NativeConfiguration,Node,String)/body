@@ -1,0 +1,26 @@
+{
+  final URI projectRoot=my(APIDefinition.class).getProjectRoot();
+  final String outputDir=my(ConfigFile.class).getSourceInfo().getOutputFolder();
+  final String outputPath=projectRoot.getPath() + File.separatorChar + outputDir+ File.separatorChar+ config.getOutputDir();
+  if (!new File(outputPath).exists())   new File(outputPath).mkdirs();
+  final String fullSourceName=outputPath + File.separatorChar + fileName;
+  FileWriter output;
+  try {
+    output=new FileWriter(fullSourceName);
+  }
+ catch (  IOException e) {
+    Sharpen.Log(e,"Cannot create native glue file '%s'",fullSourceName);
+    return false;
+  }
+  IndentedWriter writer=new IndentedWriter(output);
+  Printer printer=new Printer(writer);
+  unit.accept(printer);
+  try {
+    output.close();
+  }
+ catch (  IOException e) {
+    Sharpen.Log(e,"Cannot create native glue file '%s'",fullSourceName);
+    return false;
+  }
+  return true;
+}

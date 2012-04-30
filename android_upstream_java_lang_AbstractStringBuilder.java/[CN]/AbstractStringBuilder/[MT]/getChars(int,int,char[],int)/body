@@ -1,0 +1,6 @@
+{
+  if (start > count || end > count || start > end) {
+    throw startEndAndLength(start,end);
+  }
+  System.arraycopy(value,start,dst,dstStart,end - start);
+}

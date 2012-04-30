@@ -1,0 +1,4 @@
+{
+  String name=node.getName().getFullyQualifiedName();
+  return interfaceName(name);
+}

@@ -1,0 +1,5 @@
+{
+  if (this.readTimeout == -1)   return;
+  this.myTimerTask=new MyTimer(this);
+  this.timer.schedule(this.myTimerTask,this.readTimeout);
+}

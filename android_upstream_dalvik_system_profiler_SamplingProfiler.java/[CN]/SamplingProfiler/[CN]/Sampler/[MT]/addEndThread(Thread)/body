@@ -1,0 +1,11 @@
+{
+  if (thread == null) {
+    throw new NullPointerException("thread == null");
+  }
+  Integer threadId=threadIds.remove(thread);
+  if (threadId == null) {
+    throw new IllegalArgumentException("Unknown thread " + thread);
+  }
+  HprofData.ThreadEvent event=HprofData.ThreadEvent.end(threadId);
+  hprofData.addThreadEvent(event);
+}

@@ -1,0 +1,8 @@
+{
+  if (mDrawableContainerState.mDither != dither) {
+    mDrawableContainerState.mDither=dither;
+    if (mCurrDrawable != null) {
+      mCurrDrawable.setDither(mDrawableContainerState.mDither);
+    }
+  }
+}

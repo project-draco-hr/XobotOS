@@ -1,0 +1,3 @@
+{
+  return java.text.DateFormat.getDateInstance(java.text.DateFormat.LONG);
+}

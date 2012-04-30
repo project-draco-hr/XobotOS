@@ -1,0 +1,9 @@
+{
+  StringBuffer retval=new StringBuffer();
+  if (getVisitedNetworkID() != null) {
+    if (isQuoted)     retval.append(DOUBLE_QUOTE + getVisitedNetworkID() + DOUBLE_QUOTE);
+ else     retval.append(getVisitedNetworkID());
+  }
+  if (!parameters.isEmpty())   retval.append(SEMICOLON + this.parameters.encode());
+  return retval.toString();
+}

@@ -1,0 +1,7 @@
+{
+  Join join=new Join();
+  join.setCallId(callId);
+  join.setFromTag(fromTag);
+  join.setToTag(toTag);
+  return join;
+}

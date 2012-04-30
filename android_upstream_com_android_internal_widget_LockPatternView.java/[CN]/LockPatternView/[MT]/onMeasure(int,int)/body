@@ -1,0 +1,18 @@
+{
+  final int minimumWidth=getSuggestedMinimumWidth();
+  final int minimumHeight=getSuggestedMinimumHeight();
+  int viewWidth=resolveMeasured(widthMeasureSpec,minimumWidth);
+  int viewHeight=resolveMeasured(heightMeasureSpec,minimumHeight);
+switch (mAspect) {
+case ASPECT_SQUARE:
+    viewWidth=viewHeight=Math.min(viewWidth,viewHeight);
+  break;
+case ASPECT_LOCK_WIDTH:
+viewHeight=Math.min(viewWidth,viewHeight);
+break;
+case ASPECT_LOCK_HEIGHT:
+viewWidth=Math.min(viewWidth,viewHeight);
+break;
+}
+setMeasuredDimension(viewWidth,viewHeight);
+}

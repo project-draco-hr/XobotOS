@@ -1,0 +1,6 @@
+{
+  CSAnonymousClassBuilder builder=mapAnonymousClass(node);
+  if (builder == null)   pushExpression(new CSNullLiteralExpression());
+ else   pushExpression(builder.createConstructorInvocation());
+  return false;
+}

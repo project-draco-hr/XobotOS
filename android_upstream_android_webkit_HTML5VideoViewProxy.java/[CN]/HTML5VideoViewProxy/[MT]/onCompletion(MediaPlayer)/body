@@ -1,0 +1,3 @@
+{
+  sendMessage(obtainMessage(ENDED,1,0));
+}

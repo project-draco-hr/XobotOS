@@ -1,0 +1,10 @@
+{
+  if (this.isPrimitive()) {
+    return null;
+  }
+  ClassLoader loader=getClassLoaderImpl();
+  if (loader == null) {
+    loader=BootClassLoader.getInstance();
+  }
+  return loader;
+}

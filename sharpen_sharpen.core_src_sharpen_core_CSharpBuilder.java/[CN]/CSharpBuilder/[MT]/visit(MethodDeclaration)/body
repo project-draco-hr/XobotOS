@@ -1,0 +1,23 @@
+{
+  if (SharpenAnnotations.hasIgnoreAnnotation(node) || isRemoved(node)) {
+    return false;
+  }
+  if (isEvent(node)) {
+    processEventDeclaration(node);
+    return false;
+  }
+  if (isMappedToProperty(node)) {
+    processMappedPropertyDeclaration(node);
+    return false;
+  }
+  if (isTaggedAsProperty(node)) {
+    processPropertyDeclaration(node);
+    return false;
+  }
+  if (isIndexer(node)) {
+    processIndexerDeclaration(node);
+    return false;
+  }
+  processMethodDeclaration(node);
+  return false;
+}

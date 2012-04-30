@@ -1,0 +1,6 @@
+{
+  if (mLoop) {
+    mMANativeHelper.setGeneratePreview(true);
+    mLoop=false;
+  }
+}

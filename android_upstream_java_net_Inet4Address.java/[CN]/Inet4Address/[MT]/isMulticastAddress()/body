@@ -1,0 +1,3 @@
+{
+  return (ipaddress[0] & 0xf0) == 224;
+}

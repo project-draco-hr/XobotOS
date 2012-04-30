@@ -1,0 +1,8 @@
+{
+  if (project.hasNature(natureId)) {
+    return;
+  }
+  IProjectDescription description=project.getDescription();
+  description.setNatureIds(append(description.getNatureIds(),natureId));
+  project.setDescription(description,null);
+}

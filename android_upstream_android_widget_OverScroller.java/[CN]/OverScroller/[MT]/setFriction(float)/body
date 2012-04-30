@@ -1,0 +1,4 @@
+{
+  mScrollerX.setFriction(friction);
+  mScrollerY.setFriction(friction);
+}

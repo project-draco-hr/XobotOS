@@ -1,0 +1,11 @@
+{
+  if ((v < 0) || (v > 0xffffffffL)) {
+    android.util.Log.e("rs","FieldPacker.addU32( " + v + " )");
+    throw new IllegalArgumentException("Saving value out of range for type");
+  }
+  align(4);
+  mData[mPos++]=(byte)(v & 0xff);
+  mData[mPos++]=(byte)((v >> 8) & 0xff);
+  mData[mPos++]=(byte)((v >> 16) & 0xff);
+  mData[mPos++]=(byte)((v >> 24) & 0xff);
+}

@@ -1,0 +1,4 @@
+{
+  Message.obtain(mHandler,MSG_RESET).sendToTarget();
+  mListener.onError(error);
+}

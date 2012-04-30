@@ -1,0 +1,8 @@
+{
+  for (  CSMember member : _members) {
+    if (member.name().equals(name)) {
+      return member;
+    }
+  }
+  return null;
+}

@@ -1,0 +1,21 @@
+{
+synchronized (this) {
+    if (mFinished) {
+      throw new IllegalStateException("Broadcast already finished");
+    }
+    mFinished=true;
+    try {
+      if (mResultExtras != null) {
+        mResultExtras.setAllowFds(false);
+      }
+      if (mOrderedHint) {
+        am.finishReceiver(mToken,mResultCode,mResultData,mResultExtras,mAbortBroadcast);
+      }
+ else {
+        am.finishReceiver(mToken,0,null,null,false);
+      }
+    }
+ catch (    RemoteException ex) {
+    }
+  }
+}

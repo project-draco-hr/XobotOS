@@ -1,0 +1,10 @@
+{
+  Collection<List<?>> result=new ArrayList<List<?>>();
+  if (generalNames == null) {
+    return result;
+  }
+  for (  GeneralName generalName : generalNames) {
+    result.add(generalName.getAsList());
+  }
+  return result;
+}

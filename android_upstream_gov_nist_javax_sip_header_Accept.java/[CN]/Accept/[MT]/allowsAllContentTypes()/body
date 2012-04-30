@@ -1,0 +1,4 @@
+{
+  if (mediaRange == null)   return false;
+ else   return mediaRange.type.compareTo(STAR) == 0;
+}

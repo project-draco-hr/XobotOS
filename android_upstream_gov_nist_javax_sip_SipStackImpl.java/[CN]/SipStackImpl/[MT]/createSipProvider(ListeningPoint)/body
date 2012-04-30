@@ -1,0 +1,11 @@
+{
+  if (listeningPoint == null)   throw new NullPointerException("null listeningPoint");
+  if (this.isLoggingEnabled())   this.getStackLogger().logDebug("createSipProvider: " + listeningPoint);
+  ListeningPointImpl listeningPointImpl=(ListeningPointImpl)listeningPoint;
+  if (listeningPointImpl.sipProvider != null)   throw new ObjectInUseException("Provider already attached!");
+  SipProviderImpl provider=new SipProviderImpl(this);
+  provider.setListeningPoint(listeningPointImpl);
+  listeningPointImpl.sipProvider=provider;
+  this.sipProviders.add(provider);
+  return provider;
+}

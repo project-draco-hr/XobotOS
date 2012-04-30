@@ -1,0 +1,3 @@
+{
+  this(WorkspaceUtilities.getProject(name),monitor);
+}

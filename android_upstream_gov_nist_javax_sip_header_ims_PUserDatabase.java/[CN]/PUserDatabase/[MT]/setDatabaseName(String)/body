@@ -1,0 +1,5 @@
+{
+  if ((databaseName == null) || (databaseName.equals(" ")))   throw new NullPointerException("Database name is null");
+ else   if (!databaseName.contains("aaa://"))   this.databaseName=new StringBuffer().append("aaa://").append(databaseName).toString();
+ else   this.databaseName=databaseName;
+}

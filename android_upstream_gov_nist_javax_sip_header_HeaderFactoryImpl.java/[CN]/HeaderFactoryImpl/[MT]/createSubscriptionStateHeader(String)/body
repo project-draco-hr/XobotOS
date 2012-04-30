@@ -1,0 +1,6 @@
+{
+  if (subscriptionState == null)   throw new NullPointerException("null subscriptionState arg");
+  SubscriptionState s=new SubscriptionState();
+  s.setState(subscriptionState);
+  return s;
+}

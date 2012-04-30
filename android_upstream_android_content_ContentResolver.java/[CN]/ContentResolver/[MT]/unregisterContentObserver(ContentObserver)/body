@@ -1,0 +1,10 @@
+{
+  try {
+    IContentObserver contentObserver=observer.releaseContentObserver();
+    if (contentObserver != null) {
+      getContentService().unregisterContentObserver(contentObserver);
+    }
+  }
+ catch (  RemoteException e) {
+  }
+}

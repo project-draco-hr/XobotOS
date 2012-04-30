@@ -1,0 +1,12 @@
+{
+  if (name.equalsIgnoreCase(ParameterNamesIms.CGI_3GPP) || name.equalsIgnoreCase(ParameterNamesIms.UTRAN_CELL_ID_3GPP) || name.equalsIgnoreCase(ParameterNamesIms.DSL_LOCATION)|| name.equalsIgnoreCase(ParameterNamesIms.CI_3GPP2)) {
+    try {
+      super.setQuotedParameter(name,value.toString());
+    }
+ catch (    ParseException e) {
+    }
+  }
+ else {
+    super.setParameter(name,value);
+  }
+}

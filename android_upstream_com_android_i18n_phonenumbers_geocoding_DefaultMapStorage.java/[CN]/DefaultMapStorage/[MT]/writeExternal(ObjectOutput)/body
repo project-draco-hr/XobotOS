@@ -1,0 +1,12 @@
+{
+  objectOutput.writeInt(numOfEntries);
+  for (int i=0; i < numOfEntries; i++) {
+    objectOutput.writeInt(phoneNumberPrefixes[i]);
+    objectOutput.writeUTF(descriptions[i]);
+  }
+  int sizeOfLengths=possibleLengths.size();
+  objectOutput.writeInt(sizeOfLengths);
+  for (  Integer length : possibleLengths) {
+    objectOutput.writeInt(length);
+  }
+}

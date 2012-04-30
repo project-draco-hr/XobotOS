@@ -1,0 +1,12 @@
+{
+  if (info == null)   return;
+  if (info.isClass()) {
+    if (info.getTypeBuilder() instanceof HelperClassBuilder) {
+    }
+    NativeBuilder builder=info.getTypeBuilder().getNativeBuilder();
+    if (builder != _builder)     section.addInclude(builder.getHeaderInclude());
+  }
+ else   if (info.marshal != null) {
+    section.addIncludes(info.marshal);
+  }
+}

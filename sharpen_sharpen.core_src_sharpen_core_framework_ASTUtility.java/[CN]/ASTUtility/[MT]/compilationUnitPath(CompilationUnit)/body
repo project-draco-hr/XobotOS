@@ -1,0 +1,5 @@
+{
+  IJavaElement element=ast.getJavaElement();
+  if (null == element)   return "<unknown>";
+  return element.getResource().getFullPath().toPortableString();
+}

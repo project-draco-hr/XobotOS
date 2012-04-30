@@ -1,0 +1,11 @@
+{
+  writeIndented("catch");
+  CSVariableDeclaration ex=node.exception();
+  if (ex != null) {
+    write(" (");
+    ex.accept(this);
+    write(")");
+  }
+  writeLine();
+  node.body().accept(this);
+}

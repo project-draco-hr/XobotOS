@@ -1,0 +1,4 @@
+{
+  visitList(node.usings());
+  visitList(node.types());
+}

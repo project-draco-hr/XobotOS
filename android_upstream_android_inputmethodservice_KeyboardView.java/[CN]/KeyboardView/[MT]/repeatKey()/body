@@ -1,0 +1,5 @@
+{
+  Key key=mKeys[mRepeatKeyIndex];
+  detectAndSendKey(mCurrentKey,key.x,key.y,mLastTapTime);
+  return true;
+}

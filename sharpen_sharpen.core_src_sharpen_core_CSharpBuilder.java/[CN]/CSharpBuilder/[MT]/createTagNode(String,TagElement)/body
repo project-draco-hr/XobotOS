@@ -1,0 +1,7 @@
+{
+  CSDocTagNode summary=new CSDocTagNode(tagName);
+  for (  Object f : element.fragments()) {
+    summary.addFragment(mapTagElementFragment((ASTNode)f));
+  }
+  return summary;
+}

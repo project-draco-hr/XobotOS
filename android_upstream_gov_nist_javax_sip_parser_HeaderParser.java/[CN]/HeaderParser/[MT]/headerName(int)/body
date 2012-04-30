@@ -1,0 +1,6 @@
+{
+  this.lexer.match(tok);
+  this.lexer.SPorHT();
+  this.lexer.match(':');
+  this.lexer.SPorHT();
+}

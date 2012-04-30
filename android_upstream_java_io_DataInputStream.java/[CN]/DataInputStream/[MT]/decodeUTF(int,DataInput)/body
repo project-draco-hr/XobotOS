@@ -1,0 +1,5 @@
+{
+  byte[] buf=new byte[utfSize];
+  in.readFully(buf,0,utfSize);
+  return ModifiedUtf8.decode(buf,new char[utfSize],0,utfSize);
+}

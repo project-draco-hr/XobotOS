@@ -1,0 +1,8 @@
+{
+  this.depth=depth;
+  this.threadSet=threadSet;
+  this.threadSampler=findDefaultThreadSampler();
+  threadSampler.setDepth(depth);
+  hprofData.setFlags(BinaryHprof.ControlSettings.CPU_SAMPLING.bitmask);
+  hprofData.setDepth(depth);
+}

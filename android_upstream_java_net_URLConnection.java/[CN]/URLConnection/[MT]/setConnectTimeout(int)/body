@@ -1,0 +1,6 @@
+{
+  if (timeout < 0) {
+    throw new IllegalArgumentException("timeout < 0");
+  }
+  this.connectTimeout=timeout;
+}

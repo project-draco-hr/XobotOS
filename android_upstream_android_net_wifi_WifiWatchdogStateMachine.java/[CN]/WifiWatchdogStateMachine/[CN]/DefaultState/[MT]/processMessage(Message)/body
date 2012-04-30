@@ -1,0 +1,14 @@
+{
+switch (msg.what) {
+case EVENT_WATCHDOG_SETTINGS_CHANGE:
+    updateSettings();
+  if (DBG) {
+    log("Updating wifi-watchdog secure settings");
+  }
+return HANDLED;
+}
+if (DBG) {
+log("Caught message " + msg.what + " in state "+ getCurrentState().getName());
+}
+return HANDLED;
+}

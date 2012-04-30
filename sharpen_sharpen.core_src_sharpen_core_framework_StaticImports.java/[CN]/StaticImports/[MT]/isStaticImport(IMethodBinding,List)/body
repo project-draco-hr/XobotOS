@@ -1,0 +1,5 @@
+{
+  if (!isStatic(method))   return false;
+  for (  Object imp : imports)   if (isStaticMethodImport((ImportDeclaration)imp,method))   return true;
+  return false;
+}

@@ -1,0 +1,3 @@
+{
+  return Arrays.copyOfRange(in.buffer,in.contentOffset,in.contentOffset + in.length);
+}

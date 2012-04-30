@@ -1,0 +1,8 @@
+{
+  try {
+    return buffer.charAt(ptr + k);
+  }
+ catch (  IndexOutOfBoundsException e) {
+    return '\0';
+  }
+}

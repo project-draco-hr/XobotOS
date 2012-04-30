@@ -1,0 +1,16 @@
+{
+  if (this.getParameterValue(parameterName) != null) {
+    try {
+      if (this.getParameterValue(parameterName) instanceof String) {
+        return Long.parseLong(this.getParameter(parameterName));
+      }
+ else {
+        return ((Long)getParameterValue(parameterName)).longValue();
+      }
+    }
+ catch (    NumberFormatException ex) {
+      return -1;
+    }
+  }
+ else   return -1;
+}

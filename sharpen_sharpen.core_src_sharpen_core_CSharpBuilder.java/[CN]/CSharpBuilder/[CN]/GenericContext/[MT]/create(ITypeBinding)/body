@@ -1,0 +1,12 @@
+{
+  while (type.isNested() && !type.isGenericType() && !type.isParameterizedType()) {
+    type=type.getDeclaringClass();
+  }
+  while ((type != null) && !type.isGenericType() && !type.isParameterizedType()) {
+    type=type.getSuperclass();
+  }
+  if (type == null)   return null;
+  if (type.isParameterizedType())   return new GenericContext(type,type.getTypeArguments());
+ else   if (type.isGenericType())   return new GenericContext(type,type.getTypeParameters());
+  return null;
+}

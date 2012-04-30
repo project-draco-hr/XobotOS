@@ -1,0 +1,26 @@
+{
+  if (name == null)   return;
+  if (hasOutputDTD)   return;
+  hasOutputDTD=true;
+  write("<!DOCTYPE ");
+  write(name);
+  if (systemid == null)   systemid="";
+  if (overrideSystem != null)   systemid=overrideSystem;
+  char sysquote=(systemid.indexOf('"') != -1) ? '\'' : '"';
+  if (overridePublic != null)   publicid=overridePublic;
+  if (!(publicid == null || "".equals(publicid))) {
+    char pubquote=(publicid.indexOf('"') != -1) ? '\'' : '"';
+    write(" PUBLIC ");
+    write(pubquote);
+    write(publicid);
+    write(pubquote);
+    write(' ');
+  }
+ else {
+    write(" SYSTEM ");
+  }
+  write(sysquote);
+  write(systemid);
+  write(sysquote);
+  write(">\n");
+}

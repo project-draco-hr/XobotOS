@@ -1,0 +1,5 @@
+{
+  ObjectSlot slot=findMandatorySlot(name,byte.class);
+  slot.fieldValue=Byte.valueOf(value);
+  slot.defaulted=false;
+}

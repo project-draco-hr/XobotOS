@@ -1,0 +1,11 @@
+{
+  if (_visibility != null)   member.visibility(APIDefinition.mapVisibility(_visibility));
+  if (_comments != null) {
+    for (    final Comment comment : _comments) {
+      CSAttribute attr=new CSAttribute("Sharpen.Comment");
+      String escaped="@\"" + comment.getText().replace("\"","\"\"") + "\"";
+      attr.addArgument(new CSStringLiteralExpression(escaped));
+      member.addAttribute(attr);
+    }
+  }
+}

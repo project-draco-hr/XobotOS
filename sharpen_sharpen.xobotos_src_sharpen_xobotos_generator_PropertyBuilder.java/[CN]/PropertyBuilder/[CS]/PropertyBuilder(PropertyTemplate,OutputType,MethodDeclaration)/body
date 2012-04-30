@@ -1,0 +1,3 @@
+{
+  super(template,CSProperty.class,output,node);
+}

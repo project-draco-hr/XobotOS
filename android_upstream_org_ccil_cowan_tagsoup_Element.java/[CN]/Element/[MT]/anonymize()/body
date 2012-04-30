@@ -1,0 +1,7 @@
+{
+  for (int i=theAtts.getLength() - 1; i >= 0; i--) {
+    if (theAtts.getType(i).equals("ID") || theAtts.getQName(i).equals("name")) {
+      theAtts.removeAttribute(i);
+    }
+  }
+}

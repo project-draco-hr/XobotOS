@@ -1,0 +1,18 @@
+{
+  int startIdx=ptr;
+  try {
+    while (hasMoreChars()) {
+      char nextChar=lookAhead(0);
+      if (isTokenChar(nextChar)) {
+        consume(1);
+      }
+ else {
+        break;
+      }
+    }
+    return buffer.substring(startIdx,ptr);
+  }
+ catch (  ParseException ex) {
+    return null;
+  }
+}

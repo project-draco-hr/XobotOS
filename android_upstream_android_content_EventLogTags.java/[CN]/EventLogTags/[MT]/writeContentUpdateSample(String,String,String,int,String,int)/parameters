@@ -1,0 +1,6 @@
+String uri
+String operation
+String selection
+int time
+String blockingPackage
+int samplePercent

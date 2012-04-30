@@ -1,0 +1,3 @@
+{
+  theEntities.put(name,new Integer(value));
+}

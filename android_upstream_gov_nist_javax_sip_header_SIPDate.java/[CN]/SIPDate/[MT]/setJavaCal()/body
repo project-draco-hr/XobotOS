@@ -1,0 +1,10 @@
+{
+  javaCal=new GregorianCalendar(TimeZone.getTimeZone("GMT:0"),Locale.getDefault());
+  if (year != -1)   javaCal.set(Calendar.YEAR,year);
+  if (day != -1)   javaCal.set(Calendar.DAY_OF_MONTH,day);
+  if (month != -1)   javaCal.set(Calendar.MONTH,month);
+  if (wkday != -1)   javaCal.set(Calendar.DAY_OF_WEEK,wkday);
+  if (hour != -1)   javaCal.set(Calendar.HOUR,hour);
+  if (minute != -1)   javaCal.set(Calendar.MINUTE,minute);
+  if (second != -1)   javaCal.set(Calendar.SECOND,second);
+}

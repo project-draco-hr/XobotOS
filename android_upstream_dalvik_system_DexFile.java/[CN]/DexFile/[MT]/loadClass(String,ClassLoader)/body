@@ -1,0 +1,4 @@
+{
+  String slashName=name.replace('.','/');
+  return loadClassBinaryName(slashName,loader);
+}

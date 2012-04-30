@@ -1,0 +1,13 @@
+{
+  int lengthOfNationalNumber=nationalNumber.length();
+  if (lengthOfNationalNumber > 0) {
+    String tempNationalNumber="";
+    for (int i=0; i < lengthOfNationalNumber; i++) {
+      tempNationalNumber=inputDigitHelper(nationalNumber.charAt(i));
+    }
+    return ableToFormat ? prefixBeforeNationalNumber + tempNationalNumber : tempNationalNumber;
+  }
+ else {
+    return prefixBeforeNationalNumber.toString();
+  }
+}

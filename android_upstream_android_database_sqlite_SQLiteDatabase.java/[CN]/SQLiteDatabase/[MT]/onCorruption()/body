@@ -1,0 +1,4 @@
+{
+  EventLog.writeEvent(EVENT_DB_CORRUPT,mPath);
+  mErrorHandler.onCorruption(this);
+}

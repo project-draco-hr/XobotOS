@@ -1,0 +1,7 @@
+{
+  peek();
+  if (token != JsonToken.NULL) {
+    throw new IllegalStateException("Expected null but was " + token);
+  }
+  advance();
+}

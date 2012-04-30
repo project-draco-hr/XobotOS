@@ -1,0 +1,6 @@
+{
+  if (buf == null || (long)offset + (long)len > buf.length) {
+    throw new IllegalArgumentException();
+  }
+  return engineDigest(buf,offset,len);
+}

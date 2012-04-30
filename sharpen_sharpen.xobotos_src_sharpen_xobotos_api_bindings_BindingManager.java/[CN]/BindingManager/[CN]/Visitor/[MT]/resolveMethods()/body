@@ -1,0 +1,24 @@
+{
+  final IMarshalContext context=new IMarshalContext(){
+    @Override public NativeConfiguration getConfig(){
+      return _nativeConfig;
+    }
+    @Override public HelperClassBuilder getHelperClass(    ITypeBinding type){
+      return Visitor.this.getHelperClass(this,type);
+    }
+    @Override public MarshalInfo getMarshalInfo(    ITypeBinding type){
+      return Visitor.this.getMarshalInfo(this,type);
+    }
+  }
+;
+  boolean foundErrors=false;
+  for (  NativeMethodEntry entry : _nativeMethodList) {
+    final String name=BindingUtils.qualifiedSignature(entry.Node.resolveBinding());
+    if (DEBUG)     Sharpen.Debug("RESOLVE NATIVE METHOD: %s",name);
+    entry.Builder=_nativeBuilder.registerNativeMethod(entry.Node,entry.Template,(NativeHandleBuilder)entry.Type.Builder);
+    boolean ok=entry.Builder.resolve(context);
+    if (DEBUG)     Sharpen.Debug("RESOLVE NATIVE METHOD DONE: %s - %s",name,ok);
+    if (!ok)     foundErrors=true;
+  }
+  return !foundErrors;
+}

@@ -1,0 +1,10 @@
+{
+  if (debug)   dbg_enter("parseParameter");
+  try {
+    NameValue nv=this.nameValue('=');
+    chargingVector.setParameter(nv);
+  }
+  finally {
+    if (debug)     dbg_leave("parseParameter");
+  }
+}

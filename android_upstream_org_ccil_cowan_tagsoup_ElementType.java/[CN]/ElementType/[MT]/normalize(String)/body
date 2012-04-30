@@ -1,0 +1,20 @@
+{
+  if (value == null)   return value;
+  value=value.trim();
+  if (value.indexOf("  ") == -1)   return value;
+  boolean space=false;
+  int len=value.length();
+  StringBuffer b=new StringBuffer(len);
+  for (int i=0; i < len; i++) {
+    char v=value.charAt(i);
+    if (v == ' ') {
+      if (!space)       b.append(v);
+      space=true;
+    }
+ else {
+      b.append(v);
+      space=false;
+    }
+  }
+  return b.toString();
+}

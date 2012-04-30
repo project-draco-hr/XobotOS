@@ -1,0 +1,5 @@
+{
+  if (statusCode < 100 || statusCode > 699)   throw new ParseException("bad status code",0);
+  if (this.statusLine == null)   this.statusLine=new StatusLine();
+  this.statusLine.setStatusCode(statusCode);
+}

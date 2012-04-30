@@ -1,0 +1,14 @@
+{
+  if (_cmdLine.project != null) {
+    illegalArgument(arg);
+  }
+  if (arg.indexOf('/') > -1) {
+    String projectName=arg.split("/")[0];
+    String srcFolder=arg.substring(projectName.length() + 1);
+    _cmdLine.project=projectName;
+    _cmdLine.sourceFolders.add(srcFolder);
+  }
+ else {
+    _cmdLine.project=arg;
+  }
+}

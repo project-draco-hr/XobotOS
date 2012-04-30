@@ -1,0 +1,4 @@
+{
+  if (reasonCode == null)   throw new NullPointerException("JAIN-SIP " + "Exception, SubscriptionState, setReasonCode(), the reasonCode parameter is null");
+  this.reasonCode=reasonCode;
+}

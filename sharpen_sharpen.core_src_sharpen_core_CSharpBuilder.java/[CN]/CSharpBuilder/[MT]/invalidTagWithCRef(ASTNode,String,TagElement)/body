@@ -1,0 +1,5 @@
+{
+  warning(linkTarget,"Tag '" + element.getTagName() + "' demands a valid cref target.");
+  CSDocNode newTag=createTagNode(tagName,element);
+  return newTag;
+}

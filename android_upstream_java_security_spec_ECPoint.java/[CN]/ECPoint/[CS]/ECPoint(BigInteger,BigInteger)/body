@@ -1,0 +1,10 @@
+{
+  this.affineX=affineX;
+  if (this.affineX == null) {
+    throw new NullPointerException("affineX == null");
+  }
+  this.affineY=affineY;
+  if (this.affineY == null) {
+    throw new NullPointerException("affineY == null");
+  }
+}

@@ -1,0 +1,17 @@
+{
+  super.onAttachedToWindow();
+  mTemporaryDetach=false;
+  if (mShowErrorAfterAttach) {
+    showError();
+    mShowErrorAfterAttach=false;
+  }
+  final ViewTreeObserver observer=getViewTreeObserver();
+  if (mInsertionPointCursorController != null) {
+    observer.addOnTouchModeChangeListener(mInsertionPointCursorController);
+  }
+  if (mSelectionModifierCursorController != null) {
+    observer.addOnTouchModeChangeListener(mSelectionModifierCursorController);
+  }
+  resolveDrawables();
+  updateSpellCheckSpans(0,mText.length());
+}

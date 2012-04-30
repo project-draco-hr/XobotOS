@@ -1,0 +1,4 @@
+{
+  if (transport == null)   throw new NullPointerException("Null transport param");
+  return (ListeningPoint)this.listeningPoints.get(transport.toUpperCase());
+}

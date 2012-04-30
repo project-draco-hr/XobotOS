@@ -1,0 +1,6 @@
+{
+  if (peerAddress != null) {
+    return peerAddress.getHostAddress();
+  }
+ else   return getHost();
+}

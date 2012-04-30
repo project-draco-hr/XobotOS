@@ -1,0 +1,20 @@
+{
+  boolean stopCurrent=false;
+synchronized (threadRefs) {
+    Thread current=Thread.currentThread();
+    for (    Thread thread : threads) {
+      if (thread == current) {
+        stopCurrent=true;
+      }
+ else {
+        thread.stop();
+      }
+    }
+  }
+synchronized (groups) {
+    for (    ThreadGroup group : groups) {
+      stopCurrent|=group.stopHelper();
+    }
+  }
+  return stopCurrent;
+}

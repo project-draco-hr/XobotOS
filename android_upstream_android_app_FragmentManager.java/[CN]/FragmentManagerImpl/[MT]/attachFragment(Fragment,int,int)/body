@@ -1,0 +1,14 @@
+{
+  if (DEBUG)   Log.v(TAG,"attach: " + fragment);
+  if (fragment.mDetached) {
+    fragment.mDetached=false;
+    if (!fragment.mAdded) {
+      mAdded.add(fragment);
+      fragment.mAdded=true;
+      if (fragment.mHasMenu && fragment.mMenuVisible) {
+        mNeedMenuInvalidate=true;
+      }
+      moveToState(fragment,mCurState,transition,transitionStyle);
+    }
+  }
+}

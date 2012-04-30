@@ -1,0 +1,41 @@
+{
+  final IMethodBinding method=node.resolveMethodBinding();
+  final IMethodBinding methodDecl=method.getMethodDeclaration();
+  CSExpression targetExpression=mapMethodTargetExpression(node);
+  if ((method.getModifiers() & Modifier.STATIC) != 0 && !(targetExpression instanceof CSTypeReferenceExpression) && node.getExpression() != null)   targetExpression=mappedTypeReference(node.getExpression().resolveTypeBinding());
+  final String name=resolveTargetMethodName(targetExpression,node);
+  final String qualifiedName=BindingUtils.qualifiedName(method);
+  if (qualifiedName.equals("com.android.internal.util.ArrayUtils.emptyArray")) {
+    final ITypeBinding instanceType=method.getParameterTypes()[0].getTypeArguments()[0];
+    CSArrayCreationExpression ace=new CSArrayCreationExpression(mappedTypeReference(instanceType));
+    ace.length(new CSNumberLiteralExpression("0"));
+    pushExpression(ace);
+    return;
+  }
+  CSExpression target=null == targetExpression ? new CSReferenceExpression(name) : new CSMemberReferenceExpression(targetExpression,name);
+  CSMethodInvocationExpression mie=new CSMethodInvocationExpression(target);
+  mapMethodInvocationArguments(mie,node);
+  mapTypeArguments(mie,node);
+  if (methodDecl.isGenericMethod() && (mie.typeArguments().size() == 0)) {
+    IMethodBinding current=null;
+    if (_currentBodyDeclaration instanceof MethodDeclaration)     current=((MethodDeclaration)_currentBodyDeclaration).resolveBinding();
+    final ITypeBinding expected=getExpectedType();
+    final ITypeBinding retType=methodDecl.getReturnType();
+    final ITypeBinding[] mtp=methodDecl.getTypeParameters();
+    if ((expected != null) && expected.isParameterizedType() && retType.isParameterizedType()) {
+      ITypeBinding retDecl=methodDecl.getReturnType().getTypeDeclaration();
+      ITypeBinding expDecl=expected.getTypeDeclaration();
+      if (retDecl.equals(expDecl) && (expected.getTypeArguments().length == mtp.length)) {
+        for (        ITypeBinding tp : expected.getTypeArguments())         mie.addTypeArgument(mappedTypeReference(tp));
+      }
+    }
+ else     if ((current != null) && (current.getTypeParameters().length == mtp.length)) {
+      for (      ITypeBinding tp : current.getTypeParameters()) {
+        mie.addTypeArgument(new CSTypeReference(tp.getName()));
+      }
+    }
+  }
+  IMethodBinding base=getOverridedMethod(method);
+  if (base != null && base.getReturnType() != method.getReturnType() && !(node.getParent() instanceof ExpressionStatement))   pushExpression(new CSParenthesizedExpression(new CSCastExpression(mappedTypeReference(method.getReturnType()),mie)));
+ else   pushExpression(mie);
+}

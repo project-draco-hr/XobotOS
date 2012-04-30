@@ -1,0 +1,4 @@
+{
+  if (requestLine == null)   return null;
+ else   return this.requestLine.encode();
+}

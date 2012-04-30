@@ -1,0 +1,10 @@
+{
+  super(out);
+  this.flags=flags;
+  if (encode) {
+    coder=new Base64.Encoder(flags,null);
+  }
+ else {
+    coder=new Base64.Decoder(flags,null);
+  }
+}

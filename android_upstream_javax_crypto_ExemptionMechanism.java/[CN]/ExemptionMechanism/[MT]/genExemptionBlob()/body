@@ -1,0 +1,9 @@
+{
+  if (!isInit) {
+    throw new IllegalStateException("ExemptionMechanism is not initialized");
+  }
+  generated=false;
+  byte[] result=spiImpl.engineGenExemptionBlob();
+  generated=true;
+  return result;
+}

@@ -1,0 +1,14 @@
+{
+  return new Environment(){
+    public <T>T provide(    Class<T> service){
+      for (      Environment e : environments) {
+        final T binding=e.provide(service);
+        if (null != binding) {
+          return binding;
+        }
+      }
+      return null;
+    }
+  }
+;
+}

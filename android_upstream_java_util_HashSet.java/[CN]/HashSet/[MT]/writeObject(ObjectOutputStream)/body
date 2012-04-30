@@ -1,0 +1,9 @@
+{
+  stream.defaultWriteObject();
+  stream.writeInt(backingMap.table.length);
+  stream.writeFloat(HashMap.DEFAULT_LOAD_FACTOR);
+  stream.writeInt(size());
+  for (  E e : this) {
+    stream.writeObject(e);
+  }
+}

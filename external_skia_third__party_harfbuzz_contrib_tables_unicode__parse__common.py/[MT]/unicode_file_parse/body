@@ -1,0 +1,16 @@
+def unicode_file_parse(input, map, default_value=None):
+    'Parse a file like object, @input where the first column is a code-point\n     range and the second column is mapped via the given dict, @map.'
+    ranges = []
+    tokens = [line_split(x) for x in lines_get(input)]
+    for line in tokens:
+        if (len(line) == 2):
+            codepoints = codepoints_parse(line[0])
+            value = map[line[1]]
+            if (value == default_value):
+                continue
+            if (type(codepoints) == int):
+                codepoints = (codepoints, codepoints)
+            ranges.append((codepoints[0], codepoints[1], value))
+        else:
+            raise ValueError(line)
+    return ranges

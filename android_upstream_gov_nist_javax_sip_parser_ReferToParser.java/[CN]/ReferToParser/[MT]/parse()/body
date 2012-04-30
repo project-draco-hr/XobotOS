@@ -1,0 +1,7 @@
+{
+  headerName(TokenTypes.REFER_TO);
+  ReferTo referTo=new ReferTo();
+  super.parse(referTo);
+  this.lexer.match('\n');
+  return referTo;
+}

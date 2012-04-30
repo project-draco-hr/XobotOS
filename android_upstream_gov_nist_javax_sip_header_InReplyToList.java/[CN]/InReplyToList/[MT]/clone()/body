@@ -1,0 +1,5 @@
+{
+  InReplyToList retval=new InReplyToList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

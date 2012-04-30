@@ -1,0 +1,10 @@
+{
+  if (createProblemMarkers()) {
+    try {
+      _source.getCorrespondingResource().deleteMarkers(Sharpen.PROBLEM_MARKER,false,IResource.DEPTH_ONE);
+    }
+ catch (    CoreException e) {
+      e.printStackTrace();
+    }
+  }
+}

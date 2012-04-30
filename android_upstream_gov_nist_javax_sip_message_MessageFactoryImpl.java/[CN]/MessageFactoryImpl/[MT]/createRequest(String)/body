@@ -1,0 +1,22 @@
+{
+  if (requestString == null || requestString.equals("")) {
+    SIPRequest retval=new SIPRequest();
+    retval.setNullRequest();
+    return retval;
+  }
+  StringMsgParser smp=new StringMsgParser();
+  smp.setStrict(this.strict);
+  ParseExceptionListener parseExceptionListener=new ParseExceptionListener(){
+    public void handleException(    ParseException ex,    SIPMessage sipMessage,    Class headerClass,    String headerText,    String messageText) throws ParseException {
+      if (testing) {
+        if (headerClass == From.class || headerClass == To.class || headerClass == CallID.class || headerClass == MaxForwards.class || headerClass == Via.class || headerClass == RequestLine.class || headerClass == StatusLine.class || headerClass == CSeq.class)         throw ex;
+        sipMessage.addUnparsed(headerText);
+      }
+    }
+  }
+;
+  if (this.testing)   smp.setParseExceptionListener(parseExceptionListener);
+  SIPMessage sipMessage=smp.parseSIPMessage(requestString);
+  if (!(sipMessage instanceof SIPRequest))   throw new ParseException(requestString,0);
+  return (SIPRequest)sipMessage;
+}

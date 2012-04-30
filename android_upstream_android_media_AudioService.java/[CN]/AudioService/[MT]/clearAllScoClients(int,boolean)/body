@@ -1,0 +1,19 @@
+{
+synchronized (mScoClients) {
+    ScoClient savedClient=null;
+    int size=mScoClients.size();
+    for (int i=0; i < size; i++) {
+      ScoClient cl=mScoClients.get(i);
+      if (cl.getPid() != exceptPid) {
+        cl.clearCount(stopSco);
+      }
+ else {
+        savedClient=cl;
+      }
+    }
+    mScoClients.clear();
+    if (savedClient != null) {
+      mScoClients.add(savedClient);
+    }
+  }
+}

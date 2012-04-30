@@ -1,0 +1,11 @@
+{
+  checkCharsetName(canonicalName);
+  this.canonicalName=canonicalName;
+  this.aliasesSet=new HashSet<String>();
+  if (aliases != null) {
+    for (    String alias : aliases) {
+      checkCharsetName(alias);
+      this.aliasesSet.add(alias);
+    }
+  }
+}

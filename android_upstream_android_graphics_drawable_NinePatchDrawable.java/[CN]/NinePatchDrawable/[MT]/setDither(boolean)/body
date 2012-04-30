@@ -1,0 +1,4 @@
+{
+  getPaint().setDither(dither);
+  invalidateSelf();
+}

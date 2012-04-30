@@ -1,0 +1,8 @@
+{
+  write("(");
+  node.type().accept(this);
+  write(")");
+  if (null != node.expression()) {
+    node.expression().accept(this);
+  }
+}

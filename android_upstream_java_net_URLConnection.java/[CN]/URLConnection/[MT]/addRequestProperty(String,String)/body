@@ -1,0 +1,6 @@
+{
+  checkNotConnected();
+  if (field == null) {
+    throw new NullPointerException("field == null");
+  }
+}

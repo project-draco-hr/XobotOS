@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(PDP_BAD_DNS_ADDRESS,dnsAddress);
+}

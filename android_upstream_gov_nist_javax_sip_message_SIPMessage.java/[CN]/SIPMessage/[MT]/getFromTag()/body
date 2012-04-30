@@ -1,0 +1,3 @@
+{
+  return fromHeader == null ? null : fromHeader.getTag();
+}

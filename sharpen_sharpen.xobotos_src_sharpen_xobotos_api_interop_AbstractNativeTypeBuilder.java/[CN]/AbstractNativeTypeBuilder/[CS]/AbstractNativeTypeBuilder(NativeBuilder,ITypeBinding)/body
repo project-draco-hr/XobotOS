@@ -1,0 +1,4 @@
+{
+  this._builder=builder;
+  this._type=type;
+}

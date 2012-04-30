@@ -1,0 +1,3 @@
+{
+  super(Warning.class,Warning.NAME);
+}

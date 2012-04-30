@@ -1,0 +1,7 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("addEvent " + eventWrapper);
+synchronized (this.eventMutex) {
+    pendingEvents.add(eventWrapper);
+    eventMutex.notify();
+  }
+}

@@ -1,0 +1,17 @@
+{
+  final ByRef<CSAnonymousClassBuilder> builder=new ByRef<CSAnonymousClassBuilder>(null);
+  my(CSharpDriver.class).processAnonymousClass(this,_currentType,node,new IAnonymousClassBuilderDelegate(){
+    public CSAnonymousClass create(){
+      builder.value=new CSAnonymousClassBuilder(CSharpBuilder.this,node);
+      return new CSAnonymousClass(builder.value.type());
+    }
+    public void map(    CSAnonymousClass member){
+    }
+    public void document(    CSAnonymousClass member){
+    }
+    public void fixup(    CSAnonymousClass member){
+    }
+  }
+);
+  return builder.value;
+}

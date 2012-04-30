@@ -1,0 +1,10 @@
+def skip_test(self, message='Skipping test.\n'):
+    "Skips a test.\n\n        Proper test-skipping behavior is dependent on the external\n        TESTCOMMON_PASS_SKIPS environment variable.  If set, we treat\n        the skip as a PASS (exit 0), and otherwise treat it as NO RESULT.\n        In either case, we print the specified message as an indication\n        that the substance of the test was skipped.\n\n        (This was originally added to support development under Aegis.\n        Technically, skipping a test is a NO RESULT, but Aegis would\n        treat that as a test failure and prevent the change from going to\n        the next step.  Since we ddn't want to force anyone using Aegis\n        to have to install absolutely every tool used by the tests, we\n        would actually report to Aegis that a skipped test has PASSED\n        so that the workflow isn't held up.)\n        "
+    if message:
+        sys.stdout.write(message)
+        sys.stdout.flush()
+    pass_skips = os.environ.get('TESTCOMMON_PASS_SKIPS')
+    if (pass_skips in [None, 0, '0']):
+        self.no_result(skip=1)
+    else:
+        self.pass_test()

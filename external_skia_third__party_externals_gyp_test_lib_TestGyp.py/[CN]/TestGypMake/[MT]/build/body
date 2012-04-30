@@ -1,0 +1,14 @@
+def build(self, gyp_file, target=None, **kw):
+    '\n    Runs a Make build using the Makefiles generated from the specified\n    gyp_file.\n    '
+    arguments = kw.get('arguments', [])[:]
+    if self.configuration:
+        arguments.append(('BUILDTYPE=' + self.configuration))
+    if (target not in (None, self.DEFAULT)):
+        arguments.append(target)
+    chdir = kw.get('chdir', '')
+    if (not os.path.exists(os.path.join(chdir, 'Makefile'))):
+        print ('NO Makefile in ' + os.path.join(chdir, 'Makefile'))
+        arguments.insert(0, '-f')
+        arguments.insert(1, (os.path.splitext(gyp_file)[0] + '.Makefile'))
+    kw['arguments'] = arguments
+    return self.run(program=self.build_tool, **kw)

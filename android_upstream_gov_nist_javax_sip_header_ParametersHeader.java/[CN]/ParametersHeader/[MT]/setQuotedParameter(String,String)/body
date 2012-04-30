@@ -1,0 +1,12 @@
+{
+  NameValue nv=parameters.getNameValue(name);
+  if (nv != null) {
+    nv.setValueAsObject(value);
+    nv.setQuotedValue();
+  }
+ else {
+    nv=new NameValue(name,value);
+    nv.setQuotedValue();
+    this.parameters.set(nv);
+  }
+}

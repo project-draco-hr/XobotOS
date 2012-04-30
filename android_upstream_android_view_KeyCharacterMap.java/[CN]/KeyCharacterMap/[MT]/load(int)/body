@@ -1,0 +1,11 @@
+{
+synchronized (sInstances) {
+    KeyCharacterMap map=sInstances.get(deviceId);
+    if (map == null) {
+      int ptr=nativeLoad(deviceId);
+      map=new KeyCharacterMap(deviceId,ptr);
+      sInstances.put(deviceId,map);
+    }
+    return map;
+  }
+}

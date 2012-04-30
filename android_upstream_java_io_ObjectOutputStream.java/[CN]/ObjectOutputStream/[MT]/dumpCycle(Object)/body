@@ -1,0 +1,8 @@
+{
+  int handle=objectsWritten.get(obj);
+  if (handle != -1) {
+    writeCyclicReference(handle);
+    return handle;
+  }
+  return -1;
+}

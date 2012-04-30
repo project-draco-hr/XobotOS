@@ -1,0 +1,9 @@
+{
+  if (getTimer() != null) {
+    if (threadHandle == null) {
+      threadHandle=getThreadAuditor().addCurrentThread();
+    }
+    threadHandle.ping();
+    getTimer().schedule(new PingTimer(threadHandle),threadHandle.getPingIntervalInMillisecs());
+  }
+}

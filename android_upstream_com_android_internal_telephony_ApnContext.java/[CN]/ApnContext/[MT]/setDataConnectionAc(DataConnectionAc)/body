@@ -1,0 +1,9 @@
+{
+  if (dcac != null) {
+    dcac.addApnContextSync(this);
+  }
+ else {
+    if (mDataConnectionAc != null)     mDataConnectionAc.removeApnContextSync(this);
+  }
+  mDataConnectionAc=dcac;
+}

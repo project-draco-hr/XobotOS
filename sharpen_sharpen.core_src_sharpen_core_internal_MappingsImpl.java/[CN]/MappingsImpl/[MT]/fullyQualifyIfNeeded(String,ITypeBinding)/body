@@ -1,0 +1,11 @@
+{
+  if (isFullyQualified(typeName)) {
+    return typeName;
+  }
+  final String originalNamespace=namespace(qualifiedName(type));
+  final String mappedNamespace=_configuration.mappedNamespace(originalNamespace);
+  if (originalNamespace.equals(mappedNamespace)) {
+    return typeName;
+  }
+  return mappedNamespace + "." + typeName;
+}

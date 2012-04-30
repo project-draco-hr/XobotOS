@@ -1,0 +1,8 @@
+{
+  final CSClass type=listenerBuilder.type();
+  type.clearBaseTypes();
+  final CSMethod handlerMethod=(CSMethod)type.getMember(eventListenerMethodName(listenerBuilder));
+  handlerMethod.parameters().get(0).type(OBJECT_TYPE_REFERENCE);
+  handlerMethod.parameters().get(0).name("sender");
+  handlerMethod.parameters().get(1).type(new CSTypeReference(eventArgsType));
+}

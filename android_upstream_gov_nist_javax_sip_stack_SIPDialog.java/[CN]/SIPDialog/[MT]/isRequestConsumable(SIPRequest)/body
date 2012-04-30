@@ -1,0 +1,7 @@
+{
+  if (dialogRequest.getMethod().equals(Request.ACK))   throw new RuntimeException("Illegal method");
+  if (!this.isSequnceNumberValidation()) {
+    return true;
+  }
+  return remoteSequenceNumber < dialogRequest.getCSeq().getSeqNumber();
+}

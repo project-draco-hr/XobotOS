@@ -1,0 +1,15 @@
+{
+  if (head == null) {
+    return null;
+  }
+  Reference<? extends T> ret;
+  ret=head;
+  if (head == head.queueNext) {
+    head=null;
+  }
+ else {
+    head=head.queueNext;
+  }
+  ret.queueNext=null;
+  return ret;
+}

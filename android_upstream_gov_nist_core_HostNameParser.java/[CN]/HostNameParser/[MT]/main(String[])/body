@@ -1,0 +1,13 @@
+{
+  String hostNames[]={"foo.bar.com:1234","proxima.chaplin.bt.co.uk","129.6.55.181:2345",":1234","foo.bar.com:         1234","foo.bar.com     :      1234   ","MIK_S:1234"};
+  for (int i=0; i < hostNames.length; i++) {
+    try {
+      HostNameParser hnp=new HostNameParser(hostNames[i]);
+      HostPort hp=hnp.hostPort(true);
+      System.out.println("[" + hp.encode() + "]");
+    }
+ catch (    ParseException ex) {
+      System.out.println("exception text = " + ex.getMessage());
+    }
+  }
+}

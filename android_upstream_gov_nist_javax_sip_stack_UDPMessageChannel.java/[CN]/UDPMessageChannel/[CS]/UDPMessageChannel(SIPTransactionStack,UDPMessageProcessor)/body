@@ -1,0 +1,10 @@
+{
+  super.messageProcessor=messageProcessor;
+  this.sipStack=stack;
+  Thread mythread=new Thread(this);
+  this.myAddress=messageProcessor.getIpAddress().getHostAddress();
+  this.myPort=messageProcessor.getPort();
+  mythread.setName("UDPMessageChannelThread");
+  mythread.setDaemon(true);
+  mythread.start();
+}

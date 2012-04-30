@@ -1,0 +1,5 @@
+'\nCreated on May 19, 2011\n\n@author: bungeman\n'
+import re
+import math
+Max = _ExtremeType(1, 'Max')
+Min = _ExtremeType((-1), 'Min')

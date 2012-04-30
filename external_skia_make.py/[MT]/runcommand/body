@@ -1,0 +1,4 @@
+def runcommand(command):
+    print ('> %s' % command)
+    if os.system(command):
+        sys.exit(1)

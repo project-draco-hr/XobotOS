@@ -1,0 +1,7 @@
+{
+  if (theNewElement == null)   return;
+  rectify(theNewElement);
+  if (theStack.model() == Schema.M_EMPTY) {
+    etag_basic(buff,offset,length);
+  }
+}

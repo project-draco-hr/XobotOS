@@ -1,0 +1,9 @@
+{
+synchronized (sSync) {
+    if (sSystem == null) {
+      AssetManager system=new AssetManager(true);
+      system.makeStringBlocks(false);
+      sSystem=system;
+    }
+  }
+}

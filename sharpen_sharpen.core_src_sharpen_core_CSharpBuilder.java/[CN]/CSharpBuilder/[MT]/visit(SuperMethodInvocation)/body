@@ -1,0 +1,27 @@
+{
+  if (null != node.getQualifier()) {
+    notImplemented(node);
+  }
+  final IMethodBinding binding=originalMethodBinding(node.resolveMethodBinding());
+  final ITypeBinding declaringType=binding.getDeclaringClass();
+  if (declaringType.equals(_objectType) && node.getName().toString().equals("finalize")) {
+    pushExpression(new CSEmptyExpression());
+    return false;
+  }
+  Configuration.MemberMapping mapping=mappingForInvocation(node,binding);
+  CSExpression target=new CSMemberReferenceExpression(new CSBaseExpression(),mappedMethodName(binding));
+  if (mapping != null) {
+    if (mapping.kind == MemberKind.Indexer) {
+      processIndexerInvocation(node,binding);
+      return false;
+    }
+ else     if (mapping.kind != MemberKind.Method) {
+      pushExpression(target);
+      return false;
+    }
+  }
+  CSMethodInvocationExpression mie=new CSMethodInvocationExpression(target);
+  mapArguments(mie,node.arguments(),binding);
+  pushExpression(mie);
+  return false;
+}

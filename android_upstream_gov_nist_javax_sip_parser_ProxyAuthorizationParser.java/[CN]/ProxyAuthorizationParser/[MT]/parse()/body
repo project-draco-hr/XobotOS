@@ -1,0 +1,6 @@
+{
+  headerName(TokenTypes.PROXY_AUTHORIZATION);
+  ProxyAuthorization proxyAuth=new ProxyAuthorization();
+  super.parse(proxyAuth);
+  return proxyAuth;
+}

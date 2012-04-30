@@ -1,0 +1,31 @@
+{
+synchronized (this) {
+    if (stop) {
+      cancel();
+      stopped=true;
+      notifyAll();
+      return;
+    }
+  }
+  if (timerThread == null) {
+    timerThread=Thread.currentThread();
+  }
+  Thread[] newThreads=threadSet.threads();
+  if (!Arrays.equals(currentThreads,newThreads)) {
+    updateThreadHistory(currentThreads,newThreads);
+    currentThreads=newThreads.clone();
+  }
+  for (  Thread thread : currentThreads) {
+    if (thread == null) {
+      break;
+    }
+    if (thread == timerThread) {
+      continue;
+    }
+    StackTraceElement[] stackFrames=threadSampler.getStackTrace(thread);
+    if (stackFrames == null) {
+      continue;
+    }
+    recordStackTrace(thread,stackFrames);
+  }
+}

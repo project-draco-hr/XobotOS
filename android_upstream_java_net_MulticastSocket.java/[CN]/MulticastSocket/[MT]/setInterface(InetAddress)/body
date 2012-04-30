@@ -1,0 +1,12 @@
+{
+  checkOpen();
+  if (address == null) {
+    throw new NullPointerException("address == null");
+  }
+  NetworkInterface networkInterface=NetworkInterface.getByInetAddress(address);
+  if (networkInterface == null) {
+    throw new SocketException("Address not associated with an interface: " + address);
+  }
+  impl.setOption(SocketOptions.IP_MULTICAST_IF2,networkInterface.getIndex());
+  this.setAddress=address;
+}

@@ -1,0 +1,13 @@
+{
+  ICommand command=getCommand();
+  Map<String,String> args=command.getArguments();
+  if (!args.containsKey(CONFIG_FILE_ARG))   throw new RuntimeException("Missing configFile section in builder spec.");
+  String fileName=args.get(CONFIG_FILE_ARG);
+  String fullPath=getProject().getLocation().append(fileName).toOSString();
+  try {
+    return XStreamUtils.read(fullPath,ConfigFile.class);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException("Cannot read configuration file: " + fullPath);
+  }
+}

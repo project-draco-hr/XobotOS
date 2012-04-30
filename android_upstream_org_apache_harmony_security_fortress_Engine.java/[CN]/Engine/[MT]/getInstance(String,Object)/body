@@ -1,0 +1,23 @@
+{
+  if (algorithm == null) {
+    throw new NoSuchAlgorithmException("Null algorithm name");
+  }
+  Services.refresh();
+  Provider.Service service;
+  ServiceCacheEntry cacheEntry=this.serviceCache;
+  if (cacheEntry != null && cacheEntry.algorithm.equalsIgnoreCase(algorithm) && Services.refreshNumber == cacheEntry.refreshNumber) {
+    service=cacheEntry.service;
+  }
+ else {
+    if (Services.isEmpty()) {
+      throw notFound(serviceName,algorithm);
+    }
+    String name=this.serviceName + "." + algorithm.toUpperCase(Locale.US);
+    service=Services.getService(name);
+    if (service == null) {
+      throw notFound(serviceName,algorithm);
+    }
+    this.serviceCache=new ServiceCacheEntry(algorithm,Services.refreshNumber,service);
+  }
+  return new SpiAndProvider(service.newInstance(param),service.getProvider());
+}

@@ -1,0 +1,13 @@
+{
+  mUserPaddingRelative=true;
+  mUserPaddingStart=start;
+  mUserPaddingEnd=end;
+switch (getResolvedLayoutDirection()) {
+case LAYOUT_DIRECTION_RTL:
+    setPadding(end,top,start,bottom);
+  break;
+case LAYOUT_DIRECTION_LTR:
+default :
+setPadding(start,top,end,bottom);
+}
+}

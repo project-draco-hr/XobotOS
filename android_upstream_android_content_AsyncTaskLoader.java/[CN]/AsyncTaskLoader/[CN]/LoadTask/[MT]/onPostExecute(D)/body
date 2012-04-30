@@ -1,0 +1,9 @@
+{
+  if (DEBUG)   Slog.v(TAG,this + " onPostExecute");
+  try {
+    AsyncTaskLoader.this.dispatchOnLoadComplete(this,data);
+  }
+  finally {
+    done.countDown();
+  }
+}

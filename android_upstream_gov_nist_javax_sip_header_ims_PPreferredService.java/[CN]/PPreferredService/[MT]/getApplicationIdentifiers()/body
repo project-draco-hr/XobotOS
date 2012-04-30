@@ -1,0 +1,6 @@
+{
+  if (this.subAppIds.charAt(0) == '.') {
+    return this.subAppIds.substring(1);
+  }
+  return this.subAppIds;
+}

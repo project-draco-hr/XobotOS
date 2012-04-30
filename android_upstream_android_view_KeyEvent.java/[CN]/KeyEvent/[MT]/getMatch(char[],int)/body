@@ -1,0 +1,3 @@
+{
+  return getKeyCharacterMap().getMatch(mKeyCode,chars,metaState);
+}

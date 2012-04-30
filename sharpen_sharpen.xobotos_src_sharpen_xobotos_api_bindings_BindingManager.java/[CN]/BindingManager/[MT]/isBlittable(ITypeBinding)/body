@@ -1,0 +1,3 @@
+{
+  return type.equals(_byteType) || type.equals(_charType) || type.equals(_floatType)|| type.equals(_intType)|| type.equals(_longType)|| type.equals(_boolType);
+}

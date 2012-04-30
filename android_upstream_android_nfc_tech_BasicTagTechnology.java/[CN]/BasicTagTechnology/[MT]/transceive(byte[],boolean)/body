@@ -1,0 +1,16 @@
+{
+  checkConnected();
+  try {
+    TransceiveResult result=mTag.getTagService().transceive(mTag.getServiceHandle(),data,raw);
+    if (result == null) {
+      throw new IOException("transceive failed");
+    }
+ else {
+      return result.getResponseOrThrow();
+    }
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"NFC service dead",e);
+    throw new IOException("NFC service died");
+  }
+}

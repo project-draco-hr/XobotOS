@@ -1,0 +1,4 @@
+{
+  Entry<K,V> entry=findByObject(key);
+  return entry != null ? entry.getValue() : null;
+}

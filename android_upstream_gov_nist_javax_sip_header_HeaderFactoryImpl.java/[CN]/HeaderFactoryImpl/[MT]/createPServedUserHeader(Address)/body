@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("Address is null");
+  PServedUser psu=new PServedUser();
+  psu.setAddress(address);
+  return psu;
+}

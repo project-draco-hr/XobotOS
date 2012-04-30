@@ -1,0 +1,7 @@
+{
+synchronized (files) {
+    if (!files.contains(filename)) {
+      files.add(filename);
+    }
+  }
+}

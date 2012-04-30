@@ -1,0 +1,4 @@
+{
+  Object obj=uriParms.getValue(parmname);
+  return obj;
+}

@@ -1,0 +1,12 @@
+{
+  Iterator<String> iter=mJavaScriptObjects.keySet().iterator();
+  while (iter.hasNext()) {
+    String interfaceName=iter.next();
+    Object object=mJavaScriptObjects.get(interfaceName);
+    if (object != null) {
+      nativeAddJavascriptInterface(nativeFramePointer,mJavaScriptObjects.get(interfaceName),interfaceName);
+    }
+  }
+  mRemovedJavaScriptObjects.clear();
+  stringByEvaluatingJavaScriptFromString(SearchBoxImpl.JS_BRIDGE);
+}

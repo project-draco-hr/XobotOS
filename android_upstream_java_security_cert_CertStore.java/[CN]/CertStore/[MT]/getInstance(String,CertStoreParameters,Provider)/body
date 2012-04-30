@@ -1,0 +1,21 @@
+{
+  if (provider == null) {
+    throw new IllegalArgumentException();
+  }
+  if (type == null) {
+    throw new NullPointerException();
+  }
+  try {
+    Object spi=ENGINE.getInstance(type,provider,params);
+    return new CertStore((CertStoreSpi)spi,provider,type,params);
+  }
+ catch (  NoSuchAlgorithmException e) {
+    Throwable th=e.getCause();
+    if (th == null) {
+      throw e;
+    }
+ else {
+      throw new InvalidAlgorithmParameterException(e.getMessage(),th);
+    }
+  }
+}

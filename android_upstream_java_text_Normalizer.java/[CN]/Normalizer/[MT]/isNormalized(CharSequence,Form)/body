@@ -1,0 +1,3 @@
+{
+  return NativeNormalizer.isNormalized(src,form);
+}

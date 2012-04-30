@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(CALL_DROP,cause,cid,networkType);
+}

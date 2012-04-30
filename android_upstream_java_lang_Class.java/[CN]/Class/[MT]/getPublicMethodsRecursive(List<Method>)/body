@@ -1,0 +1,12 @@
+{
+  for (Class<?> c=this; c != null; c=c.getSuperclass()) {
+    for (    Method method : Class.getDeclaredMethods(c,true)) {
+      result.add(method);
+    }
+  }
+  for (Class<?> c=this; c != null; c=c.getSuperclass()) {
+    for (    Class<?> ifc : c.getInterfaces()) {
+      ifc.getPublicMethodsRecursive(result);
+    }
+  }
+}

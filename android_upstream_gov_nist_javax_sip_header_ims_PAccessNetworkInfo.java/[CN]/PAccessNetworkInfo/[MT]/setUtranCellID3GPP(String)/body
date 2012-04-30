@@ -1,0 +1,4 @@
+{
+  if (utranCellID == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setUtranCellID3GPP(), the utranCellID parameter is null.");
+  setParameter(ParameterNamesIms.UTRAN_CELL_ID_3GPP,utranCellID);
+}

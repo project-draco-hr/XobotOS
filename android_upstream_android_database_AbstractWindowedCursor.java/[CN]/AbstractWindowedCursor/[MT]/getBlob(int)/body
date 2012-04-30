@@ -1,0 +1,4 @@
+{
+  checkPosition();
+  return mWindow.getBlob(mPos,columnIndex);
+}

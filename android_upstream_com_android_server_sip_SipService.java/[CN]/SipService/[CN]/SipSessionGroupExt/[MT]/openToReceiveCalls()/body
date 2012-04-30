@@ -1,0 +1,8 @@
+{
+  mOpenedToReceiveCalls=true;
+  if (mConnected) {
+    mSipGroup.openToReceiveCalls(this);
+    mAutoRegistration.start(mSipGroup);
+  }
+  if (DEBUG)   Log.d(TAG,"  openToReceiveCalls: " + getUri() + ": "+ mIncomingCallPendingIntent);
+}

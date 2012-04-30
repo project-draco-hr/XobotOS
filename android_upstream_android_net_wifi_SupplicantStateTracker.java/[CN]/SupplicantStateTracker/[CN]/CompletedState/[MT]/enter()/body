@@ -1,0 +1,8 @@
+{
+  if (DBG)   Log.d(TAG,getName() + "\n");
+  mAuthenticationFailuresCount=0;
+  if (mNetworksDisabledDuringConnect) {
+    WifiConfigStore.enableAllNetworks();
+    mNetworksDisabledDuringConnect=false;
+  }
+}

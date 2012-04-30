@@ -1,0 +1,7 @@
+{
+  for (  IVariableBinding variable : _capturedVariables) {
+    String mapped=mappedVariableName(variable);
+    String name=mapped != null ? mapped : identifier(variable.getName());
+    invocation.addArgument(new CSReferenceExpression(name));
+  }
+}

@@ -1,0 +1,14 @@
+{
+  objectOutput.writeBoolean(hasNationalNumberPattern);
+  if (hasNationalNumberPattern) {
+    objectOutput.writeUTF(nationalNumberPattern_);
+  }
+  objectOutput.writeBoolean(hasPossibleNumberPattern);
+  if (hasPossibleNumberPattern) {
+    objectOutput.writeUTF(possibleNumberPattern_);
+  }
+  objectOutput.writeBoolean(hasExampleNumber);
+  if (hasExampleNumber) {
+    objectOutput.writeUTF(exampleNumber_);
+  }
+}

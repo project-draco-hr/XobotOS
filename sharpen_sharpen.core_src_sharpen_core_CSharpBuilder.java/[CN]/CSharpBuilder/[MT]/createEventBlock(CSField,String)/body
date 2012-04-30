@@ -1,0 +1,5 @@
+{
+  CSBlock block=new CSBlock();
+  block.addStatement(new CSInfixExpression("=",new CSReferenceExpression(backingField.name()),new CSCastExpression(backingField.type(),new CSMethodInvocationExpression(new CSReferenceExpression(delegateMethod),new CSReferenceExpression(backingField.name()),new CSReferenceExpression("value")))));
+  return block;
+}

@@ -1,0 +1,9 @@
+{
+  String lowerCaseName=name.toLowerCase();
+  if (this.nameTable.containsKey(lowerCaseName)) {
+    return this.nameTable.get(lowerCaseName).toString();
+  }
+ else {
+    return this.getHeader(name).toString();
+  }
+}

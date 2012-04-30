@@ -1,0 +1,6 @@
+{
+  if (mode != UNWRAP_MODE) {
+    throw new IllegalStateException();
+  }
+  return spiImpl.engineUnwrap(wrappedKey,wrappedKeyAlgorithm,wrappedKeyType);
+}

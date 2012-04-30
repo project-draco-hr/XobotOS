@@ -1,0 +1,16 @@
+{
+  Socket sock=this.sipStack.ioHandler.sendBytes(this.getMessageProcessor().getIpAddress(),this.peerAddress,this.peerPort,this.peerProtocol,msg,retry,this);
+  if (sock != mySock && sock != null) {
+    try {
+      if (mySock != null)       mySock.close();
+    }
+ catch (    IOException ex) {
+    }
+    mySock=sock;
+    this.myClientInputStream=mySock.getInputStream();
+    Thread thread=new Thread(this);
+    thread.setDaemon(true);
+    thread.setName("TLSMessageChannelThread");
+    thread.start();
+  }
+}

@@ -1,0 +1,4 @@
+{
+  if (sSipFactory == null)   sSipFactory=new SipFactory();
+  return sSipFactory;
+}

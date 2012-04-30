@@ -1,0 +1,7 @@
+{
+  theType=type;
+  if (defaultAttributes)   theAtts=new AttributesImpl(type.atts());
+ else   theAtts=new AttributesImpl();
+  theNext=null;
+  preclosed=false;
+}

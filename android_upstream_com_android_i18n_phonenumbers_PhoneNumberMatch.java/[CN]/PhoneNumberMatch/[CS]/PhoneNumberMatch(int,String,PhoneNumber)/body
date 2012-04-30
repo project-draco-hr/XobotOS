@@ -1,0 +1,11 @@
+{
+  if (start < 0) {
+    throw new IllegalArgumentException("Start index must be >= 0.");
+  }
+  if (rawString == null || number == null) {
+    throw new NullPointerException();
+  }
+  this.start=start;
+  this.rawString=rawString;
+  this.number=number;
+}

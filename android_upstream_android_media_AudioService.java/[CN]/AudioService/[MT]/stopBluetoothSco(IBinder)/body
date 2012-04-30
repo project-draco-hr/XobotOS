@@ -1,0 +1,9 @@
+{
+  if (!checkAudioSettingsPermission("stopBluetoothSco()") || !mBootCompleted) {
+    return;
+  }
+  ScoClient client=getScoClient(cb,false);
+  if (client != null) {
+    client.decCount();
+  }
+}

@@ -1,0 +1,4 @@
+{
+  mDepthFunc=func;
+  return this;
+}

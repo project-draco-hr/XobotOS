@@ -1,0 +1,4 @@
+{
+  uncheckedWrite(s);
+  _column+=s.length();
+}

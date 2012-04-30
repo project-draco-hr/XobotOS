@@ -1,0 +1,5 @@
+def run_gyp(self, gyp_file, *args, **kw):
+    if self.configuration:
+        args = (list(args) + [('-Gconfig=' + self.configuration)])
+    self.last_gyp_configuration = self.configuration
+    TestGypBase.run_gyp(self, gyp_file, *args, **kw)

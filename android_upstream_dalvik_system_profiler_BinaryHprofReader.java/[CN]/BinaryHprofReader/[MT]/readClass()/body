@@ -1,0 +1,8 @@
+{
+  int id=readId();
+  String string=idToClassName.get(id);
+  if (string == null) {
+    throw new MalformedHprofException("Unknown class id " + id);
+  }
+  return string;
+}

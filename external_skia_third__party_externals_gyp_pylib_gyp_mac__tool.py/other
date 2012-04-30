@@ -1,0 +1,10 @@
+'Utility functions to perform Xcode-style build steps.\n\nThese functions are executed via gyp-mac-tool when using the Makefile generator.\n'
+import os
+import fcntl
+import plistlib
+import shutil
+import string
+import subprocess
+import sys
+if (__name__ == '__main__'):
+    sys.exit(main(sys.argv[1:]))

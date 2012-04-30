@@ -1,0 +1,5 @@
+{
+  node.expression().accept(this);
+  write(".");
+  write(node.name());
+}

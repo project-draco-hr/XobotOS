@@ -1,0 +1,14 @@
+{
+  this.duration=duration;
+  this.quality=quality;
+  this.fileFormat=fileFormat;
+  this.videoCodec=videoCodec;
+  this.videoBitRate=videoBitRate;
+  this.videoFrameRate=videoFrameRate;
+  this.videoFrameWidth=videoWidth;
+  this.videoFrameHeight=videoHeight;
+  this.audioCodec=audioCodec;
+  this.audioBitRate=audioBitRate;
+  this.audioSampleRate=audioSampleRate;
+  this.audioChannels=audioChannels;
+}

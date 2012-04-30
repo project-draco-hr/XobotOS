@@ -1,0 +1,5 @@
+{
+  this.wildCardFlag=true;
+  this.address=new AddressImpl();
+  this.address.setWildCardFlag();
+}

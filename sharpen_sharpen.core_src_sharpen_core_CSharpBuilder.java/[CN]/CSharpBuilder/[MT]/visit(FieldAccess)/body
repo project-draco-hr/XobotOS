@@ -1,0 +1,18 @@
+{
+  IVariableBinding vb=node.resolveFieldBinding();
+  String name=mappedFieldName(vb);
+  if (name == null)   name=identifier(node.getName());
+  if (Modifier.isStatic(vb.getModifiers())) {
+    Expression expr=node.getExpression();
+    ITypeBinding type=expr.resolveTypeBinding();
+    pushExpression(new CSMemberReferenceExpression(mappedTypeReference(type),name));
+    return false;
+  }
+ else   if (null == node.getExpression()) {
+    pushExpression(new CSReferenceExpression(name));
+  }
+ else {
+    pushExpression(new CSMemberReferenceExpression(mapExpression(node.getExpression()),name));
+  }
+  return false;
+}

@@ -1,0 +1,10 @@
+{
+  try {
+    ArrayList<?> result=(ArrayList<?>)super.clone();
+    result.array=array.clone();
+    return result;
+  }
+ catch (  CloneNotSupportedException e) {
+    throw new AssertionError();
+  }
+}

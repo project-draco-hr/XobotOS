@@ -1,0 +1,8 @@
+{
+  final CSIndexedExpression indexer=new CSIndexedExpression(target);
+  final Expression lastArgument=arguments.get(arguments.size() - 1);
+  for (int i=0; i < arguments.size() - 1; ++i) {
+    indexer.addIndex(mapExpression(arguments.get(i)));
+  }
+  pushExpression(CSharpCode.newAssignment(indexer,mapExpression(lastArgument)));
+}

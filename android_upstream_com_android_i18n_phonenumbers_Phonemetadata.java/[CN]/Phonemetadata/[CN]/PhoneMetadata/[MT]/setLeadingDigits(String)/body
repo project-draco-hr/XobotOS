@@ -1,0 +1,5 @@
+{
+  hasLeadingDigits=true;
+  leadingDigits_=value;
+  return this;
+}

@@ -1,0 +1,16 @@
+{
+  View selectedView=null;
+  int end=(mBottom - mTop);
+  if ((mGroupFlags & CLIP_TO_PADDING_MASK) == CLIP_TO_PADDING_MASK) {
+    end-=mListPadding.bottom;
+  }
+  while (nextTop < end && pos < mItemCount) {
+    View temp=makeRow(pos,nextTop,true);
+    if (temp != null) {
+      selectedView=temp;
+    }
+    nextTop=mReferenceView.getBottom() + mVerticalSpacing;
+    pos+=mNumColumns;
+  }
+  return selectedView;
+}

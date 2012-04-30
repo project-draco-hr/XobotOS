@@ -1,0 +1,16 @@
+{
+  Expression expr=node.getExpression();
+  ITypeBinding exprType=expr.resolveTypeBinding();
+  CSExpression mappedExpr=mapExpression(expr);
+  if (isIterableType(exprType)) {
+    CSReferenceExpression proxy=new CSReferenceExpression("Sharpen.IterableProxy.Create");
+    CSMethodInvocationExpression cie=new CSMethodInvocationExpression(proxy);
+    cie.addArgument(mappedExpr);
+    mappedExpr=cie;
+  }
+  CSForEachStatement stmt=new CSForEachStatement(node.getStartPosition(),mappedExpr);
+  stmt.variable(createParameter(node.getParameter()));
+  visitBlock(stmt.body(),node.getBody());
+  addStatement(stmt);
+  return false;
+}

@@ -1,0 +1,19 @@
+def main(infile, outfile):
+    ranges = unicode_file_parse(infile, category_to_harfbuzz)
+    ranges = sort_and_merge(ranges)
+    print  >> outfile, '// Generated from Unicode script tables\n'
+    print  >> outfile, '#ifndef CATEGORY_PROPERTIES_H_'
+    print  >> outfile, '#define CATEGORY_PROPERTIES_H_\n'
+    print  >> outfile, '#include <stdint.h>'
+    print  >> outfile, '#include "harfbuzz-external.h"\n'
+    print  >> outfile, 'struct category_property {'
+    print  >> outfile, '  uint32_t range_start;'
+    print  >> outfile, '  uint32_t range_end;'
+    print  >> outfile, '  HB_CharCategory category;'
+    print  >> outfile, '};\n'
+    print  >> outfile, 'static const struct category_property category_properties[] = {'
+    for (start, end, value) in ranges:
+        print  >> outfile, ('  {0x%x, 0x%x, %s},' % (start, end, value))
+    print  >> outfile, '};\n'
+    print  >> outfile, ('static const unsigned category_properties_count = %d;\n' % len(ranges))
+    print  >> outfile, '#endif  // CATEGORY_PROPERTIES_H_'

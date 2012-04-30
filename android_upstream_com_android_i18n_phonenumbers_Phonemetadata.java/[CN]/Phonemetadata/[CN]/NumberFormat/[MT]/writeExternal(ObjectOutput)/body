@@ -1,0 +1,17 @@
+{
+  objectOutput.writeUTF(pattern_);
+  objectOutput.writeUTF(format_);
+  int leadingDigitsPatternSize=leadingDigitsPatternSize();
+  objectOutput.writeInt(leadingDigitsPatternSize);
+  for (int i=0; i < leadingDigitsPatternSize; i++) {
+    objectOutput.writeUTF(leadingDigitsPattern_.get(i));
+  }
+  objectOutput.writeBoolean(hasNationalPrefixFormattingRule);
+  if (hasNationalPrefixFormattingRule) {
+    objectOutput.writeUTF(nationalPrefixFormattingRule_);
+  }
+  objectOutput.writeBoolean(hasDomesticCarrierCodeFormattingRule);
+  if (hasDomesticCarrierCodeFormattingRule) {
+    objectOutput.writeUTF(domesticCarrierCodeFormattingRule_);
+  }
+}

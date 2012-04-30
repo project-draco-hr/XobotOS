@@ -1,0 +1,8 @@
+{
+  checkOpen();
+  int index=(Integer)impl.getOption(SocketOptions.IP_MULTICAST_IF2);
+  if (index != 0) {
+    return NetworkInterface.getByIndex(index);
+  }
+  return NetworkInterface.forUnboundMulticastSocket();
+}

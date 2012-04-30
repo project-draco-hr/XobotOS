@@ -1,0 +1,7 @@
+{
+  Expression exception=node.getExpression();
+  if (isCurrentExceptionVariable(exception)) {
+    return new CSThrowStatement(node.getStartPosition(),null);
+  }
+  return new CSThrowStatement(node.getStartPosition(),mapExpression(exception));
+}

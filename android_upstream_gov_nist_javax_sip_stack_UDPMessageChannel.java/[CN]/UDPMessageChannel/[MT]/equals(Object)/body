@@ -1,0 +1,12 @@
+{
+  if (other == null)   return false;
+  boolean retval;
+  if (!this.getClass().equals(other.getClass())) {
+    retval=false;
+  }
+ else {
+    UDPMessageChannel that=(UDPMessageChannel)other;
+    retval=this.getKey().equals(that.getKey());
+  }
+  return retval;
+}

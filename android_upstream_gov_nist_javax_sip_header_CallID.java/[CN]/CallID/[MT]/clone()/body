@@ -1,0 +1,5 @@
+{
+  CallID retval=(CallID)super.clone();
+  if (this.callIdentifier != null)   retval.callIdentifier=(CallIdentifier)this.callIdentifier.clone();
+  return retval;
+}

@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("null address!");
+  PCalledPartyID calledPartyID=new PCalledPartyID();
+  calledPartyID.setAddress(address);
+  return calledPartyID;
+}

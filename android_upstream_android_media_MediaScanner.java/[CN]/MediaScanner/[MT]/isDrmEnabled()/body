@@ -1,0 +1,4 @@
+{
+  String prop=SystemProperties.get("drm.service.enabled");
+  return prop != null && prop.equals("true");
+}

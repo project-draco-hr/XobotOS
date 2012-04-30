@@ -1,0 +1,5 @@
+{
+  request.setLanguage(getLanguage(),getCountry(),getVariant());
+  request.setSpeechRate(getSpeechRate());
+  request.setPitch(getPitch());
+}

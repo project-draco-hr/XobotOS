@@ -1,0 +1,10 @@
+{
+  boolean useFlyweightMapStorage=objectInput.readBoolean();
+  if (useFlyweightMapStorage) {
+    areaCodeMapStorage=new FlyweightMapStorage();
+  }
+ else {
+    areaCodeMapStorage=new DefaultMapStorage();
+  }
+  areaCodeMapStorage.readExternal(objectInput);
+}

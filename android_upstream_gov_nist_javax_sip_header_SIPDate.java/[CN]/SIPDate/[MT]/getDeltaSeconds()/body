@@ -1,0 +1,4 @@
+{
+  long ctime=this.getJavaCal().getTime().getTime();
+  return (int)(ctime - System.currentTimeMillis()) / 1000;
+}

@@ -1,0 +1,7 @@
+{
+  if (ps == null) {
+    throw new NullPointerException();
+  }
+  out=ps;
+  locale=Locale.getDefault();
+}

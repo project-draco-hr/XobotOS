@@ -1,0 +1,8 @@
+{
+  String regionCode=getRegionCodeForNumber(number);
+  if (!isValidRegionCode(regionCode)) {
+    return PhoneNumberType.UNKNOWN;
+  }
+  String nationalSignificantNumber=getNationalSignificantNumber(number);
+  return getNumberTypeHelper(nationalSignificantNumber,getMetadataForRegion(regionCode));
+}

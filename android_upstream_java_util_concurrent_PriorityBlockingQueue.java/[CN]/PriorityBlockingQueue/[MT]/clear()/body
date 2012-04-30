@@ -1,0 +1,13 @@
+{
+  final ReentrantLock lock=this.lock;
+  lock.lock();
+  try {
+    Object[] array=queue;
+    int n=size;
+    size=0;
+    for (int i=0; i < n; i++)     array[i]=null;
+  }
+  finally {
+    lock.unlock();
+  }
+}

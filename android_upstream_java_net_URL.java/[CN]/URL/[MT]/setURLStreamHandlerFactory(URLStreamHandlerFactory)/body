@@ -1,0 +1,7 @@
+{
+  if (streamHandlerFactory != null) {
+    throw new Error("Factory already set");
+  }
+  streamHandlers.clear();
+  streamHandlerFactory=factory;
+}

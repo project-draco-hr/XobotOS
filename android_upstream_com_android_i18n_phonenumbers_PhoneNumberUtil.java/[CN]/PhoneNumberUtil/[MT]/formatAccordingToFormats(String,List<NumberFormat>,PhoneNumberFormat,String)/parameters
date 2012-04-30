@@ -1,0 +1,4 @@
+String nationalNumber
+List<NumberFormat> availableFormats
+PhoneNumberFormat numberFormat
+String carrierCode

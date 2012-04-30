@@ -1,0 +1,7 @@
+{
+  name=n;
+  value=v;
+  separator=Separators.EQUALS;
+  quotes="";
+  this.isFlagParameter=isFlag;
+}

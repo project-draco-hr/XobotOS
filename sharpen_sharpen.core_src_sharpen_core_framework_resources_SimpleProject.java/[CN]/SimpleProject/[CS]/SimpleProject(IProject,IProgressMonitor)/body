@@ -1,0 +1,4 @@
+{
+  _project=project;
+  WorkspaceUtilities.initializeProject(_project,monitor);
+}

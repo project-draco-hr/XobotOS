@@ -1,0 +1,6 @@
+{
+  if (optionTag == null)   throw new NullPointerException("bad optionTag arg");
+  ProxyRequire p=new ProxyRequire();
+  p.setOptionTag(optionTag);
+  return p;
+}

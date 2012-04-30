@@ -1,0 +1,5 @@
+{
+  validateIsFloat32();
+  mRS.validate();
+  mRS.nAllocationRead(getID(),d);
+}

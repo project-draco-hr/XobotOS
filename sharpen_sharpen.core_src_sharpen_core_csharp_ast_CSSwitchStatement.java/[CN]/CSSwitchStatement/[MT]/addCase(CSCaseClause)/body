@@ -1,0 +1,6 @@
+{
+  if (null == caseClause) {
+    throw new IllegalArgumentException("caseClause");
+  }
+  _caseClauses.add(caseClause);
+}

@@ -1,0 +1,18 @@
+{
+  StringBuffer retval=new StringBuffer();
+  try {
+    while (true) {
+      char next=lookAhead(0);
+      if (next == '\n' || next == ',') {
+        break;
+      }
+ else {
+        consume(1);
+        retval.append(next);
+      }
+    }
+  }
+ catch (  ParseException ex) {
+  }
+  return retval.toString();
+}

@@ -1,0 +1,8 @@
+{
+  mRS.validate();
+  if ((slot < 0) || (slot >= mTextureCount)) {
+    throw new IllegalArgumentException("Slot ID out of range.");
+  }
+  int id=vs != null ? vs.getID() : 0;
+  mRS.nProgramBindSampler(getID(),slot,id);
+}

@@ -1,0 +1,4 @@
+{
+  setTitle(mContext.getString(titleResId));
+  mTitleRes=titleResId;
+}

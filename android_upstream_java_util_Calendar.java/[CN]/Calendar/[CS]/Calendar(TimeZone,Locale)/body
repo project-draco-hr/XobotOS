@@ -1,0 +1,6 @@
+{
+  this(timezone);
+  LocaleData localeData=LocaleData.get(locale);
+  setFirstDayOfWeek(localeData.firstDayOfWeek.intValue());
+  setMinimalDaysInFirstWeek(localeData.minimalDaysInFirstWeek.intValue());
+}

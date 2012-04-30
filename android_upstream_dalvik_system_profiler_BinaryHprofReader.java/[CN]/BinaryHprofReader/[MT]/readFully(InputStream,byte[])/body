@@ -1,0 +1,12 @@
+{
+  int offset=0;
+  int byteCount=dst.length;
+  while (byteCount > 0) {
+    int bytesRead=in.read(dst,offset,byteCount);
+    if (bytesRead < 0) {
+      throw new EOFException();
+    }
+    offset+=bytesRead;
+    byteCount-=bytesRead;
+  }
+}

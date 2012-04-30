@@ -1,0 +1,4 @@
+{
+  super(NAME);
+  this.address=address;
+}

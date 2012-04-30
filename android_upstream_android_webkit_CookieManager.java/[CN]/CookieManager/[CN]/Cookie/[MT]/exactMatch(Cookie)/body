@@ -1,0 +1,4 @@
+{
+  boolean valuesMatch=!((value == null) ^ (in.value == null));
+  return domain.equals(in.domain) && path.equals(in.path) && name.equals(in.name)&& valuesMatch;
+}

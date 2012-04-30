@@ -1,0 +1,10 @@
+{
+  List<NamespaceTemplate> list=new ArrayList<NamespaceTemplate>();
+  if (_includeFiles != null) {
+    for (    final IncludeFile file : _includeFiles) {
+      list.addAll(file.getContents().getNamespaces());
+    }
+  }
+  if (_namespaces != null)   list.addAll(_namespaces);
+  return Collections.unmodifiableList(list);
+}

@@ -1,0 +1,14 @@
+def WriteNewNinjaRule(self, name, args, description):
+    'Write out a new ninja "rule" statement for a given command.\n\n    Returns the name of the new rule.'
+    rule_name = self.name
+    if (self.toolset == 'target'):
+        rule_name += ('.' + self.toolset)
+    rule_name += ('.' + name)
+    rule_name = rule_name.replace(' ', '_')
+    args = args[:]
+    cd = ('cd %s; ' % self.build_to_base)
+    args = [self.ExpandSpecial(arg, self.base_to_build) for arg in args]
+    command = (cd + gyp.common.EncodePOSIXShellList(args))
+    self.ninja.rule(rule_name, command, description)
+    self.ninja.newline()
+    return rule_name

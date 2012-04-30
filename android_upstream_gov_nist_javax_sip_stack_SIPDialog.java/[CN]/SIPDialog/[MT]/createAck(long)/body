@@ -1,0 +1,77 @@
+{
+  if (!method.equals(Request.INVITE))   throw new SipException("Dialog was not created with an INVITE" + method);
+  if (cseqno <= 0)   throw new InvalidArgumentException("bad cseq <= 0 ");
+ else   if (cseqno > ((((long)1) << 32) - 1))   throw new InvalidArgumentException("bad cseq > " + ((((long)1) << 32) - 1));
+  if (this.remoteTarget == null) {
+    throw new SipException("Cannot create ACK - no remote Target!");
+  }
+  if (this.sipStack.isLoggingEnabled()) {
+    this.sipStack.getStackLogger().logDebug("createAck " + this + " cseqno "+ cseqno);
+  }
+  if (lastInviteOkReceived < cseqno) {
+    if (sipStack.isLoggingEnabled()) {
+      this.sipStack.getStackLogger().logDebug("WARNING : Attempt to crete ACK without OK " + this);
+      this.sipStack.getStackLogger().logDebug("LAST RESPONSE = " + this.lastResponse);
+    }
+    throw new SipException("Dialog not yet established -- no OK response!");
+  }
+  try {
+    SipURI uri4transport=null;
+    if (this.routeList != null && !this.routeList.isEmpty()) {
+      Route r=(Route)this.routeList.getFirst();
+      uri4transport=((SipURI)r.getAddress().getURI());
+    }
+ else {
+      uri4transport=((SipURI)this.remoteTarget.getURI());
+    }
+    String transport=uri4transport.getTransportParam();
+    if (transport == null) {
+      transport=uri4transport.isSecure() ? ListeningPoint.TLS : ListeningPoint.UDP;
+    }
+    ListeningPointImpl lp=(ListeningPointImpl)sipProvider.getListeningPoint(transport);
+    if (lp == null) {
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logError("remoteTargetURI " + this.remoteTarget.getURI());
+        sipStack.getStackLogger().logError("uri4transport = " + uri4transport);
+        sipStack.getStackLogger().logError("No LP found for transport=" + transport);
+      }
+      throw new SipException("Cannot create ACK - no ListeningPoint for transport towards next hop found:" + transport);
+    }
+    SIPRequest sipRequest=new SIPRequest();
+    sipRequest.setMethod(Request.ACK);
+    sipRequest.setRequestURI((SipUri)getRemoteTarget().getURI().clone());
+    sipRequest.setCallId(this.callIdHeader);
+    sipRequest.setCSeq(new CSeq(cseqno,Request.ACK));
+    List<Via> vias=new ArrayList<Via>();
+    Via via=this.lastResponse.getTopmostVia();
+    via.removeParameters();
+    if (originalRequest != null && originalRequest.getTopmostVia() != null) {
+      NameValueList originalRequestParameters=originalRequest.getTopmostVia().getParameters();
+      if (originalRequestParameters != null && originalRequestParameters.size() > 0) {
+        via.setParameters((NameValueList)originalRequestParameters.clone());
+      }
+    }
+    via.setBranch(Utils.getInstance().generateBranchId());
+    vias.add(via);
+    sipRequest.setVia(vias);
+    From from=new From();
+    from.setAddress(this.localParty);
+    from.setTag(this.myTag);
+    sipRequest.setFrom(from);
+    To to=new To();
+    to.setAddress(this.remoteParty);
+    if (hisTag != null)     to.setTag(this.hisTag);
+    sipRequest.setTo(to);
+    sipRequest.setMaxForwards(new MaxForwards(70));
+    if (this.originalRequest != null) {
+      Authorization authorization=this.originalRequest.getAuthorization();
+      if (authorization != null)       sipRequest.setHeader(authorization);
+    }
+    this.updateRequest(sipRequest);
+    return sipRequest;
+  }
+ catch (  Exception ex) {
+    InternalErrorHandler.handleException(ex);
+    throw new SipException("unexpected exception ",ex);
+  }
+}

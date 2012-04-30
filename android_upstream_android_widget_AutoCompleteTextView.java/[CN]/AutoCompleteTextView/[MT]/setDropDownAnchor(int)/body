@@ -1,0 +1,4 @@
+{
+  mDropDownAnchorId=id;
+  mPopup.setAnchorView(null);
+}

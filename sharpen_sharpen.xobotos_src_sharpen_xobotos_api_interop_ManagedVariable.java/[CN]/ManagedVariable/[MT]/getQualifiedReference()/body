@@ -1,0 +1,5 @@
+{
+  if (_flags == Flags.OUT)   return new CSByRefExpression(getReference(),true);
+ else   if (_flags == Flags.REF)   return new CSByRefExpression(getReference(),false);
+ else   return getReference();
+}

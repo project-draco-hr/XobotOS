@@ -1,0 +1,4 @@
+{
+  String baseTypeName=anonymousBaseTypeName();
+  return "_" + removeTypeArguments(simpleName(baseTypeName)) + "_"+ lineNumber(_node);
+}

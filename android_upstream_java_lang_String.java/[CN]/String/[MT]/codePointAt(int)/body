@@ -1,0 +1,6 @@
+{
+  if (index < 0 || index >= count) {
+    throw indexAndLength(index);
+  }
+  return Character.codePointAt(value,offset + index,offset + count);
+}

@@ -1,0 +1,9 @@
+{
+  begin("glGetMaterialxv");
+  arg("face",face);
+  arg("pname",pname);
+  arg("params",params.toString());
+  end();
+  mgl11.glGetMaterialxv(face,pname,params);
+  checkError();
+}

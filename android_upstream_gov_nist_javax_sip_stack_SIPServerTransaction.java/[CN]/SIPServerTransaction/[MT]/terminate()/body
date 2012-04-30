@@ -1,0 +1,10 @@
+{
+  this.setState(TransactionState.TERMINATED);
+  if (this.retransmissionAlertTimerTask != null) {
+    this.retransmissionAlertTimerTask.cancel();
+    if (retransmissionAlertTimerTask.dialogId != null) {
+      this.sipStack.retransmissionAlertTransactions.remove(retransmissionAlertTimerTask.dialogId);
+    }
+    this.retransmissionAlertTimerTask=null;
+  }
+}

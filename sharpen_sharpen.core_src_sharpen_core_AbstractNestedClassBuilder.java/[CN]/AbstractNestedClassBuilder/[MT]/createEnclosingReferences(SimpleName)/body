@@ -1,0 +1,4 @@
+{
+  CSExpression target=createEnclosingTargetReferences(name);
+  return createSimpleNameReference(name,target);
+}

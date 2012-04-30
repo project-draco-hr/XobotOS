@@ -1,0 +1,8 @@
+{
+  if (mediaRange != null)   mediaRange.encode(buffer);
+  if (parameters != null && !parameters.isEmpty()) {
+    buffer.append(';');
+    parameters.encode(buffer);
+  }
+  return buffer;
+}

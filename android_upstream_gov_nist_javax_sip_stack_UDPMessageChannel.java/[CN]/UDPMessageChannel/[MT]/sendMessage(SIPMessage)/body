@@ -1,0 +1,36 @@
+{
+  if (sipStack.isLoggingEnabled() && this.sipStack.isLogStackTraceOnMessageSend()) {
+    if (sipMessage instanceof SIPRequest && ((SIPRequest)sipMessage).getRequestLine() != null) {
+      this.sipStack.getStackLogger().logStackTrace(StackLogger.TRACE_INFO);
+    }
+ else {
+      this.sipStack.getStackLogger().logStackTrace(StackLogger.TRACE_INFO);
+    }
+  }
+  long time=System.currentTimeMillis();
+  try {
+    for (    MessageProcessor messageProcessor : sipStack.getMessageProcessors()) {
+      if (messageProcessor.getIpAddress().equals(this.peerAddress) && messageProcessor.getPort() == this.peerPort && messageProcessor.getTransport().equals(this.peerProtocol)) {
+        MessageChannel messageChannel=messageProcessor.createMessageChannel(this.peerAddress,this.peerPort);
+        if (messageChannel instanceof RawMessageChannel) {
+          ((RawMessageChannel)messageChannel).processMessage(sipMessage);
+          if (sipStack.isLoggingEnabled())           sipStack.getStackLogger().logDebug("Self routing message");
+          return;
+        }
+      }
+    }
+    byte[] msg=sipMessage.encodeAsBytes(this.getTransport());
+    sendMessage(msg,peerAddress,peerPort,peerProtocol,sipMessage instanceof SIPRequest);
+  }
+ catch (  IOException ex) {
+    throw ex;
+  }
+catch (  Exception ex) {
+    sipStack.getStackLogger().logError("An exception occured while sending message",ex);
+    throw new IOException("An exception occured while sending message");
+  }
+ finally {
+    if (sipStack.getStackLogger().isLoggingEnabled(ServerLogger.TRACE_MESSAGES) && !sipMessage.isNullRequest())     logMessage(sipMessage,peerAddress,peerPort,time);
+ else     if (sipStack.getStackLogger().isLoggingEnabled(ServerLogger.TRACE_DEBUG))     sipStack.getStackLogger().logDebug("Sent EMPTY Message");
+  }
+}

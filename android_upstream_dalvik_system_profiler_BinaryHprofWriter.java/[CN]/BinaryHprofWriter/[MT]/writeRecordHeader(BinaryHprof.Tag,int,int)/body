@@ -1,0 +1,9 @@
+{
+  String error=hprofTag.checkSize(recordLength);
+  if (error != null) {
+    throw new AssertionError(error);
+  }
+  out.writeByte(hprofTag.tag);
+  out.writeInt(timeDeltaInMicroseconds);
+  out.writeInt(recordLength);
+}

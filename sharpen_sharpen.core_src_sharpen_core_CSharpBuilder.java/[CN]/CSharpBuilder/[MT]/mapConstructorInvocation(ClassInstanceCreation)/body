@@ -1,0 +1,17 @@
+{
+  Configuration.MemberMapping mappedConstructor=effectiveMappingFor(node.resolveConstructorBinding());
+  if (null == mappedConstructor) {
+    return new CSConstructorInvocationExpression(mappedTypeReference(node.resolveTypeBinding()));
+  }
+  final String mappedName=mappedConstructor.name;
+  if (mappedName.length() == 0) {
+    pushExpression(mapExpression((Expression)node.arguments().get(0)));
+    return null;
+  }
+  if (mappedName.startsWith("System.Convert.To")) {
+    if (optimizeSystemConvert(mappedName,node)) {
+      return null;
+    }
+  }
+  return new CSMethodInvocationExpression(new CSReferenceExpression(methodName(mappedName)));
+}

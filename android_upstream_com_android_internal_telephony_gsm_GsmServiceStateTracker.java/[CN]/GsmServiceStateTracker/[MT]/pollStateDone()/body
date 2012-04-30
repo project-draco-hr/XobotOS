@@ -1,0 +1,129 @@
+{
+  if (DBG) {
+    log("Poll ServiceState done: " + " oldSS=[" + ss + "] newSS=["+ newSS+ "] oldGprs="+ gprsState+ " newData="+ newGPRSState+ " oldMaxDataCalls="+ mMaxDataCalls+ " mNewMaxDataCalls="+ mNewMaxDataCalls+ " oldReasonDataDenied="+ mReasonDataDenied+ " mNewReasonDataDenied="+ mNewReasonDataDenied+ " oldType="+ ServiceState.radioTechnologyToString(mRadioTechnology)+ " newType="+ ServiceState.radioTechnologyToString(mNewRadioTechnology));
+  }
+  boolean hasRegistered=ss.getState() != ServiceState.STATE_IN_SERVICE && newSS.getState() == ServiceState.STATE_IN_SERVICE;
+  boolean hasDeregistered=ss.getState() == ServiceState.STATE_IN_SERVICE && newSS.getState() != ServiceState.STATE_IN_SERVICE;
+  boolean hasGprsAttached=gprsState != ServiceState.STATE_IN_SERVICE && newGPRSState == ServiceState.STATE_IN_SERVICE;
+  boolean hasGprsDetached=gprsState == ServiceState.STATE_IN_SERVICE && newGPRSState != ServiceState.STATE_IN_SERVICE;
+  boolean hasRadioTechnologyChanged=mRadioTechnology != mNewRadioTechnology;
+  boolean hasChanged=!newSS.equals(ss);
+  boolean hasRoamingOn=!ss.getRoaming() && newSS.getRoaming();
+  boolean hasRoamingOff=ss.getRoaming() && !newSS.getRoaming();
+  boolean hasLocationChanged=!newCellLoc.equals(cellLoc);
+  if (ss.getState() != newSS.getState() || gprsState != newGPRSState) {
+    EventLog.writeEvent(EventLogTags.GSM_SERVICE_STATE_CHANGE,ss.getState(),gprsState,newSS.getState(),newGPRSState);
+  }
+  ServiceState tss;
+  tss=ss;
+  ss=newSS;
+  newSS=tss;
+  newSS.setStateOutOfService();
+  GsmCellLocation tcl=cellLoc;
+  cellLoc=newCellLoc;
+  newCellLoc=tcl;
+  if (hasRadioTechnologyChanged) {
+    int cid=-1;
+    GsmCellLocation loc=((GsmCellLocation)phone.getCellLocation());
+    if (loc != null)     cid=loc.getCid();
+    EventLog.writeEvent(EventLogTags.GSM_RAT_SWITCHED,cid,mRadioTechnology,mNewRadioTechnology);
+    if (DBG) {
+      log("RAT switched " + ServiceState.radioTechnologyToString(mRadioTechnology) + " -> "+ ServiceState.radioTechnologyToString(mNewRadioTechnology)+ " at cell "+ cid);
+    }
+  }
+  gprsState=newGPRSState;
+  mReasonDataDenied=mNewReasonDataDenied;
+  mMaxDataCalls=mNewMaxDataCalls;
+  mRadioTechnology=mNewRadioTechnology;
+  mNewRadioTechnology=0;
+  newSS.setStateOutOfService();
+  if (hasRadioTechnologyChanged) {
+    phone.setSystemProperty(TelephonyProperties.PROPERTY_DATA_NETWORK_TYPE,ServiceState.radioTechnologyToString(mRadioTechnology));
+  }
+  if (hasRegistered) {
+    mNetworkAttachedRegistrants.notifyRegistrants();
+  }
+  if (hasChanged) {
+    String operatorNumeric;
+    updateSpnDisplay();
+    phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_ALPHA,ss.getOperatorAlphaLong());
+    operatorNumeric=ss.getOperatorNumeric();
+    phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_NUMERIC,operatorNumeric);
+    if (operatorNumeric == null) {
+      phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY,"");
+      mGotCountryCode=false;
+    }
+ else {
+      String iso="";
+      try {
+        iso=MccTable.countryCodeForMcc(Integer.parseInt(operatorNumeric.substring(0,3)));
+      }
+ catch (      NumberFormatException ex) {
+        loge("countryCodeForMcc error" + ex);
+      }
+catch (      StringIndexOutOfBoundsException ex) {
+        loge("countryCodeForMcc error" + ex);
+      }
+      phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY,iso);
+      mGotCountryCode=true;
+      if (mNeedFixZone) {
+        TimeZone zone=null;
+        String zoneName=SystemProperties.get(TIMEZONE_PROPERTY);
+        if ((mZoneOffset == 0) && (mZoneDst == false) && (zoneName != null)&& (zoneName.length() > 0)&& (Arrays.binarySearch(GMT_COUNTRY_CODES,iso) < 0)) {
+          zone=TimeZone.getDefault();
+          long tzOffset;
+          tzOffset=zone.getOffset(System.currentTimeMillis());
+          if (getAutoTime()) {
+            setAndBroadcastNetworkSetTime(System.currentTimeMillis() - tzOffset);
+          }
+ else {
+            mSavedTime=mSavedTime - tzOffset;
+          }
+        }
+ else         if (iso.equals("")) {
+          zone=getNitzTimeZone(mZoneOffset,mZoneDst,mZoneTime);
+        }
+ else {
+          zone=TimeUtils.getTimeZone(mZoneOffset,mZoneDst,mZoneTime,iso);
+        }
+        mNeedFixZone=false;
+        if (zone != null) {
+          if (getAutoTimeZone()) {
+            setAndBroadcastNetworkSetTimeZone(zone.getID());
+          }
+          saveNitzTimeZone(zone.getID());
+        }
+      }
+    }
+    phone.setSystemProperty(TelephonyProperties.PROPERTY_OPERATOR_ISROAMING,ss.getRoaming() ? "true" : "false");
+    phone.notifyServiceStateChanged(ss);
+  }
+  if (hasGprsAttached) {
+    mAttachedRegistrants.notifyRegistrants();
+  }
+  if (hasGprsDetached) {
+    mDetachedRegistrants.notifyRegistrants();
+  }
+  if (hasRadioTechnologyChanged) {
+    phone.notifyDataConnection(Phone.REASON_NW_TYPE_CHANGED);
+  }
+  if (hasRoamingOn) {
+    mRoamingOnRegistrants.notifyRegistrants();
+  }
+  if (hasRoamingOff) {
+    mRoamingOffRegistrants.notifyRegistrants();
+  }
+  if (hasLocationChanged) {
+    phone.notifyLocationChanged();
+  }
+  if (!isGprsConsistent(gprsState,ss.getState())) {
+    if (!mStartedGprsRegCheck && !mReportedGprsNoReg) {
+      mStartedGprsRegCheck=true;
+      int check_period=Settings.Secure.getInt(phone.getContext().getContentResolver(),Settings.Secure.GPRS_REGISTER_CHECK_PERIOD_MS,DEFAULT_GPRS_CHECK_PERIOD_MILLIS);
+      sendMessageDelayed(obtainMessage(EVENT_CHECK_REPORT_GPRS),check_period);
+    }
+  }
+ else {
+    mReportedGprsNoReg=false;
+  }
+}

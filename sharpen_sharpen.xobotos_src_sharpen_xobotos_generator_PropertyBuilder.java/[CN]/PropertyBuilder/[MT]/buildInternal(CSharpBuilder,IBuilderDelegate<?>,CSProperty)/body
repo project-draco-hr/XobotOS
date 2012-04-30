@@ -1,0 +1,18 @@
+{
+  IPropertyBuilderDelegate delegate=(IPropertyBuilderDelegate)dlg;
+  if (getOutputMode() == OutputMode.ABSTRACT_STUB) {
+    property.modifier(CSMethodModifier.Abstract);
+    property.addAttribute(new CSAttribute("Sharpen.Stub"));
+    return true;
+  }
+  if (getOutputMode() == OutputMode.SHARPEN) {
+    delegate.mapBody(property);
+    return true;
+  }
+  CSBlock block=new CSBlock();
+  if (delegate.isGetter())   property.getter(block);
+ else   property.setter(block);
+  stubBlock(block);
+  property.addAttribute(new CSAttribute("Sharpen.Stub"));
+  return true;
+}

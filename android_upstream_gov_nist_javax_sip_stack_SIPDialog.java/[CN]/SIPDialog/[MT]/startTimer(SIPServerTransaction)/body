@@ -1,0 +1,22 @@
+{
+  if (this.timerTask != null && timerTask.transaction == transaction) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Timer already running for " + getDialogId());
+    return;
+  }
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("Starting dialog timer for " + getDialogId());
+  this.ackSeen=false;
+  acquireTimerTaskSem();
+  try {
+    if (this.timerTask != null) {
+      this.timerTask.transaction=transaction;
+    }
+ else {
+      this.timerTask=new DialogTimerTask(transaction);
+      sipStack.getTimer().schedule(timerTask,SIPTransactionStack.BASE_TIMER_INTERVAL,SIPTransactionStack.BASE_TIMER_INTERVAL);
+    }
+  }
+  finally {
+    releaseTimerTaskSem();
+  }
+  this.setRetransmissionTicks();
+}

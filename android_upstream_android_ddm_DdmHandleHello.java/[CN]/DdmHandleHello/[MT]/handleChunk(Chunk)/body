@@ -1,0 +1,13 @@
+{
+  if (false)   Log.v("ddm-heap","Handling " + name(request.type) + " chunk");
+  int type=request.type;
+  if (type == CHUNK_HELO) {
+    return handleHELO(request);
+  }
+ else   if (type == CHUNK_FEAT) {
+    return handleFEAT(request);
+  }
+ else {
+    throw new RuntimeException("Unknown packet " + ChunkHandler.name(type));
+  }
+}

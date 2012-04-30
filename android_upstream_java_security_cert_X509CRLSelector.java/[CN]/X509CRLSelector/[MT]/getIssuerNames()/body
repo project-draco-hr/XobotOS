@@ -1,0 +1,6 @@
+{
+  if (issuerNames == null) {
+    return null;
+  }
+  return (Collection<Object>)issuerNames.clone();
+}

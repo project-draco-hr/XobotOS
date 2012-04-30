@@ -1,0 +1,15 @@
+{
+  if (averageCharsPerByte <= 0 || maxCharsPerByte <= 0) {
+    throw new IllegalArgumentException("averageCharsPerByte and maxCharsPerByte must be positive");
+  }
+  if (averageCharsPerByte > maxCharsPerByte) {
+    throw new IllegalArgumentException("averageCharsPerByte is greater than maxCharsPerByte");
+  }
+  this.averageCharsPerByte=averageCharsPerByte;
+  this.maxCharsPerByte=maxCharsPerByte;
+  cs=charset;
+  status=INIT;
+  malformedInputAction=CodingErrorAction.REPORT;
+  unmappableCharacterAction=CodingErrorAction.REPORT;
+  replacementChars="\ufffd";
+}

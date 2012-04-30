@@ -1,0 +1,6 @@
+{
+  if (telephoneSubscriber == null) {
+    telephoneSubscriber=new TelephoneNumber();
+  }
+  return telephoneSubscriber;
+}

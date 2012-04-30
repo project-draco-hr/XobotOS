@@ -1,0 +1,17 @@
+def must_contain_all_lines(self, output, lines, title=None, find=None):
+    'Ensures that the specified output string (first argument)\n        contains all of the specified lines (second argument).\n\n        An optional third argument can be used to describe the type\n        of output being searched, and only shows up in failure output.\n\n        An optional fourth argument can be used to supply a different\n        function, of the form "find(line, output), to use when searching\n        for lines in the output.\n        '
+    if (find is None):
+        find = (lambda o, l: (string.find(o, l) != (-1)))
+    missing = []
+    for line in lines:
+        if (not find(output, line)):
+            missing.append(line)
+    if missing:
+        if (title is None):
+            title = 'output'
+        sys.stdout.write(('Missing expected lines from %s:\n' % title))
+        for line in missing:
+            sys.stdout.write((('    ' + repr(line)) + '\n'))
+        sys.stdout.write(self.banner((title + ' ')))
+        sys.stdout.write(output)
+        self.fail_test()

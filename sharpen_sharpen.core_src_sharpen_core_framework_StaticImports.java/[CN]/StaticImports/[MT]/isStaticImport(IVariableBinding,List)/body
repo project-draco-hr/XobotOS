@@ -1,0 +1,5 @@
+{
+  if (!isStatic(field))   return false;
+  for (  Object imp : imports)   if (isStaticFieldImport((ImportDeclaration)imp,field))   return true;
+  return false;
+}

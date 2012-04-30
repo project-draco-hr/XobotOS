@@ -1,0 +1,6 @@
+{
+  this.nextSeqno=Long.valueOf(this.getRemoteSeqNumber() + 1);
+  if (sipStack.isLoggingEnabled()) {
+    this.sipStack.getStackLogger().logDebug("Request Consumed -- next consumable Request Seqno = " + this.nextSeqno);
+  }
+}

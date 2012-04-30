@@ -1,0 +1,35 @@
+{
+  dest.writeInt(mLabelId);
+  mSearchActivity.writeToParcel(dest,flags);
+  dest.writeInt(mHintId);
+  dest.writeInt(mSearchMode);
+  dest.writeInt(mIconId);
+  dest.writeInt(mSearchButtonText);
+  dest.writeInt(mSearchInputType);
+  dest.writeInt(mSearchImeOptions);
+  dest.writeInt(mIncludeInGlobalSearch ? 1 : 0);
+  dest.writeInt(mQueryAfterZeroResults ? 1 : 0);
+  dest.writeInt(mAutoUrlDetect ? 1 : 0);
+  dest.writeInt(mSettingsDescriptionId);
+  dest.writeString(mSuggestAuthority);
+  dest.writeString(mSuggestPath);
+  dest.writeString(mSuggestSelection);
+  dest.writeString(mSuggestIntentAction);
+  dest.writeString(mSuggestIntentData);
+  dest.writeInt(mSuggestThreshold);
+  if (mActionKeys == null) {
+    dest.writeInt(0);
+  }
+ else {
+    dest.writeInt(mActionKeys.size());
+    for (    ActionKeyInfo actionKey : mActionKeys.values()) {
+      actionKey.writeToParcel(dest,flags);
+    }
+  }
+  dest.writeString(mSuggestProviderPackage);
+  dest.writeInt(mVoiceSearchMode);
+  dest.writeInt(mVoiceLanguageModeId);
+  dest.writeInt(mVoicePromptTextId);
+  dest.writeInt(mVoiceLanguageId);
+  dest.writeInt(mVoiceMaxResults);
+}

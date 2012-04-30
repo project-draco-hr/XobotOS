@@ -1,0 +1,4 @@
+{
+  table=(HashtableEntry<K,V>[])EMPTY_TABLE;
+  threshold=-1;
+}

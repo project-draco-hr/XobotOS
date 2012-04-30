@@ -1,0 +1,4 @@
+{
+  if (flags == Flags.ELEMENT)   return new TypeReference("int");
+ else   return new TypeReference("bool");
+}

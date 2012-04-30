@@ -1,0 +1,5 @@
+def run_built_executable(self, name, *args, **kw):
+    '\n    Runs an executable built by Visual Studio.\n    '
+    configuration = self.configuration_dirname()
+    program = [self.built_file_path(name, type=self.EXECUTABLE, **kw)]
+    return self.run(program=program, *args, **kw)

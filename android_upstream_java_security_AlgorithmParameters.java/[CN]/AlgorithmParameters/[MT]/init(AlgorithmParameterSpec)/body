@@ -1,0 +1,7 @@
+{
+  if (initialized) {
+    throw new InvalidParameterSpecException("Parameter has already been initialized");
+  }
+  spiImpl.engineInit(paramSpec);
+  initialized=true;
+}

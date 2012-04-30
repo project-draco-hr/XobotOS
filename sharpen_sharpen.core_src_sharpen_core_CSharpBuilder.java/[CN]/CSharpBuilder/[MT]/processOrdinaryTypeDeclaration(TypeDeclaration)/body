@@ -1,0 +1,31 @@
+{
+  final ITypeBinding typeBinding=node.resolveBinding();
+  final CSTypeContainer current=getCurrentType(typeBinding);
+  CSTypeDeclaration type=my(CSharpDriver.class).processTypeDeclaration(this,current,node,new CSharpDriver.ITypeBuilderDelegate(){
+    public CSTypeDeclaration create(){
+      return mapTypeDeclaration(node);
+    }
+    public void map(    CSTypeDeclaration type){
+      processDisabledType(node,isMainType(node) ? _compilationUnit : type);
+      if (_configuration.shouldMakePartial(BindingUtils.qualifiedName(typeBinding)))       type.partial(true);
+      mapSuperTypes(node,type);
+      type.visibility(mapVisibility(typeBinding));
+    }
+    public void mapMembers(    CSTypeDeclaration type,    IMemberFilter filter){
+      CSharpBuilder.this.mapMembers(node,type,filter);
+    }
+    public void document(    CSTypeDeclaration type){
+      CSharpBuilder.this.mapDocumentation(node,type);
+      processConversionJavadocTags(node,type);
+    }
+    public void fixup(    CSTypeDeclaration type){
+      adjustMemberVisibility(node,type);
+      autoImplementCloneable(node,type);
+      moveInitializersDependingOnThisReferenceToConstructor(type);
+      if (_configuration.junitConversion() && hasTests(type))       type.addAttribute(new CSAttribute("NUnit.Framework.TestFixture"));
+      type.cleanupStaticConstructor();
+    }
+  }
+);
+  return type;
+}

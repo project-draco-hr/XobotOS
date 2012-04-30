@@ -1,0 +1,5 @@
+{
+  CSMethod stub=newAbstractMethodStubFor(method);
+  safeProcessDisableTags(method,stub);
+  return stub;
+}

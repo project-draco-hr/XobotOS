@@ -1,0 +1,6 @@
+{
+  if (tag == -1) {
+    tag=isPrintableString(rawString) ? ASN1StringType.PRINTABLESTRING.id : ASN1StringType.UTF8STRING.id;
+  }
+  return tag;
+}

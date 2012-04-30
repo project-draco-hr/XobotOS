@@ -1,0 +1,7 @@
+{
+  ContactList contactList=sipMessage.getContactHeaders();
+  if (contactList != null) {
+    Contact contact=(Contact)contactList.getFirst();
+    this.setRemoteTarget(contact);
+  }
+}

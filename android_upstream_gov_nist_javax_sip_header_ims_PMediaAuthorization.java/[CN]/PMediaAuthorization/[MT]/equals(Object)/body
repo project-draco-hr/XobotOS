@@ -1,0 +1,7 @@
+{
+  if (other instanceof PMediaAuthorizationHeader) {
+    final PMediaAuthorizationHeader o=(PMediaAuthorizationHeader)other;
+    return this.getToken().equals(o.getToken());
+  }
+  return false;
+}

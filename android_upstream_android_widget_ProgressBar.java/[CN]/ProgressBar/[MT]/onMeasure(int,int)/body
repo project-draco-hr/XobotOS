@@ -1,0 +1,13 @@
+{
+  Drawable d=mCurrentDrawable;
+  int dw=0;
+  int dh=0;
+  if (d != null) {
+    dw=Math.max(mMinWidth,Math.min(mMaxWidth,d.getIntrinsicWidth()));
+    dh=Math.max(mMinHeight,Math.min(mMaxHeight,d.getIntrinsicHeight()));
+  }
+  updateDrawableState();
+  dw+=mPaddingLeft + mPaddingRight;
+  dh+=mPaddingTop + mPaddingBottom;
+  setMeasuredDimension(resolveSizeAndState(dw,widthMeasureSpec,0),resolveSizeAndState(dh,heightMeasureSpec,0));
+}

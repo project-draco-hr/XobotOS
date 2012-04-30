@@ -1,0 +1,13 @@
+{
+  int countryCallingCode=number.getCountryCode();
+  String nationalSignificantNumber=getNationalSignificantNumber(number);
+  String regionCode=getRegionCodeForCountryCode(countryCallingCode);
+  if (!hasValidRegionCode(regionCode,countryCallingCode,nationalSignificantNumber)) {
+    return nationalSignificantNumber;
+  }
+  StringBuilder formattedNumber=new StringBuilder(20);
+  formattedNumber.append(formatNationalNumber(nationalSignificantNumber,regionCode,PhoneNumberFormat.NATIONAL,carrierCode));
+  maybeGetFormattedExtension(number,regionCode,PhoneNumberFormat.NATIONAL,formattedNumber);
+  formatNumberByFormat(countryCallingCode,PhoneNumberFormat.NATIONAL,formattedNumber);
+  return formattedNumber.toString();
+}

@@ -1,0 +1,34 @@
+{
+  theNewElement=null;
+  String name;
+  if (length != 0) {
+    name=makeName(buff,offset,length);
+    ElementType type=theSchema.getElementType(name);
+    if (type == null)     return;
+    name=type.name();
+  }
+ else {
+    name=theStack.name();
+  }
+  Element sp;
+  boolean inNoforce=false;
+  for (sp=theStack; sp != null; sp=sp.next()) {
+    if (sp.name().equals(name))     break;
+    if ((sp.flags() & Schema.F_NOFORCE) != 0)     inNoforce=true;
+  }
+  if (sp == null)   return;
+  if (sp.next() == null || sp.next().next() == null)   return;
+  if (inNoforce) {
+    sp.preclose();
+  }
+ else {
+    while (theStack != sp) {
+      restartablyPop();
+    }
+    pop();
+  }
+  while (theStack.isPreclosed()) {
+    pop();
+  }
+  restart(null);
+}

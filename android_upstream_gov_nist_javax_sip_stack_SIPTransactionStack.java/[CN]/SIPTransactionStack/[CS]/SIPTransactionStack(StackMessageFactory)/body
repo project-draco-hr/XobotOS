@@ -1,0 +1,4 @@
+{
+  this();
+  this.sipMessageFactory=messageFactory;
+}

@@ -1,0 +1,16 @@
+{
+  if (this.addressType == WILD_CARD) {
+    buffer.append('*');
+  }
+ else {
+    if (displayName != null) {
+      buffer.append(DOUBLE_QUOTE).append(displayName).append(DOUBLE_QUOTE).append(SP);
+    }
+    if (address != null) {
+      if (addressType == NAME_ADDR || displayName != null)       buffer.append(LESS_THAN);
+      address.encode(buffer);
+      if (addressType == NAME_ADDR || displayName != null)       buffer.append(GREATER_THAN);
+    }
+  }
+  return buffer;
+}

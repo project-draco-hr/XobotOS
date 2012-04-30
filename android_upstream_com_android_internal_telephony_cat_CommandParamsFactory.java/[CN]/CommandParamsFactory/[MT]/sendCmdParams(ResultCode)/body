@@ -1,0 +1,3 @@
+{
+  mCaller.sendMsgParamsDecoded(resCode,mCmdParams);
+}

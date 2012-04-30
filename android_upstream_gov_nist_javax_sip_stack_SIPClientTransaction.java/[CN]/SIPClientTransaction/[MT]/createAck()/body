@@ -1,0 +1,61 @@
+{
+  SIPRequest originalRequest=this.getOriginalRequest();
+  if (originalRequest == null)   throw new SipException("bad state " + getState());
+  if (getMethod().equalsIgnoreCase(Request.ACK)) {
+    throw new SipException("Cannot ACK an ACK!");
+  }
+ else   if (lastResponse == null) {
+    throw new SipException("bad Transaction state");
+  }
+ else   if (lastResponse.getStatusCode() < 200) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("lastResponse = " + lastResponse);
+    }
+    throw new SipException("Cannot ACK a provisional response!");
+  }
+  SIPRequest ackRequest=originalRequest.createAckRequest((To)lastResponse.getTo());
+  RecordRouteList recordRouteList=lastResponse.getRecordRouteHeaders();
+  if (recordRouteList == null) {
+    if (lastResponse.getContactHeaders() != null && lastResponse.getStatusCode() / 100 != 3) {
+      Contact contact=(Contact)lastResponse.getContactHeaders().getFirst();
+      javax.sip.address.URI uri=(javax.sip.address.URI)contact.getAddress().getURI().clone();
+      ackRequest.setRequestURI(uri);
+    }
+    return ackRequest;
+  }
+  ackRequest.removeHeader(RouteHeader.NAME);
+  RouteList routeList=new RouteList();
+  ListIterator<RecordRoute> li=recordRouteList.listIterator(recordRouteList.size());
+  while (li.hasPrevious()) {
+    RecordRoute rr=(RecordRoute)li.previous();
+    Route route=new Route();
+    route.setAddress((AddressImpl)((AddressImpl)rr.getAddress()).clone());
+    route.setParameters((NameValueList)rr.getParameters().clone());
+    routeList.add(route);
+  }
+  Contact contact=null;
+  if (lastResponse.getContactHeaders() != null) {
+    contact=(Contact)lastResponse.getContactHeaders().getFirst();
+  }
+  if (!((SipURI)((Route)routeList.getFirst()).getAddress().getURI()).hasLrParam()) {
+    Route route=null;
+    if (contact != null) {
+      route=new Route();
+      route.setAddress((AddressImpl)((AddressImpl)(contact.getAddress())).clone());
+    }
+    Route firstRoute=(Route)routeList.getFirst();
+    routeList.removeFirst();
+    javax.sip.address.URI uri=firstRoute.getAddress().getURI();
+    ackRequest.setRequestURI(uri);
+    if (route != null)     routeList.add(route);
+    ackRequest.addHeader(routeList);
+  }
+ else {
+    if (contact != null) {
+      javax.sip.address.URI uri=(javax.sip.address.URI)contact.getAddress().getURI().clone();
+      ackRequest.setRequestURI(uri);
+      ackRequest.addHeader(routeList);
+    }
+  }
+  return ackRequest;
+}

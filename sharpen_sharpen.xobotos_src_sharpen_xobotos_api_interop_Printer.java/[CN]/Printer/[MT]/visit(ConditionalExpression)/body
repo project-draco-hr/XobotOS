@@ -1,0 +1,7 @@
+{
+  node.getCondition().accept(this);
+  _writer.write(" ? ");
+  node.getTrueExpression().accept(this);
+  _writer.write(" : ");
+  node.getFalseExpression().accept(this);
+}

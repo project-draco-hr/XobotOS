@@ -1,0 +1,10 @@
+{
+  Via channelViaHeader;
+  channelViaHeader=super.getViaHeader();
+  try {
+    channelViaHeader.setBranch(branch);
+  }
+ catch (  java.text.ParseException ex) {
+  }
+  return channelViaHeader;
+}

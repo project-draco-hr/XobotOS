@@ -1,0 +1,8 @@
+{
+  try {
+    mMountService.setUsbMassStorageEnabled(false);
+  }
+ catch (  Exception ex) {
+    Log.e(TAG,"Failed to disable UMS",ex);
+  }
+}

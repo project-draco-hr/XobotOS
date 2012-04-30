@@ -1,0 +1,4 @@
+{
+  final CSTypeDeclaration parent=((TypeBuilder)_parent).getMember();
+  return _native.createPInvokeWrapper(parent,method);
+}

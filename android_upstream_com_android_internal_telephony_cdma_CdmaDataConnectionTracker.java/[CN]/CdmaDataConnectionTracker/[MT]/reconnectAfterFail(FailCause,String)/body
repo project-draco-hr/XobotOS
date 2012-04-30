@@ -1,0 +1,13 @@
+{
+  if (mState == State.FAILED) {
+    int nextReconnectDelay=mDataConnections.get(0).getRetryTimer();
+    startAlarmForReconnect(nextReconnectDelay,reason);
+    mDataConnections.get(0).increaseRetryCount();
+    if (!shouldPostNotification(lastFailCauseCode)) {
+      log("NOT Posting Data Connection Unavailable notification " + "-- likely transient error");
+    }
+ else {
+      notifyNoData(lastFailCauseCode);
+    }
+  }
+}

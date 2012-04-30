@@ -1,0 +1,18 @@
+{
+  writeMemberHeader(node);
+  write("enum " + node.name());
+  if (node.baseType() != null) {
+    write(" : ");
+    node.baseType().accept(this);
+  }
+  writeLine();
+  enterBody();
+  writeSeparatedList(node.values(),new Closure(){
+    public void execute(){
+      writeLine(",");
+    }
+  }
+);
+  writeLine();
+  leaveBody();
+}

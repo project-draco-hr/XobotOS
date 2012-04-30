@@ -1,0 +1,11 @@
+{
+  IMethodBinding found=findOverriddenMethodInType(type,method);
+  if (null != found) {
+    return found;
+  }
+  ITypeBinding superClass=type.getSuperclass();
+  if (null != superClass) {
+    return findOverriddenMethodInTypeOrSuperclasses(superClass,method);
+  }
+  return null;
+}

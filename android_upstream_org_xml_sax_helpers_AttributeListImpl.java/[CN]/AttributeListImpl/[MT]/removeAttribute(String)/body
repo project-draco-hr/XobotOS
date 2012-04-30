@@ -1,0 +1,8 @@
+{
+  int i=names.indexOf(name);
+  if (i != -1) {
+    names.remove(i);
+    types.remove(i);
+    values.remove(i);
+  }
+}

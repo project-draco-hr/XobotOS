@@ -1,0 +1,17 @@
+{
+  if (Double.isNaN(d)) {
+    return Double.NaN;
+  }
+  if (d == Double.POSITIVE_INFINITY) {
+    return Double.POSITIVE_INFINITY;
+  }
+  if (d == 0) {
+    return Double.MIN_VALUE;
+  }
+ else   if (d > 0) {
+    return Double.longBitsToDouble(Double.doubleToLongBits(d) + 1);
+  }
+ else {
+    return Double.longBitsToDouble(Double.doubleToLongBits(d) - 1);
+  }
+}

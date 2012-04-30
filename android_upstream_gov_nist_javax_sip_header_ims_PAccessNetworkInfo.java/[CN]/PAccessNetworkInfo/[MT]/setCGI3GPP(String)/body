@@ -1,0 +1,4 @@
+{
+  if (cgi == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setCGI3GPP(), the cgi parameter is null.");
+  setParameter(ParameterNamesIms.CGI_3GPP,cgi);
+}

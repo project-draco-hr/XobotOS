@@ -1,0 +1,9 @@
+{
+  int count=0;
+synchronized (groups) {
+    for (    ThreadGroup group : groups) {
+      count+=1 + group.activeGroupCount();
+    }
+  }
+  return count;
+}

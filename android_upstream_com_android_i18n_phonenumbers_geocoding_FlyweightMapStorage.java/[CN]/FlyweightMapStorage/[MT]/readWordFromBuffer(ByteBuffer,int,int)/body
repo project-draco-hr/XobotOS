@@ -1,0 +1,4 @@
+{
+  index*=wordSize;
+  return wordSize == SHORT_SIZE ? buffer.getShort(index) : buffer.getInt(index);
+}

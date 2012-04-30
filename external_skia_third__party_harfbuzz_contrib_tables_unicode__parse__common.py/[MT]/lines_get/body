@@ -1,0 +1,9 @@
+def lines_get(f):
+    'Parse a file like object, removing comments and returning a list of\n     lines.'
+
+    def cut_comment(line):
+        first_hash = line.find('#')
+        if (first_hash == (-1)):
+            return line
+        return line[:first_hash]
+    return [x for x in [cut_comment(x[:(-1)]) for x in f.readlines()] if len(x)]

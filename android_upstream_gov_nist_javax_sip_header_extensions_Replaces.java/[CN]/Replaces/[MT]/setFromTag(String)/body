@@ -1,0 +1,5 @@
+{
+  if (t == null)   throw new NullPointerException("null tag ");
+ else   if (t.trim().equals(""))   throw new ParseException("bad tag",0);
+  this.setParameter(ParameterNames.FROM_TAG,t);
+}

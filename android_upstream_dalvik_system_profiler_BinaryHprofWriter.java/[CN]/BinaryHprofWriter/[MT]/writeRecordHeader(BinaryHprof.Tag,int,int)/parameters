@@ -1,0 +1,3 @@
+BinaryHprof.Tag hprofTag
+int timeDeltaInMicroseconds
+int recordLength

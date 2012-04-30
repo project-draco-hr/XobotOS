@@ -1,0 +1,3 @@
+{
+  return effectiveAnnotationFor(node,SharpenAnnotations.SHARPEN_EVENT);
+}

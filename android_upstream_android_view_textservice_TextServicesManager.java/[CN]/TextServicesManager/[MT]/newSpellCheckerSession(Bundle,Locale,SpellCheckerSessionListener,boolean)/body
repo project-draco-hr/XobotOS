@@ -1,0 +1,60 @@
+{
+  if (listener == null) {
+    throw new NullPointerException();
+  }
+  if (!referToSpellCheckerLanguageSettings && locale == null) {
+    throw new IllegalArgumentException("Locale should not be null if you don't refer" + " settings.");
+  }
+  if (referToSpellCheckerLanguageSettings && !isSpellCheckerEnabled()) {
+    return null;
+  }
+  final SpellCheckerInfo sci;
+  try {
+    sci=sService.getCurrentSpellChecker(null);
+  }
+ catch (  RemoteException e) {
+    return null;
+  }
+  if (sci == null) {
+    return null;
+  }
+  SpellCheckerSubtype subtypeInUse=null;
+  if (referToSpellCheckerLanguageSettings) {
+    subtypeInUse=getCurrentSpellCheckerSubtype(true);
+    if (subtypeInUse == null) {
+      return null;
+    }
+    if (locale != null) {
+      final String subtypeLocale=subtypeInUse.getLocale();
+      final String inputLocale=locale.toString();
+      if (subtypeLocale.length() < 2 || inputLocale.length() < 2 || !subtypeLocale.substring(0,2).equals(inputLocale.substring(0,2))) {
+        return null;
+      }
+    }
+  }
+ else {
+    final String localeStr=locale.toString();
+    for (int i=0; i < sci.getSubtypeCount(); ++i) {
+      final SpellCheckerSubtype subtype=sci.getSubtypeAt(i);
+      final String tempSubtypeLocale=subtype.getLocale();
+      if (tempSubtypeLocale.equals(localeStr)) {
+        subtypeInUse=subtype;
+        break;
+      }
+ else       if (localeStr.length() >= 2 && tempSubtypeLocale.length() >= 2 && localeStr.startsWith(tempSubtypeLocale)) {
+        subtypeInUse=subtype;
+      }
+    }
+  }
+  if (subtypeInUse == null) {
+    return null;
+  }
+  final SpellCheckerSession session=new SpellCheckerSession(sci,sService,listener);
+  try {
+    sService.getSpellCheckerService(sci.getId(),subtypeInUse.getLocale(),session.getTextServicesSessionListener(),session.getSpellCheckerSessionListener(),bundle);
+  }
+ catch (  RemoteException e) {
+    return null;
+  }
+  return session;
+}

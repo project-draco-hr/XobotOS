@@ -1,0 +1,7 @@
+{
+  visitList(node.attributes());
+  visitList(node.typeParameters());
+  visitList(node.baseTypes());
+  visitList(node.constructors());
+  visitList(node.members());
+}

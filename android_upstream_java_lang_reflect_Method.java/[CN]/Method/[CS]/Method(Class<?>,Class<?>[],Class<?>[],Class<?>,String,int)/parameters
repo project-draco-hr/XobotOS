@@ -1,0 +1,6 @@
+Class<?> declaring
+Class<?>[] paramTypes
+Class<?>[] exceptTypes
+Class<?> returnType
+String name
+int slot

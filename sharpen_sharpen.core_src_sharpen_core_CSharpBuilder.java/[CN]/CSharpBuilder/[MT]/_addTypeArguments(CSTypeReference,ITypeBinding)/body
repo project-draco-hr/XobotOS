@@ -1,0 +1,19 @@
+{
+  final ITypeBinding[] targs=type.getTypeArguments();
+  if (targs.length > 0) {
+    for (    ITypeBinding arg : targs) {
+      typeRef.addTypeArgument(mappedTypeReference(arg));
+    }
+    return true;
+  }
+  GenericContext context=getGenericContext();
+  if (context == null)   return false;
+  ITypeBinding declType=type.getTypeDeclaration();
+  if (context.type.isGenericType() && context.type.isEqualTo(declType) || isNestedInside(context.type,declType) || (declType.getTypeParameters().length == context.tparams.length)) {
+    for (    ITypeBinding arg : context.tparams) {
+      typeRef.addTypeArgument(mappedTypeReference(arg));
+    }
+    return true;
+  }
+  return false;
+}

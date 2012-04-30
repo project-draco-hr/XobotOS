@@ -1,0 +1,7 @@
+{
+  final TagElement propertyTag=effectiveAnnotationFor(node,SharpenAnnotations.SHARPEN_PROPERTY);
+  if (JavadocUtility.hasSingleTextFragment(propertyTag)) {
+    return JavadocUtility.singleTextFragmentFrom(propertyTag);
+  }
+  return null;
+}

@@ -1,0 +1,6 @@
+{
+  this.declaringClass=declaringClass;
+  this.type=type;
+  this.name=name;
+  this.slot=slot;
+}

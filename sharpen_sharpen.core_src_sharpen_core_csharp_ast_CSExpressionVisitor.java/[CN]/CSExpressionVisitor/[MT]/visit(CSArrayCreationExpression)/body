@@ -1,0 +1,5 @@
+{
+  visitNode(node.elementType());
+  visitNode(node.initializer());
+  visitNode(node.length());
+}

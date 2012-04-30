@@ -1,0 +1,9 @@
+{
+  PhoneMetadata metadata=getMetadataForRegion(regionCode);
+  if (metadata.hasPreferredExtnPrefix()) {
+    extension.append(metadata.getPreferredExtnPrefix()).append(extensionDigits);
+  }
+ else {
+    extension.append(DEFAULT_EXTN_PREFIX).append(extensionDigits);
+  }
+}

@@ -1,0 +1,5 @@
+{
+  boolean retval=this.dialogTerminatedEventDelivered;
+  this.dialogTerminatedEventDelivered=true;
+  return retval;
+}

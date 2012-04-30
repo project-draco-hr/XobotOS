@@ -1,0 +1,3 @@
+def EscapeSConsVariableExpansion(s):
+    'SCons has its own variable expansion syntax using $. We must escape it for\n    strings to be interpreted literally. For some reason this requires four\n    dollar signs, not two, even without the shell involved.'
+    return s.replace('$', '$$$$')

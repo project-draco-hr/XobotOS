@@ -1,0 +1,3 @@
+{
+  return declaration instanceof TypeDeclaration && containsJavadoc((TypeDeclaration)declaration,SharpenAnnotations.SHARPEN_MACRO);
+}

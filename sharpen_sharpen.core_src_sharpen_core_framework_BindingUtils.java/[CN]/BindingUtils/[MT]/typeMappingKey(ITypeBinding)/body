@@ -1,0 +1,8 @@
+{
+  ITypeBinding[] typeArguments=type.getTypeArguments();
+  if (typeArguments.length == 0)   typeArguments=type.getTypeParameters();
+  if (typeArguments.length > 0) {
+    return qualifiedName(type) + "<" + repeat(',',typeArguments.length - 1)+ ">";
+  }
+  return qualifiedName(type);
+}

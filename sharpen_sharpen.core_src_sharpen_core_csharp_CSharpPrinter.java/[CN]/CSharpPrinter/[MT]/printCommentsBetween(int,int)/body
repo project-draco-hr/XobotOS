@@ -1,0 +1,9 @@
+{
+  int endIndex=commentIndexAfter(lastIndex,endStartPosition);
+  if (endIndex == -1) {
+    endIndex=_comments.size();
+  }
+  if ((_currentType != null) && _currentType.noDocs())   return endIndex;
+  visitList(_comments.subList(lastIndex,endIndex));
+  return endIndex;
+}

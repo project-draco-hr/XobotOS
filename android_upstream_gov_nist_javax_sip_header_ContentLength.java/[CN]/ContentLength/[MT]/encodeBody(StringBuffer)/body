@@ -1,0 +1,5 @@
+{
+  if (contentLength == null)   buffer.append("0");
+ else   buffer.append(contentLength.toString());
+  return buffer;
+}

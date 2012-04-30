@@ -1,0 +1,6 @@
+{
+  if (!(obj instanceof InetAddress)) {
+    return false;
+  }
+  return Arrays.equals(this.ipaddress,((InetAddress)obj).ipaddress);
+}

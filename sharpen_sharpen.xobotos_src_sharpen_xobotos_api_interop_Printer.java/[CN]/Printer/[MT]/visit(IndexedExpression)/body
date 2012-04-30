@@ -1,0 +1,6 @@
+{
+  node.getExpression().accept(this);
+  _writer.write("[");
+  node.getIndex().accept(this);
+  _writer.writeBlock("]");
+}

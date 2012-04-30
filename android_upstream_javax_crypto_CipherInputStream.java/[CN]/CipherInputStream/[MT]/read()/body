@@ -1,0 +1,25 @@
+{
+  if (finished) {
+    return ((outputBuffer == null) || (index == outputBuffer.length)) ? -1 : outputBuffer[index++] & 0xFF;
+  }
+  if ((outputBuffer != null) && (index < outputBuffer.length)) {
+    return outputBuffer[index++] & 0xFF;
+  }
+  index=0;
+  outputBuffer=null;
+  int byteCount;
+  while (outputBuffer == null) {
+    if ((byteCount=in.read(inputBuffer)) == -1) {
+      try {
+        outputBuffer=cipher.doFinal();
+      }
+ catch (      Exception e) {
+        throw new IOException(e.getMessage());
+      }
+      finished=true;
+      break;
+    }
+    outputBuffer=cipher.update(inputBuffer,0,byteCount);
+  }
+  return read();
+}

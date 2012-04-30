@@ -1,0 +1,19 @@
+{
+switch (modifier) {
+case Static:
+    return "static ";
+case Virtual:
+  return "virtual ";
+case Abstract:
+return "abstract ";
+case AbstractOverride:
+return "abstract override ";
+case Sealed:
+return "sealed override ";
+case Override:
+return "override ";
+case Extern:
+return "static extern ";
+}
+return "";
+}

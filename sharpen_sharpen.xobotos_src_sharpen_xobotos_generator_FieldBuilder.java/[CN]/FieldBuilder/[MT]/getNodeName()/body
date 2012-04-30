@@ -1,0 +1,4 @@
+{
+  VariableDeclarationFragment fragment=(VariableDeclarationFragment)getASTNode().fragments().get(0);
+  return BindingUtils.qualifiedName(fragment.resolveBinding());
+}

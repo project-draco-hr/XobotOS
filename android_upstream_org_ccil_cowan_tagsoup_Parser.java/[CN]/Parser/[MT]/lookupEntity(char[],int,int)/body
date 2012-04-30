@@ -1,0 +1,21 @@
+{
+  int result=0;
+  if (length < 1)   return result;
+  if (buff[offset] == '#') {
+    if (length > 1 && (buff[offset + 1] == 'x' || buff[offset + 1] == 'X')) {
+      try {
+        return Integer.parseInt(new String(buff,offset + 2,length - 2),16);
+      }
+ catch (      NumberFormatException e) {
+        return 0;
+      }
+    }
+    try {
+      return Integer.parseInt(new String(buff,offset + 1,length - 1),10);
+    }
+ catch (    NumberFormatException e) {
+      return 0;
+    }
+  }
+  return theSchema.getEntity(new String(buff,offset,length));
+}

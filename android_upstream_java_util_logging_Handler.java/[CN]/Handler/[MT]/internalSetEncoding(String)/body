@@ -1,0 +1,13 @@
+{
+  if (newEncoding == null) {
+    this.encoding=null;
+  }
+ else {
+    if (Charset.isSupported(newEncoding)) {
+      this.encoding=newEncoding;
+    }
+ else {
+      throw new UnsupportedEncodingException(newEncoding);
+    }
+  }
+}

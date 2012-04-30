@@ -1,0 +1,13 @@
+{
+  if (str == null) {
+    throw new NullPointerException("str == null");
+  }
+  if ((offset | count) < 0 || offset > str.length() - count) {
+    throw new StringIndexOutOfBoundsException(str,offset,count);
+  }
+synchronized (lock) {
+    expand(count);
+    str.getChars(offset,offset + count,buf,this.count);
+    this.count+=count;
+  }
+}

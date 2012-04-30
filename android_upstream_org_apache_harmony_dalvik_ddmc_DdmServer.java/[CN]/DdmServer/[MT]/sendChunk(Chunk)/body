@@ -1,0 +1,3 @@
+{
+  nativeSendChunk(chunk.type,chunk.data,chunk.offset,chunk.length);
+}

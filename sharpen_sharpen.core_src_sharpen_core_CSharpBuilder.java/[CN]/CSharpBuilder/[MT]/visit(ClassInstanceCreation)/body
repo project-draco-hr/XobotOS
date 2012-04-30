@@ -1,0 +1,20 @@
+{
+  if (null != node.getAnonymousClassDeclaration()) {
+    node.getAnonymousClassDeclaration().accept(this);
+    return false;
+  }
+  CSMethodInvocationExpression expression=mapConstructorInvocation(node);
+  if (null == expression) {
+    return false;
+  }
+  if (node.getExpression() != null) {
+    expression.addArgument(mapExpression(node.getExpression()));
+  }
+ else   if (isNonStaticNestedTypeCreation(node)) {
+    ITypeBinding target=node.resolveTypeBinding();
+    expression.addArgument(createEnclosingThisReference(target.getDeclaringClass()));
+  }
+  mapArguments(expression,node.arguments(),node.resolveConstructorBinding());
+  pushExpression(expression);
+  return false;
+}

@@ -1,0 +1,5 @@
+{
+  checkIndex(index);
+  byteBuffer.putFloat(index * SizeOf.FLOAT,c);
+  return this;
+}

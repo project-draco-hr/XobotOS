@@ -1,0 +1,8 @@
+{
+  if (w instanceof PrintWriter) {
+    theWriter=(PrintWriter)w;
+  }
+ else {
+    theWriter=new PrintWriter(w);
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return ("SignalStrength:" + " " + mGsmSignalStrength + " "+ mGsmBitErrorRate+ " "+ mCdmaDbm+ " "+ mCdmaEcio+ " "+ mEvdoDbm+ " "+ mEvdoEcio+ " "+ mEvdoSnr+ " "+ mLteSignalStrength+ " "+ mLteRsrp+ " "+ mLteRsrq+ " "+ mLteRssnr+ " "+ mLteCqi+ " "+ (isGsm ? "gsm|lte" : "cdma"));
+}

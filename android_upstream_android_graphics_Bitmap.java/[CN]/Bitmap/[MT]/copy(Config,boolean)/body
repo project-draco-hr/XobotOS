@@ -1,0 +1,8 @@
+{
+  checkRecycled("Can't copy a recycled bitmap");
+  Bitmap b=nativeCopy(mNativeBitmap,config.nativeInt,isMutable);
+  if (b != null) {
+    b.mDensity=mDensity;
+  }
+  return b;
+}

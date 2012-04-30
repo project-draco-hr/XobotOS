@@ -1,0 +1,15 @@
+{
+  final Object[] items=this.items;
+  final ReentrantLock lock=this.lock;
+  lock.lock();
+  try {
+    for (int i=takeIndex, k=count; k > 0; i=inc(i), k--)     items[i]=null;
+    count=0;
+    putIndex=0;
+    takeIndex=0;
+    notFull.signalAll();
+  }
+  finally {
+    lock.unlock();
+  }
+}

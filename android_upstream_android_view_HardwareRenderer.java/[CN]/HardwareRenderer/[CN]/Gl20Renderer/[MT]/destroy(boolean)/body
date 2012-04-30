@@ -1,0 +1,10 @@
+{
+  try {
+    super.destroy(full);
+  }
+  finally {
+    if (full && mGlCanvas != null) {
+      mGlCanvas=null;
+    }
+  }
+}

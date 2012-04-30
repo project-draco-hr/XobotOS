@@ -1,0 +1,8 @@
+{
+  try {
+    GLES20Canvas.destroyDisplayList(mNativeDisplayList);
+  }
+  finally {
+    super.finalize();
+  }
+}

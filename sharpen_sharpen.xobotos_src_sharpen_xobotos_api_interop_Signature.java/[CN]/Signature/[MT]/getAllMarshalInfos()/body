@@ -1,0 +1,10 @@
+{
+  List<MarshalEntry> list=new ArrayList<MarshalEntry>();
+  if (_returnType != null)   list.add(_returnType.marshal);
+  if (_parameters != null) {
+    for (    final ParameterInfo info : _parameters) {
+      list.add(info.marshal);
+    }
+  }
+  return Collections.unmodifiableList(list);
+}

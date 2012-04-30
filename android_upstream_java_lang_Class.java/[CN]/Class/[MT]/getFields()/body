@@ -1,0 +1,6 @@
+{
+  List<Field> fields=new ArrayList<Field>();
+  getPublicFieldsRecursive(fields);
+  CollectionUtils.removeDuplicates(fields,Field.ORDER_BY_NAME_AND_DECLARING_CLASS);
+  return fields.toArray(new Field[fields.size()]);
+}

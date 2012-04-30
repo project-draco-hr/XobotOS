@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(BROWSER_TEXT_SIZE_CHANGE,oldsize,newsize);
+}

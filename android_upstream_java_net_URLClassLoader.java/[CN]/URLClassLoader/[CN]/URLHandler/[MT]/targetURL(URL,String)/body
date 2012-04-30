@@ -1,0 +1,12 @@
+{
+  try {
+    StringBuilder fileBuilder=new StringBuilder();
+    fileBuilder.append(base.getFile());
+    URI.PATH_ENCODER.appendEncoded(fileBuilder,name);
+    String file=fileBuilder.toString();
+    return new URL(base.getProtocol(),base.getHost(),base.getPort(),file,null);
+  }
+ catch (  MalformedURLException e) {
+    return null;
+  }
+}

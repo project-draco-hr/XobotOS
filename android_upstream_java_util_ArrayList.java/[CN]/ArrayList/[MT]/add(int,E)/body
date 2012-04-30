@@ -1,0 +1,19 @@
+{
+  Object[] a=array;
+  int s=size;
+  if (index > s || index < 0) {
+    throwIndexOutOfBoundsException(index,s);
+  }
+  if (s < a.length) {
+    System.arraycopy(a,index,a,index + 1,s - index);
+  }
+ else {
+    Object[] newArray=new Object[newCapacity(s)];
+    System.arraycopy(a,0,newArray,0,index);
+    System.arraycopy(a,index,newArray,index + 1,s - index);
+    array=a=newArray;
+  }
+  a[index]=object;
+  size=s + 1;
+  modCount++;
+}

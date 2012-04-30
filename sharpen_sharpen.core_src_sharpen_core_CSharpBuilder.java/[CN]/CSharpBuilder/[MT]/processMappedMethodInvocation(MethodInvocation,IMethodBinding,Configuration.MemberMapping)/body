@@ -1,0 +1,62 @@
+{
+  if (mapping.kind == MemberKind.Indexer) {
+    processIndexerInvocation(node,binding);
+    return;
+  }
+  String name=mappedMethodName(binding);
+  if (0 == name.length()) {
+    final Expression expression=node.getExpression();
+    final CSExpression target=expression != null ? mapExpression(expression) : new CSThisExpression();
+    pushExpression(target);
+    return;
+  }
+  boolean isMappingToStaticMethod=isMappingToStaticMember(name);
+  List<Expression> arguments=node.arguments();
+  CSExpression expression=mapMethodTargetExpression(node);
+  CSExpression target=null;
+  if (null == expression || isMappingToStaticMethod) {
+    target=new CSReferenceExpression(name);
+  }
+ else {
+    if (BindingUtils.isStatic(binding) && arguments.size() > 0) {
+      target=new CSMemberReferenceExpression(parensIfNeeded(mapExpression(arguments.get(0))),name);
+      arguments=arguments.subList(1,arguments.size());
+    }
+ else {
+      target=new CSMemberReferenceExpression(expression,name);
+    }
+  }
+  if (mapping.kind != MemberKind.Method) {
+    IMethodBinding originalBinding=node.resolveMethodBinding();
+    if (binding != originalBinding && originalBinding.getReturnType() != binding.getReturnType() && !(node.getParent() instanceof ExpressionStatement))     target=new CSParenthesizedExpression(new CSCastExpression(mappedTypeReference(originalBinding.getReturnType()),target));
+switch (arguments.size()) {
+case 0:
+      pushExpression(target);
+    break;
+case 1:
+  pushExpression(new CSInfixExpression("=",target,mapExpression(arguments.get(0))));
+break;
+default :
+unsupportedConstruct(node,"Method invocation with more than 1 argument mapped to property");
+break;
+}
+return;
+}
+CSMethodInvocationExpression mie=new CSMethodInvocationExpression(target);
+if (isMappingToStaticMethod && isInstanceMethod(binding)) {
+if (null == expression) {
+mie.addArgument(new CSThisExpression());
+}
+ else {
+mie.addArgument(expression);
+}
+}
+mapArguments(mie,arguments,null);
+adjustJUnitArguments(mie,node);
+if (mapping.flags == MappingFlags.CastResult) {
+pushExpression(new CSCastExpression(mappedTypeReference(binding.getReturnType()),mie));
+}
+ else {
+pushExpression(mie);
+}
+}

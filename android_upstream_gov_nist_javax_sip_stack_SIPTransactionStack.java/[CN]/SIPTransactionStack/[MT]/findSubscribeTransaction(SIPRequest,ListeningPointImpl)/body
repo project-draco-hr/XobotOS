@@ -1,0 +1,39 @@
+{
+  SIPClientTransaction retval=null;
+  try {
+    Iterator it=clientTransactionTable.values().iterator();
+    if (stackLogger.isLoggingEnabled())     stackLogger.logDebug("ct table size = " + clientTransactionTable.size());
+    String thisToTag=notifyMessage.getTo().getTag();
+    if (thisToTag == null) {
+      return retval;
+    }
+    Event eventHdr=(Event)notifyMessage.getHeader(EventHeader.NAME);
+    if (eventHdr == null) {
+      if (stackLogger.isLoggingEnabled()) {
+        stackLogger.logDebug("event Header is null -- returning null");
+      }
+      return retval;
+    }
+    while (it.hasNext()) {
+      SIPClientTransaction ct=(SIPClientTransaction)it.next();
+      if (!ct.getMethod().equals(Request.SUBSCRIBE))       continue;
+      String fromTag=ct.from.getTag();
+      Event hisEvent=ct.event;
+      if (hisEvent == null)       continue;
+      if (stackLogger.isLoggingEnabled()) {
+        stackLogger.logDebug("ct.fromTag = " + fromTag);
+        stackLogger.logDebug("thisToTag = " + thisToTag);
+        stackLogger.logDebug("hisEvent = " + hisEvent);
+        stackLogger.logDebug("eventHdr " + eventHdr);
+      }
+      if (fromTag.equalsIgnoreCase(thisToTag) && hisEvent != null && eventHdr.match(hisEvent) && notifyMessage.getCallId().getCallId().equalsIgnoreCase(ct.callId.getCallId())) {
+        if (ct.acquireSem())         retval=ct;
+        return retval;
+      }
+    }
+    return retval;
+  }
+  finally {
+    if (stackLogger.isLoggingEnabled())     stackLogger.logDebug("findSubscribeTransaction : returning " + retval);
+  }
+}

@@ -1,0 +1,3 @@
+{
+  DualPivotQuicksort.sort(array);
+}

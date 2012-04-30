@@ -1,0 +1,3 @@
+{
+  return NTZ_TABLE[((i & -i) * 0x0450FBAF) >>> 26];
+}

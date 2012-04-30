@@ -1,0 +1,7 @@
+{
+  mBulkCursor=bulkCursor;
+  mColumns=null;
+  mCount=count;
+  mRowIdColumnIndex=idIndex;
+  mWantsAllOnMoveCalls=wantsAllOnMoveCalls;
+}

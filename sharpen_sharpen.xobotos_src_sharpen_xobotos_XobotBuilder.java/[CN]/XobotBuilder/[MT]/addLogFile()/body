@@ -1,0 +1,11 @@
+{
+  ConfigFile.LogFileEntry logFile=_configFile.getLogFile();
+  if (logFile == null)   return;
+  try {
+    File file=getProjectFile(logFile.path);
+    _logger.setLogFile(file,logFile.append);
+  }
+ catch (  Exception e) {
+    Sharpen.Log(e,"Cannot create log file '%s'",logFile.path);
+  }
+}

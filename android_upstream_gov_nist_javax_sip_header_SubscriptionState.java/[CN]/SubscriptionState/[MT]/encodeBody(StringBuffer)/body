@@ -1,0 +1,11 @@
+{
+  if (state != null)   buffer.append(state);
+  if (reasonCode != null)   buffer.append(";reason=").append(reasonCode);
+  if (expires != -1)   buffer.append(";expires=").append(expires);
+  if (retryAfter != -1)   buffer.append(";retry-after=").append(retryAfter);
+  if (!parameters.isEmpty()) {
+    buffer.append(SEMICOLON);
+    parameters.encode(buffer);
+  }
+  return buffer;
+}

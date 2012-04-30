@@ -1,0 +1,3 @@
+SIPResponse sipResponse
+long receptionTime
+String status

@@ -1,0 +1,35 @@
+{
+  SIPRequest sipRequest=sipTransaction.getOriginalRequest();
+  if (sipTransaction instanceof SIPClientTransaction) {
+    if (!this.unlimitedClientTransactionTableSize) {
+      if (this.activeClientTransactionCount.get() > clientTransactionTableHiwaterMark) {
+        try {
+synchronized (this.clientTransactionTable) {
+            this.clientTransactionTable.wait();
+            this.activeClientTransactionCount.incrementAndGet();
+          }
+        }
+ catch (        Exception ex) {
+          if (stackLogger.isLoggingEnabled()) {
+            stackLogger.logError("Exception occured while waiting for room",ex);
+          }
+        }
+      }
+    }
+ else {
+      this.activeClientTransactionCount.incrementAndGet();
+    }
+    String key=sipRequest.getTransactionId();
+    clientTransactionTable.put(key,(SIPClientTransaction)sipTransaction);
+    if (stackLogger.isLoggingEnabled()) {
+      stackLogger.logDebug(" putTransactionHash : " + " key = " + key);
+    }
+  }
+ else {
+    String key=sipRequest.getTransactionId();
+    if (stackLogger.isLoggingEnabled()) {
+      stackLogger.logDebug(" putTransactionHash : " + " key = " + key);
+    }
+    serverTransactionTable.put(key,(SIPServerTransaction)sipTransaction);
+  }
+}

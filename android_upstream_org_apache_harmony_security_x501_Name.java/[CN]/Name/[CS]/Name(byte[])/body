@@ -1,0 +1,8 @@
+{
+  DerInputStream in=new DerInputStream(encoding);
+  if (in.getEndOffset() != encoding.length) {
+    throw new IOException("Wrong content length");
+  }
+  ASN1.decode(in);
+  this.rdn=(List<List<AttributeTypeAndValue>>)in.content;
+}

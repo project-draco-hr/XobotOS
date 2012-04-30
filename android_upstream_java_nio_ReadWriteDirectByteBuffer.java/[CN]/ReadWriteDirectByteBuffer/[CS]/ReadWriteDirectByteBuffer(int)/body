@@ -1,0 +1,3 @@
+{
+  super(MemoryBlock.allocate(capacity),capacity,0);
+}

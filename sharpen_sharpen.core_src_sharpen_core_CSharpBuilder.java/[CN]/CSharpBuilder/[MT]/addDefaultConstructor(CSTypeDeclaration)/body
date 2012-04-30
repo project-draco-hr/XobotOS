@@ -1,0 +1,5 @@
+{
+  final CSConstructor ctor=CSharpCode.newPublicConstructor();
+  type.addMember(ctor);
+  return ctor;
+}

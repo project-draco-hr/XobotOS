@@ -1,0 +1,4 @@
+{
+  if (hlist == null || hlist.isEmpty())   return null;
+ else   return hlist.get(0);
+}

@@ -1,0 +1,5 @@
+{
+  mIMM=(InputMethodManager)targetView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+  mTargetView=targetView;
+  mDummyMode=!fullEditor;
+}

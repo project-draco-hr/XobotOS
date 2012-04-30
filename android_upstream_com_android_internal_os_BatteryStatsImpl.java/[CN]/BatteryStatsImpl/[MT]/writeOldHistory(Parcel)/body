@@ -1,0 +1,11 @@
+{
+  if (!USE_OLD_HISTORY) {
+    return;
+  }
+  HistoryItem rec=mHistory;
+  while (rec != null) {
+    if (rec.time >= 0)     rec.writeToParcel(out,0);
+    rec=rec.next;
+  }
+  out.writeLong(-1);
+}

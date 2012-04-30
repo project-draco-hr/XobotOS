@@ -1,0 +1,4 @@
+ConfigFile configFile
+IProject project
+Map<ICompilationUnit,Boolean> sources
+IProgressMonitor monitor

@@ -1,0 +1,14 @@
+{
+  if (_members.size() > 0)   throw new IllegalStateException();
+  _members.add(new OwnerMember());
+  buildMembers();
+  buildStruct();
+  buildDefaultCtor();
+  buildNativeHelpers(UNWRAP,DEEP_UNWRAP,MARSHAL_OUT,WRAP,DEEP_WRAP,WRAP_CONST,DESTRUCTOR,FREE_MEMBERS,C_DESTRUCTOR);
+  buildManagedHelpers(NATIVE_SIZE,MANAGED_MARSHAL_IN,MANAGED_MARSHAL_OUT,MANAGED_TO_NATIVE,NATIVE_TO_MANAGED,FREE_NATIVE_PTR,FREE_MANAGED_PTR,DEEP_FREE_MANAGED_PTR);
+  if (isBlittable()) {
+    buildManagedHelpers(PINNED_HANDLE,GET_PINNED_PTR);
+  }
+  addMembers();
+  return true;
+}

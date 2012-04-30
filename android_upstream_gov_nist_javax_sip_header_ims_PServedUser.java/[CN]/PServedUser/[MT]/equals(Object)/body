@@ -1,0 +1,7 @@
+{
+  if (other instanceof PServedUser) {
+    final PServedUserHeader psu=(PServedUserHeader)other;
+    return this.getAddress().equals(((PServedUser)other).getAddress());
+  }
+  return false;
+}

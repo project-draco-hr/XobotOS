@@ -1,0 +1,3 @@
+{
+  parseURI(spec,false);
+}

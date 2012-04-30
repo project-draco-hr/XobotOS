@@ -1,0 +1,11 @@
+{
+  if (!parameterType.isParameterizedType()) {
+    return false;
+  }
+  if (!parameterType.getTypeDeclaration().equals(_classType)) {
+    return false;
+  }
+  final ITypeBinding arg=parameterType.getTypeArguments()[0];
+  final IMethodBinding decl=getTypeParameterDeclaringMethod(arg);
+  return method.equals(decl);
+}

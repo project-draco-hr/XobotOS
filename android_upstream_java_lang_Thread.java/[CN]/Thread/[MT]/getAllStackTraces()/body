@@ -1,0 +1,10 @@
+{
+  Map<Thread,StackTraceElement[]> map=new HashMap<Thread,StackTraceElement[]>();
+  int count=ThreadGroup.mSystem.activeCount();
+  Thread[] threads=new Thread[count + count / 2];
+  count=ThreadGroup.mSystem.enumerate(threads);
+  for (int i=0; i < count; i++) {
+    map.put(threads[i],threads[i].getStackTrace());
+  }
+  return map;
+}

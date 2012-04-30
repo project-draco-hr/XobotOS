@@ -1,0 +1,7 @@
+{
+  while (type.isNested()) {
+    pos=fullName.lastIndexOf(".",pos - 1);
+    type=type.getDeclaringClass();
+  }
+  return pos;
+}

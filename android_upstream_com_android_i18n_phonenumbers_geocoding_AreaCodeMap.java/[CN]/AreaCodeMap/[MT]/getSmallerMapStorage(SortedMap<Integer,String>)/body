@@ -1,0 +1,13 @@
+{
+  try {
+    AreaCodeMapStorageStrategy flyweightMapStorage=createFlyweightMapStorage();
+    int sizeOfFlyweightMapStorage=getSizeOfAreaCodeMapStorage(flyweightMapStorage,areaCodeMap);
+    AreaCodeMapStorageStrategy defaultMapStorage=createDefaultMapStorage();
+    int sizeOfDefaultMapStorage=getSizeOfAreaCodeMapStorage(defaultMapStorage,areaCodeMap);
+    return sizeOfFlyweightMapStorage < sizeOfDefaultMapStorage ? flyweightMapStorage : defaultMapStorage;
+  }
+ catch (  IOException e) {
+    LOGGER.severe(e.getMessage());
+    return createFlyweightMapStorage();
+  }
+}

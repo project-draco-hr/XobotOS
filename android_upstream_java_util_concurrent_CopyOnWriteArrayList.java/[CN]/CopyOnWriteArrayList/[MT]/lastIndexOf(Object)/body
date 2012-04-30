@@ -1,0 +1,4 @@
+{
+  Object[] snapshot=elements;
+  return lastIndexOf(object,snapshot,0,snapshot.length);
+}

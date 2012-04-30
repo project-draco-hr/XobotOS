@@ -1,0 +1,19 @@
+{
+  Iterator<NumberFormat> it=possibleFormats.iterator();
+  while (it.hasNext()) {
+    NumberFormat numberFormat=it.next();
+    String pattern=numberFormat.getPattern();
+    if (currentFormattingPattern.equals(pattern)) {
+      return false;
+    }
+    if (createFormattingTemplate(numberFormat)) {
+      currentFormattingPattern=pattern;
+      return true;
+    }
+ else {
+      it.remove();
+    }
+  }
+  ableToFormat=false;
+  return false;
+}

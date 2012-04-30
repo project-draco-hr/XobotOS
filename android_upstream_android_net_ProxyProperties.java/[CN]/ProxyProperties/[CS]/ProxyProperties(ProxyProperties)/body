@@ -1,0 +1,8 @@
+{
+  if (source != null) {
+    mHost=source.getHost();
+    mPort=source.getPort();
+    mExclusionList=source.getExclusionList();
+    mParsedExclusionList=source.mParsedExclusionList;
+  }
+}

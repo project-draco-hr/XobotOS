@@ -1,0 +1,4 @@
+def clean_dep_files():
+    for file in (glob.glob('relocate/src/dep_*.txt') + glob.glob('relocate/src/deps_all_done_*.txt')):
+        if os.path.exists(file):
+            os.remove(file)

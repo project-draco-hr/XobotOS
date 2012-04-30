@@ -1,0 +1,4 @@
+{
+  final String scrubSubscriberId=scrubSubscriberId(mSubscriberId);
+  return "NetworkTemplate: matchRule=" + getMatchRuleName(mMatchRule) + ", subscriberId="+ scrubSubscriberId;
+}

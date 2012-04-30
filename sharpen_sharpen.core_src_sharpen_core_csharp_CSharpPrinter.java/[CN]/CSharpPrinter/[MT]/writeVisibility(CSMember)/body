@@ -1,0 +1,8 @@
+{
+  writeIndentation();
+  if (member.isNewModifier())   write("new ");
+  if (isExplicitMember(member))   return;
+  CSVisibility visibility=member.visibility();
+  write(visibility.toString().toLowerCase());
+  write(" ");
+}

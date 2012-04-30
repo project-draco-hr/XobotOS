@@ -1,0 +1,12 @@
+{
+  StringBuilder res=new StringBuilder();
+  res.append("\n---- InfoAccessSyntax:");
+  if (accessDescriptions != null) {
+    for (    Object accessDescription : accessDescriptions) {
+      res.append('\n');
+      res.append(accessDescription);
+    }
+  }
+  res.append("\n---- InfoAccessSyntax END\n");
+  return res.toString();
+}

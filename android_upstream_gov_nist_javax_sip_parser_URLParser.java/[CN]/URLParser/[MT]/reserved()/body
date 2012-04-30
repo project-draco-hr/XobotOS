@@ -1,0 +1,8 @@
+{
+  char next=lexer.lookAhead(0);
+  if (isReserved(next)) {
+    lexer.consume(1);
+    return new StringBuffer().append(next).toString();
+  }
+ else   throw createParseException("reserved");
+}

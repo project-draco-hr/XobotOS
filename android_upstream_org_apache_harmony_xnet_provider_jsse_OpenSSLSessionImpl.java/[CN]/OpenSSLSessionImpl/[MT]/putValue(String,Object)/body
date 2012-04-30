@@ -1,0 +1,12 @@
+{
+  if (name == null || value == null) {
+    throw new IllegalArgumentException("name == null || value == null");
+  }
+  Object old=values.put(name,value);
+  if (value instanceof SSLSessionBindingListener) {
+    ((SSLSessionBindingListener)value).valueBound(new SSLSessionBindingEvent(this,name));
+  }
+  if (old instanceof SSLSessionBindingListener) {
+    ((SSLSessionBindingListener)old).valueUnbound(new SSLSessionBindingEvent(this,name));
+  }
+}

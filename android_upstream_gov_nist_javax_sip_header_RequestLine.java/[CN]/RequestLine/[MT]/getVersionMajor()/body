@@ -1,0 +1,14 @@
+{
+  if (sipVersion == null)   return null;
+  String major=null;
+  boolean slash=false;
+  for (int i=0; i < sipVersion.length(); i++) {
+    if (sipVersion.charAt(i) == '.')     break;
+    if (slash) {
+      if (major == null)       major="" + sipVersion.charAt(i);
+ else       major+=sipVersion.charAt(i);
+    }
+    if (sipVersion.charAt(i) == '/')     slash=true;
+  }
+  return major;
+}

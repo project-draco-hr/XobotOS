@@ -1,0 +1,12 @@
+{
+  NativePluralRules rule=getPluralRule();
+  CharSequence res=mAssets.getResourceBagText(id,attrForQuantityCode(rule.quantityForInt(quantity)));
+  if (res != null) {
+    return res;
+  }
+  res=mAssets.getResourceBagText(id,ID_OTHER);
+  if (res != null) {
+    return res;
+  }
+  throw new NotFoundException("Plural resource ID #0x" + Integer.toHexString(id) + " quantity="+ quantity+ " item="+ stringForQuantityCode(rule.quantityForInt(quantity)));
+}

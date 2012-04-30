@@ -1,0 +1,5 @@
+{
+  mUpdateTextWrap=updateTextWrap;
+  mInZoomOverviewBeforeSizeChange=inZoomOverview;
+  mInPortraitMode=inPortraitMode;
+}

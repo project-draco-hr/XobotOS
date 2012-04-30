@@ -1,0 +1,8 @@
+{
+  if (binding == null)   return null;
+  VariableBinding variable=my(BindingManager.class).resolveBinding(binding);
+  if (variable == null)   return null;
+  if (variable.getNativeHandle() != null)   return new CSNullLiteralExpression();
+  if (variable.isPointer())   return new CSReferenceExpression("System.IntPtr.Zero");
+  return null;
+}

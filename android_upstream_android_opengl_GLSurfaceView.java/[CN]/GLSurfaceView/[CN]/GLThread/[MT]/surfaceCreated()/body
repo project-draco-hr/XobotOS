@@ -1,0 +1,17 @@
+{
+synchronized (sGLThreadManager) {
+    if (LOG_THREADS) {
+      Log.i("GLThread","surfaceCreated tid=" + getId());
+    }
+    mHasSurface=true;
+    sGLThreadManager.notifyAll();
+    while ((mWaitingForSurface) && (!mExited)) {
+      try {
+        sGLThreadManager.wait();
+      }
+ catch (      InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+    }
+  }
+}

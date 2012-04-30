@@ -1,0 +1,6 @@
+{
+  if (null == _arguments) {
+    _arguments=new ArrayList<CSTypeReferenceExpression>();
+  }
+  _arguments.add(typeArgument);
+}

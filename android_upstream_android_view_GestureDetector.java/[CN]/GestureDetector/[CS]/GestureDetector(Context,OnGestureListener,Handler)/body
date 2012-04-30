@@ -1,0 +1,3 @@
+{
+  this(context,listener,handler,context != null && context.getApplicationInfo().targetSdkVersion >= Build.VERSION_CODES.FROYO);
+}

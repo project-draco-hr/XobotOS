@@ -1,0 +1,16 @@
+{
+  if (this.contentLengthHeader.getContentLength() == 0) {
+    return null;
+  }
+  MultipartMimeContentImpl retval=new MultipartMimeContentImpl(this.getContentTypeHeader());
+  byte[] rawContent=getRawContent();
+  try {
+    String body=new String(rawContent,getCharset());
+    retval.createContentList(body);
+    return retval;
+  }
+ catch (  UnsupportedEncodingException e) {
+    InternalErrorHandler.handleException(e);
+    return null;
+  }
+}

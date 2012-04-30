@@ -1,0 +1,66 @@
+{
+  if (format == null || loader == null) {
+    throw new NullPointerException();
+  }
+  final String bundleName=toBundleName(baseName,locale);
+  final ClassLoader clsloader=loader;
+  ResourceBundle ret;
+  if (format.equals(JAVACLASS)) {
+    Class<?> cls=null;
+    try {
+      cls=clsloader.loadClass(bundleName);
+    }
+ catch (    Exception e) {
+    }
+catch (    NoClassDefFoundError e) {
+    }
+    if (cls == null) {
+      return null;
+    }
+    try {
+      ResourceBundle bundle=(ResourceBundle)cls.newInstance();
+      bundle.setLocale(locale);
+      return bundle;
+    }
+ catch (    NullPointerException e) {
+      return null;
+    }
+  }
+  if (format.equals(JAVAPROPERTIES)) {
+    InputStream streams=null;
+    final String resourceName=toResourceName(bundleName,"properties");
+    if (reload) {
+      URL url=null;
+      try {
+        url=loader.getResource(resourceName);
+      }
+ catch (      NullPointerException e) {
+      }
+      if (url != null) {
+        URLConnection con=url.openConnection();
+        con.setUseCaches(false);
+        streams=con.getInputStream();
+      }
+    }
+ else {
+      try {
+        streams=clsloader.getResourceAsStream(resourceName);
+      }
+ catch (      NullPointerException e) {
+      }
+    }
+    if (streams != null) {
+      try {
+        ret=new PropertyResourceBundle(new InputStreamReader(streams));
+        ret.setLocale(locale);
+        streams.close();
+      }
+ catch (      IOException e) {
+        return null;
+      }
+      return ret;
+    }
+    return null;
+  }
+  throw new IllegalArgumentException();
+}

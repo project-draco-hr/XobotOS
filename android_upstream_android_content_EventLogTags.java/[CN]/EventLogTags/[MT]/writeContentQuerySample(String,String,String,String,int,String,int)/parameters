@@ -1,0 +1,7 @@
+String uri
+String projection
+String selection
+String sortorder
+int time
+String blockingPackage
+int samplePercent

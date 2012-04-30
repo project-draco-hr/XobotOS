@@ -1,0 +1,9 @@
+{
+  ArrayList<V> list=this.map.get(key);
+  if (list == null) {
+    return null;
+  }
+ else {
+    return list.remove(item);
+  }
+}

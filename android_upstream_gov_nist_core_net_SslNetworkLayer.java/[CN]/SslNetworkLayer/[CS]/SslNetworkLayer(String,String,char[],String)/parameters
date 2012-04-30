@@ -1,0 +1,4 @@
+String trustStoreFile
+String keyStoreFile
+char[] keyStorePassword
+String keyStoreType

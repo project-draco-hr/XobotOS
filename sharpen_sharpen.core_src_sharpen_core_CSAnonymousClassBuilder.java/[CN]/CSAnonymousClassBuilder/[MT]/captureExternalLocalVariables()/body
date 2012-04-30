@@ -1,0 +1,32 @@
+{
+  _node.accept(new ASTVisitor(){
+    IMethodBinding _currentMethodBinding;
+    @Override public boolean visit(    MethodDeclaration node){
+      IMethodBinding saved=_currentMethodBinding;
+      _currentMethodBinding=node.resolveBinding();
+      node.getBody().accept(this);
+      _currentMethodBinding=saved;
+      return false;
+    }
+    @Override public boolean visit(    AnonymousClassDeclaration node){
+      return node == _node;
+    }
+    @Override public boolean visit(    SimpleName node){
+      IBinding binding=node.resolveBinding();
+      if (isExternalLocal(binding)) {
+        _capturedVariables.add((IVariableBinding)binding);
+      }
+      return false;
+    }
+    boolean isExternalLocal(    IBinding binding){
+      if (binding instanceof IVariableBinding) {
+        IVariableBinding variable=(IVariableBinding)binding;
+        if (!variable.isField()) {
+          return variable.getDeclaringMethod() != _currentMethodBinding;
+        }
+      }
+      return false;
+    }
+  }
+);
+}

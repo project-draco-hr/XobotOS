@@ -1,0 +1,9 @@
+{
+  IProject[] referencedProjects=referent.getReferencedProjects();
+  if (contains(referencedProjects,reference)) {
+    return;
+  }
+  IProjectDescription description=referent.getDescription();
+  description.setReferencedProjects(append(referencedProjects,reference));
+  referent.setDescription(description,monitor);
+}

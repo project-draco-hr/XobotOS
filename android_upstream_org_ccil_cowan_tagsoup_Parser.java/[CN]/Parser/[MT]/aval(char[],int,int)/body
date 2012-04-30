@@ -1,0 +1,7 @@
+{
+  if (theNewElement == null || theAttributeName == null)   return;
+  String value=new String(buff,offset,length);
+  value=expandEntities(value);
+  theNewElement.setAttribute(theAttributeName,null,value);
+  theAttributeName=null;
+}

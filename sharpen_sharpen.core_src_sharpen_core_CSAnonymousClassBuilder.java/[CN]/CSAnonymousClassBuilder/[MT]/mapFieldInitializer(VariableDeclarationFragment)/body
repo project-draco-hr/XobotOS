@@ -1,0 +1,7 @@
+{
+  if (Modifier.isStatic(fragment.resolveBinding().getModifiers()))   return super.mapFieldInitializer(fragment);
+  if (fragment.getInitializer() != null) {
+    _fieldInitializers.add(fragment);
+  }
+  return null;
+}

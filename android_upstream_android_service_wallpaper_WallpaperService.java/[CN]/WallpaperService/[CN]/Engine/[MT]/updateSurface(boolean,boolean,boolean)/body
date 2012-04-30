@@ -1,0 +1,129 @@
+{
+  if (mDestroyed) {
+    Log.w(TAG,"Ignoring updateSurface: destroyed");
+  }
+  int myWidth=mSurfaceHolder.getRequestedWidth();
+  if (myWidth <= 0)   myWidth=ViewGroup.LayoutParams.MATCH_PARENT;
+  int myHeight=mSurfaceHolder.getRequestedHeight();
+  if (myHeight <= 0)   myHeight=ViewGroup.LayoutParams.MATCH_PARENT;
+  final boolean creating=!mCreated;
+  final boolean surfaceCreating=!mSurfaceCreated;
+  final boolean formatChanged=mFormat != mSurfaceHolder.getRequestedFormat();
+  boolean sizeChanged=mWidth != myWidth || mHeight != myHeight;
+  final boolean typeChanged=mType != mSurfaceHolder.getRequestedType();
+  final boolean flagsChanged=mCurWindowFlags != mWindowFlags;
+  if (forceRelayout || creating || surfaceCreating|| formatChanged|| sizeChanged|| typeChanged|| flagsChanged|| redrawNeeded) {
+    if (DEBUG)     Log.v(TAG,"Changes: creating=" + creating + " format="+ formatChanged+ " size="+ sizeChanged);
+    try {
+      mWidth=myWidth;
+      mHeight=myHeight;
+      mFormat=mSurfaceHolder.getRequestedFormat();
+      mType=mSurfaceHolder.getRequestedType();
+      mLayout.x=0;
+      mLayout.y=0;
+      mLayout.width=myWidth;
+      mLayout.height=myHeight;
+      mLayout.format=mFormat;
+      mCurWindowFlags=mWindowFlags;
+      mLayout.flags=mWindowFlags | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+      mLayout.memoryType=mType;
+      mLayout.token=mWindowToken;
+      if (!mCreated) {
+        mLayout.type=mIWallpaperEngine.mWindowType;
+        mLayout.gravity=Gravity.LEFT | Gravity.TOP;
+        mLayout.setTitle(WallpaperService.this.getClass().getName());
+        mLayout.windowAnimations=com.android.internal.R.style.Animation_Wallpaper;
+        mInputChannel=new InputChannel();
+        if (mSession.add(mWindow,mWindow.mSeq,mLayout,View.VISIBLE,mContentInsets,mInputChannel) < 0) {
+          Log.w(TAG,"Failed to add window while updating wallpaper surface.");
+          return;
+        }
+        mCreated=true;
+        InputQueue.registerInputChannel(mInputChannel,mInputHandler,Looper.myQueue());
+      }
+      mSurfaceHolder.mSurfaceLock.lock();
+      mDrawingAllowed=true;
+      final int relayoutResult=mSession.relayout(mWindow,mWindow.mSeq,mLayout,mWidth,mHeight,View.VISIBLE,false,mWinFrame,mContentInsets,mVisibleInsets,mConfiguration,mSurfaceHolder.mSurface);
+      if (DEBUG)       Log.v(TAG,"New surface: " + mSurfaceHolder.mSurface + ", frame="+ mWinFrame);
+      int w=mWinFrame.width();
+      if (mCurWidth != w) {
+        sizeChanged=true;
+        mCurWidth=w;
+      }
+      int h=mWinFrame.height();
+      if (mCurHeight != h) {
+        sizeChanged=true;
+        mCurHeight=h;
+      }
+      mSurfaceHolder.setSurfaceFrameSize(w,h);
+      mSurfaceHolder.mSurfaceLock.unlock();
+      if (!mSurfaceHolder.mSurface.isValid()) {
+        reportSurfaceDestroyed();
+        if (DEBUG)         Log.v(TAG,"Layout: Surface destroyed");
+        return;
+      }
+      boolean didSurface=false;
+      try {
+        mSurfaceHolder.ungetCallbacks();
+        if (surfaceCreating) {
+          mIsCreating=true;
+          didSurface=true;
+          if (DEBUG)           Log.v(TAG,"onSurfaceCreated(" + mSurfaceHolder + "): "+ this);
+          onSurfaceCreated(mSurfaceHolder);
+          SurfaceHolder.Callback callbacks[]=mSurfaceHolder.getCallbacks();
+          if (callbacks != null) {
+            for (            SurfaceHolder.Callback c : callbacks) {
+              c.surfaceCreated(mSurfaceHolder);
+            }
+          }
+        }
+        redrawNeeded|=creating || (relayoutResult & WindowManagerImpl.RELAYOUT_FIRST_TIME) != 0;
+        if (forceReport || creating || surfaceCreating|| formatChanged|| sizeChanged) {
+          if (DEBUG) {
+            RuntimeException e=new RuntimeException();
+            e.fillInStackTrace();
+            Log.w(TAG,"forceReport=" + forceReport + " creating="+ creating+ " formatChanged="+ formatChanged+ " sizeChanged="+ sizeChanged,e);
+          }
+          if (DEBUG)           Log.v(TAG,"onSurfaceChanged(" + mSurfaceHolder + ", "+ mFormat+ ", "+ mCurWidth+ ", "+ mCurHeight+ "): "+ this);
+          didSurface=true;
+          onSurfaceChanged(mSurfaceHolder,mFormat,mCurWidth,mCurHeight);
+          SurfaceHolder.Callback callbacks[]=mSurfaceHolder.getCallbacks();
+          if (callbacks != null) {
+            for (            SurfaceHolder.Callback c : callbacks) {
+              c.surfaceChanged(mSurfaceHolder,mFormat,mCurWidth,mCurHeight);
+            }
+          }
+        }
+        if (redrawNeeded) {
+          onSurfaceRedrawNeeded(mSurfaceHolder);
+          SurfaceHolder.Callback callbacks[]=mSurfaceHolder.getCallbacks();
+          if (callbacks != null) {
+            for (            SurfaceHolder.Callback c : callbacks) {
+              if (c instanceof SurfaceHolder.Callback2) {
+                ((SurfaceHolder.Callback2)c).surfaceRedrawNeeded(mSurfaceHolder);
+              }
+            }
+          }
+        }
+        if (didSurface && !mReportedVisible) {
+          if (mIsCreating) {
+            if (DEBUG)             Log.v(TAG,"onVisibilityChanged(true) at surface: " + this);
+            onVisibilityChanged(true);
+          }
+          if (DEBUG)           Log.v(TAG,"onVisibilityChanged(false) at surface: " + this);
+          onVisibilityChanged(false);
+        }
+      }
+  finally {
+        mIsCreating=false;
+        mSurfaceCreated=true;
+        if (redrawNeeded) {
+          mSession.finishDrawing(mWindow);
+        }
+      }
+    }
+ catch (    RemoteException ex) {
+    }
+    if (DEBUG)     Log.v(TAG,"Layout: x=" + mLayout.x + " y="+ mLayout.y+ " w="+ mLayout.width+ " h="+ mLayout.height);
+  }
+}

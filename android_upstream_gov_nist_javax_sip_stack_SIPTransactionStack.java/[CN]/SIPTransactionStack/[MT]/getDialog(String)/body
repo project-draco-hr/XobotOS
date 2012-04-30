@@ -1,0 +1,7 @@
+{
+  SIPDialog sipDialog=(SIPDialog)dialogTable.get(dialogId);
+  if (stackLogger.isLoggingEnabled()) {
+    stackLogger.logDebug("getDialog(" + dialogId + ") : returning "+ sipDialog);
+  }
+  return sipDialog;
+}

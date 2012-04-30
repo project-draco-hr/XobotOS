@@ -1,0 +1,6 @@
+{
+synchronized (AudioSystem.class) {
+    mErrorCallback=cb;
+  }
+  isMicrophoneMuted();
+}

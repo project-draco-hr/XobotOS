@@ -1,0 +1,5 @@
+{
+  TagElement tag=javadocTagFor(packageDeclaration,SharpenAnnotations.SHARPEN_IF);
+  if (null == tag)   return;
+  csNode.addEnclosingIfDef(JavadocUtility.singleTextFragmentFrom(tag));
+}

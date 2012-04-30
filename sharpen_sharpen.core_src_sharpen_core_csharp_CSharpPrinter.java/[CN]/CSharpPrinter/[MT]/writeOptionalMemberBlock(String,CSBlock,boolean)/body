@@ -1,0 +1,5 @@
+{
+  if (null != block) {
+    writeMemberBlock(name,block,isAbstract);
+  }
+}

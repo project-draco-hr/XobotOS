@@ -1,0 +1,13 @@
+{
+  if (mAdapter != null) {
+    post(new Runnable(){
+      public void run(){
+        final ListAdapter adapter=mAdapter;
+        if (adapter != null) {
+          updateDropDownForFilter(adapter.getCount());
+        }
+      }
+    }
+);
+  }
+}

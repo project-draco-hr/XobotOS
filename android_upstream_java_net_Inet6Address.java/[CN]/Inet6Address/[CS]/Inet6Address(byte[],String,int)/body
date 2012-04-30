@@ -1,0 +1,5 @@
+{
+  super(AF_INET6,ipaddress,hostName);
+  this.scope_id=scope_id;
+  this.scope_id_set=(scope_id != 0);
+}

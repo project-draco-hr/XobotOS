@@ -1,0 +1,4 @@
+{
+  SimpleProject targetProject=new SimpleProject(getTargetProjectName(project),monitor);
+  return targetProject.getProject();
+}

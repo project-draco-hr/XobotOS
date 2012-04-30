@@ -1,0 +1,15 @@
+{
+  checkOpen();
+  if (!isBound()) {
+    throw new SocketException("Socket is not bound");
+  }
+  Socket aSocket=new Socket();
+  try {
+    implAccept(aSocket);
+  }
+ catch (  IOException e) {
+    aSocket.close();
+    throw e;
+  }
+  return aSocket;
+}

@@ -1,0 +1,12 @@
+{
+  consumeContinueLabel(new Function<CSBlock>(){
+    public CSBlock apply(){
+      CSDoStatement stmt=new CSDoStatement(node.getStartPosition(),mapExpression(node.getExpression()));
+      visitBlock(stmt.body(),node.getBody());
+      addStatement(stmt);
+      return stmt.body();
+    }
+  }
+);
+  return false;
+}

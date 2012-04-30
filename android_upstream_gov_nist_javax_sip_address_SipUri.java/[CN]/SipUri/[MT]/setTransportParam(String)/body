@@ -1,0 +1,8 @@
+{
+  if (transport == null)   throw new NullPointerException("null arg");
+  if (transport.compareToIgnoreCase("UDP") == 0 || transport.compareToIgnoreCase("TLS") == 0 || transport.compareToIgnoreCase("TCP") == 0 || transport.compareToIgnoreCase("SCTP") == 0) {
+    NameValue nv=new NameValue(TRANSPORT,transport.toLowerCase());
+    uriParms.set(nv);
+  }
+ else   throw new ParseException("bad transport " + transport,0);
+}

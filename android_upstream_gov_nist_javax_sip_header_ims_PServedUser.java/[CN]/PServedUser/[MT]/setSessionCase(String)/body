@@ -1,0 +1,23 @@
+{
+  if ((sessionCase != null)) {
+    if ((sessionCase.equals("orig")) || (sessionCase.equals("term"))) {
+      try {
+        setParameter(ParameterNamesIms.SESSION_CASE,sessionCase);
+      }
+ catch (      ParseException e) {
+        e.printStackTrace();
+      }
+    }
+ else {
+      try {
+        throw new InvalidArgumentException("Value can be either orig or term");
+      }
+ catch (      InvalidArgumentException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+ else {
+    throw new NullPointerException("sess-case Parameter value is null");
+  }
+}

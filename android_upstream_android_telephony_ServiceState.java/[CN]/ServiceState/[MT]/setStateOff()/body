@@ -1,0 +1,3 @@
+{
+  setNullState(STATE_POWER_OFF);
+}

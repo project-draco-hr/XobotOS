@@ -1,0 +1,12 @@
+{
+  if (extensions == null) {
+    return null;
+  }
+  if (oidMap == null) {
+    oidMap=new HashMap<String,Extension>();
+    for (    Extension extension : extensions) {
+      oidMap.put(extension.getExtnID(),extension);
+    }
+  }
+  return oidMap.get(oid);
+}

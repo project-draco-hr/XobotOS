@@ -1,0 +1,8 @@
+{
+  Method dtor=new Method(_destructorName,new TypeReference("void"),Visibility.PUBLIC,Method.Flags.EXPORT);
+  NativeVariable ptr=NativeVariable.createParameter(dtor,getNativeClass(),"ptr",NativeVariable.Flags.BYREF);
+  final Expression unrefExpr=new ReferenceExpression("SkSafeUnref");
+  if (_template.hasRefCount())   dtor.getBody().addStatement(new MethodInvocation(unrefExpr,ptr.getReference()));
+ else   dtor.getBody().addStatement(new DestructorInvocation(ptr.getReference()));
+  return dtor;
+}

@@ -1,0 +1,4 @@
+{
+  validateIsInt8();
+  copy1DRangeFromUnchecked(off,count,d);
+}

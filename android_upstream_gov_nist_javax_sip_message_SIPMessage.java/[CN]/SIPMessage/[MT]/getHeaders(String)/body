@@ -1,0 +1,11 @@
+{
+  if (headerName == null)   throw new NullPointerException("null headerName");
+  SIPHeader sipHeader=(SIPHeader)nameTable.get(SIPHeaderNamesCache.toLowerCase(headerName));
+  if (sipHeader == null)   return new LinkedList<SIPHeader>().listIterator();
+  if (sipHeader instanceof SIPHeaderList) {
+    return ((SIPHeaderList<SIPHeader>)sipHeader).listIterator();
+  }
+ else {
+    return new HeaderIterator(this,sipHeader);
+  }
+}

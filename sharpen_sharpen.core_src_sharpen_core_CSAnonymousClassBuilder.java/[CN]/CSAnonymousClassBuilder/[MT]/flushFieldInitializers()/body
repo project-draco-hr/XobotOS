@@ -1,0 +1,5 @@
+{
+  for (  VariableDeclarationFragment field : _fieldInitializers) {
+    addToConstructor(createFieldAssignment(fieldName(field),mapExpression(field.getInitializer())));
+  }
+}

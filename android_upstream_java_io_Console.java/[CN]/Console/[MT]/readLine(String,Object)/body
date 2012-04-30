@@ -1,0 +1,6 @@
+{
+synchronized (CONSOLE_LOCK) {
+    format(format,args);
+    return readLine();
+  }
+}

@@ -1,0 +1,6 @@
+{
+  headerName(TokenTypes.PROXY_AUTHENTICATE);
+  ProxyAuthenticate proxyAuthenticate=new ProxyAuthenticate();
+  super.parse(proxyAuthenticate);
+  return proxyAuthenticate;
+}

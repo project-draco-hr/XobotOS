@@ -1,0 +1,6 @@
+{
+  if (null == project) {
+    throw new IllegalArgumentException("project");
+  }
+  _targetProject=project;
+}

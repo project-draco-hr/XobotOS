@@ -1,0 +1,7 @@
+def generate_gl_entries(output, lines, i):
+    for line in lines:
+        if (line.find('API_ENTRY(') >= 0):
+            line = line[(line.find('(') + 1):line.find(')')]
+            output.write(('        %s = %d;\n' % (line, i)))
+            i += 1
+    return i

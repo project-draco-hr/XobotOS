@@ -1,0 +1,3 @@
+{
+  return identifier.startsWith("@") ? identifier.substring(1) : identifier;
+}

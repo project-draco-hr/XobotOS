@@ -1,0 +1,20 @@
+{
+  this(sipProvider);
+  this.sipStack=(SIPTransactionStack)sipProvider.getSipStack();
+  this.setLastResponse(null,sipResponse);
+  this.localSequenceNumber=sipResponse.getCSeq().getSeqNumber();
+  this.originalLocalSequenceNumber=localSequenceNumber;
+  this.myTag=sipResponse.getFrom().getTag();
+  this.hisTag=sipResponse.getTo().getTag();
+  this.localParty=sipResponse.getFrom().getAddress();
+  this.remoteParty=sipResponse.getTo().getAddress();
+  this.method=sipResponse.getCSeq().getMethod();
+  this.callIdHeader=sipResponse.getCallId();
+  this.serverTransactionFlag=false;
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("Creating a dialog : " + this);
+    sipStack.getStackLogger().logStackTrace();
+  }
+  this.isBackToBackUserAgent=sipStack.isBackToBackUserAgent;
+  addEventListener(sipStack);
+}

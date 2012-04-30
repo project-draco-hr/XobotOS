@@ -1,0 +1,17 @@
+{
+  if (subjectAltNames == null) {
+    return null;
+  }
+  ArrayList<List<?>> result=new ArrayList<List<?>>();
+  for (int tag=0; tag < 9; tag++) {
+    if (subjectAltNames[tag] != null) {
+      for (int name=0; name < subjectAltNames[tag].size(); name++) {
+        List<Object> list=new ArrayList<Object>(2);
+        list.add(tag);
+        list.add(subjectAltNames[tag].get(name));
+        result.add(list);
+      }
+    }
+  }
+  return result;
+}

@@ -1,0 +1,9 @@
+{
+  Object[] a=array;
+  if (index >= size) {
+    throwIndexOutOfBoundsException(index,size);
+  }
+  @SuppressWarnings("unchecked") E result=(E)a[index];
+  a[index]=object;
+  return result;
+}

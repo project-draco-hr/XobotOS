@@ -1,0 +1,4 @@
+{
+  if (portC < 0)   throw new InvalidArgumentException("JAIN-SIP " + "Exception, SecurityClient, setPortClient(), the port-c parameter is <0");
+  setParameter(ParameterNamesIms.PORT_C,portC);
+}

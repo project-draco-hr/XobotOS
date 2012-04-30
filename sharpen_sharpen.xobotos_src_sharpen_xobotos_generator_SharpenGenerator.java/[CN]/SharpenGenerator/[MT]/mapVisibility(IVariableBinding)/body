@@ -1,0 +1,5 @@
+{
+  final VariableBinding variableBinding=my(BindingManager.class).resolveBinding(binding);
+  if (variableBinding == null)   return null;
+  return mapVisibility(variableBinding);
+}

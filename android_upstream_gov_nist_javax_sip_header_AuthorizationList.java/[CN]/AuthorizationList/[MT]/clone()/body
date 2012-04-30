@@ -1,0 +1,5 @@
+{
+  AuthorizationList retval=new AuthorizationList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

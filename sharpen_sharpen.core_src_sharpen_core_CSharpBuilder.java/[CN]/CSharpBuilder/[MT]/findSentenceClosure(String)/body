@@ -1,0 +1,4 @@
+{
+  Matcher matcher=SUMMARY_CLOSURE_PATTERN.matcher(text);
+  return matcher.find() ? matcher.start() : -1;
+}

@@ -1,0 +1,8 @@
+{
+  write("<!--");
+  for (int i=start; i < start + length; i++) {
+    write(ch[i]);
+    if (ch[i] == '-' && i + 1 <= start + length && ch[i + 1] == '-')     write(' ');
+  }
+  write("-->");
+}

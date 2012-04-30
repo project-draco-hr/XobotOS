@@ -1,0 +1,4 @@
+{
+  reasonPhrase=null;
+  sipVersion=SIPConstants.SIP_VERSION_STRING;
+}

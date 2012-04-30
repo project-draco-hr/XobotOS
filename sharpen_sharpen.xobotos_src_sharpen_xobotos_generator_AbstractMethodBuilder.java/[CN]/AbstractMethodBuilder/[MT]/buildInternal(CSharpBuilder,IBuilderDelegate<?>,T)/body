@@ -1,0 +1,25 @@
+{
+  IMethodBuilderDelegate delegate=(IMethodBuilderDelegate)dlg;
+  if (!isConstructor() && (getOutputMode() == OutputMode.ABSTRACT_STUB)) {
+    ((CSMethod)method).modifier(CSMethodModifier.Abstract);
+    method.addAttribute(new CSAttribute("Sharpen.Stub"));
+    method.setStub();
+    return true;
+  }
+  if (Modifier.isNative(getASTNode().getModifiers())) {
+    stubBlock(method.body());
+    method.setStub();
+    if (getOutputMode() == OutputMode.STUB)     method.addAttribute(new CSAttribute("Sharpen.Stub"));
+ else     method.addAttribute(new CSAttribute("Sharpen.NativeStub"));
+    return true;
+  }
+  if (getOutputMode() == OutputMode.SHARPEN) {
+    delegate.mapBody(method);
+    return true;
+  }
+  if (isConstructor() && !getOutputType().removeChainedConstructorInvocations())   mapChainedConstructors(builder,(CSConstructor)method);
+  stubBlock(method.body());
+  method.setStub();
+  method.addAttribute(new CSAttribute("Sharpen.Stub"));
+  return true;
+}

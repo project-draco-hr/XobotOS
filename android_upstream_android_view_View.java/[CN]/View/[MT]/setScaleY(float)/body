@@ -1,0 +1,12 @@
+{
+  ensureTransformationInfo();
+  final TransformationInfo info=mTransformationInfo;
+  if (info.mScaleY != scaleY) {
+    invalidateParentCaches();
+    invalidate(false);
+    info.mScaleY=scaleY;
+    info.mMatrixDirty=true;
+    mPrivateFlags|=DRAWN;
+    invalidate(false);
+  }
+}

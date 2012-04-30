@@ -1,0 +1,4 @@
+{
+  if (cSeqNumber <= 0 || cSeqNumber > ((long)1) << 32 - 1)   throw new InvalidArgumentException("Bad CSeq # " + cSeqNumber);
+  this.cSeqNumber=cSeqNumber;
+}

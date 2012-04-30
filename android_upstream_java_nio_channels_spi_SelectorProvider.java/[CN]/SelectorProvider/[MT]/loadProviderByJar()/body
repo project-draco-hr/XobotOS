@@ -1,0 +1,6 @@
+{
+  for (  SelectorProvider provider : ServiceLoader.load(SelectorProvider.class)) {
+    return provider;
+  }
+  return null;
+}

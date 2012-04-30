@@ -1,0 +1,9 @@
+{
+  try {
+    if (mSyncContext != null) {
+      mSyncContext.onFinished(result);
+    }
+  }
+ catch (  RemoteException e) {
+  }
+}

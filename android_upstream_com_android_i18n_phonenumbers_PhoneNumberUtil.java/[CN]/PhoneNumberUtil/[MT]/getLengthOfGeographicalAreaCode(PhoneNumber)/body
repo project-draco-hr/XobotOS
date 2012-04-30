@@ -1,0 +1,15 @@
+{
+  String regionCode=getRegionCodeForNumber(number);
+  if (!isValidRegionCode(regionCode)) {
+    return 0;
+  }
+  PhoneMetadata metadata=getMetadataForRegion(regionCode);
+  if (!metadata.hasNationalPrefix()) {
+    return 0;
+  }
+  PhoneNumberType type=getNumberTypeHelper(getNationalSignificantNumber(number),metadata);
+  if (type != PhoneNumberType.FIXED_LINE && type != PhoneNumberType.FIXED_LINE_OR_MOBILE) {
+    return 0;
+  }
+  return getLengthOfNationalDestinationCode(number);
+}

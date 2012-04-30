@@ -1,0 +1,26 @@
+{
+  final Date startTime=new Date();
+  final XobotLogger logger=new XobotLogger();
+  boolean foundErrors=false;
+  try {
+    XobotBuilder builder=new XobotBuilder(configFile,logger,project,sources);
+    if (!builder.run(monitor)) {
+      foundErrors=true;
+      return false;
+    }
+    foundErrors=builder._foundErrors;
+    return true;
+  }
+ catch (  Exception e) {
+    Sharpen.Log(e,"Sharpen builder caught unhandled exception");
+    foundErrors=true;
+    return false;
+  }
+ finally {
+    if (monitor.isCanceled())     Sharpen.Log(Level.SEVERE,"Sharpening aborted at %s.",formatEndTime(startTime));
+ else     if (foundErrors)     Sharpen.Log(Level.SEVERE,"Conversion finished with errors at %s.",formatEndTime(startTime));
+ else     Sharpen.Log(Level.SEVERE,"Conversion finished successfully at %s.",formatEndTime(startTime));
+    monitor.done();
+    logger.close();
+  }
+}

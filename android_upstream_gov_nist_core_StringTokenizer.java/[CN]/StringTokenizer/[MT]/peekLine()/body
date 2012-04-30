@@ -1,0 +1,6 @@
+{
+  int curPos=ptr;
+  String retval=this.getLine();
+  ptr=curPos;
+  return retval;
+}

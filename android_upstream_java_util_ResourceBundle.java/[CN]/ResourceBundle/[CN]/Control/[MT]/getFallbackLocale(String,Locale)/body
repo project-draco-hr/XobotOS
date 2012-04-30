@@ -1,0 +1,9 @@
+{
+  if (baseName == null || locale == null) {
+    throw new NullPointerException();
+  }
+  if (Locale.getDefault() != locale) {
+    return Locale.getDefault();
+  }
+  return null;
+}

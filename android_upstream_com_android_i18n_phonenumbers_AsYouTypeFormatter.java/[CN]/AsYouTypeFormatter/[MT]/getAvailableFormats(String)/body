@@ -1,0 +1,9 @@
+{
+  List<NumberFormat> formatList=(isInternationalFormatting && currentMetaData.intlNumberFormatSize() > 0) ? currentMetaData.intlNumberFormats() : currentMetaData.numberFormats();
+  for (  NumberFormat format : formatList) {
+    if (isFormatEligible(format.getFormat())) {
+      possibleFormats.add(format);
+    }
+  }
+  narrowDownPossibleFormats(leadingThreeDigits);
+}

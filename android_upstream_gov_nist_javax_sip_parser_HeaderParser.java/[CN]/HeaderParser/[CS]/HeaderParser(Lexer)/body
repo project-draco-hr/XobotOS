@@ -1,0 +1,4 @@
+{
+  this.lexer=lexer;
+  this.lexer.selectLexer("command_keywordLexer");
+}

@@ -1,0 +1,4 @@
+{
+  mPointSpriteEnable=enable;
+  return this;
+}

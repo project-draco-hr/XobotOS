@@ -1,0 +1,14 @@
+{
+  ArrayList returnList=new ArrayList(map.size());
+  Set pairs=map.entrySet();
+  Iterator pairsIterator=pairs.iterator();
+  while (pairsIterator.hasNext()) {
+    Map.Entry keyValuePair=(Map.Entry)(pairsIterator.next());
+    ArrayList list=(ArrayList)(keyValuePair.getValue());
+    Object[] values=list.toArray();
+    for (int ii=0; ii < values.length; ii++) {
+      returnList.add(values[ii]);
+    }
+  }
+  return returnList;
+}

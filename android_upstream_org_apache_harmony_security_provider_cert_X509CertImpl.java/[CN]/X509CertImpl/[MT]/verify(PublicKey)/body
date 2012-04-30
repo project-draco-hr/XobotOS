@@ -1,0 +1,15 @@
+{
+  Signature signature;
+  try {
+    signature=OpenSSLSignature.getInstance(getSigAlgName());
+  }
+ catch (  NoSuchAlgorithmException ignored) {
+    signature=Signature.getInstance(getSigAlgName());
+  }
+  signature.initVerify(key);
+  byte[] tbsCertificateLocal=getTbsCertificateInternal();
+  signature.update(tbsCertificateLocal,0,tbsCertificateLocal.length);
+  if (!signature.verify(certificate.getSignatureValue())) {
+    throw new SignatureException("Signature was not verified");
+  }
+}

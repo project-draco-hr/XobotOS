@@ -1,0 +1,10 @@
+{
+  checkFocus();
+synchronized (mH) {
+    if (mServedView != view && (mServedView == null || !mServedView.checkInputConnectionProxy(view))) {
+      return;
+    }
+    mServedConnecting=true;
+  }
+  startInputInner();
+}

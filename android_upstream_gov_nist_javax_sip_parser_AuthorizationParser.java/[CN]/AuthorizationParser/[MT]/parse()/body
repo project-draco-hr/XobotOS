@@ -1,0 +1,12 @@
+{
+  dbg_enter("parse");
+  try {
+    headerName(TokenTypes.AUTHORIZATION);
+    Authorization auth=new Authorization();
+    super.parse(auth);
+    return auth;
+  }
+  finally {
+    dbg_leave("parse");
+  }
+}

@@ -1,0 +1,7 @@
+{
+  for (  TargetDrawable chevron : mChevronDrawables) {
+    if (chevron != null) {
+      chevron.setAlpha(0.0f);
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  final IMethodBinding binding=node.resolveMethodBinding();
+  final ITypeBinding declaringType=binding.getDeclaringClass();
+  if ((declaringType == _objectType) && (binding.getName().equals("clone"))) {
+    final Expression expr=node.getExpression();
+    final ITypeBinding exprType=expr.resolveTypeBinding();
+    if (exprType.isArray()) {
+      CSExpression mapped=mapExpression(expr);
+      CSExpression target=new CSMemberReferenceExpression(parensIfNeeded(mapped),"Clone");
+      CSExpression mie=new CSMethodInvocationExpression(target);
+      ITypeBinding expected=getExpectedType();
+      if (expected == null)       expected=exprType;
+      pushExpression(new CSCastExpression(mappedTypeReference(expected),mie));
+      return false;
+    }
+  }
+  CSExpression mapped=my(CSharpDriver.class).mappedMethodInvocation(this,node);
+  if (mapped != null) {
+    pushExpression(mapped);
+    return false;
+  }
+  IMethodBinding originalBinding=originalMethodBinding(node.resolveMethodBinding());
+  Configuration.MemberMapping mapping=mappingForInvocation(node,originalBinding);
+  if (null != mapping) {
+    processMappedMethodInvocation(node,originalBinding,mapping);
+  }
+ else {
+    processUnmappedMethodInvocation(node);
+  }
+  return false;
+}

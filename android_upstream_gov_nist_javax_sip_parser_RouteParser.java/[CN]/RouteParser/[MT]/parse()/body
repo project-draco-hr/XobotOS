@@ -1,0 +1,27 @@
+{
+  RouteList routeList=new RouteList();
+  if (debug)   dbg_enter("parse");
+  try {
+    this.lexer.match(TokenTypes.ROUTE);
+    this.lexer.SPorHT();
+    this.lexer.match(':');
+    this.lexer.SPorHT();
+    while (true) {
+      Route route=new Route();
+      super.parse(route);
+      routeList.add(route);
+      this.lexer.SPorHT();
+      char la=lexer.lookAhead(0);
+      if (la == ',') {
+        this.lexer.match(',');
+        this.lexer.SPorHT();
+      }
+ else       if (la == '\n')       break;
+ else       throw createParseException("unexpected char");
+    }
+    return routeList;
+  }
+  finally {
+    if (debug)     dbg_leave("parse");
+  }
+}

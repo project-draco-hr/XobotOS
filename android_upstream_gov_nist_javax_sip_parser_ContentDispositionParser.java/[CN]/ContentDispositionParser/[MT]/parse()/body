@@ -1,0 +1,23 @@
+{
+  if (debug)   dbg_enter("ContentDispositionParser.parse");
+  try {
+    headerName(TokenTypes.CONTENT_DISPOSITION);
+    ContentDisposition cd=new ContentDisposition();
+    cd.setHeaderName(SIPHeaderNames.CONTENT_DISPOSITION);
+    this.lexer.SPorHT();
+    this.lexer.match(TokenTypes.ID);
+    Token token=lexer.getNextToken();
+    cd.setDispositionType(token.getTokenValue());
+    this.lexer.SPorHT();
+    super.parse(cd);
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return cd;
+  }
+ catch (  ParseException ex) {
+    throw createParseException(ex.getMessage());
+  }
+ finally {
+    if (debug)     dbg_leave("ContentDispositionParser.parse");
+  }
+}

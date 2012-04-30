@@ -1,0 +1,5 @@
+{
+  ModifyConstructor action=getTemplate().getModificationAction();
+  if (action != null)   action.modify(this,getASTNode(),ctor);
+  return true;
+}

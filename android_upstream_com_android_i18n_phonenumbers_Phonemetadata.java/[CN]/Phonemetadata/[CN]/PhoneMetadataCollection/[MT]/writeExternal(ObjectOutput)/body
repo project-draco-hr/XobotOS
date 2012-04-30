@@ -1,0 +1,7 @@
+{
+  int size=getMetadataCount();
+  objectOutput.writeInt(size);
+  for (int i=0; i < size; i++) {
+    metadata_.get(i).writeExternal(objectOutput);
+  }
+}

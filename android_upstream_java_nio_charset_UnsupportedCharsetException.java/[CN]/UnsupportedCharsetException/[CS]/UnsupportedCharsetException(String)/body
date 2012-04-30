@@ -1,0 +1,4 @@
+{
+  super((charsetName != null) ? charsetName : "null");
+  this.charsetName=charsetName;
+}

@@ -1,0 +1,3 @@
+{
+  return RealToString.getInstance().doubleToString(d);
+}

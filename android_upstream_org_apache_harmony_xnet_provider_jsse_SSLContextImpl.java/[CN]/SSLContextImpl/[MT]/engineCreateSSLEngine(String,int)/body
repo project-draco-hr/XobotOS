@@ -1,0 +1,8 @@
+{
+  if (sslParameters == null) {
+    throw new IllegalStateException("SSLContext is not initialized.");
+  }
+  SSLParametersImpl p=(SSLParametersImpl)sslParameters.clone();
+  p.setUseClientMode(false);
+  return new SSLEngineImpl(host,port,p);
+}

@@ -1,0 +1,6 @@
+{
+  NameValue maddr=uriParms.getNameValue(MADDR);
+  if (maddr == null)   return null;
+  String host=(String)maddr.getValueAsObject();
+  return host;
+}

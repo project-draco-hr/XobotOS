@@ -1,0 +1,12 @@
+{
+  if (Modifier.isStatic(node.getModifiers())) {
+    CSConstructor ctor=_currentType.ensureStaticConstructor();
+    CSBlock block=new CSBlock();
+    ctor.body().addStatement(block);
+    visitBodyDeclarationBlock(node,node.getBody(),ctor,block);
+  }
+ else {
+    _instanceInitializers.add(node);
+  }
+  return false;
+}

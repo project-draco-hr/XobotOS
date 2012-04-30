@@ -1,0 +1,3 @@
+{
+  initialize(param,RANDOM);
+}

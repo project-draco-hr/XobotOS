@@ -1,0 +1,35 @@
+{
+switch (axis) {
+case AXIS_X:
+    return x;
+case AXIS_Y:
+  return y;
+case AXIS_PRESSURE:
+return pressure;
+case AXIS_SIZE:
+return size;
+case AXIS_TOUCH_MAJOR:
+return touchMajor;
+case AXIS_TOUCH_MINOR:
+return touchMinor;
+case AXIS_TOOL_MAJOR:
+return toolMajor;
+case AXIS_TOOL_MINOR:
+return toolMinor;
+case AXIS_ORIENTATION:
+return orientation;
+default :
+{
+if (axis < 0 || axis > 63) {
+throw new IllegalArgumentException("Axis out of range.");
+}
+final long bits=mPackedAxisBits;
+final long axisBit=1L << axis;
+if ((bits & axisBit) == 0) {
+return 0;
+}
+final int index=Long.bitCount(bits & (axisBit - 1L));
+return mPackedAxisValues[index];
+}
+}
+}

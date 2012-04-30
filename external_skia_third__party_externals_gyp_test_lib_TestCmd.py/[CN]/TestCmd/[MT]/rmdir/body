@@ -1,0 +1,4 @@
+def rmdir(self, dir):
+    'Removes the specified dir name.\n        The dir name may be a list, in which case the elements are\n        concatenated with the os.path.join() method.  The dir is\n        assumed to be under the temporary working directory unless it\n        is an absolute path name.\n        The dir must be empty.\n        '
+    dir = self.canonicalize(dir)
+    os.rmdir(dir)

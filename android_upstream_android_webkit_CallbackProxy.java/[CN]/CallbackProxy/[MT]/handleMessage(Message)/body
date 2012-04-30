@@ -1,0 +1,433 @@
+{
+switch (msg.what) {
+case PAGE_STARTED:
+    String startedUrl=msg.getData().getString("url");
+  mWebView.onPageStarted(startedUrl);
+if (mWebViewClient != null) {
+  mWebViewClient.onPageStarted(mWebView,startedUrl,(Bitmap)msg.obj);
+}
+break;
+case PAGE_FINISHED:
+String finishedUrl=(String)msg.obj;
+mWebView.onPageFinished(finishedUrl);
+if (mWebViewClient != null) {
+mWebViewClient.onPageFinished(mWebView,finishedUrl);
+}
+break;
+case RECEIVED_ICON:
+if (mWebChromeClient != null) {
+mWebChromeClient.onReceivedIcon(mWebView,(Bitmap)msg.obj);
+}
+break;
+case RECEIVED_TOUCH_ICON_URL:
+if (mWebChromeClient != null) {
+mWebChromeClient.onReceivedTouchIconUrl(mWebView,(String)msg.obj,msg.arg1 == 1);
+}
+break;
+case RECEIVED_TITLE:
+if (mWebChromeClient != null) {
+mWebChromeClient.onReceivedTitle(mWebView,(String)msg.obj);
+}
+break;
+case REPORT_ERROR:
+if (mWebViewClient != null) {
+int reasonCode=msg.arg1;
+final String description=msg.getData().getString("description");
+final String failUrl=msg.getData().getString("failingUrl");
+mWebViewClient.onReceivedError(mWebView,reasonCode,description,failUrl);
+}
+break;
+case RESEND_POST_DATA:
+Message resend=(Message)msg.getData().getParcelable("resend");
+Message dontResend=(Message)msg.getData().getParcelable("dontResend");
+if (mWebViewClient != null) {
+mWebViewClient.onFormResubmission(mWebView,dontResend,resend);
+}
+ else {
+dontResend.sendToTarget();
+}
+break;
+case OVERRIDE_URL:
+String overrideUrl=msg.getData().getString("url");
+boolean override=uiOverrideUrlLoading(overrideUrl);
+ResultTransport<Boolean> result=(ResultTransport<Boolean>)msg.obj;
+synchronized (this) {
+result.setResult(override);
+notify();
+}
+break;
+case AUTH_REQUEST:
+if (mWebViewClient != null) {
+HttpAuthHandler handler=(HttpAuthHandler)msg.obj;
+String host=msg.getData().getString("host");
+String realm=msg.getData().getString("realm");
+mWebViewClient.onReceivedHttpAuthRequest(mWebView,handler,host,realm);
+}
+break;
+case SSL_ERROR:
+if (mWebViewClient != null) {
+HashMap<String,Object> map=(HashMap<String,Object>)msg.obj;
+mWebViewClient.onReceivedSslError(mWebView,(SslErrorHandler)map.get("handler"),(SslError)map.get("error"));
+}
+break;
+case PROCEEDED_AFTER_SSL_ERROR:
+if (mWebViewClient != null) {
+mWebViewClient.onProceededAfterSslError(mWebView,(SslError)msg.obj);
+}
+break;
+case CLIENT_CERT_REQUEST:
+if (mWebViewClient != null) {
+HashMap<String,Object> map=(HashMap<String,Object>)msg.obj;
+mWebViewClient.onReceivedClientCertRequest(mWebView,(ClientCertRequestHandler)map.get("handler"),(String)map.get("host_and_port"));
+}
+break;
+case PROGRESS:
+synchronized (this) {
+if (mWebChromeClient != null) {
+mWebChromeClient.onProgressChanged(mWebView,mLatestProgress);
+}
+mProgressUpdatePending=false;
+}
+break;
+case UPDATE_VISITED:
+if (mWebViewClient != null) {
+mWebViewClient.doUpdateVisitedHistory(mWebView,(String)msg.obj,msg.arg1 != 0);
+}
+break;
+case LOAD_RESOURCE:
+if (mWebViewClient != null) {
+mWebViewClient.onLoadResource(mWebView,(String)msg.obj);
+}
+break;
+case DOWNLOAD_FILE:
+if (mDownloadListener != null) {
+String url=msg.getData().getString("url");
+String userAgent=msg.getData().getString("userAgent");
+String contentDisposition=msg.getData().getString("contentDisposition");
+String mimetype=msg.getData().getString("mimetype");
+Long contentLength=msg.getData().getLong("contentLength");
+mDownloadListener.onDownloadStart(url,userAgent,contentDisposition,mimetype,contentLength);
+}
+break;
+case CREATE_WINDOW:
+if (mWebChromeClient != null) {
+if (!mWebChromeClient.onCreateWindow(mWebView,msg.arg1 == 1,msg.arg2 == 1,(Message)msg.obj)) {
+synchronized (this) {
+notify();
+}
+}
+mWebView.dismissZoomControl();
+}
+break;
+case REQUEST_FOCUS:
+if (mWebChromeClient != null) {
+mWebChromeClient.onRequestFocus(mWebView);
+}
+break;
+case CLOSE_WINDOW:
+if (mWebChromeClient != null) {
+mWebChromeClient.onCloseWindow((WebView)msg.obj);
+}
+break;
+case SAVE_PASSWORD:
+Bundle bundle=msg.getData();
+String schemePlusHost=bundle.getString("host");
+String username=bundle.getString("username");
+String password=bundle.getString("password");
+if (!mWebView.onSavePassword(schemePlusHost,username,password,(Message)msg.obj)) {
+synchronized (this) {
+notify();
+}
+}
+break;
+case ASYNC_KEYEVENTS:
+if (mWebViewClient != null) {
+mWebViewClient.onUnhandledKeyEvent(mWebView,(KeyEvent)msg.obj);
+}
+break;
+case EXCEEDED_DATABASE_QUOTA:
+if (mWebChromeClient != null) {
+HashMap<String,Object> map=(HashMap<String,Object>)msg.obj;
+String databaseIdentifier=(String)map.get("databaseIdentifier");
+String url=(String)map.get("url");
+long currentQuota=((Long)map.get("currentQuota")).longValue();
+long totalUsedQuota=((Long)map.get("totalUsedQuota")).longValue();
+long estimatedSize=((Long)map.get("estimatedSize")).longValue();
+WebStorage.QuotaUpdater quotaUpdater=(WebStorage.QuotaUpdater)map.get("quotaUpdater");
+mWebChromeClient.onExceededDatabaseQuota(url,databaseIdentifier,currentQuota,estimatedSize,totalUsedQuota,quotaUpdater);
+}
+break;
+case REACHED_APPCACHE_MAXSIZE:
+if (mWebChromeClient != null) {
+HashMap<String,Object> map=(HashMap<String,Object>)msg.obj;
+long spaceNeeded=((Long)map.get("spaceNeeded")).longValue();
+long totalUsedQuota=((Long)map.get("totalUsedQuota")).longValue();
+WebStorage.QuotaUpdater quotaUpdater=(WebStorage.QuotaUpdater)map.get("quotaUpdater");
+mWebChromeClient.onReachedMaxAppCacheSize(spaceNeeded,totalUsedQuota,quotaUpdater);
+}
+break;
+case GEOLOCATION_PERMISSIONS_SHOW_PROMPT:
+if (mWebChromeClient != null) {
+HashMap<String,Object> map=(HashMap<String,Object>)msg.obj;
+String origin=(String)map.get("origin");
+GeolocationPermissions.Callback callback=(GeolocationPermissions.Callback)map.get("callback");
+mWebChromeClient.onGeolocationPermissionsShowPrompt(origin,callback);
+}
+break;
+case GEOLOCATION_PERMISSIONS_HIDE_PROMPT:
+if (mWebChromeClient != null) {
+mWebChromeClient.onGeolocationPermissionsHidePrompt();
+}
+break;
+case JS_ALERT:
+if (mWebChromeClient != null) {
+final JsResult res=(JsResult)msg.obj;
+String message=msg.getData().getString("message");
+String url=msg.getData().getString("url");
+if (!mWebChromeClient.onJsAlert(mWebView,url,message,res)) {
+if (!canShowAlertDialog()) {
+res.cancel();
+res.setReady();
+break;
+}
+new AlertDialog.Builder(mContext).setTitle(getJsDialogTitle(url)).setMessage(message).setPositiveButton(R.string.ok,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int which){
+res.confirm();
+}
+}
+).setOnCancelListener(new DialogInterface.OnCancelListener(){
+public void onCancel(DialogInterface dialog){
+res.cancel();
+}
+}
+).show();
+}
+res.setReady();
+}
+break;
+case JS_CONFIRM:
+if (mWebChromeClient != null) {
+final JsResult res=(JsResult)msg.obj;
+String message=msg.getData().getString("message");
+String url=msg.getData().getString("url");
+if (!mWebChromeClient.onJsConfirm(mWebView,url,message,res)) {
+if (!canShowAlertDialog()) {
+res.cancel();
+res.setReady();
+break;
+}
+new AlertDialog.Builder(mContext).setTitle(getJsDialogTitle(url)).setMessage(message).setPositiveButton(R.string.ok,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int which){
+res.confirm();
+}
+}
+).setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int which){
+res.cancel();
+}
+}
+).setOnCancelListener(new DialogInterface.OnCancelListener(){
+public void onCancel(DialogInterface dialog){
+res.cancel();
+}
+}
+).show();
+}
+res.setReady();
+}
+break;
+case JS_PROMPT:
+if (mWebChromeClient != null) {
+final JsPromptResult res=(JsPromptResult)msg.obj;
+String message=msg.getData().getString("message");
+String defaultVal=msg.getData().getString("default");
+String url=msg.getData().getString("url");
+if (!mWebChromeClient.onJsPrompt(mWebView,url,message,defaultVal,res)) {
+if (!canShowAlertDialog()) {
+res.cancel();
+res.setReady();
+break;
+}
+final LayoutInflater factory=LayoutInflater.from(mContext);
+final View view=factory.inflate(R.layout.js_prompt,null);
+final EditText v=(EditText)view.findViewById(R.id.value);
+v.setText(defaultVal);
+((TextView)view.findViewById(R.id.message)).setText(message);
+new AlertDialog.Builder(mContext).setTitle(getJsDialogTitle(url)).setView(view).setPositiveButton(R.string.ok,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int whichButton){
+res.confirm(v.getText().toString());
+}
+}
+).setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int whichButton){
+res.cancel();
+}
+}
+).setOnCancelListener(new DialogInterface.OnCancelListener(){
+public void onCancel(DialogInterface dialog){
+res.cancel();
+}
+}
+).show();
+}
+res.setReady();
+}
+break;
+case JS_UNLOAD:
+if (mWebChromeClient != null) {
+final JsResult res=(JsResult)msg.obj;
+String message=msg.getData().getString("message");
+String url=msg.getData().getString("url");
+if (!mWebChromeClient.onJsBeforeUnload(mWebView,url,message,res)) {
+if (!canShowAlertDialog()) {
+res.cancel();
+res.setReady();
+break;
+}
+final String m=mContext.getString(R.string.js_dialog_before_unload,message);
+new AlertDialog.Builder(mContext).setMessage(m).setPositiveButton(R.string.ok,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int which){
+res.confirm();
+}
+}
+).setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+public void onClick(DialogInterface dialog,int which){
+res.cancel();
+}
+}
+).show();
+}
+res.setReady();
+}
+break;
+case JS_TIMEOUT:
+if (mWebChromeClient != null) {
+final JsResult res=(JsResult)msg.obj;
+if (mWebChromeClient.onJsTimeout()) {
+res.confirm();
+}
+ else {
+res.cancel();
+}
+res.setReady();
+}
+break;
+case RECEIVED_CERTIFICATE:
+mWebView.setCertificate((SslCertificate)msg.obj);
+break;
+case NOTIFY:
+synchronized (this) {
+notify();
+}
+break;
+case SCALE_CHANGED:
+if (mWebViewClient != null) {
+mWebViewClient.onScaleChanged(mWebView,msg.getData().getFloat("old"),msg.getData().getFloat("new"));
+}
+break;
+case SWITCH_OUT_HISTORY:
+mWebView.switchOutDrawHistory();
+break;
+case ADD_MESSAGE_TO_CONSOLE:
+if (mWebChromeClient == null) {
+break;
+}
+String message=msg.getData().getString("message");
+String sourceID=msg.getData().getString("sourceID");
+int lineNumber=msg.getData().getInt("lineNumber");
+int msgLevel=msg.getData().getInt("msgLevel");
+int numberOfMessageLevels=ConsoleMessage.MessageLevel.values().length;
+if (msgLevel < 0 || msgLevel >= numberOfMessageLevels) {
+msgLevel=0;
+}
+ConsoleMessage.MessageLevel messageLevel=ConsoleMessage.MessageLevel.values()[msgLevel];
+if (!mWebChromeClient.onConsoleMessage(new ConsoleMessage(message,sourceID,lineNumber,messageLevel))) {
+String logTag="Web Console";
+String logMessage=message + " at " + sourceID+ ":"+ lineNumber;
+switch (messageLevel) {
+case TIP:
+Log.v(logTag,logMessage);
+break;
+case LOG:
+Log.i(logTag,logMessage);
+break;
+case WARNING:
+Log.w(logTag,logMessage);
+break;
+case ERROR:
+Log.e(logTag,logMessage);
+break;
+case DEBUG:
+Log.d(logTag,logMessage);
+break;
+}
+}
+break;
+case GET_VISITED_HISTORY:
+if (mWebChromeClient != null) {
+mWebChromeClient.getVisitedHistory((ValueCallback<String[]>)msg.obj);
+}
+break;
+case OPEN_FILE_CHOOSER:
+if (mWebChromeClient != null) {
+UploadFileMessageData data=(UploadFileMessageData)msg.obj;
+mWebChromeClient.openFileChooser(data.getUploadFile(),data.getAcceptType());
+}
+break;
+case ADD_HISTORY_ITEM:
+if (mWebBackForwardListClient != null) {
+mWebBackForwardListClient.onNewHistoryItem((WebHistoryItem)msg.obj);
+}
+break;
+case HISTORY_INDEX_CHANGED:
+if (mWebBackForwardListClient != null) {
+mWebBackForwardListClient.onIndexChanged((WebHistoryItem)msg.obj,msg.arg1);
+}
+break;
+case AUTH_CREDENTIALS:
+{
+String host=msg.getData().getString("host");
+String realm=msg.getData().getString("realm");
+username=msg.getData().getString("username");
+password=msg.getData().getString("password");
+mWebView.setHttpAuthUsernamePassword(host,realm,username,password);
+break;
+}
+case SET_INSTALLABLE_WEBAPP:
+if (mWebChromeClient != null) {
+mWebChromeClient.setInstallableWebApp();
+}
+break;
+case NOTIFY_SEARCHBOX_LISTENERS:
+{
+SearchBoxImpl searchBox=(SearchBoxImpl)mWebView.getSearchBox();
+@SuppressWarnings("unchecked") List<String> suggestions=(List<String>)msg.obj;
+searchBox.handleSuggestions(msg.getData().getString("query"),suggestions);
+break;
+}
+case AUTO_LOGIN:
+{
+if (mWebViewClient != null) {
+String realm=msg.getData().getString("realm");
+String account=msg.getData().getString("account");
+String args=msg.getData().getString("args");
+mWebViewClient.onReceivedLoginRequest(mWebView,realm,account,args);
+}
+break;
+}
+case SEARCHBOX_IS_SUPPORTED_CALLBACK:
+{
+SearchBoxImpl searchBox=(SearchBoxImpl)mWebView.getSearchBox();
+Boolean supported=(Boolean)msg.obj;
+searchBox.handleIsSupportedCallback(supported);
+break;
+}
+case SEARCHBOX_DISPATCH_COMPLETE_CALLBACK:
+{
+SearchBoxImpl searchBox=(SearchBoxImpl)mWebView.getSearchBox();
+Boolean success=(Boolean)msg.obj;
+searchBox.handleDispatchCompleteCallback(msg.getData().getString("function"),msg.getData().getInt("id"),success);
+break;
+}
+}
+}

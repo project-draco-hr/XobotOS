@@ -1,0 +1,17 @@
+{
+  lexer.match('=');
+  char la=lexer.lookAhead(0);
+  Object value;
+  if (la == '+') {
+    lexer.consume(1);
+    value="+" + base_phone_number();
+  }
+ else   if (Lexer.isAlphaDigit(la)) {
+    Token t=lexer.match(Lexer.ID);
+    value=t.getTokenValue();
+  }
+ else {
+    throw new ParseException("Invalid phone-context:" + la,-1);
+  }
+  return new NameValue("phone-context",value,false);
+}

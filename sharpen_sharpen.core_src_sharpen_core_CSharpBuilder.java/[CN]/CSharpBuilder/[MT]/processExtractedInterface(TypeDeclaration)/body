@@ -1,0 +1,76 @@
+{
+  final ITypeBinding typeBinding=node.resolveBinding();
+  final CSTypeContainer current=getCurrentType(typeBinding);
+  final String typeName=typeName(node);
+  final String extractedName=typeName + "Class";
+  my(CSharpDriver.class).processTypeDeclaration(this,current,node,new ITypeBuilderDelegate(){
+    public CSTypeDeclaration create(){
+      CSInterface iface=new CSInterface(typeName);
+      iface.startPosition(node.getStartPosition());
+      iface.sourceLength(node.getLength());
+      CSharpBuilder.this.mapTypeParameters(node.typeParameters(),iface);
+      return iface;
+    }
+    public void map(    CSTypeDeclaration iface){
+      mapSuperTypes(node,iface);
+      iface.visibility(mapVisibility(typeBinding));
+    }
+    public void mapMembers(    CSTypeDeclaration iface,    final IMemberFilter filter){
+      CSharpBuilder.this.mapMembers(node,iface,new IMemberFilter(){
+        public boolean includeMember(        ASTNode member){
+          if ((filter != null) && !filter.includeMember(member))           return false;
+          if (!(member instanceof MethodDeclaration))           return false;
+          MethodDeclaration method=(MethodDeclaration)member;
+          if (method.isConstructor())           return false;
+          if (Modifier.isStatic(method.getModifiers()))           return false;
+          return true;
+        }
+      }
+);
+    }
+    public void document(    CSTypeDeclaration iface){
+      CSharpBuilder.this.mapDocumentation(node,iface);
+      processConversionJavadocTags(node,iface);
+    }
+    public void fixup(    CSTypeDeclaration iface){
+    }
+  }
+);
+  return my(CSharpDriver.class).processTypeDeclaration(this,current,node,new ITypeBuilderDelegate(){
+    public CSTypeDeclaration create(){
+      CSClass klass=new CSClass(extractedName,CSClassModifier.Static);
+      klass.startPosition(node.getStartPosition());
+      klass.sourceLength(node.getLength());
+      return klass;
+    }
+    public void map(    CSTypeDeclaration klass){
+      klass.visibility(mapVisibility(typeBinding));
+    }
+    public void mapMembers(    CSTypeDeclaration klass,    final IMemberFilter filter){
+      CSharpBuilder.this.mapMembers(node,klass,new IMemberFilter(){
+        public boolean includeMember(        ASTNode member){
+          if ((filter != null) && !filter.includeMember(member))           return false;
+          if (member instanceof MethodDeclaration) {
+            MethodDeclaration method=(MethodDeclaration)member;
+            if (!Modifier.isStatic(method.getModifiers()))             return false;
+          }
+          return true;
+        }
+      }
+);
+    }
+    public void document(    CSTypeDeclaration klass){
+      CSharpBuilder.this.mapDocumentation(node,klass);
+      processConversionJavadocTags(node,klass);
+    }
+    public void fixup(    CSTypeDeclaration klass){
+      for (      CSMember member : klass.members()) {
+        member.visibility(CSVisibility.Public);
+      }
+      autoImplementCloneable(node,klass);
+      adjustMemberVisibility(node,klass);
+      moveInitializersDependingOnThisReferenceToConstructor(klass);
+    }
+  }
+);
+}

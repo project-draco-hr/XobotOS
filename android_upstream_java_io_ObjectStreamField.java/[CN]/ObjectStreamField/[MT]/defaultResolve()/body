@@ -1,0 +1,31 @@
+{
+switch (typeString.charAt(0)) {
+case 'I':
+    type=int.class;
+  return true;
+case 'B':
+type=byte.class;
+return true;
+case 'C':
+type=char.class;
+return true;
+case 'S':
+type=short.class;
+return true;
+case 'Z':
+type=boolean.class;
+return true;
+case 'J':
+type=long.class;
+return true;
+case 'F':
+type=float.class;
+return true;
+case 'D':
+type=double.class;
+return true;
+default :
+type=Object.class;
+return false;
+}
+}

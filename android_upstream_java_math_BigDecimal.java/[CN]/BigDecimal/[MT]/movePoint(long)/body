@@ -1,0 +1,15 @@
+{
+  if (isZero()) {
+    return zeroScaledBy(Math.max(newScale,0));
+  }
+  if (newScale >= 0) {
+    if (bitLength < 64) {
+      return valueOf(smallValue,safeLongToInt(newScale));
+    }
+    return new BigDecimal(getUnscaledValue(),safeLongToInt(newScale));
+  }
+  if (-newScale < MathUtils.LONG_POWERS_OF_TEN.length && bitLength + LONG_POWERS_OF_TEN_BIT_LENGTH[(int)-newScale] < 64) {
+    return valueOf(smallValue * MathUtils.LONG_POWERS_OF_TEN[(int)-newScale],0);
+  }
+  return new BigDecimal(Multiplication.multiplyByTenPow(getUnscaledValue(),safeLongToInt(-newScale)),0);
+}

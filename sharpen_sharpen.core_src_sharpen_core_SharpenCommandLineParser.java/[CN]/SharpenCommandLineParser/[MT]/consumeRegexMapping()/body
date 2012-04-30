@@ -1,0 +1,6 @@
+{
+  final String regex=consumeNext();
+  final String repl=consumeNext();
+  final Configuration.RegexMapping regexMapping=new Configuration.RegexMapping(regex,repl);
+  return regexMapping;
+}

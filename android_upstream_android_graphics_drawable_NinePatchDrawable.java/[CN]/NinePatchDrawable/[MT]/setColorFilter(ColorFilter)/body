@@ -1,0 +1,4 @@
+{
+  getPaint().setColorFilter(cf);
+  invalidateSelf();
+}

@@ -1,0 +1,5 @@
+{
+  final List<CSTypeParameter> parameters=node.typeParameters();
+  if (parameters.isEmpty())   return;
+  writeGenericParameters(parameters);
+}

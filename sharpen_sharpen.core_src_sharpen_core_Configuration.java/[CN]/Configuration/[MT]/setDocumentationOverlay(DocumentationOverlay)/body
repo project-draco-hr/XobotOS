@@ -1,0 +1,4 @@
+{
+  if (null == docOverlay)   throw new IllegalArgumentException("docOverlay");
+  _docOverlay=docOverlay;
+}

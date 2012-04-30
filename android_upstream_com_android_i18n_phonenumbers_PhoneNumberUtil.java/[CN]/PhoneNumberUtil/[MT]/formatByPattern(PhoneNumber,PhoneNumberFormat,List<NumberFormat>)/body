@@ -1,0 +1,33 @@
+{
+  int countryCallingCode=number.getCountryCode();
+  String nationalSignificantNumber=getNationalSignificantNumber(number);
+  String regionCode=getRegionCodeForCountryCode(countryCallingCode);
+  if (!hasValidRegionCode(regionCode,countryCallingCode,nationalSignificantNumber)) {
+    return nationalSignificantNumber;
+  }
+  List<NumberFormat> userDefinedFormatsCopy=new ArrayList<NumberFormat>(userDefinedFormats.size());
+  for (  NumberFormat numFormat : userDefinedFormats) {
+    String nationalPrefixFormattingRule=numFormat.getNationalPrefixFormattingRule();
+    if (nationalPrefixFormattingRule.length() > 0) {
+      NumberFormat numFormatCopy=new NumberFormat();
+      numFormatCopy.mergeFrom(numFormat);
+      String nationalPrefix=getMetadataForRegion(regionCode).getNationalPrefix();
+      if (nationalPrefix.length() > 0) {
+        nationalPrefixFormattingRule=NP_PATTERN.matcher(nationalPrefixFormattingRule).replaceFirst(nationalPrefix);
+        nationalPrefixFormattingRule=FG_PATTERN.matcher(nationalPrefixFormattingRule).replaceFirst("\\$1");
+        numFormatCopy.setNationalPrefixFormattingRule(nationalPrefixFormattingRule);
+      }
+ else {
+        numFormatCopy.clearNationalPrefixFormattingRule();
+      }
+      userDefinedFormatsCopy.add(numFormatCopy);
+    }
+ else {
+      userDefinedFormatsCopy.add(numFormat);
+    }
+  }
+  StringBuilder formattedNumber=new StringBuilder(formatAccordingToFormats(nationalSignificantNumber,userDefinedFormatsCopy,numberFormat));
+  maybeGetFormattedExtension(number,regionCode,numberFormat,formattedNumber);
+  formatNumberByFormat(countryCallingCode,numberFormat,formattedNumber);
+  return formattedNumber.toString();
+}

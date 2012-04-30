@@ -1,0 +1,6 @@
+{
+  if (scheme == null)   throw new NullPointerException("null arg scheme ");
+  Authorization auth=new Authorization();
+  auth.setScheme(scheme);
+  return auth;
+}

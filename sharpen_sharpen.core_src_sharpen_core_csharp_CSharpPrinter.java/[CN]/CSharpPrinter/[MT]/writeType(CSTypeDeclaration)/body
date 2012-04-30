@@ -1,0 +1,7 @@
+{
+  writeDoc(node);
+  beginEnclosingIfDefs(node);
+  writeTypeHeader(node);
+  writeTypeBody(node);
+  endEnclosingIfDefs(node);
+}

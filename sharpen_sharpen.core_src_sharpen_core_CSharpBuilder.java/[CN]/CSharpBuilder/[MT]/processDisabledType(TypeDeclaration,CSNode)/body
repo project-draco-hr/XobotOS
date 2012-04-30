@@ -1,0 +1,7 @@
+{
+  final String expression=_configuration.conditionalCompilationExpressionFor(packageNameFor(node));
+  if (null != expression) {
+    compilationUnit().addEnclosingIfDef(expression);
+  }
+  processDisableTags(node,type);
+}

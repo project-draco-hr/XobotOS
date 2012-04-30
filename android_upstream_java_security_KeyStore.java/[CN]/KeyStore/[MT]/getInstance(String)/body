@@ -1,0 +1,12 @@
+{
+  if (type == null) {
+    throw new NullPointerException();
+  }
+  try {
+    Engine.SpiAndProvider sap=ENGINE.getInstance(type,null);
+    return new KeyStore((KeyStoreSpi)sap.spi,sap.provider,type);
+  }
+ catch (  NoSuchAlgorithmException e) {
+    throw new KeyStoreException(e);
+  }
+}

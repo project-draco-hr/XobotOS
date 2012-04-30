@@ -1,0 +1,5 @@
+{
+  super(visibility);
+  this._params=new ArrayList<Parameter>();
+  this._body=new Block();
+}

@@ -1,0 +1,10 @@
+{
+  final HashSet<String> memberNames=memberNameSetFor(type);
+  int index=0;
+  for (  CSMember member : copy(type.members())) {
+    if (!(member instanceof CSField))     continue;
+    final CSField field=(CSField)member;
+    if (!isDependentOnThisOrMember(field,memberNames))     continue;
+    moveFieldInitializerToConstructors(field,type,index++);
+  }
+}

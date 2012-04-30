@@ -1,0 +1,3 @@
+{
+  return getJField(object,declaringClass,type,slot,flag,TYPE_LONG);
+}

@@ -1,0 +1,31 @@
+{
+  final CSProperty existingProperty=findProperty(node,name);
+  my(CSharpDriver.class).processPropertyDeclaration(this,_currentType,node,name,existingProperty,new IPropertyBuilderDelegate(){
+    public boolean isGetter(){
+      return CSharpBuilder.this.isGetter(node);
+    }
+    public CSProperty create(){
+      if (existingProperty != null)       return existingProperty;
+      return newPropertyFor(node,name);
+    }
+    public void map(    CSProperty property){
+      if (!CSharpBuilder.this.isGetter(node))       mapImplicitSetterParameter(node,property);
+      mapMetaMemberAttributes(node,property);
+      mapParameters(node,property);
+    }
+    public void document(    CSProperty member){
+    }
+    public void fixup(    CSProperty member){
+    }
+    public void mapBody(    CSProperty property){
+      final CSBlock block=CSharpBuilder.this.mapBody(node);
+      if (isGetter()) {
+        property.getter(block);
+      }
+ else {
+        property.setter(block);
+      }
+    }
+  }
+);
+}

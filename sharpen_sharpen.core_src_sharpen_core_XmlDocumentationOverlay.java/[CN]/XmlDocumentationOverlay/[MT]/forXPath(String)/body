@@ -1,0 +1,5 @@
+{
+  Element found=selectElement(xpath);
+  if (null == found)   return null;
+  return serializeContent(found);
+}

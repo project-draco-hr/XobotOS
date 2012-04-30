@@ -1,0 +1,4 @@
+{
+  this._name=name;
+  if (name == null)   throw new IllegalStateException();
+}

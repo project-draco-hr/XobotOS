@@ -1,0 +1,6 @@
+{
+  if (this.stackLogger.isLoggingEnabled()) {
+    this.stackLogger.logDebug("removePendingTx: " + tr.getTransactionId());
+  }
+  this.pendingTransactions.remove(tr.getTransactionId());
+}

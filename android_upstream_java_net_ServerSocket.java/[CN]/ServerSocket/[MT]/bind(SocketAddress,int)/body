@@ -1,0 +1,29 @@
+{
+  checkOpen();
+  if (isBound()) {
+    throw new BindException("Socket is already bound");
+  }
+  int port=0;
+  InetAddress addr=Inet4Address.ANY;
+  if (localAddr != null) {
+    if (!(localAddr instanceof InetSocketAddress)) {
+      throw new IllegalArgumentException("Local address not an InetSocketAddress: " + localAddr.getClass());
+    }
+    InetSocketAddress inetAddr=(InetSocketAddress)localAddr;
+    if ((addr=inetAddr.getAddress()) == null) {
+      throw new SocketException("Host is unresolved: " + inetAddr.getHostName());
+    }
+    port=inetAddr.getPort();
+  }
+synchronized (this) {
+    try {
+      impl.bind(addr,port);
+      isBound=true;
+      impl.listen(backlog > 0 ? backlog : DEFAULT_BACKLOG);
+    }
+ catch (    IOException e) {
+      close();
+      throw e;
+    }
+  }
+}

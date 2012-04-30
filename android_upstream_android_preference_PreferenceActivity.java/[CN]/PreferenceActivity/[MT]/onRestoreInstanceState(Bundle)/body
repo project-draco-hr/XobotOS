@@ -1,0 +1,14 @@
+{
+  if (mPreferenceManager != null) {
+    Bundle container=state.getBundle(PREFERENCES_TAG);
+    if (container != null) {
+      final PreferenceScreen preferenceScreen=getPreferenceScreen();
+      if (preferenceScreen != null) {
+        preferenceScreen.restoreHierarchyState(container);
+        mSavedInstanceState=state;
+        return;
+      }
+    }
+  }
+  super.onRestoreInstanceState(state);
+}

@@ -1,0 +1,6 @@
+{
+  if (root == null) {
+    throw new NoSuchElementException();
+  }
+  return root.first().getKey();
+}

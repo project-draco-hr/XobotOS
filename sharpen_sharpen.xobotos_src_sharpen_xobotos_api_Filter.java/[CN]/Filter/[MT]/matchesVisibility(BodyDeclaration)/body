@@ -1,0 +1,7 @@
+{
+  if (_visibility == null)   return true;
+  for (  final Visibility visibility : _visibility) {
+    if (matchesVisibility(node,visibility))     return true;
+  }
+  return false;
+}

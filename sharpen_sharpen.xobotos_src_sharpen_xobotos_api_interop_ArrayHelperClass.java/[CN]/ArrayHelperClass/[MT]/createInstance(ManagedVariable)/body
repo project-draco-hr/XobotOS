@@ -1,0 +1,3 @@
+{
+  return new CSArrayCreationExpression(getManagedElementType(),_lengthMember.getReference(obj));
+}

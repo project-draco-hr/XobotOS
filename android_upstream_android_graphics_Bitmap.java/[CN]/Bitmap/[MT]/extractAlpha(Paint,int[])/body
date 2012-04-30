@@ -1,0 +1,10 @@
+{
+  checkRecycled("Can't extractAlpha on a recycled bitmap");
+  int nativePaint=paint != null ? paint.mNativePaint : 0;
+  Bitmap bm=nativeExtractAlpha(mNativeBitmap,nativePaint,offsetXY);
+  if (bm == null) {
+    throw new RuntimeException("Failed to extractAlpha on Bitmap");
+  }
+  bm.mDensity=mDensity;
+  return bm;
+}

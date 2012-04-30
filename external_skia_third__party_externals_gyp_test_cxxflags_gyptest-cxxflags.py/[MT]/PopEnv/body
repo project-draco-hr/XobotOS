@@ -1,0 +1,2 @@
+def PopEnv():
+    os.eniron = env_stack.pop()

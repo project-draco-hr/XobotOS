@@ -1,0 +1,6 @@
+{
+  super.onStop();
+  if (mPreferenceManager != null) {
+    mPreferenceManager.dispatchActivityStop();
+  }
+}

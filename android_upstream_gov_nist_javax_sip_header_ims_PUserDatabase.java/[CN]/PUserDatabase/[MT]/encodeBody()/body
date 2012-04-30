@@ -1,0 +1,8 @@
+{
+  StringBuffer retval=new StringBuffer();
+  retval.append("<");
+  if (getDatabaseName() != null)   retval.append(getDatabaseName());
+  if (!parameters.isEmpty())   retval.append(SEMICOLON + this.parameters.encode());
+  retval.append(">");
+  return retval.toString();
+}

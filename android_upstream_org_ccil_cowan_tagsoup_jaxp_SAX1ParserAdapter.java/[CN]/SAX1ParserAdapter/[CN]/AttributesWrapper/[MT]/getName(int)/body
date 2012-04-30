@@ -1,0 +1,4 @@
+{
+  String n=attrs.getQName(i);
+  return (n == null) ? attrs.getLocalName(i) : n;
+}

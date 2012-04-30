@@ -1,0 +1,11 @@
+def up_to_date(self, gyp_file, target=None, **kw):
+    '\n    Verifies that a build of the specified Xcode target is up to date.\n    '
+    result = self.build(gyp_file, target, **kw)
+    if (not result):
+        output = self.stdout()
+        for expression in self.strip_up_to_date_expressions:
+            output = expression.sub('', output)
+        if (not output.endswith(self.up_to_date_endings)):
+            self.report_not_up_to_date()
+            self.fail_test()
+    return result

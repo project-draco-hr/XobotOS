@@ -1,0 +1,5 @@
+{
+  HostPort retval=(HostPort)super.clone();
+  if (this.host != null)   retval.host=(Host)this.host.clone();
+  return retval;
+}

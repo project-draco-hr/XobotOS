@@ -1,0 +1,2 @@
+def __repr__(self):
+    return ('LinearRegression(%s, %s, %s, %s, %s)' % (str(self.slope), str(self.intercept), str(self.serror), str(self.serror_slope), str(self.serror_intercept)))

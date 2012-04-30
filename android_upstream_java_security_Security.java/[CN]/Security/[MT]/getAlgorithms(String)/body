@@ -1,0 +1,14 @@
+{
+  Set<String> result=new HashSet<String>();
+  if (serviceName == null) {
+    return result;
+  }
+  for (  Provider provider : getProviders()) {
+    for (    Provider.Service service : provider.getServices()) {
+      if (service.getType().equalsIgnoreCase(serviceName)) {
+        result.add(service.getAlgorithm());
+      }
+    }
+  }
+  return result;
+}

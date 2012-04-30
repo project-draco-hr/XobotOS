@@ -1,0 +1,12 @@
+{
+  if (index < 0) {
+    checkIndex(index);
+  }
+  int arrayIndex=index / 64;
+  if (arrayIndex >= bits.length) {
+    ensureCapacity(arrayIndex + 1);
+  }
+  bits[arrayIndex]^=(1L << index);
+  longCount=Math.max(longCount,arrayIndex + 1);
+  shrinkSize();
+}

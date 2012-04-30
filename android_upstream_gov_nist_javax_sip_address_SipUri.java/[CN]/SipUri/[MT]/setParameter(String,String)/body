@@ -1,0 +1,11 @@
+{
+  if (name.equalsIgnoreCase("ttl")) {
+    try {
+      Integer.parseInt(value);
+    }
+ catch (    NumberFormatException ex) {
+      throw new ParseException("bad parameter " + value,0);
+    }
+  }
+  uriParms.set(name,value);
+}

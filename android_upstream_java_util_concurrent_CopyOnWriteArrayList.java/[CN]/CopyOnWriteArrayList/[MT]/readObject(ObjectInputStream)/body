@@ -1,0 +1,8 @@
+{
+  in.defaultReadObject();
+  Object[] snapshot=new Object[in.readInt()];
+  for (int i=0; i < snapshot.length; i++) {
+    snapshot[i]=in.readObject();
+  }
+  elements=snapshot;
+}

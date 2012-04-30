@@ -1,0 +1,7 @@
+{
+  headerName(TokenTypes.REFERREDBY_TO);
+  ReferredBy referBy=new ReferredBy();
+  super.parse(referBy);
+  this.lexer.match('\n');
+  return referBy;
+}

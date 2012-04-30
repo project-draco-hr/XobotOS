@@ -1,0 +1,5 @@
+String number
+PhoneMetadata defaultRegionMetadata
+StringBuilder nationalNumber
+boolean keepRawInput
+PhoneNumber phoneNumber

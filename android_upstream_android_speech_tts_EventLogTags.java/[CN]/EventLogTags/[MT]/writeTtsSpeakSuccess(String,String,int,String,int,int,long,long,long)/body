@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(TTS_SPEAK_SUCCESS,engine,caller,length,locale,rate,pitch,engineLatency,engineTotal,audioLatency);
+}

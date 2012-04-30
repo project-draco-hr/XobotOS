@@ -1,0 +1,11 @@
+{
+  int error=-1;
+switch (infoType) {
+case DrmInfoRequest.TYPE_REGISTRATION_INFO:
+case DrmInfoRequest.TYPE_UNREGISTRATION_INFO:
+case DrmInfoRequest.TYPE_RIGHTS_ACQUISITION_INFO:
+    error=DrmErrorEvent.TYPE_PROCESS_DRM_INFO_FAILED;
+  break;
+}
+return error;
+}

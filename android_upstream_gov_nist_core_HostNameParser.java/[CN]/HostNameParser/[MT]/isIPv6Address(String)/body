@@ -1,0 +1,12 @@
+{
+  int hostEnd=uriHeader.indexOf(Lexer.QUESTION);
+  int semiColonIndex=uriHeader.indexOf(Lexer.SEMICOLON);
+  if (hostEnd == -1 || (semiColonIndex != -1 && hostEnd > semiColonIndex))   hostEnd=semiColonIndex;
+  if (hostEnd == -1)   hostEnd=uriHeader.length();
+  String host=uriHeader.substring(0,hostEnd);
+  int firstColonIndex=host.indexOf(Lexer.COLON);
+  if (firstColonIndex == -1)   return false;
+  int secondColonIndex=host.indexOf(Lexer.COLON,firstColonIndex + 1);
+  if (secondColonIndex == -1)   return false;
+  return true;
+}

@@ -1,0 +1,26 @@
+{
+  this.toExit=false;
+  this.forkedEvents=new HashSet<String>();
+  this.threadPoolSize=-1;
+  this.cacheServerConnections=true;
+  this.cacheClientConnections=true;
+  this.maxConnections=-1;
+  messageProcessors=new ArrayList<MessageProcessor>();
+  this.ioHandler=new IOHandler(this);
+  this.readTimeout=-1;
+  this.maxListenerResponseTime=-1;
+  this.addressResolver=new DefaultAddressResolver();
+  this.dialogTable=new ConcurrentHashMap<String,SIPDialog>();
+  this.earlyDialogTable=new ConcurrentHashMap<String,SIPDialog>();
+  clientTransactionTable=new ConcurrentHashMap<String,SIPClientTransaction>();
+  serverTransactionTable=new ConcurrentHashMap<String,SIPServerTransaction>();
+  this.terminatedServerTransactionsPendingAck=new ConcurrentHashMap<String,SIPServerTransaction>();
+  mergeTable=new ConcurrentHashMap<String,SIPServerTransaction>();
+  retransmissionAlertTransactions=new ConcurrentHashMap<String,SIPServerTransaction>();
+  this.timer=new Timer();
+  this.pendingTransactions=new ConcurrentHashMap<String,SIPServerTransaction>();
+  this.forkedClientTransactionTable=new ConcurrentHashMap<String,SIPClientTransaction>();
+  if (getThreadAuditor().isEnabled()) {
+    timer.schedule(new PingTimer(null),0);
+  }
+}

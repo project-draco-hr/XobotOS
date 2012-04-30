@@ -1,0 +1,31 @@
+{
+  for (  URL url : services) {
+    BufferedReader reader=null;
+    try {
+      reader=new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
+      String line;
+      while ((line=reader.readLine()) != null) {
+        int commentStart=line.indexOf('#');
+        if (commentStart != -1) {
+          line=line.substring(0,commentStart);
+        }
+        line=line.trim();
+        if (line.isEmpty()) {
+          continue;
+        }
+        String className=line;
+        checkValidJavaClassName(className);
+        if (!queue.contains(className)) {
+          queue.add(className);
+        }
+      }
+      isRead=true;
+    }
+ catch (    Exception e) {
+      throw new ServiceConfigurationError("Couldn't read " + url,e);
+    }
+ finally {
+      IoUtils.closeQuietly(reader);
+    }
+  }
+}

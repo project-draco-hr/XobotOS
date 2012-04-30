@@ -1,0 +1,6 @@
+{
+  ElementInfo info=new ElementInfo(type,marshal,null,Flags.ELEMENT);
+  ArrayHelperClass helper=new ArrayHelperClass(type,"Array_" + type.getName(),_sharedNativeBuilder,info,true);
+  _sharedArrayHelpers.put(type,helper);
+  _sharedNativeBuilder.registerNativeType(helper);
+}

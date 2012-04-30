@@ -1,0 +1,6 @@
+{
+  if (DBG)   log("Loading config and enabling all networks");
+  sContext=context;
+  loadConfiguredNetworks();
+  enableAllNetworks();
+}

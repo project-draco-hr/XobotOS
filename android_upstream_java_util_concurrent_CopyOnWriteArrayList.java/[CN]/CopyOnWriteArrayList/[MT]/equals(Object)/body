@@ -1,0 +1,18 @@
+{
+  if (other instanceof CopyOnWriteArrayList) {
+    return this == other || Arrays.equals(elements,((CopyOnWriteArrayList<?>)other).elements);
+  }
+ else   if (other instanceof List) {
+    Object[] snapshot=elements;
+    Iterator<?> i=((List<?>)other).iterator();
+    for (    Object o : snapshot) {
+      if (!i.hasNext() || !Objects.equal(o,i.next())) {
+        return false;
+      }
+    }
+    return !i.hasNext();
+  }
+ else {
+    return false;
+  }
+}

@@ -1,0 +1,39 @@
+{
+  ArrayList<ComponentCallbacks2> callbacks=new ArrayList<ComponentCallbacks2>();
+  if (mActivities.size() > 0) {
+    Iterator<ActivityClientRecord> it=mActivities.values().iterator();
+    while (it.hasNext()) {
+      ActivityClientRecord ar=it.next();
+      Activity a=ar.activity;
+      if (a != null) {
+        Configuration thisConfig=applyConfigCompatMainThread(newConfig,ar.packageInfo.mCompatibilityInfo.getIfNeeded());
+        if (!ar.activity.mFinished && (allActivities || (a != null && !ar.paused))) {
+          callbacks.add(a);
+        }
+ else         if (thisConfig != null) {
+          if (DEBUG_CONFIGURATION)           Slog.v(TAG,"Setting activity " + ar.activityInfo.name + " newConfig="+ thisConfig);
+          ar.newConfig=thisConfig;
+        }
+      }
+    }
+  }
+  if (mServices.size() > 0) {
+    Iterator<Service> it=mServices.values().iterator();
+    while (it.hasNext()) {
+      callbacks.add(it.next());
+    }
+  }
+synchronized (mProviderMap) {
+    if (mLocalProviders.size() > 0) {
+      Iterator<ProviderClientRecord> it=mLocalProviders.values().iterator();
+      while (it.hasNext()) {
+        callbacks.add(it.next().mLocalProvider);
+      }
+    }
+  }
+  final int N=mAllApplications.size();
+  for (int i=0; i < N; i++) {
+    callbacks.add(mAllApplications.get(i));
+  }
+  return callbacks;
+}

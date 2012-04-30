@@ -1,0 +1,21 @@
+def main():
+    source_root = sys.argv[1]
+    dest_root = sys.argv[2]
+    source_files = []
+    for (root, dirs, files) in os.walk(source_root):
+        for file in files:
+            source_files.append(os.path.join(root, file))
+    files_processed = set()
+    for source_file in source_files:
+        basename = os.path.basename(source_file)
+        match = _file_version_re.match(basename)
+        if match:
+            basename = (match.group(1) + match.group(2))
+            print basename
+        if (basename in _unidata_files):
+            if (basename in files_processed):
+                print ('duplicate file basename %s!' % basename)
+                sys.exit(1)
+            files_processed.add(basename)
+            dest_file = os.path.join(dest_root, basename)
+            _unidata_files[basename](source_file, dest_file)

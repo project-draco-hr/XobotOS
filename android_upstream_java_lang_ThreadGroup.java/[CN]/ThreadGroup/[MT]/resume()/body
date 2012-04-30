@@ -1,0 +1,12 @@
+{
+synchronized (threadRefs) {
+    for (    Thread thread : threads) {
+      thread.resume();
+    }
+  }
+synchronized (groups) {
+    for (    ThreadGroup group : groups) {
+      group.resume();
+    }
+  }
+}

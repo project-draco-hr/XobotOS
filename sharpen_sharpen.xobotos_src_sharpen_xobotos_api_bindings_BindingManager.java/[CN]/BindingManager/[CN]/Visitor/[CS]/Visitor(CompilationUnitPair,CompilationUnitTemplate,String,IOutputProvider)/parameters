@@ -1,0 +1,4 @@
+CompilationUnitPair pair
+CompilationUnitTemplate template
+String name
+IOutputProvider defaultOutput

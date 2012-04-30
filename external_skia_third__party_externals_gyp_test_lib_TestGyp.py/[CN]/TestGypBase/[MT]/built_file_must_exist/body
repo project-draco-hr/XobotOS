@@ -1,0 +1,3 @@
+def built_file_must_exist(self, name, type=None, **kw):
+    '\n    Fails the test if the specified built file name does not exist.\n    '
+    return self.must_exist(self.built_file_path(name, type, **kw))

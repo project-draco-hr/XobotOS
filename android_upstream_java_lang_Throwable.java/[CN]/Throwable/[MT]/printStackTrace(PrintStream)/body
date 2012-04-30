@@ -1,0 +1,8 @@
+{
+  try {
+    printStackTrace(err,"",null);
+  }
+ catch (  IOException e) {
+    throw new AssertionError();
+  }
+}

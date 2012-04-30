@@ -1,0 +1,8 @@
+def runCommand(cmd):
+    output_file = os.popen(cmd)
+    output_text = output_file.read()
+    exit_status = output_file.close()
+    if exit_status:
+        print  >> sys.stderr, '"', cmd, '" failed.  Exiting.'
+        sys.exit(exit_status)
+    return output_text

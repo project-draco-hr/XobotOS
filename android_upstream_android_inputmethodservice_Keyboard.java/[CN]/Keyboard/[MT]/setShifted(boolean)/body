@@ -1,0 +1,12 @@
+{
+  for (  Key shiftKey : mShiftKeys) {
+    if (shiftKey != null) {
+      shiftKey.on=shiftState;
+    }
+  }
+  if (mShifted != shiftState) {
+    mShifted=shiftState;
+    return true;
+  }
+  return false;
+}

@@ -1,0 +1,77 @@
+{
+  javaCal=new GregorianCalendar(TimeZone.getTimeZone("GMT:0"),Locale.getDefault());
+  java.util.Date date=new java.util.Date(timeMillis);
+  javaCal.setTime(date);
+  wkday=javaCal.get(Calendar.DAY_OF_WEEK);
+switch (wkday) {
+case Calendar.MONDAY:
+    sipWkDay=MON;
+  break;
+case Calendar.TUESDAY:
+sipWkDay=TUE;
+break;
+case Calendar.WEDNESDAY:
+sipWkDay=WED;
+break;
+case Calendar.THURSDAY:
+sipWkDay=THU;
+break;
+case Calendar.FRIDAY:
+sipWkDay=FRI;
+break;
+case Calendar.SATURDAY:
+sipWkDay=SAT;
+break;
+case Calendar.SUNDAY:
+sipWkDay=SUN;
+break;
+default :
+InternalErrorHandler.handleException("No date map for wkday " + wkday);
+}
+day=javaCal.get(Calendar.DAY_OF_MONTH);
+month=javaCal.get(Calendar.MONTH);
+switch (month) {
+case Calendar.JANUARY:
+sipMonth=JAN;
+break;
+case Calendar.FEBRUARY:
+sipMonth=FEB;
+break;
+case Calendar.MARCH:
+sipMonth=MAR;
+break;
+case Calendar.APRIL:
+sipMonth=APR;
+break;
+case Calendar.MAY:
+sipMonth=MAY;
+break;
+case Calendar.JUNE:
+sipMonth=JUN;
+break;
+case Calendar.JULY:
+sipMonth=JUL;
+break;
+case Calendar.AUGUST:
+sipMonth=AUG;
+break;
+case Calendar.SEPTEMBER:
+sipMonth=SEP;
+break;
+case Calendar.OCTOBER:
+sipMonth=OCT;
+break;
+case Calendar.NOVEMBER:
+sipMonth=NOV;
+break;
+case Calendar.DECEMBER:
+sipMonth=DEC;
+break;
+default :
+InternalErrorHandler.handleException("No date map for month " + month);
+}
+year=javaCal.get(Calendar.YEAR);
+hour=javaCal.get(Calendar.HOUR_OF_DAY);
+minute=javaCal.get(Calendar.MINUTE);
+second=javaCal.get(Calendar.SECOND);
+}

@@ -1,0 +1,8 @@
+{
+  if (ch <= 127) {
+    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch <= '9' && ch >= '0');
+  }
+ else {
+    return Character.isLowerCase(ch) || Character.isUpperCase(ch) || Character.isDigit(ch);
+  }
+}

@@ -1,0 +1,7 @@
+{
+  PublicKey result=publicKey;
+  if (result == null) {
+    publicKey=result=tbsCert.getSubjectPublicKeyInfo().getPublicKey();
+  }
+  return result;
+}

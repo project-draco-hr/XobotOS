@@ -1,0 +1,77 @@
+{
+  Editable editable=(Editable)mTextView.getText();
+  final int start=editable.getSpanStart(mRange);
+  final int end=editable.getSpanEnd(mRange);
+  mWordIterator.setCharSequence(editable,start,end);
+  int wordStart=mWordIterator.preceding(start);
+  int wordEnd;
+  if (wordStart == BreakIterator.DONE) {
+    wordEnd=mWordIterator.following(start);
+    if (wordEnd != BreakIterator.DONE) {
+      wordStart=mWordIterator.getBeginning(wordEnd);
+    }
+  }
+ else {
+    wordEnd=mWordIterator.getEnd(wordStart);
+  }
+  if (wordEnd == BreakIterator.DONE) {
+    editable.removeSpan(mRange);
+    return;
+  }
+  SpellCheckSpan[] spellCheckSpans=editable.getSpans(start - 1,end + 1,SpellCheckSpan.class);
+  SuggestionSpan[] suggestionSpans=editable.getSpans(start - 1,end + 1,SuggestionSpan.class);
+  int nbWordsChecked=0;
+  boolean scheduleOtherSpellCheck=false;
+  while (wordStart <= end) {
+    if (wordEnd >= start && wordEnd > wordStart) {
+      if (wordStart < start && wordEnd > start) {
+        removeSpansAt(editable,start,spellCheckSpans);
+        removeSpansAt(editable,start,suggestionSpans);
+      }
+      if (wordStart < end && wordEnd > end) {
+        removeSpansAt(editable,end,spellCheckSpans);
+        removeSpansAt(editable,end,suggestionSpans);
+      }
+      boolean createSpellCheckSpan=true;
+      if (wordEnd == start) {
+        for (int i=0; i < spellCheckSpans.length; i++) {
+          final int spanEnd=editable.getSpanEnd(spellCheckSpans[i]);
+          if (spanEnd == start) {
+            createSpellCheckSpan=false;
+            break;
+          }
+        }
+      }
+      if (wordStart == end) {
+        for (int i=0; i < spellCheckSpans.length; i++) {
+          final int spanStart=editable.getSpanStart(spellCheckSpans[i]);
+          if (spanStart == end) {
+            createSpellCheckSpan=false;
+            break;
+          }
+        }
+      }
+      if (createSpellCheckSpan) {
+        if (nbWordsChecked == MAX_SPELL_BATCH_SIZE) {
+          scheduleOtherSpellCheck=true;
+          break;
+        }
+        addSpellCheckSpan(editable,wordStart,wordEnd);
+        nbWordsChecked++;
+      }
+    }
+    wordEnd=mWordIterator.following(wordEnd);
+    if (wordEnd == BreakIterator.DONE)     break;
+    wordStart=mWordIterator.getBeginning(wordEnd);
+    if (wordStart == BreakIterator.DONE) {
+      break;
+    }
+  }
+  if (scheduleOtherSpellCheck) {
+    editable.setSpan(mRange,wordStart,end,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+  }
+ else {
+    editable.removeSpan(mRange);
+  }
+  spellCheck();
+}

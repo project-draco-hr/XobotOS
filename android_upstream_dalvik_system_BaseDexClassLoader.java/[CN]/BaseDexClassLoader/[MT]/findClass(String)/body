@@ -1,0 +1,7 @@
+{
+  Class clazz=pathList.findClass(name);
+  if (clazz == null) {
+    throw new ClassNotFoundException(name);
+  }
+  return clazz;
+}

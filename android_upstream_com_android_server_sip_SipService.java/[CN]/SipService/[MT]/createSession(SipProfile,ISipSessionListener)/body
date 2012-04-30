@@ -1,0 +1,13 @@
+{
+  mContext.enforceCallingOrSelfPermission(android.Manifest.permission.USE_SIP,null);
+  localProfile.setCallingUid(Binder.getCallingUid());
+  if (!mConnected)   return null;
+  try {
+    SipSessionGroupExt group=createGroup(localProfile);
+    return group.createSession(listener);
+  }
+ catch (  SipException e) {
+    if (DEBUG)     Log.d(TAG,"createSession()",e);
+    return null;
+  }
+}

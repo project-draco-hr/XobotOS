@@ -1,0 +1,13 @@
+{
+  SIPRequest sipRequest=(SIPRequest)request;
+  String callId=sipRequest.getCallId().getCallId();
+  request.removeHeader(AuthorizationHeader.NAME);
+  Collection<AuthorizationHeader> authHeaders=this.cachedCredentials.getCachedAuthorizationHeaders(callId);
+  if (authHeaders == null) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Could not find authentication headers for " + callId);
+    return;
+  }
+  for (  AuthorizationHeader authHeader : authHeaders) {
+    request.addHeader(authHeader);
+  }
+}

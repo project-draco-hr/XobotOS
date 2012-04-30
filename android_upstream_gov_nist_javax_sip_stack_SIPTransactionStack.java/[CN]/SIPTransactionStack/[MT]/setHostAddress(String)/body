@@ -1,0 +1,5 @@
+{
+  if (stackAddress.indexOf(':') != stackAddress.lastIndexOf(':') && stackAddress.trim().charAt(0) != '[')   this.stackAddress='[' + stackAddress + ']';
+ else   this.stackAddress=stackAddress;
+  this.stackInetAddress=InetAddress.getByName(stackAddress);
+}

@@ -1,0 +1,12 @@
+{
+  if (prefix_hash == 0) {
+    return false;
+  }
+  int idx=-1 * Arrays.binarySearch(hashes_idx,prefix_hash) - 1;
+  if (idx == cache_size) {
+    return false;
+  }
+ else {
+    return (hashes_idx[idx] & PREFIX_HASH_MASK) == prefix_hash;
+  }
+}

@@ -1,0 +1,3 @@
+{
+  concatenate(objList,false);
+}

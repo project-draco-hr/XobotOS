@@ -1,0 +1,14 @@
+{
+  super(in);
+  eof=false;
+  inputBuffer=new byte[BUFFER_SIZE];
+  if (encode) {
+    coder=new Base64.Encoder(flags,null);
+  }
+ else {
+    coder=new Base64.Decoder(flags,null);
+  }
+  coder.output=new byte[coder.maxOutputSize(BUFFER_SIZE)];
+  outputStart=0;
+  outputEnd=0;
+}

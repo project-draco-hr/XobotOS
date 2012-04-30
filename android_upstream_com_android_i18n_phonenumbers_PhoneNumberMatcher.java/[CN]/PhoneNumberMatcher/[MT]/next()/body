@@ -1,0 +1,9 @@
+{
+  if (!hasNext()) {
+    throw new NoSuchElementException();
+  }
+  PhoneNumberMatch result=lastMatch;
+  lastMatch=null;
+  state=State.NOT_READY;
+  return result;
+}

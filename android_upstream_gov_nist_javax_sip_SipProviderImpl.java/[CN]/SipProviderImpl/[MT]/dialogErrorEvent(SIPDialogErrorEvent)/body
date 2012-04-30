@@ -1,0 +1,15 @@
+{
+  SIPDialog sipDialog=(SIPDialog)dialogErrorEvent.getSource();
+  Reason reason=Reason.AckNotReceived;
+  if (dialogErrorEvent.getErrorID() == SIPDialogErrorEvent.DIALOG_ACK_NOT_SENT_TIMEOUT) {
+    reason=Reason.AckNotSent;
+  }
+ else   if (dialogErrorEvent.getErrorID() == SIPDialogErrorEvent.DIALOG_REINVITE_TIMEOUT) {
+    reason=Reason.ReInviteTimeout;
+  }
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("Dialog TimeoutError occured on " + sipDialog);
+  }
+  DialogTimeoutEvent ev=new DialogTimeoutEvent(this,sipDialog,reason);
+  this.handleEvent(ev,null);
+}

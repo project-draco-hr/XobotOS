@@ -1,0 +1,8 @@
+{
+  Pair<Integer,IBinder> pidPair=mServiceRecordToPid.get(handle);
+  if (pidPair != null && pid == pidPair.first) {
+    if (DBG)     Log.d(TAG,"Removing service record " + Integer.toHexString(handle) + " for pid "+ pid);
+    mServiceRecordToPid.remove(handle);
+    removeServiceRecordNative(handle);
+  }
+}

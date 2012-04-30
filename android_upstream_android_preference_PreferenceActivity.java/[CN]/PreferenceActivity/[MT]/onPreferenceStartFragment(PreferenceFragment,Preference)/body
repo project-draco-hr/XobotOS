@@ -1,0 +1,4 @@
+{
+  startPreferencePanel(pref.getFragment(),pref.getExtras(),pref.getTitleRes(),pref.getTitle(),null,0);
+  return true;
+}

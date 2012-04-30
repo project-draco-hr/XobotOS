@@ -1,0 +1,10 @@
+{
+  final ITypeBinding declaringType=binding.getDeclaringClass();
+  final AbstractTypeBinding typeBinding=my(BindingManager.class).resolveBinding(declaringType);
+  if ((typeBinding == null) || !(typeBinding instanceof EnumBinding))   return null;
+  EnumBinding enumBinding=(EnumBinding)typeBinding;
+  if ((enumBinding.getValueField() != null) && (binding.getName().equals(enumBinding.getValueField())))   return builder.mapExpression(binding.getType(),expr);
+  if (!Modifier.isStatic(binding.getModifiers()))   return null;
+  CSTypeReferenceExpression qualifier=new CSTypeReference(BindingUtils.qualifiedName(declaringType));
+  return new CSMemberReferenceExpression(qualifier,binding.getName());
+}

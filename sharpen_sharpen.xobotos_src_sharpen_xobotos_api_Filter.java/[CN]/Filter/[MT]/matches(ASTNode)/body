@@ -1,0 +1,4 @@
+{
+  if (!matchesInternal(node))   return Match.NO_MATCH;
+  return _exclude ? Match.NEGATIVE : Match.POSITIVE;
+}

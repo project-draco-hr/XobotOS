@@ -1,0 +1,16 @@
+{
+  super.showOnly(childIndex,animate);
+  for (int i=mCurrentWindowEnd; i >= mCurrentWindowStart; i--) {
+    int index=modulo(i,getWindowSize());
+    ViewAndMetaData vm=mViewsMap.get(index);
+    if (vm != null) {
+      View v=mViewsMap.get(index).view;
+      if (v != null)       v.bringToFront();
+    }
+  }
+  if (mHighlight != null) {
+    mHighlight.bringToFront();
+  }
+  mTransitionIsSetup=false;
+  mClickFeedbackIsValid=false;
+}

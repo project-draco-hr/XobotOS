@@ -1,0 +1,17 @@
+{
+  out.writeInt(mId);
+  out.writeString(mName);
+  out.writeInt(mSources);
+  out.writeInt(mKeyboardType);
+  final int numRanges=mMotionRanges.size();
+  for (int i=0; i < numRanges; i++) {
+    MotionRange range=mMotionRanges.get(i);
+    out.writeInt(range.mAxis);
+    out.writeInt(range.mSource);
+    out.writeFloat(range.mMin);
+    out.writeFloat(range.mMax);
+    out.writeFloat(range.mFlat);
+    out.writeFloat(range.mFuzz);
+  }
+  out.writeInt(-1);
+}

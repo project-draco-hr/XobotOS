@@ -1,0 +1,8 @@
+{
+  currentLexer=(Hashtable)lexerTables.get(lexerName);
+  if (currentLexer == null) {
+    currentLexer=new Hashtable();
+    lexerTables.put(lexerName,currentLexer);
+  }
+  return currentLexer;
+}

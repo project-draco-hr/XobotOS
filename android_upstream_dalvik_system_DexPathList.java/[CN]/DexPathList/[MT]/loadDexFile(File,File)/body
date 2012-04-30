@@ -1,0 +1,9 @@
+{
+  if (optimizedDirectory == null) {
+    return new DexFile(file);
+  }
+ else {
+    String optimizedPath=optimizedPathFor(file,optimizedDirectory);
+    return DexFile.loadDex(file.getPath(),optimizedPath,0);
+  }
+}

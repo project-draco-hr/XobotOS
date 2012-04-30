@@ -1,0 +1,66 @@
+def Load(build_files, variables, includes, depth, generator_input_info, check, circular_check):
+    global path_sections
+    path_sections = base_path_sections[:]
+    path_sections.extend(generator_input_info['path_sections'])
+    global non_configuration_keys
+    non_configuration_keys = base_non_configuration_keys[:]
+    non_configuration_keys.extend(generator_input_info['non_configuration_keys'])
+    generator_handles_variants = generator_input_info['generator_handles_variants']
+    global absolute_build_file_paths
+    absolute_build_file_paths = generator_input_info['generator_wants_absolute_build_file_paths']
+    global multiple_toolsets
+    multiple_toolsets = generator_input_info['generator_supports_multiple_toolsets']
+    extra_sources_for_rules = generator_input_info['extra_sources_for_rules']
+    data = {'target_build_files': set(), }
+    aux_data = {}
+    for build_file in build_files:
+        build_file = os.path.normpath(build_file)
+        try:
+            LoadTargetBuildFile(build_file, data, aux_data, variables, includes, depth, check)
+        except Exception as e:
+            gyp.common.ExceptionAppend(e, ('while trying to load %s' % build_file))
+            raise
+    targets = BuildTargetsDict(data)
+    QualifyDependencies(targets)
+    ExpandWildcardDependencies(targets, data)
+    for (target_name, target_dict) in targets.iteritems():
+        tmp_dict = {}
+        for key_base in dependency_sections:
+            for op in ('', '!', '/'):
+                key = (key_base + op)
+                if (key in target_dict):
+                    tmp_dict[key] = target_dict[key]
+                    del target_dict[key]
+        ProcessListFiltersInDict(target_name, tmp_dict)
+        for key in tmp_dict:
+            target_dict[key] = tmp_dict[key]
+    if circular_check:
+        VerifyNoGYPFileCircularDependencies(targets)
+    [dependency_nodes, flat_list] = BuildDependencyList(targets)
+    VerifyNoCollidingTargets(flat_list)
+    for settings_type in ['all_dependent_settings', 'direct_dependent_settings', 'link_settings']:
+        DoDependentSettings(settings_type, flat_list, targets, dependency_nodes)
+        for target in flat_list:
+            if (settings_type in targets[target]):
+                del targets[target][settings_type]
+    gii = generator_input_info
+    if gii['generator_wants_static_library_dependencies_adjusted']:
+        AdjustStaticLibraryDependencies(flat_list, targets, dependency_nodes, gii['generator_wants_sorted_dependencies'])
+    for target in flat_list:
+        target_dict = targets[target]
+        build_file = gyp.common.BuildFile(target)
+        ProcessVariablesAndConditionsInDict(target_dict, True, variables, build_file)
+    for target in flat_list:
+        target_dict = targets[target]
+        SetUpConfigurations(target, target_dict)
+    for target in flat_list:
+        target_dict = targets[target]
+        ProcessListFiltersInDict(target, target_dict)
+    for target in flat_list:
+        target_dict = targets[target]
+        build_file = gyp.common.BuildFile(target)
+        ValidateRulesInTarget(target, target_dict, extra_sources_for_rules)
+        ValidateRunAsInTarget(target, target_dict, build_file)
+        ValidateActionsInTarget(target, target_dict, build_file)
+    TurnIntIntoStrInDict(data)
+    return [flat_list, targets, data]

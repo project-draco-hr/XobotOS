@@ -1,0 +1,20 @@
+{
+  PhoneNumber copiedProto;
+  if (number.hasExtension()) {
+    copiedProto=new PhoneNumber();
+    copiedProto.mergeFrom(number);
+    copiedProto.clearExtension();
+  }
+ else {
+    copiedProto=number;
+  }
+  String nationalSignificantNumber=format(copiedProto,PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
+  String[] numberGroups=NON_DIGITS_PATTERN.split(nationalSignificantNumber);
+  if (numberGroups.length <= 3) {
+    return 0;
+  }
+  if (getRegionCodeForNumber(number).equals("AR") && getNumberType(number) == PhoneNumberType.MOBILE) {
+    return numberGroups[3].length() + 1;
+  }
+  return numberGroups[2].length();
+}

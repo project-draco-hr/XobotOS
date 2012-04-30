@@ -1,0 +1,5 @@
+{
+  ExtensionHeaderList retval=new ExtensionHeaderList(headerName);
+  retval.clonehlist(this.hlist);
+  return retval;
+}

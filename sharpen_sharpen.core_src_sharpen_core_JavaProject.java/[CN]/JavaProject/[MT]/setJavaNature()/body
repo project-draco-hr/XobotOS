@@ -1,0 +1,3 @@
+{
+  addNature(JavaCore.NATURE_ID);
+}

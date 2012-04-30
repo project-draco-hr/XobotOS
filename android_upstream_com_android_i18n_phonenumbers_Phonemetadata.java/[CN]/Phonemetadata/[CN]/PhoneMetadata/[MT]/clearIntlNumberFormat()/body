@@ -1,0 +1,4 @@
+{
+  intlNumberFormat_.clear();
+  return this;
+}

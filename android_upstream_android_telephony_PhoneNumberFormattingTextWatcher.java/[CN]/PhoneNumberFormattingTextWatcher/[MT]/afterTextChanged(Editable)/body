@@ -1,0 +1,19 @@
+{
+  if (mStopFormatting) {
+    mStopFormatting=!(s.length() == 0);
+    return;
+  }
+  if (mSelfChange) {
+    return;
+  }
+  String formatted=reformat(s,Selection.getSelectionEnd(s));
+  if (formatted != null) {
+    int rememberedPos=mFormatter.getRememberedPosition();
+    mSelfChange=true;
+    s.replace(0,s.length(),formatted,0,formatted.length());
+    if (formatted.equals(s.toString())) {
+      Selection.setSelection(s,rememberedPos);
+    }
+    mSelfChange=false;
+  }
+}

@@ -1,0 +1,23 @@
+{
+  ObjectStreamClass classDesc=readEnumDesc();
+  int newHandle=nextHandle();
+  String name;
+  byte tc=nextTC();
+switch (tc) {
+case TC_REFERENCE:
+    if (unshared) {
+      readNewHandle();
+      throw new InvalidObjectException("Unshared read of back reference");
+    }
+  name=(String)readCyclicReference();
+break;
+case TC_STRING:
+name=(String)readNewString(unshared);
+break;
+default :
+throw corruptStream(tc);
+}
+Enum<?> result=Enum.valueOf((Class)classDesc.forClass(),name);
+registerObjectRead(result,newHandle,unshared);
+return result;
+}

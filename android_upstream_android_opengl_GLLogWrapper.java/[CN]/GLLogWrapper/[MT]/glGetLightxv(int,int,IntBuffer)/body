@@ -1,0 +1,9 @@
+{
+  begin("glGetLightxv");
+  arg("light",light);
+  arg("pname",pname);
+  arg("params",params.toString());
+  end();
+  mgl11.glGetLightxv(light,pname,params);
+  checkError();
+}

@@ -1,0 +1,2 @@
+ArrayList<String> lines
+BufferedReader reader

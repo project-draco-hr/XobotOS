@@ -1,0 +1,6 @@
+{
+  Environment e=new Environment();
+  for (  final Class<?> klass : _variables.keySet())   e.add(_variables.get(klass),klass);
+  for (  final Object var : variables)   e.add(var);
+  return e;
+}

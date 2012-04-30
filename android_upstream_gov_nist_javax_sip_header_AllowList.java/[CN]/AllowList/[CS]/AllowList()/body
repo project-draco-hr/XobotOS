@@ -1,0 +1,3 @@
+{
+  super(Allow.class,AllowHeader.NAME);
+}

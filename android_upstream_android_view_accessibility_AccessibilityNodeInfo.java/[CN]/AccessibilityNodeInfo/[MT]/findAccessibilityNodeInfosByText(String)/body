@@ -1,0 +1,8 @@
+{
+  enforceSealed();
+  if (!canPerformRequestOverConnection(mAccessibilityViewId)) {
+    return Collections.emptyList();
+  }
+  AccessibilityInteractionClient client=AccessibilityInteractionClient.getInstance();
+  return client.findAccessibilityNodeInfosByViewText(mConnection,text,mAccessibilityWindowId,mAccessibilityViewId);
+}

@@ -1,0 +1,3 @@
+{
+  setZField(object,declaringClass,type,slot,flag,TYPE_BOOLEAN,value);
+}

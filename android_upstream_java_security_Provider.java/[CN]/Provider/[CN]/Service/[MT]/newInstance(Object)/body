@@ -1,0 +1,40 @@
+{
+  if (implementation == null || !className.equals(lastClassName)) {
+    ClassLoader cl=provider.getClass().getClassLoader();
+    if (cl == null) {
+      cl=ClassLoader.getSystemClassLoader();
+    }
+    try {
+      implementation=Class.forName(className,true,cl);
+      lastClassName=className;
+    }
+ catch (    Exception e) {
+      throw new NoSuchAlgorithmException(type + " " + algorithm+ " implementation not found: "+ e);
+    }
+  }
+  if (constructorParameter == null) {
+    try {
+      return implementation.newInstance();
+    }
+ catch (    Exception e) {
+      throw new NoSuchAlgorithmException(type + " " + algorithm+ " implementation not found",e);
+    }
+  }
+  if (!supportsParameter(constructorParameter)) {
+    throw new InvalidParameterException(type + ": service cannot use the parameter");
+  }
+  Class[] parameterTypes=new Class[1];
+  Object[] initargs={constructorParameter};
+  try {
+    if (type.equalsIgnoreCase("CertStore")) {
+      parameterTypes[0]=Class.forName("java.security.cert.CertStoreParameters");
+    }
+ else {
+      parameterTypes[0]=constructorParameter.getClass();
+    }
+    return implementation.getConstructor(parameterTypes).newInstance(initargs);
+  }
+ catch (  Exception e) {
+    throw new NoSuchAlgorithmException(type + " " + algorithm+ " implementation not found",e);
+  }
+}

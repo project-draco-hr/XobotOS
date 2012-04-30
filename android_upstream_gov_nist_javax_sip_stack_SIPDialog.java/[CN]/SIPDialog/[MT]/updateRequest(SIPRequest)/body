@@ -1,0 +1,12 @@
+{
+  RouteList rl=this.getRouteList();
+  if (rl.size() > 0) {
+    sipRequest.setHeader(rl);
+  }
+ else {
+    sipRequest.removeHeader(RouteHeader.NAME);
+  }
+  if (MessageFactoryImpl.getDefaultUserAgentHeader() != null) {
+    sipRequest.setHeader(MessageFactoryImpl.getDefaultUserAgentHeader());
+  }
+}

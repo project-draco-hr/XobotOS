@@ -1,0 +1,10 @@
+{
+  getMediaItem().getNativeContext().setGeneratePreview(true);
+  invalidate();
+  mBitmap=bitmap;
+  if (mFilename != null) {
+    new File(mFilename).delete();
+    mFilename=null;
+  }
+  getMediaItem().invalidateTransitions(mStartTimeMs,mDurationMs);
+}

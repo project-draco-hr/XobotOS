@@ -1,0 +1,11 @@
+@memoize
+def RelativePath(path, relative_to):
+    path = os.path.abspath(path)
+    relative_to = os.path.abspath(relative_to)
+    path_split = path.split(os.path.sep)
+    relative_to_split = relative_to.split(os.path.sep)
+    prefix_len = len(os.path.commonprefix([path_split, relative_to_split]))
+    relative_split = (([os.path.pardir] * (len(relative_to_split) - prefix_len)) + path_split[prefix_len:])
+    if (len(relative_split) == 0):
+        return ''
+    return os.path.join(*relative_split)

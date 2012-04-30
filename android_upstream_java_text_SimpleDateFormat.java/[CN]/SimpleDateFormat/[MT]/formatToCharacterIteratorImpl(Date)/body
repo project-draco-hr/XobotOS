@@ -1,0 +1,11 @@
+{
+  StringBuffer buffer=new StringBuffer();
+  ArrayList<FieldPosition> fields=new ArrayList<FieldPosition>();
+  formatImpl(date,buffer,null,fields);
+  AttributedString as=new AttributedString(buffer.toString());
+  for (  FieldPosition pos : fields) {
+    Format.Field attribute=pos.getFieldAttribute();
+    as.addAttribute(attribute,attribute,pos.getBeginIndex(),pos.getEndIndex());
+  }
+  return as.getIterator();
+}

@@ -1,0 +1,17 @@
+{
+  char normalizedChar;
+  if (nextChar == PhoneNumberUtil.PLUS_SIGN) {
+    normalizedChar=nextChar;
+    accruedInputWithoutFormatting.append(nextChar);
+  }
+ else {
+    int radix=10;
+    normalizedChar=Character.forDigit(Character.digit(nextChar,radix),radix);
+    accruedInputWithoutFormatting.append(normalizedChar);
+    nationalNumber.append(normalizedChar);
+  }
+  if (rememberPosition) {
+    positionToRemember=accruedInputWithoutFormatting.length();
+  }
+  return normalizedChar;
+}

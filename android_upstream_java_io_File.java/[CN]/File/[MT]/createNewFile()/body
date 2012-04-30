@@ -1,0 +1,16 @@
+{
+  FileDescriptor fd=null;
+  try {
+    fd=Libcore.os.open(path,O_RDWR | O_CREAT | O_EXCL,0600);
+    return true;
+  }
+ catch (  ErrnoException errnoException) {
+    if (errnoException.errno == EEXIST) {
+      return false;
+    }
+    throw errnoException.rethrowAsIOException();
+  }
+ finally {
+    IoUtils.close(fd);
+  }
+}

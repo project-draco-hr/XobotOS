@@ -1,0 +1,6 @@
+def write(self, file, content, mode='wb'):
+    "Writes the specified content text (second argument) to the\n        specified file name (first argument).  The file name may be\n        a list, in which case the elements are concatenated with the\n        os.path.join() method.  The file is created under the temporary\n        working directory.  Any subdirectories in the path must already\n        exist.  The I/O mode for the file may be specified; it must\n        begin with a 'w'.  The default is 'wb' (binary write).\n        "
+    file = self.canonicalize(file)
+    if (mode[0] != 'w'):
+        raise ValueError, "mode must begin with 'w'"
+    open(file, mode).write(content)

@@ -1,0 +1,38 @@
+{
+  String response=null;
+  String qopList=authHeader.getQop();
+  String qop=(qopList != null) ? "auth" : null;
+  String nc_value="00000001";
+  String cnonce="xyz";
+  response=MessageDigestAlgorithm.calculateResponse(authHeader.getAlgorithm(),userCredentials.getHashUserDomainPassword(),authHeader.getNonce(),nc_value,cnonce,method,uri,requestBody,qop,sipStack.getStackLogger());
+  AuthorizationHeader authorization=null;
+  try {
+    if (authHeader instanceof ProxyAuthenticateHeader) {
+      authorization=headerFactory.createProxyAuthorizationHeader(authHeader.getScheme());
+    }
+ else {
+      authorization=headerFactory.createAuthorizationHeader(authHeader.getScheme());
+    }
+    authorization.setUsername(userCredentials.getUserName());
+    authorization.setRealm(authHeader.getRealm());
+    authorization.setNonce(authHeader.getNonce());
+    authorization.setParameter("uri",uri);
+    authorization.setResponse(response);
+    if (authHeader.getAlgorithm() != null) {
+      authorization.setAlgorithm(authHeader.getAlgorithm());
+    }
+    if (authHeader.getOpaque() != null) {
+      authorization.setOpaque(authHeader.getOpaque());
+    }
+    if (qop != null) {
+      authorization.setQop(qop);
+      authorization.setCNonce(cnonce);
+      authorization.setNonceCount(Integer.parseInt(nc_value));
+    }
+    authorization.setResponse(response);
+  }
+ catch (  ParseException ex) {
+    throw new RuntimeException("Failed to create an authorization header!");
+  }
+  return authorization;
+}

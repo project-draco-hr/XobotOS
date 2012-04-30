@@ -1,0 +1,6 @@
+{
+  if (outParameter == null) {
+    throw new IllegalArgumentException("outParameter must not be null");
+  }
+  nativeTransferTo(outParameter);
+}

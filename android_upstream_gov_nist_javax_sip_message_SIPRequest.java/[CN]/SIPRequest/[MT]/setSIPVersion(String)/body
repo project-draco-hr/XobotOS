@@ -1,0 +1,4 @@
+{
+  if (sipVersion == null || !sipVersion.equalsIgnoreCase("SIP/2.0"))   throw new ParseException("sipVersion",0);
+  this.requestLine.setSipVersion(sipVersion);
+}

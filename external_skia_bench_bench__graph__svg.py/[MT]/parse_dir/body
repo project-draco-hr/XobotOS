@@ -1,0 +1,18 @@
+def parse_dir(directory, default_settings, oldest_revision, newest_revision):
+    'Parses bench data from files like bench_r<revision>_<scalar>.\n    \n    (str, {str, str}, Number, Number) -> {int:[BenchDataPoints]}'
+    revision_data_points = {}
+    for bench_file in os.listdir(directory):
+        file_name_match = re.match('bench_r(\\d+)_(\\S+)', bench_file)
+        if (file_name_match is None):
+            continue
+        revision = int(file_name_match.group(1))
+        scalar_type = file_name_match.group(2)
+        if ((revision < oldest_revision) or (revision > newest_revision)):
+            continue
+        file_handle = open(((directory + '/') + bench_file), 'r')
+        if (revision not in revision_data_points):
+            revision_data_points[revision] = []
+        default_settings['scalar'] = scalar_type
+        revision_data_points[revision].extend(bench_util.parse(default_settings, file_handle))
+        file_handle.close()
+    return revision_data_points

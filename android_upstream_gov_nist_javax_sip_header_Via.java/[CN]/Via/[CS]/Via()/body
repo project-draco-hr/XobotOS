@@ -1,0 +1,4 @@
+{
+  super(NAME);
+  sentProtocol=new Protocol();
+}

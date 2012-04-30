@@ -1,0 +1,4 @@
+{
+  setFlag(FLAG_AUTO_CANCEL,autoCancel);
+  return this;
+}

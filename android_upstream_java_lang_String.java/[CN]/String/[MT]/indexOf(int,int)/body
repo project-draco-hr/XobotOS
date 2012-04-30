@@ -1,0 +1,6 @@
+{
+  if (c > 0xffff) {
+    return indexOfSupplementary(c,start);
+  }
+  return fastIndexOf(c,start);
+}

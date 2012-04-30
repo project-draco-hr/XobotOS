@@ -1,0 +1,8 @@
+{
+  logger.parent=newParent;
+  if (logger.levelObjVal == null) {
+    setLevelRecursively(logger,null);
+  }
+  newParent.children.add(logger);
+  logger.updateDalvikLogHandler();
+}

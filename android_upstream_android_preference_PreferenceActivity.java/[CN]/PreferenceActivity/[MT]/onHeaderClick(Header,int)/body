@@ -1,0 +1,19 @@
+{
+  if (header.fragment != null) {
+    if (mSinglePane) {
+      int titleRes=header.breadCrumbTitleRes;
+      int shortTitleRes=header.breadCrumbShortTitleRes;
+      if (titleRes == 0) {
+        titleRes=header.titleRes;
+        shortTitleRes=0;
+      }
+      startWithFragment(header.fragment,header.fragmentArguments,null,0,titleRes,shortTitleRes);
+    }
+ else {
+      switchToHeader(header);
+    }
+  }
+ else   if (header.intent != null) {
+    startActivity(header.intent);
+  }
+}

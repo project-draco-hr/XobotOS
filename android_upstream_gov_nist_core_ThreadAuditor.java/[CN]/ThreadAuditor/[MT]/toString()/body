@@ -1,0 +1,9 @@
+{
+  String toString="Thread Auditor - List of monitored threads:\n";
+  Iterator<ThreadHandle> it=threadHandles.values().iterator();
+  while (it.hasNext()) {
+    ThreadHandle threadHandle=(ThreadHandle)it.next();
+    toString+="   " + threadHandle.toString() + "\n";
+  }
+  return toString;
+}

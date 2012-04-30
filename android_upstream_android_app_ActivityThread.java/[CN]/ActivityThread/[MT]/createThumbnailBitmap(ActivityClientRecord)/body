@@ -1,0 +1,40 @@
+{
+  Bitmap thumbnail=mAvailThumbnailBitmap;
+  try {
+    if (thumbnail == null) {
+      int w=mThumbnailWidth;
+      int h;
+      if (w < 0) {
+        Resources res=r.activity.getResources();
+        mThumbnailHeight=h=res.getDimensionPixelSize(com.android.internal.R.dimen.thumbnail_height);
+        mThumbnailWidth=w=res.getDimensionPixelSize(com.android.internal.R.dimen.thumbnail_width);
+      }
+ else {
+        h=mThumbnailHeight;
+      }
+      if ((w > 0) && (h > 0)) {
+        thumbnail=Bitmap.createBitmap(w,h,THUMBNAIL_FORMAT);
+        thumbnail.eraseColor(0);
+      }
+    }
+    if (thumbnail != null) {
+      Canvas cv=mThumbnailCanvas;
+      if (cv == null) {
+        mThumbnailCanvas=cv=new Canvas();
+      }
+      cv.setBitmap(thumbnail);
+      if (!r.activity.onCreateThumbnail(thumbnail,cv)) {
+        mAvailThumbnailBitmap=thumbnail;
+        thumbnail=null;
+      }
+      cv.setBitmap(null);
+    }
+  }
+ catch (  Exception e) {
+    if (!mInstrumentation.onException(r.activity,e)) {
+      throw new RuntimeException("Unable to create thumbnail of " + r.intent.getComponent().toShortString() + ": "+ e.toString(),e);
+    }
+    thumbnail=null;
+  }
+  return thumbnail;
+}

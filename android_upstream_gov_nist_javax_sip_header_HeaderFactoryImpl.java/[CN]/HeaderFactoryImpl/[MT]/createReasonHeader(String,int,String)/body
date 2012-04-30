@@ -1,0 +1,9 @@
+{
+  if (protocol == null)   throw new NullPointerException("bad protocol arg");
+  if (cause < 0)   throw new InvalidArgumentException("bad cause");
+  Reason reason=new Reason();
+  reason.setProtocol(protocol);
+  reason.setCause(cause);
+  reason.setText(text);
+  return reason;
+}

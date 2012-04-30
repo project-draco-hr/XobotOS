@@ -1,0 +1,3 @@
+{
+  getDevicePolicyManager().reportSuccessfulPasswordAttempt();
+}

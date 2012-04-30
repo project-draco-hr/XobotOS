@@ -1,0 +1,7 @@
+{
+synchronized (messageProcessors) {
+    if (messageProcessors.remove(oldMessageProcessor)) {
+      oldMessageProcessor.stop();
+    }
+  }
+}

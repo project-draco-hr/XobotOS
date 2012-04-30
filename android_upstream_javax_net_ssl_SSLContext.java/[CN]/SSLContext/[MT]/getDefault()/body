@@ -1,0 +1,8 @@
+{
+synchronized (ENGINE) {
+    if (DEFAULT == null) {
+      DEFAULT=SSLContext.getInstance("Default");
+    }
+    return DEFAULT;
+  }
+}

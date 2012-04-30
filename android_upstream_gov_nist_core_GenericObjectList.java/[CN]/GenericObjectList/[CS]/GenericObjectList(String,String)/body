@@ -1,0 +1,9 @@
+{
+  this(lname);
+  try {
+    myClass=Class.forName(classname);
+  }
+ catch (  ClassNotFoundException ex) {
+    InternalErrorHandler.handleException(ex);
+  }
+}

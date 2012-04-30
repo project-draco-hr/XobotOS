@@ -1,0 +1,9 @@
+{
+  if (addressType == IPV6ADDRESS && !isIPv6Reference(hostname)) {
+    buffer.append('[').append(hostname).append(']');
+  }
+ else {
+    buffer.append(hostname);
+  }
+  return buffer;
+}

@@ -1,0 +1,8 @@
+{
+  int slash=name_and_version.indexOf('/');
+  if (slash > 0) {
+    this.protocolName=name_and_version.substring(0,slash);
+    this.protocolVersion=name_and_version.substring(slash + 1);
+  }
+ else   throw new ParseException("Missing '/' in protocol",0);
+}

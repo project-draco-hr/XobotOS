@@ -1,0 +1,11 @@
+{
+  if (userInfo != null) {
+    userInfo.encode(buffer);
+    buffer.append(AT);
+    hostPort.encode(buffer);
+  }
+ else {
+    hostPort.encode(buffer);
+  }
+  return buffer;
+}

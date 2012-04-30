@@ -1,0 +1,10 @@
+{
+  if (!isShown()) {
+    return;
+  }
+  onInitializeAccessibilityEvent(event);
+  if ((event.getEventType() & POPULATING_ACCESSIBILITY_EVENT_TYPES) != 0) {
+    dispatchPopulateAccessibilityEvent(event);
+  }
+  getParent().requestSendAccessibilityEvent(this,event);
+}

@@ -1,0 +1,5 @@
+{
+  if (this.eventScanner == null) {
+    this.eventScanner=new EventScanner(this);
+  }
+}

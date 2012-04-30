@@ -1,0 +1,4 @@
+String resName
+String cacheDir
+byte[] script
+int length

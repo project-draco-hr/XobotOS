@@ -1,0 +1,7 @@
+{
+  Annotation[][] parameterAnnotations=getParameterAnnotations(declaringClass,slot);
+  if (parameterAnnotations.length == 0) {
+    return noAnnotations(parameterTypes.length);
+  }
+  return parameterAnnotations;
+}

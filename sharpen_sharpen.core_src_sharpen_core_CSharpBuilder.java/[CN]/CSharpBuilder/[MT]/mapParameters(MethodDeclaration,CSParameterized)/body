@@ -1,0 +1,9 @@
+{
+  if (method instanceof CSMethod) {
+    mapMethodParameters(node,(CSMethod)method);
+    return;
+  }
+  for (  Object p : node.parameters()) {
+    mapParameter((SingleVariableDeclaration)p,method);
+  }
+}

@@ -1,0 +1,6 @@
+{
+  ScopeEntry scope;
+  if (_scopeStack.size() > 0)   scope=new ScopeEntry(_scopeStack.peek());
+ else   scope=new ScopeEntry();
+  _scopeStack.push(scope);
+}

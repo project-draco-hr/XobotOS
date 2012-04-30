@@ -1,0 +1,11 @@
+{
+  int id=readId();
+  if (id == 0) {
+    return null;
+  }
+  String string=idToString.get(id);
+  if (string == null) {
+    throw new MalformedHprofException("Unknown string id " + id);
+  }
+  return string;
+}

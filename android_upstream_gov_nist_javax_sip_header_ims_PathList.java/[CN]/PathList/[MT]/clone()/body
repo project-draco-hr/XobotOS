@@ -1,0 +1,4 @@
+{
+  PathList retval=new PathList();
+  return retval.clonehlist(this.hlist);
+}

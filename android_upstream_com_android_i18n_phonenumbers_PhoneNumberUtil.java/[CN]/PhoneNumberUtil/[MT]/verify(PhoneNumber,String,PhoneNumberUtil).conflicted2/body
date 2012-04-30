@@ -1,0 +1,6 @@
+{
+  if (!util.isValidNumber(number)) {
+    return false;
+  }
+  return containsOnlyValidXChars(number,candidate,util);
+}

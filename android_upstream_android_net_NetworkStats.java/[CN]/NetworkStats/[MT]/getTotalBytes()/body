@@ -1,0 +1,4 @@
+{
+  final Entry entry=getTotal(null);
+  return entry.rxBytes + entry.txBytes;
+}

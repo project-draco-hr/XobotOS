@@ -1,0 +1,15 @@
+{
+  if (charCount <= 0) {
+    return 0;
+  }
+  int numskipped;
+  if (this.count - pos < charCount) {
+    numskipped=this.count - pos;
+    pos=this.count;
+  }
+ else {
+    numskipped=(int)charCount;
+    pos+=charCount;
+  }
+  return numskipped;
+}

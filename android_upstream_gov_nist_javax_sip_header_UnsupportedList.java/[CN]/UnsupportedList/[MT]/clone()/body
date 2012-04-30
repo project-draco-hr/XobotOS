@@ -1,0 +1,4 @@
+{
+  UnsupportedList retval=new UnsupportedList();
+  return retval.clonehlist(this.hlist);
+}

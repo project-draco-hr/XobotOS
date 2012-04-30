@@ -1,0 +1,20 @@
+{
+  boolean retValue=false;
+  setTeardownRequested(false);
+switch (setEnableApn(mApnType,true)) {
+case Phone.APN_ALREADY_ACTIVE:
+    retValue=true;
+  break;
+case Phone.APN_REQUEST_STARTED:
+mNetworkInfo.setDetailedState(DetailedState.IDLE,null,null);
+retValue=true;
+break;
+case Phone.APN_REQUEST_FAILED:
+case Phone.APN_TYPE_NOT_AVAILABLE:
+break;
+default :
+loge("Error in reconnect - unexpected response.");
+break;
+}
+return retValue;
+}

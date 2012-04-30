@@ -1,0 +1,15 @@
+{
+  if (this.os != null) {
+    try {
+      if (this.writer != null) {
+        this.writer.flush();
+      }
+ else {
+        this.os.flush();
+      }
+    }
+ catch (    Exception e) {
+      getErrorManager().error("Exception occurred when flushing the output stream",e,ErrorManager.FLUSH_FAILURE);
+    }
+  }
+}

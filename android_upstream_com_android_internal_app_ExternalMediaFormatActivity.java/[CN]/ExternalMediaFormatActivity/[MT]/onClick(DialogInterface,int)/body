@@ -1,0 +1,8 @@
+{
+  if (which == POSITIVE_BUTTON) {
+    Intent intent=new Intent(ExternalStorageFormatter.FORMAT_ONLY);
+    intent.setComponent(ExternalStorageFormatter.COMPONENT_NAME);
+    startService(intent);
+  }
+  finish();
+}

@@ -1,0 +1,13 @@
+{
+  if (digits > 0) {
+    return bits << digits;
+  }
+  long absDigits=-digits;
+  if (Long.numberOfLeadingZeros(bits & ~Double.SIGN_MASK) <= (64 - absDigits)) {
+    if ((((bits >> (absDigits - 1)) & 0x1) == 0) || Long.numberOfTrailingZeros(bits) == (absDigits - 1)) {
+      return bits >> absDigits;
+    }
+    return ((bits >> absDigits) + 1);
+  }
+  return 0;
+}

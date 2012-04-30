@@ -1,0 +1,10 @@
+{
+  CSAnonymousClassBuilder builder=new CSAnonymousClassBuilder(this,node);
+  if (builder.isEnclosingReferenceRequired()) {
+    requireEnclosingReference();
+  }
+  captureNeededVariables(builder);
+  pushExpression(builder.createConstructorInvocation());
+  _currentType.addMember(builder.type());
+  return false;
+}

@@ -1,0 +1,10 @@
+{
+  if (null == node) {
+    return;
+  }
+  CSBlock saved=_currentBlock;
+  _currentBlock=block;
+  _currentContinueLabel=null;
+  node.accept(this);
+  _currentBlock=saved;
+}

@@ -1,0 +1,3 @@
+{
+  return new ReadOnlyHeapByteBuffer(backingArray,remaining(),offset + position);
+}

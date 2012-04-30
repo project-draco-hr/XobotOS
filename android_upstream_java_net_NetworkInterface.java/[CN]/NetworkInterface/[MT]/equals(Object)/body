@@ -1,0 +1,10 @@
+{
+  if (obj == this) {
+    return true;
+  }
+  if (!(obj instanceof NetworkInterface)) {
+    return false;
+  }
+  NetworkInterface rhs=(NetworkInterface)obj;
+  return interfaceIndex == rhs.interfaceIndex && name.equals(rhs.name) && addresses.equals(rhs.addresses);
+}

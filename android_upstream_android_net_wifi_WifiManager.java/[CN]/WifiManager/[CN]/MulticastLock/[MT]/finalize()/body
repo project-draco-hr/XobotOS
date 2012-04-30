@@ -1,0 +1,5 @@
+{
+  super.finalize();
+  setReferenceCounted(false);
+  release();
+}

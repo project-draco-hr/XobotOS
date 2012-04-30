@@ -1,0 +1,4 @@
+def symlink(self, target, link):
+    'Creates a symlink to the specified target.\n        The link name may be a list, in which case the elements are\n        concatenated with the os.path.join() method.  The link is\n        assumed to be under the temporary working directory unless it\n        is an absolute path name. The target is *not* assumed to be\n        under the temporary working directory.\n        '
+    link = self.canonicalize(link)
+    os.symlink(target, link)

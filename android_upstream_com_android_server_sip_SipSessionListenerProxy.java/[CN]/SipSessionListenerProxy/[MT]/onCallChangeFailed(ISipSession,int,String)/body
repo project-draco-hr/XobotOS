@@ -1,0 +1,14 @@
+{
+  if (mListener == null)   return;
+  proxy(new Runnable(){
+    public void run(){
+      try {
+        mListener.onCallChangeFailed(session,errorCode,message);
+      }
+ catch (      Throwable t) {
+        handle(t,"onCallChangeFailed()");
+      }
+    }
+  }
+);
+}

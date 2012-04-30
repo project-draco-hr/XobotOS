@@ -1,0 +1,5 @@
+{
+  this._operator=op;
+  this._left=left;
+  this._right=right;
+}

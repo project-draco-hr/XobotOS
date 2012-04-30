@@ -1,0 +1,4 @@
+{
+  pushScope();
+  return super.visit(node);
+}

@@ -1,0 +1,4 @@
+{
+  this.tlsMessageChannel=tlsMessageChannel;
+  tlsMessageChannel.setHandshakeCompletedListener(this);
+}

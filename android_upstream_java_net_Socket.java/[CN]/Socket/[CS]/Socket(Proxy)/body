@@ -1,0 +1,7 @@
+{
+  if (proxy == null || proxy.type() == Proxy.Type.HTTP) {
+    throw new IllegalArgumentException("Invalid proxy: " + proxy);
+  }
+  this.proxy=proxy;
+  this.impl=factory != null ? factory.createSocketImpl() : new PlainSocketImpl(proxy);
+}

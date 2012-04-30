@@ -1,0 +1,10 @@
+{
+  mPlayer=new MediaPlayer();
+  mCurrentState=STATE_INITIALIZED;
+  mProxy=null;
+  mVideoLayerId=videoLayerId;
+  mSaveSeekTime=position;
+  mAutostart=autoStart;
+  mTimer=null;
+  mPauseDuringPreparing=false;
+}

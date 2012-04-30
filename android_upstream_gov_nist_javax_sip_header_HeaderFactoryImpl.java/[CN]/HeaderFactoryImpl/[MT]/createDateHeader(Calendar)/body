@@ -1,0 +1,6 @@
+{
+  SIPDateHeader d=new SIPDateHeader();
+  if (date == null)   throw new NullPointerException("null date");
+  d.setDate(date);
+  return d;
+}

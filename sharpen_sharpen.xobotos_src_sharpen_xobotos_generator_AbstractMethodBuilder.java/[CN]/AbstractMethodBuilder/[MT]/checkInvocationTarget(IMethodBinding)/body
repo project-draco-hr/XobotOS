@@ -1,0 +1,19 @@
+{
+  if (!BindingManager.reportStubUsage())   return;
+  final IMethodBinding current=getASTNode().resolveBinding();
+  final BindingManager.MethodEntry entry=my(BindingManager.class).lookupMethod(binding);
+  if ((entry == null) || (entry.Output == null)) {
+    Sharpen.Debug("[%s]: Cannot lookup target method for invocation '%s'",BindingUtils.qualifiedSignature(current),BindingUtils.qualifiedSignature(binding));
+    return;
+  }
+  if (getOutputMode() != OutputMode.SHARPEN)   return;
+  if (entry.Output.getMode() == OutputMode.SHARPEN)   return;
+  if (_invocationTargets == null)   _invocationTargets=new ArrayList<IMethodBinding>();
+  if (_invocationTargets.contains(binding))   return;
+  Sharpen.Debug("[%s]: Invoking non-sharpened method '%s'",BindingUtils.qualifiedSignature(current),BindingUtils.qualifiedSignature(binding));
+  CSAttribute attr=new CSAttribute("Sharpen.UsesStub");
+  String escaped="@\"" + BindingUtils.qualifiedSignature(binding) + "\"";
+  attr.addArgument(new CSStringLiteralExpression(escaped));
+  getMember().addAttribute(attr);
+  _invocationTargets.add(binding);
+}

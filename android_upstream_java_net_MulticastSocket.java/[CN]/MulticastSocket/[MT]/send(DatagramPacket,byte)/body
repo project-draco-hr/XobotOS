@@ -1,0 +1,17 @@
+{
+  checkOpen();
+  InetAddress packAddr=packet.getAddress();
+  int currTTL=getTimeToLive();
+  if (packAddr.isMulticastAddress() && (byte)currTTL != ttl) {
+    try {
+      setTimeToLive(ttl & 0xff);
+      impl.send(packet);
+    }
+  finally {
+      setTimeToLive(currTTL);
+    }
+  }
+ else {
+    impl.send(packet);
+  }
+}

@@ -1,0 +1,6 @@
+{
+  if (ecfAddress == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Charging-Function-Addresses, setEventChargingFunctionAddress(), the ecfAddress parameter is null.");
+  if (!this.delete(ecfAddress,ParameterNamesIms.ECF)) {
+    throw new java.text.ParseException("ECF Address Not Removed",0);
+  }
+}

@@ -1,0 +1,7 @@
+{
+  this._var=var;
+  this._init=init;
+  this._check=check;
+  this._update=update;
+  this._body=new Block();
+}

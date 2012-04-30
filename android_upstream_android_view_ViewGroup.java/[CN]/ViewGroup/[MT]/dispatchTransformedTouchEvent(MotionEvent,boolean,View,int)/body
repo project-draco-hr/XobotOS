@@ -1,0 +1,54 @@
+{
+  final boolean handled;
+  final int oldAction=event.getAction();
+  if (cancel || oldAction == MotionEvent.ACTION_CANCEL) {
+    event.setAction(MotionEvent.ACTION_CANCEL);
+    if (child == null) {
+      handled=super.dispatchTouchEvent(event);
+    }
+ else {
+      handled=child.dispatchTouchEvent(event);
+    }
+    event.setAction(oldAction);
+    return handled;
+  }
+  final int oldPointerIdBits=event.getPointerIdBits();
+  final int newPointerIdBits=oldPointerIdBits & desiredPointerIdBits;
+  if (newPointerIdBits == 0) {
+    return false;
+  }
+  final MotionEvent transformedEvent;
+  if (newPointerIdBits == oldPointerIdBits) {
+    if (child == null || child.hasIdentityMatrix()) {
+      if (child == null) {
+        handled=super.dispatchTouchEvent(event);
+      }
+ else {
+        final float offsetX=mScrollX - child.mLeft;
+        final float offsetY=mScrollY - child.mTop;
+        event.offsetLocation(offsetX,offsetY);
+        handled=child.dispatchTouchEvent(event);
+        event.offsetLocation(-offsetX,-offsetY);
+      }
+      return handled;
+    }
+    transformedEvent=MotionEvent.obtain(event);
+  }
+ else {
+    transformedEvent=event.split(newPointerIdBits);
+  }
+  if (child == null) {
+    handled=super.dispatchTouchEvent(transformedEvent);
+  }
+ else {
+    final float offsetX=mScrollX - child.mLeft;
+    final float offsetY=mScrollY - child.mTop;
+    transformedEvent.offsetLocation(offsetX,offsetY);
+    if (!child.hasIdentityMatrix()) {
+      transformedEvent.transform(child.getInverseMatrix());
+    }
+    handled=child.dispatchTouchEvent(transformedEvent);
+  }
+  transformedEvent.recycle();
+  return handled;
+}

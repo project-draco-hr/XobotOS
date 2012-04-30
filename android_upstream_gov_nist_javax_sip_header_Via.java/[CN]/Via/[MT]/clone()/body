@@ -1,0 +1,7 @@
+{
+  Via retval=(Via)super.clone();
+  if (this.sentProtocol != null)   retval.sentProtocol=(Protocol)this.sentProtocol.clone();
+  if (this.sentBy != null)   retval.sentBy=(HostPort)this.sentBy.clone();
+  if (this.getRPort() != -1)   retval.setParameter(RPORT,this.getRPort());
+  return retval;
+}

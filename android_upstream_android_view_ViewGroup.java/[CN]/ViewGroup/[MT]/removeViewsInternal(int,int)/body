@@ -1,0 +1,29 @@
+{
+  final View focused=mFocused;
+  final boolean detach=mAttachInfo != null;
+  View clearChildFocus=null;
+  final View[] children=mChildren;
+  final int end=start + count;
+  for (int i=start; i < end; i++) {
+    final View view=children[i];
+    if (mTransition != null) {
+      mTransition.removeChild(this,view);
+    }
+    if (view == focused) {
+      view.clearFocusForRemoval();
+      clearChildFocus=view;
+    }
+    if (view.getAnimation() != null || (mTransitioningViews != null && mTransitioningViews.contains(view))) {
+      addDisappearingView(view);
+    }
+ else     if (detach) {
+      view.dispatchDetachedFromWindow();
+    }
+    needGlobalAttributesUpdate(false);
+    onViewRemoved(view);
+  }
+  removeFromArray(start,count);
+  if (clearChildFocus != null) {
+    clearChildFocus(clearChildFocus);
+  }
+}

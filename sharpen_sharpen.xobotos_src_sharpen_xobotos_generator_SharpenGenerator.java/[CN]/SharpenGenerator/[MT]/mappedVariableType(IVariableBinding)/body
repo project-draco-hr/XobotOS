@@ -1,0 +1,10 @@
+{
+  if (binding == null)   return null;
+  VariableBinding variable=my(BindingManager.class).resolveBinding(binding);
+  if (variable == null)   return null;
+  NativeHandle nh=variable.getNativeHandle();
+  if (nh != null)   return nh.getManagedType();
+  if (variable.isPointer())   return new CSTypeReference("System.IntPtr");
+  if (variable.modifyType() != null)   return variable.modifyType().getExpression();
+  return null;
+}

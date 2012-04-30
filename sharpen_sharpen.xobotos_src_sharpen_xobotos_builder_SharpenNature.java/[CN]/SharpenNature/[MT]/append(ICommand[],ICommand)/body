@@ -1,0 +1,6 @@
+{
+  ICommand[] newCommands=new ICommand[commands.length + 1];
+  System.arraycopy(commands,0,newCommands,0,commands.length);
+  newCommands[newCommands.length - 1]=command;
+  return newCommands;
+}

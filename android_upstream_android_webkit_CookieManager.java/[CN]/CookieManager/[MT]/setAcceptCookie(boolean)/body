@@ -1,0 +1,7 @@
+{
+  if (JniUtil.useChromiumHttpStack()) {
+    nativeSetAcceptCookie(accept);
+    return;
+  }
+  mAcceptCookie=accept;
+}

@@ -1,0 +1,4 @@
+{
+  checkIndex(index);
+  return byteBuffer.getLong(index * SizeOf.LONG);
+}

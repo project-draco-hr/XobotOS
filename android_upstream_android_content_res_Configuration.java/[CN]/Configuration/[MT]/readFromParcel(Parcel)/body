@@ -1,0 +1,26 @@
+{
+  fontScale=source.readFloat();
+  mcc=source.readInt();
+  mnc=source.readInt();
+  if (source.readInt() != 0) {
+    locale=new Locale(source.readString(),source.readString(),source.readString());
+  }
+  userSetLocale=(source.readInt() == 1);
+  touchscreen=source.readInt();
+  keyboard=source.readInt();
+  keyboardHidden=source.readInt();
+  hardKeyboardHidden=source.readInt();
+  navigation=source.readInt();
+  navigationHidden=source.readInt();
+  orientation=source.readInt();
+  screenLayout=source.readInt();
+  uiMode=source.readInt();
+  screenWidthDp=source.readInt();
+  screenHeightDp=source.readInt();
+  smallestScreenWidthDp=source.readInt();
+  compatScreenWidthDp=source.readInt();
+  compatScreenHeightDp=source.readInt();
+  compatSmallestScreenWidthDp=source.readInt();
+  textLayoutDirection=source.readInt();
+  seq=source.readInt();
+}

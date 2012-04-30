@@ -1,0 +1,3 @@
+{
+  return my(Mappings.class).mappedMethodName(binding);
+}

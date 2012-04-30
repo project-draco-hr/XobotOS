@@ -1,0 +1,4 @@
+{
+  CSExpression exp=mapExpression(node.getExpression());
+  pushExpression(new CSMethodInvocationExpression(new CSMemberReferenceExpression(exp,"ToString")));
+}

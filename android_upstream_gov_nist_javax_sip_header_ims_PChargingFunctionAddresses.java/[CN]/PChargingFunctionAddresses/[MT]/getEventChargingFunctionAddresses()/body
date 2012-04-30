@@ -1,0 +1,17 @@
+{
+  LinkedList<NameValue> listw=new LinkedList<NameValue>();
+  Iterator li=this.parameters.iterator();
+  ListIterator<NameValue> ecfLIST=listw.listIterator();
+  NameValue nv;
+  boolean removed=false;
+  while (li.hasNext()) {
+    nv=(NameValue)li.next();
+    if (nv.getName().equalsIgnoreCase(ParameterNamesIms.ECF)) {
+      NameValue ecfNV=new NameValue();
+      ecfNV.setName(nv.getName());
+      ecfNV.setValueAsObject(nv.getValueAsObject());
+      ecfLIST.add(ecfNV);
+    }
+  }
+  return ecfLIST;
+}

@@ -1,0 +1,3 @@
+{
+  this(gsmSignalStrength,gsmBitErrorRate,cdmaDbm,cdmaEcio,evdoDbm,evdoEcio,evdoSnr,-1,-1,-1,-1,-1,gsm);
+}

@@ -1,0 +1,20 @@
+{
+  if (callId == null || cSeq == null || from == null || to == null || via == null || maxForwards == null || content == null || contentType == null)   throw new NullPointerException("missing parameters");
+  SIPResponse sipResponse=new SIPResponse();
+  StatusLine statusLine=new StatusLine();
+  statusLine.setStatusCode(statusCode);
+  String reason=SIPResponse.getReasonPhrase(statusCode);
+  if (reason == null)   throw new ParseException(statusCode + " : Unknown",0);
+  statusLine.setReasonPhrase(reason);
+  sipResponse.setStatusLine(statusLine);
+  sipResponse.setCallId(callId);
+  sipResponse.setCSeq(cSeq);
+  sipResponse.setFrom(from);
+  sipResponse.setTo(to);
+  sipResponse.setVia(via);
+  sipResponse.setContent(content,contentType);
+  if (userAgent != null) {
+    sipResponse.setHeader(userAgent);
+  }
+  return sipResponse;
+}

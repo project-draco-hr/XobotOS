@@ -1,0 +1,4 @@
+{
+  WarningList retval=new WarningList();
+  return retval.clonehlist(this.hlist);
+}

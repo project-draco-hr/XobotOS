@@ -1,0 +1,8 @@
+{
+  if ((iv == null) || (iv.length - offset < byteCount)) {
+    throw new IllegalArgumentException();
+  }
+  Arrays.checkOffsetAndCount(iv.length,offset,byteCount);
+  this.iv=new byte[byteCount];
+  System.arraycopy(iv,offset,this.iv,0,byteCount);
+}

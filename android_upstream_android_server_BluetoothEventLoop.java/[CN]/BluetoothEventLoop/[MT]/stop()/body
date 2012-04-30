@@ -1,0 +1,6 @@
+{
+  if (isEventLoopRunningNative()) {
+    if (DBG)     log("Stopping Event Loop thread");
+    stopEventLoopNative();
+  }
+}

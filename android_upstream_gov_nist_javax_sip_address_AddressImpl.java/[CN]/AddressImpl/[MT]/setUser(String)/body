@@ -1,0 +1,3 @@
+{
+  ((SipUri)this.address).setUser(user);
+}

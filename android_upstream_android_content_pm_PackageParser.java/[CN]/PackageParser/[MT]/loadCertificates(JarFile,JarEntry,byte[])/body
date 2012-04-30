@@ -1,0 +1,16 @@
+{
+  try {
+    InputStream is=new BufferedInputStream(jarFile.getInputStream(je));
+    while (is.read(readBuffer,0,readBuffer.length) != -1) {
+    }
+    is.close();
+    return je != null ? je.getCertificates() : null;
+  }
+ catch (  IOException e) {
+    Slog.w(TAG,"Exception reading " + je.getName() + " in "+ jarFile.getName(),e);
+  }
+catch (  RuntimeException e) {
+    Slog.w(TAG,"Exception reading " + je.getName() + " in "+ jarFile.getName(),e);
+  }
+  return null;
+}

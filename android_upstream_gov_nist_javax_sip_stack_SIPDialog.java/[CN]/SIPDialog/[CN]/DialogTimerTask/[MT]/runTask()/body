@@ -1,0 +1,39 @@
+{
+  SIPDialog dialog=SIPDialog.this;
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("Running dialog timer");
+  nRetransmissions++;
+  SIPServerTransaction transaction=this.transaction;
+  if (nRetransmissions > 64 * SIPTransaction.T1) {
+    if (sipProvider.getSipListener() != null && sipProvider.getSipListener() instanceof SipListenerExt) {
+      raiseErrorEvent(SIPDialogErrorEvent.DIALOG_ACK_NOT_RECEIVED_TIMEOUT);
+    }
+ else {
+      dialog.delete();
+    }
+    if (transaction != null && transaction.getState() != javax.sip.TransactionState.TERMINATED) {
+      transaction.raiseErrorEvent(SIPTransactionErrorEvent.TIMEOUT_ERROR);
+    }
+  }
+ else   if ((!dialog.ackSeen) && (transaction != null)) {
+    SIPResponse response=transaction.getLastResponse();
+    if (response.getStatusCode() == 200) {
+      try {
+        if (dialog.toRetransmitFinalResponse(transaction.T2))         transaction.sendMessage(response);
+      }
+ catch (      IOException ex) {
+        raiseIOException(transaction.getPeerAddress(),transaction.getPeerPort(),transaction.getPeerProtocol());
+      }
+ finally {
+        SIPTransactionStack stack=dialog.sipStack;
+        if (stack.isLoggingEnabled()) {
+          stack.getStackLogger().logDebug("resend 200 response from " + dialog);
+        }
+        transaction.fireTimer();
+      }
+    }
+  }
+  if (dialog.isAckSeen() || dialog.dialogState == TERMINATED_STATE) {
+    this.transaction=null;
+    this.cancel();
+  }
+}

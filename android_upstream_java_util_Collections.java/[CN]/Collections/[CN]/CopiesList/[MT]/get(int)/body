@@ -1,0 +1,6 @@
+{
+  if (location >= 0 && location < n) {
+    return element;
+  }
+  throw new IndexOutOfBoundsException();
+}

@@ -1,0 +1,4 @@
+int nativeInstance
+boolean focused
+boolean pressed
+boolean invalidate

@@ -1,0 +1,6 @@
+def _GetMSBuildGlobalProperties(spec, guid, gyp_file_name):
+    prefix = spec.get('product_prefix', '')
+    product_name = spec.get('product_name', '$(ProjectName)')
+    target_name = (prefix + product_name)
+    namespace = os.path.splitext(gyp_file_name)[0]
+    return [['PropertyGroup', {'Label': 'Globals', }, ['ProjectGuid', guid], ['Keyword', 'Win32Proj'], ['RootNamespace', namespace], ['TargetName', target_name]]]

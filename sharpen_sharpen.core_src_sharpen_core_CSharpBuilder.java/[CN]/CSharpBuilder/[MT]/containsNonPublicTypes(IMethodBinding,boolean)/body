@@ -1,0 +1,8 @@
+{
+  ITypeBinding returnType=binding.getReturnType();
+  if ((returnType != null) && containsNonPublicTypes(returnType,privateOnly))   return true;
+  for (  final ITypeBinding type : binding.getParameterTypes()) {
+    if (containsNonPublicTypes(type,privateOnly))     return true;
+  }
+  return false;
+}

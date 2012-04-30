@@ -1,0 +1,8 @@
+{
+  if (subject != null) {
+    return subject;
+  }
+ else {
+    return "";
+  }
+}

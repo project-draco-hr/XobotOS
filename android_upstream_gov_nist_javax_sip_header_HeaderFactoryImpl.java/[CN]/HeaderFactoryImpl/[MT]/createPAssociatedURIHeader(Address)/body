@@ -1,0 +1,6 @@
+{
+  if (assocURI == null)   throw new NullPointerException("null associatedURI!");
+  PAssociatedURI associatedURI=new PAssociatedURI();
+  associatedURI.setAddress(assocURI);
+  return associatedURI;
+}

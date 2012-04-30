@@ -1,0 +1,19 @@
+{
+  StringBuilder result=new StringBuilder(CHARS_PER_ENTRY * size);
+  result.append('{');
+  Iterator<Entry<K,V>> i=entrySet().iterator();
+  boolean hasMore=i.hasNext();
+  while (hasMore) {
+    Entry<K,V> entry=i.next();
+    K key=entry.getKey();
+    result.append(key == this ? "(this Map)" : key.toString());
+    result.append('=');
+    V value=entry.getValue();
+    result.append(value == this ? "(this Map)" : value.toString());
+    if (hasMore=i.hasNext()) {
+      result.append(", ");
+    }
+  }
+  result.append('}');
+  return result.toString();
+}

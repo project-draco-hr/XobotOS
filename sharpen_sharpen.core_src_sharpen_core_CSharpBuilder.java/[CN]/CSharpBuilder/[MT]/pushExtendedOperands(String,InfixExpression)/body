@@ -1,0 +1,5 @@
+{
+  for (  Object x : node.extendedOperands()) {
+    pushExpression(new CSInfixExpression(operator,popExpression(),mapExpression((Expression)x)));
+  }
+}

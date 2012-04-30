@@ -1,0 +1,4 @@
+{
+  streamHandle=createStream(noHeader);
+  guard.open("end");
+}

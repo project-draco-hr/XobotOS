@@ -1,0 +1,8 @@
+{
+  begin("glIsTexture");
+  arg("texture",texture);
+  end();
+  boolean result=mgl11.glIsTexture(texture);
+  checkError();
+  return result;
+}

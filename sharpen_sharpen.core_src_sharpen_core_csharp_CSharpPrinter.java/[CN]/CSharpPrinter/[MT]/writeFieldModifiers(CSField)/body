@@ -1,0 +1,6 @@
+{
+  for (  CSFieldModifier m : node.modifiers()) {
+    write(m.toString().toLowerCase());
+    write(" ");
+  }
+}

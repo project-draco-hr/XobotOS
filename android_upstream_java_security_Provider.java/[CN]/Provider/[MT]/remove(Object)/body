@@ -1,0 +1,15 @@
+{
+  if (key instanceof String && ((String)key).startsWith("Provider.")) {
+    return null;
+  }
+  if (providerNumber != -1) {
+    Services.setNeedRefresh();
+  }
+  if (changedProperties != null && changedProperties.remove(key) == null) {
+    removeFromPropertyServiceTable(key);
+    if (changedProperties.size() == 0) {
+      changedProperties=null;
+    }
+  }
+  return super.remove(key);
+}

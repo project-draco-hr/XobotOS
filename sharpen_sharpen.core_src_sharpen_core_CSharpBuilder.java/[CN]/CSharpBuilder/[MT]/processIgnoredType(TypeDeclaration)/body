@@ -1,0 +1,9 @@
+{
+  if (!hasIgnoreOrRemoveAnnotation(node)) {
+    return false;
+  }
+  if (isMainType(node)) {
+    compilationUnit().ignore(true);
+  }
+  return true;
+}

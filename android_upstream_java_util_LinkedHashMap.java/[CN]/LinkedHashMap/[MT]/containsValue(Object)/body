@@ -1,0 +1,16 @@
+{
+  if (value == null) {
+    for (LinkedEntry<K,V> header=this.header, e=header.nxt; e != header; e=e.nxt) {
+      if (e.value == null) {
+        return true;
+      }
+    }
+    return false;
+  }
+  for (LinkedEntry<K,V> header=this.header, e=header.nxt; e != header; e=e.nxt) {
+    if (value.equals(e.value)) {
+      return true;
+    }
+  }
+  return false;
+}

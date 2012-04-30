@@ -1,0 +1,13 @@
+{
+  Arrays.checkOffsetAndCount(buffer.length,offset,byteCount);
+  if (currentEntry == null) {
+    throw new ZipException("No active entry");
+  }
+  if (currentEntry.getMethod() == STORED) {
+    out.write(buffer,offset,byteCount);
+  }
+ else {
+    super.write(buffer,offset,byteCount);
+  }
+  crc.update(buffer,offset,byteCount);
+}

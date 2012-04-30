@@ -1,0 +1,9 @@
+{
+  int i1=b1 & 0xff;
+  int i2=b2 & 0xff;
+  CipherSuite cs=getCipherSuiteByCode(0,i1,i2);
+  if (cs != null) {
+    return cs;
+  }
+  return new CipherSuite("UNKNOWN_" + i1 + "_"+ i2,false,0,null,null,null,new byte[]{b1,b2});
+}

@@ -1,0 +1,9 @@
+{
+  try {
+    this.toListener=false;
+    this.semRelease();
+  }
+ catch (  Exception ex) {
+    sipStack.getStackLogger().logError("Unexpected exception releasing sem",ex);
+  }
+}

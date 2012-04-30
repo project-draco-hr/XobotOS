@@ -1,0 +1,7 @@
+{
+  if (DEBUG)   Slog.d(TAG,"RuntimeInit: Starting application from zygote");
+  redirectLogStreams();
+  commonInit();
+  zygoteInitNative();
+  applicationInit(targetSdkVersion,argv);
+}

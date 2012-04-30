@@ -1,0 +1,19 @@
+{
+  SIPDialog d=new SIPDialog(notifyST);
+  d.serverTransactionFlag=false;
+  d.lastTransaction=subscribeTx;
+  storeFirstTransactionInfo(d,subscribeTx);
+  d.terminateOnBye=false;
+  d.localSequenceNumber=subscribeTx.getCSeq();
+  SIPRequest not=(SIPRequest)notifyST.getRequest();
+  d.remoteSequenceNumber=not.getCSeq().getSeqNumber();
+  d.setDialogId(not.getDialogId(true));
+  d.setLocalTag(not.getToTag());
+  d.setRemoteTag(not.getFromTag());
+  d.setLastResponse(subscribeTx,subscribeTx.getLastResponse());
+  d.localParty=not.getTo().getAddress();
+  d.remoteParty=not.getFrom().getAddress();
+  d.addRoute(not);
+  d.setState(CONFIRMED_STATE);
+  return d;
+}

@@ -1,0 +1,12 @@
+{
+  if (e == null)   throw new NullPointerException();
+  Node<E> node=new Node<E>(e);
+  final ReentrantLock lock=this.lock;
+  lock.lock();
+  try {
+    return linkLast(node);
+  }
+  finally {
+    lock.unlock();
+  }
+}

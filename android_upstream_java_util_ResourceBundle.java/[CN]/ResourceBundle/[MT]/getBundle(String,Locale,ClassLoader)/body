@@ -1,0 +1,21 @@
+{
+  if (loader == null || bundleName == null) {
+    throw new NullPointerException();
+  }
+  Locale defaultLocale=Locale.getDefault();
+  if (!cacheLocale.equals(defaultLocale)) {
+    cache.clear();
+    cacheLocale=defaultLocale;
+  }
+  ResourceBundle bundle=null;
+  if (!locale.equals(defaultLocale)) {
+    bundle=handleGetBundle(false,bundleName,locale,loader);
+  }
+  if (bundle == null) {
+    bundle=handleGetBundle(true,bundleName,defaultLocale,loader);
+    if (bundle == null) {
+      throw missingResourceException(bundleName + '_' + locale,"");
+    }
+  }
+  return bundle;
+}

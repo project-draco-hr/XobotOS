@@ -1,0 +1,10 @@
+{
+  String to[]={"Min-SE: 30\n","Min-SE: 45;some-param=somevalue\n"};
+  for (int i=0; i < to.length; i++) {
+    MinSEParser tp=new MinSEParser(to[i]);
+    MinSE t=(MinSE)tp.parse();
+    System.out.println("encoded = " + t.encode());
+    System.out.println("\ntime=" + t.getExpires());
+    if (t.getParameter("some-param") != null)     System.out.println("some-param=" + t.getParameter("some-param"));
+  }
+}

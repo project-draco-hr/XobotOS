@@ -1,0 +1,35 @@
+{
+  final int version=in.readInt();
+switch (version) {
+case VERSION_INIT:
+{
+      bucketDuration=in.readLong();
+      bucketStart=readFullLongArray(in);
+      rxBytes=readFullLongArray(in);
+      rxPackets=new long[bucketStart.length];
+      txBytes=readFullLongArray(in);
+      txPackets=new long[bucketStart.length];
+      operations=new long[bucketStart.length];
+      bucketCount=bucketStart.length;
+      break;
+    }
+case VERSION_ADD_PACKETS:
+case VERSION_ADD_ACTIVE:
+{
+    bucketDuration=in.readLong();
+    bucketStart=readVarLongArray(in);
+    activeTime=(version >= VERSION_ADD_ACTIVE) ? readVarLongArray(in) : new long[bucketStart.length];
+    rxBytes=readVarLongArray(in);
+    rxPackets=readVarLongArray(in);
+    txBytes=readVarLongArray(in);
+    txPackets=readVarLongArray(in);
+    operations=readVarLongArray(in);
+    bucketCount=bucketStart.length;
+    break;
+  }
+default :
+{
+  throw new ProtocolException("unexpected version: " + version);
+}
+}
+}

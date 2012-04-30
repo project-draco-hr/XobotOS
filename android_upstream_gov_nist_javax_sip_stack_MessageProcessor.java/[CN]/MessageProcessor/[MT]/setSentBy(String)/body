@@ -1,0 +1,21 @@
+{
+  int ind=sentBy.indexOf(":");
+  if (ind == -1) {
+    this.sentByHostPort=new HostPort();
+    this.sentByHostPort.setHost(new Host(sentBy));
+  }
+ else {
+    this.sentByHostPort=new HostPort();
+    this.sentByHostPort.setHost(new Host(sentBy.substring(0,ind)));
+    String portStr=sentBy.substring(ind + 1);
+    try {
+      int port=Integer.parseInt(portStr);
+      this.sentByHostPort.setPort(port);
+    }
+ catch (    NumberFormatException ex) {
+      throw new ParseException("Bad format encountered at ",ind);
+    }
+  }
+  this.sentBySet=true;
+  this.sentBy=sentBy;
+}

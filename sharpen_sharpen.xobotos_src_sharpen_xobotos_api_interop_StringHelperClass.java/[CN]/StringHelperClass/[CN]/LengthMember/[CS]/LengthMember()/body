@@ -1,0 +1,3 @@
+{
+  super(new TypeReference("uint32_t"),new CSTypeReference("int"),"length","length",Flags.FUNCTION,Flags.PASS_TO_CTOR);
+}

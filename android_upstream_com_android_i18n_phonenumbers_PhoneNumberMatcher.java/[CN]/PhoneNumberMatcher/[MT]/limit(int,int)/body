@@ -1,0 +1,6 @@
+{
+  if ((lower < 0) || (upper <= 0) || (upper < lower)) {
+    throw new IllegalArgumentException();
+  }
+  return "{" + lower + ","+ upper+ "}";
+}

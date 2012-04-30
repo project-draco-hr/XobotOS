@@ -1,0 +1,8 @@
+{
+  checkOpen();
+  if (networkInterface == null) {
+    throw new SocketException("networkInterface == null");
+  }
+  impl.setOption(SocketOptions.IP_MULTICAST_IF2,networkInterface.getIndex());
+  this.setAddress=null;
+}

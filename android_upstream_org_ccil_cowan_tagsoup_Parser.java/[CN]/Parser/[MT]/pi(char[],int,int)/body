@@ -1,0 +1,7 @@
+{
+  if (theNewElement != null || thePITarget == null)   return;
+  if ("xml".equalsIgnoreCase(thePITarget))   return;
+  if (length > 0 && buff[length - 1] == '?')   length--;
+  theContentHandler.processingInstruction(thePITarget,new String(buff,offset,length));
+  thePITarget=null;
+}

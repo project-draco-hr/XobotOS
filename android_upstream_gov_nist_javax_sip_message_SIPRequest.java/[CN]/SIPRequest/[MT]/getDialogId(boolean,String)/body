@@ -1,0 +1,26 @@
+{
+  From from=(From)this.getFrom();
+  CallID cid=(CallID)this.getCallId();
+  StringBuffer retval=new StringBuffer(cid.getCallId());
+  if (!isServer) {
+    if (from.getTag() != null) {
+      retval.append(COLON);
+      retval.append(from.getTag());
+    }
+    if (toTag != null) {
+      retval.append(COLON);
+      retval.append(toTag);
+    }
+  }
+ else {
+    if (toTag != null) {
+      retval.append(COLON);
+      retval.append(toTag);
+    }
+    if (from.getTag() != null) {
+      retval.append(COLON);
+      retval.append(from.getTag());
+    }
+  }
+  return retval.toString().toLowerCase();
+}

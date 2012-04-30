@@ -1,0 +1,5 @@
+{
+  final ArrayList<CSNode> result=new ArrayList<CSNode>(expressions.size());
+  for (  CSNode e : expressions)   if (!(e instanceof CSRemovedExpression))   result.add(e);
+  return result;
+}

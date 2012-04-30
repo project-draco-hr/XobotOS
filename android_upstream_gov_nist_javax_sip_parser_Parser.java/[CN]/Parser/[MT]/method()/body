@@ -1,0 +1,17 @@
+{
+  try {
+    if (debug)     dbg_enter("method");
+    Token[] tokens=this.lexer.peekNextToken(1);
+    Token token=(Token)tokens[0];
+    if (token.getTokenType() == INVITE || token.getTokenType() == ACK || token.getTokenType() == OPTIONS || token.getTokenType() == BYE || token.getTokenType() == REGISTER || token.getTokenType() == CANCEL || token.getTokenType() == SUBSCRIBE || token.getTokenType() == NOTIFY || token.getTokenType() == PUBLISH || token.getTokenType() == MESSAGE || token.getTokenType() == ID) {
+      lexer.consume();
+      return token.getTokenValue();
+    }
+ else {
+      throw createParseException("Invalid Method");
+    }
+  }
+  finally {
+    if (Debug.debug)     dbg_leave("method");
+  }
+}

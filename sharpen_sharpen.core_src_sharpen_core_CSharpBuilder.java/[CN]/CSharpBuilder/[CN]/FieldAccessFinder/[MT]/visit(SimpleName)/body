@@ -1,0 +1,4 @@
+{
+  field=node.resolveBinding();
+  return false;
+}

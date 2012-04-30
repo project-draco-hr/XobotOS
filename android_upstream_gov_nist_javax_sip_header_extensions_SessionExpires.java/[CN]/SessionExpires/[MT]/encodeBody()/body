@@ -1,0 +1,7 @@
+{
+  String retval=Integer.toString(expires);
+  if (!parameters.isEmpty()) {
+    retval+=SEMICOLON + parameters.encode();
+  }
+  return retval;
+}

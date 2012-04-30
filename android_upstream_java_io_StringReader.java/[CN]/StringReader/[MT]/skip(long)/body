@@ -1,0 +1,15 @@
+{
+synchronized (lock) {
+    checkNotClosed();
+    int minSkip=-pos;
+    int maxSkip=count - pos;
+    if (maxSkip == 0 || charCount > maxSkip) {
+      charCount=maxSkip;
+    }
+ else     if (charCount < minSkip) {
+      charCount=minSkip;
+    }
+    pos+=charCount;
+    return charCount;
+  }
+}

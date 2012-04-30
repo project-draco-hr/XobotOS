@@ -1,0 +1,9 @@
+{
+  acquireReference();
+  try {
+    return nativeSetNumColumns(mWindowPtr,columnNum);
+  }
+  finally {
+    releaseReference();
+  }
+}

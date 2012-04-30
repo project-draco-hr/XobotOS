@@ -1,0 +1,5 @@
+{
+  super(parent);
+  this.originalPath=dexPath;
+  this.pathList=new DexPathList(this,dexPath,libraryPath,optimizedDirectory);
+}

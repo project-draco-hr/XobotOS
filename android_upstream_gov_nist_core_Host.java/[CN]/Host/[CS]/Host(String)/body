@@ -1,0 +1,5 @@
+{
+  if (hostName == null)   throw new IllegalArgumentException("null host name");
+  stripAddressScopeZones=Boolean.getBoolean("gov.nist.core.STRIP_ADDR_SCOPES");
+  setHost(hostName,IPV4ADDRESS);
+}

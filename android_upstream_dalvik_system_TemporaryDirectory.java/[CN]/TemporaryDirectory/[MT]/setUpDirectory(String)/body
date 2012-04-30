@@ -1,0 +1,3 @@
+{
+  setUpDirectory(new File(baseDir));
+}

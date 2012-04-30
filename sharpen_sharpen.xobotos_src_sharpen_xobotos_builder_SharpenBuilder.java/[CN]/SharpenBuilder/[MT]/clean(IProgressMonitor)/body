@@ -1,0 +1,6 @@
+{
+  final ConfigFile configFile=getConfigFile();
+  final SourceInfo sourceInfo=configFile.getSourceInfo();
+  final IFolder outputFolder=getProject().getFolder(sourceInfo.getOutputFolder());
+  outputFolder.delete(true,false,monitor);
+}

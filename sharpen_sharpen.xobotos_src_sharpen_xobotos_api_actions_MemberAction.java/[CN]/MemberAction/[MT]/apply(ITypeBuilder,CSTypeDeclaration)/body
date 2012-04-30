@@ -1,0 +1,12 @@
+{
+  final Class<T> nodeType=getNodeType();
+  final Class<W> builderType=getBuilderType();
+  for (  final T member : parent.getBodyDeclarations(nodeType)) {
+    Match match=matchesFilter(member);
+    if (match == Match.NEGATIVE)     return;
+ else     if (match != Match.POSITIVE)     continue;
+    W builder=parent.getMemberBuilder(member,builderType);
+    if (builder == null)     continue;
+    apply(parent,builder,member,builder.getMember());
+  }
+}

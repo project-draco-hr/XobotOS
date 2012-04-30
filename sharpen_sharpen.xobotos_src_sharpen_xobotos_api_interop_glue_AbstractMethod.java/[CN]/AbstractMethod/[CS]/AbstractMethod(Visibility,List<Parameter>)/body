@@ -1,0 +1,5 @@
+{
+  super(visibility);
+  this._params=Collections.unmodifiableList(params);
+  this._body=new Block();
+}

@@ -1,0 +1,7 @@
+{
+  Object[] newElements=elements.clone();
+  @SuppressWarnings("unchecked") E result=(E)newElements[index];
+  newElements[index]=e;
+  elements=newElements;
+  return result;
+}

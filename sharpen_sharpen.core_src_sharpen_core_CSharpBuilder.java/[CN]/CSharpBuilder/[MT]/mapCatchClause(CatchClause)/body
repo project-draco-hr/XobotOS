@@ -1,0 +1,21 @@
+{
+  IVariableBinding oldExceptionVariable=_currentExceptionVariable;
+  _currentExceptionVariable=node.getException().resolveBinding();
+  try {
+    CheckVariableUseVisitor check=new CheckVariableUseVisitor(_currentExceptionVariable);
+    node.getBody().accept(check);
+    CSCatchClause clause;
+    if (isEmptyCatch(node,check)) {
+      clause=new CSCatchClause();
+    }
+ else {
+      clause=new CSCatchClause(createVariableDeclaration(_currentExceptionVariable,null));
+    }
+    clause.anonymous(!check.used());
+    visitBlock(clause.body(),node.getBody());
+    return clause;
+  }
+  finally {
+    _currentExceptionVariable=oldExceptionVariable;
+  }
+}

@@ -1,0 +1,31 @@
+{
+  owner=args.owner;
+  intents=new ArrayList<II>(0);
+  String name=args.sa.getNonConfigurationString(args.nameRes,0);
+  if (name == null) {
+    className=null;
+    args.outError[0]=args.tag + " does not specify android:name";
+    return;
+  }
+  outInfo.name=buildClassName(owner.applicationInfo.packageName,name,args.outError);
+  if (outInfo.name == null) {
+    className=null;
+    args.outError[0]=args.tag + " does not have valid android:name";
+    return;
+  }
+  className=outInfo.name;
+  int iconVal=args.sa.getResourceId(args.iconRes,0);
+  if (iconVal != 0) {
+    outInfo.icon=iconVal;
+    outInfo.nonLocalizedLabel=null;
+  }
+  int logoVal=args.sa.getResourceId(args.logoRes,0);
+  if (logoVal != 0) {
+    outInfo.logo=logoVal;
+  }
+  TypedValue v=args.sa.peekValue(args.labelRes);
+  if (v != null && (outInfo.labelRes=v.resourceId) == 0) {
+    outInfo.nonLocalizedLabel=v.coerceToString();
+  }
+  outInfo.packageName=owner.packageName;
+}

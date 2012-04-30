@@ -1,0 +1,3 @@
+{
+  return isByRef() ? new PointerType(_nativeType) : _nativeType;
+}

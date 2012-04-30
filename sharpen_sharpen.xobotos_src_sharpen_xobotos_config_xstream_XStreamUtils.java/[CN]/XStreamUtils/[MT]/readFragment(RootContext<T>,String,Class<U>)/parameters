@@ -1,0 +1,3 @@
+RootContext<T> root
+String fileName
+Class<U> klass

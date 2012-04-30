@@ -1,0 +1,15 @@
+{
+  try {
+    final IBinding binding=imp.resolveBinding();
+switch (binding.getKind()) {
+case IBinding.TYPE:
+      return imp.isOnDemand() && method.getDeclaringClass() == binding;
+case IBinding.METHOD:
+    IMethodBinding bound=(IMethodBinding)binding;
+  return bound.getDeclaringClass() == method.getDeclaringClass() && binding.getName().equals(method.getMethodDeclaration().getName());
+}
+}
+ catch (Exception e) {
+}
+return false;
+}

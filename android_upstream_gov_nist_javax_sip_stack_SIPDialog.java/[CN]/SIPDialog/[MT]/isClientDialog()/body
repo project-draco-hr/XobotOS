@@ -1,0 +1,4 @@
+{
+  SIPTransaction transaction=(SIPTransaction)this.getFirstTransaction();
+  return transaction instanceof SIPClientTransaction;
+}

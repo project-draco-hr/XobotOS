@@ -1,0 +1,26 @@
+{
+  Set<Thread> n=new HashSet<Thread>(Arrays.asList(newThreads));
+  Set<Thread> o=new HashSet<Thread>(Arrays.asList(oldThreads));
+  Set<Thread> added=new HashSet<Thread>(n);
+  added.removeAll(o);
+  Set<Thread> removed=new HashSet<Thread>(o);
+  removed.removeAll(n);
+  for (  Thread thread : added) {
+    if (thread == null) {
+      continue;
+    }
+    if (thread == timerThread) {
+      continue;
+    }
+    addStartThread(thread);
+  }
+  for (  Thread thread : removed) {
+    if (thread == null) {
+      continue;
+    }
+    if (thread == timerThread) {
+      continue;
+    }
+    addEndThread(thread);
+  }
+}

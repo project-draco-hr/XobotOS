@@ -1,0 +1,9 @@
+{
+  XobotConfiguration config=my(XobotConfiguration.class);
+  ConfigFlags flags=_builder.getTemplate().getConfigFlags();
+  if (flags != null)   config=config.clone(flags);
+  XobotSharpenConversion conversion=new XobotSharpenConversion(config);
+  if (!conversion.convert())   return false;
+  if (getOutputType().removeDocs())   _builder.getCompilationUnit().clearComments();
+  return true;
+}

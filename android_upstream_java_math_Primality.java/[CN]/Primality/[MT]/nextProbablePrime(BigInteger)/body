@@ -1,0 +1,41 @@
+{
+  int i, j;
+  int gapSize=1024;
+  int[] modules=new int[primes.length];
+  boolean isDivisible[]=new boolean[gapSize];
+  BigInt ni=n.getBigInt();
+  if (ni.bitLength() <= 10) {
+    int l=(int)ni.longInt();
+    if (l < primes[primes.length - 1]) {
+      for (i=0; l >= primes[i]; i++) {
+      }
+      return BIprimes[i];
+    }
+  }
+  BigInt startPoint=ni.copy();
+  BigInt probPrime=new BigInt();
+  startPoint.addPositiveInt(BigInt.remainderByPositiveInt(ni,2) + 1);
+  for (i=0; i < primes.length; i++) {
+    modules[i]=BigInt.remainderByPositiveInt(startPoint,primes[i]) - gapSize;
+  }
+  while (true) {
+    Arrays.fill(isDivisible,false);
+    for (i=0; i < primes.length; i++) {
+      modules[i]=(modules[i] + gapSize) % primes[i];
+      j=(modules[i] == 0) ? 0 : (primes[i] - modules[i]);
+      for (; j < gapSize; j+=primes[i]) {
+        isDivisible[j]=true;
+      }
+    }
+    for (j=0; j < gapSize; j++) {
+      if (!isDivisible[j]) {
+        probPrime.putCopy(startPoint);
+        probPrime.addPositiveInt(j);
+        if (probPrime.isPrime(100)) {
+          return new BigInteger(probPrime);
+        }
+      }
+    }
+    startPoint.addPositiveInt(gapSize);
+  }
+}

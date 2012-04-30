@@ -1,0 +1,6 @@
+{
+  if (_sourceFolders.size() == 0) {
+    _sourceFolders.add(createDefaultSourceFolder());
+  }
+  return _sourceFolders.get(0);
+}

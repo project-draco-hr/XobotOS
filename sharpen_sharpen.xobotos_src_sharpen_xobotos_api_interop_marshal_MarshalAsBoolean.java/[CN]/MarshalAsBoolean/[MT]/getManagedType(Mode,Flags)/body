@@ -1,0 +1,4 @@
+{
+  if (flags == Flags.ELEMENT)   return new CSTypeReference("int");
+ else   return new CSTypeReference("bool");
+}

@@ -1,0 +1,17 @@
+{
+  if (src == null) {
+    throw new NullPointerException("src == null");
+  }
+  FileInputStream fis=new FileInputStream(src);
+  if (charsetName == null) {
+    throw new IllegalArgumentException("charsetName == null");
+  }
+  try {
+    input=new InputStreamReader(fis,charsetName);
+  }
+ catch (  UnsupportedEncodingException e) {
+    IoUtils.closeQuietly(fis);
+    throw new IllegalArgumentException(e.getMessage());
+  }
+  initialization();
+}

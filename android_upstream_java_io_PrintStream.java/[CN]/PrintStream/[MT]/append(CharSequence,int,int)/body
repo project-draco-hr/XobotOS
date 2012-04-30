@@ -1,0 +1,7 @@
+{
+  if (charSequence == null) {
+    charSequence="null";
+  }
+  print(charSequence.subSequence(start,end).toString());
+  return this;
+}

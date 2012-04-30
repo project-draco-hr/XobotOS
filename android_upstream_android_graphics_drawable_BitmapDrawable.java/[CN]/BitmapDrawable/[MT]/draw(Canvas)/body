@@ -1,0 +1,34 @@
+{
+  Bitmap bitmap=mBitmap;
+  if (bitmap != null) {
+    final BitmapState state=mBitmapState;
+    if (state.mRebuildShader) {
+      Shader.TileMode tmx=state.mTileModeX;
+      Shader.TileMode tmy=state.mTileModeY;
+      if (tmx == null && tmy == null) {
+        state.mPaint.setShader(null);
+      }
+ else {
+        state.mPaint.setShader(new BitmapShader(bitmap,tmx == null ? Shader.TileMode.CLAMP : tmx,tmy == null ? Shader.TileMode.CLAMP : tmy));
+      }
+      state.mRebuildShader=false;
+      copyBounds(mDstRect);
+    }
+    Shader shader=state.mPaint.getShader();
+    if (shader == null) {
+      if (mApplyGravity) {
+        final int layoutDirection=getResolvedLayoutDirectionSelf();
+        Gravity.apply(state.mGravity,mBitmapWidth,mBitmapHeight,getBounds(),mDstRect,layoutDirection);
+        mApplyGravity=false;
+      }
+      canvas.drawBitmap(bitmap,null,mDstRect,state.mPaint);
+    }
+ else {
+      if (mApplyGravity) {
+        copyBounds(mDstRect);
+        mApplyGravity=false;
+      }
+      canvas.drawRect(mDstRect,state.mPaint);
+    }
+  }
+}

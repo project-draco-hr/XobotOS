@@ -1,0 +1,4 @@
+{
+  String result=String.valueOf(mOptions.charAt(position));
+  replaceCharacterAndClose(result);
+}

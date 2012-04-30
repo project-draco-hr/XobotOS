@@ -1,0 +1,23 @@
+{
+  if (debug)   dbg_enter("parse");
+  try {
+    RequestLine retval=new RequestLine();
+    String m=method();
+    lexer.SPorHT();
+    retval.setMethod(m);
+    this.lexer.selectLexer("sip_urlLexer");
+    URLParser urlParser=new URLParser(this.getLexer());
+    GenericURI url=urlParser.uriReference(true);
+    lexer.SPorHT();
+    retval.setUri(url);
+    this.lexer.selectLexer("request_lineLexer");
+    String v=sipVersion();
+    retval.setSipVersion(v);
+    lexer.SPorHT();
+    lexer.match('\n');
+    return retval;
+  }
+  finally {
+    if (debug)     dbg_leave("parse");
+  }
+}

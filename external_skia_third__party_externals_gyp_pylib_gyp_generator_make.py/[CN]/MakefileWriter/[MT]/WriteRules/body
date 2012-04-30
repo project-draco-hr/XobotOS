@@ -1,0 +1,48 @@
+def WriteRules(self, rules, extra_sources, extra_outputs, extra_mac_bundle_resources, part_of_all):
+    "Write Makefile code for any 'rules' from the gyp input.\n\n    extra_sources: a list that will be filled in with newly generated source\n                   files, if any\n    extra_outputs: a list that will be filled in with any outputs of these\n                   rules (used to make other pieces dependent on these rules)\n    part_of_all: flag indicating this target is part of 'all'\n    "
+    for rule in rules:
+        name = ((self.target + '_') + StringToMakefileVariable(rule['rule_name']))
+        count = 0
+        self.WriteLn(('### Generated for rule %s:' % name))
+        all_outputs = []
+        for rule_source in rule.get('rule_sources', []):
+            dirs = set()
+            rule_source_basename = os.path.basename(rule_source)
+            (rule_source_root, rule_source_ext) = os.path.splitext(rule_source_basename)
+            outputs = [self.ExpandInputRoot(out, rule_source_root) for out in rule['outputs']]
+            for out in outputs:
+                dir = os.path.dirname(out)
+                if dir:
+                    dirs.add(dir)
+            if int(rule.get('process_outputs_as_sources', False)):
+                extra_sources += outputs
+            if int(rule.get('process_outputs_as_mac_bundle_resources', False)):
+                extra_mac_bundle_resources += outputs
+            all_outputs += outputs
+            inputs = map(Sourceify, map(self.Absolutify, ([rule_source] + rule.get('inputs', []))))
+            actions = [('$(call do_cmd,%s_%d)' % (name, count))]
+            if (name == 'resources_grit'):
+                actions += ['@touch --no-create $@']
+            self.WriteMakeRule(outputs[:1], ['obj := $(abs_obj)'])
+            self.WriteMakeRule(outputs[:1], ['builddir := $(abs_builddir)'])
+            self.WriteMakeRule(outputs, (inputs + ['FORCE_DO_CMD']), actions)
+            for output in outputs:
+                assert (' ' not in output), ('Spaces in rule filenames not yet supported (%s)' % output)
+            self.WriteLn(('all_deps += %s' % ' '.join(outputs)))
+            self._num_outputs += len(outputs)
+            action = [self.ExpandInputRoot(ac, rule_source_root) for ac in rule['action']]
+            mkdirs = ''
+            if (len(dirs) > 0):
+                mkdirs = ('mkdir -p %s; ' % ' '.join(dirs))
+            cd_action = ('cd %s; ' % Sourceify((self.path or '.')))
+            self.WriteLn(('cmd_%(name)s_%(count)d = export LD_LIBRARY_PATH=$(builddir)/lib.host:$(builddir)/lib.target:$$LD_LIBRARY_PATH; %(cd_action)s%(mkdirs)s%(action)s' % {'action': gyp.common.EncodePOSIXShellList(action), 'cd_action': cd_action, 'count': count, 'mkdirs': mkdirs, 'name': name, }))
+            self.WriteLn(('quiet_cmd_%(name)s_%(count)d = RULE %(name)s_%(count)d $@' % {'count': count, 'name': name, }))
+            self.WriteLn()
+            count += 1
+        outputs_variable = ('rule_%s_outputs' % name)
+        self.WriteList(all_outputs, outputs_variable)
+        extra_outputs.append(('$(%s)' % outputs_variable))
+        self.WriteLn(('### Finished generating for rule: %s' % name))
+        self.WriteLn()
+    self.WriteLn('### Finished generating for all rules')
+    self.WriteLn('')

@@ -1,0 +1,3 @@
+{
+  return this.terminatedServerTransactionsPendingAck.get(ackMessage.getTopmostVia().getBranch());
+}

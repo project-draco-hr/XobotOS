@@ -1,0 +1,9 @@
+{
+synchronized (lock) {
+    checkNotClosed();
+    if (pos < buf.length) {
+      return buf[pos++];
+    }
+    return in.read();
+  }
+}

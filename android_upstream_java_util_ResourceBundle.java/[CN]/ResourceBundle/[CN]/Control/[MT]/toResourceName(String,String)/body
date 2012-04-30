@@ -1,0 +1,9 @@
+{
+  if (suffix == null) {
+    throw new NullPointerException();
+  }
+  StringBuilder ret=new StringBuilder(bundleName.replace('.','/'));
+  ret.append('.');
+  ret.append(suffix);
+  return ret.toString();
+}

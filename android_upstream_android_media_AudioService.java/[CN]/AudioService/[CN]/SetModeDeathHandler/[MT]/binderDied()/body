@@ -1,0 +1,16 @@
+{
+  int newModeOwnerPid=0;
+synchronized (mSetModeDeathHandlers) {
+    Log.w(TAG,"setMode() client died");
+    int index=mSetModeDeathHandlers.indexOf(this);
+    if (index < 0) {
+      Log.w(TAG,"unregistered setMode() client died");
+    }
+ else {
+      newModeOwnerPid=setModeInt(AudioSystem.MODE_NORMAL,mCb,mPid);
+    }
+  }
+  if (newModeOwnerPid != 0) {
+    disconnectBluetoothSco(newModeOwnerPid);
+  }
+}

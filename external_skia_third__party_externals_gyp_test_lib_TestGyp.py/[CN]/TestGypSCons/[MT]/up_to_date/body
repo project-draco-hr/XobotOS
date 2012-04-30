@@ -1,0 +1,14 @@
+def up_to_date(self, gyp_file, target=None, **kw):
+    '\n    Verifies that a build of the specified SCons target is up to date.\n    '
+    if (target in (None, self.DEFAULT)):
+        up_to_date_targets = 'all'
+    else:
+        up_to_date_targets = target
+    up_to_date_lines = []
+    for arg in up_to_date_targets.split():
+        up_to_date_lines.append(("scons: `%s' is up to date.\n" % arg))
+    kw['stdout'] = ''.join(up_to_date_lines)
+    arguments = kw.get('arguments', [])[:]
+    arguments.append('-Q')
+    kw['arguments'] = arguments
+    return self.build(gyp_file, target, **kw)

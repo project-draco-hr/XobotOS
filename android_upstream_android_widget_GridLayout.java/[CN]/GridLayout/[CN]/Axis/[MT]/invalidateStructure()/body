@@ -1,0 +1,11 @@
+{
+  maxIndex=UNDEFINED;
+  groupBounds=null;
+  forwardLinks=null;
+  backwardLinks=null;
+  leadingMargins=null;
+  trailingMargins=null;
+  arcs=null;
+  locations=null;
+  invalidateValues();
+}

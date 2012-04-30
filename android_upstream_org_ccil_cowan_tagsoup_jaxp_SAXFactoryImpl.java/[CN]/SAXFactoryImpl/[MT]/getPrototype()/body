@@ -1,0 +1,6 @@
+{
+  if (prototypeParser == null) {
+    prototypeParser=new SAXParserImpl();
+  }
+  return prototypeParser;
+}

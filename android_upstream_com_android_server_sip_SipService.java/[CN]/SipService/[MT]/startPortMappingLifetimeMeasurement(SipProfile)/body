@@ -1,0 +1,3 @@
+{
+  startPortMappingLifetimeMeasurement(localProfile,DEFAULT_MAX_KEEPALIVE_INTERVAL);
+}

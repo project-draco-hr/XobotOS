@@ -1,0 +1,6 @@
+{
+  if (this.authority == null) {
+    this.authority=new Authority();
+  }
+  authority.setHostPort(hostPort);
+}

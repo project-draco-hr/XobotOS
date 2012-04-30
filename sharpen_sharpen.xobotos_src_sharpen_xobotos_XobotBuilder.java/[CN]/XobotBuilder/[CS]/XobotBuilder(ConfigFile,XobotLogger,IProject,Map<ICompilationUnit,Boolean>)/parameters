@@ -1,0 +1,4 @@
+ConfigFile configFile
+XobotLogger logger
+IProject project
+Map<ICompilationUnit,Boolean> sources

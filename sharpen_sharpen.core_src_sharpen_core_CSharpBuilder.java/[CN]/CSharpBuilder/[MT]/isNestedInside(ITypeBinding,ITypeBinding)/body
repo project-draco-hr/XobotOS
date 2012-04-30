@@ -1,0 +1,7 @@
+{
+  if (!child.isNested())   return false;
+  while ((child=child.getSuperclass()) != null) {
+    if (child.isEqualTo(parent))     return true;
+  }
+  return false;
+}

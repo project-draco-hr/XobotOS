@@ -1,0 +1,8 @@
+{
+  mContext=context;
+  mCsHandler=target;
+  BluetoothAdapter adapter=BluetoothAdapter.getDefaultAdapter();
+  if (adapter != null) {
+    adapter.getProfileProxy(mContext,mProfileServiceListener,BluetoothProfile.PAN);
+  }
+}

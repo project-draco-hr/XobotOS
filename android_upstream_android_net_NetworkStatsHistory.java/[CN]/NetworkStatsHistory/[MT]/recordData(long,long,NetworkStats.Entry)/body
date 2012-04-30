@@ -1,0 +1,36 @@
+{
+  if (entry.rxBytes < 0 || entry.rxPackets < 0 || entry.txBytes < 0 || entry.txPackets < 0 || entry.operations < 0) {
+    throw new IllegalArgumentException("tried recording negative data");
+  }
+  if (entry.rxBytes == 0 && entry.rxPackets == 0 && entry.txBytes == 0 && entry.txPackets == 0 && entry.operations == 0) {
+    return;
+  }
+  ensureBuckets(start,end);
+  long duration=end - start;
+  final int startIndex=getIndexAfter(end);
+  for (int i=startIndex; i >= 0; i--) {
+    final long curStart=bucketStart[i];
+    final long curEnd=curStart + bucketDuration;
+    if (curEnd < start)     break;
+    if (curStart > end)     continue;
+    final long overlap=Math.min(curEnd,end) - Math.max(curStart,start);
+    if (overlap <= 0)     continue;
+    final long fracRxBytes=entry.rxBytes * overlap / duration;
+    final long fracRxPackets=entry.rxPackets * overlap / duration;
+    final long fracTxBytes=entry.txBytes * overlap / duration;
+    final long fracTxPackets=entry.txPackets * overlap / duration;
+    final long fracOperations=entry.operations * overlap / duration;
+    addLong(activeTime,i,overlap);
+    addLong(rxBytes,i,fracRxBytes);
+    entry.rxBytes-=fracRxBytes;
+    addLong(rxPackets,i,fracRxPackets);
+    entry.rxPackets-=fracRxPackets;
+    addLong(txBytes,i,fracTxBytes);
+    entry.txBytes-=fracTxBytes;
+    addLong(txPackets,i,fracTxPackets);
+    entry.txPackets-=fracTxPackets;
+    addLong(operations,i,fracOperations);
+    entry.operations-=fracOperations;
+    duration-=overlap;
+  }
+}

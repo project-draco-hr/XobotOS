@@ -1,0 +1,7 @@
+{
+  if (null == warningHandler() || null == _ast) {
+    throw new IllegalStateException();
+  }
+  _ast.accept(this);
+  visit(_ast.getCommentList());
+}

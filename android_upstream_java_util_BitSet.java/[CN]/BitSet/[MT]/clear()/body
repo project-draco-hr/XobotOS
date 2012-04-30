@@ -1,0 +1,4 @@
+{
+  Arrays.fill(bits,0,longCount,0L);
+  longCount=0;
+}

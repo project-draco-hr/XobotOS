@@ -1,0 +1,14 @@
+{
+  this._configFile=configFile;
+  this._logger=logger;
+  this._project=project;
+  this._sources=sources;
+  this._config=new XobotConfiguration(_configFile);
+  addLogFile();
+  _root=_project.getLocationURI();
+  _sourceInfo=_configFile.getSourceInfo();
+  _sourceFolder=_project.getFolder(_sourceInfo.getSourceFolder());
+  _outputFolder=_project.getFolder(_sourceInfo.getOutputFolder());
+  String apiFileName=configFile.getAPIDefinitionFileName();
+  _api=RootContext.readConfigurationFile(_root,apiFileName,APIDefinition.class,_config);
+}

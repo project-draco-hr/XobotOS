@@ -1,0 +1,14 @@
+{
+  mOuterRing.draw(canvas);
+  for (  TargetDrawable target : mTargetDrawables) {
+    if (target != null) {
+      target.draw(canvas);
+    }
+  }
+  for (  TargetDrawable target : mChevronDrawables) {
+    if (target != null) {
+      target.draw(canvas);
+    }
+  }
+  mHandleDrawable.draw(canvas);
+}

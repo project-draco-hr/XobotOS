@@ -1,0 +1,7 @@
+{
+  if (!(object instanceof Collator)) {
+    return false;
+  }
+  Collator collator=(Collator)object;
+  return icuColl == null ? collator.icuColl == null : icuColl.equals(collator.icuColl);
+}

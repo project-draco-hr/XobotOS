@@ -1,0 +1,3 @@
+{
+  return address.charAt(0) == '[' && address.charAt(address.length() - 1) == ']';
+}

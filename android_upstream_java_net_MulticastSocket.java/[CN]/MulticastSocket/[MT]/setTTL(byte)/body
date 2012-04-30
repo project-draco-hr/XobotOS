@@ -1,0 +1,4 @@
+{
+  checkOpen();
+  impl.setTTL(ttl);
+}

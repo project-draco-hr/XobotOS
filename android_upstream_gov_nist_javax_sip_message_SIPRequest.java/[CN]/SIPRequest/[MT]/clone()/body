@@ -1,0 +1,6 @@
+{
+  SIPRequest retval=(SIPRequest)super.clone();
+  retval.transactionPointer=null;
+  if (this.requestLine != null)   retval.requestLine=(RequestLine)this.requestLine.clone();
+  return retval;
+}

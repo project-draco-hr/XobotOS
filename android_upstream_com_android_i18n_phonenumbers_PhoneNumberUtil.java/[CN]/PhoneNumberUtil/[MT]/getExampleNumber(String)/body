@@ -1,0 +1,3 @@
+{
+  return getExampleNumberForType(regionCode,PhoneNumberType.FIXED_LINE);
+}

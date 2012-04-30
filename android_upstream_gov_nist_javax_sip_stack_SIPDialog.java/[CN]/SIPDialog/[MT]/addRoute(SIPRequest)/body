@@ -1,0 +1,23 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("setContact: dialogState: " + this + "state = "+ this.getState());
+  }
+  if (this.dialogState == CONFIRMED_STATE && SIPRequest.isTargetRefresh(sipRequest.getMethod())) {
+    this.doTargetRefresh(sipRequest);
+  }
+  if (this.dialogState == CONFIRMED_STATE || this.dialogState == TERMINATED_STATE) {
+    return;
+  }
+  if (sipRequest.getToTag() != null)   return;
+  RecordRouteList rrlist=sipRequest.getRecordRouteHeaders();
+  if (rrlist != null) {
+    this.addRoute(rrlist);
+  }
+ else {
+    this.routeList=new RouteList();
+  }
+  ContactList contactList=sipRequest.getContactHeaders();
+  if (contactList != null) {
+    this.setRemoteTarget((ContactHeader)contactList.getFirst());
+  }
+}

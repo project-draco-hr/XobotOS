@@ -1,0 +1,5 @@
+{
+  hasPreferredDomesticCarrierCode=false;
+  preferredDomesticCarrierCode_="";
+  return this;
+}

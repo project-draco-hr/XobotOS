@@ -1,0 +1,8 @@
+{
+  if (!checkAudioSettingsPermission("setBluetoothScoOn()")) {
+    return;
+  }
+  mForcedUseForComm=on ? AudioSystem.FORCE_BT_SCO : AudioSystem.FORCE_NONE;
+  sendMsg(mAudioHandler,MSG_SET_FORCE_USE,SHARED_MSG,SENDMSG_QUEUE,AudioSystem.FOR_COMMUNICATION,mForcedUseForComm,null,0);
+  sendMsg(mAudioHandler,MSG_SET_FORCE_USE,SHARED_MSG,SENDMSG_QUEUE,AudioSystem.FOR_RECORD,mForcedUseForComm,null,0);
+}

@@ -1,0 +1,6 @@
+{
+  if (maxPathLength < -1) {
+    throw new InvalidParameterException("maxPathLength < -1");
+  }
+  this.maxPathLength=maxPathLength;
+}

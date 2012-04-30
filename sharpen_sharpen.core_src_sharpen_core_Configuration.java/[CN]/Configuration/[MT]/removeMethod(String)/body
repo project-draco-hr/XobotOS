@@ -1,0 +1,3 @@
+{
+  _removedMethods.add(fullyQualifiedName);
+}

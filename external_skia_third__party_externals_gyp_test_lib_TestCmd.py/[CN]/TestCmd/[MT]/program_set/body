@@ -1,0 +1,5 @@
+def program_set(self, program):
+    'Set the executable program or script to be tested.\n        '
+    if (program and (not os.path.isabs(program))):
+        program = os.path.join(self._cwd, program)
+    self.program = program

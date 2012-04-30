@@ -1,0 +1,7 @@
+{
+  startMonth=month;
+  startDay=after ? day : -day;
+  startDayOfWeek=-dayOfWeek;
+  startTime=time;
+  setStartMode();
+}

@@ -1,0 +1,9 @@
+{
+  if (element.getTagName().equals("@deprecated")) {
+    member.removeAttribute("System.Obsolete");
+    member.removeAttribute("System.ObsoleteAttribute");
+    member.addAttribute(obsoleteAttributeFromDeprecatedTagElement(element));
+    return true;
+  }
+  return false;
+}

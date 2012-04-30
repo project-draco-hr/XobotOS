@@ -1,0 +1,6 @@
+{
+  checkSynchronousHint();
+  mPendingResult.mResultCode=code;
+  mPendingResult.mResultData=data;
+  mPendingResult.mResultExtras=extras;
+}

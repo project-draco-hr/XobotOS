@@ -1,0 +1,9 @@
+{
+  String[] test={"sip:alice@example.com","sips:alice@examples.com","sip:3Zqkv5dajqaaas0tCjCxT0xH2ZEuEMsFl0xoasip%3A%2B3519116786244%40siplab.domain.com@213.0.115.163:7070"};
+  for (int i=0; i < test.length; i++) {
+    URLParser p=new URLParser(test[i]);
+    GenericURI uri=p.parse();
+    System.out.println("uri type returned " + uri.getClass().getName());
+    System.out.println(test[i] + " is SipUri? " + uri.isSipURI()+ ">"+ uri.encode());
+  }
+}

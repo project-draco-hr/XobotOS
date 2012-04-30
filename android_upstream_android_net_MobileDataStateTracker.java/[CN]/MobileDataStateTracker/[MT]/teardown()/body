@@ -1,0 +1,4 @@
+{
+  setTeardownRequested(true);
+  return (setEnableApn(mApnType,false) != Phone.APN_REQUEST_FAILED);
+}

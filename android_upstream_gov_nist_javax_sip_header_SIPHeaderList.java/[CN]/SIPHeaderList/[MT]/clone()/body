@@ -1,0 +1,13 @@
+{
+  try {
+    Class<?> clazz=this.getClass();
+    Constructor<?> cons=clazz.getConstructor((Class[])null);
+    SIPHeaderList<HDR> retval=(SIPHeaderList<HDR>)cons.newInstance((Object[])null);
+    retval.headerName=this.headerName;
+    retval.myClass=this.myClass;
+    return retval.clonehlist(this.hlist);
+  }
+ catch (  Exception ex) {
+    throw new RuntimeException("Could not clone!",ex);
+  }
+}

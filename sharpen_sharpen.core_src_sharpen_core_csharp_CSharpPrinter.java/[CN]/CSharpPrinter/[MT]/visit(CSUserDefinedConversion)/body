@@ -1,0 +1,19 @@
+{
+  printPrecedingComments(node);
+  beginEnclosingIfDefs(node);
+  writeDoc(node);
+  writeAttributes(node);
+  writeIndentation();
+  write("public static ");
+  write(node.implicit() ? "implicit" : "explicit");
+  write(" operator ");
+  node.targetType().accept(this);
+  write("(");
+  node.sourceType().accept(this);
+  write(" ");
+  write("source");
+  write(")");
+  writeLine();
+  node.body().accept(this);
+  endEnclosingIfDefs(node);
+}

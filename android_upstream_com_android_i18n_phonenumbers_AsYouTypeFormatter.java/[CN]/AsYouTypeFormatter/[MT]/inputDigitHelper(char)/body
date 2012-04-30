@@ -1,0 +1,16 @@
+{
+  Matcher digitMatcher=digitPattern.matcher(formattingTemplate);
+  if (digitMatcher.find(lastMatchPosition)) {
+    String tempTemplate=digitMatcher.replaceFirst(Character.toString(nextChar));
+    formattingTemplate.replace(0,tempTemplate.length(),tempTemplate);
+    lastMatchPosition=digitMatcher.start();
+    return formattingTemplate.substring(0,lastMatchPosition + 1);
+  }
+ else {
+    if (possibleFormats.size() == 1) {
+      ableToFormat=false;
+    }
+    currentFormattingPattern="";
+    return accruedInput.toString();
+  }
+}

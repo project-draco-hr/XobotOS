@@ -1,0 +1,18 @@
+{
+  if (node instanceof AnonymousClassDeclaration) {
+    ;
+  }
+ else   if (node.getParent() instanceof AnonymousClassDeclaration) {
+    ;
+  }
+ else   if (!(node.getParent() instanceof TypeDeclaration))   return null;
+  final ByRef<V> result=new ByRef<V>();
+  TemplateVisitor visitor=new TemplateVisitor(){
+    @Override public void accept(    AbstractTemplate template){
+      result.value=klass.cast(template);
+    }
+  }
+;
+  if (!visit(visitor,node,klass))   return null;
+  return result.value != null ? result.value : defaultValue;
+}

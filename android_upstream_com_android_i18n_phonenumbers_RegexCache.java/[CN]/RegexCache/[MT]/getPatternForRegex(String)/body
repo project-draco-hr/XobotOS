@@ -1,0 +1,8 @@
+{
+  Pattern pattern=cache.get(regex);
+  if (pattern == null) {
+    pattern=Pattern.compile(regex);
+    cache.put(regex,pattern);
+  }
+  return pattern;
+}

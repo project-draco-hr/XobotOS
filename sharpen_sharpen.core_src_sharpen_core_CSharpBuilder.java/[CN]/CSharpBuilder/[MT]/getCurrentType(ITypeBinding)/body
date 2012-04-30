@@ -1,0 +1,8 @@
+{
+  if (null != _currentType && !isExtractedNestedType(binding)) {
+    return _currentType;
+  }
+ else {
+    return _compilationUnit;
+  }
+}

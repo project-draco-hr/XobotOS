@@ -1,0 +1,4 @@
+{
+  validate();
+  rsnTypeGetNativeData(mContext,id,typeData);
+}

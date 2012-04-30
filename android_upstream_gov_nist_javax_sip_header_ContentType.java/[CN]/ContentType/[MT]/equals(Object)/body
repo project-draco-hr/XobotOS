@@ -1,0 +1,7 @@
+{
+  if (other instanceof ContentTypeHeader) {
+    final ContentTypeHeader o=(ContentTypeHeader)other;
+    return this.getContentType().equalsIgnoreCase(o.getContentType()) && this.getContentSubType().equalsIgnoreCase(o.getContentSubType()) && equalParameters(o);
+  }
+  return false;
+}

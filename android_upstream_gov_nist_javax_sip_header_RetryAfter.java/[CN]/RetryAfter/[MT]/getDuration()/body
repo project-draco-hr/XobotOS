@@ -1,0 +1,4 @@
+{
+  if (this.getParameter(DURATION) == null)   return -1;
+ else   return super.getParameterAsInt(DURATION);
+}

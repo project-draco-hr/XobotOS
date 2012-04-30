@@ -1,0 +1,6 @@
+{
+  if (isLoggingEnabled()) {
+    this.getStackLogger().logDebug("dialog table  = " + this.dialogTable);
+    System.out.println("dialog table = " + this.dialogTable);
+  }
+}

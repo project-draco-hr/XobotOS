@@ -1,0 +1,18 @@
+{
+  if (Log.isLoggable(TAG,Log.VERBOSE)) {
+    Log.v(TAG,"getAuthTokenLabel: authTokenType " + authTokenType);
+  }
+  checkBinderPermission();
+  try {
+    Bundle result=new Bundle();
+    result.putString(AccountManager.KEY_AUTH_TOKEN_LABEL,AbstractAccountAuthenticator.this.getAuthTokenLabel(authTokenType));
+    if (Log.isLoggable(TAG,Log.VERBOSE)) {
+      result.keySet();
+      Log.v(TAG,"getAuthTokenLabel: result " + AccountManager.sanitizeResult(result));
+    }
+    response.onResult(result);
+  }
+ catch (  Exception e) {
+    handleException(response,"getAuthTokenLabel",authTokenType,e);
+  }
+}

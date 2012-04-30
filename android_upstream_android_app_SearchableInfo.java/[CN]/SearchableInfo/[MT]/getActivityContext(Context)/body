@@ -1,0 +1,3 @@
+{
+  return createActivityContext(context,mSearchActivity);
+}

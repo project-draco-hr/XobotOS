@@ -1,0 +1,20 @@
+{
+  if (hlist.isEmpty()) {
+    buffer.append(headerName).append(':').append(Separators.NEWLINE);
+  }
+ else {
+    if (this.headerName.equals(SIPHeaderNames.WWW_AUTHENTICATE) || this.headerName.equals(SIPHeaderNames.PROXY_AUTHENTICATE) || this.headerName.equals(SIPHeaderNames.AUTHORIZATION)|| this.headerName.equals(SIPHeaderNames.PROXY_AUTHORIZATION)|| (prettyEncode && (this.headerName.equals(SIPHeaderNames.VIA) || this.headerName.equals(SIPHeaderNames.ROUTE) || this.headerName.equals(SIPHeaderNames.RECORD_ROUTE)))|| this.getClass().equals(ExtensionHeaderList.class)) {
+      ListIterator<HDR> li=hlist.listIterator();
+      while (li.hasNext()) {
+        HDR sipheader=(HDR)li.next();
+        sipheader.encode(buffer);
+      }
+    }
+ else {
+      buffer.append(headerName).append(Separators.COLON).append(Separators.SP);
+      this.encodeBody(buffer);
+      buffer.append(Separators.NEWLINE);
+    }
+  }
+  return buffer;
+}

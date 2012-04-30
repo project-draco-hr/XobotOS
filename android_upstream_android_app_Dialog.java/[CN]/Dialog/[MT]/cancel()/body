@@ -1,0 +1,7 @@
+{
+  if (!mCanceled && mCancelMessage != null) {
+    mCanceled=true;
+    Message.obtain(mCancelMessage).sendToTarget();
+  }
+  dismiss();
+}

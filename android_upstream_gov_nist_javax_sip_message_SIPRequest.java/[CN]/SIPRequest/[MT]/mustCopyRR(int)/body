@@ -1,0 +1,6 @@
+{
+  if (code > 100 && code < 300) {
+    return isDialogCreating(this.getMethod()) && getToTag() == null;
+  }
+ else   return false;
+}

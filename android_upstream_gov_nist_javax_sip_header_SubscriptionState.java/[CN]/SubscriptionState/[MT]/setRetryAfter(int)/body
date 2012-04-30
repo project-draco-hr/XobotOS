@@ -1,0 +1,4 @@
+{
+  if (retryAfter <= 0)   throw new InvalidArgumentException("JAIN-SIP " + "Exception, SubscriptionState, setRetryAfter(), the retryAfter parameter is <=0");
+  this.retryAfter=retryAfter;
+}

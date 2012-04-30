@@ -1,0 +1,4 @@
+{
+  Via via=(Via)this.getViaHeaders().getFirst();
+  return via.getHost();
+}

@@ -1,0 +1,5 @@
+{
+  boolean retval=super.cancel();
+  this.isCancelled=true;
+  return retval;
+}

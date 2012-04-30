@@ -1,0 +1,254 @@
+{
+  theState=S_PCDATA;
+  PushbackReader r;
+  if (r0 instanceof PushbackReader) {
+    r=(PushbackReader)r0;
+  }
+ else   if (r0 instanceof BufferedReader) {
+    r=new PushbackReader(r0);
+  }
+ else {
+    r=new PushbackReader(new BufferedReader(r0,200));
+  }
+  int firstChar=r.read();
+  if (firstChar != '\uFEFF')   unread(r,firstChar);
+  while (theState != S_DONE) {
+    int ch=r.read();
+    if (ch >= 0x80 && ch <= 0x9F)     ch=theWinMap[ch - 0x80];
+    if (ch == '\r') {
+      ch=r.read();
+      if (ch != '\n') {
+        unread(r,ch);
+        ch='\n';
+      }
+    }
+    if (ch == '\n') {
+      theCurrentLine++;
+      theCurrentColumn=0;
+    }
+ else {
+      theCurrentColumn++;
+    }
+    if (!(ch >= 0x20 || ch == '\n' || ch == '\t' || ch == -1))     continue;
+    int action=0;
+    for (int i=0; i < statetable.length; i+=4) {
+      if (theState != statetable[i]) {
+        if (action != 0)         break;
+        continue;
+      }
+      if (statetable[i + 1] == 0) {
+        action=statetable[i + 2];
+        theNextState=statetable[i + 3];
+      }
+ else       if (statetable[i + 1] == ch) {
+        action=statetable[i + 2];
+        theNextState=statetable[i + 3];
+        break;
+      }
+    }
+switch (action) {
+case 0:
+      throw new Error("HTMLScanner can't cope with " + Integer.toString(ch) + " in state "+ Integer.toString(theState));
+case A_ADUP:
+    h.adup(theOutputBuffer,0,theSize);
+  theSize=0;
+break;
+case A_ADUP_SAVE:
+h.adup(theOutputBuffer,0,theSize);
+theSize=0;
+save(ch,h);
+break;
+case A_ADUP_STAGC:
+h.adup(theOutputBuffer,0,theSize);
+theSize=0;
+h.stagc(theOutputBuffer,0,theSize);
+break;
+case A_ANAME:
+h.aname(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_ANAME_ADUP:
+h.aname(theOutputBuffer,0,theSize);
+theSize=0;
+h.adup(theOutputBuffer,0,theSize);
+break;
+case A_ANAME_ADUP_STAGC:
+h.aname(theOutputBuffer,0,theSize);
+theSize=0;
+h.adup(theOutputBuffer,0,theSize);
+h.stagc(theOutputBuffer,0,theSize);
+break;
+case A_AVAL:
+h.aval(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_AVAL_STAGC:
+h.aval(theOutputBuffer,0,theSize);
+theSize=0;
+h.stagc(theOutputBuffer,0,theSize);
+break;
+case A_CDATA:
+mark();
+if (theSize > 1) theSize-=2;
+h.pcdata(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_ENTITY_START:
+h.pcdata(theOutputBuffer,0,theSize);
+theSize=0;
+save(ch,h);
+break;
+case A_ENTITY:
+mark();
+char ch1=(char)ch;
+if (theState == S_ENT && ch1 == '#') {
+theNextState=S_NCR;
+save(ch,h);
+break;
+}
+ else if (theState == S_NCR && (ch1 == 'x' || ch1 == 'X')) {
+theNextState=S_XNCR;
+save(ch,h);
+break;
+}
+ else if (theState == S_ENT && Character.isLetterOrDigit(ch1)) {
+save(ch,h);
+break;
+}
+ else if (theState == S_NCR && Character.isDigit(ch1)) {
+save(ch,h);
+break;
+}
+ else if (theState == S_XNCR && (Character.isDigit(ch1) || "abcdefABCDEF".indexOf(ch1) != -1)) {
+save(ch,h);
+break;
+}
+h.entity(theOutputBuffer,1,theSize - 1);
+int ent=h.getEntity();
+if (ent != 0) {
+theSize=0;
+if (ent >= 0x80 && ent <= 0x9F) {
+ent=theWinMap[ent - 0x80];
+}
+if (ent < 0x20) {
+ent=0x20;
+}
+ else if (ent >= 0xD800 && ent <= 0xDFFF) {
+ent=0;
+}
+ else if (ent <= 0xFFFF) {
+save(ent,h);
+}
+ else {
+ent-=0x10000;
+save((ent >> 10) + 0xD800,h);
+save((ent & 0x3FF) + 0xDC00,h);
+}
+if (ch != ';') {
+unread(r,ch);
+theCurrentColumn--;
+}
+}
+ else {
+unread(r,ch);
+theCurrentColumn--;
+}
+theNextState=S_PCDATA;
+break;
+case A_ETAG:
+h.etag(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_DECL:
+h.decl(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_GI:
+h.gi(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_GI_STAGC:
+h.gi(theOutputBuffer,0,theSize);
+theSize=0;
+h.stagc(theOutputBuffer,0,theSize);
+break;
+case A_LT:
+mark();
+save('<',h);
+save(ch,h);
+break;
+case A_LT_PCDATA:
+mark();
+save('<',h);
+h.pcdata(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_PCDATA:
+mark();
+h.pcdata(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_CMNT:
+mark();
+h.cmnt(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_MINUS3:
+save('-',h);
+save(' ',h);
+break;
+case A_MINUS2:
+save('-',h);
+save(' ',h);
+case A_MINUS:
+save('-',h);
+save(ch,h);
+break;
+case A_PI:
+mark();
+h.pi(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_PITARGET:
+h.pitarget(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_PITARGET_PI:
+h.pitarget(theOutputBuffer,0,theSize);
+theSize=0;
+h.pi(theOutputBuffer,0,theSize);
+break;
+case A_SAVE:
+save(ch,h);
+break;
+case A_SKIP:
+break;
+case A_SP:
+save(' ',h);
+break;
+case A_STAGC:
+h.stagc(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+case A_EMPTYTAG:
+mark();
+if (theSize > 0) h.gi(theOutputBuffer,0,theSize);
+theSize=0;
+h.stage(theOutputBuffer,0,theSize);
+break;
+case A_UNGET:
+unread(r,ch);
+theCurrentColumn--;
+break;
+case A_UNSAVE_PCDATA:
+if (theSize > 0) theSize--;
+h.pcdata(theOutputBuffer,0,theSize);
+theSize=0;
+break;
+default :
+throw new Error("Can't process state " + action);
+}
+theState=theNextState;
+}
+h.eof(theOutputBuffer,0,0);
+}

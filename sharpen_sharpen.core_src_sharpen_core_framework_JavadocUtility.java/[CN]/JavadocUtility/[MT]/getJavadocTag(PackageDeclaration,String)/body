@@ -1,0 +1,4 @@
+{
+  final List<TagElement> found=getJavadocTags(node,tagName);
+  return firstTagElementOrNull(found);
+}

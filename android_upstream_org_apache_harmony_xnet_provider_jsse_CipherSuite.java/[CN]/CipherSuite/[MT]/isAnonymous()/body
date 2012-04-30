@@ -1,0 +1,6 @@
+{
+  if (keyExchange == KEY_EXCHANGE_DH_anon || keyExchange == KEY_EXCHANGE_DH_anon_EXPORT || keyExchange == KEY_EXCHANGE_ECDH_anon) {
+    return true;
+  }
+  return false;
+}

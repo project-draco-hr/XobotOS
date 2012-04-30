@@ -1,0 +1,9 @@
+{
+switch (type) {
+case START:
+    return String.format("THREAD START (obj=%d, id = %d, name=\"%s\", group=\"%s\")",objectId,threadId,threadName,groupName);
+case END:
+  return String.format("THREAD END (id = %d)",threadId);
+}
+throw new IllegalStateException(type.toString());
+}

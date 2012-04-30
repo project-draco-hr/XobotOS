@@ -1,0 +1,11 @@
+{
+  loge("IP configuration failed");
+  mWifiInfo.setInetAddress(null);
+  if (++mReconnectCount > getMaxDhcpRetries()) {
+    loge("Failed " + mReconnectCount + " times, Disabling "+ mLastNetworkId);
+    WifiConfigStore.disableNetwork(mLastNetworkId,WifiConfiguration.DISABLED_DHCP_FAILURE);
+    mReconnectCount=0;
+  }
+  WifiNative.disconnectCommand();
+  WifiNative.reconnectCommand();
+}

@@ -1,0 +1,7 @@
+def __init__(self, spec):
+    self.spec = spec
+    self.xcode_settings = {}
+    configs = spec['configurations']
+    for (configname, config) in configs.iteritems():
+        self.xcode_settings[configname] = config.get('xcode_settings', {})
+    self.configname = None

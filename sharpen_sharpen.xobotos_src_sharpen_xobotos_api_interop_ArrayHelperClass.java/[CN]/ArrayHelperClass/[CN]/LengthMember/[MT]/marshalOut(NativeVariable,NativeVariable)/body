@@ -1,0 +1,3 @@
+{
+  return createAssert(new BinaryOperator("==",getReference(src),getReference(dest)));
+}

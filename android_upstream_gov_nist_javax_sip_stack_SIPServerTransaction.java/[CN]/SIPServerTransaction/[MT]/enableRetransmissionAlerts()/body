@@ -1,0 +1,5 @@
+{
+  if (this.getDialog() != null)   throw new SipException("Dialog associated with tx");
+ else   if (!this.getMethod().equals(Request.INVITE))   throw new SipException("Request Method must be INVITE");
+  this.retransmissionAlertEnabled=true;
+}

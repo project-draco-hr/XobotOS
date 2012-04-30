@@ -1,0 +1,5 @@
+{
+  final MemberMapping mapping=effectiveMappingFor(original.resolveBinding());
+  if (null == mapping)   return false;
+  return mapping.kind == MemberKind.Property;
+}

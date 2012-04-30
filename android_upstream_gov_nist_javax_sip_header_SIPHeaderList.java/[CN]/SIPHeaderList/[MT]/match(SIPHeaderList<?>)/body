@@ -1,0 +1,19 @@
+{
+  if (template == null)   return true;
+  if (!this.getClass().equals(template.getClass()))   return false;
+  SIPHeaderList<SIPHeader> that=(SIPHeaderList<SIPHeader>)template;
+  if (this.hlist == that.hlist)   return true;
+ else   if (this.hlist == null)   return false;
+ else {
+    for (Iterator<SIPHeader> it=that.hlist.iterator(); it.hasNext(); ) {
+      SIPHeader sipHeader=(SIPHeader)it.next();
+      boolean found=false;
+      for (Iterator<HDR> it1=this.hlist.iterator(); it1.hasNext() && !found; ) {
+        SIPHeader sipHeader1=(SIPHeader)it1.next();
+        found=sipHeader1.match(sipHeader);
+      }
+      if (!found)       return false;
+    }
+    return true;
+  }
+}

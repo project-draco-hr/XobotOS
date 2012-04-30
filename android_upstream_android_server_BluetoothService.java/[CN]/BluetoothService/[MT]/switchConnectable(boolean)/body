@@ -1,0 +1,3 @@
+{
+  setAdapterPropertyBooleanNative("Powered",on ? 1 : 0);
+}

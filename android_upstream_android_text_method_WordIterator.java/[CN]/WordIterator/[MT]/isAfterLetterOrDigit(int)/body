@@ -1,0 +1,7 @@
+{
+  if (shiftedOffset >= 1 && shiftedOffset <= mString.length()) {
+    final int codePoint=mString.codePointBefore(shiftedOffset);
+    if (Character.isLetterOrDigit(codePoint))     return true;
+  }
+  return false;
+}

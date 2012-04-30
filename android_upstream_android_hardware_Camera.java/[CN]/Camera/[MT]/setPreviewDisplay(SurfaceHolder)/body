@@ -1,0 +1,8 @@
+{
+  if (holder != null) {
+    setPreviewDisplay(holder.getSurface());
+  }
+ else {
+    setPreviewDisplay((Surface)null);
+  }
+}

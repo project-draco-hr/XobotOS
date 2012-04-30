@@ -1,0 +1,3 @@
+{
+  return (SingleVariableDeclaration)method.parameters().get(index);
+}

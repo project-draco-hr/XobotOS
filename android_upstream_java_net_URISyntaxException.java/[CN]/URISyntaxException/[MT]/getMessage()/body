@@ -1,0 +1,7 @@
+{
+  String reason=super.getMessage();
+  if (index != -1) {
+    return reason + " at index " + index+ ": "+ input;
+  }
+  return reason + ": " + input;
+}

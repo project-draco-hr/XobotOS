@@ -1,0 +1,3 @@
+def DebugOutput(mode, message):
+    if (mode in gyp.debug.keys()):
+        print ('%s: %s' % (mode.upper(), message))

@@ -1,0 +1,8 @@
+{
+  final MethodDeclaration declaration=declaringNode(node.resolveMethodBinding());
+  final TagElement macro=effectiveAnnotationFor(declaration,SharpenAnnotations.SHARPEN_MACRO);
+  final CSMacro code=new CSMacro(JavadocUtility.singleTextFragmentFrom(macro));
+  code.addVariable("expression",mapExpression(node.getExpression()));
+  code.addVariable("arguments",mapExpressions(node.arguments()));
+  pushExpression(new CSMacroExpression(code));
+}

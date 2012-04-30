@@ -1,0 +1,6 @@
+{
+  NameValue nv=new NameValue();
+  nv.setName(name);
+  nv.setValue(value);
+  duplicates.set(nv);
+}

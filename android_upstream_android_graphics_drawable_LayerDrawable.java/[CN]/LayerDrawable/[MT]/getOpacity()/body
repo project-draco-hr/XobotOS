@@ -1,0 +1,6 @@
+{
+  if (mOpacityOverride != PixelFormat.UNKNOWN) {
+    return mOpacityOverride;
+  }
+  return mLayerState.getOpacity();
+}

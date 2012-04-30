@@ -1,0 +1,8 @@
+{
+  if (mHardwareLayer != null) {
+    mHardwareLayer.destroy();
+    mHardwareLayer=null;
+    return true;
+  }
+  return false;
+}

@@ -1,0 +1,6 @@
+{
+  this._parent=parent;
+  this._name=name;
+  this._fileName=fileName;
+  if (parent != null)   parent.addChild(this);
+}

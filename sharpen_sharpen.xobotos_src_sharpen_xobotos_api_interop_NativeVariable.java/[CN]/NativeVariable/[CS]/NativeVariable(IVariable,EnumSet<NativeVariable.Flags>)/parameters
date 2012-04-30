@@ -1,0 +1,2 @@
+IVariable var
+EnumSet<NativeVariable.Flags> flags

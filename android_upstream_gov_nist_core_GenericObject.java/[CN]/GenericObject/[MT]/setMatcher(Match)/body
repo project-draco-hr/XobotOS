@@ -1,0 +1,4 @@
+{
+  if (matchExpression == null)   throw new IllegalArgumentException("null arg!");
+  this.matchExpression=matchExpression;
+}

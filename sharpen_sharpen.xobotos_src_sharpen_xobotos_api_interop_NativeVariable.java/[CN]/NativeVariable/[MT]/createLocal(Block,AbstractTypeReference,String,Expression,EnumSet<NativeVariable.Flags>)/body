@@ -1,0 +1,6 @@
+{
+  AbstractTypeReference effective=getEffectiveType(type,flags);
+  LocalVariable var=new LocalVariable(effective,name,init);
+  body.addStatement(var);
+  return new NativeVariable(var,flags);
+}

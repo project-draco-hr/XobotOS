@@ -1,0 +1,7 @@
+{
+  SecureRandom result=internalSecureRandom;
+  if (result == null) {
+    internalSecureRandom=result=new SecureRandom();
+  }
+  return result.generateSeed(numBytes);
+}

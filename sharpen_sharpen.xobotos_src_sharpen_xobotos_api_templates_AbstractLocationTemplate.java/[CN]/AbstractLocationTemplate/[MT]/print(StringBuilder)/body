@@ -1,0 +1,9 @@
+{
+  if (_locationFilters != null) {
+    for (    final LocationFilter filter : _locationFilters) {
+      sb.append(':');
+      sb.append(filter);
+    }
+  }
+  super.print(sb);
+}

@@ -1,0 +1,15 @@
+{
+  if (!isValidRegionCode(regionCode)) {
+    LOGGER.log(Level.SEVERE,"Invalid or missing region code provided.");
+    return null;
+  }
+  PhoneMetadata metadata=getMetadataForRegion(regionCode);
+  String nationalPrefix=metadata.getNationalPrefix();
+  if (nationalPrefix.length() == 0) {
+    return null;
+  }
+  if (stripNonDigits) {
+    nationalPrefix=nationalPrefix.replace("~","");
+  }
+  return nationalPrefix;
+}

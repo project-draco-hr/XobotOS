@@ -1,0 +1,28 @@
+{
+  PVisitedNetworkIDList visitedNetworkIDList=new PVisitedNetworkIDList();
+  if (debug)   dbg_enter("VisitedNetworkIDParser.parse");
+  try {
+    this.lexer.match(TokenTypes.P_VISITED_NETWORK_ID);
+    this.lexer.SPorHT();
+    this.lexer.match(':');
+    this.lexer.SPorHT();
+    while (true) {
+      PVisitedNetworkID visitedNetworkID=new PVisitedNetworkID();
+      if (this.lexer.lookAhead(0) == '\"')       parseQuotedString(visitedNetworkID);
+ else       parseToken(visitedNetworkID);
+      visitedNetworkIDList.add(visitedNetworkID);
+      this.lexer.SPorHT();
+      char la=lexer.lookAhead(0);
+      if (la == ',') {
+        this.lexer.match(',');
+        this.lexer.SPorHT();
+      }
+ else       if (la == '\n')       break;
+ else       throw createParseException("unexpected char = " + la);
+    }
+    return visitedNetworkIDList;
+  }
+  finally {
+    if (debug)     dbg_leave("VisitedNetworkIDParser.parse");
+  }
+}

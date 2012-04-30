@@ -1,0 +1,7 @@
+{
+  checkOpen();
+  finished=false;
+  needsDictionary=false;
+  inLength=inRead=0;
+  resetImpl(streamHandle);
+}

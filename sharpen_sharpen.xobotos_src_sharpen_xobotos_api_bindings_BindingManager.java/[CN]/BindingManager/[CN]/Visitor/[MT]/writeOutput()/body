@@ -1,0 +1,5 @@
+{
+  if (_nativeBuilder == null)   return true;
+  if (DEBUG)   Sharpen.Debug("WRITING OUTPUT: %s",_name);
+  return _nativeBuilder.writeOutput();
+}

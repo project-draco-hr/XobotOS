@@ -1,0 +1,3 @@
+def built_file_path(self, name, type=None, **kw):
+    '\n    Returns a path to the specified file name, of the specified type.\n    '
+    raise NotImplementedError

@@ -1,0 +1,9 @@
+{
+  String key=makeKey(dst,dstPort);
+  Socket clientSock=getSocket(key);
+  if (clientSock == null) {
+    clientSock=sipStack.getNetworkLayer().createSocket(dst,dstPort,localAddress,localPort);
+    putSocket(key,clientSock);
+  }
+  return clientSock.getLocalSocketAddress();
+}

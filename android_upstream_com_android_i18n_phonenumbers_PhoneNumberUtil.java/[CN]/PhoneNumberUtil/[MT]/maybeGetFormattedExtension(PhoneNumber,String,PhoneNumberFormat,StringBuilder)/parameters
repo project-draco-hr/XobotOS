@@ -1,0 +1,4 @@
+PhoneNumber number
+String regionCode
+PhoneNumberFormat numberFormat
+StringBuilder formattedNumber

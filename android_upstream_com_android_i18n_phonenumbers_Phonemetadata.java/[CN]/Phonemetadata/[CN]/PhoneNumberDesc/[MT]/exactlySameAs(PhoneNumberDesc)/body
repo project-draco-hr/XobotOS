@@ -1,0 +1,3 @@
+{
+  return nationalNumberPattern_.equals(other.nationalNumberPattern_) && possibleNumberPattern_.equals(other.possibleNumberPattern_) && exampleNumber_.equals(other.exampleNumber_);
+}

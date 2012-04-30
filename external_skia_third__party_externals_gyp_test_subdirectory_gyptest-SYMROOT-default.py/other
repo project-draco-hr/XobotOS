@@ -1,0 +1,9 @@
+'\nVerifies building a target and a subsidiary dependent target from a\n.gyp file in a subdirectory, without specifying an explicit output build\ndirectory, and using the generated solution or project file at the top\nof the tree as the entry point.\n                                 \nThe configuration sets the Xcode SYMROOT variable and uses --depth=\nto make Xcode behave like the other build tools--that is, put all\nbuilt targets in a single output build directory at the top of the tree.\n'
+import TestGyp
+test = TestGyp.TestGyp()
+test.run_gyp('prog1.gyp', '-Dset_symroot=1', '--depth=.', chdir='src')
+test.relocate('src', 'relocate/src')
+test.build('prog1.gyp', SYMROOT=None, chdir='relocate/src')
+test.run_built_executable('prog1', stdout='Hello from prog1.c\n', chdir='relocate/src')
+test.run_built_executable('prog2', stdout='Hello from prog2.c\n', chdir='relocate/src')
+test.pass_test()

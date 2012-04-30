@@ -1,0 +1,6 @@
+{
+  super(template,CSMethod.class,output,node);
+  this._parent=parent;
+  if (nativeBuilder != null)   this._native=getNativeBuilder(nativeBuilder);
+ else   this._native=null;
+}

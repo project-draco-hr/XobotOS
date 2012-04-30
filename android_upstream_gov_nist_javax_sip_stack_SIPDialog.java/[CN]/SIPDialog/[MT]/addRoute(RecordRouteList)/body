@@ -1,0 +1,48 @@
+{
+  try {
+    if (this.isClientDialog()) {
+      this.routeList=new RouteList();
+      ListIterator li=recordRouteList.listIterator(recordRouteList.size());
+      boolean addRoute=true;
+      while (li.hasPrevious()) {
+        RecordRoute rr=(RecordRoute)li.previous();
+        if (addRoute) {
+          Route route=new Route();
+          AddressImpl address=((AddressImpl)((AddressImpl)rr.getAddress()).clone());
+          route.setAddress(address);
+          route.setParameters((NameValueList)rr.getParameters().clone());
+          this.routeList.add(route);
+        }
+      }
+    }
+ else {
+      this.routeList=new RouteList();
+      ListIterator li=recordRouteList.listIterator();
+      boolean addRoute=true;
+      while (li.hasNext()) {
+        RecordRoute rr=(RecordRoute)li.next();
+        if (addRoute) {
+          Route route=new Route();
+          AddressImpl address=((AddressImpl)((AddressImpl)rr.getAddress()).clone());
+          route.setAddress(address);
+          route.setParameters((NameValueList)rr.getParameters().clone());
+          routeList.add(route);
+        }
+      }
+    }
+  }
+  finally {
+    if (sipStack.getStackLogger().isLoggingEnabled()) {
+      Iterator it=routeList.iterator();
+      while (it.hasNext()) {
+        SipURI sipUri=(SipURI)(((Route)it.next()).getAddress().getURI());
+        if (!sipUri.hasLrParam()) {
+          if (sipStack.isLoggingEnabled()) {
+            sipStack.getStackLogger().logWarning("NON LR route in Route set detected for dialog : " + this);
+            sipStack.getStackLogger().logStackTrace();
+          }
+        }
+      }
+    }
+  }
+}

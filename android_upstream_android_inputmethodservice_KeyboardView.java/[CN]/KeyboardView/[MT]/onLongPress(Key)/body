@@ -1,0 +1,69 @@
+{
+  int popupKeyboardId=popupKey.popupResId;
+  if (popupKeyboardId != 0) {
+    mMiniKeyboardContainer=mMiniKeyboardCache.get(popupKey);
+    if (mMiniKeyboardContainer == null) {
+      LayoutInflater inflater=(LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+      mMiniKeyboardContainer=inflater.inflate(mPopupLayout,null);
+      mMiniKeyboard=(KeyboardView)mMiniKeyboardContainer.findViewById(com.android.internal.R.id.keyboardView);
+      View closeButton=mMiniKeyboardContainer.findViewById(com.android.internal.R.id.closeButton);
+      if (closeButton != null)       closeButton.setOnClickListener(this);
+      mMiniKeyboard.setOnKeyboardActionListener(new OnKeyboardActionListener(){
+        public void onKey(        int primaryCode,        int[] keyCodes){
+          mKeyboardActionListener.onKey(primaryCode,keyCodes);
+          dismissPopupKeyboard();
+        }
+        public void onText(        CharSequence text){
+          mKeyboardActionListener.onText(text);
+          dismissPopupKeyboard();
+        }
+        public void swipeLeft(){
+        }
+        public void swipeRight(){
+        }
+        public void swipeUp(){
+        }
+        public void swipeDown(){
+        }
+        public void onPress(        int primaryCode){
+          mKeyboardActionListener.onPress(primaryCode);
+        }
+        public void onRelease(        int primaryCode){
+          mKeyboardActionListener.onRelease(primaryCode);
+        }
+      }
+);
+      Keyboard keyboard;
+      if (popupKey.popupCharacters != null) {
+        keyboard=new Keyboard(getContext(),popupKeyboardId,popupKey.popupCharacters,-1,getPaddingLeft() + getPaddingRight());
+      }
+ else {
+        keyboard=new Keyboard(getContext(),popupKeyboardId);
+      }
+      mMiniKeyboard.setKeyboard(keyboard);
+      mMiniKeyboard.setPopupParent(this);
+      mMiniKeyboardContainer.measure(MeasureSpec.makeMeasureSpec(getWidth(),MeasureSpec.AT_MOST),MeasureSpec.makeMeasureSpec(getHeight(),MeasureSpec.AT_MOST));
+      mMiniKeyboardCache.put(popupKey,mMiniKeyboardContainer);
+    }
+ else {
+      mMiniKeyboard=(KeyboardView)mMiniKeyboardContainer.findViewById(com.android.internal.R.id.keyboardView);
+    }
+    getLocationInWindow(mCoordinates);
+    mPopupX=popupKey.x + mPaddingLeft;
+    mPopupY=popupKey.y + mPaddingTop;
+    mPopupX=mPopupX + popupKey.width - mMiniKeyboardContainer.getMeasuredWidth();
+    mPopupY=mPopupY - mMiniKeyboardContainer.getMeasuredHeight();
+    final int x=mPopupX + mMiniKeyboardContainer.getPaddingRight() + mCoordinates[0];
+    final int y=mPopupY + mMiniKeyboardContainer.getPaddingBottom() + mCoordinates[1];
+    mMiniKeyboard.setPopupOffset(x < 0 ? 0 : x,y);
+    mMiniKeyboard.setShifted(isShifted());
+    mPopupKeyboard.setContentView(mMiniKeyboardContainer);
+    mPopupKeyboard.setWidth(mMiniKeyboardContainer.getMeasuredWidth());
+    mPopupKeyboard.setHeight(mMiniKeyboardContainer.getMeasuredHeight());
+    mPopupKeyboard.showAtLocation(this,Gravity.NO_GRAVITY,x,y);
+    mMiniKeyboardOnScreen=true;
+    invalidateAllKeys();
+    return true;
+  }
+  return false;
+}

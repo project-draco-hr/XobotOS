@@ -1,0 +1,22 @@
+{
+  if (classLoader == null) {
+    URL resource=XPathFactoryFinder.class.getClassLoader().getResource(SERVICE_ID);
+    return Collections.singleton(resource);
+  }
+ else {
+    try {
+      Enumeration<URL> e=classLoader.getResources(SERVICE_ID);
+      if (debug && !e.hasMoreElements()) {
+        debugPrintln("no " + SERVICE_ID + " file was found");
+      }
+      return Collections.list(e);
+    }
+ catch (    IOException e) {
+      if (debug) {
+        debugPrintln("failed to enumerate resources " + SERVICE_ID);
+        e.printStackTrace();
+      }
+      return Collections.emptySet();
+    }
+  }
+}

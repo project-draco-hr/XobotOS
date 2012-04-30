@@ -1,0 +1,5 @@
+{
+  this.addressType=WILD_CARD;
+  this.address=new SipUri();
+  ((SipUri)this.address).setUser("*");
+}

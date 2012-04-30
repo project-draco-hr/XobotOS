@@ -1,0 +1,13 @@
+{
+  int colon=name.indexOf(':');
+  if (colon == -1) {
+    return attribute ? "" : theSchema.getURI();
+  }
+  String prefix=name.substring(0,colon);
+  if (prefix.equals("xml")) {
+    return "http://www.w3.org/XML/1998/namespace";
+  }
+ else {
+    return ("urn:x-prefix:" + prefix).intern();
+  }
+}

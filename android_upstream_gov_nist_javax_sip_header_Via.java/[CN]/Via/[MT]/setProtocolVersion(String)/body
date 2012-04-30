@@ -1,0 +1,4 @@
+{
+  if (sentProtocol == null)   sentProtocol=new Protocol();
+  sentProtocol.setProtocolVersion(protocolVersion);
+}

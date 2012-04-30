@@ -1,0 +1,4 @@
+{
+  final int lastDot=typeName.lastIndexOf('.');
+  return lastDot > 0 ? typeName.substring(lastDot + 1) : typeName;
+}

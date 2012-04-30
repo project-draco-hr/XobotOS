@@ -1,0 +1,4 @@
+{
+  if (branch == null || branch.length() == 0)   throw new NullPointerException("JAIN-SIP Exception, " + "Via, setBranch(), the branch parameter is null or length 0.");
+  setParameter(ParameterNames.BRANCH,branch);
+}

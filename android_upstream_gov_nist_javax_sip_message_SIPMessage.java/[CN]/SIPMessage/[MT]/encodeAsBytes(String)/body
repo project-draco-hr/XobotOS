@@ -1,0 +1,45 @@
+{
+  if (this instanceof SIPRequest && ((SIPRequest)this).isNullRequest()) {
+    return "\r\n\r\n".getBytes();
+  }
+  ViaHeader topVia=(ViaHeader)this.getHeader(ViaHeader.NAME);
+  try {
+    topVia.setTransport(transport);
+  }
+ catch (  ParseException e) {
+    InternalErrorHandler.handleException(e);
+  }
+  StringBuffer encoding=new StringBuffer();
+synchronized (this.headers) {
+    Iterator<SIPHeader> it=this.headers.iterator();
+    while (it.hasNext()) {
+      SIPHeader siphdr=(SIPHeader)it.next();
+      if (!(siphdr instanceof ContentLength))       siphdr.encode(encoding);
+    }
+  }
+  contentLengthHeader.encode(encoding);
+  encoding.append(NEWLINE);
+  byte[] retval=null;
+  byte[] content=this.getRawContent();
+  if (content != null) {
+    byte[] msgarray=null;
+    try {
+      msgarray=encoding.toString().getBytes(getCharset());
+    }
+ catch (    UnsupportedEncodingException ex) {
+      InternalErrorHandler.handleException(ex);
+    }
+    retval=new byte[msgarray.length + content.length];
+    System.arraycopy(msgarray,0,retval,0,msgarray.length);
+    System.arraycopy(content,0,retval,msgarray.length,content.length);
+  }
+ else {
+    try {
+      retval=encoding.toString().getBytes(getCharset());
+    }
+ catch (    UnsupportedEncodingException ex) {
+      InternalErrorHandler.handleException(ex);
+    }
+  }
+  return retval;
+}

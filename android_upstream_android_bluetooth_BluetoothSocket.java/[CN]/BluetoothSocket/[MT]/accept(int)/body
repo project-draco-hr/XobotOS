@@ -1,0 +1,12 @@
+{
+  mLock.readLock().lock();
+  try {
+    if (mSocketState == SocketState.CLOSED)     throw new IOException("socket closed");
+    BluetoothSocket acceptedSocket=acceptNative(timeout);
+    mSocketState=SocketState.CONNECTED;
+    return acceptedSocket;
+  }
+  finally {
+    mLock.readLock().unlock();
+  }
+}

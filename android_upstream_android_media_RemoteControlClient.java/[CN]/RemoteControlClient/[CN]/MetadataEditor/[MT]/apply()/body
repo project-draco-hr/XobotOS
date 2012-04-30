@@ -1,0 +1,24 @@
+{
+  if (mApplied) {
+    Log.e(TAG,"Can't apply a previously applied MetadataEditor");
+    return;
+  }
+synchronized (mCacheLock) {
+    mMetadata=new Bundle(mEditorMetadata);
+    if ((mArtwork != null) && (!mArtwork.equals(mEditorArtwork))) {
+      mArtwork.recycle();
+    }
+    mArtwork=mEditorArtwork;
+    mEditorArtwork=null;
+    if (mMetadataChanged & mArtworkChanged) {
+      sendMetadataWithArtwork_syncCacheLock();
+    }
+ else     if (mMetadataChanged) {
+      sendMetadata_syncCacheLock();
+    }
+ else     if (mArtworkChanged) {
+      sendArtwork_syncCacheLock();
+    }
+    mApplied=true;
+  }
+}

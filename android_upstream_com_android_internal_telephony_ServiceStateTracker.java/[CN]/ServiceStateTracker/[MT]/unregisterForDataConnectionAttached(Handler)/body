@@ -1,0 +1,3 @@
+{
+  mAttachedRegistrants.remove(h);
+}

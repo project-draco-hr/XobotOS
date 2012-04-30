@@ -1,0 +1,17 @@
+{
+  MeasuredText mt;
+synchronized (sLock) {
+    for (int i=sCached.length; --i >= 0; ) {
+      if (sCached[i] != null) {
+        mt=sCached[i];
+        sCached[i]=null;
+        return mt;
+      }
+    }
+  }
+  mt=new MeasuredText();
+  if (localLOGV) {
+    Log.v("MEAS","new: " + mt);
+  }
+  return mt;
+}

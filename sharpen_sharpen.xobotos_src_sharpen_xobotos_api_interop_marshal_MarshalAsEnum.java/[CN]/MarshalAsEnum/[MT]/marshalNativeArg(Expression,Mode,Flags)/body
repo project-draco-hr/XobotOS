@@ -1,0 +1,4 @@
+{
+  final TypeReference enumType=new TypeReference(_nativeType);
+  return new CastExpression(enumType,expr);
+}

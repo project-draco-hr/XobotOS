@@ -1,0 +1,3 @@
+{
+  return transport.equalsIgnoreCase("TLS") ? 5061 : 5060;
+}

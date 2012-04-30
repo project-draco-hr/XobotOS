@@ -1,0 +1,6 @@
+def read(self, file, mode='rb'):
+    "Reads and returns the contents of the specified file name.\n        The file name may be a list, in which case the elements are\n        concatenated with the os.path.join() method.  The file is\n        assumed to be under the temporary working directory unless it\n        is an absolute path name.  The I/O mode for the file may\n        be specified; it must begin with an 'r'.  The default is\n        'rb' (binary read).\n        "
+    file = self.canonicalize(file)
+    if (mode[0] != 'r'):
+        raise ValueError, "mode must begin with 'r'"
+    return open(file, mode).read()

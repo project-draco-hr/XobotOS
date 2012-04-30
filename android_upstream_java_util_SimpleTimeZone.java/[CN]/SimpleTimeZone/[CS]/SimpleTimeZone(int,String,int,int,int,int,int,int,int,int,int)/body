@@ -1,0 +1,9 @@
+{
+  this(offset,name);
+  if (daylightSavings <= 0) {
+    throw new IllegalArgumentException("Invalid daylightSavings: " + daylightSavings);
+  }
+  dstSavings=daylightSavings;
+  setStartRule(startMonth,startDay,startDayOfWeek,startTime);
+  setEndRule(endMonth,endDay,endDayOfWeek,endTime);
+}

@@ -1,0 +1,19 @@
+{
+  if (null == field.initializer())   return false;
+  if (this instanceof AbstractNestedClassBuilder) {
+    if (!field.isConst() && !field.isStatic())     return true;
+  }
+  final ByRef<Boolean> foundThisReference=new ByRef<Boolean>(false);
+  field.initializer().accept(new CSExpressionVisitor(){
+    @Override public void visit(    CSThisExpression node){
+      foundThisReference.value=true;
+    }
+    @Override public void visit(    CSReferenceExpression node){
+      if (fields.contains(node.name())) {
+        foundThisReference.value=true;
+      }
+    }
+  }
+);
+  return foundThisReference.value;
+}

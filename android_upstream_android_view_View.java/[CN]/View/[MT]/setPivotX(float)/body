@@ -1,0 +1,13 @@
+{
+  ensureTransformationInfo();
+  mPrivateFlags|=PIVOT_EXPLICITLY_SET;
+  final TransformationInfo info=mTransformationInfo;
+  if (info.mPivotX != pivotX) {
+    invalidateParentCaches();
+    invalidate(false);
+    info.mPivotX=pivotX;
+    info.mMatrixDirty=true;
+    mPrivateFlags|=DRAWN;
+    invalidate(false);
+  }
+}

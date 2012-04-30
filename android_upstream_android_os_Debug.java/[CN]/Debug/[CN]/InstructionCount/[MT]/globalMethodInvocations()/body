@@ -1,0 +1,9 @@
+{
+  int count=0;
+  for (int i=0; i < NUM_INSTR; i++) {
+    if (OpcodeInfo.isInvoke(i)) {
+      count+=mCounts[i];
+    }
+  }
+  return count;
+}

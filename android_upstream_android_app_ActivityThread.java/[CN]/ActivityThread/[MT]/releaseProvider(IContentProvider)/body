@@ -1,0 +1,21 @@
+{
+  if (provider == null) {
+    return false;
+  }
+  IBinder jBinder=provider.asBinder();
+synchronized (mProviderMap) {
+    ProviderRefCount prc=mProviderRefCountMap.get(jBinder);
+    if (prc == null) {
+      if (localLOGV)       Slog.v(TAG,"releaseProvider::Weird shouldn't be here");
+      return false;
+    }
+ else {
+      prc.count--;
+      if (prc.count == 0) {
+        Message msg=mH.obtainMessage(H.REMOVE_PROVIDER,provider);
+        mH.sendMessage(msg);
+      }
+    }
+  }
+  return true;
+}

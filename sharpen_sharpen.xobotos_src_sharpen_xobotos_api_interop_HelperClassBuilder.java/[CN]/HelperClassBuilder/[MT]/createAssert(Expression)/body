@@ -1,0 +1,4 @@
+{
+  if (expr == null)   expr=new BoolLiteralExpression(false);
+  return new ExpressionStatement(new MethodInvocation(new ReferenceExpression("assert"),expr));
+}

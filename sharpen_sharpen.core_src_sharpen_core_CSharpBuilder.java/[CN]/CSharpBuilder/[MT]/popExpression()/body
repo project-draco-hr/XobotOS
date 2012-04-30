@@ -1,0 +1,8 @@
+{
+  if (null == _currentExpression) {
+    throw new IllegalStateException();
+  }
+  CSExpression found=_currentExpression;
+  _currentExpression=null;
+  return found;
+}

@@ -1,0 +1,10 @@
+{
+  String lcName=name.toLowerCase();
+  if (this.nameValueMap.containsKey(lcName)) {
+    this.nameValueMap.remove(lcName);
+    return true;
+  }
+ else {
+    return false;
+  }
+}

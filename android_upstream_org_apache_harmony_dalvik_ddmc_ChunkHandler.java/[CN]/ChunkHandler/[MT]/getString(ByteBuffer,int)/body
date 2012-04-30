@@ -1,0 +1,5 @@
+{
+  char[] data=new char[len];
+  for (int i=0; i < len; i++)   data[i]=buf.getChar();
+  return new String(data);
+}

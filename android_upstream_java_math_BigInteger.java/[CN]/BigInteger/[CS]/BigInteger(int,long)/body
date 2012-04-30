@@ -1,0 +1,5 @@
+{
+  BigInt bigInt=new BigInt();
+  bigInt.putULongInt(value,(sign < 0));
+  setBigInt(bigInt);
+}

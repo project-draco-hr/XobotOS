@@ -1,0 +1,7 @@
+{
+  if (qName == null) {
+    qName=localName;
+  }
+  mAttrWrapper.setAttributes(attrs);
+  docHandler.startElement(qName,mAttrWrapper);
+}

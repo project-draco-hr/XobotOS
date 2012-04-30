@@ -1,0 +1,11 @@
+{
+  if (done) {
+    throw new IOException("attempt to write after finish");
+  }
+  Arrays.checkOffsetAndCount(buffer.length,offset,byteCount);
+  if (!def.needsInput()) {
+    throw new IOException();
+  }
+  def.setInput(buffer,offset,byteCount);
+  deflate();
+}

@@ -1,0 +1,3 @@
+{
+  return (theEntityResolver == this) ? null : theEntityResolver;
+}

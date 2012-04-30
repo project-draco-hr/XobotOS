@@ -1,0 +1,11 @@
+{
+  if (iv == null) {
+    throw new IllegalArgumentException("iv == null");
+  }
+  if (iv.length - offset < 8) {
+    throw new IllegalArgumentException("iv.length - offset < 8");
+  }
+  this.effectiveKeyBits=effectiveKeyBits;
+  this.iv=new byte[8];
+  System.arraycopy(iv,offset,this.iv,0,8);
+}

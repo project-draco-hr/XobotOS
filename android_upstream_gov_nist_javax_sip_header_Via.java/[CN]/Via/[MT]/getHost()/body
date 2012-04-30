@@ -1,0 +1,8 @@
+{
+  if (sentBy == null)   return null;
+ else {
+    Host host=sentBy.getHost();
+    if (host == null)     return null;
+ else     return host.getHostname();
+  }
+}

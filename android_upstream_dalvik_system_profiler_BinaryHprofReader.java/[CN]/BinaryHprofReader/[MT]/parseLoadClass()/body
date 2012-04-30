@@ -1,0 +1,16 @@
+{
+  int classId=in.readInt();
+  int classObjectId=readId();
+  int stackTraceSerialNumber=in.readInt();
+  String className=readString();
+  if (TRACE) {
+    System.out.println("\tclassId=" + classId);
+    System.out.println("\tclassObjectId=" + classObjectId);
+    System.out.println("\tstackTraceSerialNumber=" + stackTraceSerialNumber);
+    System.out.println("\tclassName=" + className);
+  }
+  String old=idToClassName.put(classId,className);
+  if (old != null) {
+    throw new MalformedHprofException("Duplicate class id: " + classId);
+  }
+}

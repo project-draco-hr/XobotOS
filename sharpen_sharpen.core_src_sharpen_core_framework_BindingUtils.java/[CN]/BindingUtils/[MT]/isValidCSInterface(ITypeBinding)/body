@@ -1,0 +1,7 @@
+{
+  if (type.getDeclaredFields().length != 0)   return false;
+  for (  ITypeBinding ntype : type.getDeclaredTypes()) {
+    if (!isExtractedNestedType(ntype))     return false;
+  }
+  return true;
+}

@@ -1,0 +1,140 @@
+{
+  this.callIdHeader=sipResponse.getCallId();
+  int statusCode=sipResponse.getStatusCode();
+  if (statusCode == 100) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logWarning("Invalid status code - 100 in setLastResponse - ignoring");
+    return;
+  }
+  this.lastResponse=sipResponse;
+  this.setAssigned();
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("sipDialog: setLastResponse:" + this + " lastResponse = "+ this.lastResponse.getFirstLine());
+  }
+  if (this.getState() == DialogState.TERMINATED) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("sipDialog: setLastResponse -- dialog is terminated - ignoring ");
+    }
+    if (sipResponse.getCSeq().getMethod().equals(Request.INVITE) && statusCode == 200) {
+      this.lastInviteOkReceived=Math.max(sipResponse.getCSeq().getSeqNumber(),this.lastInviteOkReceived);
+    }
+    return;
+  }
+  String cseqMethod=sipResponse.getCSeq().getMethod();
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logStackTrace();
+    sipStack.getStackLogger().logDebug("cseqMethod = " + cseqMethod);
+    sipStack.getStackLogger().logDebug("dialogState = " + this.getState());
+    sipStack.getStackLogger().logDebug("method = " + this.getMethod());
+    sipStack.getStackLogger().logDebug("statusCode = " + statusCode);
+    sipStack.getStackLogger().logDebug("transaction = " + transaction);
+  }
+  if (transaction == null || transaction instanceof ClientTransaction) {
+    if (sipStack.isDialogCreated(cseqMethod)) {
+      if (getState() == null && (statusCode / 100 == 1)) {
+        setState(SIPDialog.EARLY_STATE);
+        if ((sipResponse.getToTag() != null || sipStack.rfc2543Supported) && this.getRemoteTag() == null) {
+          setRemoteTag(sipResponse.getToTag());
+          this.setDialogId(sipResponse.getDialogId(false));
+          sipStack.putDialog(this);
+          this.addRoute(sipResponse);
+        }
+      }
+ else       if (getState() != null && getState().equals(DialogState.EARLY) && statusCode / 100 == 1) {
+        if (cseqMethod.equals(getMethod()) && transaction != null && (sipResponse.getToTag() != null || sipStack.rfc2543Supported)) {
+          setRemoteTag(sipResponse.getToTag());
+          this.setDialogId(sipResponse.getDialogId(false));
+          sipStack.putDialog(this);
+          this.addRoute(sipResponse);
+        }
+      }
+ else       if (statusCode / 100 == 2) {
+        if (cseqMethod.equals(getMethod()) && (sipResponse.getToTag() != null || sipStack.rfc2543Supported) && this.getState() != DialogState.CONFIRMED) {
+          setRemoteTag(sipResponse.getToTag());
+          this.setDialogId(sipResponse.getDialogId(false));
+          sipStack.putDialog(this);
+          this.addRoute(sipResponse);
+          setState(SIPDialog.CONFIRMED_STATE);
+        }
+        if (cseqMethod.equals(Request.INVITE)) {
+          this.lastInviteOkReceived=Math.max(sipResponse.getCSeq().getSeqNumber(),this.lastInviteOkReceived);
+        }
+      }
+ else       if (statusCode >= 300 && statusCode <= 699 && (getState() == null || (cseqMethod.equals(getMethod()) && getState().getValue() == SIPDialog.EARLY_STATE))) {
+        setState(SIPDialog.TERMINATED_STATE);
+      }
+      if (this.getState() != DialogState.CONFIRMED && this.getState() != DialogState.TERMINATED) {
+        if (originalRequest != null) {
+          RecordRouteList rrList=originalRequest.getRecordRouteHeaders();
+          if (rrList != null) {
+            ListIterator<RecordRoute> it=rrList.listIterator(rrList.size());
+            while (it.hasPrevious()) {
+              RecordRoute rr=(RecordRoute)it.previous();
+              Route route=(Route)routeList.getFirst();
+              if (route != null && rr.getAddress().equals(route.getAddress())) {
+                routeList.removeFirst();
+              }
+ else               break;
+            }
+          }
+        }
+      }
+    }
+ else     if (cseqMethod.equals(Request.NOTIFY) && (this.getMethod().equals(Request.SUBSCRIBE) || this.getMethod().equals(Request.REFER)) && sipResponse.getStatusCode() / 100 == 2 && this.getState() == null) {
+      this.setDialogId(sipResponse.getDialogId(true));
+      sipStack.putDialog(this);
+      this.setState(SIPDialog.CONFIRMED_STATE);
+    }
+ else     if (cseqMethod.equals(Request.BYE) && statusCode / 100 == 2 && isTerminatedOnBye()) {
+      setState(SIPDialog.TERMINATED_STATE);
+    }
+  }
+ else {
+    if (cseqMethod.equals(Request.BYE) && statusCode / 100 == 2 && this.isTerminatedOnBye()) {
+      this.setState(SIPDialog.TERMINATED_STATE);
+    }
+ else {
+      boolean doPutDialog=false;
+      if (getLocalTag() == null && sipResponse.getTo().getTag() != null && sipStack.isDialogCreated(cseqMethod) && cseqMethod.equals(getMethod())) {
+        setLocalTag(sipResponse.getTo().getTag());
+        doPutDialog=true;
+      }
+      if (statusCode / 100 != 2) {
+        if (statusCode / 100 == 1) {
+          if (doPutDialog) {
+            setState(SIPDialog.EARLY_STATE);
+            this.setDialogId(sipResponse.getDialogId(true));
+            sipStack.putDialog(this);
+          }
+        }
+ else {
+          if (statusCode == 489 && (cseqMethod.equals(Request.NOTIFY) || cseqMethod.equals(Request.SUBSCRIBE))) {
+            if (sipStack.isLoggingEnabled())             sipStack.getStackLogger().logDebug("RFC 3265 : Not setting dialog to TERMINATED for 489");
+          }
+ else {
+            if (!this.isReInvite() && getState() != DialogState.CONFIRMED) {
+              this.setState(SIPDialog.TERMINATED_STATE);
+            }
+          }
+        }
+      }
+ else {
+        if (this.dialogState <= SIPDialog.EARLY_STATE && (cseqMethod.equals(Request.INVITE) || cseqMethod.equals(Request.SUBSCRIBE) || cseqMethod.equals(Request.REFER))) {
+          this.setState(SIPDialog.CONFIRMED_STATE);
+        }
+        if (doPutDialog) {
+          this.setDialogId(sipResponse.getDialogId(true));
+          sipStack.putDialog(this);
+        }
+        if (transaction.getState() != TransactionState.TERMINATED && sipResponse.getStatusCode() == Response.OK && cseqMethod.equals(Request.INVITE) && this.isBackToBackUserAgent) {
+          if (!this.takeAckSem()) {
+            if (sipStack.isLoggingEnabled()) {
+              sipStack.getStackLogger().logDebug("Delete dialog -- cannot acquire ackSem");
+            }
+            this.delete();
+            return;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  DumpComponentInfo data=new DumpComponentInfo();
+  try {
+    data.fd=ParcelFileDescriptor.dup(fd);
+    data.token=activitytoken;
+    data.prefix=prefix;
+    data.args=args;
+    queueOrSendMessage(H.DUMP_ACTIVITY,data);
+  }
+ catch (  IOException e) {
+    Slog.w(TAG,"dumpActivity failed",e);
+  }
+}

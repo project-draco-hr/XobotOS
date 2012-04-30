@@ -1,0 +1,11 @@
+{
+  Content retval=null;
+  if (contentList == null)   return null;
+  for (  Content content : contentList) {
+    if (content.getContentTypeHeader().getContentType().equalsIgnoreCase(contentType) && content.getContentTypeHeader().getContentSubType().equalsIgnoreCase(contentSubtype)) {
+      retval=content;
+      break;
+    }
+  }
+  return retval;
+}

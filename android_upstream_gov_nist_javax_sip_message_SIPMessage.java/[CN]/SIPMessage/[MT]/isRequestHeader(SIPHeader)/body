@@ -1,0 +1,3 @@
+{
+  return sipHeader instanceof AlertInfo || sipHeader instanceof InReplyTo || sipHeader instanceof Authorization|| sipHeader instanceof MaxForwards|| sipHeader instanceof UserAgent|| sipHeader instanceof Priority|| sipHeader instanceof ProxyAuthorization|| sipHeader instanceof ProxyRequire|| sipHeader instanceof ProxyRequireList|| sipHeader instanceof Route|| sipHeader instanceof RouteList|| sipHeader instanceof Subject|| sipHeader instanceof SIPIfMatch;
+}

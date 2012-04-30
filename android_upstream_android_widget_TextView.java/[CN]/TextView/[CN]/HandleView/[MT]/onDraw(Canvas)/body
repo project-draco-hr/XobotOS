@@ -1,0 +1,4 @@
+{
+  mDrawable.setBounds(0,0,mRight - mLeft,mBottom - mTop);
+  mDrawable.draw(c);
+}

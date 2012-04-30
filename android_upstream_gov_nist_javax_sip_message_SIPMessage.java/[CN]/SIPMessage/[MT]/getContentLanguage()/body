@@ -1,0 +1,3 @@
+{
+  return (ContentLanguageHeader)getHeaderLowerCase(CONTENT_LANGUAGE_LOWERCASE);
+}

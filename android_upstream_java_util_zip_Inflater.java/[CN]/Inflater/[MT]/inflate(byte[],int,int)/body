@@ -1,0 +1,14 @@
+{
+  Arrays.checkOffsetAndCount(buf.length,offset,byteCount);
+  checkOpen();
+  if (needsInput()) {
+    return 0;
+  }
+  boolean neededDict=needsDictionary;
+  needsDictionary=false;
+  int result=inflateImpl(buf,offset,byteCount,streamHandle);
+  if (needsDictionary && neededDict) {
+    throw new DataFormatException("Needs dictionary");
+  }
+  return result;
+}

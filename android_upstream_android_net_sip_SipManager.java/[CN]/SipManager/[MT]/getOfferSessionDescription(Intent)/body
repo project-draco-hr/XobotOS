@@ -1,0 +1,3 @@
+{
+  return incomingCallIntent.getStringExtra(EXTRA_OFFER_SD);
+}

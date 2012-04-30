@@ -1,0 +1,12 @@
+{
+synchronized (lock) {
+    checkNotClosed();
+    if (length > pos) {
+      throw new IOException("Pushback buffer full");
+    }
+    Arrays.checkOffsetAndCount(buffer.length,offset,length);
+    for (int i=offset + length - 1; i >= offset; i--) {
+      unread(buffer[i]);
+    }
+  }
+}

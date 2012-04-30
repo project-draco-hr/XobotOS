@@ -1,0 +1,3 @@
+def ReportWarning(text):
+    'Report a warning, but continue.\n    '
+    print ('warning: %s' % text)

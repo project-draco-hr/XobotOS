@@ -1,0 +1,8 @@
+{
+  if (comment == null || comment.length() <= 0xFFFF) {
+    this.comment=comment;
+  }
+ else {
+    throw new IllegalArgumentException();
+  }
+}

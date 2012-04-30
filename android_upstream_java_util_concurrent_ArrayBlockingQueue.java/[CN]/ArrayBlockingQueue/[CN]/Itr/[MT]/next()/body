@@ -1,0 +1,19 @@
+{
+  final ReentrantLock lock=ArrayBlockingQueue.this.lock;
+  lock.lock();
+  try {
+    if (remaining <= 0)     throw new NoSuchElementException();
+    lastRet=nextIndex;
+    E x=itemAt(nextIndex);
+    if (x == null) {
+      x=nextItem;
+      lastItem=null;
+    }
+ else     lastItem=x;
+    while (--remaining > 0 && (nextItem=itemAt(nextIndex=inc(nextIndex))) == null)     ;
+    return x;
+  }
+  finally {
+    lock.unlock();
+  }
+}

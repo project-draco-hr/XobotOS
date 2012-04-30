@@ -1,0 +1,19 @@
+{
+  Integer identifier=stackFrameToId.get(stackFrame);
+  if (identifier != null) {
+    return identifier;
+  }
+  int id=nextStackFrameId++;
+  stackFrameToId.put(stackFrame,id);
+  int classId=writeLoadClass(stackFrame.getClassName());
+  int methodNameId=writeString(stackFrame.getMethodName());
+  int sourceId=writeString(stackFrame.getFileName());
+  writeRecordHeader(BinaryHprof.Tag.STACK_FRAME,0,BinaryHprof.Tag.STACK_FRAME.maximumSize);
+  writeId(id);
+  writeId(methodNameId);
+  writeId(0);
+  writeId(sourceId);
+  out.writeInt(classId);
+  out.writeInt(stackFrame.getLineNumber());
+  return id;
+}

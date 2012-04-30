@@ -1,0 +1,20 @@
+{
+  _returnInfo=_builder.getReturnInfo();
+  _paramInfo=_builder.getParameterInfo();
+  _nativeName=_builder.getNativeName();
+  _nativeFunction=_builder.getNativeFunction();
+  _implicitInstance=_builder.getImplicitInstance();
+  if (_method.getNativeClass() != null)   _nativeClass=new TypeReference(_method.getNativeClass());
+ else   if (_builder.getNativeHandle() != null)   _nativeClass=_builder.getNativeHandle().getNativeClass();
+  if (_returnInfo != null) {
+    if (_returnInfo.marshal instanceof MarshalAsNativeType) {
+      _returnHelper=((MarshalAsNativeType)_returnInfo.marshal).getTypeBuilder();
+      _returnType=new PointerType(_returnHelper.getNativePInvokeType());
+    }
+ else     _returnType=_returnInfo.getNativeType();
+  }
+ else {
+    _returnType=new TypeReference("void");
+  }
+  return true;
+}

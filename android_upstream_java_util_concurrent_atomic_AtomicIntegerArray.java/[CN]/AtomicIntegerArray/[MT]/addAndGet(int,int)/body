@@ -1,0 +1,8 @@
+{
+  long offset=checkedByteOffset(i);
+  while (true) {
+    int current=getRaw(offset);
+    int next=current + delta;
+    if (compareAndSetRaw(offset,current,next))     return next;
+  }
+}

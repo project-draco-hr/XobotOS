@@ -1,0 +1,3 @@
+def CopyAndStrip(s, t):
+    'Copies a file and removes comments behind data lines but not in others.'
+    CopyAndStripWithOptionalMerge(s, t, False)

@@ -1,0 +1,6 @@
+{
+  if (retryAfter < 0)   throw new InvalidArgumentException("bad retryAfter arg");
+  RetryAfter r=new RetryAfter();
+  r.setRetryAfter(retryAfter);
+  return r;
+}

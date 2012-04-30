@@ -1,0 +1,12 @@
+{
+  if (list == null)   return;
+  boolean first=true;
+  for (  T item : list) {
+    if (first)     first=false;
+ else {
+      _writer.writeBlock(",");
+      _writer.writeSpace();
+    }
+    item.accept(this);
+  }
+}

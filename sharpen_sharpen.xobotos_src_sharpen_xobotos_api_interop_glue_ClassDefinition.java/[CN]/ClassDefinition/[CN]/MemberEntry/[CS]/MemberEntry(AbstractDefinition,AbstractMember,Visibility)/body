@@ -1,0 +1,5 @@
+{
+  this.Definition=definition;
+  this.Declaration=declaration;
+  this.Visibility=visibility;
+}

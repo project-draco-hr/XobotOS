@@ -1,0 +1,4 @@
+{
+  if (integrityProtected == null)   throw new NullPointerException("JAIN-SIP Exception, " + " AuthenticationHeader, setIntegrityProtected(), The integrity-protected parameter is null");
+  setParameter(INTEGRITY_PROTECTED,integrityProtected);
+}

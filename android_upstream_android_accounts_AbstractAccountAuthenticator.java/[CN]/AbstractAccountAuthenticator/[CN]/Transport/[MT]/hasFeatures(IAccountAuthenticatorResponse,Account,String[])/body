@@ -1,0 +1,12 @@
+{
+  checkBinderPermission();
+  try {
+    final Bundle result=AbstractAccountAuthenticator.this.hasFeatures(new AccountAuthenticatorResponse(response),account,features);
+    if (result != null) {
+      response.onResult(result);
+    }
+  }
+ catch (  Exception e) {
+    handleException(response,"hasFeatures",account.toString(),e);
+  }
+}

@@ -1,0 +1,7 @@
+{
+  SIPDialog sipDialog=(SIPDialog)dialogErrorEvent.getSource();
+  SipListener sipListener=((SipStackImpl)this).getSipListener();
+  if (sipDialog != null && !(sipListener instanceof SipListenerExt)) {
+    sipDialog.delete();
+  }
+}

@@ -1,0 +1,4 @@
+{
+  PAssertedIdentity retval=(PAssertedIdentity)super.clone();
+  return retval;
+}

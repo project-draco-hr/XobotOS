@@ -1,0 +1,8 @@
+{
+  if (location < elementCount) {
+    elementData[location]=object;
+  }
+ else {
+    throw arrayIndexOutOfBoundsException(location,elementCount);
+  }
+}

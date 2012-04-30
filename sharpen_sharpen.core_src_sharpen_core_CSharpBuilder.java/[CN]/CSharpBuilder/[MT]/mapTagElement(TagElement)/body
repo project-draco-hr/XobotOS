@@ -1,0 +1,19 @@
+{
+  String tagName=element.getTagName();
+  if (TagElement.TAG_PARAM.equals(tagName)) {
+    return mapTagParam(element);
+  }
+ else   if (TagElement.TAG_RETURN.equals(tagName)) {
+    return createTagNode("returns",element);
+  }
+ else   if (TagElement.TAG_LINK.equals(tagName)) {
+    return mapTagLink(element);
+  }
+ else   if (TagElement.TAG_THROWS.equals(tagName)) {
+    return mapTagThrows(element);
+  }
+ else   if (TagElement.TAG_SEE.equals(tagName)) {
+    return mapTagWithCRef("seealso",element);
+  }
+  return createTagNode(tagName.substring(1),element);
+}

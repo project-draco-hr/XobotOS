@@ -1,0 +1,13 @@
+{
+  CSExpression expr=getReference(arg);
+  if (isClass()) {
+    expr=new CSMethodInvocationExpression(getHelper().MANAGED_TO_NATIVE.expr(),expr);
+    CSBlock block=new CSBlock();
+    block.addStatement(new CSInfixExpression("=",getReference(obj),expr));
+    block.addStatement(new CSInfixExpression("=",new CSMemberReferenceExpression(pinned.getReference(),_ptrName),getReference(obj)));
+    return block;
+  }
+ else {
+    return new CSExpressionStatement(-1,new CSInfixExpression("=",getReference(obj),expr));
+  }
+}

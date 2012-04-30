@@ -1,0 +1,8 @@
+{
+  ListIterator<String> it=methods.listIterator();
+  while (it.hasNext()) {
+    Allow allow=new Allow();
+    allow.setMethod((String)it.next());
+    this.add(allow);
+  }
+}

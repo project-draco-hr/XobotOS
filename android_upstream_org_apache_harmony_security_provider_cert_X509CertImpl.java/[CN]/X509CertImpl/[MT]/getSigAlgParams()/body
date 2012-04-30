@@ -1,0 +1,15 @@
+{
+  if (nullSigAlgParams) {
+    return null;
+  }
+  byte[] result=sigAlgParams;
+  if (result == null) {
+    result=tbsCert.getSignature().getParameters();
+    if (result == null) {
+      nullSigAlgParams=true;
+      return null;
+    }
+    sigAlgParams=result;
+  }
+  return result;
+}

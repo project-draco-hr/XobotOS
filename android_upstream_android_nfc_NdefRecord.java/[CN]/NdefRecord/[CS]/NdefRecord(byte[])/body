@@ -1,0 +1,10 @@
+{
+  mFlags=0;
+  mTnf=0;
+  mType=null;
+  mId=null;
+  mPayload=null;
+  if (parseNdefRecord(data) == -1) {
+    throw new FormatException("Error while parsing NDEF record");
+  }
+}

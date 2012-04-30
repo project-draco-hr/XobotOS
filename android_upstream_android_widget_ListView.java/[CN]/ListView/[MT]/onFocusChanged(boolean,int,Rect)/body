@@ -1,0 +1,35 @@
+{
+  super.onFocusChanged(gainFocus,direction,previouslyFocusedRect);
+  final ListAdapter adapter=mAdapter;
+  int closetChildIndex=-1;
+  if (adapter != null && gainFocus && previouslyFocusedRect != null) {
+    previouslyFocusedRect.offset(mScrollX,mScrollY);
+    if (adapter.getCount() < getChildCount() + mFirstPosition) {
+      mLayoutMode=LAYOUT_NORMAL;
+      layoutChildren();
+    }
+    Rect otherRect=mTempRect;
+    int minDistance=Integer.MAX_VALUE;
+    final int childCount=getChildCount();
+    final int firstPosition=mFirstPosition;
+    for (int i=0; i < childCount; i++) {
+      if (!adapter.isEnabled(firstPosition + i)) {
+        continue;
+      }
+      View other=getChildAt(i);
+      other.getDrawingRect(otherRect);
+      offsetDescendantRectToMyCoords(other,otherRect);
+      int distance=getDistance(previouslyFocusedRect,otherRect,direction);
+      if (distance < minDistance) {
+        minDistance=distance;
+        closetChildIndex=i;
+      }
+    }
+  }
+  if (closetChildIndex >= 0) {
+    setSelection(closetChildIndex + mFirstPosition);
+  }
+ else {
+    requestLayout();
+  }
+}

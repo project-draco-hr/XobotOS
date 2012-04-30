@@ -1,0 +1,10 @@
+{
+  String value=node.getLiteralValue();
+  if (value != null && value.length() == 0) {
+    pushExpression(new CSReferenceExpression("string.Empty"));
+  }
+ else {
+    pushExpression(new CSStringLiteralExpression(fixEscapedNumbers(node.getEscapedValue())));
+  }
+  return false;
+}

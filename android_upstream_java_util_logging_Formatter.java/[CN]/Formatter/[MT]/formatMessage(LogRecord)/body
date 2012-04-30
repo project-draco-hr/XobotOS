@@ -1,0 +1,24 @@
+{
+  String pattern=r.getMessage();
+  ResourceBundle rb=null;
+  if ((rb=r.getResourceBundle()) != null) {
+    try {
+      pattern=rb.getString(pattern);
+    }
+ catch (    Exception e) {
+      pattern=r.getMessage();
+    }
+  }
+  if (pattern != null) {
+    Object[] params=r.getParameters();
+    if (pattern.indexOf("{0") >= 0 && params != null && params.length > 0) {
+      try {
+        pattern=MessageFormat.format(pattern,params);
+      }
+ catch (      IllegalArgumentException e) {
+        pattern=r.getMessage();
+      }
+    }
+  }
+  return pattern;
+}

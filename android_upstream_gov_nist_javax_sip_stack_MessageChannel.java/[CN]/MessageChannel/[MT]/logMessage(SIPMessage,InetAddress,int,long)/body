@@ -1,0 +1,5 @@
+{
+  if (!getSIPStack().getStackLogger().isLoggingEnabled(ServerLogger.TRACE_MESSAGES))   return;
+  if (port == -1)   port=5060;
+  getSIPStack().serverLogger.logMessage(sipMessage,this.getHost() + ":" + this.getPort(),address.getHostAddress().toString() + ":" + port,true,time);
+}

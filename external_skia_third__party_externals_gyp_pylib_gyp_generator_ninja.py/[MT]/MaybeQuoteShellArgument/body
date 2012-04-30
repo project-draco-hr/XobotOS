@@ -1,0 +1,4 @@
+def MaybeQuoteShellArgument(arg):
+    if (('"' in arg) or (' ' in arg)):
+        return QuoteShellArgument(arg)
+    return arg

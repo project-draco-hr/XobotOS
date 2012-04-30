@@ -1,0 +1,11 @@
+{
+  super();
+  plugin=this;
+  try {
+    resourceBundle=ResourceBundle.getBundle("sharpen.SharpenPluginResources");
+  }
+ catch (  MissingResourceException x) {
+    resourceBundle=null;
+  }
+  _logger=Logger.getLogger(SHARPEN_LOGGER_NAME);
+}

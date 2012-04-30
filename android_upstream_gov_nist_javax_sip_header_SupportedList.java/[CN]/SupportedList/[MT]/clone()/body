@@ -1,0 +1,5 @@
+{
+  SupportedList retval=new SupportedList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

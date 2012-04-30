@@ -1,0 +1,30 @@
+def LoadOneBuildFile(build_file_path, data, aux_data, variables, includes, is_target, check):
+    if (build_file_path in data):
+        return data[build_file_path]
+    if os.path.exists(build_file_path):
+        build_file_contents = open(build_file_path).read()
+    else:
+        raise Exception(('%s not found (cwd: %s)' % (build_file_path, os.getcwd())))
+    build_file_data = None
+    try:
+        if check:
+            build_file_data = CheckedEval(build_file_contents)
+        else:
+            build_file_data = eval(build_file_contents, {'__builtins__': None, }, None)
+    except SyntaxError as e:
+        e.filename = build_file_path
+        raise
+    except Exception as e:
+        gyp.common.ExceptionAppend(e, ('while reading ' + build_file_path))
+        raise
+    data[build_file_path] = build_file_data
+    aux_data[build_file_path] = {}
+    try:
+        if is_target:
+            LoadBuildFileIncludesIntoDict(build_file_data, build_file_path, data, aux_data, variables, includes, check)
+        else:
+            LoadBuildFileIncludesIntoDict(build_file_data, build_file_path, data, aux_data, variables, None, check)
+    except Exception as e:
+        gyp.common.ExceptionAppend(e, ('while reading includes of ' + build_file_path))
+        raise
+    return build_file_data

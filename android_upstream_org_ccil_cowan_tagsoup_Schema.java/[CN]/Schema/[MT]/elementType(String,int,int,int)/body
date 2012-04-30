@@ -1,0 +1,5 @@
+{
+  ElementType e=new ElementType(name,model,memberOf,flags,this);
+  theElementTypes.put(name.toLowerCase(),e);
+  if (memberOf == M_ROOT)   theRoot=e;
+}

@@ -1,0 +1,9 @@
+{
+  List<String> retval=new LinkedList<String>();
+  ListIterator<HDR> li=hlist.listIterator();
+  while (li.hasNext()) {
+    Header sipheader=li.next();
+    retval.add(sipheader.toString());
+  }
+  return retval;
+}

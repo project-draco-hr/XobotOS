@@ -1,0 +1,6 @@
+def _AddActions(actions_to_add, spec, relative_path_of_gyp_file):
+    actions = spec.get('actions', [])
+    for a in actions:
+        cmd = _BuildCommandLineForRule(spec, a, has_input_path=False)
+        inputs = (a.get('inputs') or [relative_path_of_gyp_file])
+        _AddActionStep(actions_to_add, inputs=inputs, outputs=a.get('outputs', []), description=a.get('message', a['action_name']), command=cmd)

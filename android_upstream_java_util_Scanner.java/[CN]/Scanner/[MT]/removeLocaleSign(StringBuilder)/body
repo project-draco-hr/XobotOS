@@ -1,0 +1,29 @@
+{
+  String positivePrefix=decimalFormat.getPositivePrefix();
+  String positiveSuffix=decimalFormat.getPositiveSuffix();
+  String negativePrefix=decimalFormat.getNegativePrefix();
+  String negativeSuffix=decimalFormat.getNegativeSuffix();
+  if (tokenBuilder.indexOf("+") == 0) {
+    tokenBuilder.delete(0,1);
+  }
+  if (!positivePrefix.isEmpty() && tokenBuilder.indexOf(positivePrefix) == 0) {
+    tokenBuilder.delete(0,positivePrefix.length());
+  }
+  if (!positiveSuffix.isEmpty() && -1 != tokenBuilder.indexOf(positiveSuffix)) {
+    tokenBuilder.delete(tokenBuilder.length() - positiveSuffix.length(),tokenBuilder.length());
+  }
+  boolean negative=false;
+  if (tokenBuilder.indexOf("-") == 0) {
+    tokenBuilder.delete(0,1);
+    negative=true;
+  }
+  if (!negativePrefix.isEmpty() && tokenBuilder.indexOf(negativePrefix) == 0) {
+    tokenBuilder.delete(0,negativePrefix.length());
+    negative=true;
+  }
+  if (!negativeSuffix.isEmpty() && -1 != tokenBuilder.indexOf(negativeSuffix)) {
+    tokenBuilder.delete(tokenBuilder.length() - negativeSuffix.length(),tokenBuilder.length());
+    negative=true;
+  }
+  return negative;
+}

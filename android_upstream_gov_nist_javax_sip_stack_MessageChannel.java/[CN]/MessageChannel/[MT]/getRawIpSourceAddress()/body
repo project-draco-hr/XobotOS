@@ -1,0 +1,12 @@
+{
+  String sourceAddress=getPeerAddress();
+  String rawIpSourceAddress=null;
+  try {
+    InetAddress sourceInetAddress=InetAddress.getByName(sourceAddress);
+    rawIpSourceAddress=sourceInetAddress.getHostAddress();
+  }
+ catch (  Exception ex) {
+    InternalErrorHandler.handleException(ex);
+  }
+  return rawIpSourceAddress;
+}

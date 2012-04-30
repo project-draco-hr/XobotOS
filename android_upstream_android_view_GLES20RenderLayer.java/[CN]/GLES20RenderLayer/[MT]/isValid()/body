@@ -1,0 +1,3 @@
+{
+  return mLayer != 0 && mLayerWidth > 0 && mLayerHeight > 0;
+}

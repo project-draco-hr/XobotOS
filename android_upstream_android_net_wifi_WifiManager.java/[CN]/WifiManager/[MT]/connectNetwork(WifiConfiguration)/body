@@ -1,0 +1,6 @@
+{
+  if (config == null) {
+    return;
+  }
+  mAsyncChannel.sendMessage(CMD_CONNECT_NETWORK,config);
+}

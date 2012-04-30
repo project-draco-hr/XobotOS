@@ -1,0 +1,54 @@
+{
+  final IMethodBinding binding=node.resolveBinding();
+  final ASTNode parent=node.getParent();
+  final ITypeBinding declaringType;
+  if (parent instanceof TypeDeclaration) {
+    declaringType=((TypeDeclaration)parent).resolveBinding();
+  }
+ else   if (parent instanceof AnonymousClassDeclaration) {
+    declaringType=((AnonymousClassDeclaration)parent).resolveBinding();
+  }
+ else {
+    declaringType=null;
+  }
+  _currentWildcardParams=new HashMap<ITypeBinding,String>();
+  CSMethodBase method=my(CSharpDriver.class).processMethodDeclaration(this,_currentType,node,new IMethodBuilderDelegate(){
+    public ITypeBinding getDeclaringType(){
+      return declaringType;
+    }
+    public IMethodBinding getBaseMethod(    boolean overrideOnly,    boolean allowStatic){
+      return CSharpBuilder.this.getBaseMethod(binding,overrideOnly,allowStatic);
+    }
+    public CSMethodBase create(){
+      if (isDestructor(node))       return new CSDestructor();
+      if (node.isConstructor())       return new CSConstructor();
+      final String name=mappedMethodDeclarationName(node);
+      CSMethod method=new CSMethod(name);
+      method.returnType(mappedReturnType(node));
+      method.modifier(mapMethodModifier(node));
+      mapTypeParameters(node.typeParameters(),method);
+      return method;
+    }
+    public void map(    CSMethodBase method){
+      method.startPosition(node.getStartPosition());
+      method.isVarArgs(node.isVarargs());
+      mapParameters(node,method);
+      mapAnnotations(node,method);
+    }
+    public void mapBody(    CSMethodBase method){
+      visitBodyDeclarationBlock(node,node.getBody(),method);
+    }
+    public void document(    CSMethodBase method){
+      CSharpBuilder.this.mapDocumentation(node,method);
+    }
+    public void fixup(    CSMethodBase method){
+      CSharpBuilder.this.fixupMethod(node,method);
+    }
+    public void fixup(    CSTypeDeclaration parent,    CSMethodBase method){
+      if (method instanceof CSMethod)       CSharpBuilder.this.fixupMethod(node,parent,(CSMethod)method);
+    }
+  }
+);
+  _currentWildcardParams=null;
+  return method;
+}

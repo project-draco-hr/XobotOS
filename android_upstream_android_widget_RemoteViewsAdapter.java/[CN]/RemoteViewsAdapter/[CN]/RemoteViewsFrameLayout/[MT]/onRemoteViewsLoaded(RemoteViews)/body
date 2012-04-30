@@ -1,0 +1,9 @@
+{
+  try {
+    removeAllViews();
+    addView(view.apply(getContext(),this));
+  }
+ catch (  Exception e) {
+    Log.e(TAG,"Failed to apply RemoteViews.");
+  }
+}

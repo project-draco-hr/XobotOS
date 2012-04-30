@@ -1,0 +1,91 @@
+{
+  final int viewFlags=mViewFlags;
+  if ((viewFlags & ENABLED_MASK) == DISABLED) {
+    if (event.getAction() == MotionEvent.ACTION_UP && (mPrivateFlags & PRESSED) != 0) {
+      mPrivateFlags&=~PRESSED;
+      refreshDrawableState();
+    }
+    return (((viewFlags & CLICKABLE) == CLICKABLE || (viewFlags & LONG_CLICKABLE) == LONG_CLICKABLE));
+  }
+  if (mTouchDelegate != null) {
+    if (mTouchDelegate.onTouchEvent(event)) {
+      return true;
+    }
+  }
+  if (((viewFlags & CLICKABLE) == CLICKABLE || (viewFlags & LONG_CLICKABLE) == LONG_CLICKABLE)) {
+switch (event.getAction()) {
+case MotionEvent.ACTION_UP:
+      boolean prepressed=(mPrivateFlags & PREPRESSED) != 0;
+    if ((mPrivateFlags & PRESSED) != 0 || prepressed) {
+      boolean focusTaken=false;
+      if (isFocusable() && isFocusableInTouchMode() && !isFocused()) {
+        focusTaken=requestFocus();
+      }
+      if (prepressed) {
+        mPrivateFlags|=PRESSED;
+        refreshDrawableState();
+      }
+      if (!mHasPerformedLongPress) {
+        removeLongPressCallback();
+        if (!focusTaken) {
+          if (mPerformClick == null) {
+            mPerformClick=new PerformClick();
+          }
+          if (!post(mPerformClick)) {
+            performClick();
+          }
+        }
+      }
+      if (mUnsetPressedState == null) {
+        mUnsetPressedState=new UnsetPressedState();
+      }
+      if (prepressed) {
+        postDelayed(mUnsetPressedState,ViewConfiguration.getPressedStateDuration());
+      }
+ else       if (!post(mUnsetPressedState)) {
+        mUnsetPressedState.run();
+      }
+      removeTapCallback();
+    }
+  break;
+case MotionEvent.ACTION_DOWN:
+mHasPerformedLongPress=false;
+if (performButtonActionOnTouchDown(event)) {
+break;
+}
+boolean isInScrollingContainer=isInScrollingContainer();
+if (isInScrollingContainer) {
+mPrivateFlags|=PREPRESSED;
+if (mPendingCheckForTap == null) {
+mPendingCheckForTap=new CheckForTap();
+}
+postDelayed(mPendingCheckForTap,ViewConfiguration.getTapTimeout());
+}
+ else {
+mPrivateFlags|=PRESSED;
+refreshDrawableState();
+checkForLongClick(0);
+}
+break;
+case MotionEvent.ACTION_CANCEL:
+mPrivateFlags&=~PRESSED;
+refreshDrawableState();
+removeTapCallback();
+break;
+case MotionEvent.ACTION_MOVE:
+final int x=(int)event.getX();
+final int y=(int)event.getY();
+if (!pointInView(x,y,mTouchSlop)) {
+removeTapCallback();
+if ((mPrivateFlags & PRESSED) != 0) {
+removeLongPressCallback();
+mPrivateFlags&=~PRESSED;
+refreshDrawableState();
+}
+}
+break;
+}
+return true;
+}
+return false;
+}

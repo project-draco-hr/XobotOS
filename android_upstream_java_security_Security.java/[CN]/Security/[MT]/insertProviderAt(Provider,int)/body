@@ -1,0 +1,8 @@
+{
+  if (getProvider(provider.getName()) != null) {
+    return -1;
+  }
+  int result=Services.insertProviderAt(provider,position);
+  renumProviders();
+  return result;
+}

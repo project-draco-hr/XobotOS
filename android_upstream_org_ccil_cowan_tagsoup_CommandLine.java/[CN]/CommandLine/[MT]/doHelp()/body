@@ -1,0 +1,16 @@
+{
+  System.err.print("usage: java -jar tagsoup-*.jar ");
+  System.err.print(" [ ");
+  boolean first=true;
+  for (Enumeration e=options.keys(); e.hasMoreElements(); ) {
+    if (!first) {
+      System.err.print("| ");
+    }
+    first=false;
+    String key=(String)(e.nextElement());
+    System.err.print(key);
+    if (key.endsWith("="))     System.err.print("?");
+    System.err.print(" ");
+  }
+  System.err.println("]*");
+}

@@ -1,0 +1,3 @@
+{
+  return mAudioFocusIdListenerMap.get(id);
+}

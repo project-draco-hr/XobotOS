@@ -1,0 +1,4 @@
+{
+  addStatement(mapThrowStatement(node));
+  return false;
+}

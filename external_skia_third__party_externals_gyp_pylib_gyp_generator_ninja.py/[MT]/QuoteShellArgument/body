@@ -1,0 +1,2 @@
+def QuoteShellArgument(arg):
+    return (("'" + arg.replace("'", (("'" + '"\'"') + "'"))) + "'")

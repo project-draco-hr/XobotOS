@@ -1,0 +1,5 @@
+{
+  buffer.append(this.scheme).append(':');
+  telephoneNumber.encode(buffer);
+  return buffer;
+}

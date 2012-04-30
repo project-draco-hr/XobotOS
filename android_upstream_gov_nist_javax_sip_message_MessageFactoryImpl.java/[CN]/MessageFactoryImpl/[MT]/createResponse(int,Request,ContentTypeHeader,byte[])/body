@@ -1,0 +1,11 @@
+{
+  if (request == null || content == null || contentType == null)   throw new NullPointerException("null Parameters");
+  SIPRequest sipRequest=(SIPRequest)request;
+  SIPResponse sipResponse=sipRequest.createResponse(statusCode);
+  sipResponse.setHeader((ContentType)contentType);
+  sipResponse.setMessageContent(content);
+  if (server != null) {
+    sipResponse.setHeader(server);
+  }
+  return sipResponse;
+}

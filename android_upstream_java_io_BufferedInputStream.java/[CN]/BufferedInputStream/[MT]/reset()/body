@@ -1,0 +1,9 @@
+{
+  if (buf == null) {
+    throw new IOException("Stream is closed");
+  }
+  if (-1 == markpos) {
+    throw new IOException("Mark has been invalidated.");
+  }
+  pos=markpos;
+}

@@ -1,0 +1,14 @@
+{
+  setPattern(objectInput.readUTF());
+  setFormat(objectInput.readUTF());
+  int leadingDigitsPatternSize=objectInput.readInt();
+  for (int i=0; i < leadingDigitsPatternSize; i++) {
+    leadingDigitsPattern_.add(objectInput.readUTF());
+  }
+  if (objectInput.readBoolean()) {
+    setNationalPrefixFormattingRule(objectInput.readUTF());
+  }
+  if (objectInput.readBoolean()) {
+    setDomesticCarrierCodeFormattingRule(objectInput.readUTF());
+  }
+}

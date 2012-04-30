@@ -1,0 +1,8 @@
+{
+  try {
+    return (GenericObject)iterator.next();
+  }
+ catch (  NoSuchElementException ex) {
+    return null;
+  }
+}

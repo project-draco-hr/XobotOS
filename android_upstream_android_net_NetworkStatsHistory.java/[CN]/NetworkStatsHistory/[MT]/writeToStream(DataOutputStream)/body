@@ -1,0 +1,11 @@
+{
+  out.writeInt(VERSION_ADD_ACTIVE);
+  out.writeLong(bucketDuration);
+  writeVarLongArray(out,bucketStart,bucketCount);
+  writeVarLongArray(out,activeTime,bucketCount);
+  writeVarLongArray(out,rxBytes,bucketCount);
+  writeVarLongArray(out,rxPackets,bucketCount);
+  writeVarLongArray(out,txBytes,bucketCount);
+  writeVarLongArray(out,txPackets,bucketCount);
+  writeVarLongArray(out,operations,bucketCount);
+}

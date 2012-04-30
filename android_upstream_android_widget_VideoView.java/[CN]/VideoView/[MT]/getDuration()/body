@@ -1,0 +1,11 @@
+{
+  if (isInPlaybackState()) {
+    if (mDuration > 0) {
+      return mDuration;
+    }
+    mDuration=mMediaPlayer.getDuration();
+    return mDuration;
+  }
+  mDuration=-1;
+  return mDuration;
+}

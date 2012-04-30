@@ -1,0 +1,4 @@
+{
+  if (host == null)   return null;
+ else   return host.getInetAddress();
+}

@@ -1,0 +1,6 @@
+{
+  if (rs.mElement_RGBA_5551 == null) {
+    rs.mElement_RGBA_5551=createPixel(rs,DataType.UNSIGNED_5_5_5_1,DataKind.PIXEL_RGBA);
+  }
+  return rs.mElement_RGBA_5551;
+}

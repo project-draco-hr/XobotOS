@@ -1,0 +1,9 @@
+{
+  if (expr instanceof NumberLiteral) {
+    NumberLiteral literal=(NumberLiteral)expr;
+    Object value=literal.resolveConstantExpressionValue();
+    return value.equals(0);
+  }
+  if (expr instanceof NullLiteral)   return true;
+  return false;
+}

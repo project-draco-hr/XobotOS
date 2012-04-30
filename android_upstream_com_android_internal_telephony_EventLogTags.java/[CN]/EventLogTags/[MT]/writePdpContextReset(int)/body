@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(PDP_CONTEXT_RESET,outPacketCount);
+}

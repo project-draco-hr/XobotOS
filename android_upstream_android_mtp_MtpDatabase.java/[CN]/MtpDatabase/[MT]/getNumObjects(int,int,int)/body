@@ -1,0 +1,18 @@
+{
+  Cursor c=null;
+  try {
+    c=createObjectQuery(storageID,format,parent);
+    if (c != null) {
+      return c.getCount();
+    }
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"RemoteException in getNumObjects",e);
+  }
+ finally {
+    if (c != null) {
+      c.close();
+    }
+  }
+  return -1;
+}

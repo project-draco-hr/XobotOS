@@ -1,0 +1,4 @@
+{
+  mNinePatchState.mChangingConfigurations=getChangingConfigurations();
+  return mNinePatchState;
+}

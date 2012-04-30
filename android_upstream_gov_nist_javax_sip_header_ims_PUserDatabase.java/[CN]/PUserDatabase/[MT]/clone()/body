@@ -1,0 +1,4 @@
+{
+  PUserDatabase retval=(PUserDatabase)super.clone();
+  return retval;
+}

@@ -1,0 +1,4 @@
+{
+  if (received == null)   throw new NullPointerException("JAIN-SIP Exception, " + "Via, setReceived(), the received parameter is null.");
+  setParameter(ParameterNames.RECEIVED,received);
+}

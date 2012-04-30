@@ -1,0 +1,6 @@
+{
+  if (mediaRange == null) {
+    return false;
+  }
+ else   return mediaRange.getSubtype().compareTo(STAR) == 0;
+}

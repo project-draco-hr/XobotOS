@@ -1,0 +1,13 @@
+{
+  for (  CipherSuite clientSuite : clientSuites) {
+    if (!clientSuite.supported) {
+      continue;
+    }
+    for (    CipherSuite enabledCipherSuite : parameters.getEnabledCipherSuitesMember()) {
+      if (clientSuite.equals(enabledCipherSuite)) {
+        return clientSuite;
+      }
+    }
+  }
+  return null;
+}

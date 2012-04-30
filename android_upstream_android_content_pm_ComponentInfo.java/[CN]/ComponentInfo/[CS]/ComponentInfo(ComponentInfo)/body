@@ -1,0 +1,8 @@
+{
+  super(orig);
+  applicationInfo=orig.applicationInfo;
+  processName=orig.processName;
+  descriptionRes=orig.descriptionRes;
+  enabled=orig.enabled;
+  exported=orig.exported;
+}

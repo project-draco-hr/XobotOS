@@ -1,0 +1,4 @@
+{
+  writeSyncLocked();
+  mShuttingDown=true;
+}

@@ -1,0 +1,10 @@
+{
+  int flags=in.readInt();
+  short depth=in.readShort();
+  if (TRACE) {
+    System.out.println("\tflags=" + Integer.toHexString(flags));
+    System.out.println("\tdepth=" + depth);
+  }
+  hprofData.setFlags(flags);
+  hprofData.setDepth(depth);
+}

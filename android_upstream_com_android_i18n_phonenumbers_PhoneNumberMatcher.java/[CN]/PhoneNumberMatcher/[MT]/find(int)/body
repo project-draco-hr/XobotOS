@@ -1,0 +1,15 @@
+{
+  Matcher matcher=PATTERN.matcher(text);
+  while ((maxTries > 0) && matcher.find(index)) {
+    int start=matcher.start();
+    CharSequence candidate=text.subSequence(start,matcher.end());
+    candidate=trimAfterFirstMatch(PhoneNumberUtil.SECOND_NUMBER_START_PATTERN,candidate);
+    PhoneNumberMatch match=extractMatch(candidate,start);
+    if (match != null) {
+      return match;
+    }
+    index=start + candidate.length();
+    maxTries--;
+  }
+  return null;
+}

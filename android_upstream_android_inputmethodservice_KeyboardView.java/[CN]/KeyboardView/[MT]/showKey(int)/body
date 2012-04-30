@@ -1,0 +1,64 @@
+{
+  final PopupWindow previewPopup=mPreviewPopup;
+  final Key[] keys=mKeys;
+  if (keyIndex < 0 || keyIndex >= mKeys.length)   return;
+  Key key=keys[keyIndex];
+  if (key.icon != null) {
+    mPreviewText.setCompoundDrawables(null,null,null,key.iconPreview != null ? key.iconPreview : key.icon);
+    mPreviewText.setText(null);
+  }
+ else {
+    mPreviewText.setCompoundDrawables(null,null,null,null);
+    mPreviewText.setText(getPreviewText(key));
+    if (key.label.length() > 1 && key.codes.length < 2) {
+      mPreviewText.setTextSize(TypedValue.COMPLEX_UNIT_PX,mKeyTextSize);
+      mPreviewText.setTypeface(Typeface.DEFAULT_BOLD);
+    }
+ else {
+      mPreviewText.setTextSize(TypedValue.COMPLEX_UNIT_PX,mPreviewTextSizeLarge);
+      mPreviewText.setTypeface(Typeface.DEFAULT);
+    }
+  }
+  mPreviewText.measure(MeasureSpec.makeMeasureSpec(0,MeasureSpec.UNSPECIFIED),MeasureSpec.makeMeasureSpec(0,MeasureSpec.UNSPECIFIED));
+  int popupWidth=Math.max(mPreviewText.getMeasuredWidth(),key.width + mPreviewText.getPaddingLeft() + mPreviewText.getPaddingRight());
+  final int popupHeight=mPreviewHeight;
+  LayoutParams lp=mPreviewText.getLayoutParams();
+  if (lp != null) {
+    lp.width=popupWidth;
+    lp.height=popupHeight;
+  }
+  if (!mPreviewCentered) {
+    mPopupPreviewX=key.x - mPreviewText.getPaddingLeft() + mPaddingLeft;
+    mPopupPreviewY=key.y - popupHeight + mPreviewOffset;
+  }
+ else {
+    mPopupPreviewX=160 - mPreviewText.getMeasuredWidth() / 2;
+    mPopupPreviewY=-mPreviewText.getMeasuredHeight();
+  }
+  mHandler.removeMessages(MSG_REMOVE_PREVIEW);
+  getLocationInWindow(mCoordinates);
+  mCoordinates[0]+=mMiniKeyboardOffsetX;
+  mCoordinates[1]+=mMiniKeyboardOffsetY;
+  mPreviewText.getBackground().setState(key.popupResId != 0 ? LONG_PRESSABLE_STATE_SET : EMPTY_STATE_SET);
+  mPopupPreviewX+=mCoordinates[0];
+  mPopupPreviewY+=mCoordinates[1];
+  getLocationOnScreen(mCoordinates);
+  if (mPopupPreviewY + mCoordinates[1] < 0) {
+    if (key.x + key.width <= getWidth() / 2) {
+      mPopupPreviewX+=(int)(key.width * 2.5);
+    }
+ else {
+      mPopupPreviewX-=(int)(key.width * 2.5);
+    }
+    mPopupPreviewY+=popupHeight;
+  }
+  if (previewPopup.isShowing()) {
+    previewPopup.update(mPopupPreviewX,mPopupPreviewY,popupWidth,popupHeight);
+  }
+ else {
+    previewPopup.setWidth(popupWidth);
+    previewPopup.setHeight(popupHeight);
+    previewPopup.showAtLocation(mPopupParent,Gravity.NO_GRAVITY,mPopupPreviewX,mPopupPreviewY);
+  }
+  mPreviewText.setVisibility(VISIBLE);
+}

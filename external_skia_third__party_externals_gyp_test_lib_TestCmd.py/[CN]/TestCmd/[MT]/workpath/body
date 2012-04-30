@@ -1,0 +1,3 @@
+def workpath(self, *args):
+    'Returns the absolute path name to a subdirectory or file\n        within the current temporary working directory.  Concatenates\n        the temporary working directory name with the specified\n        arguments using the os.path.join() method.\n        '
+    return apply(os.path.join, ((self.workdir,) + tuple(args)))

@@ -1,0 +1,3 @@
+{
+  return _csprojFiles != null ? Collections.unmodifiableList(_csprojFiles) : null;
+}

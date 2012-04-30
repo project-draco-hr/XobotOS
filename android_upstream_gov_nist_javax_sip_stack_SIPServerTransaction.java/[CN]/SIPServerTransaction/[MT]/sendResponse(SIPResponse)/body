@@ -1,0 +1,35 @@
+{
+  try {
+    if (isReliable()) {
+      getMessageChannel().sendMessage(transactionResponse);
+    }
+ else {
+      Via via=transactionResponse.getTopmostVia();
+      String transport=via.getTransport();
+      if (transport == null)       throw new IOException("missing transport!");
+      int port=via.getRPort();
+      if (port == -1)       port=via.getPort();
+      if (port == -1) {
+        if (transport.equalsIgnoreCase("TLS"))         port=5061;
+ else         port=5060;
+      }
+      String host=null;
+      if (via.getMAddr() != null) {
+        host=via.getMAddr();
+      }
+ else {
+        host=via.getParameter(Via.RECEIVED);
+        if (host == null) {
+          host=via.getHost();
+        }
+      }
+      Hop hop=sipStack.addressResolver.resolveAddress(new HopImpl(host,port,transport));
+      MessageChannel messageChannel=((SIPTransactionStack)getSIPStack()).createRawMessageChannel(this.getSipProvider().getListeningPoint(hop.getTransport()).getIPAddress(),this.getPort(),hop);
+      if (messageChannel != null)       messageChannel.sendMessage(transactionResponse);
+ else       throw new IOException("Could not create a message channel for " + hop);
+    }
+  }
+  finally {
+    this.startTransactionTimer();
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return ASTUtility.compilationUnitPath(_ast).toCharArray();
+}

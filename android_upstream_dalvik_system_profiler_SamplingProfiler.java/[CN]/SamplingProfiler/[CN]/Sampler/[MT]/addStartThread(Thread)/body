@@ -1,0 +1,17 @@
+{
+  if (thread == null) {
+    throw new NullPointerException("thread == null");
+  }
+  int threadId=nextThreadId++;
+  Integer old=threadIds.put(thread,threadId);
+  if (old != null) {
+    throw new IllegalArgumentException("Thread already registered as " + old);
+  }
+  String threadName=thread.getName();
+  ThreadGroup group=thread.getThreadGroup();
+  String groupName=group == null ? null : group.getName();
+  ThreadGroup parentGroup=group == null ? null : group.getParent();
+  String parentGroupName=parentGroup == null ? null : parentGroup.getName();
+  HprofData.ThreadEvent event=HprofData.ThreadEvent.start(nextObjectId++,threadId,threadName,groupName,parentGroupName);
+  hprofData.addThreadEvent(event);
+}

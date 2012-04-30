@@ -1,0 +1,10 @@
+{
+  NfcAdapter adapter;
+  try {
+    adapter=NfcAdapter.getSingleton();
+  }
+ catch (  UnsupportedOperationException e) {
+    adapter=null;
+  }
+  mAdapter=adapter;
+}

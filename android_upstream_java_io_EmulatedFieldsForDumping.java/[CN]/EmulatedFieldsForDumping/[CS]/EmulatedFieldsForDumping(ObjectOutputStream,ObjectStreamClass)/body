@@ -1,0 +1,4 @@
+{
+  this.oos=oos;
+  this.emulatedFields=new EmulatedFields(streamClass.fields(),(ObjectStreamField[])null);
+}

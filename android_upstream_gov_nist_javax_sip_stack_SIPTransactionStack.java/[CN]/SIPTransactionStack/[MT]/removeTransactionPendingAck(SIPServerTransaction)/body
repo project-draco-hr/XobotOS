@@ -1,0 +1,10 @@
+{
+  String branchId=((SIPRequest)serverTransaction.getRequest()).getTopmostVia().getBranch();
+  if (branchId != null && this.terminatedServerTransactionsPendingAck.containsKey(branchId)) {
+    this.terminatedServerTransactionsPendingAck.remove(branchId);
+    return true;
+  }
+ else {
+    return false;
+  }
+}

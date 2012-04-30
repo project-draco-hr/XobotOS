@@ -1,0 +1,6 @@
+{
+  if (longCount == 0) {
+    return 0;
+  }
+  return 64 * (longCount - 1) + (64 - Long.numberOfLeadingZeros(bits[longCount - 1]));
+}

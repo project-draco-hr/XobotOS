@@ -1,0 +1,37 @@
+{
+  Matcher groupMatcher=GROUP_SEPARATOR.matcher(candidate);
+  if (groupMatcher.find()) {
+    CharSequence firstGroupOnly=candidate.substring(0,groupMatcher.start());
+    firstGroupOnly=trimAfterFirstMatch(PhoneNumberUtil.UNWANTED_END_CHAR_PATTERN,firstGroupOnly);
+    PhoneNumberMatch match=parseAndVerify(firstGroupOnly.toString(),offset);
+    if (match != null) {
+      return match;
+    }
+    maxTries--;
+    int withoutFirstGroupStart=groupMatcher.end();
+    CharSequence withoutFirstGroup=candidate.substring(withoutFirstGroupStart);
+    withoutFirstGroup=trimAfterFirstMatch(PhoneNumberUtil.UNWANTED_END_CHAR_PATTERN,withoutFirstGroup);
+    match=parseAndVerify(withoutFirstGroup.toString(),offset + withoutFirstGroupStart);
+    if (match != null) {
+      return match;
+    }
+    maxTries--;
+    if (maxTries > 0) {
+      int lastGroupStart=withoutFirstGroupStart;
+      while (groupMatcher.find()) {
+        lastGroupStart=groupMatcher.start();
+      }
+      CharSequence withoutLastGroup=candidate.substring(0,lastGroupStart);
+      withoutLastGroup=trimAfterFirstMatch(PhoneNumberUtil.UNWANTED_END_CHAR_PATTERN,withoutLastGroup);
+      if (withoutLastGroup.equals(firstGroupOnly)) {
+        return null;
+      }
+      match=parseAndVerify(withoutLastGroup.toString(),offset);
+      if (match != null) {
+        return match;
+      }
+      maxTries--;
+    }
+  }
+  return null;
+}

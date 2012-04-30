@@ -1,0 +1,9 @@
+{
+  if (method == null)   throw new NullPointerException("Bad method");
+  if (cSeqNumber < 0 || rSeqNumber < 0)   throw new InvalidArgumentException("bad cseq/rseq arg");
+  RAck rack=new RAck();
+  rack.setMethod(method);
+  rack.setCSequenceNumber(cSeqNumber);
+  rack.setRSequenceNumber(rSeqNumber);
+  return rack;
+}

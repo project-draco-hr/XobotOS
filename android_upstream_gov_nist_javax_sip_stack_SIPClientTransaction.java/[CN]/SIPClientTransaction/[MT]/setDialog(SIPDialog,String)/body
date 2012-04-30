@@ -1,0 +1,16 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("setDialog: " + dialogId + "sipDialog = "+ sipDialog);
+  if (sipDialog == null) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logError("NULL DIALOG!!");
+    throw new NullPointerException("bad dialog null");
+  }
+  if (this.defaultDialog == null) {
+    this.defaultDialog=sipDialog;
+    if (this.getMethod().equals(Request.INVITE) && this.getSIPStack().maxForkTime != 0) {
+      this.getSIPStack().addForkedClientTransaction(this);
+    }
+  }
+  if (dialogId != null && sipDialog.getDialogId() != null) {
+    this.sipDialogs.put(dialogId,sipDialog);
+  }
+}

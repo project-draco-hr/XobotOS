@@ -1,0 +1,4 @@
+byte[] dictionary
+int offset
+int byteCount
+long handle

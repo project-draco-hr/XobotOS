@@ -1,0 +1,9 @@
+{
+  if (type.isTypeVariable())   return true;
+  if (type.isArray())   return containsTypeVariables(type.getElementType());
+  if (type.isCapture())   return containsTypeVariables(type.getWildcard());
+  if (type.isParameterizedType())   return containsTypeVariables(type.getTypeArguments());
+  if (type.isTypeVariable())   return containsTypeVariables(type.getTypeBounds());
+  if (type.isWildcardType() && type.getBound() != null)   return containsTypeVariables(type.getBound());
+  return false;
+}

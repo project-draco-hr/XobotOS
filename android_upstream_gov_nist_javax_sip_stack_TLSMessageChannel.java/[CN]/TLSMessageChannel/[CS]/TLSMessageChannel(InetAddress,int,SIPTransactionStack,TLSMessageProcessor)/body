@@ -1,0 +1,15 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("creating new TLSMessageChannel (outgoing)");
+    sipStack.getStackLogger().logStackTrace();
+  }
+  this.peerAddress=inetAddr;
+  this.peerPort=port;
+  this.myPort=messageProcessor.getPort();
+  this.peerProtocol="TLS";
+  this.sipStack=sipStack;
+  this.tlsMessageProcessor=messageProcessor;
+  this.myAddress=messageProcessor.getIpAddress().getHostAddress();
+  this.key=MessageChannel.getKey(peerAddress,peerPort,"TLS");
+  super.messageProcessor=messageProcessor;
+}

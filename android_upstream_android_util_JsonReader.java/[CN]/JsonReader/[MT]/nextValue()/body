@@ -1,0 +1,19 @@
+{
+  int c=nextNonWhitespace();
+switch (c) {
+case '{':
+    push(JsonScope.EMPTY_OBJECT);
+  return token=JsonToken.BEGIN_OBJECT;
+case '[':
+push(JsonScope.EMPTY_ARRAY);
+return token=JsonToken.BEGIN_ARRAY;
+case '\'':
+checkLenient();
+case '"':
+value=nextString((char)c);
+return token=JsonToken.STRING;
+default :
+pos--;
+return readLiteral();
+}
+}

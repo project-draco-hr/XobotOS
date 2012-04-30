@@ -1,0 +1,4 @@
+{
+  if (!isByRef())   throw new IllegalStateException();
+  return new DereferenceExpression(getReference());
+}

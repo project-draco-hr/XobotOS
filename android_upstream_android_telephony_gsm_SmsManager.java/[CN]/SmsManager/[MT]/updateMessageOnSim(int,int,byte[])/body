@@ -1,0 +1,3 @@
+{
+  return mSmsMgrProxy.updateMessageOnIcc(messageIndex,newStatus,pdu);
+}

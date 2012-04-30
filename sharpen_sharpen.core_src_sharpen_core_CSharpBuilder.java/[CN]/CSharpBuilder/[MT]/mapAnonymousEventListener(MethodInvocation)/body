@@ -1,0 +1,4 @@
+{
+  ClassInstanceCreation creation=(ClassInstanceCreation)node.arguments().get(0);
+  return mapAnonymousClass(creation.getAnonymousClassDeclaration());
+}

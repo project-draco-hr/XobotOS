@@ -1,0 +1,6 @@
+{
+  if (rs.mElement_A_8 == null) {
+    rs.mElement_A_8=createPixel(rs,DataType.UNSIGNED_8,DataKind.PIXEL_A);
+  }
+  return rs.mElement_A_8;
+}

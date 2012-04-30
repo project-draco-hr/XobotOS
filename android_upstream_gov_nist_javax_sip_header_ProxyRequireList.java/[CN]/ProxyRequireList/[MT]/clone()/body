@@ -1,0 +1,5 @@
+{
+  ProxyRequireList retval=new ProxyRequireList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

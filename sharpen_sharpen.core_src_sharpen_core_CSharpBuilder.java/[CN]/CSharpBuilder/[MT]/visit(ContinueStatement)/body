@@ -1,0 +1,9 @@
+{
+  SimpleName labelName=node.getLabel();
+  if (labelName != null) {
+    addStatement(new CSGotoStatement(node.getStartPosition(),continueLabel(labelName.getIdentifier())));
+    return false;
+  }
+  addStatement(new CSContinueStatement(node.getStartPosition()));
+  return false;
+}

@@ -1,0 +1,3 @@
+{
+  mRS.nScriptSetVarJ(getID(),index,v);
+}

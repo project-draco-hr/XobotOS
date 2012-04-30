@@ -1,0 +1,7 @@
+{
+  writeMemberHeader(node);
+  write("delegate void ");
+  write(node.name());
+  writeParameterList(node.parameters());
+  writeLine(";");
+}

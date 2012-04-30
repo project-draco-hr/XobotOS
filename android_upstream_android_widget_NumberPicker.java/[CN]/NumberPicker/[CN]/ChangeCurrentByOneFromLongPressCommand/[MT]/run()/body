@@ -1,0 +1,4 @@
+{
+  changeCurrentByOne(mIncrement);
+  postDelayed(this,mLongPressUpdateInterval);
+}

@@ -1,0 +1,13 @@
+{
+  if (list == null)   return true;
+  for (  final V template : list) {
+    Match match=template.matches(member);
+    if (match == Match.NO_MATCH)     continue;
+ else     if (match == Match.NEGATIVE)     return false;
+    OutputType output=template.getOutputType();
+    if ((output != null) && (output.getModeForMember(member) == OutputMode.NOTHING))     return false;
+    visitor.accept(template);
+    return true;
+  }
+  return true;
+}

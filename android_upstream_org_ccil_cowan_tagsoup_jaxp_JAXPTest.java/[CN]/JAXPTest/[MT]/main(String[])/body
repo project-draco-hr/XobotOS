@@ -1,0 +1,3 @@
+{
+  new JAXPTest().test(args);
+}

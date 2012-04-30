@@ -1,0 +1,5 @@
+{
+  TagElement element=javadocTagFor(declaringNode(node.resolveMethodBinding()),SharpenAnnotations.SHARPEN_REMOVE);
+  String exchangeValue=JavadocUtility.singleTextFragmentFrom(element);
+  pushExpression(new CSReferenceExpression(exchangeValue));
+}

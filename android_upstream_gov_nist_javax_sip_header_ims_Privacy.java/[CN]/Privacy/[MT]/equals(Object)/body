@@ -1,0 +1,7 @@
+{
+  if (other instanceof PrivacyHeader) {
+    PrivacyHeader o=(PrivacyHeader)other;
+    return (this.getPrivacy().equals(o.getPrivacy()));
+  }
+  return false;
+}

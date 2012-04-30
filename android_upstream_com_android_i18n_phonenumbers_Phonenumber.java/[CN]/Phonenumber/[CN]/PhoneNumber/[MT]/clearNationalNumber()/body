@@ -1,0 +1,5 @@
+{
+  hasNationalNumber=false;
+  nationalNumber_=0L;
+  return this;
+}

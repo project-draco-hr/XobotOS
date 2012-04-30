@@ -1,0 +1,9 @@
+{
+  int colon=name.indexOf(':');
+  if (colon == -1) {
+    return name;
+  }
+ else {
+    return name.substring(colon + 1).intern();
+  }
+}

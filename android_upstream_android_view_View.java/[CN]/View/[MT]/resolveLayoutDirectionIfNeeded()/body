@@ -1,0 +1,29 @@
+{
+  if ((mPrivateFlags2 & LAYOUT_DIRECTION_RESOLVED) == LAYOUT_DIRECTION_RESOLVED)   return;
+  mPrivateFlags2&=~LAYOUT_DIRECTION_RESOLVED_RTL;
+  resetResolvedTextDirection();
+switch (getLayoutDirection()) {
+case LAYOUT_DIRECTION_INHERIT:
+    if (mParent == null)     return;
+  if (mParent instanceof ViewGroup) {
+    ViewGroup viewGroup=((ViewGroup)mParent);
+    if (!viewGroup.canResolveLayoutDirection()) {
+      return;
+    }
+    if (viewGroup.getResolvedLayoutDirection() == LAYOUT_DIRECTION_RTL) {
+      mPrivateFlags2|=LAYOUT_DIRECTION_RESOLVED_RTL;
+    }
+  }
+break;
+case LAYOUT_DIRECTION_RTL:
+mPrivateFlags2|=LAYOUT_DIRECTION_RESOLVED_RTL;
+break;
+case LAYOUT_DIRECTION_LOCALE:
+if (isLayoutDirectionRtl(Locale.getDefault())) {
+mPrivateFlags2|=LAYOUT_DIRECTION_RESOLVED_RTL;
+}
+break;
+default :
+}
+mPrivateFlags2|=LAYOUT_DIRECTION_RESOLVED;
+}

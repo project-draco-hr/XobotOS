@@ -1,0 +1,15 @@
+{
+  SIPHeader header=(SIPHeader)sipHeader;
+  if (header == null)   throw new IllegalArgumentException("null header!");
+  try {
+    if (header instanceof SIPHeaderList) {
+      SIPHeaderList<?> hl=(SIPHeaderList<?>)header;
+      if (hl.isEmpty())       return;
+    }
+    this.removeHeader(header.getHeaderName());
+    attachHeader(header,true,false);
+  }
+ catch (  SIPDuplicateHeaderException ex) {
+    InternalErrorHandler.handleException(ex);
+  }
+}

@@ -1,0 +1,6 @@
+{
+  if (null == _attributes) {
+    _attributes=new ArrayList<CSDocAttributeNode>();
+  }
+  _attributes.add(new CSDocAttributeNode(name,value));
+}

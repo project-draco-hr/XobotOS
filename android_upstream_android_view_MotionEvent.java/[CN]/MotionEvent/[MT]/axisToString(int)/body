@@ -1,0 +1,4 @@
+{
+  String symbolicName=AXIS_SYMBOLIC_NAMES.get(axis);
+  return symbolicName != null ? symbolicName : Integer.toString(axis);
+}

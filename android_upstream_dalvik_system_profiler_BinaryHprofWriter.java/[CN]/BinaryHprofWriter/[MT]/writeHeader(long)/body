@@ -1,0 +1,6 @@
+{
+  out.writeBytes(BinaryHprof.MAGIC + "1.0.2");
+  out.writeByte(0);
+  out.writeInt(BinaryHprof.ID_SIZE);
+  out.writeLong(dumpTimeInMilliseconds);
+}

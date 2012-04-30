@@ -1,0 +1,6 @@
+{
+  if (callId == null)   throw new NullPointerException("null arg callId");
+  CallID c=new CallID();
+  c.setCallId(callId);
+  return c;
+}

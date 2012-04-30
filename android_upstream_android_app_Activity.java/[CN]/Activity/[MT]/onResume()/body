@@ -1,0 +1,4 @@
+{
+  getApplication().dispatchActivityResumed(this);
+  mCalled=true;
+}

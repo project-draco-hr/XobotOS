@@ -1,0 +1,12 @@
+{
+  _writer.writeIndentation();
+  _writer.write("if (");
+  node.getCondition().accept(this);
+  _writer.writeLine(")");
+  node.getThenBlock().accept(this);
+  if (!node.getElseBlock().isEmpty()) {
+    _writer.writeIndentation();
+    _writer.writeLine("else");
+    node.getElseBlock().accept(this);
+  }
+}

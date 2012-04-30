@@ -1,0 +1,30 @@
+{
+  if (debug)   dbg_enter("parseQuotedString");
+  try {
+    StringBuffer retval=new StringBuffer();
+    if (this.lexer.lookAhead(0) != '\"')     throw createParseException("unexpected char");
+    this.lexer.consume(1);
+    while (true) {
+      char next=this.lexer.getNextChar();
+      if (next == '\"') {
+        break;
+      }
+ else       if (next == '\0') {
+        throw new ParseException("unexpected EOL",1);
+      }
+ else       if (next == '\\') {
+        retval.append(next);
+        next=this.lexer.getNextChar();
+        retval.append(next);
+      }
+ else {
+        retval.append(next);
+      }
+    }
+    visitedNetworkID.setVisitedNetworkID(retval.toString());
+    super.parse(visitedNetworkID);
+  }
+  finally {
+    if (debug)     dbg_leave("parseQuotedString.parse");
+  }
+}

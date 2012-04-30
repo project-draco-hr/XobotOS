@@ -1,0 +1,17 @@
+{
+  if (name == null) {
+    return null;
+  }
+  int n=0;
+  while (true) {
+    URLHandler handler=getHandler(n++);
+    if (handler == null) {
+      break;
+    }
+    URL res=handler.findResource(name);
+    if (res != null) {
+      return res;
+    }
+  }
+  return null;
+}

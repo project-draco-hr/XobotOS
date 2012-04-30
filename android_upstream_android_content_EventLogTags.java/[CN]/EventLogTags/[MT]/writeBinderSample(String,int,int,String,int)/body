@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(BINDER_SAMPLE,descriptor,methodNum,time,blockingPackage,samplePercent);
+}

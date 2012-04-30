@@ -1,0 +1,9 @@
+{
+  if (start < 0 || end < start || end > cs.length()) {
+    throw new IndexOutOfBoundsException("cs.length()=" + cs.length() + ", start="+ start+ ", end="+ end);
+  }
+  CharBuffer result=new CharSequenceAdapter(cs);
+  result.position=start;
+  result.limit=end;
+  return result;
+}

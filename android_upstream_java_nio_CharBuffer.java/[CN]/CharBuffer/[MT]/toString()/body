@@ -1,0 +1,7 @@
+{
+  StringBuilder result=new StringBuilder(limit - position);
+  for (int i=position; i < limit; i++) {
+    result.append(get(i));
+  }
+  return result.toString();
+}

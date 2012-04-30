@@ -1,0 +1,8 @@
+{
+  CSExpression target;
+  if (node.getExpression() == null)   target=new CSThisExpression();
+ else   target=mapMethodTargetExpression(node);
+  List<Expression> arguments=new ArrayList<Expression>();
+  arguments.addAll(node.arguments());
+  processIndexerInvocation(binding,target,arguments);
+}

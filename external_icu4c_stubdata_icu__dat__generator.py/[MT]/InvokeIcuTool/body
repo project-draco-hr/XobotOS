@@ -1,0 +1,9 @@
+def InvokeIcuTool(tool, working_dir, args):
+    command_list = [os.path.join(ICU_PREBUILT_DIR, tool)]
+    command_list.extend(args)
+    if VERBOSE:
+        command = ('[%s] %s' % (working_dir, ' '.join(command_list)))
+        print command
+    ret = subprocess.call(command_list, cwd=working_dir)
+    if (ret != 0):
+        sys.exit(command_list[0:])

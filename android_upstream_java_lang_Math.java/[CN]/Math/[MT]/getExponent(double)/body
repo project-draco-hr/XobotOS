@@ -1,0 +1,5 @@
+{
+  long bits=Double.doubleToRawLongBits(d);
+  bits=(bits & Double.EXPONENT_MASK) >> Double.MANTISSA_BITS;
+  return (int)bits - Double.EXPONENT_BIAS;
+}

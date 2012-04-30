@@ -1,0 +1,3 @@
+{
+  return disable(ALL_THREAD_DETECT_BITS);
+}

@@ -1,0 +1,13 @@
+{
+  if (!mRunning)   return;
+  mRunning=false;
+  mMyWakeLock.release(mSession);
+  if (mSession != null) {
+    mSession.setListener(null);
+    if (mConnected && mRegistered)     mSession.unregister();
+  }
+  mTimer.cancel(this);
+  stopKeepAliveProcess();
+  mRegistered=false;
+  setListener(mProxy.getListener());
+}

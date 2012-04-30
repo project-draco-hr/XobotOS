@@ -1,0 +1,9 @@
+{
+  for (  CSDocNode node : member.docs()) {
+    if (!(node instanceof CSDocTagNode))     continue;
+    if (cref.equals(((CSDocTagNode)node).getAttribute("cref"))) {
+      return true;
+    }
+  }
+  return false;
+}

@@ -1,0 +1,15 @@
+{
+  String cid=joinHeader.getCallId();
+  String fromTag=joinHeader.getFromTag();
+  String toTag=joinHeader.getToTag();
+  StringBuffer retval=new StringBuffer(cid);
+  if (toTag != null) {
+    retval.append(":");
+    retval.append(toTag);
+  }
+  if (fromTag != null) {
+    retval.append(":");
+    retval.append(fromTag);
+  }
+  return this.dialogTable.get(retval.toString().toLowerCase());
+}

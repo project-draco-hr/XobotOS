@@ -1,0 +1,3 @@
+{
+  theEntity=lookupEntity(buff,offset,length);
+}

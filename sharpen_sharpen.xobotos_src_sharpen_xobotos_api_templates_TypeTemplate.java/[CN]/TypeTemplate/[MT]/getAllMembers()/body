@@ -1,0 +1,12 @@
+{
+  List<AbstractMemberTemplate<?,?>> list=new ArrayList<AbstractMemberTemplate<?,?>>();
+  if (_types != null)   list.addAll(_types);
+  if (_enums != null)   list.addAll(_enums);
+  if (_anonymousClasses != null)   list.addAll(_anonymousClasses);
+  if (_ctors != null)   list.addAll(_ctors);
+  if (_methods != null)   list.addAll(_methods);
+  if (_destructors != null)   list.addAll(_destructors);
+  if (_fields != null)   list.addAll(_fields);
+  if (_properties != null)   list.addAll(_properties);
+  return unmodifiable(list);
+}

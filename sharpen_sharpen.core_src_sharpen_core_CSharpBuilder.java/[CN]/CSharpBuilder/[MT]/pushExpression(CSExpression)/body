@@ -1,0 +1,6 @@
+{
+  if (null != _currentExpression) {
+    throw new IllegalStateException();
+  }
+  _currentExpression=expression;
+}

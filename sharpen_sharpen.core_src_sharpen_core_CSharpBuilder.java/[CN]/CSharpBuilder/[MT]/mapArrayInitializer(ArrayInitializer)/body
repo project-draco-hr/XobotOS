@@ -1,0 +1,7 @@
+{
+  CSArrayInitializerExpression initializer=new CSArrayInitializerExpression();
+  for (  Object e : node.expressions()) {
+    initializer.addExpression(mapExpression((Expression)e));
+  }
+  return initializer;
+}

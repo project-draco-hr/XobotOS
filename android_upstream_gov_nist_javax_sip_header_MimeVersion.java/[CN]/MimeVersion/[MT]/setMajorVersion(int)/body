@@ -1,0 +1,4 @@
+{
+  if (majorVersion < 0)   throw new InvalidArgumentException("JAIN-SIP Exception" + ", MimeVersion, setMajorVersion(), the majorVersion parameter is null");
+  this.majorVersion=majorVersion;
+}

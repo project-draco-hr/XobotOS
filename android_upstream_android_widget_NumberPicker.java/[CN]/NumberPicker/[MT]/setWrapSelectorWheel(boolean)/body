@@ -1,0 +1,9 @@
+{
+  if (wrapSelectorWheel && (mMaxValue - mMinValue) < mSelectorIndices.length) {
+    throw new IllegalStateException("Range less than selector items count.");
+  }
+  if (wrapSelectorWheel != mWrapSelectorWheel) {
+    mWrapSelectorWheel=wrapSelectorWheel;
+    updateIncrementAndDecrementButtonsVisibilityState();
+  }
+}

@@ -1,0 +1,3 @@
+{
+  readFully(dst,0,dst.length);
+}

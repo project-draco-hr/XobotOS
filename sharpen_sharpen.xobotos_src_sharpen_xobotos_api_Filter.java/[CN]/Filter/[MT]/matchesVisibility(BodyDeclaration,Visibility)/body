@@ -1,0 +1,6 @@
+{
+  if (visibility == Visibility.PUBLIC)   return Modifier.isPublic(node.getModifiers());
+ else   if (visibility == Visibility.PROTECTED)   return Modifier.isProtected(node.getModifiers());
+ else   if (visibility == Visibility.PRIVATE)   return Modifier.isPrivate(node.getModifiers());
+  return false;
+}

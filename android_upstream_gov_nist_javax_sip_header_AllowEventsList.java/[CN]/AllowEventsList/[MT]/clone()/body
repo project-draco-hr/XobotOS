@@ -1,0 +1,5 @@
+{
+  AllowEventsList retval=new AllowEventsList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

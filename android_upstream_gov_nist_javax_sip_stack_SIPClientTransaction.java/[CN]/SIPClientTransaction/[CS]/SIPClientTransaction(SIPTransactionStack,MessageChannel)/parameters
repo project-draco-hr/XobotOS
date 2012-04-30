@@ -1,0 +1,2 @@
+SIPTransactionStack newSIPStack
+MessageChannel newChannelToUse

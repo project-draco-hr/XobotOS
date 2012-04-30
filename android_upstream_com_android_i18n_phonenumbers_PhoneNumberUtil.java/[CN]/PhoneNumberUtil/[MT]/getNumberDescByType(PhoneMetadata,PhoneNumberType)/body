@@ -1,0 +1,25 @@
+{
+switch (type) {
+case PREMIUM_RATE:
+    return metadata.getPremiumRate();
+case TOLL_FREE:
+  return metadata.getTollFree();
+case MOBILE:
+return metadata.getMobile();
+case FIXED_LINE:
+case FIXED_LINE_OR_MOBILE:
+return metadata.getFixedLine();
+case SHARED_COST:
+return metadata.getSharedCost();
+case VOIP:
+return metadata.getVoip();
+case PERSONAL_NUMBER:
+return metadata.getPersonalNumber();
+case PAGER:
+return metadata.getPager();
+case UAN:
+return metadata.getUan();
+default :
+return metadata.getGeneralDesc();
+}
+}

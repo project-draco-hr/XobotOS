@@ -1,0 +1,5 @@
+{
+  if (sipServerTx.getRequest().getMethod().equals(Request.INVITE) && response.getStatusCode() / 100 == 2) {
+    this.startTimer(sipServerTx);
+  }
+}

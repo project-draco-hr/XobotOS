@@ -1,0 +1,4 @@
+String number
+String regionCode
+PhoneNumberFormat numberFormat
+String carrierCode

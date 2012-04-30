@@ -1,0 +1,12 @@
+{
+  if (!implementsCloneable(type) || node.isInterface()) {
+    return;
+  }
+  final String name;
+  if (type.getMember("Clone") instanceof CSMethod)   name="Clone";
+ else   name="MemberwiseClone";
+  CSMethod clone=new CSMethod("System.ICloneable.Clone");
+  clone.returnType(OBJECT_TYPE_REFERENCE);
+  clone.body().addStatement(new CSReturnStatement(-1,new CSMethodInvocationExpression(new CSReferenceExpression(name))));
+  type.addMember(clone);
+}

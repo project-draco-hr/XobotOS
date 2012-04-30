@@ -1,0 +1,7 @@
+{
+  super.reInit();
+  this.eventScanner=new EventScanner(this);
+  this.listeningPoints=new Hashtable<String,ListeningPointImpl>();
+  this.sipProviders=new LinkedList<SipProviderImpl>();
+  this.sipListener=null;
+}

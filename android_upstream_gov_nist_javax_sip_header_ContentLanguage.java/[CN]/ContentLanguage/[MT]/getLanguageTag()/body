@@ -1,0 +1,8 @@
+{
+  if ("".equals(locale.getCountry())) {
+    return locale.getLanguage();
+  }
+ else {
+    return locale.getLanguage() + '-' + locale.getCountry();
+  }
+}

@@ -1,0 +1,9 @@
+{
+  begin("glGetTexParameterfv");
+  arg("target",target);
+  arg("pname",pname);
+  arg("params",params.toString());
+  end();
+  mgl11.glGetTexParameterfv(target,pname,params);
+  checkError();
+}

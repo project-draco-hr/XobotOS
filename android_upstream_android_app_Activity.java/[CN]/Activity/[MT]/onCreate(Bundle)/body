@@ -1,0 +1,12 @@
+{
+  if (mLastNonConfigurationInstances != null) {
+    mAllLoaderManagers=mLastNonConfigurationInstances.loaders;
+  }
+  if (savedInstanceState != null) {
+    Parcelable p=savedInstanceState.getParcelable(FRAGMENTS_TAG);
+    mFragments.restoreAllState(p,mLastNonConfigurationInstances != null ? mLastNonConfigurationInstances.fragments : null);
+  }
+  mFragments.dispatchCreate();
+  getApplication().dispatchActivityCreated(this,savedInstanceState);
+  mCalled=true;
+}

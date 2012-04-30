@@ -1,0 +1,4 @@
+{
+  final CSConstructorInvocationExpression chained=ctor.chainedConstructorInvocation();
+  return chained != null && chained.expression() instanceof CSThisExpression;
+}

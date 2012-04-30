@@ -1,0 +1,4 @@
+{
+  if (check.used())   return false;
+  return isThrowable(clause.getException().resolveBinding().getType());
+}

@@ -1,0 +1,5 @@
+{
+  objectsRead=new ArrayList<Object>();
+  nextHandle=baseWireHandle;
+  primitiveData=emptyStream;
+}

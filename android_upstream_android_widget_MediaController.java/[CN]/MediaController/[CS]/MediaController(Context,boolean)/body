@@ -1,0 +1,7 @@
+{
+  super(context);
+  mContext=context;
+  mUseFastForward=useFastForward;
+  initFloatingWindowLayout();
+  initFloatingWindow();
+}

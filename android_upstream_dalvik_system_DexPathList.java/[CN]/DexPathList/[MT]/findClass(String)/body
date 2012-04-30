@@ -1,0 +1,12 @@
+{
+  for (  Element element : dexElements) {
+    DexFile dex=element.dexFile;
+    if (dex != null) {
+      Class clazz=dex.loadClassBinaryName(name,definingContext);
+      if (clazz != null) {
+        return clazz;
+      }
+    }
+  }
+  return null;
+}

@@ -1,0 +1,10 @@
+{
+  StringBuilder result=new StringBuilder();
+  result.append('(');
+  for (int i=0; i < parameterTypes.length; i++) {
+    result.append(getSignature(parameterTypes[i]));
+  }
+  result.append(')');
+  result.append(getSignature(returnType));
+  return result.toString();
+}

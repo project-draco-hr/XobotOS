@@ -1,0 +1,4 @@
+{
+  mProgressNumberFormat=format;
+  onProgressChanged();
+}

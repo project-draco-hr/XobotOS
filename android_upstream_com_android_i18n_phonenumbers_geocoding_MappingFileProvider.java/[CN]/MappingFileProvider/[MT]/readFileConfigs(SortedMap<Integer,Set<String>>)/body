@@ -1,0 +1,10 @@
+{
+  numOfEntries=availableDataFiles.size();
+  countryCallingCodes=new int[numOfEntries];
+  availableLanguages=new ArrayList<Set<String>>(numOfEntries);
+  int index=0;
+  for (  int countryCallingCode : availableDataFiles.keySet()) {
+    countryCallingCodes[index++]=countryCallingCode;
+    availableLanguages.add(new HashSet<String>(availableDataFiles.get(countryCallingCode)));
+  }
+}

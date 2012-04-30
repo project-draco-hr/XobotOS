@@ -1,0 +1,20 @@
+def WriteMacBundleResources(self, resources, bundle_deps, spec):
+    "Writes Makefile code for 'mac_bundle_resources'."
+    self.WriteLn('### Generated for mac_bundle_resources')
+    variable = (self.target + '_mac_bundle_resources')
+    path = generator_default_variables['PRODUCT_DIR']
+    dest = os.path.join(path, self.xcode_settings.GetBundleResourceFolder())
+    dest = QuoteSpaces(dest)
+    for res in resources:
+        output = dest
+        assert (' ' not in res), ('Spaces in resource filenames not supported (%s)' % res)
+        path = Sourceify(self.Absolutify(res))
+        path_parts = os.path.split(path)
+        lproj_parts = os.path.split(path_parts[0])
+        if lproj_parts[1].endswith('.lproj'):
+            output = os.path.join(output, lproj_parts[1])
+        output = Sourceify(self.Absolutify(os.path.join(output, path_parts[1])))
+        if output.endswith('.xib'):
+            output = (output[0:(-3)] + 'nib')
+        self.WriteDoCmd([output], [path], 'mac_tool,,,copy-bundle-resource', part_of_all=True)
+        bundle_deps.append(output)

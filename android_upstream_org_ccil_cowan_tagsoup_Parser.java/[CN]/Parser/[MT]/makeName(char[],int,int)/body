@@ -1,0 +1,26 @@
+{
+  StringBuffer dst=new StringBuffer(length + 2);
+  boolean seenColon=false;
+  boolean start=true;
+  for (; length-- > 0; offset++) {
+    char ch=buff[offset];
+    if (Character.isLetter(ch) || ch == '_') {
+      start=false;
+      dst.append(ch);
+    }
+ else     if (Character.isDigit(ch) || ch == '-' || ch == '.') {
+      if (start)       dst.append('_');
+      start=false;
+      dst.append(ch);
+    }
+ else     if (ch == ':' && !seenColon) {
+      seenColon=true;
+      if (start)       dst.append('_');
+      start=true;
+      dst.append(translateColons ? '_' : ch);
+    }
+  }
+  int dstLength=dst.length();
+  if (dstLength == 0 || dst.charAt(dstLength - 1) == ':')   dst.append('_');
+  return dst.toString().intern();
+}

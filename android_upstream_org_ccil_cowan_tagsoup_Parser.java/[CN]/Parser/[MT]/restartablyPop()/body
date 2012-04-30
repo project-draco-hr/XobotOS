@@ -1,0 +1,9 @@
+{
+  Element popped=theStack;
+  pop();
+  if (restartElements && (popped.flags() & Schema.F_RESTART) != 0) {
+    popped.anonymize();
+    popped.setNext(theSaved);
+    theSaved=popped;
+  }
+}

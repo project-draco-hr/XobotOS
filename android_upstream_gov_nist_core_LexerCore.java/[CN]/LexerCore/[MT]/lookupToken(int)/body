@@ -1,0 +1,9 @@
+{
+  if (value > START) {
+    return (String)globalSymbolTable.get(Integer.valueOf(value));
+  }
+ else {
+    Character ch=Character.valueOf((char)value);
+    return ch.toString();
+  }
+}

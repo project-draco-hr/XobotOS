@@ -1,0 +1,3 @@
+def FindAllCommentBlocks(self, file_contents):
+    'Returns a list of all comment blocks within these file contents.\n        '
+    return self._comment_pattern.findall(file_contents)

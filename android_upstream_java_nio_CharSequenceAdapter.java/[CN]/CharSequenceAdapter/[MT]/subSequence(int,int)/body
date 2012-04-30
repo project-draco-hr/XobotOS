@@ -1,0 +1,7 @@
+{
+  checkStartEndRemaining(start,end);
+  CharSequenceAdapter result=copy(this);
+  result.position=position + start;
+  result.limit=position + end;
+  return result;
+}

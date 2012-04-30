@@ -1,0 +1,18 @@
+{
+  if (type == null) {
+    throw new NullPointerException();
+  }
+  try {
+    Engine.SpiAndProvider sap=ENGINE.getInstance(type,params);
+    return new CertStore((CertStoreSpi)sap.spi,sap.provider,type,params);
+  }
+ catch (  NoSuchAlgorithmException e) {
+    Throwable th=e.getCause();
+    if (th == null) {
+      throw e;
+    }
+ else {
+      throw new InvalidAlgorithmParameterException(e.getMessage(),th);
+    }
+  }
+}

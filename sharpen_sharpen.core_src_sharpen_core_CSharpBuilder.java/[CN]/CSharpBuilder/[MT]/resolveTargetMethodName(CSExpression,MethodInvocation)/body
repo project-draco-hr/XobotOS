@@ -1,0 +1,7 @@
+{
+  final IMethodBinding method=staticImportMethodBinding(node.getName(),_ast.imports());
+  if (method != null && targetExpression == null) {
+    return mappedTypeName(method.getDeclaringClass()) + "." + mappedMethodName(node.resolveMethodBinding());
+  }
+  return mappedMethodName(node.resolveMethodBinding());
+}

@@ -1,0 +1,32 @@
+{
+  String tagName=node.tagName();
+  List<CSDocAttributeNode> attributes=node.attributes();
+  List<CSDocNode> fragments=node.fragments();
+  write("<");
+  write(tagName);
+  if (!attributes.isEmpty()) {
+    for (    CSDocAttributeNode attr : attributes) {
+      write(" ");
+      write(attr.name());
+      write("=\"");
+      write(attr.value());
+      write("\"");
+    }
+  }
+  write(">");
+  if (fragments.size() > 1) {
+    writeLine();
+    for (    CSDocNode f : fragments) {
+      writeIndentation();
+      f.accept(this);
+      writeLine();
+    }
+    writeIndented("</" + tagName + ">");
+  }
+ else {
+    if (!fragments.isEmpty()) {
+      fragments.get(0).accept(this);
+    }
+    write("</" + tagName + ">");
+  }
+}

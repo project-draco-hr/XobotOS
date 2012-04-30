@@ -1,0 +1,4 @@
+{
+  if (maxForwards > 0)   maxForwards--;
+ else   throw new TooManyHopsException("has already reached 0!");
+}

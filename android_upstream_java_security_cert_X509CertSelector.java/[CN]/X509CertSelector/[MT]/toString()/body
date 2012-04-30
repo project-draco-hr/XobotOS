@@ -1,0 +1,75 @@
+{
+  StringBuilder result=new StringBuilder();
+  result.append("X509CertSelector: \n[");
+  if (this.certificateEquals != null) {
+    result.append("\n  certificateEquals: ").append(certificateEquals);
+  }
+  if (this.serialNumber != null) {
+    result.append("\n  serialNumber: ").append(serialNumber);
+  }
+  if (this.issuer != null) {
+    result.append("\n  issuer: ").append(issuer);
+  }
+  if (this.subject != null) {
+    result.append("\n  subject: ").append(subject);
+  }
+  if (this.subjectKeyIdentifier != null) {
+    result.append("\n  subjectKeyIdentifier: ").append(Array.getBytesAsString(subjectKeyIdentifier));
+  }
+  if (this.authorityKeyIdentifier != null) {
+    result.append("\n  authorityKeyIdentifier: ").append(Array.getBytesAsString(authorityKeyIdentifier));
+  }
+  if (this.certificateValid != null) {
+    result.append("\n  certificateValid: ").append(certificateValid);
+  }
+  if (this.subjectPublicKeyAlgID != null) {
+    result.append("\n  subjectPublicKeyAlgID: ").append(subjectPublicKeyAlgID);
+  }
+  if (this.privateKeyValid != null) {
+    result.append("\n  privateKeyValid: ").append(privateKeyValid);
+  }
+  if (this.subjectPublicKey != null) {
+    result.append("\n  subjectPublicKey: ").append(Array.getBytesAsString(subjectPublicKey));
+  }
+  if (this.keyUsage != null) {
+    result.append("\n  keyUsage: \n  [");
+    String[] kuNames=new String[]{"digitalSignature","nonRepudiation","keyEncipherment","dataEncipherment","keyAgreement","keyCertSign","cRLSign","encipherOnly","decipherOnly"};
+    for (int i=0; i < 9; i++) {
+      if (keyUsage[i]) {
+        result.append("\n    ").append(kuNames[i]);
+      }
+    }
+    result.append("\n  ]");
+  }
+  if (this.extendedKeyUsage != null) {
+    result.append("\n  extendedKeyUsage: ").append(extendedKeyUsage.toString());
+  }
+  result.append("\n  matchAllNames: ").append(matchAllNames);
+  result.append("\n  pathLen: ").append(pathLen);
+  if (this.subjectAltNames != null) {
+    result.append("\n  subjectAltNames:  \n  [");
+    for (int i=0; i < 9; i++) {
+      List<GeneralName> names=subjectAltNames[i];
+      if (names != null) {
+        int size=names.size();
+        for (        GeneralName generalName : names) {
+          result.append("\n    ").append(generalName.toString());
+        }
+      }
+    }
+    result.append("\n  ]");
+  }
+  if (this.nameConstraints != null) {
+  }
+  if (this.policies != null) {
+    result.append("\n  policies: ").append(policies.toString());
+  }
+  if (this.pathToNames != null) {
+    result.append("\n  pathToNames:  \n  [");
+    for (    GeneralName generalName : pathToNames) {
+      result.append("\n    ").append(generalName.toString());
+    }
+  }
+  result.append("\n]");
+  return result.toString();
+}

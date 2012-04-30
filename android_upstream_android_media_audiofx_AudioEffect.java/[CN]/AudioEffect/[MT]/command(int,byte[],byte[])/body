@@ -1,0 +1,4 @@
+{
+  checkState("command()");
+  return native_command(cmdCode,command.length,command,reply.length,reply);
+}

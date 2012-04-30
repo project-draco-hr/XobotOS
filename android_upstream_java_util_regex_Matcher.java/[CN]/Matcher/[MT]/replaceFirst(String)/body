@@ -1,0 +1,8 @@
+{
+  reset();
+  StringBuffer buffer=new StringBuffer(input.length());
+  if (find()) {
+    appendReplacement(buffer,replacement);
+  }
+  return appendTail(buffer).toString();
+}

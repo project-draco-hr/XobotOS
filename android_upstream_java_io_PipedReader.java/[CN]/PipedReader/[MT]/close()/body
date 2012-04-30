@@ -1,0 +1,5 @@
+{
+  buffer=null;
+  isClosed=true;
+  notifyAll();
+}

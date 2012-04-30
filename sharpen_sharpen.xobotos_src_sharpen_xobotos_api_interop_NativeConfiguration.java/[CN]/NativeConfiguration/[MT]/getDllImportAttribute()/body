@@ -1,0 +1,3 @@
+{
+  return new CSDllImport(_dllName,CallingConvention.CDecl,CharSet.Unicode);
+}

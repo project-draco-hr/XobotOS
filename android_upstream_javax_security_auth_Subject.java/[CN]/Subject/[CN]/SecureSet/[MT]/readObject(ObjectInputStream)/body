@@ -1,0 +1,19 @@
+{
+  in.defaultReadObject();
+switch (setType) {
+case SET_Principal:
+    permission=_PRINCIPALS;
+  break;
+case SET_PrivCred:
+permission=_PRIVATE_CREDENTIALS;
+break;
+case SET_PubCred:
+permission=_PUBLIC_CREDENTIALS;
+break;
+default :
+throw new IllegalArgumentException();
+}
+for (SST element : elements) {
+verifyElement(element);
+}
+}

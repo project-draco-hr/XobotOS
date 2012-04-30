@@ -1,0 +1,3 @@
+{
+  this.elements=Arrays.copyOf(array,array.length,Object[].class);
+}

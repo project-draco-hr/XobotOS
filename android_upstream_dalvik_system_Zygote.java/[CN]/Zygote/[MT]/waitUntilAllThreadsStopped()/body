@@ -1,0 +1,10 @@
+{
+  File tasks=new File("/proc/self/task");
+  while (tasks.list().length > 1) {
+    try {
+      Thread.sleep(10);
+    }
+ catch (    InterruptedException ignored) {
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  final int selectionEnd=widget.getSelectionEnd();
+  mWordIterator.setCharSequence(buffer,selectionEnd,selectionEnd);
+  return Selection.moveToPreceding(buffer,mWordIterator,isSelecting(buffer));
+}

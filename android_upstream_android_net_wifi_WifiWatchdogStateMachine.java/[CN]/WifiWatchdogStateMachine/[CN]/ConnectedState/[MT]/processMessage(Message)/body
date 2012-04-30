@@ -1,0 +1,11 @@
+{
+switch (msg.what) {
+case EVENT_SCAN_RESULTS_AVAILABLE:
+    updateBssids();
+  return HANDLED;
+case EVENT_WATCHDOG_SETTINGS_CHANGE:
+transitionTo(mOnlineWatchState);
+return NOT_HANDLED;
+}
+return NOT_HANDLED;
+}

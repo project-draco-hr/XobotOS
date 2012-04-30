@@ -1,0 +1,25 @@
+def append_functions(functions, lines):
+    i = 0
+    for line in lines:
+        if (line.find('API_ENTRY(') >= 0):
+            returnType = line[0:line.find(' API_ENTRY(')]
+            functionName = line[(line.find('(') + 1):line.find(')')]
+            parameterList = line[(line.find(')(') + 2):line.find(') {')]
+            functions.append(functionName)
+            continue
+            parameters = parameterList.split(',')
+            paramIndex = 0
+            if (line.find('*') >= 0):
+                print '// FIXME: this function has pointers, it should be hand written'
+                externs.append(('%s Tracing_%s(%s);' % (returnType, functionName, parameterList)))
+            print ('%s Tracing_%s(%s)\n{' % (returnType, functionName, parameterList))
+            if (parameterList == 'void'):
+                parameters = []
+            arguments = ''
+            for parameter in parameters:
+                parameter = parameter.replace('const', '')
+                parameter = parameter.strip()
+                paramType = parameter.split(' ')[0]
+                paramName = parameter.split(' ')[1]
+                paramIndex += 1
+    return functions

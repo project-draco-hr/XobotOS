@@ -1,0 +1,22 @@
+{
+  if (this.isNullRequest()) {
+    return "\r\n\r\n".getBytes();
+  }
+ else   if (this.requestLine == null) {
+    return new byte[0];
+  }
+  byte[] rlbytes=null;
+  if (requestLine != null) {
+    try {
+      rlbytes=requestLine.encode().getBytes("UTF-8");
+    }
+ catch (    UnsupportedEncodingException ex) {
+      InternalErrorHandler.handleException(ex);
+    }
+  }
+  byte[] superbytes=super.encodeAsBytes(transport);
+  byte[] retval=new byte[rlbytes.length + superbytes.length];
+  System.arraycopy(rlbytes,0,retval,0,rlbytes.length);
+  System.arraycopy(superbytes,0,retval,rlbytes.length,superbytes.length);
+  return retval;
+}

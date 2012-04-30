@@ -1,0 +1,23 @@
+def _complete(self, actual_stdout, expected_stdout, actual_stderr, expected_stderr, status, match):
+    '\n        Post-processes running a subcommand, checking for failure\n        status and displaying output appropriately.\n        '
+    if _failed(self, status):
+        expect = ''
+        if (status != 0):
+            expect = (' (expected %s)' % str(status))
+        print ('%s returned %s%s' % (self.program, str(_status(self)), expect))
+        print self.banner('STDOUT ')
+        print actual_stdout
+        print self.banner('STDERR ')
+        print actual_stderr
+        self.fail_test()
+    if ((not (expected_stdout is None)) and (not match(actual_stdout, expected_stdout))):
+        self.diff(expected_stdout, actual_stdout, 'STDOUT ')
+        if actual_stderr:
+            print self.banner('STDERR ')
+            print actual_stderr
+        self.fail_test()
+    if ((not (expected_stderr is None)) and (not match(actual_stderr, expected_stderr))):
+        print self.banner('STDOUT ')
+        print actual_stdout
+        self.diff(expected_stderr, actual_stderr, 'STDERR ')
+        self.fail_test()

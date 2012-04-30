@@ -1,0 +1,5 @@
+ElementInfo info
+String nativeName
+String managedName
+Mode mode
+Flags flags

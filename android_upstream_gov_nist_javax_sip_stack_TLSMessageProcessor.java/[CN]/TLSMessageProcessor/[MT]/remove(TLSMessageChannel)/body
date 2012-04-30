@@ -1,0 +1,8 @@
+{
+  String key=tlsMessageChannel.getKey();
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug(Thread.currentThread() + " removing " + key);
+  }
+  if (tlsMessageChannels.get(key) == tlsMessageChannel)   this.tlsMessageChannels.remove(key);
+  incomingTlsMessageChannels.remove(tlsMessageChannel);
+}

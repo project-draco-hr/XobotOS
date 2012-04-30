@@ -1,0 +1,5 @@
+{
+  node.body().accept(this);
+  for (  final CSVariableDeclaration vdecl : node.parameters())   vdecl.accept(this);
+  node.body().accept(this);
+}

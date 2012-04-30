@@ -1,0 +1,7 @@
+{
+  checkOpen();
+  if (ttl < 0 || ttl > 255) {
+    throw new IllegalArgumentException("TimeToLive out of bounds: " + ttl);
+  }
+  impl.setTimeToLive(ttl);
+}

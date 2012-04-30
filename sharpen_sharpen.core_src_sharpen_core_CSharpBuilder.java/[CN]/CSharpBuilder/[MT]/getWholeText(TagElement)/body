@@ -1,0 +1,26 @@
+{
+  StringBuilder builder=new StringBuilder();
+  for (  ASTNode fragment : (List<ASTNode>)element.fragments()) {
+    if (fragment instanceof TextElement) {
+      TextElement textElement=(TextElement)fragment;
+      String text=textElement.getText();
+      appendWithSpaceIfRequired(builder,text);
+    }
+ else     if (fragment instanceof TagElement) {
+      builder.append(getWholeText((TagElement)fragment));
+    }
+ else     if (fragment instanceof MethodRef) {
+      builder.append(mapCRefTarget(fragment));
+    }
+ else     if (fragment instanceof MemberRef) {
+      builder.append(mapCRefTarget(fragment));
+    }
+ else     if (fragment instanceof Name) {
+      builder.append(mapCRefTarget(fragment));
+    }
+ else {
+      break;
+    }
+  }
+  return builder.toString().trim();
+}

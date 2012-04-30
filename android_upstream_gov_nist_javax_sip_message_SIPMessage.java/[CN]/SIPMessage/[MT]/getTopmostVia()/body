@@ -1,0 +1,4 @@
+{
+  if (this.getViaHeaders() == null)   return null;
+ else   return (Via)(getViaHeaders().getFirst());
+}

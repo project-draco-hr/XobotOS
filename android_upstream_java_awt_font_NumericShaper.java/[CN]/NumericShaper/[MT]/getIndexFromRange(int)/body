@@ -1,0 +1,13 @@
+{
+  if (range == 0) {
+    throw rangeException(range);
+  }
+  int index=0;
+  while (index < MAX_INDEX) {
+    if (range == (1 << index)) {
+      return index;
+    }
+    index++;
+  }
+  throw rangeException(range);
+}

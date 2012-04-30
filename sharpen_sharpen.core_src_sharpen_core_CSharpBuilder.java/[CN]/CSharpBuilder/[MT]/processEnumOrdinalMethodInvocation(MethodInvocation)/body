@@ -1,0 +1,4 @@
+{
+  CSExpression exp=mapExpression(node.getExpression());
+  pushExpression(new CSCastExpression(new CSTypeReference("int"),new CSParenthesizedExpression(exp)));
+}

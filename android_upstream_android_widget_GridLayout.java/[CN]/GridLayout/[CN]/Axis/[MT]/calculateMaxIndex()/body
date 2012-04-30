@@ -1,0 +1,12 @@
+{
+  int result=-1;
+  for (int i=0, N=getChildCount(); i < N; i++) {
+    View c=getChildAt(i);
+    LayoutParams params=getLayoutParams(c);
+    Spec spec=horizontal ? params.columnSpec : params.rowSpec;
+    Interval span=spec.span;
+    result=max(result,span.min);
+    result=max(result,span.max);
+  }
+  return result == -1 ? UNDEFINED : result;
+}

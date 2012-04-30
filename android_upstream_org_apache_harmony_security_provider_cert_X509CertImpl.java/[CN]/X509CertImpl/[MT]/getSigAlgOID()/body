@@ -1,0 +1,7 @@
+{
+  String result=sigAlgOID;
+  if (result == null) {
+    sigAlgOID=result=tbsCert.getSignature().getAlgorithm();
+  }
+  return result;
+}

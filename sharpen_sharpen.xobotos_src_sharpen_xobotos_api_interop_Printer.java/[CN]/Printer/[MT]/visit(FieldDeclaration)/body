@@ -1,0 +1,8 @@
+{
+  final Field field=node.getDefinition();
+  _writer.writeIndentation();
+  field.getType().accept(this);
+  _writer.write(" ");
+  _writer.write(field.getName());
+  _writer.writeLine(";");
+}

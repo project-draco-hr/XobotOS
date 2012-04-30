@@ -1,0 +1,6 @@
+{
+  super();
+  listName=null;
+  stringRep="";
+  separator=";";
+}

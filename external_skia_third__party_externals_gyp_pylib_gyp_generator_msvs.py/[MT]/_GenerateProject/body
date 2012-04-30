@@ -1,0 +1,9 @@
+def _GenerateProject(project, options, version):
+    'Generates a vcproj file.\n\n  Arguments:\n    project: the MSVSProject object.\n    options: global generator options.\n    version: the MSVSVersion object.\n  '
+    default_config = _GetDefaultConfiguration(project.spec)
+    if default_config.get('msvs_existing_vcproj'):
+        return
+    if version.UsesVcxproj():
+        _GenerateMSBuildProject(project, options, version)
+    else:
+        _GenerateMSVSProject(project, options, version)

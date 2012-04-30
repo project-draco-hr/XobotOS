@@ -1,0 +1,4 @@
+{
+  if ((node instanceof CSMember) && ((CSMember)node).noDocs())   return;
+  printPrecedingComments(node.startPosition());
+}

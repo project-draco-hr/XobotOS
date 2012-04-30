@@ -1,0 +1,4 @@
+{
+  Bound toBound=inclusive ? INCLUSIVE : EXCLUSIVE;
+  return new BoundedMap(true,null,NO_BOUND,to,toBound);
+}

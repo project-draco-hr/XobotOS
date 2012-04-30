@@ -1,0 +1,6 @@
+{
+  if (proxy == null) {
+    throw new IllegalArgumentException("proxy == null");
+  }
+  return streamHandler.openConnection(this,proxy);
+}

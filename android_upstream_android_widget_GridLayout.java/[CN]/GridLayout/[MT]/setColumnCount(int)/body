@@ -1,0 +1,5 @@
+{
+  horizontalAxis.setCount(columnCount);
+  invalidateStructure();
+  requestLayout();
+}

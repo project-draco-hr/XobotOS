@@ -1,0 +1,26 @@
+{
+  int numOfEntries=areaCodeMapStorage.getNumOfEntries();
+  if (numOfEntries == 0) {
+    return "";
+  }
+  long phonePrefix=Long.parseLong(number.getCountryCode() + phoneUtil.getNationalSignificantNumber(number));
+  int currentIndex=numOfEntries - 1;
+  SortedSet<Integer> currentSetOfLengths=areaCodeMapStorage.getPossibleLengths();
+  while (currentSetOfLengths.size() > 0) {
+    Integer possibleLength=currentSetOfLengths.last();
+    String phonePrefixStr=String.valueOf(phonePrefix);
+    if (phonePrefixStr.length() > possibleLength) {
+      phonePrefix=Long.parseLong(phonePrefixStr.substring(0,possibleLength));
+    }
+    currentIndex=binarySearch(0,currentIndex,phonePrefix);
+    if (currentIndex < 0) {
+      return "";
+    }
+    int currentPrefix=areaCodeMapStorage.getPrefix(currentIndex);
+    if (phonePrefix == currentPrefix) {
+      return areaCodeMapStorage.getDescription(currentIndex);
+    }
+    currentSetOfLengths=currentSetOfLengths.headSet(possibleLength);
+  }
+  return "";
+}

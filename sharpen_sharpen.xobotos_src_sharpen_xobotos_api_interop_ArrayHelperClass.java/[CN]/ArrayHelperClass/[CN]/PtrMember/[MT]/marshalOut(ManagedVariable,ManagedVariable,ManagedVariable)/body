@@ -1,0 +1,25 @@
+{
+  final CSExpression lengthRef=_lengthMember.getReference(obj);
+  final CSExpression zero=new CSNumberLiteralExpression("0");
+  final CSExpression elementSize=getNativeElementSizeExpr();
+  if (isBlittable()) {
+    return createManagedAssert(null);
+  }
+ else {
+    CSBlock block=new CSBlock();
+    ManagedVariable addr=new ManagedVariable("addr",new CSTypeReference("System.IntPtr"));
+    addr.getDeclaration().initializer(getReference(obj));
+    block.addStatement(new CSDeclarationStatement(-1,addr.getDeclaration()));
+    ManagedVariable i=new ManagedVariable("i",new CSTypeReference("int"));
+    i.getDeclaration().initializer(zero);
+    CSExpression check=new CSInfixExpression("<",i.getReference(),lengthRef);
+    CSForStatement forStm=new CSForStatement(-1,check);
+    forStm.addInitializer(new CSDeclarationExpression(i.getDeclaration()));
+    forStm.addUpdater(new CSPostfixExpression("++",i.getReference()));
+    forStm.addUpdater(new CSInfixExpression("+=",addr.getReference(),elementSize));
+    final CSExpression expr=new CSIndexedExpression(arg.getReference(),i.getReference());
+    forStm.body().addStatement(marshalOut(addr.getReference(),expr,_elementInfo.getManagedType()));
+    block.addStatement(forStm);
+    return block;
+  }
+}

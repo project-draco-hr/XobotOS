@@ -1,0 +1,6 @@
+{
+  if (product == null)   throw new NullPointerException("null productList arg");
+  Server server=new Server();
+  server.setProduct(product);
+  return server;
+}

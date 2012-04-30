@@ -1,0 +1,10 @@
+{
+  for (Enumeration<Socket> values=socketTable.elements(); values.hasMoreElements(); ) {
+    Socket s=(Socket)values.nextElement();
+    try {
+      s.close();
+    }
+ catch (    IOException ex) {
+    }
+  }
+}

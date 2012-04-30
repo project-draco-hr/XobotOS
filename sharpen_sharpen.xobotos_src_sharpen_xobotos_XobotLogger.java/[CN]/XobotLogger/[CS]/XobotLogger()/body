@@ -1,0 +1,7 @@
+{
+  console=Activator.getConsole();
+  console.clearConsole();
+  console.activate();
+  consoleHandler=new MyConsoleHandler(console);
+  logger.addHandler(consoleHandler);
+}

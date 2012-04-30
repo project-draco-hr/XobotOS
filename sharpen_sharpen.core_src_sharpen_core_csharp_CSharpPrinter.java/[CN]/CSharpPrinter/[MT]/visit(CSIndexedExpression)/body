@@ -1,0 +1,6 @@
+{
+  node.expression().accept(this);
+  write("[");
+  writeCommaSeparatedList(node.indexes());
+  write("]");
+}

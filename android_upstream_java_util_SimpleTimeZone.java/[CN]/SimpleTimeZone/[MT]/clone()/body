@@ -1,0 +1,4 @@
+{
+  SimpleTimeZone zone=(SimpleTimeZone)super.clone();
+  return zone;
+}

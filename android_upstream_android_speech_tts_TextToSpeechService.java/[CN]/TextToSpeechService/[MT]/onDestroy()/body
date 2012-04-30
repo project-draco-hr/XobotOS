@@ -1,0 +1,7 @@
+{
+  if (DBG)   Log.d(TAG,"onDestroy()");
+  mSynthHandler.quit();
+  mAudioPlaybackHandler.quit();
+  mCallbacks.kill();
+  super.onDestroy();
+}

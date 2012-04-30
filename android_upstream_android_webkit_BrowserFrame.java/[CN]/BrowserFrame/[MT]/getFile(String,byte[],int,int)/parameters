@@ -1,0 +1,4 @@
+String uri
+byte[] buffer
+int offset
+int expectedSize

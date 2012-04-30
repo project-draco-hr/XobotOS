@@ -1,0 +1,7 @@
+{
+  if (!isValidRegionCode(regionCode)) {
+    return 0;
+  }
+  PhoneMetadata metadata=getMetadataForRegion(regionCode);
+  return metadata.getCountryCode();
+}

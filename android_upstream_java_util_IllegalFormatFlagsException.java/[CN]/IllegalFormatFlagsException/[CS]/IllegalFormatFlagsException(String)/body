@@ -1,0 +1,6 @@
+{
+  if (flags == null) {
+    throw new NullPointerException();
+  }
+  this.flags=flags;
+}

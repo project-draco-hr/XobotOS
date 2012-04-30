@@ -1,0 +1,6 @@
+{
+  if (null == _fragments) {
+    _fragments=new ArrayList<CSDocNode>();
+  }
+  _fragments.add(node);
+}

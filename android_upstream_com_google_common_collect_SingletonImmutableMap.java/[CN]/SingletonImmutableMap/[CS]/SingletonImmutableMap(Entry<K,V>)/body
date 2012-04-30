@@ -1,0 +1,5 @@
+{
+  this.entry=checkNotNull(entry);
+  this.singleKey=checkNotNull(entry.getKey());
+  this.singleValue=checkNotNull(entry.getValue());
+}

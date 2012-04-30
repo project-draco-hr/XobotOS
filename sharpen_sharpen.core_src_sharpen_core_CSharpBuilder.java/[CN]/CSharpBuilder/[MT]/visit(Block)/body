@@ -1,0 +1,10 @@
+{
+  if (isBlockInsideBlock(node)) {
+    CSBlock parent=_currentBlock;
+    _currentBlock=new CSBlock();
+    _currentBlock.parent(parent);
+    parent.addStatement(_currentBlock);
+  }
+  _currentContinueLabel=null;
+  return super.visit(node);
+}

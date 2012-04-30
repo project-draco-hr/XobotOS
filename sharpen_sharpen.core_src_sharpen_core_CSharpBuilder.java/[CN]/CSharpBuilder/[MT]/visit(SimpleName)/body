@@ -1,0 +1,5 @@
+{
+  CSExpression expr=createSimpleNameReference(node,null);
+  if (expr != null)   pushExpression(expr);
+  return false;
+}

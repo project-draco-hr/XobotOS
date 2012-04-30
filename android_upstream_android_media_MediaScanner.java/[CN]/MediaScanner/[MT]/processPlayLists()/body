@@ -1,0 +1,9 @@
+{
+  Iterator<FileCacheEntry> iterator=mPlayLists.iterator();
+  while (iterator.hasNext()) {
+    FileCacheEntry entry=iterator.next();
+    if (entry.mLastModifiedChanged) {
+      processPlayList(entry);
+    }
+  }
+}

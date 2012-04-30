@@ -1,0 +1,7 @@
+{
+  Arrays.checkOffsetAndCount(array.length,start,shortCount);
+  ShortBuffer buf=new ReadWriteShortArrayBuffer(array);
+  buf.position=start;
+  buf.limit=start + shortCount;
+  return buf;
+}

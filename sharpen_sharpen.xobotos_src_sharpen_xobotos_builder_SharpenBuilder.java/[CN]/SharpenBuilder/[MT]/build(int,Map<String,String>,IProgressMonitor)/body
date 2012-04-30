@@ -1,0 +1,38 @@
+{
+  final ConfigFile configFile=getConfigFile();
+  final SourceInfo sourceInfo=configFile.getSourceInfo();
+  final IFolder outputFolder=getProject().getFolder(sourceInfo.getOutputFolder());
+  try {
+    if (kind == CLEAN_BUILD) {
+      outputFolder.delete(true,false,monitor);
+      return null;
+    }
+ else     if (kind == FULL_BUILD)     outputFolder.delete(true,false,null);
+ else     if (kind == AUTO_BUILD || kind == INCREMENTAL_BUILD)     WorkspaceUtilities.initializeTree(outputFolder,null);
+ else     return null;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException("Cannot setup build environment: " + e);
+  }
+  Map<ICompilationUnit,Boolean> sources=new HashMap<ICompilationUnit,Boolean>();
+  final IJavaProject javaProject=JavaCore.create(getProject());
+  final List<ICompilationUnit> allUnits=JavaModelUtility.collectCompilationUnits(javaProject);
+  if (kind == FULL_BUILD) {
+    for (    final ICompilationUnit unit : allUnits) {
+      sources.put(unit,true);
+    }
+  }
+ else {
+    for (    final ICompilationUnit unit : allUnits) {
+      sources.put(unit,false);
+    }
+    IResourceDelta delta=getDelta(getProject());
+    ChangedCompilationUnitCollector collector=new ChangedCompilationUnitCollector();
+    delta.accept(collector);
+    for (    final ICompilationUnit unit : collector.changes()) {
+      sources.put(unit,true);
+    }
+  }
+  XobotBuilder.run(configFile,getProject(),sources,monitor);
+  return null;
+}

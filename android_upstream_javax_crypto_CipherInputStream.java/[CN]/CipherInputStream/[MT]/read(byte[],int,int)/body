@@ -1,0 +1,16 @@
+{
+  if (in == null) {
+    throw new NullPointerException("Underlying input stream is null");
+  }
+  int i;
+  for (i=0; i < len; ++i) {
+    int b=read();
+    if (b == -1) {
+      return (i == 0) ? -1 : i;
+    }
+    if (buf != null) {
+      buf[off + i]=(byte)b;
+    }
+  }
+  return i;
+}

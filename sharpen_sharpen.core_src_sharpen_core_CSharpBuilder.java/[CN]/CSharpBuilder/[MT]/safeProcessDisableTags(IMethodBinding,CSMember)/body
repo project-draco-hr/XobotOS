@@ -1,0 +1,5 @@
+{
+  final MethodDeclaration node=declaringNode(method);
+  if (node == null)   return;
+  processDisableTags(node,member);
+}

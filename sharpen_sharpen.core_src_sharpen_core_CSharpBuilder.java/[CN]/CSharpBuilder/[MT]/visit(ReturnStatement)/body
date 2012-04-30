@@ -1,0 +1,8 @@
+{
+  CSExpression expr;
+  IMethodBinding binding=currentMethodBinding();
+  if (binding != null)   expr=mapExpression(binding.getReturnType(),node.getExpression());
+ else   expr=mapExpression(node.getExpression());
+  addStatement(new CSReturnStatement(node.getStartPosition(),expr));
+  return false;
+}

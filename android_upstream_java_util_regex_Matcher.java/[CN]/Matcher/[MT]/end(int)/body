@@ -1,0 +1,4 @@
+{
+  ensureMatch();
+  return matchOffsets[(group * 2) + 1];
+}

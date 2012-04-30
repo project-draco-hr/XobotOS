@@ -1,0 +1,5 @@
+{
+  names.add(name);
+  types.add(type);
+  values.add(value);
+}

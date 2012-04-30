@@ -1,0 +1,7 @@
+{
+  checkOpen();
+  Arrays.checkOffsetAndCount(buf.length,offset,byteCount);
+  inRead=0;
+  inLength=byteCount;
+  setInputImpl(buf,offset,byteCount,streamHandle);
+}

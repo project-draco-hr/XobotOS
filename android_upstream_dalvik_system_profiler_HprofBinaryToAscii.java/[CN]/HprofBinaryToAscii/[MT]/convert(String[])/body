@@ -1,0 +1,31 @@
+{
+  if (args.length != 1) {
+    usage("binary hprof file argument expected");
+    return false;
+  }
+  File file=new File(args[0]);
+  if (!file.exists()) {
+    usage("file " + file + " does not exist");
+    return false;
+  }
+  if (startsWithMagic(file)) {
+    HprofData hprofData;
+    try {
+      hprofData=readHprof(file);
+    }
+ catch (    IOException e) {
+      System.out.println("Problem reading binary hprof data from " + file + ": "+ e.getMessage());
+      return false;
+    }
+    return write(hprofData);
+  }
+  HprofData hprofData;
+  try {
+    hprofData=readSnapshot(file);
+  }
+ catch (  IOException e) {
+    System.out.println("Problem reading snapshot containing binary hprof data from " + file + ": "+ e.getMessage());
+    return false;
+  }
+  return write(hprofData);
+}

@@ -1,0 +1,6 @@
+{
+  if (qName == null) {
+    qName=localName;
+  }
+  docHandler.endElement(qName);
+}

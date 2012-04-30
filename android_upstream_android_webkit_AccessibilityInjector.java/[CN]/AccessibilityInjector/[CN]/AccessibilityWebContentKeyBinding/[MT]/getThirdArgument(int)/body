@@ -1,0 +1,3 @@
+{
+  return (mActionSequence[index] & THIRD_ARGUMENT_MASK) >> THIRD_ARGUMENT_OFFSET;
+}

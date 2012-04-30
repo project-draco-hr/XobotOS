@@ -1,0 +1,6 @@
+{
+  if (null == list) {
+    return Collections.emptyList();
+  }
+  return Collections.unmodifiableList(list);
+}

@@ -1,0 +1,12 @@
+{
+  if (certPathCheckers == null || certPathCheckers.isEmpty()) {
+    if (this.certPathCheckers != null && !this.certPathCheckers.isEmpty()) {
+      this.certPathCheckers=null;
+    }
+    return;
+  }
+  this.certPathCheckers=new ArrayList<PKIXCertPathChecker>();
+  for (  PKIXCertPathChecker certPathChecker : certPathCheckers) {
+    this.certPathCheckers.add((PKIXCertPathChecker)certPathChecker.clone());
+  }
+}

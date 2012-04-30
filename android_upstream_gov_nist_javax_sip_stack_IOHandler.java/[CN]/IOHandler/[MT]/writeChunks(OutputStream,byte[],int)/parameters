@@ -1,0 +1,3 @@
+OutputStream outputStream
+byte[] bytes
+int length

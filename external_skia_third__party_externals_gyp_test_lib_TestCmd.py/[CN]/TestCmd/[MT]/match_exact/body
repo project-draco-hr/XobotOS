@@ -1,0 +1,3 @@
+def match_exact(self, lines, matches):
+    'Compare actual and expected file contents.\n        '
+    return match_exact(lines, matches)

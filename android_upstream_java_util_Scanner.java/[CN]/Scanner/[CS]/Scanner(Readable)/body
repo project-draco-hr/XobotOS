@@ -1,0 +1,7 @@
+{
+  if (src == null) {
+    throw new NullPointerException();
+  }
+  input=src;
+  initialization();
+}

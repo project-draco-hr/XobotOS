@@ -1,0 +1,33 @@
+{
+  if (this.ackSeen)   return;
+  SIPServerTransaction tr=this.getInviteTransaction();
+  if (tr != null) {
+    if (tr.getCSeq() == sipRequest.getCSeq().getSeqNumber()) {
+      acquireTimerTaskSem();
+      try {
+        if (this.timerTask != null) {
+          this.timerTask.cancel();
+          this.timerTask=null;
+        }
+      }
+  finally {
+        releaseTimerTaskSem();
+      }
+      this.ackSeen=true;
+      if (this.dialogDeleteTask != null) {
+        this.dialogDeleteTask.cancel();
+        this.dialogDeleteTask=null;
+      }
+      this.setLastAckReceived(sipRequest);
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logDebug("ackReceived for " + ((SIPTransaction)tr).getMethod());
+        this.ackLine=sipStack.getStackLogger().getLineCount();
+        this.printDebugInfo();
+      }
+      if (this.isBackToBackUserAgent) {
+        this.releaseAckSem();
+      }
+      this.setState(CONFIRMED_STATE);
+    }
+  }
+}

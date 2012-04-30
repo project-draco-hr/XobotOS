@@ -1,0 +1,9 @@
+{
+  printPrecedingComments(node);
+  writeIndented("foreach (");
+  node.variable().accept(this);
+  write(" in ");
+  node.expression().accept(this);
+  writeLine(")");
+  node.body().accept(this);
+}

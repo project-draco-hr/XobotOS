@@ -1,0 +1,6 @@
+{
+  if (!internalIsLoggable(logLevel)) {
+    return;
+  }
+  dalvikLogHandler.publish(this,androidTag,logLevel,msg);
+}

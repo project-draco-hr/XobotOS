@@ -1,0 +1,8 @@
+{
+  if (this == other)   return true;
+  if (other instanceof Address) {
+    final Address o=(Address)other;
+    return this.getURI().equals(o.getURI());
+  }
+  return false;
+}

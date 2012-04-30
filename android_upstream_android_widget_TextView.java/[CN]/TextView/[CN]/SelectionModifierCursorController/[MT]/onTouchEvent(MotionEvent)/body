@@ -1,0 +1,30 @@
+{
+switch (event.getActionMasked()) {
+case MotionEvent.ACTION_DOWN:
+    final float x=event.getX();
+  final float y=event.getY();
+mMinTouchOffset=mMaxTouchOffset=getOffsetForPosition(x,y);
+long duration=SystemClock.uptimeMillis() - mPreviousTapUpTime;
+if (duration <= ViewConfiguration.getDoubleTapTimeout() && isPositionOnText(x,y)) {
+final float deltaX=x - mPreviousTapPositionX;
+final float deltaY=y - mPreviousTapPositionY;
+final float distanceSquared=deltaX * deltaX + deltaY * deltaY;
+if (distanceSquared < mSquaredTouchSlopDistance) {
+startSelectionActionMode();
+mDiscardNextActionUp=true;
+}
+}
+mPreviousTapPositionX=x;
+mPreviousTapPositionY=y;
+break;
+case MotionEvent.ACTION_POINTER_DOWN:
+case MotionEvent.ACTION_POINTER_UP:
+if (mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT)) {
+updateMinAndMaxOffsets(event);
+}
+break;
+case MotionEvent.ACTION_UP:
+mPreviousTapUpTime=SystemClock.uptimeMillis();
+break;
+}
+}

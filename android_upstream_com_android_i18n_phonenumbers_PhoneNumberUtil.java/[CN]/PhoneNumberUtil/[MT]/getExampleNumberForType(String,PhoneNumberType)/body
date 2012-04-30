@@ -1,0 +1,16 @@
+{
+  if (!isValidRegionCode(regionCode)) {
+    LOGGER.log(Level.WARNING,"Invalid or unknown region code provided.");
+    return null;
+  }
+  PhoneNumberDesc desc=getNumberDescByType(getMetadataForRegion(regionCode),type);
+  try {
+    if (desc.hasExampleNumber()) {
+      return parse(desc.getExampleNumber(),regionCode);
+    }
+  }
+ catch (  NumberParseException e) {
+    LOGGER.log(Level.SEVERE,e.toString());
+  }
+  return null;
+}

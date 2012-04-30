@@ -1,0 +1,6 @@
+{
+  if (newFormatter == null) {
+    throw new NullPointerException();
+  }
+  this.formatter=newFormatter;
+}

@@ -1,0 +1,4 @@
+{
+  if (this.listeningPoints.size() > 0)   return (ListeningPoint)this.listeningPoints.values().iterator().next();
+ else   return null;
+}

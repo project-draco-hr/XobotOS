@@ -1,0 +1,5 @@
+{
+  RecordRouteList retval=new RecordRouteList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

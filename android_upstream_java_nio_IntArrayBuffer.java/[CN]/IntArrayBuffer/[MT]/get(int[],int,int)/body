@@ -1,0 +1,8 @@
+{
+  if (intCount > remaining()) {
+    throw new BufferUnderflowException();
+  }
+  System.arraycopy(backingArray,offset + position,dst,dstOffset,intCount);
+  position+=intCount;
+  return this;
+}

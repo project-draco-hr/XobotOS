@@ -1,0 +1,16 @@
+{
+  int numStreamTypes=AudioSystem.getNumStreamTypes();
+  VolumeStreamState[] streams=mStreamStates=new VolumeStreamState[numStreamTypes];
+  for (int i=0; i < numStreamTypes; i++) {
+    streams[i]=new VolumeStreamState(System.VOLUME_SETTINGS[STREAM_VOLUME_ALIAS[i]],i);
+  }
+  for (int i=0; i < numStreamTypes; i++) {
+    if (STREAM_VOLUME_ALIAS[i] != i) {
+      int index=rescaleIndex(streams[i].mIndex,STREAM_VOLUME_ALIAS[i],i);
+      streams[i].mIndex=streams[i].getValidIndex(index);
+      setStreamVolumeIndex(i,index);
+      index=rescaleIndex(streams[i].mLastAudibleIndex,STREAM_VOLUME_ALIAS[i],i);
+      streams[i].mLastAudibleIndex=streams[i].getValidIndex(index);
+    }
+  }
+}

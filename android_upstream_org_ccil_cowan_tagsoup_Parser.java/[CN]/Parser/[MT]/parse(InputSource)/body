@@ -1,0 +1,11 @@
+{
+  setup();
+  Reader r=getReader(input);
+  theContentHandler.startDocument();
+  theScanner.resetDocumentLocator(input.getPublicId(),input.getSystemId());
+  if (theScanner instanceof Locator) {
+    theContentHandler.setDocumentLocator((Locator)theScanner);
+  }
+  if (!(theSchema.getURI().equals("")))   theContentHandler.startPrefixMapping(theSchema.getPrefix(),theSchema.getURI());
+  theScanner.scan(r,this);
+}

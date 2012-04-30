@@ -1,0 +1,4 @@
+{
+  this(lname);
+  myClass=objclass;
+}

@@ -1,0 +1,7 @@
+'\nCopyright 2011 Google Inc.\n\nUse of this source code is governed by a BSD-style license that can be\nfound in the LICENSE file.\n'
+"\nUpdates all copyright headers within our code:\n- For files that already have a copyright header, the header is modified\n  while keeping the year and holder intact.\n- For files that don't have a copyright header, we add one with the current\n  year and default holder.\n\n@author: epoger@google.com\n"
+import os
+import sys
+import fileparser
+ALLOWED_COPYRIGHT_HOLDERS = ['Google Inc.', 'Skia', 'The Android Open Source Project']
+Main(sys.argv[1])

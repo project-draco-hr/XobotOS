@@ -1,0 +1,8 @@
+{
+  if (mAttachInfo.mHardwareRenderer != null) {
+    if (mAttachInfo.mHardwareRenderer.isEnabled()) {
+      mAttachInfo.mHardwareRenderer.destroyLayers(mView);
+    }
+    mAttachInfo.mHardwareRenderer.destroy(false);
+  }
+}

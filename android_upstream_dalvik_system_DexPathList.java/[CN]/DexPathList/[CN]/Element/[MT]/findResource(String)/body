@@ -1,0 +1,11 @@
+{
+  if ((zipFile == null) || (zipFile.getEntry(name) == null)) {
+    return null;
+  }
+  try {
+    return new URL("jar:" + file.toURL() + "!/"+ name);
+  }
+ catch (  MalformedURLException ex) {
+    throw new RuntimeException(ex);
+  }
+}

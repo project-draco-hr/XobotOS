@@ -1,0 +1,6 @@
+{
+  if ((databaseName == null) || (databaseName.equals(" ")))   throw new NullPointerException("Database name is null");
+  PUserDatabase pUserDatabase=new PUserDatabase();
+  pUserDatabase.setDatabaseName(databaseName);
+  return pUserDatabase;
+}

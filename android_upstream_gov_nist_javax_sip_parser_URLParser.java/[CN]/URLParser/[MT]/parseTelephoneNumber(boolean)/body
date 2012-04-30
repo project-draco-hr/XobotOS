@@ -1,0 +1,17 @@
+{
+  TelephoneNumber tn;
+  if (debug)   dbg_enter("telephone_subscriber");
+  lexer.selectLexer("charLexer");
+  try {
+    char c=lexer.lookAhead(0);
+    if (c == '+')     tn=global_phone_number(inBrackets);
+ else     if (Lexer.isHexDigit(c) || c == '#' || c == '*' || c == '-' || c == '.' || c == '(' || c == ')') {
+      tn=local_phone_number(inBrackets);
+    }
+ else     throw createParseException("unexpected char " + c);
+    return tn;
+  }
+  finally {
+    if (debug)     dbg_leave("telephone_subscriber");
+  }
+}

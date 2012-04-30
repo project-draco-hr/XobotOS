@@ -1,0 +1,10 @@
+{
+  if (!mAudioOn) {
+    mHistoryCur.states|=HistoryItem.STATE_AUDIO_ON_FLAG;
+    if (DEBUG_HISTORY)     Slog.v(TAG,"Audio on to: " + Integer.toHexString(mHistoryCur.states));
+    addHistoryRecordLocked(SystemClock.elapsedRealtime());
+    mAudioOn=true;
+    mAudioOnTimer.startRunningLocked(this);
+  }
+  getUidStatsLocked(uid).noteAudioTurnedOnLocked();
+}

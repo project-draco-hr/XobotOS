@@ -1,0 +1,4 @@
+{
+  node.getParent().accept(this);
+  node.getChild().accept(this);
+}

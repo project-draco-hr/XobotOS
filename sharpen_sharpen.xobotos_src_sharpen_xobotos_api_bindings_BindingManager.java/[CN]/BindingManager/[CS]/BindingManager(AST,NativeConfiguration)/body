@@ -1,0 +1,16 @@
+{
+  this._nativeConfig=config;
+  _objectType=resolveWellKnownType(ast,"java.lang.Object");
+  _classType=resolveWellKnownType(ast,"java.lang.Class");
+  _stringType=resolveWellKnownType(ast,"java.lang.String");
+  _charType=resolveWellKnownType(ast,"char");
+  _byteType=resolveWellKnownType(ast,"byte");
+  _boolType=resolveWellKnownType(ast,"boolean");
+  _intType=resolveWellKnownType(ast,"int");
+  _longType=resolveWellKnownType(ast,"long");
+  _floatType=resolveWellKnownType(ast,"float");
+  _serializableType=resolveWellKnownType(ast,"java.io.Serializable");
+  _charMarshal=new MarshalAsPrimitive(_charType,"char","char16_t");
+  _byteMarshal=new MarshalAsPrimitive(_byteType,"byte","uint8_t");
+  _boolMarshal=new MarshalAsBoolean(_boolType);
+}

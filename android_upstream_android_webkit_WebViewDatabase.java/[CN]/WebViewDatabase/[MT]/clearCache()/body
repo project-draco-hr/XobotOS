@@ -1,0 +1,6 @@
+{
+  if (!checkInitialized()) {
+    return;
+  }
+  mCacheDatabase.delete("cache",null,null);
+}

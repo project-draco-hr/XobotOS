@@ -1,0 +1,6 @@
+{
+  if (inFullScreenMode()) {
+    mFullScreenHolder.hide();
+    mFullScreenHolder=null;
+  }
+}

@@ -1,0 +1,15 @@
+{
+  if (_preserveFQNState.value())   return fullName;
+  if (!_configuration.organizeUsings())   return fullName;
+  int pos=fullName.lastIndexOf(".");
+  if (pos == -1)   return fullName;
+  if (!hasMapping(type)) {
+    pos=nameSpaceLength(type,fullName,pos);
+  }
+  String namespace=fullName.substring(0,pos);
+  registerNamespace(namespace);
+  String name=fullName.substring(pos + 1);
+  if (keepFullyQualified(name))   return fullName;
+  _compilationUnit.addUsing(new CSUsing(namespace));
+  return name;
+}

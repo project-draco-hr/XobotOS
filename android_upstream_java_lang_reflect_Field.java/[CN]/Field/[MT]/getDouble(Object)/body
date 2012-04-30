@@ -1,0 +1,3 @@
+{
+  return getDField(object,declaringClass,type,slot,flag,TYPE_DOUBLE);
+}

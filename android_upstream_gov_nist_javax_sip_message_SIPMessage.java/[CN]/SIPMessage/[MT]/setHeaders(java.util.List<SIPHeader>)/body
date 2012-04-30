@@ -1,0 +1,11 @@
+{
+  ListIterator<SIPHeader> listIterator=headers.listIterator();
+  while (listIterator.hasNext()) {
+    SIPHeader sipHeader=(SIPHeader)listIterator.next();
+    try {
+      this.attachHeader(sipHeader,false);
+    }
+ catch (    SIPDuplicateHeaderException ex) {
+    }
+  }
+}

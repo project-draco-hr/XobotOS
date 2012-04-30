@@ -1,0 +1,10 @@
+{
+  String auditReport=null;
+  String leakedDialogs=auditDialogs(activeCallIDs,leakedDialogTimer);
+  String leakedServerTransactions=auditTransactions(serverTransactionTable,leakedTransactionTimer);
+  String leakedClientTransactions=auditTransactions(clientTransactionTable,leakedTransactionTimer);
+  if (leakedDialogs != null || leakedServerTransactions != null || leakedClientTransactions != null) {
+    auditReport="SIP Stack Audit:\n" + (leakedDialogs != null ? leakedDialogs : "") + (leakedServerTransactions != null ? leakedServerTransactions : "")+ (leakedClientTransactions != null ? leakedClientTransactions : "");
+  }
+  return auditReport;
+}

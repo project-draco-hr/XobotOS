@@ -1,0 +1,8 @@
+{
+  IProject target=getTargetProject(javaProject,null);
+  if (target.exists()) {
+    target.close(null);
+    target.delete(true,true,null);
+  }
+  return target;
+}

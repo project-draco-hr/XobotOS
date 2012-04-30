@@ -1,0 +1,5 @@
+{
+  int bits=Float.floatToRawIntBits(f);
+  bits=(bits & Float.EXPONENT_MASK) >> Float.MANTISSA_BITS;
+  return bits - Float.EXPONENT_BIAS;
+}

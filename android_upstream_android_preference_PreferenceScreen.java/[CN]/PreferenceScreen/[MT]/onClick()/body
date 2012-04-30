@@ -1,0 +1,6 @@
+{
+  if (getIntent() != null || getFragment() != null || getPreferenceCount() == 0) {
+    return;
+  }
+  showDialog(null);
+}

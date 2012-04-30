@@ -1,0 +1,7 @@
+{
+  if (limit < 0 || start < 0 || start > limit || limit > text.length) {
+    throw new IllegalArgumentException();
+  }
+  Bidi bidi=new Bidi(text,start,null,0,limit - start,0);
+  return !bidi.isLeftToRight();
+}

@@ -1,0 +1,14 @@
+import sys
+import re
+input = []
+if (len(sys.argv) > 1):
+    input_file = open(sys.argv[1])
+    input = input_file.read().splitlines()
+    input_file.close()
+else:
+    input = sys.stdin.read().splitlines()
+comment_re = re.compile('\\s*#.*')
+quote_re_str = '(?P<q>[\\\'"])(.*?)(?<![^\\\\][\\\\])(?P=q)'
+quote_re = re.compile(quote_re_str)
+lines = split_double_braces(input)
+prettyprint_input(lines)

@@ -1,0 +1,10 @@
+{
+  byte[] data=new byte[16];
+synchronized (UUID.class) {
+    if (rng == null) {
+      rng=new SecureRandom();
+    }
+  }
+  rng.nextBytes(data);
+  return makeUuid(data,4);
+}

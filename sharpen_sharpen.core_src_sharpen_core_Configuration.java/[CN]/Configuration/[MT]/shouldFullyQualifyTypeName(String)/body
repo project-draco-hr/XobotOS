@@ -1,0 +1,8 @@
+{
+  for (  String s : _fullyQualifiedTypes) {
+    if (name.equals(s) || name.startsWith(s + ".")) {
+      return true;
+    }
+  }
+  return false;
+}

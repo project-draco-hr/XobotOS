@@ -1,0 +1,6 @@
+{
+  if (null == _printer) {
+    _printer=new CSharpPrinter();
+  }
+  return _printer;
+}

@@ -1,0 +1,5 @@
+{
+  if (type.isInterface() || type.isEnum())   return true;
+  if (Modifier.isStatic(type.getModifiers()))   return true;
+  return false;
+}

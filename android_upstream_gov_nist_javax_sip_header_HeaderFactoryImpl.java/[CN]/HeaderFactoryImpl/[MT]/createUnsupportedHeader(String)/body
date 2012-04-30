@@ -1,0 +1,6 @@
+{
+  if (optionTag == null)   throw new NullPointerException(optionTag);
+  Unsupported unsupported=new Unsupported();
+  unsupported.setOptionTag(optionTag);
+  return unsupported;
+}

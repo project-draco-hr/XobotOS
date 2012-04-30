@@ -1,0 +1,18 @@
+{
+  List<NamespaceTemplate> list=null;
+  if (_templateIncludeFiles != null) {
+    for (    final TemplateIncludeFile file : _templateIncludeFiles) {
+      NamespaceTemplateSection nsts=file.getContents();
+      List<NamespaceTemplate> ns=nsts.getNamespaces();
+      if (ns != null) {
+        if (list == null)         list=new ArrayList<NamespaceTemplate>();
+        list.addAll(ns);
+      }
+    }
+  }
+  if (_namespaces != null) {
+    if (list == null)     list=new ArrayList<NamespaceTemplate>();
+    list.addAll(_namespaces);
+  }
+  return unmodifiable(list);
+}

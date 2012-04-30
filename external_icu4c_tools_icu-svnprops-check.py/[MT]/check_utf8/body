@@ -1,0 +1,16 @@
+def check_utf8(file_name, base_mime_type, actual_mime_type):
+    if (actual_mime_type.find('charset=') > 0):
+        return actual_mime_type
+    f = open(file_name, 'r')
+    bytes = f.read()
+    f.close()
+    if all(((ord(byte) < 128) for byte in bytes)):
+        return base_mime_type
+    try:
+        bytes.decode('UTF-8')
+    except UnicodeDecodeError:
+        print ('warning: %s: not ASCII, not UTF-8' % file_name)
+        return base_mime_type
+    if (ord(bytes[0]) != 239):
+        print ('UTF-8 file with no BOM: ' + file_name)
+    return (base_mime_type + '\\;charset=utf-8')

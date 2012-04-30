@@ -1,0 +1,15 @@
+{
+  if (isTerminated()) {
+    try {
+      this.cancel();
+    }
+ catch (    IllegalStateException ex) {
+      if (!sipStack.isAlive())       return;
+    }
+    TimerTask myTimer=new LingerTimer();
+    sipStack.getTimer().schedule(myTimer,SIPTransactionStack.CONNECTION_LINGER_TIME * 1000);
+  }
+ else {
+    fireTimer();
+  }
+}

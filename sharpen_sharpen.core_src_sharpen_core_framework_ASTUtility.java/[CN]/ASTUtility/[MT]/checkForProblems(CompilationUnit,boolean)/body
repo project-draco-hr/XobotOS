@@ -1,0 +1,5 @@
+{
+  if (dumpProblemsToStdErr(ast) && throwOnError) {
+    throw new RuntimeException("'" + compilationUnitPath(ast) + "' has errors, check stderr for details.");
+  }
+}

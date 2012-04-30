@@ -1,0 +1,7 @@
+def _SdkPath(self):
+    sdk_root = 'macosx10.5'
+    if ('SDKROOT' in self._Settings()):
+        sdk_root = self._Settings()['SDKROOT']
+    if sdk_root.startswith('macosx'):
+        sdk_root = ('MacOSX' + sdk_root[len('macosx'):])
+    return ('/Developer/SDKs/%s.sdk' % sdk_root)

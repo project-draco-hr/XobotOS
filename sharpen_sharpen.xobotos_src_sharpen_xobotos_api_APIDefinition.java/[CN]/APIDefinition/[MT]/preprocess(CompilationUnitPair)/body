@@ -1,0 +1,19 @@
+{
+  final String fullName=getUnitName(pair.source);
+  final ByRef<IOutputProvider> defaultOutput=new ByRef<IOutputProvider>(null);
+  final ByRef<CompilationUnitTemplate> unitTemplate=new ByRef<CompilationUnitTemplate>(CompilationUnitTemplate.DEFAULT);
+  TemplateVisitor visitor=new TemplateVisitor(){
+    @Override public void accept(    NamespaceTemplate template){
+      if (defaultOutput.value != null)       return;
+      if (template.getOutputType() != null)       defaultOutput.value=template;
+    }
+    @Override public void accept(    CompilationUnitTemplate template){
+      unitTemplate.value=template;
+    }
+  }
+;
+  for (  final NamespaceTemplate def : getNamespaces()) {
+    if (def.visit(visitor,fullName,VisitMode.FirstMatch))     break;
+  }
+  return my(BindingManager.class).preprocess(pair,unitTemplate.value,fullName,defaultOutput.value);
+}

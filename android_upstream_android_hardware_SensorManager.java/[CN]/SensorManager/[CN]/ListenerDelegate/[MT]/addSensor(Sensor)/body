@@ -1,0 +1,4 @@
+{
+  mSensors.put(sensor.getHandle(),true);
+  mSensorList.add(sensor);
+}

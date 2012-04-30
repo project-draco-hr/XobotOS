@@ -1,0 +1,53 @@
+{
+  if (name != null && value != null && !isFlagParameter) {
+    if (GenericObject.isMySubclass(value.getClass())) {
+      GenericObject gv=(GenericObject)value;
+      buffer.append(name).append(separator).append(quotes);
+      gv.encode(buffer);
+      buffer.append(quotes);
+      return buffer;
+    }
+ else     if (GenericObjectList.isMySubclass(value.getClass())) {
+      GenericObjectList gvlist=(GenericObjectList)value;
+      buffer.append(name).append(separator).append(gvlist.encode());
+      return buffer;
+    }
+ else     if (value.toString().length() == 0) {
+      if (this.isQuotedString) {
+        buffer.append(name).append(separator).append(quotes).append(quotes);
+        return buffer;
+      }
+ else {
+        buffer.append(name).append(separator);
+        return buffer;
+      }
+    }
+ else {
+      buffer.append(name).append(separator).append(quotes).append(value.toString()).append(quotes);
+      return buffer;
+    }
+  }
+ else   if (name == null && value != null) {
+    if (GenericObject.isMySubclass(value.getClass())) {
+      GenericObject gv=(GenericObject)value;
+      gv.encode(buffer);
+      return buffer;
+    }
+ else     if (GenericObjectList.isMySubclass(value.getClass())) {
+      GenericObjectList gvlist=(GenericObjectList)value;
+      buffer.append(gvlist.encode());
+      return buffer;
+    }
+ else {
+      buffer.append(quotes).append(value.toString()).append(quotes);
+      return buffer;
+    }
+  }
+ else   if (name != null && (value == null || isFlagParameter)) {
+    buffer.append(name);
+    return buffer;
+  }
+ else {
+    return buffer;
+  }
+}

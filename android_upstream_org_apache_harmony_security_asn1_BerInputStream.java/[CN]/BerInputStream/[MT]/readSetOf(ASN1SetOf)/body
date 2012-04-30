@@ -1,0 +1,6 @@
+{
+  if (tag != ASN1Constants.TAG_C_SETOF) {
+    throw expected("setOf");
+  }
+  decodeValueCollection(setOf);
+}

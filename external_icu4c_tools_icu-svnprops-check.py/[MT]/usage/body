@@ -1,0 +1,2 @@
+def usage():
+    print (('usage: ' + sys.argv[0]) + ' [-f | --fix] [-h | --help]')

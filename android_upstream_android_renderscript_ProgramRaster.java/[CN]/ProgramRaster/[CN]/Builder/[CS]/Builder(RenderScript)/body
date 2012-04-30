@@ -1,0 +1,5 @@
+{
+  mRS=rs;
+  mPointSprite=false;
+  mCullMode=CullMode.BACK;
+}

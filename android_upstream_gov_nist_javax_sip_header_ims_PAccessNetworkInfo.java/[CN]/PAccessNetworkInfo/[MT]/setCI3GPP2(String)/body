@@ -1,0 +1,4 @@
+{
+  if (ci3Gpp2 == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setCI3GPP2(), the ci3Gpp2 parameter is null.");
+  setParameter(ParameterNamesIms.CI_3GPP2,ci3Gpp2);
+}

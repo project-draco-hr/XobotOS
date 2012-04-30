@@ -1,0 +1,7 @@
+{
+  String encoding=System.getProperty("file.encoding","UTF-8");
+  if (!encoding.equals("UTF-8")) {
+    throw new UnsupportedOperationException("Cannot localize " + encoding);
+  }
+  return stream;
+}

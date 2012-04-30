@@ -1,0 +1,13 @@
+{
+  final Cursor cursor=mCursor;
+  if (cursor == null) {
+    return;
+  }
+  mDirty=false;
+  if (!cursor.requery()) {
+    return;
+  }
+  readCursorIntoCache(cursor);
+  setChanged();
+  notifyObservers();
+}

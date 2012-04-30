@@ -1,0 +1,5 @@
+{
+  final CSBlock block=new CSBlock();
+  processBlock(node,node.getBody(),block);
+  return block;
+}

@@ -1,0 +1,7 @@
+{
+  if (mDrawable != null && mColorMod) {
+    mDrawable=mDrawable.mutate();
+    mDrawable.setColorFilter(mColorFilter);
+    mDrawable.setAlpha(mAlpha * mViewAlphaScale >> 8);
+  }
+}

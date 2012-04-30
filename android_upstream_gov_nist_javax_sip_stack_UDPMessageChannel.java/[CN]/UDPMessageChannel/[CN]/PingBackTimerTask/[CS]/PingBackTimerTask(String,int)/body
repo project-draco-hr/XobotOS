@@ -1,0 +1,5 @@
+{
+  this.ipAddress=ipAddress;
+  this.port=port;
+  pingBackRecord.put(ipAddress + ":" + port,this);
+}

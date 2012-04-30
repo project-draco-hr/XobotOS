@@ -1,0 +1,6 @@
+{
+  if (start < 0 || end > count || start > end) {
+    throw startEndAndLength(start,end);
+  }
+  return Character.codePointCount(value,offset + start,end - start);
+}

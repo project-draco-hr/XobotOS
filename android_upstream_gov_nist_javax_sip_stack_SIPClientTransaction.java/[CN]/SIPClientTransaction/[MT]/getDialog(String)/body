@@ -1,0 +1,4 @@
+{
+  SIPDialog retval=(SIPDialog)this.sipDialogs.get(dialogId);
+  return retval;
+}

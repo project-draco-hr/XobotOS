@@ -1,0 +1,13 @@
+{
+  if (number.getCountryCode() != getCountryCodeForRegion(regionCode)) {
+    return false;
+  }
+  PhoneMetadata metadata=getMetadataForRegion(regionCode);
+  PhoneNumberDesc generalNumDesc=metadata.getGeneralDesc();
+  String nationalSignificantNumber=getNationalSignificantNumber(number);
+  if (!generalNumDesc.hasNationalNumberPattern()) {
+    int numberLength=nationalSignificantNumber.length();
+    return numberLength > MIN_LENGTH_FOR_NSN && numberLength <= MAX_LENGTH_FOR_NSN;
+  }
+  return getNumberTypeHelper(nationalSignificantNumber,metadata) != PhoneNumberType.UNKNOWN;
+}

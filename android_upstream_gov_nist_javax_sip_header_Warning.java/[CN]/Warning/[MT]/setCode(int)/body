@@ -1,0 +1,6 @@
+{
+  if (code > 99 && code < 1000) {
+    this.code=code;
+  }
+ else   throw new InvalidArgumentException("Code parameter in the Warning header is invalid: code=" + code);
+}

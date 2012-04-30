@@ -1,0 +1,9 @@
+{
+  try {
+    ctx.terminate();
+    Thread.currentThread().interrupt();
+  }
+ catch (  ObjectInUseException e) {
+    sipStack.getStackLogger().logError("unexpected error",e);
+  }
+}

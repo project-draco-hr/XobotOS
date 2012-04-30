@@ -1,0 +1,4 @@
+def WriteList(fp, list, prefix='', separator=',\n    ', preamble=None, postamble=None):
+    fp.write((preamble or ''))
+    fp.write((separator or ' ').join([(prefix + l) for l in list]))
+    fp.write((postamble or ''))

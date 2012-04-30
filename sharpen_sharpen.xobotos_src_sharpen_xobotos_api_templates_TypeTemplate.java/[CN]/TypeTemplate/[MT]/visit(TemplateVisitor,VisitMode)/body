@@ -1,0 +1,7 @@
+{
+  super.visit(visitor,mode);
+  List<AbstractMemberTemplate<?,?>> list;
+  if (mode == VisitMode.AllTypes)   list=getAllTypes();
+ else   list=getAllMembers();
+  for (  final AbstractMemberTemplate<?,?> template : list)   template.visit(visitor,mode);
+}

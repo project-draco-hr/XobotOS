@@ -1,0 +1,8 @@
+{
+  this.isRunning=true;
+  Thread thread=new Thread(this);
+  thread.setDaemon(true);
+  thread.setName("UDPMessageProcessorThread");
+  thread.setPriority(Thread.MAX_PRIORITY);
+  thread.start();
+}

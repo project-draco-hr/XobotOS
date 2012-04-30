@@ -1,0 +1,9 @@
+{
+  if ((offset | charCount) < 0 || charCount > data.length - offset) {
+    throw failedBoundsCheck(data.length,offset,charCount);
+  }
+  this.offset=0;
+  this.value=new char[charCount];
+  this.count=charCount;
+  System.arraycopy(data,offset,value,0,count);
+}

@@ -1,0 +1,3 @@
+{
+  return doAccess(X_OK);
+}

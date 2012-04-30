@@ -1,0 +1,77 @@
+{
+  AsyncResult ar;
+switch (msg.what) {
+case EVENT_NEW_SMS:
+    if (false) {
+      Log.d(TAG,"New SMS Message Received");
+    }
+  SmsMessage sms;
+ar=(AsyncResult)msg.obj;
+if (ar.exception != null) {
+Log.e(TAG,"Exception processing incoming SMS. Exception:" + ar.exception);
+return;
+}
+sms=(SmsMessage)ar.result;
+try {
+int result=dispatchMessage(sms.mWrappedSmsMessage);
+if (result != Activity.RESULT_OK) {
+boolean handled=(result == Intents.RESULT_SMS_HANDLED);
+notifyAndAcknowledgeLastIncomingSms(handled,result,null);
+}
+}
+ catch (RuntimeException ex) {
+Log.e(TAG,"Exception dispatching message",ex);
+notifyAndAcknowledgeLastIncomingSms(false,Intents.RESULT_SMS_GENERIC_ERROR,null);
+}
+break;
+case EVENT_SEND_SMS_COMPLETE:
+handleSendComplete((AsyncResult)msg.obj);
+break;
+case EVENT_SEND_RETRY:
+sendSms((SmsTracker)msg.obj);
+break;
+case EVENT_POST_ALERT:
+handleReachSentLimit((SmsTracker)(msg.obj));
+break;
+case EVENT_ALERT_TIMEOUT:
+((AlertDialog)(msg.obj)).dismiss();
+msg.obj=null;
+if (mSTrackers.isEmpty() == false) {
+try {
+SmsTracker sTracker=mSTrackers.remove(0);
+sTracker.mSentIntent.send(RESULT_ERROR_LIMIT_EXCEEDED);
+}
+ catch (CanceledException ex) {
+Log.e(TAG,"failed to send back RESULT_ERROR_LIMIT_EXCEEDED");
+}
+}
+if (false) {
+Log.d(TAG,"EVENT_ALERT_TIMEOUT, message stop sending");
+}
+break;
+case EVENT_SEND_CONFIRMED_SMS:
+if (mSTrackers.isEmpty() == false) {
+SmsTracker sTracker=mSTrackers.remove(mSTrackers.size() - 1);
+if (sTracker.isMultipart()) {
+sendMultipartSms(sTracker);
+}
+ else {
+sendSms(sTracker);
+}
+removeMessages(EVENT_ALERT_TIMEOUT,msg.obj);
+}
+break;
+case EVENT_STOP_SENDING:
+if (mSTrackers.isEmpty() == false) {
+try {
+SmsTracker sTracker=mSTrackers.remove(mSTrackers.size() - 1);
+sTracker.mSentIntent.send(RESULT_ERROR_LIMIT_EXCEEDED);
+}
+ catch (CanceledException ex) {
+Log.e(TAG,"failed to send back RESULT_ERROR_LIMIT_EXCEEDED");
+}
+removeMessages(EVENT_ALERT_TIMEOUT,msg.obj);
+}
+break;
+}
+}

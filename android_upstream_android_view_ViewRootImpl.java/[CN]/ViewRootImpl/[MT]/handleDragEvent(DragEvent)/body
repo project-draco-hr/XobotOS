@@ -1,0 +1,57 @@
+{
+  if (mView != null && mAdded) {
+    final int what=event.mAction;
+    if (what == DragEvent.ACTION_DRAG_EXITED) {
+      mView.dispatchDragEvent(event);
+    }
+ else {
+      if (what == DragEvent.ACTION_DRAG_STARTED) {
+        mCurrentDragView=null;
+        mDragDescription=event.mClipDescription;
+      }
+ else {
+        event.mClipDescription=mDragDescription;
+      }
+      if ((what == DragEvent.ACTION_DRAG_LOCATION) || (what == DragEvent.ACTION_DROP)) {
+        mDragPoint.set(event.mX,event.mY);
+        if (mTranslator != null) {
+          mTranslator.translatePointInScreenToAppWindow(mDragPoint);
+        }
+        if (mCurScrollY != 0) {
+          mDragPoint.offset(0,mCurScrollY);
+        }
+        event.mX=mDragPoint.x;
+        event.mY=mDragPoint.y;
+      }
+      final View prevDragView=mCurrentDragView;
+      boolean result=mView.dispatchDragEvent(event);
+      if (prevDragView != mCurrentDragView) {
+        try {
+          if (prevDragView != null) {
+            sWindowSession.dragRecipientExited(mWindow);
+          }
+          if (mCurrentDragView != null) {
+            sWindowSession.dragRecipientEntered(mWindow);
+          }
+        }
+ catch (        RemoteException e) {
+          Slog.e(TAG,"Unable to note drag target change");
+        }
+      }
+      if (what == DragEvent.ACTION_DROP) {
+        mDragDescription=null;
+        try {
+          Log.i(TAG,"Reporting drop result: " + result);
+          sWindowSession.reportDropResult(mWindow,result);
+        }
+ catch (        RemoteException e) {
+          Log.e(TAG,"Unable to report drop result");
+        }
+      }
+      if (what == DragEvent.ACTION_DRAG_ENDED) {
+        setLocalDragState(null);
+      }
+    }
+  }
+  event.recycle();
+}

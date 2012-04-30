@@ -1,0 +1,5 @@
+def _InstallableTargetInstallPath(self):
+    'Returns the location of the final output for an installable target.'
+    if ((self.type == 'shared_library') and (self.flavor != 'mac')):
+        return ('$(builddir)/lib.%s/%s' % (self.toolset, self.alias))
+    return ('$(builddir)/' + self.alias)

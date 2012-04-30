@@ -1,0 +1,5 @@
+{
+  CompilationUnitBinding binding=_template.getBinding();
+  if (binding == null)   return false;
+  return binding.autoRenameFields();
+}

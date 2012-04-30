@@ -1,0 +1,3 @@
+{
+  ((Editable)mTextView.getText()).removeSpan(mRange);
+}

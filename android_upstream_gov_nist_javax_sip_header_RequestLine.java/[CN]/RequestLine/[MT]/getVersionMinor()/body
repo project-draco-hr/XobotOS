@@ -1,0 +1,13 @@
+{
+  if (sipVersion == null)   return null;
+  String minor=null;
+  boolean dot=false;
+  for (int i=0; i < sipVersion.length(); i++) {
+    if (dot) {
+      if (minor == null)       minor="" + sipVersion.charAt(i);
+ else       minor+=sipVersion.charAt(i);
+    }
+    if (sipVersion.charAt(i) == '.')     dot=true;
+  }
+  return minor;
+}

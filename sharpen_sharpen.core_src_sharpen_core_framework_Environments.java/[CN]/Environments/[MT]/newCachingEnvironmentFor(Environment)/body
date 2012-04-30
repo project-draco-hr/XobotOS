@@ -1,0 +1,18 @@
+{
+  return new Environment(){
+    private final Map<Class<?>,Object> _bindings=new HashMap<Class<?>,Object>();
+    public <T>T provide(    Class<T> service){
+      final Object existing=_bindings.get(service);
+      if (null != existing) {
+        return service.cast(existing);
+      }
+      final T binding=environment.provide(service);
+      if (null == binding) {
+        return null;
+      }
+      _bindings.put(service,binding);
+      return binding;
+    }
+  }
+;
+}

@@ -1,0 +1,23 @@
+{
+  final Statement freeArray;
+  if (TRACK_ALLOCATIONS) {
+    freeArray=new ExpressionStatement(new MethodInvocation(new TemplateFunctionReference("MarshalHelper::freeArray",getNativeType()),getReference(obj),_lengthMember.getReference(obj)));
+  }
+ else {
+    freeArray=new ArrayDestructorInvocation(getNativeType());
+  }
+  if (isBlittable() || !isClass())   return freeArray;
+  Block block=new Block();
+  LocalVariable i=new LocalVariable(new TypeReference("uint32_t"),"i");
+  Expression init=new NumberLiteralExpression(0);
+  Expression iRef=new VariableReference(i);
+  Expression check=new BinaryOperator("<",iRef,_lengthMember.getReference(obj));
+  Expression update=new PostfixIncrement(i);
+  ForStatement forStm=new ForStatement(i,init,check,update);
+  Expression srcIdx=new IndexedExpression(getReference(obj),iRef);
+  if (isByRef())   forStm.getBody().addStatement(new MethodInvocation(getHelper().DESTRUCTOR.expr(),srcIdx));
+ else   forStm.getBody().addStatement(new MethodInvocation(getHelper().FREE_MEMBERS.expr(),srcIdx));
+  block.addStatement(forStm);
+  block.addStatement(freeArray);
+  return block;
+}

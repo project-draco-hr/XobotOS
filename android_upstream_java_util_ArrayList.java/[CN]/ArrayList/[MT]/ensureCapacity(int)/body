@@ -1,0 +1,9 @@
+{
+  Object[] a=array;
+  if (a.length < minimumCapacity) {
+    Object[] newArray=new Object[minimumCapacity];
+    System.arraycopy(a,0,newArray,0,size);
+    array=newArray;
+    modCount++;
+  }
+}

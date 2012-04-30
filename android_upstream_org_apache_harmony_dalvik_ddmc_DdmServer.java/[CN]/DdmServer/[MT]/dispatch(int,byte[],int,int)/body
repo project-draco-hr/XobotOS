@@ -1,0 +1,22 @@
+{
+  ChunkHandler handler;
+synchronized (mHandlerMap) {
+    while (!mRegistrationComplete && !mRegistrationTimedOut) {
+      try {
+        mHandlerMap.wait(1000);
+      }
+ catch (      InterruptedException ie) {
+        continue;
+      }
+      if (!mRegistrationComplete) {
+        mRegistrationTimedOut=true;
+      }
+    }
+    handler=mHandlerMap.get(type);
+  }
+  if (handler == null) {
+    return null;
+  }
+  Chunk chunk=new Chunk(type,data,offset,length);
+  return handler.handleChunk(chunk);
+}

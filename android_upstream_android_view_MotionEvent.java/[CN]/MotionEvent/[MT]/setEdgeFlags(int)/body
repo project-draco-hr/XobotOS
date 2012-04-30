@@ -1,0 +1,3 @@
+{
+  nativeSetEdgeFlags(mNativePtr,flags);
+}

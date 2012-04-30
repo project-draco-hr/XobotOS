@@ -1,0 +1,6 @@
+{
+  int hashCode=address == null ? 0 : -address.hashCode();
+  hashCode+=broadcastAddress == null ? 0 : broadcastAddress.hashCode();
+  hashCode+=prefixLength;
+  return hashCode;
+}

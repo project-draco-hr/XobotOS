@@ -1,0 +1,43 @@
+{
+  try {
+    char nextChar=lookAhead(0);
+    if (isAlphaDigit(nextChar)) {
+      return true;
+    }
+ else {
+switch (nextChar) {
+case '_':
+case '+':
+case '-':
+case '!':
+case '`':
+case '\'':
+case '.':
+case '/':
+case '}':
+case '{':
+case ']':
+case '[':
+case '^':
+case '|':
+case '~':
+case '%':
+case '#':
+case '@':
+case '$':
+case ':':
+case ';':
+case '?':
+case '\"':
+case '*':
+case '=':
+        return true;
+default :
+      return false;
+  }
+}
+}
+ catch (ParseException ex) {
+return false;
+}
+}

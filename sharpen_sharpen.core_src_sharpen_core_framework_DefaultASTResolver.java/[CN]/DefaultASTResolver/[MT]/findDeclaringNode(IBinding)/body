@@ -1,0 +1,7 @@
+{
+  for (  CompilationUnitPair pair : _pairs) {
+    ASTNode node=pair.ast.findDeclaringNode(binding);
+    if (null != node)     return node;
+  }
+  return null;
+}

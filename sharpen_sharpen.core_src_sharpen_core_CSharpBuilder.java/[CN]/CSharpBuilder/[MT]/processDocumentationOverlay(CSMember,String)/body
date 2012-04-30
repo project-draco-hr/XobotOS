@@ -1,0 +1,7 @@
+{
+  if (null == overlay) {
+    return false;
+  }
+  node.addDoc(new CSDocTextOverlay(overlay.trim()));
+  return true;
+}

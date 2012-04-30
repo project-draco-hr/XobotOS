@@ -1,0 +1,5 @@
+{
+  AlertInfoList retval=new AlertInfoList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

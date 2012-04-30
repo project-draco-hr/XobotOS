@@ -1,0 +1,3 @@
+{
+  return (RouteList)getSIPHeaderListLowerCase(ROUTE_LOWERCASE);
+}

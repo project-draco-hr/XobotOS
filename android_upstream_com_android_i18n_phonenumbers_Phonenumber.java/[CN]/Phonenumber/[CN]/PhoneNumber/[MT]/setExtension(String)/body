@@ -1,0 +1,8 @@
+{
+  if (value == null) {
+    throw new NullPointerException();
+  }
+  hasExtension=true;
+  extension_=value;
+  return this;
+}

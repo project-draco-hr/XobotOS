@@ -1,0 +1,12 @@
+{
+  _writer.writeLine("#ifndef " + node.getConditional());
+  _writer.writeLine("#define " + node.getConditional() + " 1");
+  _writer.writeLine();
+  node.getIncludeSection().accept(this);
+  _writer.writeLine();
+  visitList(node.getMembers());
+  _writer.writeLine();
+  visitList(node.getMethods());
+  _writer.writeLine();
+  _writer.writeLine("#endif");
+}

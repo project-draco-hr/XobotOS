@@ -1,0 +1,7 @@
+{
+  IProjectDescription desc=_project.getDescription();
+  ICommand[] commands=desc.getBuildSpec();
+  if (containsBuilderCommand(commands))   return;
+  desc.setBuildSpec(append(commands,newBuilderCommand(desc)));
+  _project.setDescription(desc,null);
+}

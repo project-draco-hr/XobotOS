@@ -1,0 +1,6 @@
+{
+  if (isBlockInsideBlock(node)) {
+    _currentBlock=(CSBlock)_currentBlock.parent();
+  }
+  super.endVisit(node);
+}

@@ -1,0 +1,8 @@
+{
+  try {
+    return mPM.removeUser(id);
+  }
+ catch (  RemoteException e) {
+    return false;
+  }
+}

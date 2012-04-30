@@ -1,0 +1,4 @@
+{
+  mLoadListener=loadlistener;
+  mContext=loadlistener.getContext();
+}

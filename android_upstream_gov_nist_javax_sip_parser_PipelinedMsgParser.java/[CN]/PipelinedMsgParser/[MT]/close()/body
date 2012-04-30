@@ -1,0 +1,7 @@
+{
+  try {
+    this.rawInputStream.close();
+  }
+ catch (  IOException ex) {
+  }
+}

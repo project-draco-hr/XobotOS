@@ -1,0 +1,128 @@
+{
+  if (!mHaveFrame) {
+    return;
+  }
+  ViewRootImpl viewRoot=(ViewRootImpl)getRootView().getParent();
+  if (viewRoot != null) {
+    mTranslator=viewRoot.mTranslator;
+  }
+  if (mTranslator != null) {
+    mSurface.setCompatibilityTranslator(mTranslator);
+  }
+  int myWidth=mRequestedWidth;
+  if (myWidth <= 0)   myWidth=getWidth();
+  int myHeight=mRequestedHeight;
+  if (myHeight <= 0)   myHeight=getHeight();
+  getLocationInWindow(mLocation);
+  final boolean creating=mWindow == null;
+  final boolean formatChanged=mFormat != mRequestedFormat;
+  final boolean sizeChanged=mWidth != myWidth || mHeight != myHeight;
+  final boolean visibleChanged=mVisible != mRequestedVisible || mNewSurfaceNeeded;
+  if (force || creating || formatChanged|| sizeChanged|| visibleChanged|| mLeft != mLocation[0] || mTop != mLocation[1] || mUpdateWindowNeeded || mReportDrawNeeded || redrawNeeded) {
+    if (localLOGV)     Log.i(TAG,"Changes: creating=" + creating + " format="+ formatChanged+ " size="+ sizeChanged+ " visible="+ visibleChanged+ " left="+ (mLeft != mLocation[0])+ " top="+ (mTop != mLocation[1]));
+    try {
+      final boolean visible=mVisible=mRequestedVisible;
+      mLeft=mLocation[0];
+      mTop=mLocation[1];
+      mWidth=myWidth;
+      mHeight=myHeight;
+      mFormat=mRequestedFormat;
+      mLayout.x=mLeft;
+      mLayout.y=mTop;
+      mLayout.width=getWidth();
+      mLayout.height=getHeight();
+      if (mTranslator != null) {
+        mTranslator.translateLayoutParamsInAppWindowToScreen(mLayout);
+      }
+      mLayout.format=mRequestedFormat;
+      mLayout.flags|=WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS| WindowManager.LayoutParams.FLAG_SCALED| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE| WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+      if (!getContext().getResources().getCompatibilityInfo().supportsScreen()) {
+        mLayout.flags|=WindowManager.LayoutParams.FLAG_COMPATIBLE_WINDOW;
+      }
+      if (mWindow == null) {
+        mWindow=new MyWindow(this);
+        mLayout.type=mWindowType;
+        mLayout.gravity=Gravity.LEFT | Gravity.TOP;
+        mSession.addWithoutInputChannel(mWindow,mWindow.mSeq,mLayout,mVisible ? VISIBLE : GONE,mContentInsets);
+      }
+      if (visibleChanged && (!visible || mNewSurfaceNeeded)) {
+        reportSurfaceDestroyed();
+      }
+      mNewSurfaceNeeded=false;
+      boolean realSizeChanged;
+      boolean reportDrawNeeded;
+      mSurfaceLock.lock();
+      try {
+        mUpdateWindowNeeded=false;
+        reportDrawNeeded=mReportDrawNeeded;
+        mReportDrawNeeded=false;
+        mDrawingStopped=!visible;
+        final int relayoutResult=mSession.relayout(mWindow,mWindow.mSeq,mLayout,mWidth,mHeight,visible ? VISIBLE : GONE,false,mWinFrame,mContentInsets,mVisibleInsets,mConfiguration,mSurface);
+        if ((relayoutResult & WindowManagerImpl.RELAYOUT_FIRST_TIME) != 0) {
+          mReportDrawNeeded=true;
+        }
+        if (localLOGV)         Log.i(TAG,"New surface: " + mSurface + ", vis="+ visible+ ", frame="+ mWinFrame);
+        mSurfaceFrame.left=0;
+        mSurfaceFrame.top=0;
+        if (mTranslator == null) {
+          mSurfaceFrame.right=mWinFrame.width();
+          mSurfaceFrame.bottom=mWinFrame.height();
+        }
+ else {
+          float appInvertedScale=mTranslator.applicationInvertedScale;
+          mSurfaceFrame.right=(int)(mWinFrame.width() * appInvertedScale + 0.5f);
+          mSurfaceFrame.bottom=(int)(mWinFrame.height() * appInvertedScale + 0.5f);
+        }
+        final int surfaceWidth=mSurfaceFrame.right;
+        final int surfaceHeight=mSurfaceFrame.bottom;
+        realSizeChanged=mLastSurfaceWidth != surfaceWidth || mLastSurfaceHeight != surfaceHeight;
+        mLastSurfaceWidth=surfaceWidth;
+        mLastSurfaceHeight=surfaceHeight;
+      }
+  finally {
+        mSurfaceLock.unlock();
+      }
+      try {
+        redrawNeeded|=creating | reportDrawNeeded;
+        if (visible) {
+          mDestroyReportNeeded=true;
+          SurfaceHolder.Callback callbacks[];
+synchronized (mCallbacks) {
+            callbacks=new SurfaceHolder.Callback[mCallbacks.size()];
+            mCallbacks.toArray(callbacks);
+          }
+          if (visibleChanged) {
+            mIsCreating=true;
+            for (            SurfaceHolder.Callback c : callbacks) {
+              c.surfaceCreated(mSurfaceHolder);
+            }
+          }
+          if (creating || formatChanged || sizeChanged|| visibleChanged|| realSizeChanged) {
+            for (            SurfaceHolder.Callback c : callbacks) {
+              c.surfaceChanged(mSurfaceHolder,mFormat,myWidth,myHeight);
+            }
+          }
+          if (redrawNeeded) {
+            for (            SurfaceHolder.Callback c : callbacks) {
+              if (c instanceof SurfaceHolder.Callback2) {
+                ((SurfaceHolder.Callback2)c).surfaceRedrawNeeded(mSurfaceHolder);
+              }
+            }
+          }
+        }
+ else {
+          mSurface.release();
+        }
+      }
+  finally {
+        mIsCreating=false;
+        if (redrawNeeded) {
+          mSession.finishDrawing(mWindow);
+        }
+      }
+    }
+ catch (    RemoteException ex) {
+    }
+    if (localLOGV)     Log.v(TAG,"Layout: x=" + mLayout.x + " y="+ mLayout.y+ " w="+ mLayout.width+ " h="+ mLayout.height+ ", frame="+ mSurfaceFrame);
+  }
+}

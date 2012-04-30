@@ -1,0 +1,18 @@
+{
+  objectOutput.writeInt(prefixSizeInBytes);
+  objectOutput.writeInt(descIndexSizeInBytes);
+  int sizeOfLengths=possibleLengths.size();
+  objectOutput.writeInt(sizeOfLengths);
+  for (  Integer length : possibleLengths) {
+    objectOutput.writeInt(length);
+  }
+  objectOutput.writeInt(descriptionPool.length);
+  for (  String description : descriptionPool) {
+    objectOutput.writeUTF(description);
+  }
+  objectOutput.writeInt(numOfEntries);
+  for (int i=0; i < numOfEntries; i++) {
+    writeExternalWord(objectOutput,prefixSizeInBytes,phoneNumberPrefixes,i);
+    writeExternalWord(objectOutput,descIndexSizeInBytes,descriptionIndexes,i);
+  }
+}

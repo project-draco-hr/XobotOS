@@ -1,0 +1,11 @@
+{
+  if (accountType == null)   throw new IllegalArgumentException("accountType is null");
+  try {
+    if (authToken != null) {
+      mService.invalidateAuthToken(accountType,authToken);
+    }
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException(e);
+  }
+}

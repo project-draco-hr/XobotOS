@@ -1,0 +1,26 @@
+{
+  final SyncContext syncContextClient=new SyncContext(syncContext);
+  boolean alreadyInProgress;
+  final Account threadsKey=toSyncKey(account);
+synchronized (mSyncThreadLock) {
+    if (!mSyncThreads.containsKey(threadsKey)) {
+      if (mAutoInitialize && extras != null && extras.getBoolean(ContentResolver.SYNC_EXTRAS_INITIALIZE,false)) {
+        if (ContentResolver.getIsSyncable(account,authority) < 0) {
+          ContentResolver.setIsSyncable(account,authority,1);
+        }
+        syncContextClient.onFinished(new SyncResult());
+        return;
+      }
+      SyncThread syncThread=new SyncThread("SyncAdapterThread-" + mNumSyncStarts.incrementAndGet(),syncContextClient,authority,account,extras);
+      mSyncThreads.put(threadsKey,syncThread);
+      syncThread.start();
+      alreadyInProgress=false;
+    }
+ else {
+      alreadyInProgress=true;
+    }
+  }
+  if (alreadyInProgress) {
+    syncContextClient.onFinished(SyncResult.ALREADY_IN_PROGRESS);
+  }
+}

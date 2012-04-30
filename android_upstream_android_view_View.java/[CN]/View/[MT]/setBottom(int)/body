@@ -1,0 +1,34 @@
+{
+  if (bottom != mBottom) {
+    updateMatrix();
+    final boolean matrixIsIdentity=mTransformationInfo == null || mTransformationInfo.mMatrixIsIdentity;
+    if (matrixIsIdentity) {
+      if (mAttachInfo != null) {
+        int maxBottom;
+        if (bottom < mBottom) {
+          maxBottom=mBottom;
+        }
+ else {
+          maxBottom=bottom;
+        }
+        invalidate(0,0,mRight - mLeft,maxBottom - mTop);
+      }
+    }
+ else {
+      invalidate(true);
+    }
+    int width=mRight - mLeft;
+    int oldHeight=mBottom - mTop;
+    mBottom=bottom;
+    onSizeChanged(width,mBottom - mTop,width,oldHeight);
+    if (!matrixIsIdentity) {
+      if ((mPrivateFlags & PIVOT_EXPLICITLY_SET) == 0) {
+        mTransformationInfo.mMatrixDirty=true;
+      }
+      mPrivateFlags|=DRAWN;
+      invalidate(true);
+    }
+    mBackgroundSizeChanged=true;
+    invalidateParentIfNeeded();
+  }
+}

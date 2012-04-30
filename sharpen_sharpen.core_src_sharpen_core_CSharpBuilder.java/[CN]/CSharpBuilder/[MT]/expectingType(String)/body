@@ -1,0 +1,4 @@
+{
+  ITypeBinding expected=getExpectedType();
+  return (expected != null && expected.getName().equals(name));
+}

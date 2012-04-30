@@ -1,0 +1,12 @@
+{
+  int potentialCountryCode;
+  int numberLength=fullNumber.length();
+  for (int i=1; i <= MAX_LENGTH_COUNTRY_CODE && i <= numberLength; i++) {
+    potentialCountryCode=Integer.parseInt(fullNumber.substring(0,i));
+    if (countryCallingCodeToRegionCodeMap.containsKey(potentialCountryCode)) {
+      nationalNumber.append(fullNumber.substring(i));
+      return potentialCountryCode;
+    }
+  }
+  return 0;
+}

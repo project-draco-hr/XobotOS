@@ -1,0 +1,3 @@
+{
+  super(PMediaAuthorization.class,PMediaAuthorizationHeader.NAME);
+}

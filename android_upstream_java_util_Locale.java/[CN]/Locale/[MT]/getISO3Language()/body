@@ -1,0 +1,6 @@
+{
+  if (languageCode.length() == 0) {
+    return languageCode;
+  }
+  return ICU.getISO3LanguageNative(toString());
+}

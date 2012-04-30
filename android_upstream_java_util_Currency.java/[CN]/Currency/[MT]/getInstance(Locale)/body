@@ -1,0 +1,23 @@
+{
+synchronized (localesToCurrencies) {
+    Currency currency=localesToCurrencies.get(locale);
+    if (currency != null) {
+      return currency;
+    }
+    String country=locale.getCountry();
+    String variant=locale.getVariant();
+    if (!variant.isEmpty() && (variant.equals("EURO") || variant.equals("HK") || variant.equals("PREEURO"))) {
+      country=country + "_" + variant;
+    }
+    String currencyCode=ICU.getCurrencyCode(country);
+    if (currencyCode == null) {
+      throw new IllegalArgumentException("Unsupported ISO 3166 country: " + locale);
+    }
+ else     if (currencyCode.equals("None")) {
+      return null;
+    }
+    Currency result=getInstance(currencyCode);
+    localesToCurrencies.put(locale,result);
+    return result;
+  }
+}

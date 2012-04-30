@@ -1,0 +1,5 @@
+{
+  CSConstructorInvocationExpression cie=new CSConstructorInvocationExpression(target);
+  mapArguments(cie,args,binding);
+  return cie;
+}

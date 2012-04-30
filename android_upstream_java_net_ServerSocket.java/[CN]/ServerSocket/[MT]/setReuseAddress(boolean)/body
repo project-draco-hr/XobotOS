@@ -1,0 +1,4 @@
+{
+  checkOpen();
+  impl.setOption(SocketOptions.SO_REUSEADDR,Boolean.valueOf(reuse));
+}

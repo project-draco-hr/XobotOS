@@ -1,0 +1,8 @@
+{
+  Scanner s=new HTMLScanner();
+  Reader r=new InputStreamReader(System.in,"UTF-8");
+  Writer w=new OutputStreamWriter(System.out,"UTF-8");
+  PYXWriter pw=new PYXWriter(w);
+  s.scan(r,pw);
+  w.close();
+}

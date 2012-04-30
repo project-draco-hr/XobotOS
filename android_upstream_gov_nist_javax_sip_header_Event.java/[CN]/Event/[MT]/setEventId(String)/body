@@ -1,0 +1,4 @@
+{
+  if (eventId == null)   throw new NullPointerException(" the eventId parameter is null");
+  setParameter(ParameterNames.ID,eventId);
+}

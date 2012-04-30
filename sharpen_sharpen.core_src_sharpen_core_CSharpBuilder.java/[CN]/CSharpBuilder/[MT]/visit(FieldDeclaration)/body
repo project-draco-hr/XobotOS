@@ -1,0 +1,28 @@
+{
+  if (SharpenAnnotations.hasIgnoreAnnotation(node)) {
+    return false;
+  }
+  for (  Object item : node.fragments()) {
+    final VariableDeclarationFragment fragment=(VariableDeclarationFragment)item;
+    my(CSharpDriver.class).processFieldDeclaration(this,_currentType,node,fragment,new IFieldBuilderDelegate(){
+      public CSField create(){
+        final IVariableBinding binding=fragment.resolveBinding();
+        final ITypeBinding fieldType=binding.getType();
+        CSTypeReferenceExpression fieldTypeRef=mappedVariableType(binding);
+        CSVisibility visibility=mapVisibility(binding);
+        pushExpectedType(fieldType);
+        CSField field=mapFieldDeclarationFragment(node,fragment,fieldTypeRef,visibility);
+        popExpectedType();
+        return field;
+      }
+      public void map(      CSField member){
+      }
+      public void document(      CSField member){
+      }
+      public void fixup(      CSField member){
+      }
+    }
+);
+  }
+  return false;
+}

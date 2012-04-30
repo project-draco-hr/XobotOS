@@ -1,0 +1,8 @@
+{
+  this.pendingEvents=new LinkedList();
+  Thread myThread=new Thread(this);
+  myThread.setDaemon(false);
+  this.sipStack=sipStackImpl;
+  myThread.setName("EventScannerThread");
+  myThread.start();
+}

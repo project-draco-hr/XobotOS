@@ -1,0 +1,11 @@
+{
+  NameValue nv=parameters.getNameValue(name);
+  if (nv != null) {
+    nv.setValueAsObject(value);
+  }
+ else {
+    nv=new NameValue(name,value);
+    if (name.equalsIgnoreCase("methods"))     nv.setQuotedValue();
+    this.parameters.set(nv);
+  }
+}

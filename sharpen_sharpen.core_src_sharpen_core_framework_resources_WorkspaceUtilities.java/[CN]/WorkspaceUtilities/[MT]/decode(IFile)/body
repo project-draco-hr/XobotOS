@@ -1,0 +1,10 @@
+{
+  try {
+    return new InputStreamReader(file.getContents(),file.getCharset());
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+    throwCoreException(e);
+  }
+  return null;
+}

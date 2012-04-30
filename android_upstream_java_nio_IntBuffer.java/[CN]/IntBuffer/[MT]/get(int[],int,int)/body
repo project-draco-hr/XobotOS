@@ -1,0 +1,10 @@
+{
+  Arrays.checkOffsetAndCount(dst.length,dstOffset,intCount);
+  if (intCount > remaining()) {
+    throw new BufferUnderflowException();
+  }
+  for (int i=dstOffset; i < dstOffset + intCount; ++i) {
+    dst[i]=get();
+  }
+  return this;
+}

@@ -1,0 +1,4 @@
+{
+  if (info.isClass())   return info.getTypeBuilder().getNativePInvokeType();
+ else   return info.getNativeType();
+}

@@ -1,0 +1,65 @@
+{
+  if (method == null || sipResponse == null)   throw new NullPointerException("null argument");
+  if (method.equals(Request.CANCEL))   throw new SipException("Dialog.createRequest(): Invalid request");
+  if (this.getState() == null || (this.getState().getValue() == TERMINATED_STATE && !method.equalsIgnoreCase(Request.BYE)) || (this.isServer() && this.getState().getValue() == EARLY_STATE && method.equalsIgnoreCase(Request.BYE)))   throw new SipException("Dialog  " + getDialogId() + " not yet established or terminated "+ this.getState());
+  SipUri sipUri=null;
+  if (this.getRemoteTarget() != null)   sipUri=(SipUri)this.getRemoteTarget().getURI().clone();
+ else {
+    sipUri=(SipUri)this.getRemoteParty().getURI().clone();
+    sipUri.clearUriParms();
+  }
+  CSeq cseq=new CSeq();
+  try {
+    cseq.setMethod(method);
+    cseq.setSeqNumber(this.getLocalSeqNumber());
+  }
+ catch (  Exception ex) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logError("Unexpected error");
+    InternalErrorHandler.handleException(ex);
+  }
+  ListeningPointImpl lp=(ListeningPointImpl)this.sipProvider.getListeningPoint(sipResponse.getTopmostVia().getTransport());
+  if (lp == null) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logError("Cannot find listening point for transport " + sipResponse.getTopmostVia().getTransport());
+    throw new SipException("Cannot find listening point for transport " + sipResponse.getTopmostVia().getTransport());
+  }
+  Via via=lp.getViaHeader();
+  From from=new From();
+  from.setAddress(this.localParty);
+  To to=new To();
+  to.setAddress(this.remoteParty);
+  SIPRequest sipRequest=sipResponse.createRequest(sipUri,via,cseq,from,to);
+  if (SIPRequest.isTargetRefresh(method)) {
+    ContactHeader contactHeader=((ListeningPointImpl)this.sipProvider.getListeningPoint(lp.getTransport())).createContactHeader();
+    ((SipURI)contactHeader.getAddress().getURI()).setSecure(this.isSecure());
+    sipRequest.setHeader(contactHeader);
+  }
+  try {
+    cseq=(CSeq)sipRequest.getCSeq();
+    cseq.setSeqNumber(this.localSequenceNumber + 1);
+  }
+ catch (  InvalidArgumentException ex) {
+    InternalErrorHandler.handleException(ex);
+  }
+  if (method.equals(Request.SUBSCRIBE)) {
+    if (eventHeader != null)     sipRequest.addHeader(eventHeader);
+  }
+  try {
+    if (this.getLocalTag() != null) {
+      from.setTag(this.getLocalTag());
+    }
+ else {
+      from.removeTag();
+    }
+    if (this.getRemoteTag() != null) {
+      to.setTag(this.getRemoteTag());
+    }
+ else {
+      to.removeTag();
+    }
+  }
+ catch (  ParseException ex) {
+    InternalErrorHandler.handleException(ex);
+  }
+  this.updateRequest(sipRequest);
+  return sipRequest;
+}

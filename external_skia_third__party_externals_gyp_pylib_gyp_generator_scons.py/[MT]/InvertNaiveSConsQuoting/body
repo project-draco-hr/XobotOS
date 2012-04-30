@@ -1,0 +1,5 @@
+def InvertNaiveSConsQuoting(s):
+    'SCons tries to "help" with quoting by naively putting double-quotes around\n     command-line arguments containing space or tab, which is broken for all\n     but trivial cases, so we undo it. (See quote_spaces() in Subst.py)'
+    if ((' ' in s) or ('\t' in s)):
+        s = (('"' + s) + '"')
+    return s

@@ -1,0 +1,5 @@
+{
+  isThreadActive=false;
+  thread=Thread.currentThread();
+  threadAuditor=aThreadAuditor;
+}

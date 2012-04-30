@@ -1,0 +1,6 @@
+{
+  StringBuilder fullLocale=new StringBuilder(language);
+  appendSubsequentLocalePart(script,fullLocale);
+  appendSubsequentLocalePart(region,fullLocale);
+  return fullLocale;
+}

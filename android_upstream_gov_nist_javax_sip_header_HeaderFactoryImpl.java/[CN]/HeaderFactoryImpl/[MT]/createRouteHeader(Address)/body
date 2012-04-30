@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("null address arg");
+  Route route=new Route();
+  route.setAddress(address);
+  return route;
+}

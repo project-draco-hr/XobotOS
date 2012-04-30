@@ -1,0 +1,13 @@
+{
+  TransactionState realState=getRealState();
+  if (realState == null || realState == TransactionState.TRYING) {
+    if (isInviteTransaction() && !this.isMapped && sipStack.getTimer() != null) {
+      this.isMapped=true;
+      sipStack.getTimer().schedule(new SendTrying(),200);
+    }
+ else {
+      isMapped=true;
+    }
+  }
+  sipStack.removePendingTransaction(this);
+}

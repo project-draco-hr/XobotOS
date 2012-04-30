@@ -1,0 +1,3 @@
+def build(self, gyp_file, target=None, **kw):
+    "\n    Runs a build of the specified target against the configuration\n    generated from the specified gyp_file.\n\n    A 'target' argument of None or the special value TestGyp.DEFAULT\n    specifies the default argument for the underlying build tool.\n    A 'target' argument of TestGyp.ALL specifies the 'all' target\n    (if any) of the underlying build tool.\n    "
+    raise NotImplementedError

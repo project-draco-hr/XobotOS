@@ -1,0 +1,4 @@
+{
+  super(javaProject.getProject(),null);
+  _javaProject=javaProject;
+}

@@ -1,0 +1,6 @@
+{
+  if (exceptionTypes == null) {
+    return EmptyArray.CLASS;
+  }
+  return exceptionTypes.clone();
+}

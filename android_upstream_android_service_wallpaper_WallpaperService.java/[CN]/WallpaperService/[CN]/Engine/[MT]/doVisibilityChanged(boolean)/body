@@ -1,0 +1,6 @@
+{
+  if (!mDestroyed) {
+    mVisible=visible;
+    reportVisibility();
+  }
+}

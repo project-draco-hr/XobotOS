@@ -1,0 +1,30 @@
+{
+  PMediaAuthorizationList mediaAuthorizationList=new PMediaAuthorizationList();
+  if (debug)   dbg_enter("MediaAuthorizationParser.parse");
+  try {
+    headerName(TokenTypes.P_MEDIA_AUTHORIZATION);
+    PMediaAuthorization mediaAuthorization=new PMediaAuthorization();
+    mediaAuthorization.setHeaderName(SIPHeaderNamesIms.P_MEDIA_AUTHORIZATION);
+    while (lexer.lookAhead(0) != '\n') {
+      this.lexer.match(TokenTypes.ID);
+      Token token=lexer.getNextToken();
+      try {
+        mediaAuthorization.setMediaAuthorizationToken(token.getTokenValue());
+      }
+ catch (      InvalidArgumentException e) {
+        throw createParseException(e.getMessage());
+      }
+      mediaAuthorizationList.add(mediaAuthorization);
+      this.lexer.SPorHT();
+      if (lexer.lookAhead(0) == ',') {
+        this.lexer.match(',');
+        mediaAuthorization=new PMediaAuthorization();
+      }
+      this.lexer.SPorHT();
+    }
+    return mediaAuthorizationList;
+  }
+  finally {
+    if (debug)     dbg_leave("MediaAuthorizationParser.parse");
+  }
+}

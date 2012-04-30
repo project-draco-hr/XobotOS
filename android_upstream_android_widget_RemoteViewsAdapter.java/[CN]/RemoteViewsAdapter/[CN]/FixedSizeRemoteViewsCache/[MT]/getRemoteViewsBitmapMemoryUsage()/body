@@ -1,0 +1,10 @@
+{
+  int mem=0;
+  for (  Integer i : mIndexRemoteViews.keySet()) {
+    final RemoteViews v=mIndexRemoteViews.get(i);
+    if (v != null) {
+      mem+=v.estimateBitmapMemoryUsage();
+    }
+  }
+  return mem;
+}

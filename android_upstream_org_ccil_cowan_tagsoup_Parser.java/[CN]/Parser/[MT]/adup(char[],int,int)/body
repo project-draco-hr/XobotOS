@@ -1,0 +1,5 @@
+{
+  if (theNewElement == null || theAttributeName == null)   return;
+  theNewElement.setAttribute(theAttributeName,null,theAttributeName);
+  theAttributeName=null;
+}

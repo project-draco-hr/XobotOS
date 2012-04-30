@@ -1,0 +1,98 @@
+{
+  try {
+    if (sipMessage.getFrom() == null || sipMessage.getTo() == null || sipMessage.getCallId() == null || sipMessage.getCSeq() == null || sipMessage.getViaHeaders() == null) {
+      String badmsg=sipMessage.encode();
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logDebug(">>> Dropped Bad Msg");
+        sipStack.getStackLogger().logDebug(badmsg);
+      }
+      return;
+    }
+    ViaList viaList=sipMessage.getViaHeaders();
+    if (sipMessage instanceof SIPRequest) {
+      Via v=(Via)viaList.getFirst();
+      Hop hop=sipStack.addressResolver.resolveAddress(v.getHop());
+      this.peerProtocol=v.getTransport();
+      try {
+        this.peerAddress=mySock.getInetAddress();
+        if (v.hasParameter(Via.RPORT) || !hop.getHost().equals(this.peerAddress.getHostAddress())) {
+          v.setParameter(Via.RECEIVED,this.peerAddress.getHostAddress());
+        }
+        v.setParameter(Via.RPORT,Integer.toString(this.peerPort));
+      }
+ catch (      java.text.ParseException ex) {
+        InternalErrorHandler.handleException(ex,sipStack.getStackLogger());
+      }
+      if (!this.isCached) {
+        ((TCPMessageProcessor)this.messageProcessor).cacheMessageChannel(this);
+        this.isCached=true;
+        int remotePort=((java.net.InetSocketAddress)mySock.getRemoteSocketAddress()).getPort();
+        String key=IOHandler.makeKey(mySock.getInetAddress(),remotePort);
+        sipStack.ioHandler.putSocket(key,mySock);
+      }
+    }
+    long receptionTime=System.currentTimeMillis();
+    if (sipMessage instanceof SIPRequest) {
+      SIPRequest sipRequest=(SIPRequest)sipMessage;
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logDebug("----Processing Message---");
+      }
+      if (this.sipStack.getStackLogger().isLoggingEnabled(ServerLogger.TRACE_MESSAGES)) {
+        sipStack.serverLogger.logMessage(sipMessage,this.getPeerHostPort().toString(),this.getMessageProcessor().getIpAddress().getHostAddress() + ":" + this.getMessageProcessor().getPort(),false,receptionTime);
+      }
+      if (sipStack.getMaxMessageSize() > 0 && sipRequest.getSize() + (sipRequest.getContentLength() == null ? 0 : sipRequest.getContentLength().getContentLength()) > sipStack.getMaxMessageSize()) {
+        SIPResponse sipResponse=sipRequest.createResponse(SIPResponse.MESSAGE_TOO_LARGE);
+        byte[] resp=sipResponse.encodeAsBytes(this.getTransport());
+        this.sendMessage(resp,false);
+        throw new Exception("Message size exceeded");
+      }
+      ServerRequestInterface sipServerRequest=sipStack.newSIPServerRequest(sipRequest,this);
+      if (sipServerRequest != null) {
+        try {
+          sipServerRequest.processRequest(sipRequest,this);
+        }
+  finally {
+          if (sipServerRequest instanceof SIPTransaction) {
+            SIPServerTransaction sipServerTx=(SIPServerTransaction)sipServerRequest;
+            if (!sipServerTx.passToListener())             ((SIPTransaction)sipServerRequest).releaseSem();
+          }
+        }
+      }
+ else {
+        if (sipStack.isLoggingEnabled())         this.sipStack.getStackLogger().logWarning("Dropping request -- could not acquire semaphore in 10 sec");
+      }
+    }
+ else {
+      SIPResponse sipResponse=(SIPResponse)sipMessage;
+      try {
+        sipResponse.checkHeaders();
+      }
+ catch (      ParseException ex) {
+        if (sipStack.isLoggingEnabled())         sipStack.getStackLogger().logError("Dropping Badly formatted response message >>> " + sipResponse);
+        return;
+      }
+      if (sipStack.getMaxMessageSize() > 0 && sipResponse.getSize() + (sipResponse.getContentLength() == null ? 0 : sipResponse.getContentLength().getContentLength()) > sipStack.getMaxMessageSize()) {
+        if (sipStack.isLoggingEnabled())         this.sipStack.getStackLogger().logDebug("Message size exceeded");
+        return;
+      }
+      ServerResponseInterface sipServerResponse=sipStack.newSIPServerResponse(sipResponse,this);
+      if (sipServerResponse != null) {
+        try {
+          if (sipServerResponse instanceof SIPClientTransaction && !((SIPClientTransaction)sipServerResponse).checkFromTag(sipResponse)) {
+            if (sipStack.isLoggingEnabled())             sipStack.getStackLogger().logError("Dropping response message with invalid tag >>> " + sipResponse);
+            return;
+          }
+          sipServerResponse.processResponse(sipResponse,this);
+        }
+  finally {
+          if (sipServerResponse instanceof SIPTransaction && !((SIPTransaction)sipServerResponse).passToListener())           ((SIPTransaction)sipServerResponse).releaseSem();
+        }
+      }
+ else {
+        sipStack.getStackLogger().logWarning("Application is blocked -- could not acquire semaphore -- dropping response");
+      }
+    }
+  }
+  finally {
+  }
+}

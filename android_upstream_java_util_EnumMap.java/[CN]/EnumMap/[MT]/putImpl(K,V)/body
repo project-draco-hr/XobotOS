@@ -1,0 +1,14 @@
+{
+  if (key == null) {
+    throw new NullPointerException();
+  }
+  keyType.cast(key);
+  int keyOrdinal=key.ordinal();
+  if (!hasMapping[keyOrdinal]) {
+    hasMapping[keyOrdinal]=true;
+    mappingsCount++;
+  }
+  V oldValue=(V)values[keyOrdinal];
+  values[keyOrdinal]=value;
+  return oldValue;
+}

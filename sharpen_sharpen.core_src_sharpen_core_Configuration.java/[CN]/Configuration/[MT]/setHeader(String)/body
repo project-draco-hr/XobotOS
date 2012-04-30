@@ -1,0 +1,4 @@
+{
+  if (null == header)   throw new IllegalArgumentException("header");
+  _header=header;
+}

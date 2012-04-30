@@ -1,0 +1,8 @@
+{
+synchronized (lock) {
+    checkStatus();
+    Arrays.checkOffsetAndCount(buffer.length,offset,count);
+    CharBuffer chars=CharBuffer.wrap(buffer,offset,count);
+    convert(chars);
+  }
+}

@@ -1,0 +1,6 @@
+{
+  final CSConstructor ctor=new CSConstructor();
+  ctor.visibility(CSVisibility.Internal);
+  patchConstructor(ctor);
+  _convertedType.addMember(ctor);
+}

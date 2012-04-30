@@ -1,0 +1,16 @@
+{
+  String key=MessageChannel.getKey(targetHostPort,"TCP");
+  if (tcpMessageChannels.get(key) != null) {
+    return (TCPMessageChannel)this.tcpMessageChannels.get(key);
+  }
+ else {
+    TCPMessageChannel retval=new TCPMessageChannel(targetHostPort.getInetAddress(),targetHostPort.getPort(),sipStack,this);
+    this.tcpMessageChannels.put(key,retval);
+    retval.isCached=true;
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("key " + key);
+      sipStack.getStackLogger().logDebug("Creating " + retval);
+    }
+    return retval;
+  }
+}

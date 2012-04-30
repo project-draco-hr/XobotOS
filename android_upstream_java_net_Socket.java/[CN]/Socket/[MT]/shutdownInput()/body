@@ -1,0 +1,8 @@
+{
+  if (isInputShutdown()) {
+    throw new SocketException("Socket input is shutdown");
+  }
+  checkOpenAndCreate(false);
+  impl.shutdownInput();
+  isInputShutdown=true;
+}

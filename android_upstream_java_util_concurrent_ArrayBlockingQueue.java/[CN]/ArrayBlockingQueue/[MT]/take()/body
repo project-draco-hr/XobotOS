@@ -1,0 +1,11 @@
+{
+  final ReentrantLock lock=this.lock;
+  lock.lockInterruptibly();
+  try {
+    while (count == 0)     notEmpty.await();
+    return extract();
+  }
+  finally {
+    lock.unlock();
+  }
+}

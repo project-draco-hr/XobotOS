@@ -1,0 +1,8 @@
+{
+  StringBuffer stringBuffer=new StringBuffer();
+  for (int i=0; i < nesting_level; i++)   stringBuffer.append("<");
+  if (debug) {
+    System.out.println(stringBuffer + rule + "\nlexer buffer = \n"+ lexer.getRest());
+  }
+  nesting_level--;
+}

@@ -1,0 +1,4 @@
+{
+  if (o == null)   throw new NullPointerException("JAIN-SIP Exception, " + " Unsupported, setOptionTag(), The option tag parameter is null");
+  optionTag=o;
+}

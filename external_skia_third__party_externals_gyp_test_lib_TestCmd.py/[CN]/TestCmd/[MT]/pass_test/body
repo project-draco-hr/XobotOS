@@ -1,0 +1,6 @@
+def pass_test(self, condition=1, function=None):
+    'Cause the test to pass.\n        '
+    if (not condition):
+        return
+    self.condition = 'pass_test'
+    pass_test(self=self, condition=condition, function=function)

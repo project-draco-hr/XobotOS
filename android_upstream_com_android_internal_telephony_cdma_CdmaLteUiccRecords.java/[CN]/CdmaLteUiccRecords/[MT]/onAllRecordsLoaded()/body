@@ -1,0 +1,4 @@
+{
+  setLocaleFromCsim();
+  super.onAllRecordsLoaded();
+}

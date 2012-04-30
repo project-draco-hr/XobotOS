@@ -1,0 +1,19 @@
+{
+  if (!supportsScreen()) {
+    CompatibilityInfo.computeCompatibleScaling(inoutDm,inoutDm);
+  }
+ else {
+    inoutDm.widthPixels=inoutDm.noncompatWidthPixels;
+    inoutDm.heightPixels=inoutDm.noncompatHeightPixels;
+  }
+  if (isScalingRequired()) {
+    float invertedRatio=applicationInvertedScale;
+    inoutDm.density=inoutDm.noncompatDensity * invertedRatio;
+    inoutDm.densityDpi=(int)((inoutDm.density * DisplayMetrics.DENSITY_DEFAULT) + .5f);
+    inoutDm.scaledDensity=inoutDm.noncompatScaledDensity * invertedRatio;
+    inoutDm.xdpi=inoutDm.noncompatXdpi * invertedRatio;
+    inoutDm.ydpi=inoutDm.noncompatYdpi * invertedRatio;
+    inoutDm.widthPixels=(int)(inoutDm.widthPixels * invertedRatio + 0.5f);
+    inoutDm.heightPixels=(int)(inoutDm.heightPixels * invertedRatio + 0.5f);
+  }
+}

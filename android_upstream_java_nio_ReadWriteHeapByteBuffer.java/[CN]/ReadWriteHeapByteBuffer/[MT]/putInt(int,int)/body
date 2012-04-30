@@ -1,0 +1,5 @@
+{
+  checkIndex(index,SizeOf.INT);
+  Memory.pokeInt(backingArray,offset + index,value,order);
+  return this;
+}

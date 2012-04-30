@@ -1,0 +1,5 @@
+{
+  Via topmostVia=response.getTopmostVia();
+  String branch=topmostVia.getBranch();
+  return branch != null && branch.endsWith(this.signature);
+}

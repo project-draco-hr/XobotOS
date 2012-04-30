@@ -1,0 +1,10 @@
+{
+  if (index < 0) {
+    checkIndex(index);
+  }
+  int arrayIndex=index / 64;
+  if (arrayIndex >= longCount) {
+    return false;
+  }
+  return (bits[arrayIndex] & (1L << index)) != 0;
+}

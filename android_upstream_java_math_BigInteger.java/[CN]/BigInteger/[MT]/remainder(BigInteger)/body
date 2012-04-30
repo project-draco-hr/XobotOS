@@ -1,0 +1,5 @@
+{
+  BigInt remainder=new BigInt();
+  BigInt.division(getBigInt(),divisor.getBigInt(),null,remainder);
+  return new BigInteger(remainder);
+}

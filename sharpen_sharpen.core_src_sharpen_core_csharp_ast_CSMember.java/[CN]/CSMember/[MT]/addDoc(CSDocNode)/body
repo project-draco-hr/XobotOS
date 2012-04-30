@@ -1,0 +1,7 @@
+{
+  if (_removeDocs)   return;
+  if (null == _docs) {
+    _docs=new ArrayList<CSDocNode>();
+  }
+  _docs.add(node);
+}

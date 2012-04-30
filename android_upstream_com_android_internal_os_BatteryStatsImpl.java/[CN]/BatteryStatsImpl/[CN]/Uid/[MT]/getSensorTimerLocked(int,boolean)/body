@@ -1,0 +1,22 @@
+{
+  Sensor se=mSensorStats.get(sensor);
+  if (se == null) {
+    if (!create) {
+      return null;
+    }
+    se=new Sensor(sensor);
+    mSensorStats.put(sensor,se);
+  }
+  StopwatchTimer t=se.mTimer;
+  if (t != null) {
+    return t;
+  }
+  ArrayList<StopwatchTimer> timers=mSensorTimers.get(sensor);
+  if (timers == null) {
+    timers=new ArrayList<StopwatchTimer>();
+    mSensorTimers.put(sensor,timers);
+  }
+  t=new StopwatchTimer(Uid.this,BatteryStats.SENSOR,timers,mUnpluggables);
+  se.mTimer=t;
+  return t;
+}

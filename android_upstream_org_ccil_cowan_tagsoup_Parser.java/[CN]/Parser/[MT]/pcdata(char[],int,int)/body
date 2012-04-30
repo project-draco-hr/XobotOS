@@ -1,0 +1,18 @@
+{
+  if (length == 0)   return;
+  boolean allWhite=true;
+  for (int i=0; i < length; i++) {
+    if (!Character.isWhitespace(buff[offset + i])) {
+      allWhite=false;
+    }
+  }
+  if (allWhite && !theStack.canContain(thePCDATA)) {
+    if (ignorableWhitespace) {
+      theContentHandler.ignorableWhitespace(buff,offset,length);
+    }
+  }
+ else {
+    rectify(thePCDATA);
+    theContentHandler.characters(buff,offset,length);
+  }
+}

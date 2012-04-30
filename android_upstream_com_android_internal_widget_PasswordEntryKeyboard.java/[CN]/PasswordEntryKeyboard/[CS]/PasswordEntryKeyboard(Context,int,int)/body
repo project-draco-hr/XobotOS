@@ -1,0 +1,4 @@
+{
+  super(context,xmlLayoutResId,mode);
+  init(context);
+}

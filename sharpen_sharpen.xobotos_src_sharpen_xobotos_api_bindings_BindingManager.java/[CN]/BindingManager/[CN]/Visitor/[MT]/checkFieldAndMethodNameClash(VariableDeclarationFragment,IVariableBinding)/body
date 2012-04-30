@@ -1,0 +1,18 @@
+{
+  final ITypeBinding declType=binding.getDeclaringClass();
+  final String name=binding.getName();
+  final List<String> visibleMethods=getVisibleMethodNames(declType);
+  if (!visibleMethods.contains(name))   return;
+  int mods=binding.getModifiers();
+  boolean isNonPrivate=Modifier.isPublic(mods) || Modifier.isProtected(mods);
+  if (isNonPrivate && !autoRenameFields()) {
+    addProblem(node,ProblemKind.PARSING_ERROR,"Non-private field %s.%s clashes with visible method",BindingUtils.qualifiedName(declType),name);
+  }
+  int i=0;
+  String newName=name.startsWith("_") ? name + '_' + (++i) : '_' + name;
+  while (visibleMethods.contains(newName)) {
+    newName=name + '_' + (++i);
+  }
+  final String renamed=newName;
+  addRenamedVariable(binding,renamed);
+}

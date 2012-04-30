@@ -1,0 +1,9 @@
+{
+  dumpSyncState(pw);
+  dumpSyncHistory(pw);
+  pw.println();
+  pw.println("SyncAdapters:");
+  for (  RegisteredServicesCache.ServiceInfo info : mSyncAdapters.getAllServices()) {
+    pw.println("  " + info);
+  }
+}

@@ -1,0 +1,4 @@
+{
+  final MethodDeclaration dec=declaringNode(method);
+  return dec != null && isProperty(dec);
+}

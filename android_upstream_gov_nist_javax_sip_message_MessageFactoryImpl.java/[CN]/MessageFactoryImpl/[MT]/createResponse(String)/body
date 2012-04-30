@@ -1,0 +1,7 @@
+{
+  if (responseString == null)   return new SIPResponse();
+  StringMsgParser smp=new StringMsgParser();
+  SIPMessage sipMessage=smp.parseSIPMessage(responseString);
+  if (!(sipMessage instanceof SIPResponse))   throw new ParseException(responseString,0);
+  return (SIPResponse)sipMessage;
+}

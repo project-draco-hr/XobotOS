@@ -1,0 +1,6 @@
+{
+  if (instance == null) {
+    instance=new PhoneNumberOfflineGeocoder(MAPPING_DATA_DIRECTORY);
+  }
+  return instance;
+}

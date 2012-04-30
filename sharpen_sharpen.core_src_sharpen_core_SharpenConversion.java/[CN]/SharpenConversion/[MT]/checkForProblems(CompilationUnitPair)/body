@@ -1,0 +1,16 @@
+{
+  boolean hasErrors=false;
+  for (  IProblem problem : pair.ast.getProblems()) {
+    Sharpen.Log(Level.SEVERE,ASTUtility.formatProblem(problem));
+    if (createProblemMarkers())     createProblemMarker(problem);
+ else     ASTUtility.dumpProblem(System.err,problem);
+    if (problem.isError())     hasErrors=true;
+  }
+  for (  IProblem problem : pair.getProblems()) {
+    Sharpen.Log(Level.SEVERE,ASTUtility.formatProblem(problem));
+    if (createProblemMarkers())     createProblemMarker(problem);
+ else     ASTUtility.dumpProblem(System.err,problem);
+    if (problem.isError())     hasErrors=true;
+  }
+  return hasErrors;
+}

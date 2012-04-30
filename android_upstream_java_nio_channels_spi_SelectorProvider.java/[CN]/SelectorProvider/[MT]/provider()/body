@@ -1,0 +1,12 @@
+{
+  if (provider == null) {
+    provider=ServiceLoader.loadFromSystemProperty(SelectorProvider.class);
+    if (provider == null) {
+      provider=loadProviderByJar();
+    }
+    if (provider == null) {
+      provider=new SelectorProviderImpl();
+    }
+  }
+  return provider;
+}

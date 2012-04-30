@@ -1,0 +1,5 @@
+{
+  Locale locale=Locale.getDefault();
+  this.symbols=new DecimalFormatSymbols(locale);
+  initNative(LocaleData.get(locale).numberPattern);
+}

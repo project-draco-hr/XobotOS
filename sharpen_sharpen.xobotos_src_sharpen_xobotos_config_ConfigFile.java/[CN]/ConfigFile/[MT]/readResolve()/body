@@ -1,0 +1,8 @@
+{
+  if (_sourceInfo == null)   throw new RuntimeException("<source-info> element missing in config file!");
+  if (_mapNamespaces == null)   _mapNamespaces=new ArrayList<NameMapping>();
+  if (_apiDefFileName == null)   throw new RuntimeException("Missing <api-def> entry in config file!");
+  if ((_logFile != null) && (_logFile.path == null))   throw new RuntimeException("Invalid 'log-file' entry in config file!");
+  if (_nativeConfig == null)   throw new RuntimeException("Missing <native-config> entry in config file!");
+  return this;
+}

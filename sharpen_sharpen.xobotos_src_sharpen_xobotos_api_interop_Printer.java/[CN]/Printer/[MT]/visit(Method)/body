@@ -1,0 +1,27 @@
+{
+  if (node.hasDeclaration()) {
+    _writer.writeIndentation();
+  }
+ else {
+    if (node.getFlags() == Flags.EXPORT) {
+      _writer.writeIndentation();
+      _writer.write("extern \"C\" DLL_EXPORT ");
+    }
+ else     if (node.getFlags() == Flags.STATIC) {
+      _writer.writeIndentation();
+      if (!node.hasDeclaration())       _writer.write("static ");
+    }
+ else {
+      _writer.writeIndentation();
+    }
+  }
+  node.getReturnType().accept(this);
+  _writer.writeLine();
+  _writer.writeIndentation();
+  _writer.write(_currentClass + node.getName());
+  _writer.write("(");
+  visitCommaSeparatedList(node.getParameters());
+  _writer.writeLine(")");
+  node.getBody().accept(this);
+  _writer.writeLine();
+}

@@ -1,0 +1,10 @@
+{
+  mOpaque=!translucent;
+  if (record) {
+    mRenderer=nCreateDisplayListRenderer();
+  }
+ else {
+    mRenderer=nCreateRenderer();
+  }
+  setupFinalizer();
+}

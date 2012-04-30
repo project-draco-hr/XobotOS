@@ -1,0 +1,5 @@
+{
+  Contact retval=(Contact)super.clone();
+  if (this.contactList != null)   retval.contactList=(ContactList)this.contactList.clone();
+  return retval;
+}

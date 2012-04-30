@@ -1,0 +1,4 @@
+{
+  if (maddr == null)   throw new NullPointerException("bad maddr");
+  setParameter("maddr",maddr);
+}

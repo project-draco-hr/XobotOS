@@ -1,0 +1,8 @@
+{
+  for (  final AbstractAction action : _template.getActions()) {
+    action.apply(this,type);
+  }
+  ModifyType action=_template.getModificationAction();
+  if (action != null)   action.modify(this,getASTNode(),type);
+  return true;
+}

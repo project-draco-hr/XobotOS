@@ -1,0 +1,13 @@
+{
+  HashSet branchIds=new HashSet();
+  for (int b=0; b < 100000; b++) {
+    String bid=Utils.getInstance().generateBranchId();
+    if (branchIds.contains(bid)) {
+      throw new RuntimeException("Duplicate Branch ID");
+    }
+ else {
+      branchIds.add(bid);
+    }
+  }
+  System.out.println("Done!!");
+}

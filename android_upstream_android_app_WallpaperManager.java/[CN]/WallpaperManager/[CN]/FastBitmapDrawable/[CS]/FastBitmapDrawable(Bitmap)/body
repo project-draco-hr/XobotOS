@@ -1,0 +1,8 @@
+{
+  mBitmap=bitmap;
+  mWidth=bitmap.getWidth();
+  mHeight=bitmap.getHeight();
+  setBounds(0,0,mWidth,mHeight);
+  mPaint=new Paint();
+  mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
+}

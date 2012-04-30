@@ -1,0 +1,25 @@
+{
+  if (mRequestedEngine != null && mEnginesHelper.isEngineInstalled(mRequestedEngine)) {
+    if (connectToEngine(mRequestedEngine)) {
+      mCurrentEngine=mRequestedEngine;
+      return SUCCESS;
+    }
+  }
+  final String defaultEngine=getDefaultEngine();
+  if (defaultEngine != null && !defaultEngine.equals(mRequestedEngine)) {
+    if (connectToEngine(defaultEngine)) {
+      mCurrentEngine=defaultEngine;
+      return SUCCESS;
+    }
+  }
+  final String highestRanked=mEnginesHelper.getHighestRankedEngineName();
+  if (highestRanked != null && !highestRanked.equals(mRequestedEngine) && !highestRanked.equals(defaultEngine)) {
+    if (connectToEngine(highestRanked)) {
+      mCurrentEngine=highestRanked;
+      return SUCCESS;
+    }
+  }
+  mCurrentEngine=null;
+  dispatchOnInit(ERROR);
+  return ERROR;
+}

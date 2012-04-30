@@ -1,0 +1,11 @@
+'\nVerifies build of an executable in three different configurations.\n'
+import TestGyp
+test = TestGyp.TestGyp()
+test.run_gyp('configurations.gyp')
+test.set_configuration('Release')
+test.build('configurations.gyp')
+test.run_built_executable('configurations', stdout='Base configuration\nCommon configuration\nCommon2 configuration\nRelease configuration\n')
+test.set_configuration('Debug')
+test.build('configurations.gyp')
+test.run_built_executable('configurations', stdout='Base configuration\nCommon configuration\nCommon2 configuration\nDebug configuration\n')
+test.pass_test()

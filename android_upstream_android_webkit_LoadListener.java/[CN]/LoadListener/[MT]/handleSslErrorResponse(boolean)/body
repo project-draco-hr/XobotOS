@@ -1,0 +1,9 @@
+{
+  if (mRequestHandle != null) {
+    mRequestHandle.handleSslErrorResponse(proceed);
+  }
+  if (!proceed) {
+    mBrowserFrame.stopLoading();
+    tearDown();
+  }
+}

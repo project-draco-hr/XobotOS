@@ -1,0 +1,23 @@
+{
+  if (Log.isLoggable(TAG,Log.VERBOSE)) {
+    Log.v(TAG,"confirmCredentials: " + account + ", response "+ response+ ", expectActivityLaunch "+ expectActivityLaunch+ ", caller's uid "+ Binder.getCallingUid()+ ", pid "+ Binder.getCallingPid());
+  }
+  if (response == null)   throw new IllegalArgumentException("response is null");
+  if (account == null)   throw new IllegalArgumentException("account is null");
+  checkManageAccountsPermission();
+  long identityToken=clearCallingIdentity();
+  try {
+    new Session(response,account.type,expectActivityLaunch,true){
+      public void run() throws RemoteException {
+        mAuthenticator.confirmCredentials(this,account,options);
+      }
+      protected String toDebugString(      long now){
+        return super.toDebugString(now) + ", confirmCredentials" + ", "+ account;
+      }
+    }
+.bind();
+  }
+  finally {
+    restoreCallingIdentity(identityToken);
+  }
+}

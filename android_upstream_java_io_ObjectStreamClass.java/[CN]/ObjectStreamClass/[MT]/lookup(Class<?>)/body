@@ -1,0 +1,4 @@
+{
+  ObjectStreamClass osc=lookupStreamClass(cl);
+  return (osc.isSerializable() || osc.isExternalizable()) ? osc : null;
+}

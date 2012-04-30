@@ -1,0 +1,6 @@
+{
+  int s=size;
+  Object[] result=new Object[s];
+  System.arraycopy(array,0,result,0,s);
+  return result;
+}

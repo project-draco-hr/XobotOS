@@ -1,0 +1,10 @@
+def built_file_path(self, name, type=None, **kw):
+    '\n    Returns a path to the specified file name, of the specified type,\n    as built by Xcode.\n\n    Built files are in the subdirectory \'build/{configuration}\'.\n    The default is \'build/Default\'.\n\n    A chdir= keyword argument specifies the source directory\n    relative to which  the output subdirectory can be found.\n\n    "type" values of STATIC_LIB or SHARED_LIB append the necessary\n    prefixes and suffixes to a platform-independent library base name.\n    '
+    result = []
+    chdir = kw.get('chdir')
+    if chdir:
+        result.append(chdir)
+    configuration = self.configuration_dirname()
+    result.extend(['build', configuration])
+    result.append(self.built_file_basename(name, type, **kw))
+    return self.workpath(*result)

@@ -1,0 +1,3 @@
+{
+  setIField(object,declaringClass,type,slot,flag,TYPE_INTEGER,value);
+}

@@ -1,0 +1,5 @@
+{
+  final String typeName=mappedTypeName(exception.resolveTypeBinding());
+  if (containsExceptionTagWithCRef(member,typeName))   return;
+  member.addDoc(newTagWithCRef("exception",typeName));
+}

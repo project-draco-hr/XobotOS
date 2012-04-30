@@ -1,0 +1,3 @@
+{
+  return findMemberTemplate(node,FieldTemplate.DEFAULT,FieldTemplate.class);
+}

@@ -1,0 +1,39 @@
+{
+  if (transport.equalsIgnoreCase("udp")) {
+    UDPMessageProcessor udpMessageProcessor=new UDPMessageProcessor(ipAddress,this,port);
+    this.addMessageProcessor(udpMessageProcessor);
+    this.udpFlag=true;
+    return udpMessageProcessor;
+  }
+ else   if (transport.equalsIgnoreCase("tcp")) {
+    TCPMessageProcessor tcpMessageProcessor=new TCPMessageProcessor(ipAddress,this,port);
+    this.addMessageProcessor(tcpMessageProcessor);
+    return tcpMessageProcessor;
+  }
+ else   if (transport.equalsIgnoreCase("tls")) {
+    TLSMessageProcessor tlsMessageProcessor=new TLSMessageProcessor(ipAddress,this,port);
+    this.addMessageProcessor(tlsMessageProcessor);
+    return tlsMessageProcessor;
+  }
+ else   if (transport.equalsIgnoreCase("sctp")) {
+    try {
+      Class<?> mpc=ClassLoader.getSystemClassLoader().loadClass("gov.nist.javax.sip.stack.sctp.SCTPMessageProcessor");
+      MessageProcessor mp=(MessageProcessor)mpc.newInstance();
+      mp.initialize(ipAddress,port,this);
+      this.addMessageProcessor(mp);
+      return mp;
+    }
+ catch (    ClassNotFoundException e) {
+      throw new IllegalArgumentException("SCTP not supported (needs Java 7 and SCTP jar in classpath)");
+    }
+catch (    InstantiationException ie) {
+      throw new IllegalArgumentException("Error initializing SCTP",ie);
+    }
+catch (    IllegalAccessException ie) {
+      throw new IllegalArgumentException("Error initializing SCTP",ie);
+    }
+  }
+ else {
+    throw new IllegalArgumentException("bad transport");
+  }
+}

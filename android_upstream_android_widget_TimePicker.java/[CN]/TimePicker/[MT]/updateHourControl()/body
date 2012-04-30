@@ -1,0 +1,12 @@
+{
+  if (is24HourView()) {
+    mHourSpinner.setMinValue(0);
+    mHourSpinner.setMaxValue(23);
+    mHourSpinner.setFormatter(NumberPicker.TWO_DIGIT_FORMATTER);
+  }
+ else {
+    mHourSpinner.setMinValue(1);
+    mHourSpinner.setMaxValue(12);
+    mHourSpinner.setFormatter(null);
+  }
+}

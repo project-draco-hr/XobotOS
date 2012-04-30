@@ -1,0 +1,28 @@
+{
+  SIPMessage message;
+  if (!firstLine.startsWith(SIPConstants.SIP_VERSION_STRING)) {
+    message=new SIPRequest();
+    try {
+      RequestLine requestLine=new RequestLineParser(firstLine + "\n").parse();
+      ((SIPRequest)message).setRequestLine(requestLine);
+    }
+ catch (    ParseException ex) {
+      if (this.parseExceptionListener != null)       this.parseExceptionListener.handleException(ex,message,RequestLine.class,firstLine,rawStringMessage);
+ else       throw ex;
+    }
+  }
+ else {
+    message=new SIPResponse();
+    try {
+      StatusLine sl=new StatusLineParser(firstLine + "\n").parse();
+      ((SIPResponse)message).setStatusLine(sl);
+    }
+ catch (    ParseException ex) {
+      if (this.parseExceptionListener != null) {
+        this.parseExceptionListener.handleException(ex,message,StatusLine.class,firstLine,rawStringMessage);
+      }
+ else       throw ex;
+    }
+  }
+  return message;
+}

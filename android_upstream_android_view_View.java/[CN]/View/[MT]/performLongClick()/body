@@ -1,0 +1,14 @@
+{
+  sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
+  boolean handled=false;
+  if (mOnLongClickListener != null) {
+    handled=mOnLongClickListener.onLongClick(View.this);
+  }
+  if (!handled) {
+    handled=showContextMenu();
+  }
+  if (handled) {
+    performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+  }
+  return handled;
+}

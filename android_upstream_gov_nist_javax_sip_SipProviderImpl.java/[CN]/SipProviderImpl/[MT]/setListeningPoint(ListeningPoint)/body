@@ -1,0 +1,10 @@
+{
+  if (listeningPoint == null)   throw new NullPointerException("Null listening point");
+  ListeningPointImpl lp=(ListeningPointImpl)listeningPoint;
+  lp.sipProvider=this;
+  String transport=lp.getTransport().toUpperCase();
+  this.address=listeningPoint.getIPAddress();
+  this.port=listeningPoint.getPort();
+  this.listeningPoints.clear();
+  this.listeningPoints.put(transport,listeningPoint);
+}

@@ -1,0 +1,31 @@
+{
+  if (debug)   dbg_enter("AllowEventsParser.parse");
+  AllowEventsList list=new AllowEventsList();
+  try {
+    headerName(TokenTypes.ALLOW_EVENTS);
+    AllowEvents allowEvents=new AllowEvents();
+    allowEvents.setHeaderName(SIPHeaderNames.ALLOW_EVENTS);
+    this.lexer.SPorHT();
+    this.lexer.match(TokenTypes.ID);
+    Token token=lexer.getNextToken();
+    allowEvents.setEventType(token.getTokenValue());
+    list.add(allowEvents);
+    this.lexer.SPorHT();
+    while (lexer.lookAhead(0) == ',') {
+      this.lexer.match(',');
+      this.lexer.SPorHT();
+      allowEvents=new AllowEvents();
+      this.lexer.match(TokenTypes.ID);
+      token=lexer.getNextToken();
+      allowEvents.setEventType(token.getTokenValue());
+      list.add(allowEvents);
+      this.lexer.SPorHT();
+    }
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return list;
+  }
+  finally {
+    if (debug)     dbg_leave("AllowEventsParser.parse");
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return unfoldMultiArray((ArrayType)node.getType().getComponentType(),node.dimensions(),0);
+}

@@ -1,0 +1,26 @@
+{
+  super(orig);
+  taskAffinity=orig.taskAffinity;
+  permission=orig.permission;
+  processName=orig.processName;
+  className=orig.className;
+  theme=orig.theme;
+  flags=orig.flags;
+  requiresSmallestWidthDp=orig.requiresSmallestWidthDp;
+  compatibleWidthLimitDp=orig.compatibleWidthLimitDp;
+  largestWidthLimitDp=orig.largestWidthLimitDp;
+  sourceDir=orig.sourceDir;
+  publicSourceDir=orig.publicSourceDir;
+  nativeLibraryDir=orig.nativeLibraryDir;
+  resourceDirs=orig.resourceDirs;
+  sharedLibraryFiles=orig.sharedLibraryFiles;
+  dataDir=orig.dataDir;
+  uid=orig.uid;
+  targetSdkVersion=orig.targetSdkVersion;
+  enabled=orig.enabled;
+  enabledSetting=orig.enabledSetting;
+  installLocation=orig.installLocation;
+  manageSpaceActivityName=orig.manageSpaceActivityName;
+  descriptionRes=orig.descriptionRes;
+  uiOptions=orig.uiOptions;
+}

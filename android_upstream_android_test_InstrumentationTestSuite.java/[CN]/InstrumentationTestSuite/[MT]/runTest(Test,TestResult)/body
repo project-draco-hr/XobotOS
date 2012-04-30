@@ -1,0 +1,6 @@
+{
+  if (test instanceof InstrumentationTestCase) {
+    ((InstrumentationTestCase)test).injectInstrumentation(mInstrumentation);
+  }
+  super.runTest(test,result);
+}

@@ -1,0 +1,12 @@
+{
+  String retval;
+  if (requestLine != null) {
+    this.setRequestLineDefaults();
+    retval=requestLine.encode() + super.encodeSIPHeaders();
+  }
+ else   if (this.isNullRequest()) {
+    retval="\r\n\r\n";
+  }
+ else   retval=super.encodeSIPHeaders();
+  return retval;
+}

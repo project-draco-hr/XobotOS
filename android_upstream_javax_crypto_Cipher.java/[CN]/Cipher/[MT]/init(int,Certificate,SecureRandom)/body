@@ -1,0 +1,28 @@
+{
+  checkMode(opmode);
+  if (certificate instanceof X509Certificate) {
+    Set<String> ce=((X509Certificate)certificate).getCriticalExtensionOIDs();
+    boolean critical=false;
+    if (ce != null && !ce.isEmpty()) {
+      for (      String oid : ce) {
+        if (oid.equals("2.5.29.15")) {
+          critical=true;
+          break;
+        }
+      }
+      if (critical) {
+        boolean[] keyUsage=((X509Certificate)certificate).getKeyUsage();
+        if (keyUsage != null) {
+          if (opmode == ENCRYPT_MODE && !keyUsage[3]) {
+            throw new InvalidKeyException("The public key in the certificate " + "cannot be used for ENCRYPT_MODE");
+          }
+ else           if (opmode == WRAP_MODE && !keyUsage[2]) {
+            throw new InvalidKeyException("The public key in the certificate " + "cannot be used for WRAP_MODE");
+          }
+        }
+      }
+    }
+  }
+  spiImpl.engineInit(opmode,certificate.getPublicKey(),random);
+  mode=opmode;
+}

@@ -1,0 +1,7 @@
+{
+  if (isInPlaybackState()) {
+    mMediaPlayer.start();
+    mCurrentState=STATE_PLAYING;
+  }
+  mTargetState=STATE_PLAYING;
+}

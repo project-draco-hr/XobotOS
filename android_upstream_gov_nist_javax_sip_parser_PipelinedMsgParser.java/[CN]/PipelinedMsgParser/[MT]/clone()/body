@@ -1,0 +1,8 @@
+{
+  PipelinedMsgParser p=new PipelinedMsgParser();
+  p.rawInputStream=this.rawInputStream;
+  p.sipMessageListener=this.sipMessageListener;
+  Thread mythread=new Thread(p);
+  mythread.setName("PipelineThread");
+  return p;
+}

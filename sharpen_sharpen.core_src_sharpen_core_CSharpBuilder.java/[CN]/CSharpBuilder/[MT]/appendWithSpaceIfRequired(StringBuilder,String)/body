@@ -1,0 +1,6 @@
+{
+  if (builder.length() > 0 && builder.charAt(builder.length() - 1) != ' ' && text.startsWith(" ") == false) {
+    builder.append(" ");
+  }
+  builder.append(text);
+}

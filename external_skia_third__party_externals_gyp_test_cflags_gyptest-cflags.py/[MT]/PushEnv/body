@@ -1,0 +1,3 @@
+def PushEnv():
+    env_copy = os.environ.copy()
+    env_stack.append(env_copy)

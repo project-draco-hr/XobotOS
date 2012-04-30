@@ -1,0 +1,5 @@
+{
+  checkIndex(index,SizeOf.INT);
+  this.block.pokeInt(offset + index,value,order);
+  return this;
+}

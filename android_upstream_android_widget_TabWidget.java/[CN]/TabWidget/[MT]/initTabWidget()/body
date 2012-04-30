@@ -1,0 +1,23 @@
+{
+  setChildrenDrawingOrderEnabled(true);
+  final Context context=mContext;
+  final Resources resources=context.getResources();
+  if (context.getApplicationInfo().targetSdkVersion <= Build.VERSION_CODES.DONUT) {
+    if (mLeftStrip == null) {
+      mLeftStrip=resources.getDrawable(com.android.internal.R.drawable.tab_bottom_left_v4);
+    }
+    if (mRightStrip == null) {
+      mRightStrip=resources.getDrawable(com.android.internal.R.drawable.tab_bottom_right_v4);
+    }
+  }
+ else {
+    if (mLeftStrip == null) {
+      mLeftStrip=resources.getDrawable(com.android.internal.R.drawable.tab_bottom_left);
+    }
+    if (mRightStrip == null) {
+      mRightStrip=resources.getDrawable(com.android.internal.R.drawable.tab_bottom_right);
+    }
+  }
+  setFocusable(true);
+  setOnFocusChangeListener(this);
+}

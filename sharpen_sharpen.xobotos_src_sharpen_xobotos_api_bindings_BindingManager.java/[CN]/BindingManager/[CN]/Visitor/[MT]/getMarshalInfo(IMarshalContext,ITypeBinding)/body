@@ -1,0 +1,10 @@
+{
+  if (type.equals(_charType))   return _charMarshal;
+ else   if (type.equals(_byteType))   return _byteMarshal;
+ else   if (type.equals(_stringType))   return _stringMarshal;
+ else   if (type.equals(_boolType))   return _boolMarshal;
+ else   if (type.isPrimitive())   return new MarshalAsPrimitive(type,type.getName(),type.getName());
+  HelperClassBuilder helper=getHelperClass(context,type);
+  if (helper != null)   return new MarshalAsNativeType(type,helper);
+  return null;
+}

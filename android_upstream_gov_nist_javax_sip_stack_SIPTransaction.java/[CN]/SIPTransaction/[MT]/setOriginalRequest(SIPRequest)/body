@@ -1,0 +1,26 @@
+{
+  String newBranch;
+  if (this.originalRequest != null && (!this.originalRequest.getTransactionId().equals(newOriginalRequest.getTransactionId()))) {
+    sipStack.removeTransactionHash(this);
+  }
+  this.originalRequest=newOriginalRequest;
+  this.method=newOriginalRequest.getMethod();
+  this.from=(From)newOriginalRequest.getFrom();
+  this.to=(To)newOriginalRequest.getTo();
+  this.toTag=this.to.getTag();
+  this.fromTag=this.from.getTag();
+  this.callId=(CallID)newOriginalRequest.getCallId();
+  this.cSeq=newOriginalRequest.getCSeq().getSeqNumber();
+  this.event=(Event)newOriginalRequest.getHeader("Event");
+  this.transactionId=newOriginalRequest.getTransactionId();
+  originalRequest.setTransaction(this);
+  newBranch=((Via)newOriginalRequest.getViaHeaders().getFirst()).getBranch();
+  if (newBranch != null) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Setting Branch id : " + newBranch);
+    setBranch(newBranch);
+  }
+ else {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Branch id is null - compute TID!" + newOriginalRequest.encode());
+    setBranch(newOriginalRequest.getTransactionId());
+  }
+}

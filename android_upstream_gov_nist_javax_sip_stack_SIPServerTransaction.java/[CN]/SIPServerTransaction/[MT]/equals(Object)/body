@@ -1,0 +1,7 @@
+{
+  if (!other.getClass().equals(this.getClass())) {
+    return false;
+  }
+  SIPServerTransaction sst=(SIPServerTransaction)other;
+  return this.getBranch().equalsIgnoreCase(sst.getBranch());
+}

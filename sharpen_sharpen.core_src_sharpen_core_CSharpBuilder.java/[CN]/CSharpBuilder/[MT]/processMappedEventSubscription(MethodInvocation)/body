@@ -1,0 +1,6 @@
+{
+  final MethodInvocation event=(MethodInvocation)node.getExpression();
+  final String eventArgsType=_configuration.mappedEvent(qualifiedName(event));
+  final String eventHandlerType=buildEventHandlerTypeName(node,eventArgsType);
+  mapEventSubscription(node,eventArgsType,eventHandlerType);
+}

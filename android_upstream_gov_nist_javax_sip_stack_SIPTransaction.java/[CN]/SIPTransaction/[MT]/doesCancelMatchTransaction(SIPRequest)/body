@@ -1,0 +1,34 @@
+{
+  ViaList viaHeaders;
+  Via topViaHeader;
+  String messageBranch;
+  boolean transactionMatches;
+  transactionMatches=false;
+  if (this.getOriginalRequest() == null || this.getOriginalRequest().getMethod().equals(Request.CANCEL))   return false;
+  viaHeaders=requestToTest.getViaHeaders();
+  if (viaHeaders != null) {
+    topViaHeader=(Via)viaHeaders.getFirst();
+    messageBranch=topViaHeader.getBranch();
+    if (messageBranch != null) {
+      if (!messageBranch.toLowerCase().startsWith(SIPConstants.BRANCH_MAGIC_COOKIE_LOWER_CASE)) {
+        messageBranch=null;
+      }
+    }
+    if (messageBranch != null && this.getBranch() != null) {
+      if (getBranch().equalsIgnoreCase(messageBranch) && topViaHeader.getSentBy().equals(((Via)getOriginalRequest().getViaHeaders().getFirst()).getSentBy())) {
+        transactionMatches=true;
+        if (sipStack.isLoggingEnabled())         sipStack.getStackLogger().logDebug("returning  true");
+      }
+    }
+ else {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("testing against " + getOriginalRequest());
+      if (getOriginalRequest().getRequestURI().equals(requestToTest.getRequestURI()) && getOriginalRequest().getTo().equals(requestToTest.getTo()) && getOriginalRequest().getFrom().equals(requestToTest.getFrom())&& getOriginalRequest().getCallId().getCallId().equals(requestToTest.getCallId().getCallId())&& getOriginalRequest().getCSeq().getSeqNumber() == requestToTest.getCSeq().getSeqNumber() && topViaHeader.equals(getOriginalRequest().getViaHeaders().getFirst())) {
+        transactionMatches=true;
+      }
+    }
+  }
+  if (transactionMatches) {
+    this.setPassToListener();
+  }
+  return transactionMatches;
+}

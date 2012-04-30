@@ -1,0 +1,8 @@
+{
+  if (_recursive)   sb.append(":recursive");
+  if (_outputType != null) {
+    sb.append(':');
+    sb.append(_outputType);
+  }
+  super.print(sb);
+}

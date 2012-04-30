@@ -1,0 +1,12 @@
+{
+  if (false) {
+    Log.d(TAG,"getAllProviders");
+  }
+  try {
+    return mService.getAllProviders();
+  }
+ catch (  RemoteException ex) {
+    Log.e(TAG,"getAllProviders: RemoteException",ex);
+  }
+  return null;
+}

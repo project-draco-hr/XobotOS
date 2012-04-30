@@ -1,0 +1,12 @@
+{
+  if (getState() != STATE_ON) {
+    return toDeviceSet(new String[0]);
+  }
+  try {
+    return toDeviceSet(mService.listBonds());
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"",e);
+  }
+  return null;
+}

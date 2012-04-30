@@ -1,0 +1,4 @@
+{
+  if (uncaughtHandler != null)   return uncaughtHandler;
+ else   return group;
+}

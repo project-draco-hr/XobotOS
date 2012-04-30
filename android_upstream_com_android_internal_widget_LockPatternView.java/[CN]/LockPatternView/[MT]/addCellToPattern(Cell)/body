@@ -1,0 +1,5 @@
+{
+  mPatternDrawLookup[newCell.getRow()][newCell.getColumn()]=true;
+  mPattern.add(newCell);
+  notifyCellAdded();
+}

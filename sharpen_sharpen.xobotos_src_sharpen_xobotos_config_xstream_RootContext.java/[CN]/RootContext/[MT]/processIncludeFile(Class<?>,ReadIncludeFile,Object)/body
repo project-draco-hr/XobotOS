@@ -1,0 +1,25 @@
+{
+  final String fileName;
+  try {
+    Field field=klass.getDeclaredField(annotation.fileNameField());
+    field.setAccessible(true);
+    fileName=(String)field.get(include);
+  }
+ catch (  Exception e) {
+    throw new ConfigurationException("Cannot get include file name in '%s'",klass);
+  }
+  for (  final Scope scope : _stack) {
+    if (scope.isFileScope() && scope.getFileName().equals(fileName))     throw new ConfigurationException("Duplicate include file '%s'",fileName);
+  }
+  _stack.push(new Scope(_stack.peek(),null,fileName));
+  IConfigurationFile contents=XStreamUtils.readFragment(this,fileName,annotation.fileType());
+  _stack.pop();
+  try {
+    Field field=klass.getDeclaredField(annotation.contentsField());
+    field.setAccessible(true);
+    field.set(include,contents);
+  }
+ catch (  Exception e) {
+    throw new ConfigurationException("Cannot set include file contents field in '%s'",klass);
+  }
+}

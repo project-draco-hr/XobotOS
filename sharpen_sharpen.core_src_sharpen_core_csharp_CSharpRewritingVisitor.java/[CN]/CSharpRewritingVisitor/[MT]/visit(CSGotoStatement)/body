@@ -1,0 +1,5 @@
+{
+  if (node.target() != null) {
+    node.target().accept(this);
+  }
+}

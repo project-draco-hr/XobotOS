@@ -1,0 +1,4 @@
+CSTypeDeclaration klass
+int id
+CSTypeReference typeRef
+EnumConstantDeclaration node

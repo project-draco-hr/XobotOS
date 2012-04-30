@@ -1,0 +1,14 @@
+{
+  if (phoneNumber.startsWith("#") || phoneNumber.startsWith("*")) {
+    return phoneNumber;
+  }
+  PhoneNumberUtil util=PhoneNumberUtil.getInstance();
+  String result=null;
+  try {
+    PhoneNumber pn=util.parseAndKeepRawInput(phoneNumber,defaultCountryIso);
+    result=util.formatInOriginalFormat(pn,defaultCountryIso);
+  }
+ catch (  NumberParseException e) {
+  }
+  return result;
+}

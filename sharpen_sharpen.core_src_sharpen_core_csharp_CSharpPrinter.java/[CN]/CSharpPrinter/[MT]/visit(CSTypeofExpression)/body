@@ -1,0 +1,5 @@
+{
+  write("typeof(");
+  node.type().accept(this);
+  write(")");
+}

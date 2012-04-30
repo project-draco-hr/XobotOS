@@ -1,0 +1,10 @@
+{
+  String superstring=super.debugDump();
+  stringRepresentation="";
+  sprint(SIPRequest.class.getName());
+  sprint("{");
+  if (requestLine != null)   sprint(requestLine.debugDump());
+  sprint(superstring);
+  sprint("}");
+  return stringRepresentation;
+}

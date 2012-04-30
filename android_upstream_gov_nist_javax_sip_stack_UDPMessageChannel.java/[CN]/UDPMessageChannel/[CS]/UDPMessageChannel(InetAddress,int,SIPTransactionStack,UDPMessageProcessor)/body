@@ -1,0 +1,12 @@
+{
+  peerAddress=targetAddr;
+  peerPort=port;
+  peerProtocol="UDP";
+  super.messageProcessor=messageProcessor;
+  this.myAddress=messageProcessor.getIpAddress().getHostAddress();
+  this.myPort=messageProcessor.getPort();
+  this.sipStack=sipStack;
+  if (sipStack.isLoggingEnabled()) {
+    this.sipStack.getStackLogger().logDebug("Creating message channel " + targetAddr.getHostAddress() + "/"+ port);
+  }
+}

@@ -1,0 +1,9 @@
+{
+  if (contentCoding != null) {
+    buffer.append(contentCoding);
+  }
+  if (parameters != null && !parameters.isEmpty()) {
+    buffer.append(SEMICOLON).append(parameters.encode());
+  }
+  return buffer;
+}

@@ -1,0 +1,8 @@
+{
+  if (this.isClosed)   throw new IOException("Closed!!");
+  Buffer buff=new Buffer(bytes,bytes.length);
+synchronized (this.buffList) {
+    buffList.add(buff);
+    buffList.notifyAll();
+  }
+}

@@ -1,0 +1,4 @@
+byte[] msg
+InetAddress peerAddress
+int peerPort
+boolean reConnect

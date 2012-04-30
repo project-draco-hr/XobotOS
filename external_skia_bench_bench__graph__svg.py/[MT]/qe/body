@@ -1,0 +1,3 @@
+def qe(out):
+    'Stringify input and escape as xml data.'
+    return xml.sax.saxutils.escape(str(out))

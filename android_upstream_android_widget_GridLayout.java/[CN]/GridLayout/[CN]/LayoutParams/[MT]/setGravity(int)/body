@@ -1,0 +1,4 @@
+{
+  rowSpec=rowSpec.copyWriteAlignment(getAlignment(gravity,false));
+  columnSpec=columnSpec.copyWriteAlignment(getAlignment(gravity,true));
+}

@@ -1,0 +1,3 @@
+{
+  return isTaggedDeclaration(node,SharpenAnnotations.SHARPEN_INDEXER) || isMappedToIndexer(node);
+}

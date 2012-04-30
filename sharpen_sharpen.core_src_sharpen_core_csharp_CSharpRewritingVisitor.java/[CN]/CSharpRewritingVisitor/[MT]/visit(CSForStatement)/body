@@ -1,0 +1,6 @@
+{
+  if (null != node.expression()) {
+    node.expression().accept(this);
+  }
+  node.body().accept(this);
+}

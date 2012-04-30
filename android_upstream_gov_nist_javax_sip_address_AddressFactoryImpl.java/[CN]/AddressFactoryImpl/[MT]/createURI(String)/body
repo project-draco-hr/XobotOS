@@ -1,0 +1,21 @@
+{
+  if (uri == null)   throw new NullPointerException("null arg");
+  try {
+    URLParser urlParser=new URLParser(uri);
+    String scheme=urlParser.peekScheme();
+    if (scheme == null)     throw new ParseException("bad scheme",0);
+    if (scheme.equalsIgnoreCase("sip")) {
+      return (javax.sip.address.URI)urlParser.sipURL(true);
+    }
+ else     if (scheme.equalsIgnoreCase("sips")) {
+      return (javax.sip.address.URI)urlParser.sipURL(true);
+    }
+ else     if (scheme.equalsIgnoreCase("tel")) {
+      return (javax.sip.address.URI)urlParser.telURL(true);
+    }
+  }
+ catch (  ParseException ex) {
+    throw new ParseException(ex.getMessage(),0);
+  }
+  return new gov.nist.javax.sip.address.GenericURI(uri);
+}

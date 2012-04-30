@@ -1,0 +1,20 @@
+{
+  ITypeBuilderDelegate delegate=(ITypeBuilderDelegate)dlg;
+  delegate.mapMembers(type,this);
+  if (getOutputMode() == OutputMode.SHARPEN) {
+    if (!getASTNode().resolveBinding().isNested()) {
+      CSAttribute attr=new CSAttribute("Sharpen.Sharpened");
+      type.addAttribute(attr);
+    }
+  }
+ else   if (getOutputMode() == OutputMode.STUB) {
+    CSAttribute attr=new CSAttribute("Sharpen.Stub");
+    type.addAttribute(attr);
+  }
+  if (getOutputType().removeStaticConstructor() && type.hasStaticConstructor()) {
+    CSConstructor sctor=type.ensureStaticConstructor();
+    stubBlock(sctor.body());
+    sctor.setStub();
+  }
+  return true;
+}

@@ -1,0 +1,5 @@
+{
+  if ((type != null) && type.isArray())   return null;
+  if (_nativeHandle == null)   throw new ConfigurationException("Missing 'native-handle' in MarshalAsClass");
+  return new MarshalAsClass(type,_flags,_nativeHandle);
+}

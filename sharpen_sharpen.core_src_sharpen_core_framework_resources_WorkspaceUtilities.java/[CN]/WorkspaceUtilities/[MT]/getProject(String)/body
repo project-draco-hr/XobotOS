@@ -1,0 +1,3 @@
+{
+  return getWorkspaceRoot().getProject(name);
+}

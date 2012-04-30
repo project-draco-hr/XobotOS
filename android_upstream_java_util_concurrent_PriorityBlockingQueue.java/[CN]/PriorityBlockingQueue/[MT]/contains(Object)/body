@@ -1,0 +1,12 @@
+{
+  int index;
+  final ReentrantLock lock=this.lock;
+  lock.lock();
+  try {
+    index=indexOf(o);
+  }
+  finally {
+    lock.unlock();
+  }
+  return index != -1;
+}

@@ -1,0 +1,28 @@
+{
+  if (debug)   dbg_enter("uricNoSlash");
+  try {
+    try {
+      char la=lexer.lookAhead(0);
+      if (isEscaped()) {
+        String retval=lexer.charAsString(3);
+        lexer.consume(3);
+        return retval;
+      }
+ else       if (isUnreserved(la)) {
+        lexer.consume(1);
+        return Lexer.charAsString(la);
+      }
+ else       if (isReservedNoSlash(la)) {
+        lexer.consume(1);
+        return Lexer.charAsString(la);
+      }
+ else       return null;
+    }
+ catch (    ParseException ex) {
+      return null;
+    }
+  }
+  finally {
+    if (debug)     dbg_leave("uricNoSlash");
+  }
+}

@@ -1,0 +1,5 @@
+{
+  NumberFormat result=getInstance(LocaleData.get(locale).integerPattern,locale);
+  result.setParseIntegerOnly(true);
+  return result;
+}

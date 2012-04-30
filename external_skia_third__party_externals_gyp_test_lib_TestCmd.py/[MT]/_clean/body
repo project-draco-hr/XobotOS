@@ -1,0 +1,9 @@
+def _clean():
+    global _Cleanup
+    cleanlist = filter(None, _Cleanup)
+    del _Cleanup[:]
+    cleanlist.reverse()
+    for test in cleanlist:
+        test.cleanup()
+    if _chain_to_exitfunc:
+        _chain_to_exitfunc()

@@ -1,0 +1,5 @@
+{
+  if (hasValue())   throw new IllegalStateException();
+  if (isByRef())   return new PointerType(_type);
+ else   return _type;
+}

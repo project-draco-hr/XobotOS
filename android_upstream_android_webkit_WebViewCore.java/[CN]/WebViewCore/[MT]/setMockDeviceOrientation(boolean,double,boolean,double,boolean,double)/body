@@ -1,0 +1,3 @@
+{
+  mDeviceMotionAndOrientationManager.setMockOrientation(canProvideAlpha,alpha,canProvideBeta,beta,canProvideGamma,gamma);
+}

@@ -1,0 +1,4 @@
+{
+  if (_actions == null)   _actions=new ArrayList<AbstractAction>();
+  return this;
+}

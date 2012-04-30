@@ -1,0 +1,7 @@
+{
+  peek();
+  if (token != expected) {
+    throw new IllegalStateException("Expected " + expected + " but was "+ peek());
+  }
+  advance();
+}

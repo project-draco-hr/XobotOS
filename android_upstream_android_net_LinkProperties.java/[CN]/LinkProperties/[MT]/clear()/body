@@ -1,0 +1,7 @@
+{
+  mIfaceName=null;
+  mLinkAddresses.clear();
+  mDnses.clear();
+  mRoutes.clear();
+  mHttpProxy=null;
+}

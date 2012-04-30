@@ -1,0 +1,4 @@
+{
+  this._decl=new CSVariableDeclaration(name,getEffectiveType(type,flags),init);
+  this._flags=flags;
+}

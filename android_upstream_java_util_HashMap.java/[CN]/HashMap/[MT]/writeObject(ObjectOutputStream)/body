@@ -1,0 +1,11 @@
+{
+  ObjectOutputStream.PutField fields=stream.putFields();
+  fields.put("loadFactor",DEFAULT_LOAD_FACTOR);
+  stream.writeFields();
+  stream.writeInt(table.length);
+  stream.writeInt(size);
+  for (  Entry<K,V> e : entrySet()) {
+    stream.writeObject(e.getKey());
+    stream.writeObject(e.getValue());
+  }
+}

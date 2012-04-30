@@ -1,0 +1,8 @@
+{
+  if (longCount > remaining()) {
+    throw new BufferUnderflowException();
+  }
+  System.arraycopy(backingArray,offset + position,dst,dstOffset,longCount);
+  position+=longCount;
+  return this;
+}

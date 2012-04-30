@@ -1,0 +1,21 @@
+{
+  printPrecedingComments(node);
+  beginEnclosingIfDefs(node);
+  writeDoc(node);
+  writeAttributes(node);
+  if (node.dllImport() != null)   writeDllImport(node.dllImport());
+  writeMethodHeader(node,node.modifier());
+  node.returnType().accept(this);
+  write(" ");
+  writeMethodName(node);
+  writeTypeParameters(node);
+  writeParameterList(node);
+  if (node.modifier() != CSMethodModifier.Override)   writeTypeParameterConstraints(node.typeParameters());
+  if (node.isAbstract() || (node.dllImport() != null)) {
+    writeLine(";");
+  }
+ else {
+    writeMethodBody(node);
+  }
+  endEnclosingIfDefs(node);
+}

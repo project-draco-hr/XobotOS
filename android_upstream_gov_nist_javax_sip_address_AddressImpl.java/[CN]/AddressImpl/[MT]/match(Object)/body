@@ -1,0 +1,11 @@
+{
+  if (other == null)   return true;
+  if (!(other instanceof Address))   return false;
+ else {
+    AddressImpl that=(AddressImpl)other;
+    if (that.getMatcher() != null)     return that.getMatcher().match(this.encode());
+ else     if (that.displayName != null && this.displayName == null)     return false;
+ else     if (that.displayName == null)     return address.match(that.address);
+ else     return displayName.equalsIgnoreCase(that.displayName) && address.match(that.address);
+  }
+}

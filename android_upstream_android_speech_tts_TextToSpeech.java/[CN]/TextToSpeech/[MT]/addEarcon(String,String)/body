@@ -1,0 +1,6 @@
+{
+synchronized (mStartLock) {
+    mEarcons.put(earcon,Uri.parse(filename));
+    return SUCCESS;
+  }
+}

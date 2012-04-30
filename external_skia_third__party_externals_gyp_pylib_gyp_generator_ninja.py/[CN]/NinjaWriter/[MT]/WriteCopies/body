@@ -1,0 +1,10 @@
+def WriteCopies(self, copies, prebuild):
+    outputs = []
+    for copy in copies:
+        for path in copy['files']:
+            path = os.path.normpath(path)
+            basename = os.path.split(path)[1]
+            src = self.GypPathToNinja(path)
+            dst = self.GypPathToNinja(os.path.join(copy['destination'], basename))
+            outputs += self.ninja.build(dst, 'copy', src, order_only=prebuild)
+    return outputs

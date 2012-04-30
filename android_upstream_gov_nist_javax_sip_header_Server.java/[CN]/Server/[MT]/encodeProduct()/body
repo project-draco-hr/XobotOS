@@ -1,0 +1,10 @@
+{
+  StringBuffer tokens=new StringBuffer();
+  ListIterator it=productTokens.listIterator();
+  while (it.hasNext()) {
+    tokens.append((String)it.next());
+    if (it.hasNext())     tokens.append('/');
+ else     break;
+  }
+  return tokens.toString();
+}

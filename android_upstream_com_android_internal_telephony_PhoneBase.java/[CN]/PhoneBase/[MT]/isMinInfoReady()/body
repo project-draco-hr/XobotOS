@@ -1,0 +1,4 @@
+{
+  logUnexpectedCdmaMethodCall("isMinInfoReady");
+  return false;
+}

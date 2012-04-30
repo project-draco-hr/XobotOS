@@ -1,0 +1,3 @@
+{
+  setInAnimation((ObjectAnimator)AnimatorInflater.loadAnimator(context,resourceID));
+}

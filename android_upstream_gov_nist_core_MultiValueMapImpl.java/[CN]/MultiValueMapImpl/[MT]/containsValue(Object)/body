@@ -1,0 +1,11 @@
+{
+  Set pairs=map.entrySet();
+  if (pairs == null)   return false;
+  Iterator pairsIterator=pairs.iterator();
+  while (pairsIterator.hasNext()) {
+    Map.Entry keyValuePair=(Map.Entry)(pairsIterator.next());
+    ArrayList list=(ArrayList)(keyValuePair.getValue());
+    if (list.contains(value))     return true;
+  }
+  return false;
+}

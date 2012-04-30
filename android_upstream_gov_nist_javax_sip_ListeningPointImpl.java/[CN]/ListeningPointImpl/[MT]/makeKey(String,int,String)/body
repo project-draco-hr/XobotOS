@@ -1,0 +1,3 @@
+{
+  return new StringBuffer(host).append(":").append(port).append("/").append(transport).toString().toLowerCase();
+}

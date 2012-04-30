@@ -1,0 +1,8 @@
+{
+  if (isManagedClass()) {
+    CSConstructorInvocationExpression cie=new CSConstructorInvocationExpression(getManagedType(Mode.OUT,null));
+    cie.addArgument(expr);
+    return cie;
+  }
+  return expr;
+}

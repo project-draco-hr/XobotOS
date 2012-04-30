@@ -1,0 +1,32 @@
+{
+  if (!(firstTransactionIsServerTransaction)) {
+    throw new SipException("Not a Server Dialog!");
+  }
+  if (statusCode <= 100 || statusCode > 199)   throw new InvalidArgumentException("Bad status code ");
+  SIPRequest request=this.originalRequest;
+  if (!request.getMethod().equals(Request.INVITE))   throw new SipException("Bad method");
+  ListIterator<SIPHeader> list=request.getHeaders(SupportedHeader.NAME);
+  if (list == null || !optionPresent(list,"100rel")) {
+    list=request.getHeaders(RequireHeader.NAME);
+    if (list == null || !optionPresent(list,"100rel")) {
+      throw new SipException("No Supported/Require 100rel header in the request");
+    }
+  }
+  SIPResponse response=request.createResponse(statusCode);
+  Require require=new Require();
+  try {
+    require.setOptionTag("100rel");
+  }
+ catch (  Exception ex) {
+    InternalErrorHandler.handleException(ex);
+  }
+  response.addHeader(require);
+  RSeq rseq=new RSeq();
+  rseq.setSeqNumber(1L);
+  RecordRouteList rrl=request.getRecordRouteHeaders();
+  if (rrl != null) {
+    RecordRouteList rrlclone=(RecordRouteList)rrl.clone();
+    response.setHeader(rrlclone);
+  }
+  return response;
+}

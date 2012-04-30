@@ -1,0 +1,4 @@
+{
+  if (qValue == -1)   super.removeParameter(ParameterNames.Q);
+  super.setParameter(ParameterNames.Q,qValue);
+}

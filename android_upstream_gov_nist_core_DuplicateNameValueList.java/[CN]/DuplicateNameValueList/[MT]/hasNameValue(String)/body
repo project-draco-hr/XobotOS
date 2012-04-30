@@ -1,0 +1,3 @@
+{
+  return nameValueMap.containsKey(name.toLowerCase());
+}

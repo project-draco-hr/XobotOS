@@ -1,0 +1,5 @@
+{
+  if (version == null) {
+    throw new IllegalStateException("data access before read()");
+  }
+}

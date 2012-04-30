@@ -1,0 +1,7 @@
+{
+  node.expression().accept(this);
+  node.trueBlock().accept(this);
+  if (!node.falseBlock().isEmpty()) {
+    node.falseBlock().accept(this);
+  }
+}

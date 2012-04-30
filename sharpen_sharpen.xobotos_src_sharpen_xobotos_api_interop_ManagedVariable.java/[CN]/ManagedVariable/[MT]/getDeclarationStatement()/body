@@ -1,0 +1,3 @@
+{
+  return new CSDeclarationStatement(-1,_decl);
+}

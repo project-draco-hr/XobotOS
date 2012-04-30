@@ -1,0 +1,6 @@
+{
+  long magnitudeBits=Double.doubleToRawLongBits(magnitude);
+  long signBits=Double.doubleToRawLongBits(sign);
+  magnitudeBits=(magnitudeBits & ~Double.SIGN_MASK) | (signBits & Double.SIGN_MASK);
+  return Double.longBitsToDouble(magnitudeBits);
+}

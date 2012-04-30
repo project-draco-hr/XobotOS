@@ -1,0 +1,5 @@
+{
+  super(wr);
+  this.autoFlush=autoFlush;
+  out=wr;
+}

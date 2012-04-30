@@ -1,0 +1,77 @@
+{
+  if (areEqual(arg,"-pascalCase")) {
+    _cmdLine.pascalCase=SharpenCommandLine.PascalCaseOptions.Identifiers;
+  }
+ else   if (areEqual(arg,"-pascalCase+")) {
+    _cmdLine.pascalCase=SharpenCommandLine.PascalCaseOptions.NamespaceAndIdentifiers;
+  }
+ else   if (areEqual(arg,"-cp")) {
+    _cmdLine.classpath.add(consumeNext());
+  }
+ else   if (areEqual(arg,"-srcFolder")) {
+    _cmdLine.sourceFolders.add(consumeNext());
+  }
+ else   if (areEqual(arg,"-nativeTypeSystem")) {
+    _cmdLine.nativeTypeSystem=true;
+  }
+ else   if (areEqual(arg,"-nativeInterfaces")) {
+    _cmdLine.nativeInterfaces=true;
+  }
+ else   if (areEqual(arg,"-organizeUsings")) {
+    _cmdLine.organizeUsings=true;
+  }
+ else   if (areEqual(arg,"-fullyQualify")) {
+    _cmdLine.fullyQualifiedTypes.add(consumeNext());
+  }
+ else   if (areEqual(arg,"-namespaceMapping")) {
+    _cmdLine.namespaceMappings.add(consumeRegexMapping());
+  }
+ else   if (areEqual(arg,"-methodMapping")) {
+    String from=consumeNext();
+    String to=consumeNext();
+    _cmdLine.memberMappings.put(from,new Configuration.MemberMapping(to,MemberKind.Method));
+  }
+ else   if (areEqual(arg,"-typeMapping")) {
+    _cmdLine.typeMappings.add(consumeNameMapping());
+  }
+ else   if (areEqual(arg,"-propertyMapping")) {
+    String from=consumeNext();
+    String to=consumeNext();
+    _cmdLine.memberMappings.put(from,new Configuration.MemberMapping(to,MemberKind.Property));
+  }
+ else   if (areEqual(arg,"-fieldMapping")) {
+    String from=consumeNext();
+    String to=consumeNext();
+    _cmdLine.memberMappings.put(from,new Configuration.MemberMapping(to,MemberKind.Field));
+  }
+ else   if (areEqual(arg,"-makePartial")) {
+    _cmdLine.partialTypes.add(consumeNext());
+  }
+ else   if (areEqual(arg,"-runtimeTypeName")) {
+    _cmdLine.runtimeTypeName=consumeNext();
+  }
+ else   if (areEqual(arg,"-header")) {
+    _cmdLine.headerFile=consumeNext();
+  }
+ else   if (areEqual(arg,"-xmldoc")) {
+    _cmdLine.xmldoc=consumeNext();
+  }
+ else   if (areEqual(arg,"-eventMapping")) {
+    _cmdLine.eventMappings.add(consumeNameMapping());
+  }
+ else   if (areEqual(arg,"-eventAddMapping")) {
+    _cmdLine.eventAddMappings.add(consumeNext());
+  }
+ else   if (areEqual(arg,"-conditionalCompilation")) {
+    _cmdLine.conditionalCompilation.put(consumeNext(),consumeNext());
+  }
+ else   if (areEqual(arg,"-configurationClass")) {
+    _cmdLine.configurationClass=consumeNext();
+  }
+ else   if (areEqual(arg,"-junitConversion")) {
+    _cmdLine.junitConversion=true;
+  }
+ else {
+    illegalArgument(arg);
+  }
+}

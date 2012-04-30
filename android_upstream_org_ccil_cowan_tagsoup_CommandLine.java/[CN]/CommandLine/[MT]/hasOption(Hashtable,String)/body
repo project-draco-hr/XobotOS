@@ -1,0 +1,5 @@
+{
+  if (Boolean.getBoolean(option))   return true;
+ else   if (options.get(option) != Boolean.FALSE)   return true;
+  return false;
+}

@@ -1,0 +1,19 @@
+{
+  while (klass != null) {
+    RootContextReference annotation=klass.getAnnotation(RootContextReference.class);
+    if (annotation == null) {
+      klass=klass.getSuperclass();
+      continue;
+    }
+    final Field field;
+    try {
+      field=klass.getDeclaredField(annotation.value());
+      field.setAccessible(true);
+      field.set(obj,this);
+    }
+ catch (    Exception e) {
+      throw new ConfigurationException("Cannot set root context field in '%s'",klass);
+    }
+    return;
+  }
+}

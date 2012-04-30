@@ -1,0 +1,24 @@
+{
+  if (DEBUG)   Log.v(TAG,"attach: " + this + " wrapper="+ wrapper);
+  if (mDestroyed) {
+    return;
+  }
+  mIWallpaperEngine=wrapper;
+  mCaller=wrapper.mCaller;
+  mConnection=wrapper.mConnection;
+  mWindowToken=wrapper.mWindowToken;
+  mSurfaceHolder.setSizeFromLayout();
+  mInitializing=true;
+  mSession=ViewRootImpl.getWindowSession(getMainLooper());
+  mWindow.setSession(mSession);
+  mScreenOn=((PowerManager)getSystemService(Context.POWER_SERVICE)).isScreenOn();
+  IntentFilter filter=new IntentFilter();
+  filter.addAction(Intent.ACTION_SCREEN_ON);
+  filter.addAction(Intent.ACTION_SCREEN_OFF);
+  registerReceiver(mReceiver,filter);
+  if (DEBUG)   Log.v(TAG,"onCreate(): " + this);
+  onCreate(mSurfaceHolder);
+  mInitializing=false;
+  mReportedVisible=false;
+  updateSurface(false,false,false);
+}

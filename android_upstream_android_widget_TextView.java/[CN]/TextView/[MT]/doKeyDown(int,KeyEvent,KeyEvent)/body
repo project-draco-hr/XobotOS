@@ -1,0 +1,90 @@
+{
+  if (!isEnabled()) {
+    return 0;
+  }
+switch (keyCode) {
+case KeyEvent.KEYCODE_ENTER:
+    mEnterKeyIsDown=true;
+  if (event.hasNoModifiers()) {
+    if (mInputContentType != null) {
+      if (mInputContentType.onEditorActionListener != null && mInputContentType.onEditorActionListener.onEditorAction(this,EditorInfo.IME_NULL,event)) {
+        mInputContentType.enterDown=true;
+        return -1;
+      }
+    }
+    if ((event.getFlags() & KeyEvent.FLAG_EDITOR_ACTION) != 0 || shouldAdvanceFocusOnEnter()) {
+      if (mOnClickListener != null) {
+        return 0;
+      }
+      return -1;
+    }
+  }
+break;
+case KeyEvent.KEYCODE_DPAD_CENTER:
+mDPadCenterIsDown=true;
+if (event.hasNoModifiers()) {
+if (shouldAdvanceFocusOnEnter()) {
+return 0;
+}
+}
+break;
+case KeyEvent.KEYCODE_TAB:
+if (event.hasNoModifiers() || event.hasModifiers(KeyEvent.META_SHIFT_ON)) {
+if (shouldAdvanceFocusOnTab()) {
+return 0;
+}
+}
+break;
+case KeyEvent.KEYCODE_BACK:
+if (mSelectionActionMode != null) {
+stopSelectionActionMode();
+return -1;
+}
+break;
+}
+if (mInput != null) {
+resetErrorChangedFlag();
+boolean doDown=true;
+if (otherEvent != null) {
+try {
+beginBatchEdit();
+final boolean handled=mInput.onKeyOther(this,(Editable)mText,otherEvent);
+hideErrorIfUnchanged();
+doDown=false;
+if (handled) {
+return -1;
+}
+}
+ catch (AbstractMethodError e) {
+}
+ finally {
+endBatchEdit();
+}
+}
+if (doDown) {
+beginBatchEdit();
+final boolean handled=mInput.onKeyDown(this,(Editable)mText,keyCode,event);
+endBatchEdit();
+hideErrorIfUnchanged();
+if (handled) return 1;
+}
+}
+if (mMovement != null && mLayout != null) {
+boolean doDown=true;
+if (otherEvent != null) {
+try {
+boolean handled=mMovement.onKeyOther(this,(Spannable)mText,otherEvent);
+doDown=false;
+if (handled) {
+return -1;
+}
+}
+ catch (AbstractMethodError e) {
+}
+}
+if (doDown) {
+if (mMovement.onKeyDown(this,(Spannable)mText,keyCode,event)) return 2;
+}
+}
+return 0;
+}

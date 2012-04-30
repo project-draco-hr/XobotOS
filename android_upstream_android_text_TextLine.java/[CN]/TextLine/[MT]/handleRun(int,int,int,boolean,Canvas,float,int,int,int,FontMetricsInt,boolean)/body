@@ -1,0 +1,56 @@
+{
+  if (start == measureLimit) {
+    TextPaint wp=mWorkPaint;
+    wp.set(mPaint);
+    if (fmi != null) {
+      expandMetricsFromPaint(fmi,wp);
+    }
+    return 0f;
+  }
+  if (mSpanned == null) {
+    TextPaint wp=mWorkPaint;
+    wp.set(mPaint);
+    final int mlimit=measureLimit;
+    return handleText(wp,start,mlimit,start,limit,runIsRtl,c,x,top,y,bottom,fmi,needWidth || mlimit < measureLimit);
+  }
+  final SpanSet<MetricAffectingSpan> metricAffectingSpans=new SpanSet<MetricAffectingSpan>(mSpanned,mStart + start,mStart + limit,MetricAffectingSpan.class);
+  final SpanSet<CharacterStyle> characterStyleSpans=new SpanSet<CharacterStyle>(mSpanned,mStart + start,mStart + limit,CharacterStyle.class);
+  final float originalX=x;
+  for (int i=start, inext; i < measureLimit; i=inext) {
+    TextPaint wp=mWorkPaint;
+    wp.set(mPaint);
+    inext=metricAffectingSpans.getNextTransition(mStart + i,mStart + limit) - mStart;
+    int mlimit=Math.min(inext,measureLimit);
+    ReplacementSpan replacement=null;
+    for (int j=0; j < metricAffectingSpans.numberOfSpans; j++) {
+      if ((metricAffectingSpans.spanStarts[j] >= mStart + mlimit) || (metricAffectingSpans.spanEnds[j] <= mStart + i))       continue;
+      MetricAffectingSpan span=metricAffectingSpans.spans[j];
+      if (span instanceof ReplacementSpan) {
+        replacement=(ReplacementSpan)span;
+      }
+ else {
+        span.updateDrawState(wp);
+      }
+    }
+    if (replacement != null) {
+      x+=handleReplacement(replacement,wp,i,mlimit,runIsRtl,c,x,top,y,bottom,fmi,needWidth || mlimit < measureLimit);
+      continue;
+    }
+    if (c == null) {
+      x+=handleText(wp,i,mlimit,i,inext,runIsRtl,c,x,top,y,bottom,fmi,needWidth || mlimit < measureLimit);
+    }
+ else {
+      for (int j=i, jnext; j < mlimit; j=jnext) {
+        jnext=characterStyleSpans.getNextTransition(mStart + j,mStart + mlimit) - mStart;
+        wp.set(mPaint);
+        for (int k=0; k < characterStyleSpans.numberOfSpans; k++) {
+          if ((characterStyleSpans.spanStarts[k] >= mStart + jnext) || (characterStyleSpans.spanEnds[k] <= mStart + j))           continue;
+          CharacterStyle span=characterStyleSpans.spans[k];
+          span.updateDrawState(wp);
+        }
+        x+=handleText(wp,j,jnext,i,inext,runIsRtl,c,x,top,y,bottom,fmi,needWidth || jnext < measureLimit);
+      }
+    }
+  }
+  return x - originalX;
+}

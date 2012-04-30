@@ -1,0 +1,5 @@
+{
+  PMediaAuthorization retval=(PMediaAuthorization)super.clone();
+  if (this.token != null)   retval.token=this.token;
+  return retval;
+}

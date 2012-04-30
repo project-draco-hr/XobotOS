@@ -1,0 +1,7 @@
+def InvertRelativePath(path):
+    'Given a relative path like foo/bar, return the inverse relative path:\n  the path from the relative path back to the origin dir.\n\n  E.g. os.path.normpath(os.path.join(path, InvertRelativePath(path)))\n  should always produce the empty string.'
+    if (not path):
+        return path
+    assert ('..' not in path), path
+    depth = len(path.split('/'))
+    return '/'.join((['..'] * depth))

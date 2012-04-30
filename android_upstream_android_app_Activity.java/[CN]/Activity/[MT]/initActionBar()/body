@@ -1,0 +1,8 @@
+{
+  Window window=getWindow();
+  window.getDecorView();
+  if (isChild() || !window.hasFeature(Window.FEATURE_ACTION_BAR) || mActionBar != null) {
+    return;
+  }
+  mActionBar=new ActionBarImpl(this);
+}

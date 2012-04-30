@@ -1,0 +1,4 @@
+{
+  this.scheme=challenge.scheme;
+  super.parameters=challenge.authParams;
+}

@@ -1,0 +1,4 @@
+Object obj
+long offset
+Object expectedValue
+Object newValue

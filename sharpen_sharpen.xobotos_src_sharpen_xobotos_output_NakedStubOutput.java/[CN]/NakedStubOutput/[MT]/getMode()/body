@@ -1,0 +1,3 @@
+{
+  return OutputMode.NAKED_STUB;
+}

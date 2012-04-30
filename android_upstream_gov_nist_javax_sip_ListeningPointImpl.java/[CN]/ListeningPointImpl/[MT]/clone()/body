@@ -1,0 +1,5 @@
+{
+  ListeningPointImpl lip=new ListeningPointImpl(this.sipStack,this.port,null);
+  lip.sipStack=this.sipStack;
+  return lip;
+}

@@ -1,0 +1,4 @@
+{
+  if (theNewElement != null)   return;
+  thePITarget=makeName(buff,offset,length).replace(':','_');
+}

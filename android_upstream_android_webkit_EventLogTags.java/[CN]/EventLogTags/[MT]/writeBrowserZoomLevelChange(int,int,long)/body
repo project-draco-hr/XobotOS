@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(BROWSER_ZOOM_LEVEL_CHANGE,startLevel,endLevel,time);
+}

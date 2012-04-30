@@ -1,0 +1,8 @@
+{
+  if (node.getLocationInParent() != MethodInvocation.NAME_PROPERTY)   return null;
+  final MethodInvocation invocation=parentMethodInvocation(node);
+  if (invocation.getExpression() != null)   return null;
+  final IMethodBinding method=invocation.resolveMethodBinding();
+  if (!isStaticImport(method,imports))   return null;
+  return method;
+}

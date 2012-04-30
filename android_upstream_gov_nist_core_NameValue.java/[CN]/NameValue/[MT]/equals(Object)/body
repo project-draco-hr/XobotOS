@@ -1,0 +1,17 @@
+{
+  if (other == null)   return false;
+  if (!other.getClass().equals(this.getClass()))   return false;
+  NameValue that=(NameValue)other;
+  if (this == that)   return true;
+  if (this.name == null && that.name != null || this.name != null && that.name == null)   return false;
+  if (this.name != null && that.name != null && this.name.compareToIgnoreCase(that.name) != 0)   return false;
+  if (this.value != null && that.value == null || this.value == null && that.value != null)   return false;
+  if (this.value == that.value)   return true;
+  if (value instanceof String) {
+    if (isQuotedString)     return this.value.equals(that.value);
+    String val=(String)this.value;
+    String val1=(String)that.value;
+    return val.compareToIgnoreCase(val1) == 0;
+  }
+ else   return this.value.equals(that.value);
+}

@@ -1,0 +1,4 @@
+{
+  checkRead();
+  return version;
+}

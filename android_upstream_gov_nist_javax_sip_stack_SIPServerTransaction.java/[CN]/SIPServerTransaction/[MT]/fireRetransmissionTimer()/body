@@ -1,0 +1,21 @@
+{
+  try {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("fireRetransmissionTimer() -- ");
+    }
+    if (isInviteTransaction() && lastResponse != null) {
+      if (!this.retransmissionAlertEnabled || sipStack.isTransactionPendingAck(this)) {
+        if (lastResponse.getStatusCode() / 100 > 2 && !this.isAckSeen)         super.sendMessage(lastResponse);
+      }
+ else {
+        SipProviderImpl sipProvider=(SipProviderImpl)this.getSipProvider();
+        TimeoutEvent txTimeout=new TimeoutEvent(sipProvider,this,Timeout.RETRANSMIT);
+        sipProvider.handleEvent(txTimeout,this);
+      }
+    }
+  }
+ catch (  IOException e) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logException(e);
+    raiseErrorEvent(SIPTransactionErrorEvent.TRANSPORT_ERROR);
+  }
+}

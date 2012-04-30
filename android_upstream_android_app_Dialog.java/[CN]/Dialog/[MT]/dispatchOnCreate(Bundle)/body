@@ -1,0 +1,6 @@
+{
+  if (!mCreated) {
+    onCreate(savedInstanceState);
+    mCreated=true;
+  }
+}

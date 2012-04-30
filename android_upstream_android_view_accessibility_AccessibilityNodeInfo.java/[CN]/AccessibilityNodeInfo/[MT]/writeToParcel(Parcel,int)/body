@@ -1,0 +1,34 @@
+{
+  if (mConnection == null) {
+    parcel.writeInt(0);
+  }
+ else {
+    parcel.writeInt(1);
+    parcel.writeStrongBinder(mConnection.asBinder());
+  }
+  parcel.writeInt(isSealed() ? 1 : 0);
+  parcel.writeInt(mAccessibilityViewId);
+  parcel.writeInt(mAccessibilityWindowId);
+  parcel.writeInt(mParentAccessibilityViewId);
+  SparseIntArray childIds=mChildAccessibilityIds;
+  final int childIdsSize=childIds.size();
+  parcel.writeInt(childIdsSize);
+  for (int i=0; i < childIdsSize; i++) {
+    parcel.writeInt(childIds.valueAt(i));
+  }
+  parcel.writeInt(mBoundsInParent.top);
+  parcel.writeInt(mBoundsInParent.bottom);
+  parcel.writeInt(mBoundsInParent.left);
+  parcel.writeInt(mBoundsInParent.right);
+  parcel.writeInt(mBoundsInScreen.top);
+  parcel.writeInt(mBoundsInScreen.bottom);
+  parcel.writeInt(mBoundsInScreen.left);
+  parcel.writeInt(mBoundsInScreen.right);
+  parcel.writeInt(mActions);
+  parcel.writeInt(mBooleanProperties);
+  TextUtils.writeToParcel(mPackageName,parcel,flags);
+  TextUtils.writeToParcel(mClassName,parcel,flags);
+  TextUtils.writeToParcel(mText,parcel,flags);
+  TextUtils.writeToParcel(mContentDescription,parcel,flags);
+  recycle();
+}

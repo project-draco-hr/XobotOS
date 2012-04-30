@@ -1,0 +1,20 @@
+{
+  while (klass != null) {
+    ReferenceById annotation=klass.getAnnotation(ReferenceById.class);
+    if (annotation == null) {
+      klass=klass.getSuperclass();
+      continue;
+    }
+    final String path=buildPath();
+    final Field field;
+    try {
+      field=klass.getDeclaredField(annotation.value());
+      field.setAccessible(true);
+      field.set(obj,path);
+    }
+ catch (    Exception e) {
+      throw new ConfigurationException("Cannot set ID field in '%s'",klass);
+    }
+    return;
+  }
+}

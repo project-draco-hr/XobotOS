@@ -1,0 +1,10 @@
+{
+  if (name == null) {
+    throw new IllegalArgumentException("name == null");
+  }
+  Object old=values.remove(name);
+  if (old instanceof SSLSessionBindingListener) {
+    SSLSessionBindingListener listener=(SSLSessionBindingListener)old;
+    listener.valueUnbound(new SSLSessionBindingEvent(this,name));
+  }
+}

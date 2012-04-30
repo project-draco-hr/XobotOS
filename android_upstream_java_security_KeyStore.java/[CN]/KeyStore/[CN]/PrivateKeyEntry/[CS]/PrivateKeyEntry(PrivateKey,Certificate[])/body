@@ -1,0 +1,35 @@
+{
+  if (privateKey == null) {
+    throw new NullPointerException("privateKey == null");
+  }
+  if (chain == null) {
+    throw new NullPointerException("chain == null");
+  }
+  if (chain.length == 0) {
+    throw new IllegalArgumentException("chain.length == 0");
+  }
+  String s=chain[0].getType();
+  if (!(chain[0].getPublicKey().getAlgorithm()).equals(privateKey.getAlgorithm())) {
+    throw new IllegalArgumentException("Algorithm of private key does not match " + "algorithm of public key in end certificate of entry " + "(with index number: 0)");
+  }
+  for (int i=1; i < chain.length; i++) {
+    if (!s.equals(chain[i].getType())) {
+      throw new IllegalArgumentException("Certificates from the given chain have " + "different types");
+    }
+  }
+  boolean isAllX509Certificates=true;
+  for (  Certificate cert : chain) {
+    if (!(cert instanceof X509Certificate)) {
+      isAllX509Certificates=false;
+      break;
+    }
+  }
+  if (isAllX509Certificates) {
+    this.chain=new X509Certificate[chain.length];
+  }
+ else {
+    this.chain=new Certificate[chain.length];
+  }
+  System.arraycopy(chain,0,this.chain,0,chain.length);
+  this.privateKey=privateKey;
+}

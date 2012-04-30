@@ -1,0 +1,2 @@
+def must_contain_lines(self, lines, output, title=None):
+    return self.must_contain_all_lines(output, lines, title)

@@ -1,0 +1,8 @@
+{
+  if (immediate) {
+    doDie();
+  }
+ else {
+    sendEmptyMessage(DIE);
+  }
+}

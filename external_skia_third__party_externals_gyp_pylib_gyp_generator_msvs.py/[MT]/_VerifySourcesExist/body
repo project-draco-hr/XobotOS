@@ -1,0 +1,9 @@
+def _VerifySourcesExist(sources, root_dir):
+    'Verifies that all source files exist on disk.\n\n  Checks that all regular source files, i.e. not created at run time,\n  exist on disk.  Missing files cause needless recompilation but no otherwise\n  visible errors.\n\n  Arguments:\n    sources: A recursive list of Filter/file names.\n    root_dir: The root directory for the relative path names.\n  '
+    for source in sources:
+        if isinstance(source, MSVSProject.Filter):
+            _VerifySourcesExist(source.contents, root_dir)
+        elif ('$' not in source):
+            full_path = os.path.join(root_dir, source)
+            if (not os.path.exists(full_path)):
+                print ('Warning: Missing input file ' + full_path)

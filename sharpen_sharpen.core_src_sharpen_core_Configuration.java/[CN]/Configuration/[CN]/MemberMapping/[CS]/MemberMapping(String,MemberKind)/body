@@ -1,0 +1,5 @@
+{
+  this.name=name;
+  this.kind=kind;
+  this.flags=MappingFlags.None;
+}

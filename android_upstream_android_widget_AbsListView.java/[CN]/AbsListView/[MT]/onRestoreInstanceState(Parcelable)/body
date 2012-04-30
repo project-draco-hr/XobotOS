@@ -1,0 +1,35 @@
+{
+  SavedState ss=(SavedState)state;
+  super.onRestoreInstanceState(ss.getSuperState());
+  mDataChanged=true;
+  mSyncHeight=ss.height;
+  if (ss.selectedId >= 0) {
+    mNeedSync=true;
+    mSyncRowId=ss.selectedId;
+    mSyncPosition=ss.position;
+    mSpecificTop=ss.viewTop;
+    mSyncMode=SYNC_SELECTED_POSITION;
+  }
+ else   if (ss.firstId >= 0) {
+    setSelectedPositionInt(INVALID_POSITION);
+    setNextSelectedPositionInt(INVALID_POSITION);
+    mSelectorPosition=INVALID_POSITION;
+    mNeedSync=true;
+    mSyncRowId=ss.firstId;
+    mSyncPosition=ss.position;
+    mSpecificTop=ss.viewTop;
+    mSyncMode=SYNC_FIRST_POSITION;
+  }
+  setFilterText(ss.filter);
+  if (ss.checkState != null) {
+    mCheckStates=ss.checkState;
+  }
+  if (ss.checkIdState != null) {
+    mCheckedIdStates=ss.checkIdState;
+  }
+  mCheckedItemCount=ss.checkedItemCount;
+  if (ss.inActionMode && mChoiceMode == CHOICE_MODE_MULTIPLE_MODAL && mMultiChoiceModeCallback != null) {
+    mChoiceActionMode=startActionMode(mMultiChoiceModeCallback);
+  }
+  requestLayout();
+}

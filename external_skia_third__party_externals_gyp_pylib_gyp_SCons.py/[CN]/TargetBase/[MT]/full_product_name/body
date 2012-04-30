@@ -1,0 +1,15 @@
+def full_product_name(self):
+    "\n    Returns the full name of the product being built:\n\n      * Uses 'product_name' if it's set, else prefix + 'target_name'.\n      * Prepends 'product_dir' if set.\n      * Appends SCons suffix variables for the target type (or\n        product_extension).\n    "
+    suffix = self.target_suffix
+    product_extension = self.spec.get('product_extension')
+    if product_extension:
+        suffix = ('.' + product_extension)
+    prefix = self.spec.get('product_prefix', self.target_prefix)
+    name = self.spec['target_name']
+    name = ((prefix + self.spec.get('product_name', name)) + suffix)
+    product_dir = self.spec.get('product_dir')
+    if product_dir:
+        name = os.path.join(product_dir, name)
+    else:
+        name = os.path.join(self.out_dir, name)
+    return name

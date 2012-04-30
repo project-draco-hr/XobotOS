@@ -1,0 +1,4 @@
+{
+  allocateElements(c.size());
+  addAll(c);
+}

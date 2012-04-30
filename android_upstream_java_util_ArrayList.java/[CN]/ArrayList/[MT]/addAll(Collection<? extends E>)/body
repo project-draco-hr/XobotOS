@@ -1,0 +1,20 @@
+{
+  Object[] newPart=collection.toArray();
+  int newPartSize=newPart.length;
+  if (newPartSize == 0) {
+    return false;
+  }
+  Object[] a=array;
+  int s=size;
+  int newSize=s + newPartSize;
+  if (newSize > a.length) {
+    int newCapacity=newCapacity(newSize - 1);
+    Object[] newArray=new Object[newCapacity];
+    System.arraycopy(a,0,newArray,0,s);
+    array=a=newArray;
+  }
+  System.arraycopy(newPart,0,a,s,newPartSize);
+  size=newSize;
+  modCount++;
+  return true;
+}

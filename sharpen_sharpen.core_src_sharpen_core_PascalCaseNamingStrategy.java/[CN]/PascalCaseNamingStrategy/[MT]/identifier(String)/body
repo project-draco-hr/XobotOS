@@ -1,0 +1,6 @@
+{
+  if (isAllUpper(name)) {
+    return super.identifier(fromJavaConstantName(name));
+  }
+  return super.identifier(name);
+}

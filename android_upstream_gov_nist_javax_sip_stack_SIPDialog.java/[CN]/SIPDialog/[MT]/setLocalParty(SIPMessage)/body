@@ -1,0 +1,8 @@
+{
+  if (!isServer()) {
+    this.localParty=sipMessage.getFrom().getAddress();
+  }
+ else {
+    this.localParty=sipMessage.getTo().getAddress();
+  }
+}

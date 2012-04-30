@@ -1,0 +1,5 @@
+{
+  byte[] bytes=str.getBytes("UTF-16BE");
+  out.write(bytes);
+  written+=bytes.length;
+}

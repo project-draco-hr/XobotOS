@@ -1,0 +1,4 @@
+{
+  this.retransmissionTicksLeft=1;
+  this.prevRetransmissionTicks=1;
+}

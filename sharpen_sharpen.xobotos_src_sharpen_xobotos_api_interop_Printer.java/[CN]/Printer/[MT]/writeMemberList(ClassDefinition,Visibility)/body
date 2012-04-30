@@ -1,0 +1,17 @@
+{
+  List<MemberEntry> members=node.getMembers(new MemberFilter(){
+    @Override public boolean filter(    MemberEntry entry){
+      if ((visibility != null) && (entry.Visibility != visibility))       return false;
+      if (node.hasDeclaration() && (entry.Definition == null))       return false;
+      return true;
+    }
+  }
+);
+  if (members.size() == 0)   return;
+  if (visibility != null)   writeVisibility(visibility);
+  for (  MemberEntry member : members) {
+    if (member.Definition != null)     member.Definition.accept(this);
+ else     member.Declaration.accept(this);
+  }
+  _writer.writeLine();
+}

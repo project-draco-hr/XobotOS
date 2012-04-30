@@ -1,0 +1,32 @@
+{
+  if (!sipStack.isAlive())   throw new SipException("Stack is stopped");
+  SIPResponse sipResponse=(SIPResponse)response;
+  Via via=sipResponse.getTopmostVia();
+  if (via == null)   throw new SipException("No via header in response!");
+  SIPServerTransaction st=(SIPServerTransaction)sipStack.findTransaction((SIPMessage)response,true);
+  if (st != null && st.getState() != TransactionState.TERMINATED && this.isAutomaticDialogSupportEnabled()) {
+    throw new SipException("Transaction exists -- cannot send response statelessly");
+  }
+  String transport=via.getTransport();
+  String host=via.getReceived();
+  if (host == null)   host=via.getHost();
+  int port=via.getRPort();
+  if (port == -1) {
+    port=via.getPort();
+    if (port == -1) {
+      if (transport.equalsIgnoreCase("TLS"))       port=5061;
+ else       port=5060;
+    }
+  }
+  if (host.indexOf(":") > 0)   if (host.indexOf("[") < 0)   host="[" + host + "]";
+  Hop hop=sipStack.getAddressResolver().resolveAddress(new HopImpl(host,port,transport));
+  try {
+    ListeningPointImpl listeningPoint=(ListeningPointImpl)this.getListeningPoint(transport);
+    if (listeningPoint == null)     throw new SipException("whoopsa daisy! no listening point found for transport " + transport);
+    MessageChannel messageChannel=sipStack.createRawMessageChannel(this.getListeningPoint(hop.getTransport()).getIPAddress(),listeningPoint.port,hop);
+    messageChannel.sendMessage(sipResponse);
+  }
+ catch (  IOException ex) {
+    throw new SipException(ex.getMessage());
+  }
+}

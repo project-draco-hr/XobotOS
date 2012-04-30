@@ -1,0 +1,8 @@
+{
+  for (  RegexMapping mapping : _namespaceMappings) {
+    Matcher matcher=mapping.pattern.matcher(typeName);
+    if (!matcher.matches())     continue;
+    return matcher.replaceFirst(mapping.repl);
+  }
+  return typeName;
+}

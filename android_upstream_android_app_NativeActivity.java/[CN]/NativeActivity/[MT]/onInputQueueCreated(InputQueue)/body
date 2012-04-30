@@ -1,0 +1,6 @@
+{
+  if (!mDestroyed) {
+    mCurInputQueue=queue;
+    onInputChannelCreatedNative(mNativeHandle,queue.getInputChannel());
+  }
+}

@@ -1,0 +1,15 @@
+{
+  if (callId == null || cSeq == null || from == null || to == null || via == null || maxForwards == null)   throw new ParseException("JAIN-SIP Exception, some parameters are missing" + ", unable to create the response",0);
+  SIPResponse sipResponse=new SIPResponse();
+  sipResponse.setStatusCode(statusCode);
+  sipResponse.setCallId(callId);
+  sipResponse.setCSeq(cSeq);
+  sipResponse.setFrom(from);
+  sipResponse.setTo(to);
+  sipResponse.setVia(via);
+  sipResponse.setMaxForwards(maxForwards);
+  if (userAgent != null) {
+    sipResponse.setHeader(userAgent);
+  }
+  return sipResponse;
+}

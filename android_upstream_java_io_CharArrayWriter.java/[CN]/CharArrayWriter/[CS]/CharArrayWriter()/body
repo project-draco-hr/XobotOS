@@ -1,0 +1,4 @@
+{
+  buf=new char[32];
+  lock=buf;
+}

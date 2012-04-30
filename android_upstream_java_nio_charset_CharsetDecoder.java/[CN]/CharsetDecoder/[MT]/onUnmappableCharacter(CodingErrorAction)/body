@@ -1,0 +1,8 @@
+{
+  if (newAction == null) {
+    throw new IllegalArgumentException();
+  }
+  unmappableCharacterAction=newAction;
+  implOnUnmappableCharacter(newAction);
+  return this;
+}

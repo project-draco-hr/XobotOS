@@ -1,0 +1,24 @@
+{
+switch (mState) {
+case SPLINE:
+    if (mDuration < mSplineDuration) {
+      mStart=mFinal;
+      mVelocity=(int)mCurrVelocity;
+      mDeceleration=getDeceleration(mVelocity);
+      mStartTime+=mDuration;
+      onEdgeReached();
+    }
+ else {
+      return false;
+    }
+  break;
+case BALLISTIC:
+mStartTime+=mDuration;
+startSpringback(mFinal,mStart,0);
+break;
+case CUBIC:
+return false;
+}
+update();
+return true;
+}

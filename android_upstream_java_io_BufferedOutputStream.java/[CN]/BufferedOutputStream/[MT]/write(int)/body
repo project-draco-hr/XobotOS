@@ -1,0 +1,8 @@
+{
+  checkNotClosed();
+  if (count == buf.length) {
+    out.write(buf,0,count);
+    count=0;
+  }
+  buf[count++]=(byte)oneByte;
+}

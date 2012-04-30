@@ -1,0 +1,12 @@
+{
+  String longestPhoneNumber="999999999999999";
+  Matcher m=regexCache.getPatternForRegex(numberPattern).matcher(longestPhoneNumber);
+  m.find();
+  String aPhoneNumber=m.group();
+  if (aPhoneNumber.length() < nationalNumber.length()) {
+    return "";
+  }
+  String template=aPhoneNumber.replaceAll(numberPattern,numberFormat);
+  template=template.replaceAll("9",digitPlaceholder);
+  return template;
+}

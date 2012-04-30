@@ -1,0 +1,5 @@
+def ExtractAllResourceToTempDir():
+    src_dat = os.path.join(ICU4C_DIR, 'stubdata', (ICUDATA + '-all.dat'))
+    dst_dat = os.path.join(ICU4C_DIR, 'stubdata', (ICUDATA + '.dat'))
+    shutil.copyfile(src_dat, dst_dat)
+    InvokeIcuTool('icupkg', None, [dst_dat, '-x', '*', '-d', TMP_DAT_PATH])

@@ -1,0 +1,39 @@
+{
+  checkOpenAndCreate(true);
+  if (timeout < 0) {
+    throw new IllegalArgumentException("timeout < 0");
+  }
+  if (isConnected()) {
+    throw new SocketException("Already connected");
+  }
+  if (remoteAddr == null) {
+    throw new IllegalArgumentException("remoteAddr == null");
+  }
+  if (!(remoteAddr instanceof InetSocketAddress)) {
+    throw new IllegalArgumentException("Remote address not an InetSocketAddress: " + remoteAddr.getClass());
+  }
+  InetSocketAddress inetAddr=(InetSocketAddress)remoteAddr;
+  InetAddress addr;
+  if ((addr=inetAddr.getAddress()) == null) {
+    throw new UnknownHostException("Host is unresolved: " + inetAddr.getHostName());
+  }
+  int port=inetAddr.getPort();
+  checkDestination(addr,port);
+synchronized (connectLock) {
+    try {
+      if (!isBound()) {
+        if (!usingSocks()) {
+          impl.bind(Inet4Address.ANY,0);
+        }
+        isBound=true;
+      }
+      impl.connect(remoteAddr,timeout);
+      isConnected=true;
+      cacheLocalAddress();
+    }
+ catch (    IOException e) {
+      impl.close();
+      throw e;
+    }
+  }
+}

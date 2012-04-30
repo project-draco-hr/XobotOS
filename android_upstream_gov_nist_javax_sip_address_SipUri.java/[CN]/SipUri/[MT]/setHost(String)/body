@@ -1,0 +1,4 @@
+{
+  Host h=new Host(host);
+  this.setHost(h);
+}

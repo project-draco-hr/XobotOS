@@ -1,0 +1,6 @@
+{
+  if (expression instanceof CSInfixExpression || expression instanceof CSPrefixExpression || expression instanceof CSPostfixExpression|| expression instanceof CSCastExpression) {
+    return new CSParenthesizedExpression(expression);
+  }
+  return expression;
+}

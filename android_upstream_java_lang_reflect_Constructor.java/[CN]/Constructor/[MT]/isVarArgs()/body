@@ -1,0 +1,4 @@
+{
+  int mods=Method.getMethodModifiers(declaringClass,slot);
+  return (mods & Modifier.VARARGS) != 0;
+}

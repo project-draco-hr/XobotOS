@@ -1,0 +1,27 @@
+{
+  PathList pathList=new PathList();
+  if (debug)   dbg_enter("PathParser.parse");
+  try {
+    this.lexer.match(TokenTypes.PATH);
+    this.lexer.SPorHT();
+    this.lexer.match(':');
+    this.lexer.SPorHT();
+    while (true) {
+      Path path=new Path();
+      super.parse(path);
+      pathList.add(path);
+      this.lexer.SPorHT();
+      char la=lexer.lookAhead(0);
+      if (la == ',') {
+        this.lexer.match(',');
+        this.lexer.SPorHT();
+      }
+ else       if (la == '\n')       break;
+ else       throw createParseException("unexpected char");
+    }
+    return pathList;
+  }
+  finally {
+    if (debug)     dbg_leave("PathParser.parse");
+  }
+}

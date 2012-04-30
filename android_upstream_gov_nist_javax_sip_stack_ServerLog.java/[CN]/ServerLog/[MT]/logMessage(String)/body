@@ -1,0 +1,10 @@
+{
+  checkLogFile();
+  String logInfo=message;
+  if (printWriter != null) {
+    printWriter.println(logInfo);
+  }
+  if (sipStack.isLoggingEnabled()) {
+    stackLogger.logInfo(logInfo);
+  }
+}

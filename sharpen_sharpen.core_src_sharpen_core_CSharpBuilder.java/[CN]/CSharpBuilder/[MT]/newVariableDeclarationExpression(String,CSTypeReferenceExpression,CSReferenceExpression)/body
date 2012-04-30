@@ -1,0 +1,3 @@
+{
+  return new CSDeclarationExpression(new CSVariableDeclaration(name,type,initializer));
+}

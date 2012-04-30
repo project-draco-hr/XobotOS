@@ -1,0 +1,10 @@
+{
+  this.lexer.SPorHT();
+  while (lexer.lookAhead(0) == ';') {
+    this.lexer.consume(1);
+    this.lexer.SPorHT();
+    NameValue nv=nameValue();
+    parametersHeader.setParameter(nv);
+    this.lexer.SPorHT();
+  }
+}

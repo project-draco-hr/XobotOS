@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("null address!");
+  PAssertedIdentity assertedIdentity=new PAssertedIdentity();
+  assertedIdentity.setAddress(address);
+  return assertedIdentity;
+}

@@ -1,0 +1,13 @@
+{
+  if (timeoutTimerTicksLeft != -1) {
+    if (--timeoutTimerTicksLeft == 0) {
+      fireTimeoutTimer();
+    }
+  }
+  if (retransmissionTimerTicksLeft != -1) {
+    if (--retransmissionTimerTicksLeft == 0) {
+      enableRetransmissionTimer(retransmissionTimerLastTickCount * 2);
+      fireRetransmissionTimer();
+    }
+  }
+}

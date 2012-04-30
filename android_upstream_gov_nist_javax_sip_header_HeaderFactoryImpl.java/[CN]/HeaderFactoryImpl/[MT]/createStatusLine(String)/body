@@ -1,0 +1,4 @@
+{
+  StatusLineParser statusLineParser=new StatusLineParser(statusLine);
+  return (SipStatusLine)statusLineParser.parse();
+}

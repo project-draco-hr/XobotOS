@@ -1,0 +1,4 @@
+{
+  if (!isClass())   return new AssignmentStatement(getReference(dest),getReference(src));
+  return new AssignmentStatement(getReference(dest),new MethodInvocation(getHelper().UNWRAP.expr(),getReference(src)));
+}

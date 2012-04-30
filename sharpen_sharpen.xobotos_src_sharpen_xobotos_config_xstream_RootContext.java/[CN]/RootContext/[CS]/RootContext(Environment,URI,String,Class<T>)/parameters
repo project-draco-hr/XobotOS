@@ -1,0 +1,4 @@
+Environment environment
+URI projectRoot
+String fileName
+Class<T> klass

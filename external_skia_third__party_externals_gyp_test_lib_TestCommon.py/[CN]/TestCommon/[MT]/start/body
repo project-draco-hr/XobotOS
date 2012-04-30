@@ -1,0 +1,31 @@
+def start(self, program=None, interpreter=None, arguments=None, universal_newlines=None, **kw):
+    '\n        Starts a program or script for the test environment.\n\n        This handles the "options" keyword argument and exceptions.\n        '
+    try:
+        options = kw['options']
+        del kw['options']
+    except KeyError:
+        pass
+    else:
+        if options:
+            if (arguments is None):
+                arguments = options
+            else:
+                arguments = ((options + ' ') + arguments)
+    try:
+        return apply(TestCmd.start, (self, program, interpreter, arguments, universal_newlines), kw)
+    except KeyboardInterrupt:
+        raise
+    except Exception as e:
+        print self.banner('STDOUT ')
+        try:
+            print self.stdout()
+        except IndexError:
+            pass
+        print self.banner('STDERR ')
+        try:
+            print self.stderr()
+        except IndexError:
+            pass
+        cmd_args = self.command_args(program, interpreter, arguments)
+        sys.stderr.write(('Exception trying to execute: %s\n' % cmd_args))
+        raise e

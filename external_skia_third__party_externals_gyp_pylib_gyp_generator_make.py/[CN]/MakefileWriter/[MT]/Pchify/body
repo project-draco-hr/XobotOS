@@ -1,0 +1,6 @@
+def Pchify(self, path, lang):
+    'Convert a prefix header path to its output directory form.'
+    if ('$(' in path):
+        path = path.replace('$(obj)/', ('$(obj).%s/$(TARGET)/pch-%s' % (self.toolset, lang)))
+        return path
+    return ('$(obj).%s/$(TARGET)/pch-%s/%s' % (self.toolset, lang, path))

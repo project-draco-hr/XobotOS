@@ -1,0 +1,4 @@
+{
+  String symbolicName=KEYCODE_SYMBOLIC_NAMES.get(keyCode);
+  return symbolicName != null ? symbolicName : Integer.toString(keyCode);
+}

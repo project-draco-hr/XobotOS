@@ -1,0 +1,14 @@
+{
+  if (messageChannel == null || sipRequest == null) {
+    throw new IllegalArgumentException("Null Arg!");
+  }
+  SipStackImpl theStack=(SipStackImpl)messageChannel.getSIPStack();
+  DialogFilter retval=new DialogFilter(theStack);
+  if (messageChannel instanceof SIPTransaction) {
+    retval.transactionChannel=(SIPTransaction)messageChannel;
+  }
+  retval.listeningPoint=messageChannel.getMessageProcessor().getListeningPoint();
+  if (retval.listeningPoint == null)   return null;
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("Returning request interface for " + sipRequest.getFirstLine() + " "+ retval+ " messageChannel = "+ messageChannel);
+  return retval;
+}

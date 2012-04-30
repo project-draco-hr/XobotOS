@@ -1,0 +1,6 @@
+{
+  fullList=list;
+  modCount=fullList.modCount;
+  offset=start;
+  size=end - start;
+}

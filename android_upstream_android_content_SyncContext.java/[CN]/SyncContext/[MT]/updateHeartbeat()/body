@@ -1,0 +1,12 @@
+{
+  final long now=SystemClock.elapsedRealtime();
+  if (now < mLastHeartbeatSendTime + HEARTBEAT_SEND_INTERVAL_IN_MS)   return;
+  try {
+    mLastHeartbeatSendTime=now;
+    if (mSyncContext != null) {
+      mSyncContext.sendHeartbeat();
+    }
+  }
+ catch (  RemoteException e) {
+  }
+}

@@ -1,0 +1,6 @@
+{
+  if (mInputMethodState != null) {
+    mInputMethodState.mExtracting=req;
+  }
+  hideControllers();
+}

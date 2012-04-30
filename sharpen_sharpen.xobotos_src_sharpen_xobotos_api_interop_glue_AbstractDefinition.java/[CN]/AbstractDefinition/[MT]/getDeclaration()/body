@@ -1,0 +1,4 @@
+{
+  if (_declaration == null)   _declaration=createDeclaration();
+  return _declaration;
+}

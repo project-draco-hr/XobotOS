@@ -1,0 +1,6 @@
+{
+  if (!serverAuthority) {
+    parseAuthority(true);
+  }
+  return this;
+}

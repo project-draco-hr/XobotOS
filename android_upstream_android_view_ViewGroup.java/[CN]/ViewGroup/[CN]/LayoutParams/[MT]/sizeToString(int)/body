@@ -1,0 +1,9 @@
+{
+  if (size == WRAP_CONTENT) {
+    return "wrap-content";
+  }
+  if (size == MATCH_PARENT) {
+    return "match-parent";
+  }
+  return String.valueOf(size);
+}

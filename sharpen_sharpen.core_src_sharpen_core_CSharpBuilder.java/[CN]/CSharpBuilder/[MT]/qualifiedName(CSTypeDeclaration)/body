@@ -1,0 +1,6 @@
+{
+  if (currentNamespace() == null) {
+    return node.name();
+  }
+  return currentNamespace() + "." + node.name();
+}

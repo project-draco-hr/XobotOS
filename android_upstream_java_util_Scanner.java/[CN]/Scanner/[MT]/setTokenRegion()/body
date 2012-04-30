@@ -1,0 +1,20 @@
+{
+  int tokenStartIndex=0;
+  int tokenEndIndex=0;
+  matcher.usePattern(delimiter);
+  matcher.region(findStartIndex,bufferLength);
+  tokenStartIndex=findPreDelimiter();
+  if (setHeadTokenRegion(tokenStartIndex)) {
+    return true;
+  }
+  tokenEndIndex=findPostDelimiter();
+  if (-1 == tokenEndIndex) {
+    if (findStartIndex == bufferLength) {
+      return false;
+    }
+    tokenEndIndex=bufferLength;
+    findStartIndex=bufferLength;
+  }
+  matcher.region(tokenStartIndex,tokenEndIndex);
+  return true;
+}

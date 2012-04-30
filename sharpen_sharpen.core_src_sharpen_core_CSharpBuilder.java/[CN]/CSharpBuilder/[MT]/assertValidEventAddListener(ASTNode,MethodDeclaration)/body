@@ -1,0 +1,4 @@
+{
+  if (isValidEventAddListener(addListener))   return;
+  unsupportedConstruct(source,SharpenAnnotations.SHARPEN_EVENT_ADD + " must take lone single method interface argument");
+}

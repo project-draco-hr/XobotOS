@@ -1,0 +1,5 @@
+{
+  VariableBinding old=_variableBindings.get(binding);
+  VariableBinding renamed=new RenamedVariable(old,name);
+  _variableBindings.put(binding,renamed);
+}

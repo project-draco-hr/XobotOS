@@ -1,0 +1,5 @@
+{
+  this.classLoader=sl.classLoader;
+  this.service=sl.service;
+  this.services=sl.services;
+}

@@ -1,0 +1,10 @@
+'\nPut an object file on the sources list.\nExpect the result to link ok.\n'
+import TestGyp
+import sys
+if (sys.platform != 'darwin'):
+    test = TestGyp.TestGyp(formats=['make'])
+    test.run_gyp('link-objects.gyp')
+    test.build('link-objects.gyp', test.ALL)
+    test.run_built_executable('link-objects', stdout='PASS\n')
+    test.up_to_date('link-objects.gyp', test.ALL)
+    test.pass_test()

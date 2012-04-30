@@ -1,0 +1,29 @@
+{
+  final SslError sslError;
+  try {
+    X509Certificate cert=new X509CertImpl(certDER);
+    SslCertificate sslCert=new SslCertificate(cert);
+    sslError=SslError.SslErrorFromChromiumErrorCode(certError,sslCert,url);
+  }
+ catch (  IOException e) {
+    Log.e(LOGTAG,"Can't get the certificate from WebKit, canceling");
+    nativeSslCertErrorCancel(handle,certError);
+    return;
+  }
+  if (SslCertLookupTable.getInstance().isAllowed(sslError)) {
+    nativeSslCertErrorProceed(handle);
+    mCallbackProxy.onProceededAfterSslError(sslError);
+    return;
+  }
+  SslErrorHandler handler=new SslErrorHandler(){
+    @Override public void proceed(){
+      SslCertLookupTable.getInstance().setIsAllowed(sslError);
+      nativeSslCertErrorProceed(handle);
+    }
+    @Override public void cancel(){
+      nativeSslCertErrorCancel(handle,certError);
+    }
+  }
+;
+  mCallbackProxy.onReceivedSslError(handler,sslError);
+}

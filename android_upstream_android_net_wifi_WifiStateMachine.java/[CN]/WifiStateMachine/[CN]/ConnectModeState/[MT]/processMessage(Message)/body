@@ -1,0 +1,84 @@
+{
+  if (DBG)   log(getName() + message.toString() + "\n");
+  StateChangeResult stateChangeResult;
+switch (message.what) {
+case WifiMonitor.AUTHENTICATION_FAILURE_EVENT:
+    mSupplicantStateTracker.sendMessage(WifiMonitor.AUTHENTICATION_FAILURE_EVENT);
+  break;
+case WifiMonitor.WPS_OVERLAP_EVENT:
+sendErrorBroadcast(WifiManager.WPS_OVERLAP_ERROR);
+break;
+case WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT:
+SupplicantState state=handleSupplicantStateChange(message);
+if (!SupplicantState.isDriverActive(state)) {
+if (mNetworkInfo.getState() != NetworkInfo.State.DISCONNECTED) {
+handleNetworkDisconnect();
+}
+transitionTo(mDriverStoppedState);
+break;
+}
+if (state == SupplicantState.DISCONNECTED && mNetworkInfo.getState() != NetworkInfo.State.DISCONNECTED) {
+if (DBG) log("Missed CTRL-EVENT-DISCONNECTED, disconnect");
+handleNetworkDisconnect();
+transitionTo(mDisconnectedState);
+}
+break;
+case CMD_DISCONNECT:
+WifiNative.disconnectCommand();
+break;
+case CMD_RECONNECT:
+WifiNative.reconnectCommand();
+break;
+case CMD_REASSOCIATE:
+WifiNative.reassociateCommand();
+break;
+case CMD_CONNECT_NETWORK:
+int netId=message.arg1;
+WifiConfiguration config=(WifiConfiguration)message.obj;
+if (config != null) {
+netId=WifiConfigStore.selectNetwork(config);
+}
+ else {
+WifiConfigStore.selectNetwork(netId);
+}
+mSupplicantStateTracker.sendMessage(CMD_CONNECT_NETWORK);
+WifiNative.reconnectCommand();
+mLastExplicitNetworkId=netId;
+mLastNetworkChoiceTime=SystemClock.elapsedRealtime();
+mNextWifiActionExplicit=true;
+if (DBG) log("Setting wifi connect explicit for netid " + netId);
+transitionTo(mDisconnectingState);
+break;
+case CMD_START_WPS:
+mWpsStateMachine.sendMessage(Message.obtain(message));
+transitionTo(mWaitForWpsCompletionState);
+break;
+case WifiMonitor.SCAN_RESULTS_EVENT:
+WifiNative.setScanResultHandlingCommand(CONNECT_MODE);
+return NOT_HANDLED;
+case WifiMonitor.NETWORK_CONNECTION_EVENT:
+if (DBG) log("Network connection established");
+mLastNetworkId=message.arg1;
+mLastBssid=(String)message.obj;
+mWifiInfo.setSSID(fetchSSID());
+mWifiInfo.setBSSID(mLastBssid);
+mWifiInfo.setNetworkId(mLastNetworkId);
+if (mNextWifiActionExplicit && mWifiInfo.getNetworkId() == mLastExplicitNetworkId && SystemClock.elapsedRealtime() < mLastNetworkChoiceTime + EXPLICIT_CONNECT_ALLOWED_DELAY_MS) {
+mWifiInfo.setExplicitConnect(true);
+}
+mNextWifiActionExplicit=false;
+setNetworkDetailedState(DetailedState.OBTAINING_IPADDR);
+sendNetworkStateChangeBroadcast(mLastBssid);
+transitionTo(mConnectingState);
+break;
+case WifiMonitor.NETWORK_DISCONNECTION_EVENT:
+if (DBG) log("Network connection lost");
+handleNetworkDisconnect();
+transitionTo(mDisconnectedState);
+break;
+default :
+return NOT_HANDLED;
+}
+EventLog.writeEvent(EVENTLOG_WIFI_EVENT_HANDLED,message.what);
+return HANDLED;
+}

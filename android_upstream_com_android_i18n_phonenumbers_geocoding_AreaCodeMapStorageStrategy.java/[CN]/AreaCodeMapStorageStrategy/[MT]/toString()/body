@@ -1,0 +1,11 @@
+{
+  StringBuilder output=new StringBuilder();
+  int numOfEntries=getNumOfEntries();
+  for (int i=0; i < numOfEntries; i++) {
+    output.append(getPrefix(i));
+    output.append("|");
+    output.append(getDescription(i));
+    output.append("\n");
+  }
+  return output.toString();
+}

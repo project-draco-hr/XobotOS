@@ -1,0 +1,20 @@
+{
+  if (!hmap.isEmpty()) {
+    Iterator<NameValue> iterator=hmap.values().iterator();
+    if (iterator.hasNext()) {
+      while (true) {
+        Object obj=iterator.next();
+        if (obj instanceof GenericObject) {
+          GenericObject gobj=(GenericObject)obj;
+          gobj.encode(buffer);
+        }
+ else {
+          buffer.append(obj.toString());
+        }
+        if (iterator.hasNext())         buffer.append(separator);
+ else         break;
+      }
+    }
+  }
+  return buffer;
+}

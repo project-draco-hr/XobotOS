@@ -1,0 +1,8 @@
+{
+  if (mAccessibilityDelegate != null) {
+    return mAccessibilityDelegate.onRequestSendAccessibilityEvent(this,child,event);
+  }
+ else {
+    return onRequestSendAccessibilityEventInternal(child,event);
+  }
+}

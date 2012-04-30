@@ -1,0 +1,7 @@
+{
+  String methodName=mappedMethodName(binding);
+  if (methodName.indexOf('.') > -1) {
+    return methodName;
+  }
+  return mappedTypeName(binding.getDeclaringClass()) + "." + methodName;
+}

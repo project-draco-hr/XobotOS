@@ -1,0 +1,8 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("Exiting provider");
+  for (Iterator it=listeningPoints.values().iterator(); it.hasNext(); ) {
+    ListeningPointImpl listeningPoint=(ListeningPointImpl)it.next();
+    listeningPoint.removeSipProvider();
+  }
+  this.eventScanner.stop();
+}

@@ -1,0 +1,7 @@
+{
+  Replaces replaces=new Replaces();
+  replaces.setCallId(callId);
+  replaces.setFromTag(fromTag);
+  replaces.setToTag(toTag);
+  return replaces;
+}

@@ -1,0 +1,9 @@
+'\nVerifies that .hpp files are ignored when included in the source list on all\nplatforms.\n'
+import TestGyp
+test = TestGyp.TestGyp()
+test.run_gyp('headers.gyp', chdir='src')
+test.relocate('src', 'relocate/src')
+test.build('headers.gyp', test.ALL, chdir='relocate/src')
+expect = 'Hello from program.c\nHello from lib1.c\n'
+test.run_built_executable('program', chdir='relocate/src', stdout=expect)
+test.pass_test()

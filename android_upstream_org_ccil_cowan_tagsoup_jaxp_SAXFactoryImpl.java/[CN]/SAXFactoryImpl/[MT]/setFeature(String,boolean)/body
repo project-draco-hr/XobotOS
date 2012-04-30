@@ -1,0 +1,7 @@
+{
+  getPrototype().setFeature(name,value);
+  if (features == null) {
+    features=new LinkedHashMap();
+  }
+  features.put(name,value ? Boolean.TRUE : Boolean.FALSE);
+}

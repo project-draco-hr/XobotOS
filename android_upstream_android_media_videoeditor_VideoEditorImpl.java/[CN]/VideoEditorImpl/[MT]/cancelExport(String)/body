@@ -1,0 +1,5 @@
+{
+  if (mMANativeHelper != null && filename != null) {
+    mMANativeHelper.stop(filename);
+  }
+}

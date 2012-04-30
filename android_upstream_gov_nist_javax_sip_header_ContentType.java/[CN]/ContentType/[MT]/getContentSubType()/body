@@ -1,0 +1,3 @@
+{
+  return mediaRange == null ? null : mediaRange.getSubtype();
+}

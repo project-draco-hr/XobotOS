@@ -1,0 +1,3 @@
+{
+  return _flags.contains(Flags.BYREF) || _flags.contains(Flags.OUT);
+}

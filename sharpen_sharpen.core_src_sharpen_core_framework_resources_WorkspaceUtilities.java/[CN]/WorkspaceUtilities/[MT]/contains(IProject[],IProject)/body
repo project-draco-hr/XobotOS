@@ -1,0 +1,6 @@
+{
+  for (  IProject p : array) {
+    if (p == element)     return true;
+  }
+  return false;
+}

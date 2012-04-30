@@ -1,0 +1,7 @@
+{
+  if (mLocalMatrix != null) {
+    localM.set(mLocalMatrix);
+    return !mLocalMatrix.isIdentity();
+  }
+  return false;
+}

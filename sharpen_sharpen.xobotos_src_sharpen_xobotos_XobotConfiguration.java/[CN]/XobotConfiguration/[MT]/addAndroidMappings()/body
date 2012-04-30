@@ -1,0 +1,11 @@
+{
+  mapType("android.net.Uri","System.Uri");
+  mapType("android.net.Uri.Builder","System.UriBuilder");
+  mapMethod("android.net.Uri.withAppendedPath",sharpenUtilMethod("AppendUri"));
+  mapMethod("android.net.Uri.parse",sharpenUtilMethod("ParseUri"));
+  mapMethod("android.net.Uri.encode",sharpenUtilMethod("EncodeUri"));
+  mapMethod("android.net.Uri.toSafeString",sharpenUtilMethod("ToSafeString"));
+  mapProperty("android.net.Uri.getScheme","Scheme");
+  mapMethod("libcore.util.SneakyThrow.sneakyThrow",sharpenUtilMethod("Throw"));
+  mapMethod("com.android.internal.os.RuntimeInit.wtf",miscRuntimeMethod("FatalError"));
+}

@@ -1,0 +1,8 @@
+{
+  int minSize=Math.min(this.longCount,bs.longCount);
+  for (int i=0; i < minSize; ++i) {
+    bits[i]&=bs.bits[i];
+  }
+  Arrays.fill(bits,minSize,longCount,0L);
+  shrinkSize();
+}

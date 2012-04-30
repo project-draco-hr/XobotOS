@@ -1,0 +1,34 @@
+{
+  final CSExpression lengthRef=_lengthMember.getReference(obj);
+  final CSExpression zero=new CSNumberLiteralExpression("0");
+  final CSExpression elementSize=getNativeElementSizeExpr();
+  if (isBlittable()) {
+    CSExpression copyRef=new CSReferenceExpression("Marshal.Copy");
+    return new CSExpressionStatement(-1,new CSMethodInvocationExpression(copyRef,getReference(obj),arg.getReference(),zero,lengthRef));
+  }
+  CSBlock block=new CSBlock();
+  ManagedVariable i=new ManagedVariable("i",new CSTypeReference("int"),zero);
+  final CSExpression expr=new CSIndexedExpression(arg.getReference(),i.getReference());
+  CSExpression check=new CSInfixExpression("<",i.getReference(),lengthRef);
+  CSForStatement forStm=new CSForStatement(-1,check);
+  forStm.addInitializer(new CSDeclarationExpression(i.getDeclaration()));
+  forStm.addUpdater(new CSPostfixExpression("++",i.getReference()));
+  final CSTypeReference intPtrType=new CSTypeReference("System.IntPtr");
+  if (isByRef()) {
+    ManagedVariable vector=new ManagedVariable("vector",new CSArrayTypeReference(intPtrType,1),new CSArrayCreationExpression(intPtrType,lengthRef));
+    block.addStatement(vector.getDeclarationStatement());
+    CSExpression copyRef=new CSReferenceExpression("Marshal.Copy");
+    block.addStatement(new CSMethodInvocationExpression(copyRef,getReference(obj),vector.getReference(),zero,lengthRef));
+    CSExpression idx=new CSIndexedExpression(vector.getReference(),i.getReference());
+    forStm.body().addStatement(nativeToManaged(idx,expr,_elementInfo.getManagedType()));
+  }
+ else {
+    ManagedVariable addr=new ManagedVariable("addr",new CSTypeReference("System.IntPtr"));
+    addr.getDeclaration().initializer(getReference(obj));
+    block.addStatement(new CSDeclarationStatement(-1,addr.getDeclaration()));
+    forStm.addUpdater(new CSInfixExpression("+=",addr.getReference(),elementSize));
+    forStm.body().addStatement(nativeToManaged(addr.getReference(),expr,_elementInfo.getManagedType()));
+  }
+  block.addStatement(forStm);
+  return block;
+}

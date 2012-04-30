@@ -1,0 +1,4 @@
+{
+  address=address.toUpperCase();
+  mBluetoothService.onCreatePairedDeviceResult(address,result);
+}

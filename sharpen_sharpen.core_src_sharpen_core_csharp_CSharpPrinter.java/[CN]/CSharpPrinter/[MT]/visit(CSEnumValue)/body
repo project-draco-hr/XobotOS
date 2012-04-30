@@ -1,0 +1,9 @@
+{
+  printPrecedingComments(node);
+  writeDoc(node);
+  writeIndented(node.name());
+  if (node.initializer() != null) {
+    write(" = ");
+    node.initializer().accept(this);
+  }
+}

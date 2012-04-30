@@ -1,0 +1,4 @@
+{
+  for (  CSUsing us : _usings)   if (us.namespace().equals(namespace))   return true;
+  return false;
+}

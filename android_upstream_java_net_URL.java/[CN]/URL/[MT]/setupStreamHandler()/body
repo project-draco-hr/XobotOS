@@ -1,0 +1,52 @@
+{
+  streamHandler=streamHandlers.get(protocol);
+  if (streamHandler != null) {
+    return;
+  }
+  if (streamHandlerFactory != null) {
+    streamHandler=streamHandlerFactory.createURLStreamHandler(protocol);
+    if (streamHandler != null) {
+      streamHandlers.put(protocol,streamHandler);
+      return;
+    }
+  }
+  String packageList=System.getProperty("java.protocol.handler.pkgs");
+  ClassLoader contextClassLoader=Thread.currentThread().getContextClassLoader();
+  if (packageList != null && contextClassLoader != null) {
+    for (    String packageName : packageList.split("\\|")) {
+      String className=packageName + "." + protocol+ ".Handler";
+      try {
+        Class<?> c=contextClassLoader.loadClass(className);
+        streamHandler=(URLStreamHandler)c.newInstance();
+        if (streamHandler != null) {
+          streamHandlers.put(protocol,streamHandler);
+        }
+        return;
+      }
+ catch (      IllegalAccessException ignored) {
+      }
+catch (      InstantiationException ignored) {
+      }
+catch (      ClassNotFoundException ignored) {
+      }
+    }
+  }
+  if (protocol.equals("file")) {
+    streamHandler=new FileHandler();
+  }
+ else   if (protocol.equals("ftp")) {
+    streamHandler=new FtpHandler();
+  }
+ else   if (protocol.equals("http")) {
+    streamHandler=new HttpHandler();
+  }
+ else   if (protocol.equals("https")) {
+    streamHandler=new HttpsHandler();
+  }
+ else   if (protocol.equals("jar")) {
+    streamHandler=new JarHandler();
+  }
+  if (streamHandler != null) {
+    streamHandlers.put(protocol,streamHandler);
+  }
+}

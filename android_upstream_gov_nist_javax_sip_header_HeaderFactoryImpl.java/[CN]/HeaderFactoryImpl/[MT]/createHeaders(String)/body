@@ -1,0 +1,7 @@
+{
+  if (headers == null)   throw new NullPointerException("null arg!");
+  StringMsgParser smp=new StringMsgParser();
+  SIPHeader shdr=smp.parseSIPHeader(headers);
+  if (shdr instanceof SIPHeaderList)   return (SIPHeaderList)shdr;
+ else   throw new ParseException("List of headers of this type is not allowed in a message",0);
+}

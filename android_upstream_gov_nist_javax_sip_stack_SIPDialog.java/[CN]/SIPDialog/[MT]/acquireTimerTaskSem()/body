@@ -1,0 +1,12 @@
+{
+  boolean acquired=false;
+  try {
+    acquired=this.timerTaskLock.tryAcquire(10,TimeUnit.SECONDS);
+  }
+ catch (  InterruptedException ex) {
+    acquired=false;
+  }
+  if (!acquired) {
+    throw new IllegalStateException("Impossible to acquire the dialog timer task lock");
+  }
+}

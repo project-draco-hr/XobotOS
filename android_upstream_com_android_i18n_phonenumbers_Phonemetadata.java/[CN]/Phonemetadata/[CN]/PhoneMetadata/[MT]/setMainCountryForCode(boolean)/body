@@ -1,0 +1,5 @@
+{
+  hasMainCountryForCode=true;
+  mainCountryForCode_=value;
+  return this;
+}

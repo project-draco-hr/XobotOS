@@ -1,0 +1,7 @@
+{
+synchronized (AccessibleObject.class) {
+    for (    AccessibleObject object : objects) {
+      object.flag=flag;
+    }
+  }
+}

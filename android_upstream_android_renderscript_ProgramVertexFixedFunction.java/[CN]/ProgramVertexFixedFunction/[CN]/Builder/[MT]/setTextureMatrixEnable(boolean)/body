@@ -1,0 +1,4 @@
+{
+  mTextureMatrixEnable=enable;
+  return this;
+}

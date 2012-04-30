@@ -1,0 +1,5 @@
+{
+  this.Type=type;
+  this.Node=method;
+  this.Template=template;
+}

@@ -1,0 +1,16 @@
+{
+  Pattern internationalPrefix=regexCache.getPatternForRegex("\\" + PhoneNumberUtil.PLUS_SIGN + "|"+ currentMetaData.getInternationalPrefix());
+  Matcher iddMatcher=internationalPrefix.matcher(accruedInputWithoutFormatting);
+  if (iddMatcher.lookingAt()) {
+    isInternationalFormatting=true;
+    int startOfCountryCallingCode=iddMatcher.end();
+    nationalNumber.setLength(0);
+    nationalNumber.append(accruedInputWithoutFormatting.substring(startOfCountryCallingCode));
+    prefixBeforeNationalNumber.append(accruedInputWithoutFormatting.substring(0,startOfCountryCallingCode));
+    if (accruedInputWithoutFormatting.charAt(0) != PhoneNumberUtil.PLUS_SIGN) {
+      prefixBeforeNationalNumber.append(" ");
+    }
+    return true;
+  }
+  return false;
+}

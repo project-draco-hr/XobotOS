@@ -1,0 +1,16 @@
+{
+  if (debug)   dbg_enter("PriorityParser.parse");
+  Priority priority=new Priority();
+  try {
+    headerName(TokenTypes.PRIORITY);
+    priority.setHeaderName(SIPHeaderNames.PRIORITY);
+    this.lexer.SPorHT();
+    priority.setPriority(this.lexer.ttokenSafe());
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return priority;
+  }
+  finally {
+    if (debug)     dbg_leave("PriorityParser.parse");
+  }
+}

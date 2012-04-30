@@ -1,0 +1,4 @@
+{
+  objectsWritten=new SerializationHandleMap();
+  currentHandle=baseWireHandle;
+}

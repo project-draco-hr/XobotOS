@@ -1,0 +1,5 @@
+def AddResFile(collection, path):
+    end = path.find('.res')
+    if (end > 0):
+        collection.add(path[(path.find('/') + 1):end])
+    return

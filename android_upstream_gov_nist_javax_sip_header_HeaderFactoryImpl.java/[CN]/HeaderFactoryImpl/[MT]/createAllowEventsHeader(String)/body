@@ -1,0 +1,6 @@
+{
+  if (eventType == null)   throw new NullPointerException("null arg eventType");
+  AllowEvents allowEvents=new AllowEvents();
+  allowEvents.setEventType(eventType);
+  return allowEvents;
+}

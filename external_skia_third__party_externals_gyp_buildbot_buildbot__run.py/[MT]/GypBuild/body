@@ -1,0 +1,21 @@
+def GypBuild():
+    print '@@@BUILD_STEP cleanup@@@'
+    print 'Removing out/ ...'
+    shutil.rmtree('out', ignore_errors=True)
+    print 'Done.'
+    retcode = 0
+    if sys.platform.startswith('linux'):
+        retcode += GypTestFormat('scons', format='scons')
+        retcode += GypTestFormat('make', format='make')
+    elif (sys.platform == 'darwin'):
+        retcode += GypTestFormat('xcode', format='xcode')
+        retcode += GypTestFormat('make', format='make')
+    elif (sys.platform == 'win32'):
+        retcode += GypTestFormat('msvs-2008', format='msvs', msvs_version='2008')
+        if (os.environ['BUILDBOT_BUILDERNAME'] == 'gyp-win64'):
+            retcode += GypTestFormat('msvs-2010', format='msvs', msvs_version='2010')
+    else:
+        raise Exception('Unknown platform')
+    if retcode:
+        print '@@@BUILD_STEP failures@@@'
+        sys.exit(retcode)

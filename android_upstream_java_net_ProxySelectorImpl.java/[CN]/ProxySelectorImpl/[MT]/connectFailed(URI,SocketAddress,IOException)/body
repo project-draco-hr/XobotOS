@@ -1,0 +1,5 @@
+{
+  if (uri == null || sa == null || ioe == null) {
+    throw new IllegalArgumentException();
+  }
+}

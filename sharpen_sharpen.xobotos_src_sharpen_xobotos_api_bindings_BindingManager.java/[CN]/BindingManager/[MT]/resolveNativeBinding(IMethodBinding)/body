@@ -1,0 +1,4 @@
+{
+  NativeMethodEntry entry=_nativeMethods.get(binding.getMethodDeclaration());
+  return entry != null ? entry.Builder : null;
+}

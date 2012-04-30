@@ -1,0 +1,10 @@
+def SelectVisualStudioVersion(version='auto'):
+    'Select which version of Visual Studio projects to generate.\n\n  Arguments:\n    version: Hook to allow caller to force a particular version (vs auto).\n  Returns:\n    An object representing a visual studio project format version.\n  '
+    if (version == 'auto'):
+        version = os.environ.get('GYP_MSVS_VERSION', 'auto')
+    if (version == 'auto'):
+        versions = _DetectVisualStudioVersions()
+        if (not versions):
+            return _CreateVersion('2005')
+        return versions[0]
+    return _CreateVersion(version)

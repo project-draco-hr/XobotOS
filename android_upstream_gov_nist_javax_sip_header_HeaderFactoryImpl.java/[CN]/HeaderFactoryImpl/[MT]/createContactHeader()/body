@@ -1,0 +1,6 @@
+{
+  Contact contact=new Contact();
+  contact.setWildCardFlag(true);
+  contact.setExpires(0);
+  return contact;
+}

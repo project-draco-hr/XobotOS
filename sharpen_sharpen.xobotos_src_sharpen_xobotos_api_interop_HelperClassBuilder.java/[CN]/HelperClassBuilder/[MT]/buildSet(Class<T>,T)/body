@@ -1,0 +1,7 @@
+{
+  EnumSet<T> set=EnumSet.noneOf(klass);
+  if (args != null) {
+    for (    T arg : args)     set.add(arg);
+  }
+  return set;
+}

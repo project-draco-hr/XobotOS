@@ -1,0 +1,32 @@
+{
+  if (debug)   dbg_enter("uriReference");
+  GenericURI retval=null;
+  Token[] tokens=lexer.peekNextToken(2);
+  Token t1=(Token)tokens[0];
+  Token t2=(Token)tokens[1];
+  try {
+    if (t1.getTokenType() == TokenTypes.SIP || t1.getTokenType() == TokenTypes.SIPS) {
+      if (t2.getTokenType() == ':')       retval=sipURL(inBrackets);
+ else       throw createParseException("Expecting \':\'");
+    }
+ else     if (t1.getTokenType() == TokenTypes.TEL) {
+      if (t2.getTokenType() == ':') {
+        retval=telURL(inBrackets);
+      }
+ else       throw createParseException("Expecting \':\'");
+    }
+ else {
+      String urlString=uricString();
+      try {
+        retval=new GenericURI(urlString);
+      }
+ catch (      ParseException ex) {
+        throw createParseException(ex.getMessage());
+      }
+    }
+  }
+  finally {
+    if (debug)     dbg_leave("uriReference");
+  }
+  return retval;
+}

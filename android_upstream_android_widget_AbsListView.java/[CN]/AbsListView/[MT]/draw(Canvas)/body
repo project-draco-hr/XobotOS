@@ -1,0 +1,44 @@
+{
+  super.draw(canvas);
+  if (mEdgeGlowTop != null) {
+    final int scrollY=mScrollY;
+    if (!mEdgeGlowTop.isFinished()) {
+      final int restoreCount=canvas.save();
+      final int leftPadding=mListPadding.left + mGlowPaddingLeft;
+      final int rightPadding=mListPadding.right + mGlowPaddingRight;
+      final int width=getWidth() - leftPadding - rightPadding;
+      canvas.translate(leftPadding,Math.min(0,scrollY + mFirstPositionDistanceGuess));
+      mEdgeGlowTop.setSize(width,getHeight());
+      if (mEdgeGlowTop.draw(canvas)) {
+        invalidate();
+      }
+      canvas.restoreToCount(restoreCount);
+    }
+    if (!mEdgeGlowBottom.isFinished()) {
+      final int restoreCount=canvas.save();
+      final int leftPadding=mListPadding.left + mGlowPaddingLeft;
+      final int rightPadding=mListPadding.right + mGlowPaddingRight;
+      final int width=getWidth() - leftPadding - rightPadding;
+      final int height=getHeight();
+      canvas.translate(-width + leftPadding,Math.max(height,scrollY + mLastPositionDistanceGuess));
+      canvas.rotate(180,width,0);
+      mEdgeGlowBottom.setSize(width,height);
+      if (mEdgeGlowBottom.draw(canvas)) {
+        invalidate();
+      }
+      canvas.restoreToCount(restoreCount);
+    }
+  }
+  if (mFastScroller != null) {
+    final int scrollY=mScrollY;
+    if (scrollY != 0) {
+      int restoreCount=canvas.save();
+      canvas.translate(0,(float)scrollY);
+      mFastScroller.draw(canvas);
+      canvas.restoreToCount(restoreCount);
+    }
+ else {
+      mFastScroller.draw(canvas);
+    }
+  }
+}

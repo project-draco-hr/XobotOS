@@ -1,0 +1,6 @@
+{
+  if (index >= size) {
+    throwIndexOutOfBoundsException(index,size);
+  }
+  return (E)array[index];
+}

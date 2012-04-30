@@ -1,0 +1,36 @@
+{
+  String carrierCode="";
+  int numberLength=number.length();
+  String possibleNationalPrefix=metadata.getNationalPrefixForParsing();
+  if (numberLength == 0 || possibleNationalPrefix.length() == 0) {
+    return "";
+  }
+  Matcher prefixMatcher=regexCache.getPatternForRegex(possibleNationalPrefix).matcher(number);
+  if (prefixMatcher.lookingAt()) {
+    Pattern nationalNumberRule=regexCache.getPatternForRegex(metadata.getGeneralDesc().getNationalNumberPattern());
+    boolean isViableOriginalNumber=nationalNumberRule.matcher(number).matches();
+    int numOfGroups=prefixMatcher.groupCount();
+    String transformRule=metadata.getNationalPrefixTransformRule();
+    if (transformRule == null || transformRule.length() == 0 || prefixMatcher.group(numOfGroups) == null) {
+      if (isViableOriginalNumber && !nationalNumberRule.matcher(number.substring(prefixMatcher.end())).matches()) {
+        return "";
+      }
+      if (numOfGroups > 0 && prefixMatcher.group(numOfGroups) != null) {
+        carrierCode=prefixMatcher.group(1);
+      }
+      number.delete(0,prefixMatcher.end());
+    }
+ else {
+      StringBuilder transformedNumber=new StringBuilder(number);
+      transformedNumber.replace(0,numberLength,prefixMatcher.replaceFirst(transformRule));
+      if (isViableOriginalNumber && !nationalNumberRule.matcher(transformedNumber.toString()).matches()) {
+        return "";
+      }
+      if (numOfGroups > 1) {
+        carrierCode=prefixMatcher.group(1);
+      }
+      number.replace(0,number.length(),transformedNumber.toString());
+    }
+  }
+  return carrierCode;
+}

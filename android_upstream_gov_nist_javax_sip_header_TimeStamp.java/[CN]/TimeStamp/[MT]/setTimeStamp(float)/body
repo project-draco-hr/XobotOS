@@ -1,0 +1,5 @@
+{
+  if (timeStamp < 0)   throw new InvalidArgumentException("JAIN-SIP Exception, TimeStamp, " + "setTimeStamp(), the timeStamp parameter is <0");
+  this.timeStamp=-1;
+  this.timeStampFloat=timeStamp;
+}

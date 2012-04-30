@@ -1,0 +1,4 @@
+{
+  String engine=getString(mContext.getContentResolver(),Settings.Secure.TTS_DEFAULT_SYNTH);
+  return isEngineInstalled(engine) ? engine : getHighestRankedEngineName();
+}

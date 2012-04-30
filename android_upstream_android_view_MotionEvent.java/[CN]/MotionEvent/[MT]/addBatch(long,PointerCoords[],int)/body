@@ -1,0 +1,3 @@
+{
+  nativeAddBatch(mNativePtr,eventTime * NS_PER_MS,pointerCoords,metaState);
+}

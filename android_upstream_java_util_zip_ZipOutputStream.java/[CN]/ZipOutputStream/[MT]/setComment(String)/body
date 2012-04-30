@@ -1,0 +1,6 @@
+{
+  if (comment.length() > 0xFFFF) {
+    throw new IllegalArgumentException("Comment too long: " + comment.length() + " characters");
+  }
+  this.comment=comment;
+}

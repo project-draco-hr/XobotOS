@@ -1,0 +1,3 @@
+def __call__(self, arg, dirname, names):
+    pathjoin = (lambda n, d=dirname: os.path.join(d, n))
+    self.entries.extend(map(pathjoin, names))

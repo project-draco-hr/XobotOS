@@ -1,0 +1,28 @@
+{
+  reset();
+  if (!("yes".equals(outputProperties.getProperty(OMIT_XML_DECLARATION,"no")))) {
+    write("<?xml");
+    if (version == null) {
+      write(" version=\"1.0\"");
+    }
+ else {
+      write(" version=\"");
+      write(version);
+      write("\"");
+    }
+    if (outputEncoding != null && outputEncoding != "") {
+      write(" encoding=\"");
+      write(outputEncoding);
+      write("\"");
+    }
+    if (standalone == null) {
+      write(" standalone=\"yes\"?>\n");
+    }
+ else {
+      write(" standalone=\"");
+      write(standalone);
+      write("\"");
+    }
+  }
+  super.startDocument();
+}

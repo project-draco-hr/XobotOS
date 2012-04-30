@@ -1,0 +1,7 @@
+{
+  ASTNode attachedToNode=element;
+  while (attachedToNode instanceof TagElement || attachedToNode instanceof Javadoc) {
+    attachedToNode=attachedToNode.getParent();
+  }
+  return attachedToNode;
+}

@@ -1,0 +1,3 @@
+{
+  killBackgroundProcesses(packageName);
+}

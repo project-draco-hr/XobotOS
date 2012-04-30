@@ -1,0 +1,11 @@
+{
+  int start=fromReq.indexOf(name);
+  if (start != -1) {
+    int end=fromReq.indexOf("\r\n",start);
+    if (end != -1) {
+      buf.append(fromReq.subSequence(start - 2,end));
+      return true;
+    }
+  }
+  return false;
+}

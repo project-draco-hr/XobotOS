@@ -1,0 +1,3 @@
+{
+  return binding.getQualifiedName().equals("java.lang.String");
+}

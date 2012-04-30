@@ -1,0 +1,5 @@
+{
+  Visitor visitor=new Visitor();
+  node.accept(visitor);
+  return visitor._reachable;
+}

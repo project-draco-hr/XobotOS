@@ -1,0 +1,6 @@
+{
+  this(orig.declaringClass,orig.parameterTypes,orig.exceptionTypes,orig.returnType,orig.name,orig.slot);
+  if (orig.flag) {
+    this.flag=true;
+  }
+}

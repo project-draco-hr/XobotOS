@@ -1,0 +1,6 @@
+{
+  mPreviousOffsetIndex=(mPreviousOffsetIndex + 1) % HISTORY_SIZE;
+  mPreviousOffsets[mPreviousOffsetIndex]=offset;
+  mPreviousOffsetsTimes[mPreviousOffsetIndex]=SystemClock.uptimeMillis();
+  mNumberPreviousOffsets++;
+}

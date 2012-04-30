@@ -1,0 +1,13 @@
+{
+  List<CSDocNode> docs=node.docs();
+  if (docs.isEmpty()) {
+    return;
+  }
+  linePrefix("/// ");
+  for (  CSDocNode doc : docs) {
+    writeIndentation();
+    doc.accept(this);
+    writeLine();
+  }
+  linePrefix(null);
+}

@@ -1,0 +1,8 @@
+{
+  writeIndented("switch (");
+  node.expression().accept(this);
+  writeLine(")");
+  enterBody();
+  writeLineSeparatedList(node.caseClauses());
+  leaveBody();
+}

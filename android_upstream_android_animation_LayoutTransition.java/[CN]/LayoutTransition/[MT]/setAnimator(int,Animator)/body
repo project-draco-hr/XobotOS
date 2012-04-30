@@ -1,0 +1,16 @@
+{
+switch (transitionType) {
+case CHANGE_APPEARING:
+    mChangingAppearingAnim=animator;
+  break;
+case CHANGE_DISAPPEARING:
+mChangingDisappearingAnim=animator;
+break;
+case APPEARING:
+mAppearingAnim=animator;
+break;
+case DISAPPEARING:
+mDisappearingAnim=animator;
+break;
+}
+}

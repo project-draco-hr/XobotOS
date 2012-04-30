@@ -1,0 +1,4 @@
+{
+  writeRecordHeader(BinaryHprof.Tag.END_THREAD,0,BinaryHprof.Tag.END_THREAD.maximumSize);
+  out.writeInt(e.threadId);
+}

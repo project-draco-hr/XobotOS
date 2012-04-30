@@ -1,0 +1,5 @@
+{
+  Integer val=Integer.valueOf(value);
+  currentLexer.put(name,val);
+  if (!globalSymbolTable.containsKey(val))   globalSymbolTable.put(val,name);
+}

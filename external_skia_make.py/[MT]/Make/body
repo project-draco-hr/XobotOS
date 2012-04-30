@@ -1,0 +1,34 @@
+def Make(args):
+    'Main function.\n\n    parameters:\n        args: command line arguments as a list of strings\n    '
+    global BUILDTYPE
+    targets = []
+    for arg in args:
+        if (arg == TARGET_ALL):
+            targets.extend(LIST_OF_ALL_TARGETS)
+        elif (arg == TARGET_CLEAN):
+            MakeClean()
+        elif arg.startswith('BUILDTYPE='):
+            BUILDTYPE = arg[10:]
+        elif arg.startswith('GYP_DEFINES='):
+            os.environ['GYP_DEFINES'] = arg[12:]
+        else:
+            targets.append(arg)
+    if (not targets):
+        sys.exit(0)
+    if (os.name == 'nt'):
+        MakeWindows(targets)
+        sys.exit(0)
+    elif (os.name == 'posix'):
+        if (sys.platform == 'darwin'):
+            print 'Mac developers should not run this script; see http://code.google.com/p/skia/wiki/GettingStartedOnMac'
+            sys.exit(1)
+        elif (sys.platform == 'cygwin'):
+            print 'Windows development on Cygwin is not currently supported; see http://code.google.com/p/skia/wiki/GettingStartedOnWindows'
+            sys.exit(1)
+        else:
+            print 'Unix developers should not run this script; see http://code.google.com/p/skia/wiki/GettingStartedOnLinux'
+            sys.exit(1)
+    else:
+        print ('unknown platform (os.name=%s, sys.platform=%s); see %s' % (os.name, sys.platform, 'http://code.google.com/p/skia/wiki/DocRoot'))
+        sys.exit(1)
+    sys.exit(0)

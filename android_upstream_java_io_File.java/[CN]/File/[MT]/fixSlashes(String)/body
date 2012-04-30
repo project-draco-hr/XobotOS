@@ -1,0 +1,23 @@
+{
+  boolean lastWasSlash=false;
+  char[] newPath=origPath.toCharArray();
+  int length=newPath.length;
+  int newLength=0;
+  for (int i=0; i < length; ++i) {
+    char ch=newPath[i];
+    if (ch == '/') {
+      if (!lastWasSlash) {
+        newPath[newLength++]=separatorChar;
+        lastWasSlash=true;
+      }
+    }
+ else {
+      newPath[newLength++]=ch;
+      lastWasSlash=false;
+    }
+  }
+  if (lastWasSlash && newLength > 1) {
+    newLength--;
+  }
+  return (newLength != length) ? new String(newPath,0,newLength) : origPath;
+}

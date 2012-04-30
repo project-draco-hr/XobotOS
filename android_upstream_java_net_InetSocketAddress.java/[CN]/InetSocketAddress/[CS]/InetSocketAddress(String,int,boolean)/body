@@ -1,0 +1,17 @@
+{
+  if (hostname == null || port < 0 || port > 65535) {
+    throw new IllegalArgumentException("host=" + hostname + ", port="+ port);
+  }
+  InetAddress addr=null;
+  if (needResolved) {
+    try {
+      addr=InetAddress.getByName(hostname);
+      hostname=null;
+    }
+ catch (    UnknownHostException ignored) {
+    }
+  }
+  this.addr=addr;
+  this.hostname=hostname;
+  this.port=port;
+}

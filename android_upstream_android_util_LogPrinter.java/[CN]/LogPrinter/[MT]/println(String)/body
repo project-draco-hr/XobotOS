@@ -1,0 +1,3 @@
+{
+  Log.println_native(mBuffer,mPriority,mTag,x);
+}

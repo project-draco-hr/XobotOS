@@ -1,0 +1,3 @@
+{
+  super(WWWAuthenticate.class,WWWAuthenticateHeader.NAME);
+}

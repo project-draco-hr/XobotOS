@@ -1,0 +1,10 @@
+{
+  CSExpression expr;
+  if (isClass()) {
+    expr=new CSMethodInvocationExpression(getHelper().MANAGED_TO_NATIVE.expr(),getReference(arg));
+  }
+ else {
+    expr=getElementInfo().marshalIn(getReference(arg));
+  }
+  return new CSExpressionStatement(-1,new CSInfixExpression("=",getReference(obj),expr));
+}

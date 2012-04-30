@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("null address!");
+  ReferredBy referredBy=new ReferredBy();
+  referredBy.setAddress(address);
+  return referredBy;
+}

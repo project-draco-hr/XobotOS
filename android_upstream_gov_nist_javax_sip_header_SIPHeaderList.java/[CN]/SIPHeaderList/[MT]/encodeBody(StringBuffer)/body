@@ -1,0 +1,15 @@
+{
+  ListIterator<HDR> iterator=this.listIterator();
+  while (true) {
+    SIPHeader sipHeader=(SIPHeader)iterator.next();
+    if (sipHeader == this)     throw new RuntimeException("Unexpected circularity in SipHeaderList");
+    sipHeader.encodeBody(buffer);
+    if (iterator.hasNext()) {
+      if (!this.headerName.equals(PrivacyHeader.NAME))       buffer.append(Separators.COMMA);
+ else       buffer.append(Separators.SEMICOLON);
+      continue;
+    }
+ else     break;
+  }
+  return buffer;
+}

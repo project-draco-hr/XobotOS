@@ -1,0 +1,26 @@
+{
+  if (!ignoreCase) {
+    return regionMatches(thisStart,string,start,length);
+  }
+  if (string == null) {
+    throw new NullPointerException("string == null");
+  }
+  if (thisStart < 0 || length > count - thisStart) {
+    return false;
+  }
+  if (start < 0 || length > string.count - start) {
+    return false;
+  }
+  thisStart+=offset;
+  start+=string.offset;
+  int end=thisStart + length;
+  char[] target=string.value;
+  while (thisStart < end) {
+    char c1=value[thisStart++];
+    char c2=target[start++];
+    if (c1 != c2 && foldCase(c1) != foldCase(c2)) {
+      return false;
+    }
+  }
+  return true;
+}

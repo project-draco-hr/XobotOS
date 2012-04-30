@@ -1,0 +1,12 @@
+{
+  Object result=null;
+  if (className == null) {
+    return result;
+  }
+  try {
+    result=Class.forName(className).newInstance();
+  }
+ catch (  Exception e) {
+  }
+  return result;
+}

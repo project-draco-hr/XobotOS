@@ -1,0 +1,7 @@
+{
+  PipedReader reader=destination;
+  if (reader == null) {
+    throw new IOException("Pipe not connected");
+  }
+  reader.receive((char)c);
+}

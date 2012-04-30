@@ -1,0 +1,3 @@
+{
+  setWindowManager(wm,appToken,appName,false);
+}

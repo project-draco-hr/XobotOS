@@ -1,0 +1,19 @@
+{
+  if (debug)   dbg_enter("uriParam");
+  try {
+    String pvalue="";
+    String pname=paramNameOrValue();
+    char next=lexer.lookAhead(0);
+    boolean isFlagParam=true;
+    if (next == '=') {
+      lexer.consume(1);
+      pvalue=paramNameOrValue();
+      isFlagParam=false;
+    }
+    if (pname.length() == 0 && (pvalue == null || pvalue.length() == 0))     return null;
+ else     return new NameValue(pname,pvalue,isFlagParam);
+  }
+  finally {
+    if (debug)     dbg_leave("uriParam");
+  }
+}

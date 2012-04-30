@@ -1,0 +1,4 @@
+{
+  if (accessTypeVal == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setAccessType(), the accessType parameter is null.");
+  this.accessType=accessTypeVal;
+}

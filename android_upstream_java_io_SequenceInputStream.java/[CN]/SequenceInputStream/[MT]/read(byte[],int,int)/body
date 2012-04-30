@@ -1,0 +1,14 @@
+{
+  if (in == null) {
+    return -1;
+  }
+  Arrays.checkOffsetAndCount(buffer.length,offset,count);
+  while (in != null) {
+    int result=in.read(buffer,offset,count);
+    if (result >= 0) {
+      return result;
+    }
+    nextStream();
+  }
+  return -1;
+}

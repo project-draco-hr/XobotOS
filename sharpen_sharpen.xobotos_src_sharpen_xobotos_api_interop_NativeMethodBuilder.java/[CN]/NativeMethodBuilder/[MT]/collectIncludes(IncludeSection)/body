@@ -1,0 +1,8 @@
+{
+  if (_resolveFailed)   return;
+  section.addIncludes(_native);
+  for (  final ElementInfo param : _paramInfo) {
+    collectIncludes(section,param);
+  }
+  collectIncludes(section,_returnInfo);
+}

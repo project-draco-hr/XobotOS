@@ -1,0 +1,13 @@
+{
+  inetAddress=null;
+  if (isIPv6Address(host))   addressType=IPV6ADDRESS;
+ else   addressType=type;
+  if (host != null) {
+    hostname=host.trim();
+    if (addressType == HOSTNAME)     hostname=hostname.toLowerCase();
+    int zoneStart=-1;
+    if (addressType == IPV6ADDRESS && stripAddressScopeZones && (zoneStart=hostname.indexOf('%')) != -1) {
+      hostname=hostname.substring(0,zoneStart);
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("set Local tag " + mytag + " "+ this.dialogId);
+    sipStack.getStackLogger().logStackTrace();
+  }
+  this.myTag=mytag;
+}

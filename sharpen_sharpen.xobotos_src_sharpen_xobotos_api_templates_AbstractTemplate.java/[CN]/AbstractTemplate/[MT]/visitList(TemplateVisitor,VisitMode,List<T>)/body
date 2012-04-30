@@ -1,0 +1,4 @@
+{
+  if (list == null)   return;
+  for (  final T template : list)   template.visit(visitor,mode);
+}

@@ -1,0 +1,9 @@
+def MakeDat(input_file, stubdata_dir):
+    print ("------ Processing '%s'..." % input_file)
+    if (not os.path.isfile(input_file)):
+        print ('%s not a file!' % input_file)
+        sys.exit(1)
+    GenResIndex(input_file)
+    CopyAndroidCnvFiles(stubdata_dir)
+    args = ['-tl', '-s', TMP_DAT_PATH, '-a', input_file, 'new', (ICUDATA + '.dat')]
+    InvokeIcuTool('icupkg', TMP_DAT_PATH, args)

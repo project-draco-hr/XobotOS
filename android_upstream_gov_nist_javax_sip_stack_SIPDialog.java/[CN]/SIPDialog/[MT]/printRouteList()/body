@@ -1,0 +1,6 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("this : " + this);
+    sipStack.getStackLogger().logDebug("printRouteList : " + this.routeList.encode());
+  }
+}

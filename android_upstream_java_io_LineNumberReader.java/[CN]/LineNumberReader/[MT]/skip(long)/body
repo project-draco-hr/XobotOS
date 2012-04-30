@@ -1,0 +1,13 @@
+{
+  if (charCount < 0) {
+    throw new IllegalArgumentException("charCount < 0: " + charCount);
+  }
+synchronized (lock) {
+    for (int i=0; i < charCount; i++) {
+      if (read() == -1) {
+        return i;
+      }
+    }
+    return charCount;
+  }
+}

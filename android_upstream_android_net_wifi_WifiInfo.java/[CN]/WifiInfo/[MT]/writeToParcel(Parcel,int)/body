@@ -1,0 +1,17 @@
+{
+  dest.writeInt(mNetworkId);
+  dest.writeInt(mRssi);
+  dest.writeInt(mLinkSpeed);
+  if (mIpAddress != null) {
+    dest.writeByte((byte)1);
+    dest.writeByteArray(mIpAddress.getAddress());
+  }
+ else {
+    dest.writeByte((byte)0);
+  }
+  dest.writeString(getSSID());
+  dest.writeString(mBSSID);
+  dest.writeString(mMacAddress);
+  dest.writeByte(mExplicitConnect ? (byte)1 : (byte)0);
+  mSupplicantState.writeToParcel(dest,flags);
+}

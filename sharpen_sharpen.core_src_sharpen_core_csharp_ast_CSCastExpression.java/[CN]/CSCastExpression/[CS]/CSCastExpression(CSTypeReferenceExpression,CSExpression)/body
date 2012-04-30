@@ -1,0 +1,10 @@
+{
+  if (null == type) {
+    throw new IllegalArgumentException("type");
+  }
+  if (null == expression) {
+    throw new IllegalArgumentException("expression");
+  }
+  _type=type;
+  _expression=expression;
+}

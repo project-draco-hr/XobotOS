@@ -1,0 +1,14 @@
+{
+  if (mRetaining) {
+    if (DEBUG)     Log.v(TAG,"  Finished Retaining: " + this);
+    mRetaining=false;
+    if (mStarted != mRetainingStarted) {
+      if (!mStarted) {
+        stop();
+      }
+    }
+  }
+  if (mStarted && mHaveData && !mReportNextStart) {
+    callOnLoadFinished(mLoader,mData);
+  }
+}

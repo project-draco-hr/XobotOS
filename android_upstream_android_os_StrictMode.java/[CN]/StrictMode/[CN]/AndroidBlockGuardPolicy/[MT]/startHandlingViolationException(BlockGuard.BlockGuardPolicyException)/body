@@ -1,0 +1,5 @@
+{
+  final ViolationInfo info=new ViolationInfo(e,e.getPolicy());
+  info.violationUptimeMillis=SystemClock.uptimeMillis();
+  handleViolationWithTimingAttempt(info);
+}

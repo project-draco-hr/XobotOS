@@ -1,0 +1,13 @@
+{
+  if (sipProvider == null)   throw new NullPointerException("null provider arg");
+  SipProviderImpl sipProviderImpl=(SipProviderImpl)sipProvider;
+  if (sipProviderImpl.getSipListener() != null) {
+    throw new ObjectInUseException("SipProvider still has an associated SipListener!");
+  }
+  sipProviderImpl.removeListeningPoints();
+  sipProviderImpl.stop();
+  sipProviders.remove(sipProvider);
+  if (sipProviders.isEmpty()) {
+    this.stopStack();
+  }
+}

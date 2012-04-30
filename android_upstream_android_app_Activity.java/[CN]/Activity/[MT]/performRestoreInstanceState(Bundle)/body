@@ -1,0 +1,4 @@
+{
+  onRestoreInstanceState(savedInstanceState);
+  restoreManagedDialogs(savedInstanceState);
+}

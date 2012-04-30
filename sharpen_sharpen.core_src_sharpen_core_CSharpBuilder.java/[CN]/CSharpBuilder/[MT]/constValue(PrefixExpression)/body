@@ -1,0 +1,9 @@
+{
+  if (PrefixExpression.Operator.NOT == expression.getOperator()) {
+    Object value=constValue(expression.getOperand());
+    if (null != value) {
+      return isTrue(value) ? Boolean.FALSE : Boolean.TRUE;
+    }
+  }
+  return null;
+}

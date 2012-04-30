@@ -1,0 +1,14 @@
+{
+  if (key == null) {
+    throw new IllegalArgumentException("key == null");
+  }
+  if (key.length == 0) {
+    throw new IllegalArgumentException("key.length == 0");
+  }
+  if (algorithm == null) {
+    throw new IllegalArgumentException("algorithm == null");
+  }
+  this.algorithm=algorithm;
+  this.key=new byte[key.length];
+  System.arraycopy(key,0,this.key,0,key.length);
+}

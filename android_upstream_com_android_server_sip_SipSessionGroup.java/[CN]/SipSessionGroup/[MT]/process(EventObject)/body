@@ -1,0 +1,14 @@
+{
+  SipSessionImpl session=getSipSession(event);
+  try {
+    boolean isLoggable=isLoggable(session,event);
+    boolean processed=(session != null) && session.process(event);
+    if (isLoggable && processed) {
+      Log.d(TAG,"new state after: " + SipSession.State.toString(session.mState));
+    }
+  }
+ catch (  Throwable e) {
+    Log.w(TAG,"event process error: " + event,e);
+    session.onError(e);
+  }
+}

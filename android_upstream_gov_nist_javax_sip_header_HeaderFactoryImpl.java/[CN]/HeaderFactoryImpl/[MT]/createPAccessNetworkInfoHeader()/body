@@ -1,0 +1,4 @@
+{
+  PAccessNetworkInfo accessNetworkInfo=new PAccessNetworkInfo();
+  return accessNetworkInfo;
+}

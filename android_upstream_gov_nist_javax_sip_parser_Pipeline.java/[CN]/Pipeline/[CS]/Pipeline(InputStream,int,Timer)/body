@@ -1,0 +1,6 @@
+{
+  this.timer=timer;
+  this.pipe=pipe;
+  buffList=new LinkedList();
+  this.readTimeout=readTimeout;
+}

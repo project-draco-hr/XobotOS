@@ -1,0 +1,4 @@
+def WriteVariableList(self, var, values):
+    if (values is None):
+        values = []
+    self.ninja.variable(var, ' '.join(values))

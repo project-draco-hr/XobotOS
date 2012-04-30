@@ -1,0 +1,13 @@
+{
+  if (sipStack.isLoggingEnabled())   this.sipStack.getStackLogger().logException(ex);
+  if ((hdrClass != null) && (hdrClass.equals(From.class) || hdrClass.equals(To.class) || hdrClass.equals(CSeq.class)|| hdrClass.equals(Via.class)|| hdrClass.equals(CallID.class)|| hdrClass.equals(RequestLine.class)|| hdrClass.equals(StatusLine.class))) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logError("BAD MESSAGE!");
+      sipStack.getStackLogger().logError(message);
+    }
+    throw ex;
+  }
+ else {
+    sipMessage.addUnparsed(header);
+  }
+}

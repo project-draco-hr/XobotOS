@@ -1,0 +1,49 @@
+{
+  try {
+    ThreadAuditor.ThreadHandle threadHandle=sipStack.getThreadAuditor().addCurrentThread();
+    while (true) {
+      EventWrapper eventWrapper=null;
+      LinkedList eventsToDeliver;
+synchronized (this.eventMutex) {
+        while (pendingEvents.isEmpty()) {
+          if (this.isStopped) {
+            if (sipStack.isLoggingEnabled())             sipStack.getStackLogger().logDebug("Stopped event scanner!!");
+            return;
+          }
+          try {
+            threadHandle.ping();
+            eventMutex.wait(threadHandle.getPingIntervalInMillisecs());
+          }
+ catch (          InterruptedException ex) {
+            if (sipStack.isLoggingEnabled())             sipStack.getStackLogger().logDebug("Interrupted!");
+            return;
+          }
+        }
+        eventsToDeliver=pendingEvents;
+        pendingEvents=new LinkedList();
+      }
+      ListIterator iterator=eventsToDeliver.listIterator();
+      while (iterator.hasNext()) {
+        eventWrapper=(EventWrapper)iterator.next();
+        if (sipStack.isLoggingEnabled()) {
+          sipStack.getStackLogger().logDebug("Processing " + eventWrapper + "nevents "+ eventsToDeliver.size());
+        }
+        try {
+          deliverEvent(eventWrapper);
+        }
+ catch (        Exception e) {
+          if (sipStack.isLoggingEnabled()) {
+            sipStack.getStackLogger().logError("Unexpected exception caught while delivering event -- carrying on bravely",e);
+          }
+        }
+      }
+    }
+  }
+  finally {
+    if (sipStack.isLoggingEnabled()) {
+      if (!this.isStopped) {
+        sipStack.getStackLogger().logFatalError("Event scanner exited abnormally");
+      }
+    }
+  }
+}

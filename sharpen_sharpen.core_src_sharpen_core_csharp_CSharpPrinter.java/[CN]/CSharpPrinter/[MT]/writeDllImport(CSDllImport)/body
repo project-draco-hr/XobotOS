@@ -1,0 +1,38 @@
+{
+  writeIndented("[DllImport(");
+  write('"' + dllImport.getDllName() + '"');
+  CSDllImport.CallingConvention cconv=dllImport.getCallingConvention();
+  if (cconv != null) {
+    write(", CallingConvention = CallingConvention.");
+switch (cconv) {
+case CDecl:
+      write("Cdecl");
+    break;
+case StdCall:
+  write("StdCall");
+break;
+case ThisCall:
+write("ThisCall");
+break;
+default :
+write("Winapi");
+break;
+}
+}
+CSDllImport.CharSet charSet=dllImport.getCharSet();
+if (charSet != null) {
+write(", CharSet = CharSet.");
+switch (charSet) {
+case Ansi:
+write("Ansi");
+break;
+case Unicode:
+write("Unicode");
+break;
+default :
+write("Auto");
+break;
+}
+}
+writeLine(")]");
+}

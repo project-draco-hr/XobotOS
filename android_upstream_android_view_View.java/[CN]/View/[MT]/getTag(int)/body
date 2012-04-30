@@ -1,0 +1,4 @@
+{
+  if (mKeyedTags != null)   return mKeyedTags.get(key);
+  return null;
+}

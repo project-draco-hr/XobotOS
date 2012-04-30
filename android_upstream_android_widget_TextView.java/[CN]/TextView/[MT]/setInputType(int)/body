@@ -1,0 +1,33 @@
+{
+  final boolean wasPassword=isPasswordInputType(mInputType);
+  final boolean wasVisiblePassword=isVisiblePasswordInputType(mInputType);
+  setInputType(type,false);
+  final boolean isPassword=isPasswordInputType(type);
+  final boolean isVisiblePassword=isVisiblePasswordInputType(type);
+  boolean forceUpdate=false;
+  if (isPassword) {
+    setTransformationMethod(PasswordTransformationMethod.getInstance());
+    setTypefaceByIndex(MONOSPACE,0);
+  }
+ else   if (isVisiblePassword) {
+    if (mTransformation == PasswordTransformationMethod.getInstance()) {
+      forceUpdate=true;
+    }
+    setTypefaceByIndex(MONOSPACE,0);
+  }
+ else   if (wasPassword || wasVisiblePassword) {
+    setTypefaceByIndex(-1,-1);
+    if (mTransformation == PasswordTransformationMethod.getInstance()) {
+      forceUpdate=true;
+    }
+  }
+  boolean singleLine=!isMultilineInputType(type);
+  if (mSingleLine != singleLine || forceUpdate) {
+    applySingleLine(singleLine,!isPassword,true);
+  }
+  if (!isSuggestionsEnabled()) {
+    mText=removeSuggestionSpans(mText);
+  }
+  InputMethodManager imm=InputMethodManager.peekInstance();
+  if (imm != null)   imm.restartInput(this);
+}

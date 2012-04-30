@@ -1,0 +1,5 @@
+{
+  Integer ttl=(Integer)uriParms.getValue("ttl");
+  if (ttl != null)   return ttl.intValue();
+ else   return -1;
+}

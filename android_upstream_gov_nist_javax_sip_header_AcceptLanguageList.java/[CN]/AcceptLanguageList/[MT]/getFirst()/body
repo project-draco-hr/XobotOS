@@ -1,0 +1,5 @@
+{
+  AcceptLanguage retval=(AcceptLanguage)super.getFirst();
+  if (retval != null)   return retval;
+ else   return new AcceptLanguage();
+}

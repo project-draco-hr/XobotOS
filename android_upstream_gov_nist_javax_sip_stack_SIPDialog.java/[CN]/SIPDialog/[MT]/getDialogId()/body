@@ -1,0 +1,4 @@
+{
+  if (this.dialogId == null && this.lastResponse != null)   this.dialogId=this.lastResponse.getDialogId(isServer());
+  return this.dialogId;
+}

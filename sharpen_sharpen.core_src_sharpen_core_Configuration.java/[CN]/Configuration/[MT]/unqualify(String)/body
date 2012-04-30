@@ -1,0 +1,4 @@
+{
+  final int lastDot=qualifiedMethodName.lastIndexOf('.');
+  return lastDot == -1 ? qualifiedMethodName : qualifiedMethodName.substring(lastDot + 1);
+}

@@ -1,0 +1,4 @@
+{
+  mAutomaticPerformanceSnapshots=true;
+  mPerformanceCollector=new PerformanceCollector();
+}

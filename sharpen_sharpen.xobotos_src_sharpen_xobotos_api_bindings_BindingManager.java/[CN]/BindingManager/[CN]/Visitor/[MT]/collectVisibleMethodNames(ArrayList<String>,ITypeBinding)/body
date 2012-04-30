@@ -1,0 +1,10 @@
+{
+  for (  final IMethodBinding method : type.getDeclaredMethods()) {
+    if (!list.contains(method.getName()))     list.add(method.getName());
+  }
+  ITypeBinding superClass=type.getSuperclass();
+  if (superClass != null)   collectVisibleMethodNames(list,superClass);
+  for (  final ITypeBinding iface : type.getInterfaces()) {
+    collectVisibleMethodNames(list,iface);
+  }
+}

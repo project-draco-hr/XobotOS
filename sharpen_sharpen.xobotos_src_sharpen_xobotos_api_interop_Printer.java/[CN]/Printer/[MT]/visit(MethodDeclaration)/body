@@ -1,0 +1,20 @@
+{
+  final Method method=node.getDefinition();
+  if (method.getFlags() == Flags.EXPORT) {
+    _writer.writeIndentation();
+    _writer.write("extern \"C\" DLL_EXPORT ");
+  }
+ else   if (method.getFlags() == Flags.STATIC) {
+    _writer.writeIndentation();
+    _writer.write("static ");
+  }
+ else {
+    _writer.writeIndentation();
+  }
+  method.getReturnType().accept(this);
+  _writer.write(" ");
+  _writer.write(method.getName());
+  _writer.write("(");
+  visitCommaSeparatedList(method.getParameters());
+  _writer.writeLine(");");
+}

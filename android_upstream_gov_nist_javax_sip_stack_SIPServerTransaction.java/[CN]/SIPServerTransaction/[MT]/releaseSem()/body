@@ -1,0 +1,9 @@
+{
+  if (this.pendingSubscribeTransaction != null) {
+    pendingSubscribeTransaction.releaseSem();
+  }
+ else   if (this.inviteTransaction != null && this.getMethod().equals(Request.CANCEL)) {
+    this.inviteTransaction.releaseSem();
+  }
+  super.releaseSem();
+}

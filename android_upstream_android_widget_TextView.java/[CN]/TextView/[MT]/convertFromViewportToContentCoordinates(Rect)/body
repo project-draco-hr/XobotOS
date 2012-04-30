@@ -1,0 +1,8 @@
+{
+  final int horizontalOffset=viewportToContentHorizontalOffset();
+  r.left+=horizontalOffset;
+  r.right+=horizontalOffset;
+  final int verticalOffset=viewportToContentVerticalOffset();
+  r.top+=verticalOffset;
+  r.bottom+=verticalOffset;
+}

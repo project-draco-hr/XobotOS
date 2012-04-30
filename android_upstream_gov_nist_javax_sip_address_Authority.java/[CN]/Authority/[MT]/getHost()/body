@@ -1,0 +1,4 @@
+{
+  if (hostPort == null)   return null;
+ else   return hostPort.getHost();
+}

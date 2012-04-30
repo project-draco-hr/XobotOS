@@ -1,0 +1,6 @@
+{
+  if (!_configuration.junitConversion())   return false;
+  if (isLegacyTestFixtureClass(type))   return true;
+  ITypeBinding base=type.getSuperclass();
+  return (base != null) && isLegacyTestFixture(base);
+}

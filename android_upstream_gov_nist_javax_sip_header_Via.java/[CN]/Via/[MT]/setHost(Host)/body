@@ -1,0 +1,6 @@
+{
+  if (sentBy == null) {
+    sentBy=new HostPort();
+  }
+  sentBy.setHost(host);
+}

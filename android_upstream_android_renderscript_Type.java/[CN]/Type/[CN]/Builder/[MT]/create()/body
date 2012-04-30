@@ -1,0 +1,30 @@
+{
+  if (mDimZ > 0) {
+    if ((mDimX < 1) || (mDimY < 1)) {
+      throw new RSInvalidStateException("Both X and Y dimension required when Z is present.");
+    }
+    if (mDimFaces) {
+      throw new RSInvalidStateException("Cube maps not supported with 3D types.");
+    }
+  }
+  if (mDimY > 0) {
+    if (mDimX < 1) {
+      throw new RSInvalidStateException("X dimension required when Y is present.");
+    }
+  }
+  if (mDimFaces) {
+    if (mDimY < 1) {
+      throw new RSInvalidStateException("Cube maps require 2D Types.");
+    }
+  }
+  int id=mRS.nTypeCreate(mElement.getID(),mDimX,mDimY,mDimZ,mDimMipmaps,mDimFaces);
+  Type t=new Type(id,mRS);
+  t.mElement=mElement;
+  t.mDimX=mDimX;
+  t.mDimY=mDimY;
+  t.mDimZ=mDimZ;
+  t.mDimMipmaps=mDimMipmaps;
+  t.mDimFaces=mDimFaces;
+  t.calcElementCount();
+  return t;
+}

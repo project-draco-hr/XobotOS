@@ -1,0 +1,4 @@
+{
+  StaticNestedClassBuilder builder=new StaticNestedClassBuilder(parent);
+  return builder.processTypeDeclaration(node);
+}

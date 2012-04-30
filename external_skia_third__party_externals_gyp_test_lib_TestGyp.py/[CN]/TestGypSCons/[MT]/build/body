@@ -1,0 +1,12 @@
+def build(self, gyp_file, target=None, **kw):
+    '\n    Runs a scons build using the SCons configuration generated from the\n    specified gyp_file.\n    '
+    arguments = kw.get('arguments', [])[:]
+    dirname = os.path.dirname(gyp_file)
+    if dirname:
+        arguments.extend(['-C', dirname])
+    if self.configuration:
+        arguments.append(('--mode=' + self.configuration))
+    if (target not in (None, self.DEFAULT)):
+        arguments.append(target)
+    kw['arguments'] = arguments
+    return self.run(program=self.build_tool, **kw)

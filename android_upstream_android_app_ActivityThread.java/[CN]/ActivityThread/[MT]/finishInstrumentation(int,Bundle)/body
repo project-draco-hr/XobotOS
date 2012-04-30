@@ -1,0 +1,11 @@
+{
+  IActivityManager am=ActivityManagerNative.getDefault();
+  if (mProfiler.profileFile != null && mProfiler.handlingProfiling && mProfiler.profileFd == null) {
+    Debug.stopMethodTracing();
+  }
+  try {
+    am.finishInstrumentation(mAppThread,resultCode,results);
+  }
+ catch (  RemoteException ex) {
+  }
+}

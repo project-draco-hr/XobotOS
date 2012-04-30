@@ -1,0 +1,4 @@
+{
+  if (eventType == null)   throw new NullPointerException("JAIN-SIP Exception," + "AllowEvents, setEventType(), the eventType parameter is null");
+  this.eventType=eventType;
+}

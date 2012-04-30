@@ -1,0 +1,5 @@
+{
+  hasSameMobileAndFixedLinePattern=true;
+  sameMobileAndFixedLinePattern_=value;
+  return this;
+}

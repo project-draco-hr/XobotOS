@@ -1,0 +1,6 @@
+{
+  this.declaringClass=declaringClass;
+  this.parameterTypes=ptypes;
+  this.exceptionTypes=extypes;
+  this.slot=slot;
+}

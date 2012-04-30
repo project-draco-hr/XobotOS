@@ -1,0 +1,21 @@
+{
+  if (this.value != null) {
+    return this.value;
+  }
+ else {
+    String encodedHdr=null;
+    try {
+      encodedHdr=this.encode();
+    }
+ catch (    Exception ex) {
+      return null;
+    }
+    StringBuffer buffer=new StringBuffer(encodedHdr);
+    while (buffer.length() > 0 && buffer.charAt(0) != ':') {
+      buffer.deleteCharAt(0);
+    }
+    buffer.deleteCharAt(0);
+    this.value=buffer.toString().trim();
+    return this.value;
+  }
+}

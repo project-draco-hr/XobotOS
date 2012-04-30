@@ -1,0 +1,4 @@
+{
+  logMotionEvent("Trackball",event);
+  return true;
+}

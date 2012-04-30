@@ -1,0 +1,10 @@
+{
+  super(flags);
+  this._configFile=configFile;
+  addAndroidMappings();
+  setCreateProblemMarkers(true);
+  setIgnoreErrors(true);
+  for (  final NameMapping mapping : _configFile.getNamespaceMappings()) {
+    mapNamespace(mapping.from,mapping.to);
+  }
+}

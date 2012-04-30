@@ -1,0 +1,3 @@
+{
+  return (that instanceof PhoneNumber) && exactlySameAs((PhoneNumber)that);
+}

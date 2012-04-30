@@ -1,0 +1,4 @@
+{
+  super(TIMESTAMP);
+  delay=-1;
+}

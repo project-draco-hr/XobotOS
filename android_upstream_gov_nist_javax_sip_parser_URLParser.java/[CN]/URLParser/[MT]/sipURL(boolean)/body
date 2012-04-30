@@ -1,0 +1,54 @@
+{
+  if (debug)   dbg_enter("sipURL");
+  SipUri retval=new SipUri();
+  Token nextToken=lexer.peekNextToken();
+  int sipOrSips=TokenTypes.SIP;
+  String scheme=TokenNames.SIP;
+  if (nextToken.getTokenType() == TokenTypes.SIPS) {
+    sipOrSips=TokenTypes.SIPS;
+    scheme=TokenNames.SIPS;
+  }
+  try {
+    lexer.match(sipOrSips);
+    lexer.match(':');
+    retval.setScheme(scheme);
+    int startOfUser=lexer.markInputPosition();
+    String userOrHost=user();
+    String passOrPort=null;
+    if (lexer.lookAhead() == ':') {
+      lexer.consume(1);
+      passOrPort=password();
+    }
+    if (lexer.lookAhead() == '@') {
+      lexer.consume(1);
+      retval.setUser(userOrHost);
+      if (passOrPort != null)       retval.setUserPassword(passOrPort);
+    }
+ else {
+      lexer.rewindInputPosition(startOfUser);
+    }
+    HostNameParser hnp=new HostNameParser(this.getLexer());
+    HostPort hp=hnp.hostPort(false);
+    retval.setHostPort(hp);
+    lexer.selectLexer("charLexer");
+    while (lexer.hasMoreChars()) {
+      if (lexer.lookAhead(0) != ';' || !inBrackets)       break;
+      lexer.consume(1);
+      NameValue parms=uriParam();
+      if (parms != null)       retval.setUriParameter(parms);
+    }
+    if (lexer.hasMoreChars() && lexer.lookAhead(0) == '?') {
+      lexer.consume(1);
+      while (lexer.hasMoreChars()) {
+        NameValue parms=qheader();
+        retval.setQHeader(parms);
+        if (lexer.hasMoreChars() && lexer.lookAhead(0) != '&')         break;
+ else         lexer.consume(1);
+      }
+    }
+    return retval;
+  }
+  finally {
+    if (debug)     dbg_leave("sipURL");
+  }
+}

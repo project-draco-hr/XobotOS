@@ -1,0 +1,4 @@
+int handle
+int certError
+byte certDER[]
+String url

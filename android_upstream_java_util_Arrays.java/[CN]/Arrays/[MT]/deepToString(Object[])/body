@@ -1,0 +1,8 @@
+{
+  if (array == null) {
+    return "null";
+  }
+  StringBuilder buf=new StringBuilder(array.length * 9);
+  deepToStringImpl(array,new Object[]{array},buf);
+  return buf.toString();
+}

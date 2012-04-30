@@ -1,0 +1,34 @@
+{
+  final View[] activeViews=mActiveViews;
+  final boolean hasListener=mRecyclerListener != null;
+  final boolean multipleScraps=mViewTypeCount > 1;
+  ArrayList<View> scrapViews=mCurrentScrap;
+  final int count=activeViews.length;
+  for (int i=count - 1; i >= 0; i--) {
+    final View victim=activeViews[i];
+    if (victim != null) {
+      final AbsListView.LayoutParams lp=(AbsListView.LayoutParams)victim.getLayoutParams();
+      int whichScrap=lp.viewType;
+      activeViews[i]=null;
+      if (!shouldRecycleViewType(whichScrap)) {
+        if (whichScrap != ITEM_VIEW_TYPE_HEADER_OR_FOOTER) {
+          removeDetachedView(victim,false);
+        }
+        continue;
+      }
+      if (multipleScraps) {
+        scrapViews=mScrapViews[whichScrap];
+      }
+      victim.dispatchStartTemporaryDetach();
+      lp.scrappedFromPosition=mFirstActivePosition + i;
+      scrapViews.add(victim);
+      if (hasListener) {
+        mRecyclerListener.onMovedToScrapHeap(victim);
+      }
+      if (ViewDebug.TRACE_RECYCLER) {
+        ViewDebug.trace(victim,ViewDebug.RecyclerTraceType.MOVE_FROM_ACTIVE_TO_SCRAP_HEAP,mFirstActivePosition + i,-1);
+      }
+    }
+  }
+  pruneScrapViews();
+}

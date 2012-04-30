@@ -1,0 +1,9 @@
+{
+  AttachInfo attachInfo=mAttachInfo;
+  if (attachInfo != null) {
+    Message msg=Message.obtain();
+    msg.what=AttachInfo.INVALIDATE_MSG;
+    msg.obj=this;
+    attachInfo.mHandler.sendMessageDelayed(msg,delayMilliseconds);
+  }
+}

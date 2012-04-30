@@ -1,0 +1,10 @@
+{
+  if (!useDefaultMargins) {
+    return 0;
+  }
+  Spec spec=horizontal ? p.columnSpec : p.rowSpec;
+  Axis axis=horizontal ? horizontalAxis : verticalAxis;
+  Interval span=spec.span;
+  boolean isAtEdge=leading ? (span.min == 0) : (span.max == axis.getCount());
+  return getDefaultMargin(c,isAtEdge,horizontal,leading);
+}

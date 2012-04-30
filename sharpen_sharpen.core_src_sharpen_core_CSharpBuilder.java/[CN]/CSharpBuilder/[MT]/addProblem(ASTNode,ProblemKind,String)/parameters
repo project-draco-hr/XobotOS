@@ -1,0 +1,3 @@
+ASTNode node
+ProblemKind kind
+String message

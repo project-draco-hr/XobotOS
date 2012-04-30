@@ -1,0 +1,8 @@
+{
+  if (this.transactionTimerStarted.compareAndSet(false,true)) {
+    if (sipStack.getTimer() != null) {
+      TimerTask myTimer=new TransactionTimer();
+      sipStack.getTimer().schedule(myTimer,BASE_TIMER_INTERVAL,BASE_TIMER_INTERVAL);
+    }
+  }
+}

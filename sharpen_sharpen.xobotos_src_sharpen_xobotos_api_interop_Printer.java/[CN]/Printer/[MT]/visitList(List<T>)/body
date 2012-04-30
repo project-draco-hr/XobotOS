@@ -1,0 +1,6 @@
+{
+  if (list == null)   return;
+  for (  T item : list) {
+    item.accept(this);
+  }
+}

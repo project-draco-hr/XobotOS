@@ -1,0 +1,21 @@
+{
+  if (isBlittable() && (mode != Mode.OUT)) {
+    marshalBlittable(context,expr,mode,flags);
+    return;
+  }
+  final CSTypeReference intPtr=new CSTypeReference("System.IntPtr");
+  ManagedVariable arg=new ManagedVariable(context.getVariableName("ptr"),intPtr,null,mode == Mode.OUT ? ManagedVariable.Flags.OUT : null);
+  ManagedVariable ptr=new ManagedVariable(context.getVariableName("ptr"),intPtr,new CSReferenceExpression("System.IntPtr.Zero"));
+  context.addParameter(null,arg.getDeclaration().type(),mode == Mode.OUT ? ptr.getOutReference() : ptr.getReference());
+  CSExpression cleanupFunc=mode == Mode.OUT ? FREE_NATIVE_PTR.expr() : FREE_MANAGED_PTR.expr();
+  CSExpression cleanup=new CSMethodInvocationExpression(cleanupFunc,ptr.getReference());
+  context.addDeclaration(ptr.getDeclaration(),new CSExpressionStatement(-1,cleanup));
+  if (mode != Mode.OUT) {
+    CSExpression marshal=new CSInfixExpression("=",ptr.getReference(),new CSMethodInvocationExpression(MANAGED_TO_NATIVE.expr(),expr));
+    context.addPreStatement(new CSExpressionStatement(-1,marshal));
+  }
+  if ((mode == Mode.REF) || (mode == Mode.OUT)) {
+    CSExpression marshal=new CSMethodInvocationExpression(MANAGED_MARSHAL_OUT.expr(),ptr.getReference(),expr);
+    context.addPostStatement(new CSExpressionStatement(-1,marshal));
+  }
+}

@@ -1,0 +1,6 @@
+{
+  if (tag != ASN1Constants.TAG_C_SET) {
+    throw expected("set");
+  }
+  throw new ASN1Exception("Decoding ASN.1 Set type is not supported");
+}

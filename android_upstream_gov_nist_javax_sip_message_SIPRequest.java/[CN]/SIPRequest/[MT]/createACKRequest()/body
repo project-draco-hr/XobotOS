@@ -1,0 +1,5 @@
+{
+  RequestLine requestLine=(RequestLine)this.requestLine.clone();
+  requestLine.setMethod(Request.ACK);
+  return this.createSIPRequest(requestLine,false);
+}

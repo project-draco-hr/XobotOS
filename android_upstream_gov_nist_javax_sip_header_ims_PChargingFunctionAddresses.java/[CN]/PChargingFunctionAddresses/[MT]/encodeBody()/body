@@ -1,0 +1,7 @@
+{
+  StringBuffer encoding=new StringBuffer();
+  if (!duplicates.isEmpty()) {
+    encoding.append(duplicates.encode());
+  }
+  return encoding.toString();
+}

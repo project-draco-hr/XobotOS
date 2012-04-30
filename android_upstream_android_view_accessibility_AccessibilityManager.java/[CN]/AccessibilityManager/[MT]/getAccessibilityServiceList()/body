@@ -1,0 +1,10 @@
+{
+  List<AccessibilityServiceInfo> infos=getInstalledAccessibilityServiceList();
+  List<ServiceInfo> services=new ArrayList<ServiceInfo>();
+  final int infoCount=infos.size();
+  for (int i=0; i < infoCount; i++) {
+    AccessibilityServiceInfo info=infos.get(i);
+    services.add(info.getResolveInfo().serviceInfo);
+  }
+  return Collections.unmodifiableList(services);
+}

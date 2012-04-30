@@ -1,0 +1,9 @@
+{
+  String rfc3966Format=util.format(number,PhoneNumberFormat.RFC3966);
+  int endIndex=rfc3966Format.indexOf(';');
+  if (endIndex < 0) {
+    endIndex=rfc3966Format.length();
+  }
+  int startIndex=rfc3966Format.indexOf('-') + 1;
+  return rfc3966Format.substring(startIndex,endIndex).split("-");
+}

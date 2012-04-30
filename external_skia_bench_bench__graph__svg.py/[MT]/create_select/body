@@ -1,0 +1,17 @@
+def create_select(qualifier, lines, select_id=None):
+    'Output select with options showing lines which qualifier maps to it.\n    \n    ((Label) -> str, {Label:_}, str?) -> _'
+    options = {}
+    for label in lines.keys():
+        option = qualifier(label)
+        if (option not in options):
+            options[option] = []
+        options[option].append(label)
+    option_list = list(options.keys())
+    option_list.sort()
+    print '<select class="lines"',
+    if (select_id is not None):
+        print ('id=%s' % qa(select_id))
+    print 'multiple="true" size="10" onchange="updateSvg();">'
+    for option in option_list:
+        print (((('<option value=' + qa((('[' + reduce((lambda x, y: ((x + json.dumps(str(y))) + ',')), options[option], '')[0:(-1)]) + ']'))) + '>') + qe(option)) + '</option>')
+    print '</select>'

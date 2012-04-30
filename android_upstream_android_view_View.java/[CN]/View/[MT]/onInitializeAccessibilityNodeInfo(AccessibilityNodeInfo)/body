@@ -1,0 +1,8 @@
+{
+  if (mAccessibilityDelegate != null) {
+    mAccessibilityDelegate.onInitializeAccessibilityNodeInfo(this,info);
+  }
+ else {
+    onInitializeAccessibilityNodeInfoInternal(info);
+  }
+}

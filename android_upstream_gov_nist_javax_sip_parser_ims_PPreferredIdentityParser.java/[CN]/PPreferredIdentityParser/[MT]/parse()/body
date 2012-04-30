@@ -1,0 +1,15 @@
+{
+  if (debug)   dbg_enter("PreferredIdentityParser.parse");
+  try {
+    this.lexer.match(TokenTypes.P_PREFERRED_IDENTITY);
+    this.lexer.SPorHT();
+    this.lexer.match(':');
+    this.lexer.SPorHT();
+    PPreferredIdentity p=new PPreferredIdentity();
+    super.parse(p);
+    return p;
+  }
+  finally {
+    if (debug)     dbg_leave("PreferredIdentityParser.parse");
+  }
+}

@@ -1,0 +1,21 @@
+def GenerateConfig(fp, config, indent='', src_dir=''):
+    '\n  Generates SCons dictionary items for a gyp configuration.\n\n  This provides the main translation between the (lower-case) gyp settings\n  keywords and the (upper-case) SCons construction variables.\n  '
+    var_mapping = {'ASFLAGS': 'asflags', 'CCFLAGS': 'cflags', 'CFLAGS': 'cflags_c', 'CXXFLAGS': 'cflags_cc', 'CPPDEFINES': 'defines', 'CPPPATH': 'include_dirs', 'LINKFLAGS': 'ldflags', }
+    postamble = ('\n%s],\n' % indent)
+    for scons_var in sorted(var_mapping.keys()):
+        gyp_var = var_mapping[scons_var]
+        value = config.get(gyp_var)
+        if value:
+            if (gyp_var in ('defines',)):
+                value = [EscapeCppDefine(v) for v in value]
+            if (gyp_var in ('include_dirs',)):
+                if (src_dir and (not src_dir.endswith('/'))):
+                    src_dir += '/'
+                result = []
+                for v in value:
+                    v = FixPath(v, src_dir)
+                    result.append(('env.Dir(%r)' % v))
+                value = result
+            else:
+                value = map(repr, value)
+            WriteList(fp, value, prefix=indent, preamble=('%s%s = [\n    ' % (indent, scons_var)), postamble=postamble)

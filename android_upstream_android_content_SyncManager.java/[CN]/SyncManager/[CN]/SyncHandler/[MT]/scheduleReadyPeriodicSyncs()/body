@@ -1,0 +1,45 @@
+{
+  final boolean backgroundDataUsageAllowed=getConnectivityManager().getBackgroundDataSetting();
+  long earliestFuturePollTime=Long.MAX_VALUE;
+  if (!backgroundDataUsageAllowed || !mSyncStorageEngine.getMasterSyncAutomatically()) {
+    return earliestFuturePollTime;
+  }
+  final long nowAbsolute=System.currentTimeMillis();
+  ArrayList<SyncStorageEngine.AuthorityInfo> infos=mSyncStorageEngine.getAuthorities();
+  for (  SyncStorageEngine.AuthorityInfo info : infos) {
+    if (!ArrayUtils.contains(mAccounts,info.account)) {
+      continue;
+    }
+    if (!mSyncStorageEngine.getSyncAutomatically(info.account,info.authority)) {
+      continue;
+    }
+    if (mSyncStorageEngine.getIsSyncable(info.account,info.authority) == 0) {
+      continue;
+    }
+    SyncStatusInfo status=mSyncStorageEngine.getOrCreateSyncStatus(info);
+    for (int i=0, N=info.periodicSyncs.size(); i < N; i++) {
+      final Bundle extras=info.periodicSyncs.get(i).first;
+      final Long periodInSeconds=info.periodicSyncs.get(i).second;
+      final long lastPollTimeAbsolute=status.getPeriodicSyncTime(i);
+      final long nextPollTimeAbsolute=lastPollTimeAbsolute > nowAbsolute ? nowAbsolute : lastPollTimeAbsolute + periodInSeconds * 1000;
+      if (nextPollTimeAbsolute <= nowAbsolute) {
+        final Pair<Long,Long> backoff=mSyncStorageEngine.getBackoff(info.account,info.authority);
+        final RegisteredServicesCache.ServiceInfo<SyncAdapterType> syncAdapterInfo=mSyncAdapters.getServiceInfo(SyncAdapterType.newKey(info.authority,info.account.type));
+        if (syncAdapterInfo == null) {
+          continue;
+        }
+        scheduleSyncOperation(new SyncOperation(info.account,SyncStorageEngine.SOURCE_PERIODIC,info.authority,extras,0,backoff != null ? backoff.first : 0,mSyncStorageEngine.getDelayUntilTime(info.account,info.authority),syncAdapterInfo.type.allowParallelSyncs()));
+        status.setPeriodicSyncTime(i,nowAbsolute);
+      }
+ else {
+        if (nextPollTimeAbsolute < earliestFuturePollTime) {
+          earliestFuturePollTime=nextPollTimeAbsolute;
+        }
+      }
+    }
+  }
+  if (earliestFuturePollTime == Long.MAX_VALUE) {
+    return Long.MAX_VALUE;
+  }
+  return SystemClock.elapsedRealtime() + ((earliestFuturePollTime < nowAbsolute) ? 0 : (earliestFuturePollTime - nowAbsolute));
+}

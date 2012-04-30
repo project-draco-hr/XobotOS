@@ -1,0 +1,10 @@
+{
+  String name=getAbsoluteName();
+  if (!name.startsWith("/")) {
+    return new URL("file","",-1,"/" + name,null);
+  }
+ else   if (name.startsWith("//")) {
+    return new URL("file:" + name);
+  }
+  return new URL("file","",-1,name,null);
+}

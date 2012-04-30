@@ -1,0 +1,11 @@
+{
+  for (  final CompilationUnitPair pair : sources) {
+    for (    final IProblem problem : pair.ast.getProblems()) {
+      if (problem.isError())       return false;
+    }
+    for (    final IProblem problem : pair.getProblems()) {
+      if (problem.isError())       return false;
+    }
+  }
+  return true;
+}

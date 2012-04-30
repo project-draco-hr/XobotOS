@@ -1,0 +1,12 @@
+{
+  int javaMode=mode;
+switch (mode) {
+case RuleBasedCollatorICU.VALUE_OFF:
+    javaMode=Collator.NO_DECOMPOSITION;
+  break;
+case RuleBasedCollatorICU.VALUE_ON:
+javaMode=Collator.CANONICAL_DECOMPOSITION;
+break;
+}
+return javaMode;
+}

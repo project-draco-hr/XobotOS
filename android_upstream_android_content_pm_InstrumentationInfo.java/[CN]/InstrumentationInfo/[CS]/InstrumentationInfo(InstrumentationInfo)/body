@@ -1,0 +1,10 @@
+{
+  super(orig);
+  targetPackage=orig.targetPackage;
+  sourceDir=orig.sourceDir;
+  publicSourceDir=orig.publicSourceDir;
+  dataDir=orig.dataDir;
+  nativeLibraryDir=orig.nativeLibraryDir;
+  handleProfiling=orig.handleProfiling;
+  functionalTest=orig.functionalTest;
+}

@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(PDP_RADIO_RESET,outPacketCount);
+}

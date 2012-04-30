@@ -1,0 +1,6 @@
+def preserve(self, *conditions):
+    'Arrange for the temporary working directories for the\n        specified TestCmd environment to be preserved for one or more\n        conditions.  If no conditions are specified, arranges for\n        the temporary working directories to be preserved for all\n        conditions.\n        '
+    if (conditions is ()):
+        conditions = ('pass_test', 'fail_test', 'no_result')
+    for cond in conditions:
+        self._preserve[cond] = 1

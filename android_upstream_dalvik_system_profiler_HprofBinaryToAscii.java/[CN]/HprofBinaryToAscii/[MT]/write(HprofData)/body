@@ -1,0 +1,10 @@
+{
+  try {
+    AsciiHprofWriter.write(hprofData,System.out);
+  }
+ catch (  IOException e) {
+    System.out.println("Problem writing ASCII hprof data: " + e.getMessage());
+    return false;
+  }
+  return true;
+}

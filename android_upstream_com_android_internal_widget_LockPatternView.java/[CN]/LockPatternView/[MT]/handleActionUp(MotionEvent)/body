@@ -1,0 +1,13 @@
+{
+  if (!mPattern.isEmpty()) {
+    mPatternInProgress=false;
+    notifyPatternDetected();
+    invalidate();
+  }
+  if (PROFILE_DRAWING) {
+    if (mDrawingProfilingStarted) {
+      Debug.stopMethodTracing();
+      mDrawingProfilingStarted=false;
+    }
+  }
+}

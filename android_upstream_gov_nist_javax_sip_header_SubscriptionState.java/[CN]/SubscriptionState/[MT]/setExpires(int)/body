@@ -1,0 +1,4 @@
+{
+  if (expires < 0)   throw new InvalidArgumentException("JAIN-SIP " + "Exception, SubscriptionState, setExpires(), the expires parameter is  < 0");
+  this.expires=expires;
+}

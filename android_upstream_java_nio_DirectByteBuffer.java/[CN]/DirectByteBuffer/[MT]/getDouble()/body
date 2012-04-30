@@ -1,0 +1,9 @@
+{
+  int newPosition=position + SizeOf.DOUBLE;
+  if (newPosition > limit) {
+    throw new BufferUnderflowException();
+  }
+  double result=Double.longBitsToDouble(this.block.peekLong(offset + position,order));
+  position=newPosition;
+  return result;
+}

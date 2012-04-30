@@ -1,0 +1,28 @@
+{
+  if (this.pendingReliableResponse != null) {
+    throw new SipException("Unacknowledged response");
+  }
+ else   this.pendingReliableResponse=(SIPResponse)relResponse;
+  RSeq rseq=(RSeq)relResponse.getHeader(RSeqHeader.NAME);
+  if (relResponse.getHeader(RSeqHeader.NAME) == null) {
+    rseq=new RSeq();
+    relResponse.setHeader(rseq);
+  }
+  try {
+    this.rseqNumber++;
+    rseq.setSeqNumber(this.rseqNumber);
+    this.lastResponse=(SIPResponse)relResponse;
+    if (this.getDialog() != null) {
+      boolean acquired=this.provisionalResponseSem.tryAcquire(1,TimeUnit.SECONDS);
+      if (!acquired) {
+        throw new SipException("Unacknowledged response");
+      }
+    }
+    this.sendMessage((SIPMessage)relResponse);
+    this.provisionalResponseTask=new ProvisionalResponseTask();
+    this.sipStack.getTimer().schedule(provisionalResponseTask,0,SIPTransactionStack.BASE_TIMER_INTERVAL);
+  }
+ catch (  Exception ex) {
+    InternalErrorHandler.handleException(ex);
+  }
+}

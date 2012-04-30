@@ -1,0 +1,8 @@
+{
+  final String mappedName=_typeMappings.get(typeName);
+  if (mappedName != null)   return mappedName;
+  final int i=defaultValue.lastIndexOf('.');
+  if (i < 0)   return _namingStrategy.identifier(defaultValue);
+  final String ns=applyNamespaceMappings(defaultValue.substring(0,i));
+  return _namingStrategy.namespace(ns + "." + defaultValue.substring(i + 1));
+}

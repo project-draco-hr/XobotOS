@@ -1,0 +1,34 @@
+{
+  byte[] localBuf=buf;
+  InputStream localIn=in;
+  if (localBuf == null) {
+    throw streamClosed();
+  }
+  if (byteCount < 1) {
+    return 0;
+  }
+  if (localIn == null) {
+    throw streamClosed();
+  }
+  if (count - pos >= byteCount) {
+    pos+=byteCount;
+    return byteCount;
+  }
+  long read=count - pos;
+  pos=count;
+  if (markpos != -1) {
+    if (byteCount <= marklimit) {
+      if (fillbuf(localIn,localBuf) == -1) {
+        return read;
+      }
+      if (count - pos >= byteCount - read) {
+        pos+=byteCount - read;
+        return byteCount;
+      }
+      read+=(count - pos);
+      pos=count;
+      return read;
+    }
+  }
+  return read + localIn.skip(byteCount - read);
+}

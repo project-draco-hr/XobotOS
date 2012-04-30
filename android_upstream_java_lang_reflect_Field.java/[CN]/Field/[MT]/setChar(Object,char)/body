@@ -1,0 +1,3 @@
+{
+  setCField(object,declaringClass,type,slot,flag,TYPE_CHAR,value);
+}

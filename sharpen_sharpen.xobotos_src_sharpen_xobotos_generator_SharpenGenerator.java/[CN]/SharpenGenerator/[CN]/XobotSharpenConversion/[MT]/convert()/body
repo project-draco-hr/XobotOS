@@ -1,0 +1,15 @@
+{
+  final CompilationUnit ast=_builder.getPair().ast;
+  final String path=ASTUtility.compilationUnitPath(ast);
+  prepareForConversion(ast);
+  try {
+    convert(_builder.getPair(),_builder.getCompilationUnit());
+    return true;
+  }
+ catch (  Exception e) {
+    Sharpen.Log(e,"Exception while converting %s",path);
+    createProblemMarker(ast,null,"Exception: " + e.toString(),true);
+    _foundErrors=true;
+    return false;
+  }
+}

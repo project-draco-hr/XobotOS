@@ -1,0 +1,7 @@
+{
+  final ArrayList<CSExpression> result=new ArrayList<CSExpression>(expressions.size());
+  for (  Object expression : expressions) {
+    result.add(mapExpression((Expression)expression));
+  }
+  return result;
+}

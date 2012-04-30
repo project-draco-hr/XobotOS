@@ -1,0 +1,11 @@
+{
+  parametersHeader.removeParameters();
+  while (true) {
+    this.lexer.SPorHT();
+    NameValue nv=nameValue();
+    parametersHeader.setParameter(nv.getName(),(String)nv.getValueAsObject());
+    this.lexer.SPorHT();
+    if (lexer.lookAhead(0) != ';')     break;
+ else     lexer.consume(1);
+  }
+}

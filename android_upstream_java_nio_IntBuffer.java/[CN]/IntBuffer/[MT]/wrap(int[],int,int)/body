@@ -1,0 +1,7 @@
+{
+  Arrays.checkOffsetAndCount(array.length,start,intCount);
+  IntBuffer buf=new ReadWriteIntArrayBuffer(array);
+  buf.position=start;
+  buf.limit=start + intCount;
+  return buf;
+}

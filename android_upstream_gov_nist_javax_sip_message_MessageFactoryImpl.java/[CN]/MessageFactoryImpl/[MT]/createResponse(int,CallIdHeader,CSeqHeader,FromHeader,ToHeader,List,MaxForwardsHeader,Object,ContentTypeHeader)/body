@@ -1,0 +1,20 @@
+{
+  if (callId == null || cSeq == null || from == null || to == null || via == null || maxForwards == null || content == null || contentType == null)   throw new NullPointerException(" unable to create the response");
+  SIPResponse sipResponse=new SIPResponse();
+  StatusLine statusLine=new StatusLine();
+  statusLine.setStatusCode(statusCode);
+  String reasonPhrase=SIPResponse.getReasonPhrase(statusCode);
+  statusLine.setReasonPhrase(reasonPhrase);
+  sipResponse.setStatusLine(statusLine);
+  sipResponse.setCallId(callId);
+  sipResponse.setCSeq(cSeq);
+  sipResponse.setFrom(from);
+  sipResponse.setTo(to);
+  sipResponse.setVia(via);
+  sipResponse.setMaxForwards(maxForwards);
+  sipResponse.setContent(content,contentType);
+  if (userAgent != null) {
+    sipResponse.setHeader(userAgent);
+  }
+  return sipResponse;
+}

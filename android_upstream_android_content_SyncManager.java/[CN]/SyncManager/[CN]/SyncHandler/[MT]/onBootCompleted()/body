@@ -1,0 +1,7 @@
+{
+  mBootCompleted=true;
+  mSyncStorageEngine.doDatabaseCleanup(AccountManager.get(mContext).getAccounts());
+  if (mReadyToRunLatch != null) {
+    mReadyToRunLatch.countDown();
+  }
+}

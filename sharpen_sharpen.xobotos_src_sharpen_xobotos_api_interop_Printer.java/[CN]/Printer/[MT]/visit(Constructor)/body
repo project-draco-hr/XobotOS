@@ -1,0 +1,10 @@
+{
+  _writer.writeIndentation();
+  _writer.write(_currentClass);
+  node.getType().accept(this);
+  _writer.write("(");
+  visitCommaSeparatedList(node.getParameters());
+  _writer.writeLine(")");
+  node.getBody().accept(this);
+  _writer.writeLine();
+}

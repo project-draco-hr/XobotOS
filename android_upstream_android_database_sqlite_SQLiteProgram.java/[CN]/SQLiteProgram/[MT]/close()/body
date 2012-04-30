@@ -1,0 +1,7 @@
+{
+  mBindArgs=null;
+  if (nHandle == 0 || !mDatabase.isOpen()) {
+    return;
+  }
+  releaseReference();
+}

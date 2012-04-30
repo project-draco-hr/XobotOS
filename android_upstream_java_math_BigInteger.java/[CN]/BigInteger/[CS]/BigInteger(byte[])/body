@@ -1,0 +1,8 @@
+{
+  if (value.length == 0) {
+    throw new NumberFormatException("value.length == 0");
+  }
+  BigInt bigInt=new BigInt();
+  bigInt.putBigEndianTwosComplement(value);
+  setBigInt(bigInt);
+}

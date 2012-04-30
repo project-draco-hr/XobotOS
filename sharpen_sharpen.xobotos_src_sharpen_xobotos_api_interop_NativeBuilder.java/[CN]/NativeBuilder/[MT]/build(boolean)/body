@@ -1,0 +1,24 @@
+{
+  collectIncludes(_unit.getIncludeSection());
+  if (needsHeader) {
+    String condName=_name.replace('.','_').toUpperCase() + "_GLUE_H";
+    _header=new CompilationUnitHeader(_name,condName);
+    _header.setIncludeSection(_unit.getIncludeSection());
+    IncludeSection newSection=new IncludeSection();
+    newSection.addInclude(getHeaderInclude());
+    _unit.setIncludeSection(newSection);
+  }
+  for (  final AbstractNativeTypeBuilder builder : _nativeTypes) {
+    if (!builder.build())     return false;
+  }
+  for (  final AbstractNativeTypeBuilder builder : _nativeTypes) {
+    if (!builder.createNativeType(_unit))     return false;
+    if (needsHeader) {
+      if (!builder.createHeader(_header))       return false;
+    }
+  }
+  for (  final NativeMethodBuilder builder : _nativeMethods.values()) {
+    builder.createNativeMethod(_unit);
+  }
+  return true;
+}

@@ -1,0 +1,13 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("setDialog " + this + " dialog = "+ sipDialog);
+  this.dialog=sipDialog;
+  if (dialogId != null)   this.dialog.setAssigned();
+  if (this.retransmissionAlertEnabled && this.retransmissionAlertTimerTask != null) {
+    this.retransmissionAlertTimerTask.cancel();
+    if (this.retransmissionAlertTimerTask.dialogId != null) {
+      sipStack.retransmissionAlertTransactions.remove(this.retransmissionAlertTimerTask.dialogId);
+    }
+    this.retransmissionAlertTimerTask=null;
+  }
+  this.retransmissionAlertEnabled=false;
+}

@@ -1,0 +1,27 @@
+{
+  final DisplayMetrics metrics=getContext().getResources().getDisplayMetrics();
+  final int screenWidth=metrics.widthPixels;
+  final boolean isPortrait=screenWidth < metrics.heightPixels;
+  final int widthMode=getMode(widthMeasureSpec);
+  super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+  int width=getMeasuredWidth();
+  boolean measure=false;
+  widthMeasureSpec=MeasureSpec.makeMeasureSpec(width,EXACTLY);
+  final float widthWeightMin=isPortrait ? mMinorWeightMin : mMajorWeightMin;
+  final float widthWeightMax=isPortrait ? mMinorWeightMax : mMajorWeightMax;
+  if (widthMode == AT_MOST) {
+    final int weightedMin=(int)(screenWidth * widthWeightMin);
+    final int weightedMax=(int)(screenWidth * widthWeightMin);
+    if (widthWeightMin > 0.0f && width < weightedMin) {
+      widthMeasureSpec=MeasureSpec.makeMeasureSpec(weightedMin,EXACTLY);
+      measure=true;
+    }
+ else     if (widthWeightMax > 0.0f && width > weightedMax) {
+      widthMeasureSpec=MeasureSpec.makeMeasureSpec(weightedMax,EXACTLY);
+      measure=true;
+    }
+  }
+  if (measure) {
+    super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+  }
+}

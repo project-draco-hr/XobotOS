@@ -1,0 +1,10 @@
+{
+  if (mLayout instanceof BoringLayout && mSavedLayout == null) {
+    mSavedLayout=(BoringLayout)mLayout;
+  }
+  if (mHintLayout instanceof BoringLayout && mSavedHintLayout == null) {
+    mSavedHintLayout=(BoringLayout)mHintLayout;
+  }
+  mSavedMarqueeModeLayout=mLayout=mHintLayout=null;
+  prepareCursorControllers();
+}

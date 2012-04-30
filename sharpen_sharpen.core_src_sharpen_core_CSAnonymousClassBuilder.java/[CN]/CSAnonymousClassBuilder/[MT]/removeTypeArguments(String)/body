@@ -1,0 +1,5 @@
+{
+  final int index=typeName.indexOf('<');
+  if (index < 0)   return typeName;
+  return typeName.substring(0,index);
+}

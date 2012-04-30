@@ -1,0 +1,3 @@
+{
+  return (theContentHandler == this) ? null : theContentHandler;
+}

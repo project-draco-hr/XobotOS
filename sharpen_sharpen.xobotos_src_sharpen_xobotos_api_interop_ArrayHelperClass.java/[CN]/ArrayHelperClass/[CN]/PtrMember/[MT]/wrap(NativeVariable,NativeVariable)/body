@@ -1,0 +1,21 @@
+{
+  LocalVariable i=new LocalVariable(new TypeReference("uint32_t"),"i");
+  Expression init=new NumberLiteralExpression(0);
+  Expression iRef=new VariableReference(i);
+  Expression check=new BinaryOperator("<",iRef,_lengthMember.getReference(src));
+  Expression update=new PostfixIncrement(i);
+  ForStatement forStm=new ForStatement(i,init,check,update);
+  Expression srcIdx=new IndexedExpression(getReference(src),iRef);
+  Expression targetIdx=getIndex(dest,iRef);
+  if (!isClass()) {
+    forStm.getBody().addStatement(new AssignmentStatement(targetIdx,srcIdx));
+  }
+ else   if (isByRef()) {
+    forStm.getBody().addStatement(new AssignmentStatement(targetIdx,new MethodInvocation(getHelper().WRAP.expr(),srcIdx)));
+  }
+ else {
+    Expression destAddr=new AddressOfExpression(targetIdx);
+    forStm.getBody().addStatement(new MethodInvocation(getHelper().WRAP.expr(),srcIdx,destAddr));
+  }
+  return forStm;
+}

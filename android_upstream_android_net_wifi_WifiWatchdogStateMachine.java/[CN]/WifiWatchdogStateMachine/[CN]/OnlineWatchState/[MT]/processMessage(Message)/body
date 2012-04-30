@@ -1,0 +1,62 @@
+{
+switch (msg.what) {
+case EVENT_RSSI_CHANGE:
+    if (msg.arg1 != mNetEventCounter) {
+      if (DBG) {
+        log("Rssi change message out of sync, ignoring");
+      }
+      return HANDLED;
+    }
+  int newRssi=msg.arg2;
+signalUnstable=!rssiStrengthAboveCutoff(newRssi);
+if (DBG) {
+log("OnlineWatchState:: new rssi " + newRssi + " --> level "+ WifiManager.calculateSignalLevel(newRssi,WIFI_SIGNAL_LEVELS));
+}
+if (signalUnstable && !unstableSignalChecks) {
+if (DBG) {
+log("Sending triggered check msg");
+}
+triggerSingleDnsCheck();
+}
+return HANDLED;
+case MESSAGE_SINGLE_DNS_CHECK:
+if (msg.arg1 != checkGuard) {
+if (DBG) {
+log("Single check msg out of sync, ignoring.");
+}
+return HANDLED;
+}
+lastCheckTime=SystemClock.elapsedRealtime();
+pingInfoMap.clear();
+for (InetAddress curDns : mDnsPinger.getDnsList()) {
+pingInfoMap.put(mDnsPinger.pingDnsAsync(curDns,mDnsPingTimeoutMs,0),curDns);
+}
+return HANDLED;
+case DnsPinger.DNS_PING_RESULT:
+InetAddress curDnsServer=pingInfoMap.get(msg.arg1);
+if (curDnsServer == null) {
+return HANDLED;
+}
+pingInfoMap.remove(msg.arg1);
+int responseTime=msg.arg2;
+if (responseTime >= 0) {
+if (DBG) {
+log("Single DNS ping OK. Response time: " + responseTime + " from DNS "+ curDnsServer);
+}
+pingInfoMap.clear();
+checkGuard++;
+unstableSignalChecks=false;
+triggerSingleDnsCheck();
+}
+ else {
+if (pingInfoMap.isEmpty()) {
+if (DBG) {
+log("Single dns ping failure. All dns servers failed, " + "starting full checks.");
+}
+transitionTo(mDnsCheckingState);
+}
+}
+return HANDLED;
+}
+return NOT_HANDLED;
+}

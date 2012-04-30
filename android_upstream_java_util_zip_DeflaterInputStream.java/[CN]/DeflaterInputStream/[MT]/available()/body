@@ -1,0 +1,4 @@
+{
+  checkClosed();
+  return available ? 1 : 0;
+}

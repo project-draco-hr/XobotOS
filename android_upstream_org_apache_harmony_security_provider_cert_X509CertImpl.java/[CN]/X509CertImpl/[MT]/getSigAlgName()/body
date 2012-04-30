@@ -1,0 +1,12 @@
+{
+  String result=sigAlgName;
+  if (result == null) {
+    String sigAlgOIDLocal=getSigAlgOID();
+    result=AlgNameMapper.map2AlgName(sigAlgOIDLocal);
+    if (result == null) {
+      result=sigAlgOIDLocal;
+    }
+    sigAlgName=result;
+  }
+  return result;
+}

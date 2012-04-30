@@ -1,0 +1,17 @@
+{
+  NameValue nv=super.parameters.getNameValue(name.toLowerCase());
+  if (nv == null) {
+    nv=new NameValue(name,value);
+    if (name.equalsIgnoreCase(ParameterNames.QOP) || name.equalsIgnoreCase(ParameterNames.REALM) || name.equalsIgnoreCase(ParameterNames.CNONCE)|| name.equalsIgnoreCase(ParameterNames.NONCE)|| name.equalsIgnoreCase(ParameterNames.USERNAME)|| name.equalsIgnoreCase(ParameterNames.DOMAIN)|| name.equalsIgnoreCase(ParameterNames.OPAQUE)|| name.equalsIgnoreCase(ParameterNames.NEXT_NONCE)|| name.equalsIgnoreCase(ParameterNames.URI)|| name.equalsIgnoreCase(ParameterNames.RESPONSE)|| name.equalsIgnoreCase(ParameterNamesIms.IK)|| name.equalsIgnoreCase(ParameterNamesIms.CK)|| name.equalsIgnoreCase(ParameterNamesIms.INTEGRITY_PROTECTED)) {
+      if (((this instanceof Authorization) || (this instanceof ProxyAuthorization)) && name.equalsIgnoreCase(ParameterNames.QOP)) {
+      }
+ else {
+        nv.setQuotedValue();
+      }
+      if (value == null)       throw new NullPointerException("null value");
+      if (value.startsWith(Separators.DOUBLE_QUOTE))       throw new ParseException(value + " : Unexpected DOUBLE_QUOTE",0);
+    }
+    super.setParameter(nv);
+  }
+ else   nv.setValueAsObject(value);
+}

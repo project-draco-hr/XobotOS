@@ -1,0 +1,5 @@
+{
+  super(hdrName);
+  this.parameters=new NameValueList(sync);
+  this.duplicates=new DuplicateNameValueList();
+}

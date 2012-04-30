@@ -1,0 +1,14 @@
+{
+  mBindArgs=null;
+  if (this.nStatement == 0) {
+    return;
+  }
+  mDatabase.verifyDbIsOpen();
+  acquireReference();
+  try {
+    native_clear_bindings();
+  }
+  finally {
+    releaseReference();
+  }
+}

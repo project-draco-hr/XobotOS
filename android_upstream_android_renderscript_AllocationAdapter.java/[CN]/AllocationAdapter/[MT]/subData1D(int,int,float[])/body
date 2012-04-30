@@ -1,0 +1,3 @@
+{
+  super.copy1DRangeFrom(off,count,d);
+}

@@ -1,0 +1,8 @@
+{
+  CSAttribute attribute=new CSAttribute(mappedTypeName("System.ObsoleteAttribute"));
+  if (element.fragments().isEmpty()) {
+    return attribute;
+  }
+  attribute.addArgument(new CSStringLiteralExpression(toLiteralStringForm(getWholeText(element))));
+  return attribute;
+}

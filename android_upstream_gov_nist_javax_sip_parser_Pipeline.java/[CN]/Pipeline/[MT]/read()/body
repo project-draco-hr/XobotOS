@@ -1,0 +1,27 @@
+{
+synchronized (this.buffList) {
+    if (currentBuffer != null && currentBuffer.ptr < currentBuffer.length) {
+      int retval=currentBuffer.getNextByte();
+      if (currentBuffer.ptr == currentBuffer.length)       this.currentBuffer=null;
+      return retval;
+    }
+    if (this.isClosed && this.buffList.isEmpty())     return -1;
+    try {
+      while (this.buffList.isEmpty()) {
+        this.buffList.wait();
+        if (this.isClosed)         return -1;
+      }
+      currentBuffer=(Buffer)this.buffList.removeFirst();
+      int retval=currentBuffer.getNextByte();
+      if (currentBuffer.ptr == currentBuffer.length)       this.currentBuffer=null;
+      return retval;
+    }
+ catch (    InterruptedException ex) {
+      throw new IOException(ex.getMessage());
+    }
+catch (    NoSuchElementException ex) {
+      ex.printStackTrace();
+      throw new IOException(ex.getMessage());
+    }
+  }
+}

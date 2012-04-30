@@ -1,0 +1,19 @@
+{
+  Object[] a=array;
+  int s=size;
+  if (object != null) {
+    for (int i=0; i < s; i++) {
+      if (object.equals(a[i])) {
+        return true;
+      }
+    }
+  }
+ else {
+    for (int i=0; i < s; i++) {
+      if (a[i] == null) {
+        return true;
+      }
+    }
+  }
+  return false;
+}

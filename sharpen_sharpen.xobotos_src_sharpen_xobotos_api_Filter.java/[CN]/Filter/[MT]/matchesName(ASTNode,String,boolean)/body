@@ -1,0 +1,35 @@
+{
+  if (node instanceof AbstractTypeDeclaration) {
+    final AbstractTypeDeclaration tdecl=(AbstractTypeDeclaration)node;
+    final ITypeBinding binding=tdecl.resolveBinding();
+    final String fullName=binding.getName();
+    if (regex)     return pattern.matches(fullName);
+ else     return pattern.equals(fullName);
+  }
+  if (node instanceof MethodDeclaration) {
+    final MethodDeclaration mdecl=(MethodDeclaration)node;
+    final IMethodBinding binding=mdecl.resolveBinding();
+    final String fullSignature=methodSignature(binding);
+    final String fullName=binding.getName();
+    if (regex)     return fullSignature.matches(pattern);
+ else     if (pattern.indexOf('(') > 0)     return pattern.equals(fullSignature);
+ else     return pattern.equals(fullName);
+  }
+  if (node instanceof FieldDeclaration) {
+    final FieldDeclaration fdecl=(FieldDeclaration)node;
+    if (fdecl.fragments().size() != 1)     return false;
+    final Object firstFragment=fdecl.fragments().get(0);
+    final IVariableBinding binding=((VariableDeclarationFragment)firstFragment).resolveBinding();
+    final String fullName=binding.getName();
+    if (regex)     return pattern.matches(fullName);
+ else     return pattern.matches(fullName);
+  }
+  if (node instanceof VariableDeclarationFragment) {
+    final VariableDeclarationFragment fragment=(VariableDeclarationFragment)node;
+    final IVariableBinding binding=fragment.resolveBinding();
+    final String fullName=binding.getName();
+    if (regex)     return pattern.matches(fullName);
+ else     return pattern.matches(fullName);
+  }
+  return false;
+}

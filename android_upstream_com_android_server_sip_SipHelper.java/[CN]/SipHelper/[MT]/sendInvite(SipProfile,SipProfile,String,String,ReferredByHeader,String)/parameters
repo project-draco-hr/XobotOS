@@ -1,0 +1,6 @@
+SipProfile caller
+SipProfile callee
+String sessionDescription
+String tag
+ReferredByHeader referredBy
+String replaces

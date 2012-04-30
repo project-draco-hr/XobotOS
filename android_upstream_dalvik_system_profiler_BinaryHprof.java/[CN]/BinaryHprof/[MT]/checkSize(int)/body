@@ -1,0 +1,12 @@
+{
+  if (actual < minimumSize) {
+    return "expected a minimial record size of " + minimumSize + " for "+ this+ " but received "+ actual;
+  }
+  if (maximumSize == 0) {
+    return null;
+  }
+  if (actual > maximumSize) {
+    return "expected a maximum record size of " + maximumSize + " for "+ this+ " but received "+ actual;
+  }
+  return null;
+}

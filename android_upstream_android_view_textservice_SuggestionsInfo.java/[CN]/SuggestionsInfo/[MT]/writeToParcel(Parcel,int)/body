@@ -1,0 +1,7 @@
+{
+  dest.writeInt(mSuggestionsAttributes);
+  dest.writeStringArray(mSuggestions);
+  dest.writeInt(mCookie);
+  dest.writeInt(mSequence);
+  dest.writeInt(mSuggestionsAvailable ? 1 : 0);
+}

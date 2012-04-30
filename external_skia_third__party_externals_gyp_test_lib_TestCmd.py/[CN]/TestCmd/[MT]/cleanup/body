@@ -1,0 +1,23 @@
+def cleanup(self, condition=None):
+    'Removes any temporary working directories for the specified\n        TestCmd environment.  If the environment variable PRESERVE was\n        set when the TestCmd environment was created, temporary working\n        directories are not removed.  If any of the environment variables\n        PRESERVE_PASS, PRESERVE_FAIL, or PRESERVE_NO_RESULT were set\n        when the TestCmd environment was created, then temporary working\n        directories are not removed if the test passed, failed, or had\n        no result, respectively.  Temporary working directories are also\n        preserved for conditions specified via the preserve method.\n\n        Typically, this method is not called directly, but is used when\n        the script exits to clean up temporary working directories as\n        appropriate for the exit status.\n        '
+    if (not self._dirlist):
+        return
+    os.chdir(self._cwd)
+    self.workdir = None
+    if (condition is None):
+        condition = self.condition
+    if self._preserve[condition]:
+        for dir in self._dirlist:
+            print 'Preserved directory', dir
+    else:
+        list = self._dirlist[:]
+        list.reverse()
+        for dir in list:
+            self.writable(dir, 1)
+            shutil.rmtree(dir, ignore_errors=1)
+        self._dirlist = []
+    try:
+        global _Cleanup
+        _Cleanup.remove(self)
+    except (AttributeError, ValueError):
+        pass

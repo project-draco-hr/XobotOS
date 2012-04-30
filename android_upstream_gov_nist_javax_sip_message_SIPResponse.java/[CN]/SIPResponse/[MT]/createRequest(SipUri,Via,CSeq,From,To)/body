@@ -1,0 +1,33 @@
+{
+  SIPRequest newRequest=new SIPRequest();
+  String method=cseq.getMethod();
+  newRequest.setMethod(method);
+  newRequest.setRequestURI(requestURI);
+  this.setBranch(via,method);
+  newRequest.setHeader(via);
+  newRequest.setHeader(cseq);
+  Iterator headerIterator=getHeaders();
+  while (headerIterator.hasNext()) {
+    SIPHeader nextHeader=(SIPHeader)headerIterator.next();
+    if (SIPMessage.isResponseHeader(nextHeader) || nextHeader instanceof ViaList || nextHeader instanceof CSeq|| nextHeader instanceof ContentType|| nextHeader instanceof ContentLength|| nextHeader instanceof RecordRouteList|| nextHeader instanceof RequireList|| nextHeader instanceof ContactList|| nextHeader instanceof ContentLength|| nextHeader instanceof ServerHeader|| nextHeader instanceof ReasonHeader|| nextHeader instanceof SessionExpires|| nextHeader instanceof ReasonList) {
+      continue;
+    }
+    if (nextHeader instanceof To)     nextHeader=(SIPHeader)to;
+ else     if (nextHeader instanceof From)     nextHeader=(SIPHeader)from;
+    try {
+      newRequest.attachHeader(nextHeader,false);
+    }
+ catch (    SIPDuplicateHeaderException e) {
+      e.printStackTrace();
+    }
+  }
+  try {
+    newRequest.attachHeader(new MaxForwards(70),false);
+  }
+ catch (  Exception d) {
+  }
+  if (MessageFactoryImpl.getDefaultUserAgentHeader() != null) {
+    newRequest.setHeader(MessageFactoryImpl.getDefaultUserAgentHeader());
+  }
+  return newRequest;
+}

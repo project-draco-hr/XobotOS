@@ -1,0 +1,3 @@
+{
+  return mTextFilterEnabled && getAdapter() instanceof Filterable && ((Filterable)getAdapter()).getFilter() != null;
+}

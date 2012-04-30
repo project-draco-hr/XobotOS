@@ -1,0 +1,6 @@
+{
+  if (!isInit) {
+    throwNotInitialized();
+  }
+  implSpi.engineDeleteEntry(alias);
+}

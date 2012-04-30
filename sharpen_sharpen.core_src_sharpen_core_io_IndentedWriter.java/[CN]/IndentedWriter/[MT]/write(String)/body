@@ -1,0 +1,7 @@
+{
+  if (_column > MAX_COLUMNS) {
+    writeLine();
+    writeIndented(_indentString);
+  }
+  writeBlock(s);
+}

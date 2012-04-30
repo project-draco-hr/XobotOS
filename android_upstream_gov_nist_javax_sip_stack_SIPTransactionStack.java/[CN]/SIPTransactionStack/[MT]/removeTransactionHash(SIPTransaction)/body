@@ -1,0 +1,19 @@
+{
+  SIPRequest sipRequest=sipTransaction.getOriginalRequest();
+  if (sipRequest == null)   return;
+  if (sipTransaction instanceof SIPClientTransaction) {
+    String key=sipTransaction.getTransactionId();
+    if (stackLogger.isLoggingEnabled()) {
+      stackLogger.logStackTrace();
+      stackLogger.logDebug("removing client Tx : " + key);
+    }
+    clientTransactionTable.remove(key);
+  }
+ else   if (sipTransaction instanceof SIPServerTransaction) {
+    String key=sipTransaction.getTransactionId();
+    serverTransactionTable.remove(key);
+    if (stackLogger.isLoggingEnabled()) {
+      stackLogger.logDebug("removing server Tx : " + key);
+    }
+  }
+}

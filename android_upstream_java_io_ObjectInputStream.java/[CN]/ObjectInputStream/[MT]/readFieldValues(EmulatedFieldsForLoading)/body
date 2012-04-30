@@ -1,0 +1,39 @@
+{
+  EmulatedFields.ObjectSlot[] slots=emulatedFields.emulatedFields().slots();
+  for (  ObjectSlot element : slots) {
+    element.defaulted=false;
+    Class<?> type=element.field.getType();
+    if (type == int.class) {
+      element.fieldValue=input.readInt();
+    }
+ else     if (type == byte.class) {
+      element.fieldValue=input.readByte();
+    }
+ else     if (type == char.class) {
+      element.fieldValue=input.readChar();
+    }
+ else     if (type == short.class) {
+      element.fieldValue=input.readShort();
+    }
+ else     if (type == boolean.class) {
+      element.fieldValue=input.readBoolean();
+    }
+ else     if (type == long.class) {
+      element.fieldValue=input.readLong();
+    }
+ else     if (type == float.class) {
+      element.fieldValue=input.readFloat();
+    }
+ else     if (type == double.class) {
+      element.fieldValue=input.readDouble();
+    }
+ else {
+      try {
+        element.fieldValue=readObject();
+      }
+ catch (      ClassNotFoundException cnf) {
+        throw new InvalidClassException(cnf.toString());
+      }
+    }
+  }
+}

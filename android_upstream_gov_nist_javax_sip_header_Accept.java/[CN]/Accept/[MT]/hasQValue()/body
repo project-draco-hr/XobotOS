@@ -1,0 +1,3 @@
+{
+  return super.hasParameter(ParameterNames.Q);
+}

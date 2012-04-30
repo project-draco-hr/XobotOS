@@ -1,0 +1,27 @@
+{
+  if (DBG)   log(getName() + message.toString() + "\n");
+switch (message.what) {
+case CMD_SET_SCAN_MODE:
+    if (message.arg1 == SCAN_ONLY_MODE) {
+      return HANDLED;
+    }
+ else {
+      WifiNative.setScanResultHandlingCommand(message.arg1);
+      WifiNative.reconnectCommand();
+      mIsScanMode=false;
+      transitionTo(mDisconnectedState);
+    }
+  break;
+case CMD_DISCONNECT:
+case CMD_RECONNECT:
+case CMD_REASSOCIATE:
+case WifiMonitor.SUPPLICANT_STATE_CHANGE_EVENT:
+case WifiMonitor.NETWORK_CONNECTION_EVENT:
+case WifiMonitor.NETWORK_DISCONNECTION_EVENT:
+break;
+default :
+return NOT_HANDLED;
+}
+EventLog.writeEvent(EVENTLOG_WIFI_EVENT_HANDLED,message.what);
+return HANDLED;
+}

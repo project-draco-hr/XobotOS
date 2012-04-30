@@ -1,0 +1,18 @@
+{
+  if (sourceInitialized) {
+    return;
+  }
+  boolean sawLogger=false;
+  for (  StackTraceElement element : new Throwable().getStackTrace()) {
+    String current=element.getClassName();
+    if (current.startsWith(Logger.class.getName())) {
+      sawLogger=true;
+    }
+ else     if (sawLogger) {
+      this.sourceClassName=element.getClassName();
+      this.sourceMethodName=element.getMethodName();
+      break;
+    }
+  }
+  sourceInitialized=true;
+}

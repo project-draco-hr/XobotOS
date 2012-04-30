@@ -1,0 +1,11 @@
+def WriteActionsRulesCopies(self, spec, extra_sources, prebuild):
+    'Write out the Actions, Rules, and Copies steps.  Return any outputs\n    of these steps (or a stamp file if there are lots of outputs).'
+    outputs = []
+    if ('actions' in spec):
+        outputs += self.WriteActions(spec['actions'], extra_sources, prebuild)
+    if ('rules' in spec):
+        outputs += self.WriteRules(spec['rules'], extra_sources, prebuild)
+    if ('copies' in spec):
+        outputs += self.WriteCopies(spec['copies'], prebuild)
+    outputs = self.WriteCollapsedDependencies('actions_rules_copies', outputs)
+    return outputs

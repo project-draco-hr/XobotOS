@@ -1,0 +1,5 @@
+{
+  CSField field=new CSField(name,type,CSVisibility.Private);
+  field.addModifier(CSFieldModifier.Readonly);
+  return field;
+}

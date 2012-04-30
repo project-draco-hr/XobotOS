@@ -1,0 +1,21 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("handleEvent " + sipEvent + "currentTransaction = "+ transaction+ "this.sipListener = "+ this.getSipListener()+ "sipEvent.source = "+ sipEvent.getSource());
+    if (sipEvent instanceof RequestEvent) {
+      Dialog dialog=((RequestEvent)sipEvent).getDialog();
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("Dialog = " + dialog);
+    }
+ else     if (sipEvent instanceof ResponseEvent) {
+      Dialog dialog=((ResponseEvent)sipEvent).getDialog();
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("Dialog = " + dialog);
+    }
+    sipStack.getStackLogger().logStackTrace();
+  }
+  EventWrapper eventWrapper=new EventWrapper(sipEvent,transaction);
+  if (!sipStack.reEntrantListener) {
+    this.eventScanner.addEvent(eventWrapper);
+  }
+ else {
+    this.eventScanner.deliverEvent(eventWrapper);
+  }
+}

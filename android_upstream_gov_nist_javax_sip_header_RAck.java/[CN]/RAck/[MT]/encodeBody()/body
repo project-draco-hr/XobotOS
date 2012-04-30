@@ -1,0 +1,3 @@
+{
+  return new StringBuffer().append(rSeqNumber).append(SP).append(cSeqNumber).append(SP).append(method).toString();
+}

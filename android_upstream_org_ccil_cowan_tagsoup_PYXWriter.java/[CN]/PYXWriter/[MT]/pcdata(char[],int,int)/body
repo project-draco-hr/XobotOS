@@ -1,0 +1,33 @@
+{
+  if (length == 0)   return;
+  boolean inProgress=false;
+  length+=offset;
+  for (int i=offset; i < length; i++) {
+    if (buff[i] == '\n') {
+      if (inProgress) {
+        theWriter.println();
+      }
+      theWriter.println("-\\n");
+      inProgress=false;
+    }
+ else {
+      if (!inProgress) {
+        theWriter.print('-');
+      }
+switch (buff[i]) {
+case '\t':
+        theWriter.print("\\t");
+      break;
+case '\\':
+    theWriter.print("\\\\");
+  break;
+default :
+theWriter.print(buff[i]);
+}
+inProgress=true;
+}
+}
+if (inProgress) {
+theWriter.println();
+}
+}

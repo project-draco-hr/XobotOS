@@ -1,0 +1,17 @@
+{
+  if (callId == null || cSeq == null || from == null || to == null || via == null || maxForwards == null || content == null || contentType == null)   throw new NullPointerException("Null params ");
+  SIPResponse sipResponse=new SIPResponse();
+  sipResponse.setStatusCode(statusCode);
+  sipResponse.setCallId(callId);
+  sipResponse.setCSeq(cSeq);
+  sipResponse.setFrom(from);
+  sipResponse.setTo(to);
+  sipResponse.setVia(via);
+  sipResponse.setMaxForwards(maxForwards);
+  sipResponse.setHeader((ContentType)contentType);
+  sipResponse.setMessageContent(content);
+  if (userAgent != null) {
+    sipResponse.setHeader(userAgent);
+  }
+  return sipResponse;
+}

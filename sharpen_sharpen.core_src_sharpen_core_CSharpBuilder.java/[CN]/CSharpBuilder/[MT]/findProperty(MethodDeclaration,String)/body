@@ -1,0 +1,9 @@
+{
+  CSMember existingProperty=_currentType.getMember(name);
+  if (existingProperty != null) {
+    if (!(existingProperty instanceof CSProperty)) {
+      throw new IllegalArgumentException(sourceInformation(node) + ": Previously declared member redeclared as property.");
+    }
+  }
+  return (CSProperty)existingProperty;
+}

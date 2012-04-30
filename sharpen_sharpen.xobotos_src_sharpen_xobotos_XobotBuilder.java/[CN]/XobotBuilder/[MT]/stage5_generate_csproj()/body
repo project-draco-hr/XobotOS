@@ -1,0 +1,8 @@
+{
+  List<CSProjectFile> csprojFiles=_sourceInfo.getCSProjectFiles();
+  if (csprojFiles == null)   return true;
+  for (  final CSProjectFile file : csprojFiles) {
+    if (!generate_csproj(file))     return false;
+  }
+  return true;
+}

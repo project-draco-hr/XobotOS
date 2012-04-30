@@ -1,0 +1,4 @@
+{
+  if (o == null)   throw new NullPointerException("JAIN-SIP Exception," + " Organization, setOrganization(), the organization parameter is null");
+  organization=o;
+}

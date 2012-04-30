@@ -1,0 +1,11 @@
+{
+  if (type.isGenericType())   return type;
+  if (type.isParameterizedType())   return type.getTypeDeclaration();
+  if (type.isRawType())   return type.getTypeDeclaration();
+  if (type.isCapture()) {
+    ITypeBinding erasure=type.getErasure();
+    return isRawOrGenericType(erasure) ? erasure : null;
+  }
+  if (type.isArray())   return getUnderlyingGenericType(type.getElementType());
+  return null;
+}

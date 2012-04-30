@@ -1,0 +1,21 @@
+{
+  if (type == null) {
+    throw new NullPointerException("type == null");
+  }
+  if (protectionParameter == null) {
+    throw new NullPointerException("protectionParameter == null");
+  }
+  if (file == null) {
+    throw new NullPointerException("file == null");
+  }
+  if (!(protectionParameter instanceof PasswordProtection) && !(protectionParameter instanceof CallbackHandlerProtection)) {
+    throw new IllegalArgumentException("protectionParameter is neither " + "PasswordProtection nor CallbackHandlerProtection instance");
+  }
+  if (!file.exists()) {
+    throw new IllegalArgumentException("File does not exist: " + file.getName());
+  }
+  if (!file.isFile()) {
+    throw new IllegalArgumentException("Not a regular file: " + file.getName());
+  }
+  return new BuilderImpl(null,protectionParameter,file,type,provider);
+}

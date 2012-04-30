@@ -1,0 +1,29 @@
+{
+  try {
+    PhoneNumber secondNumberAsProto=parse(secondNumber,UNKNOWN_REGION);
+    return isNumberMatch(firstNumber,secondNumberAsProto);
+  }
+ catch (  NumberParseException e) {
+    if (e.getErrorType() == NumberParseException.ErrorType.INVALID_COUNTRY_CODE) {
+      String firstNumberRegion=getRegionCodeForCountryCode(firstNumber.getCountryCode());
+      try {
+        if (!firstNumberRegion.equals(UNKNOWN_REGION)) {
+          PhoneNumber secondNumberWithFirstNumberRegion=parse(secondNumber,firstNumberRegion);
+          MatchType match=isNumberMatch(firstNumber,secondNumberWithFirstNumberRegion);
+          if (match == MatchType.EXACT_MATCH) {
+            return MatchType.NSN_MATCH;
+          }
+          return match;
+        }
+ else {
+          PhoneNumber secondNumberProto=new PhoneNumber();
+          parseHelper(secondNumber,null,false,false,secondNumberProto);
+          return isNumberMatch(firstNumber,secondNumberProto);
+        }
+      }
+ catch (      NumberParseException e2) {
+      }
+    }
+  }
+  return MatchType.NOT_A_NUMBER;
+}

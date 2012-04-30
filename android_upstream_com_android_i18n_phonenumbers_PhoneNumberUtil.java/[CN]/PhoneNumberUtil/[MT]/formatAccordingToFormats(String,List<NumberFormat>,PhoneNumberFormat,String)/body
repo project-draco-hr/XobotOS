@@ -1,0 +1,28 @@
+{
+  for (  NumberFormat numFormat : availableFormats) {
+    int size=numFormat.leadingDigitsPatternSize();
+    if (size == 0 || regexCache.getPatternForRegex(numFormat.getLeadingDigitsPattern(size - 1)).matcher(nationalNumber).lookingAt()) {
+      Matcher m=regexCache.getPatternForRegex(numFormat.getPattern()).matcher(nationalNumber);
+      if (m.matches()) {
+        String numberFormatRule=numFormat.getFormat();
+        if (numberFormat == PhoneNumberFormat.NATIONAL && carrierCode != null && carrierCode.length() > 0 && numFormat.getDomesticCarrierCodeFormattingRule().length() > 0) {
+          String carrierCodeFormattingRule=numFormat.getDomesticCarrierCodeFormattingRule();
+          carrierCodeFormattingRule=CC_PATTERN.matcher(carrierCodeFormattingRule).replaceFirst(carrierCode);
+          numberFormatRule=FIRST_GROUP_PATTERN.matcher(numberFormatRule).replaceFirst(carrierCodeFormattingRule);
+          return m.replaceAll(numberFormatRule);
+        }
+ else {
+          String nationalPrefixFormattingRule=numFormat.getNationalPrefixFormattingRule();
+          if (numberFormat == PhoneNumberFormat.NATIONAL && nationalPrefixFormattingRule != null && nationalPrefixFormattingRule.length() > 0) {
+            Matcher firstGroupMatcher=FIRST_GROUP_PATTERN.matcher(numberFormatRule);
+            return m.replaceAll(firstGroupMatcher.replaceFirst(nationalPrefixFormattingRule));
+          }
+ else {
+            return m.replaceAll(numberFormatRule);
+          }
+        }
+      }
+    }
+  }
+  return nationalNumber;
+}

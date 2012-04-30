@@ -1,0 +1,6 @@
+{
+  this(locale);
+  validatePattern(template);
+  pattern=template;
+  formatData=new DateFormatSymbols(locale);
+}

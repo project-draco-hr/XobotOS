@@ -1,0 +1,8 @@
+{
+  if (value == null) {
+    throw new NullPointerException();
+  }
+  hasUan=true;
+  uan_=value;
+  return this;
+}

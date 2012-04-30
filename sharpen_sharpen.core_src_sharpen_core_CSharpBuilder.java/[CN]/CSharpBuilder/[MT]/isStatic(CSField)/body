@@ -1,0 +1,4 @@
+{
+  final Set<CSFieldModifier> fieldModifiers=member.modifiers();
+  return fieldModifiers.contains(CSFieldModifier.Static) || fieldModifiers.contains(CSFieldModifier.Const);
+}

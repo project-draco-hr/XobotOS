@@ -1,0 +1,3 @@
+{
+  return useDaylightTime() && getOffset(time.getTime()) != getRawOffset();
+}

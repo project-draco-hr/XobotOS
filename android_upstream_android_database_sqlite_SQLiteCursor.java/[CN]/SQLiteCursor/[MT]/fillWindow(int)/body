@@ -1,0 +1,14 @@
+{
+  clearOrCreateLocalWindow(getDatabase().getPath());
+  mWindow.setStartPosition(startPos);
+  int count=getQuery().fillWindow(mWindow);
+  if (startPos == 0) {
+    if (Log.isLoggable(TAG,Log.DEBUG)) {
+      Log.d(TAG,"received count(*) from native_fill_window: " + count);
+    }
+    mCount=count;
+  }
+ else   if (mCount <= 0) {
+    throw new IllegalStateException("Row count should never be zero or negative " + "when the start position is non-zero");
+  }
+}

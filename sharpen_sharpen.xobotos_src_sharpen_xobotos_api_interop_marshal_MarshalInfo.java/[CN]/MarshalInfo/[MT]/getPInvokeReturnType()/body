@@ -1,0 +1,3 @@
+{
+  return getPInvokeType(Mode.OUT,null);
+}

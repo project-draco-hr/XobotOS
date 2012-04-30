@@ -1,0 +1,10 @@
+{
+  if (other == this)   return true;
+  if (other instanceof SIPHeaderList) {
+    SIPHeaderList<SIPHeader> that=(SIPHeaderList<SIPHeader>)other;
+    if (this.hlist == that.hlist)     return true;
+ else     if (this.hlist == null)     return that.hlist == null || that.hlist.size() == 0;
+    return this.hlist.equals(that.hlist);
+  }
+  return false;
+}

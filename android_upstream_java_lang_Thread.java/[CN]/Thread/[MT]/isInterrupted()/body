@@ -1,0 +1,7 @@
+{
+  VMThread vmt=this.vmThread;
+  if (vmt != null) {
+    return vmt.isInterrupted();
+  }
+  return false;
+}

@@ -1,0 +1,9 @@
+{
+  try {
+    StructStatFs sb=Libcore.os.statfs(path);
+    return sb.f_blocks * sb.f_bsize;
+  }
+ catch (  ErrnoException errnoException) {
+    return 0;
+  }
+}

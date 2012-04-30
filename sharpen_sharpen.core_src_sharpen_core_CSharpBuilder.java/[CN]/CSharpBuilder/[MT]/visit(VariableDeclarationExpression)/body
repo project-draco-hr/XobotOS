@@ -1,0 +1,4 @@
+{
+  pushExpression(new CSDeclarationExpression(createVariableDeclaration((VariableDeclarationFragment)node.fragments().get(0))));
+  return false;
+}

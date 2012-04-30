@@ -1,0 +1,16 @@
+{
+  if (index >= 0 && index <= count) {
+    if (string == null) {
+      string="null";
+    }
+    int min=string.length();
+    if (min != 0) {
+      move(min,index);
+      string._getChars(0,min,value,index);
+      count+=min;
+    }
+  }
+ else {
+    throw indexAndLength(index);
+  }
+}

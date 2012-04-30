@@ -1,0 +1,7 @@
+{
+  int belowPosition=position + 1;
+  View view=obtainView(belowPosition,mIsScrap);
+  int edgeOfNewChild=theView.getBottom() + mDividerHeight;
+  setupChild(view,belowPosition,edgeOfNewChild,true,mListPadding.left,false,mIsScrap[0]);
+  return view;
+}

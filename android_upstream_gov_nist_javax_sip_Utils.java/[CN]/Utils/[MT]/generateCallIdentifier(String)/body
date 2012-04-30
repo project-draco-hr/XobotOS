@@ -1,0 +1,6 @@
+{
+  String date=Long.toString(System.currentTimeMillis() + callIDCounter++ + rand.nextLong());
+  byte cid[]=digester.digest(date.getBytes());
+  String cidString=Utils.toHexString(cid);
+  return cidString + "@" + address;
+}

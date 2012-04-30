@@ -1,0 +1,16 @@
+{
+  InputStream inputStream=null;
+  try {
+    inputStream=new BufferedInputStream(new FileInputStream(file));
+    int ch;
+    while ((ch=inputStream.read()) != -1) {
+      if (ch == '\n' && inputStream.read() == '\n') {
+        return read(inputStream);
+      }
+    }
+    throw new EOFException("Could not find expected header");
+  }
+  finally {
+    closeQuietly(inputStream);
+  }
+}

@@ -1,0 +1,3 @@
+def GetTargetPostbuilds(self, configname, output, output_binary):
+    'Returns a list of shell commands that contain the shell commands\n    to run as postbuilds for this target, before the actual postbuilds.'
+    return (self._GetDebugPostbuilds(configname, output, output_binary) + self._GetStripPostbuilds(configname, output_binary))

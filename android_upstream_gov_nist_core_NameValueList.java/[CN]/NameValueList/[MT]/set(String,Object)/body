@@ -1,0 +1,4 @@
+{
+  NameValue nameValue=new NameValue(name,value);
+  hmap.put(name.toLowerCase(),nameValue);
+}

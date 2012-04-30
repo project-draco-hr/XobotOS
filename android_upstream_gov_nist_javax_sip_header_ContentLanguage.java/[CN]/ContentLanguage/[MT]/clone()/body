@@ -1,0 +1,5 @@
+{
+  ContentLanguage retval=(ContentLanguage)super.clone();
+  if (this.locale != null)   retval.locale=(Locale)this.locale.clone();
+  return retval;
+}

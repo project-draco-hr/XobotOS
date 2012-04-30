@@ -1,0 +1,13 @@
+{
+  if (!checkOpenConnection()) {
+    return;
+  }
+  try {
+    mService.startListening(recognizerIntent,mListener);
+    if (DBG)     Log.d(TAG,"service start listening command succeded");
+  }
+ catch (  final RemoteException e) {
+    Log.e(TAG,"startListening() failed",e);
+    mListener.onError(ERROR_CLIENT);
+  }
+}

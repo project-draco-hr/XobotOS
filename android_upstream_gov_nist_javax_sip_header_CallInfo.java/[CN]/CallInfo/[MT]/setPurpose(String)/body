@@ -1,0 +1,8 @@
+{
+  if (purpose == null)   throw new NullPointerException("null arg");
+  try {
+    this.setParameter("purpose",purpose);
+  }
+ catch (  ParseException ex) {
+  }
+}

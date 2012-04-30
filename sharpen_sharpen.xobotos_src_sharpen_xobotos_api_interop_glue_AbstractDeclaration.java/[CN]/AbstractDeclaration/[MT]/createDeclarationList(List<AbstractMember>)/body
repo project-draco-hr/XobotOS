@@ -1,0 +1,8 @@
+{
+  List<AbstractMember> retval=new ArrayList<AbstractMember>();
+  for (  AbstractMember member : list) {
+    if (member instanceof AbstractDefinition)     retval.add(((AbstractDefinition)member).getDeclaration());
+ else     retval.add(member);
+  }
+  return Collections.unmodifiableList(retval);
+}

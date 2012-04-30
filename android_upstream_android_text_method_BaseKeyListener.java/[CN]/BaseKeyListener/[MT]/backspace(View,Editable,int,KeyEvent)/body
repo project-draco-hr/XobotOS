@@ -1,0 +1,3 @@
+{
+  return backspaceOrForwardDelete(view,content,keyCode,event,false);
+}

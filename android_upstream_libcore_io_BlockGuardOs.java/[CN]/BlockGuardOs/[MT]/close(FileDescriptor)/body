@@ -1,0 +1,6 @@
+{
+  if (S_ISSOCK(Libcore.os.fstat(fd).st_mode) && isLingerSocket(fd)) {
+    BlockGuard.getThreadPolicy().onNetwork();
+  }
+  os.close(fd);
+}

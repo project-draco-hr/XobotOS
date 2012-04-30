@@ -1,0 +1,13 @@
+{
+  if (mSelectedPosition != INVALID_POSITION) {
+    if (mLayoutMode != LAYOUT_SPECIFIC) {
+      mResurrectToPosition=mSelectedPosition;
+    }
+    if (mNextSelectedPosition >= 0 && mNextSelectedPosition != mSelectedPosition) {
+      mResurrectToPosition=mNextSelectedPosition;
+    }
+    setSelectedPositionInt(INVALID_POSITION);
+    setNextSelectedPositionInt(INVALID_POSITION);
+    mSelectedTop=0;
+  }
+}

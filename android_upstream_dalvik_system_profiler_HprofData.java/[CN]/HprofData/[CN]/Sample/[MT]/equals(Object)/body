@@ -1,0 +1,7 @@
+{
+  if (!(o instanceof Sample)) {
+    return false;
+  }
+  Sample s=(Sample)o;
+  return count == s.count && stackTrace.equals(s.stackTrace);
+}

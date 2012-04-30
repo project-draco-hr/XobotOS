@@ -1,0 +1,3 @@
+{
+  unsafe.putOrderedInt(array,checkedByteOffset(i),newValue);
+}

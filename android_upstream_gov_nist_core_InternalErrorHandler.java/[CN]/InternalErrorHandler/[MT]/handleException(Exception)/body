@@ -1,0 +1,5 @@
+{
+  System.err.println("Unexpected internal error FIXME!! " + ex.getMessage());
+  ex.printStackTrace();
+  throw new RuntimeException("Unexpected internal error FIXME!! " + ex.getMessage(),ex);
+}

@@ -1,0 +1,3 @@
+{
+  Log.w(TAG,"setAuxiliaryOutputFile(String) is no longer supported.");
+}

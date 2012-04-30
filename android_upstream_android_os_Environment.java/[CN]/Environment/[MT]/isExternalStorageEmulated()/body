@@ -1,0 +1,4 @@
+{
+  StorageVolume volume=getPrimaryVolume();
+  return (volume != null && volume.isEmulated());
+}

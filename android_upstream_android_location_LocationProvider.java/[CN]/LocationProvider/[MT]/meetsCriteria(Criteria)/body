@@ -1,0 +1,9 @@
+{
+  try {
+    return mService.providerMeetsCriteria(mName,criteria);
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"meetsCriteria: RemoteException",e);
+    return false;
+  }
+}

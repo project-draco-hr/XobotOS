@@ -1,0 +1,5 @@
+{
+  if (_currentBodyDeclaration == null)   return null;
+ else   if (_currentBodyDeclaration instanceof MethodDeclaration)   return ((MethodDeclaration)_currentBodyDeclaration).resolveBinding();
+  return null;
+}

@@ -1,0 +1,43 @@
+{
+  final Expression thenExpr=node.getThenExpression();
+  final Expression elseExpr=node.getElseExpression();
+  final ITypeBinding type=node.resolveTypeBinding();
+  final ITypeBinding thenType=thenExpr.resolveTypeBinding();
+  final ITypeBinding elseType=elseExpr.resolveTypeBinding();
+  CSExpression mappedCondition=mapExpression(node.getExpression());
+  CSExpression mappedThen=mapExpression(type,thenExpr);
+  CSExpression mappedElse=mapExpression(type,elseExpr);
+  boolean oneIsNull=thenExpr instanceof NullLiteral || elseExpr instanceof NullLiteral;
+  if (isZeroLiteral(elseExpr)) {
+    CSExpression mapped=my(CSharpDriver.class).mappedNullPointer(thenExpr);
+    if (mapped != null)     mappedElse=mapped;
+    oneIsNull=true;
+  }
+  if (isZeroLiteral(thenExpr)) {
+    CSExpression mapped=my(CSharpDriver.class).mappedNullPointer(elseExpr);
+    if (mapped != null)     mappedThen=mapped;
+    oneIsNull=true;
+  }
+  if (oneIsNull) {
+    pushExpression(new CSConditionalExpression(mappedCondition,mappedThen,mappedElse));
+    return false;
+  }
+  final ITypeBinding stringType=my(IBindingManager.class).getStringType();
+  final ITypeBinding serializableType=my(IBindingManager.class).getSerializableType();
+  if ((type.equals(stringType) || type.equals(serializableType)) && (thenType.equals(stringType) || elseType.equals(stringType))) {
+    if (!thenType.equals(stringType)) {
+      CSExpression toStringRef=new CSMemberReferenceExpression(mappedThen,"ToString");
+      mappedThen=new CSMethodInvocationExpression(toStringRef);
+    }
+    if (!elseType.equals(stringType)) {
+      CSExpression toStringRef=new CSMemberReferenceExpression(mappedElse,"ToString");
+      mappedElse=new CSMethodInvocationExpression(toStringRef);
+    }
+  }
+  if (type.isClass() && thenType.isAssignmentCompatible(type) && elseType.isAssignmentCompatible(type)&& !thenType.isAssignmentCompatible(elseType)&& !elseType.isAssignmentCompatible(thenType)) {
+    if (!thenType.equals(type))     mappedThen=new CSCastExpression(mappedTypeReference(type),mappedThen);
+    if (!elseType.equals(type))     mappedElse=new CSCastExpression(mappedTypeReference(type),mappedElse);
+  }
+  pushExpression(new CSConditionalExpression(mappedCondition,mappedThen,mappedElse));
+  return false;
+}

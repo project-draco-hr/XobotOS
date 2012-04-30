@@ -1,0 +1,8 @@
+{
+  if (value == null) {
+    throw new NullPointerException();
+  }
+  hasRawInput=true;
+  rawInput_=value;
+  return this;
+}

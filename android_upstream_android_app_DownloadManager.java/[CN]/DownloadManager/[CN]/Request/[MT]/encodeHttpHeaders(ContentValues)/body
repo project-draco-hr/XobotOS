@@ -1,0 +1,8 @@
+{
+  int index=0;
+  for (  Pair<String,String> header : mRequestHeaders) {
+    String headerString=header.first + ": " + header.second;
+    values.put(Downloads.Impl.RequestHeaders.INSERT_KEY_PREFIX + index,headerString);
+    index++;
+  }
+}

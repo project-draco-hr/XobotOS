@@ -1,0 +1,9 @@
+{
+  CSExpression handleRef=new CSMemberReferenceExpression(pinned.getReference(),_handleName);
+  CSExpression createHandle=new CSMethodInvocationExpression(new CSReferenceExpression("GCHandle.Alloc"),arg.getReference(),new CSReferenceExpression("GCHandleType.Pinned"));
+  CSExpression getAddr=new CSMethodInvocationExpression(new CSMemberReferenceExpression(handleRef,"AddrOfPinnedObject"));
+  CSBlock block=new CSBlock();
+  block.addStatement(new CSInfixExpression("=",handleRef,createHandle));
+  block.addStatement(new CSInfixExpression("=",getReference(obj),getAddr));
+  return block;
+}

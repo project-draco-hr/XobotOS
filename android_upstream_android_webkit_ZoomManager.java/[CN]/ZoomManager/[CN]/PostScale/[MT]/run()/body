@@ -1,0 +1,10 @@
+{
+  if (mWebView.getWebViewCore() != null) {
+    float newScale=mActualScale;
+    if (mWebView.getSettings().getUseWideViewPort() && mInPortraitMode && mInZoomOverviewBeforeSizeChange) {
+      newScale=getZoomOverviewScale();
+    }
+    setZoomScale(newScale,mUpdateTextWrap,true);
+    updateZoomPicker();
+  }
+}

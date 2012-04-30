@@ -1,0 +1,3 @@
+{
+  return (theDTDHandler == this) ? null : theDTDHandler;
+}

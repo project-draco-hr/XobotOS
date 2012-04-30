@@ -1,0 +1,13 @@
+{
+  Handler handler;
+  AttachInfo attachInfo=mAttachInfo;
+  if (attachInfo != null) {
+    handler=attachInfo.mHandler;
+  }
+ else {
+    ViewRootImpl.getRunQueue().removeCallbacks(action);
+    return true;
+  }
+  handler.removeCallbacks(action);
+  return true;
+}

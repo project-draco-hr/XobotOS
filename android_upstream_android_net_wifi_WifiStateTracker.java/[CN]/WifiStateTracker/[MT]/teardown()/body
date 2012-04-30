@@ -1,0 +1,5 @@
+{
+  mTeardownRequested.set(true);
+  mWifiManager.stopWifi();
+  return true;
+}

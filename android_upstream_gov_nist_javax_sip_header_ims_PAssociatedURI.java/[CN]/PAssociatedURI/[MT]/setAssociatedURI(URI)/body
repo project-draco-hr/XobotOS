@@ -1,0 +1,4 @@
+{
+  if (associatedURI == null)   throw new NullPointerException("null URI");
+  this.address.setURI(associatedURI);
+}

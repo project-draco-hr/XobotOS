@@ -1,0 +1,4 @@
+{
+  this.orderPreserved=orderPreserved;
+  invalidateStructure();
+}

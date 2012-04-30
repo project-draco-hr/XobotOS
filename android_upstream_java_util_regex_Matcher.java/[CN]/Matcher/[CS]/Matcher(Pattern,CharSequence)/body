@@ -1,0 +1,4 @@
+{
+  usePattern(pattern);
+  reset(input);
+}

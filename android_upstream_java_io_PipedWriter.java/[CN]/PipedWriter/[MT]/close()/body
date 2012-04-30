@@ -1,0 +1,8 @@
+{
+  PipedReader reader=destination;
+  if (reader != null) {
+    reader.done();
+    isClosed=true;
+    destination=null;
+  }
+}

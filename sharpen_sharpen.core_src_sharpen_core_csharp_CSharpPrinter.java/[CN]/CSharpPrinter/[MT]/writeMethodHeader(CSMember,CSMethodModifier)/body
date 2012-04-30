@@ -1,0 +1,9 @@
+{
+  if (!_currentType.isInterface()) {
+    writeVisibility(member);
+    write(methodModifier(modifiers));
+  }
+ else {
+    writeIndentation();
+  }
+}

@@ -1,0 +1,20 @@
+{
+  super(ipAddress,port,"udp",sipStack);
+  this.sipStack=sipStack;
+  this.messageQueue=new LinkedList();
+  this.port=port;
+  try {
+    this.sock=sipStack.getNetworkLayer().createDatagramSocket(port,ipAddress);
+    sock.setReceiveBufferSize(sipStack.getReceiveUdpBufferSize());
+    sock.setSendBufferSize(sipStack.getSendUdpBufferSize());
+    if (sipStack.getThreadAuditor().isEnabled()) {
+      sock.setSoTimeout((int)sipStack.getThreadAuditor().getPingIntervalInMillisecs());
+    }
+    if (ipAddress.getHostAddress().equals(IN_ADDR_ANY) || ipAddress.getHostAddress().equals(IN6_ADDR_ANY)) {
+      super.setIpAddress(sock.getLocalAddress());
+    }
+  }
+ catch (  SocketException ex) {
+    throw new IOException(ex.getMessage());
+  }
+}

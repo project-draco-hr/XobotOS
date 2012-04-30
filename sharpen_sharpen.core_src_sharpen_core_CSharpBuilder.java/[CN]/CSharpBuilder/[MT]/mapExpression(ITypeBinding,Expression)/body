@@ -1,0 +1,16 @@
+{
+  if (expression instanceof NullLiteral) {
+    if ((expectedType != null) && isTypeVariable(expectedType))     return new CSDefaultExpression(expectedType.getName());
+ else     return new CSNullLiteralExpression();
+  }
+  if ((expression != null) && (expectedType != null)) {
+    final ITypeBinding type=expression.resolveTypeBinding();
+    pushExpectedType(expectedType);
+    CSExpression mappedExpr=mapExpression(expression);
+    popExpectedType();
+    return castIfNeeded(expectedType,type,mappedExpr);
+  }
+ else {
+    return mapExpression(expression);
+  }
+}

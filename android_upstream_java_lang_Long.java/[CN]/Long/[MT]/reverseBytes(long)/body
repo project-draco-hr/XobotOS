@@ -1,0 +1,5 @@
+{
+  v=((v >>> 8) & 0x00FF00FF00FF00FFL) | ((v & 0x00FF00FF00FF00FFL) << 8);
+  v=((v >>> 16) & 0x0000FFFF0000FFFFL) | ((v & 0x0000FFFF0000FFFFL) << 16);
+  return ((v >>> 32)) | ((v) << 32);
+}

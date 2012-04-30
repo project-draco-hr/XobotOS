@@ -1,0 +1,4 @@
+{
+  if (dslLocation == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Access-Network-Info, setDSLLocation(), the dslLocation parameter is null.");
+  setParameter(ParameterNamesIms.DSL_LOCATION,dslLocation);
+}

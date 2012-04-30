@@ -1,0 +1,6 @@
+{
+  computeContentLength(content);
+  messageContentBytes=content;
+  messageContent=null;
+  messageContentObject=null;
+}

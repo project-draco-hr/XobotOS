@@ -1,0 +1,5 @@
+{
+  BigDecimal result=abs();
+  result.inplaceRound(mc);
+  return result;
+}

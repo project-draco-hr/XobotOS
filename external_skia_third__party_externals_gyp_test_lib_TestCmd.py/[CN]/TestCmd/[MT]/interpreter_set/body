@@ -1,0 +1,3 @@
+def interpreter_set(self, interpreter):
+    'Set the program to be used to interpret the program\n        under test as a script.\n        '
+    self.interpreter = interpreter

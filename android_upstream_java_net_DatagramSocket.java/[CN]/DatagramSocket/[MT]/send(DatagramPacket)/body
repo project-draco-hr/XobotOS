@@ -1,0 +1,22 @@
+{
+  checkOpen();
+  ensureBound();
+  InetAddress packAddr=pack.getAddress();
+  if (address != null) {
+    if (packAddr != null) {
+      if (!address.equals(packAddr) || port != pack.getPort()) {
+        throw new IllegalArgumentException("Packet address mismatch with connected address");
+      }
+    }
+ else {
+      pack.setAddress(address);
+      pack.setPort(port);
+    }
+  }
+ else {
+    if (packAddr == null) {
+      throw new NullPointerException("Destination address is null");
+    }
+  }
+  impl.send(pack);
+}

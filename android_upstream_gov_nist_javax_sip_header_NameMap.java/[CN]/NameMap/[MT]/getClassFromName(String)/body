@@ -1,0 +1,12 @@
+{
+  String className=(String)nameMap.get(headerName.toLowerCase());
+  if (className == null)   return null;
+ else {
+    try {
+      return Class.forName(className);
+    }
+ catch (    ClassNotFoundException ex) {
+      return null;
+    }
+  }
+}

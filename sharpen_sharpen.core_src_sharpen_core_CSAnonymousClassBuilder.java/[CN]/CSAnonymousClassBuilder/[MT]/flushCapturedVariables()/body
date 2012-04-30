@@ -1,0 +1,23 @@
+{
+  int capturedVariableCount=0;
+  if (isEnclosingReferenceRequired()) {
+    capturedVariableCount++;
+    CSField ef=createEnclosingField();
+    addFieldParameter(ef);
+    ITypeBinding bt=anonymousBaseType();
+    if (bt != null && isNonStaticNestedType(bt)) {
+      if (null == _constructor.chainedConstructorInvocation())       _constructor.chainedConstructorInvocation(new CSConstructorInvocationExpression(new CSBaseExpression()));
+      final IMethodBinding ctor=constructorBinding();
+      final ITypeBinding superclass=ctor.getDeclaringClass().getSuperclass();
+      CSExpression enclosing=createEnclosingBaseCtorArgument(ef.name(),superclass);
+      _constructor.chainedConstructorInvocation().addArgument(enclosing);
+    }
+  }
+  for (  IVariableBinding variable : _capturedVariables) {
+    capturedVariableCount++;
+    String mapped=mappedVariableName(variable);
+    String name=mapped != null ? mapped : identifier(variable.getName());
+    addFieldParameter(name,mappedTypeReference(variable.getType()));
+  }
+  return capturedVariableCount;
+}

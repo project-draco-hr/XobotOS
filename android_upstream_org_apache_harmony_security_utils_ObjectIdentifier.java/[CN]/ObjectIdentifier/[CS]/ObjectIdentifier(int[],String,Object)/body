@@ -1,0 +1,9 @@
+{
+  this(oid);
+  if (oidGroup == null) {
+    throw new NullPointerException("oidGroup == null");
+  }
+  this.group=oidGroup;
+  this.name=name;
+  toOIDString();
+}

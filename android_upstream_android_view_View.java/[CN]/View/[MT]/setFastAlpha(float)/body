@@ -1,0 +1,4 @@
+{
+  ensureTransformationInfo();
+  mTransformationInfo.mAlpha=alpha;
+}

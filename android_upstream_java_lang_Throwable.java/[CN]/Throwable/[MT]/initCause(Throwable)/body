@@ -1,0 +1,10 @@
+{
+  if (cause != this) {
+    throw new IllegalStateException("Cause already initialized");
+  }
+  if (throwable == this) {
+    throw new IllegalArgumentException("throwable == this");
+  }
+  cause=throwable;
+  return this;
+}

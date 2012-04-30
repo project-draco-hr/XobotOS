@@ -1,0 +1,8 @@
+{
+  if (!this.getClass().equals(other.getClass()))   return false;
+ else {
+    TCPMessageChannel that=(TCPMessageChannel)other;
+    if (this.mySock != that.mySock)     return false;
+ else     return true;
+  }
+}

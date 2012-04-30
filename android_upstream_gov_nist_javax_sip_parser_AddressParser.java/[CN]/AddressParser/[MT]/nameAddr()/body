@@ -1,0 +1,42 @@
+{
+  if (debug)   dbg_enter("nameAddr");
+  try {
+    if (this.lexer.lookAhead(0) == '<') {
+      this.lexer.consume(1);
+      this.lexer.selectLexer("sip_urlLexer");
+      this.lexer.SPorHT();
+      URLParser uriParser=new URLParser((Lexer)lexer);
+      GenericURI uri=uriParser.uriReference(true);
+      AddressImpl retval=new AddressImpl();
+      retval.setAddressType(AddressImpl.NAME_ADDR);
+      retval.setURI(uri);
+      this.lexer.SPorHT();
+      this.lexer.match('>');
+      return retval;
+    }
+ else {
+      AddressImpl addr=new AddressImpl();
+      addr.setAddressType(AddressImpl.NAME_ADDR);
+      String name=null;
+      if (this.lexer.lookAhead(0) == '\"') {
+        name=this.lexer.quotedString();
+        this.lexer.SPorHT();
+      }
+ else       name=this.lexer.getNextToken('<');
+      addr.setDisplayName(name.trim());
+      this.lexer.match('<');
+      this.lexer.SPorHT();
+      URLParser uriParser=new URLParser((Lexer)lexer);
+      GenericURI uri=uriParser.uriReference(true);
+      AddressImpl retval=new AddressImpl();
+      addr.setAddressType(AddressImpl.NAME_ADDR);
+      addr.setURI(uri);
+      this.lexer.SPorHT();
+      this.lexer.match('>');
+      return addr;
+    }
+  }
+  finally {
+    if (debug)     dbg_leave("nameAddr");
+  }
+}

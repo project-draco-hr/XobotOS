@@ -1,0 +1,5 @@
+{
+  stream.defaultReadObject();
+  char inSeparator=stream.readChar();
+  this.path=fixSlashes(path.replace(inSeparator,separatorChar));
+}

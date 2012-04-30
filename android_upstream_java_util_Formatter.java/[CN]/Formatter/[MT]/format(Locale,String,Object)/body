@@ -1,0 +1,12 @@
+{
+  Locale originalLocale=locale;
+  try {
+    this.locale=(l == null ? Locale.US : l);
+    this.localeData=LocaleData.get(locale);
+    doFormat(format,args);
+  }
+  finally {
+    this.locale=originalLocale;
+  }
+  return this;
+}

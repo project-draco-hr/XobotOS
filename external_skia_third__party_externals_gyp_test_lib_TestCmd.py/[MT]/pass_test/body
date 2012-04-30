@@ -1,0 +1,8 @@
+def pass_test(self=None, condition=1, function=None):
+    'Causes a test to pass.\n\n    By default, the pass_test() method reports PASSED for the test\n    and exits with a status of 0.  If a condition argument is supplied,\n    the test passes only if the condition is true.\n    '
+    if (not condition):
+        return
+    if (not (function is None)):
+        function()
+    sys.stderr.write('PASSED\n')
+    sys.exit(0)

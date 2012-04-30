@@ -1,0 +1,3 @@
+{
+  return arg.getNodeType() == ASTNode.TYPE_LITERAL;
+}

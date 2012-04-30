@@ -1,0 +1,44 @@
+{
+  if (DEBUG_BACKUP)   Slog.v(TAG,"handleCreateBackupAgent: " + data);
+  unscheduleGcIdler();
+  LoadedApk packageInfo=getPackageInfoNoCheck(data.appInfo,data.compatInfo);
+  String packageName=packageInfo.mPackageName;
+  if (mBackupAgents.get(packageName) != null) {
+    Slog.d(TAG,"BackupAgent " + "  for " + packageName + " already exists");
+    return;
+  }
+  BackupAgent agent=null;
+  String classname=data.appInfo.backupAgentName;
+  if (classname == null && (data.backupMode == IApplicationThread.BACKUP_MODE_FULL || data.backupMode == IApplicationThread.BACKUP_MODE_RESTORE_FULL)) {
+    classname="android.app.backup.FullBackupAgent";
+  }
+  try {
+    IBinder binder=null;
+    try {
+      if (DEBUG_BACKUP)       Slog.v(TAG,"Initializing agent class " + classname);
+      java.lang.ClassLoader cl=packageInfo.getClassLoader();
+      agent=(BackupAgent)cl.loadClass(classname).newInstance();
+      ContextImpl context=new ContextImpl();
+      context.init(packageInfo,null,this);
+      context.setOuterContext(agent);
+      agent.attach(context);
+      agent.onCreate();
+      binder=agent.onBind();
+      mBackupAgents.put(packageName,agent);
+    }
+ catch (    Exception e) {
+      Slog.e(TAG,"Agent threw during creation: " + e);
+      if (data.backupMode != IApplicationThread.BACKUP_MODE_RESTORE && data.backupMode != IApplicationThread.BACKUP_MODE_RESTORE_FULL) {
+        throw e;
+      }
+    }
+    try {
+      ActivityManagerNative.getDefault().backupAgentCreated(packageName,binder);
+    }
+ catch (    RemoteException e) {
+    }
+  }
+ catch (  Exception e) {
+    throw new RuntimeException("Unable to create BackupAgent " + classname + ": "+ e.toString(),e);
+  }
+}

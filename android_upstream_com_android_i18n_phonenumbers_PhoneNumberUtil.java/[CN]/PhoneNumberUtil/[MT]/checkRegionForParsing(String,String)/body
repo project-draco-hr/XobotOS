@@ -1,0 +1,8 @@
+{
+  if (!isValidRegionCode(defaultRegion)) {
+    if (numberToParse == null || numberToParse.length() == 0 || !PLUS_CHARS_PATTERN.matcher(numberToParse).lookingAt()) {
+      return false;
+    }
+  }
+  return true;
+}

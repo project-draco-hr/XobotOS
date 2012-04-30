@@ -1,0 +1,3 @@
+{
+  addClasspathEntry(JavaRuntime.getDefaultJREContainerEntry());
+}

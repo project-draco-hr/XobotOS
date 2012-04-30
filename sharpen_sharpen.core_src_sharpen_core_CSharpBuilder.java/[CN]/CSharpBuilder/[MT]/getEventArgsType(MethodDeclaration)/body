@@ -1,0 +1,5 @@
+{
+  TagElement tag=eventTagFor(node);
+  if (null == tag)   return null;
+  return mappedTypeName(JavadocUtility.singleTextFragmentFrom(tag));
+}

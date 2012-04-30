@@ -1,0 +1,4 @@
+def WriteStringToFile(string, filepath):
+    'Writes this string out to filepath, replacing the file if it already\n    exists.\n    '
+    with open(filepath, 'w') as file_handle:
+        file_handle.write(string)

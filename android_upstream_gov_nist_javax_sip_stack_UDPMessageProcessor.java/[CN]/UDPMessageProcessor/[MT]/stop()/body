@@ -1,0 +1,7 @@
+{
+synchronized (this.messageQueue) {
+    this.isRunning=false;
+    this.messageQueue.notifyAll();
+    sock.close();
+  }
+}

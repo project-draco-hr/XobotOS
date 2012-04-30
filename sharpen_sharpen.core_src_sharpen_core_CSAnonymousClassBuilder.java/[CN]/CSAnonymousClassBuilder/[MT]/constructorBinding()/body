@@ -1,0 +1,10 @@
+{
+  if (_node.getParent() instanceof EnumConstantDeclaration) {
+    final EnumConstantDeclaration node=(EnumConstantDeclaration)_node.getParent();
+    return node.resolveConstructorBinding();
+  }
+ else {
+    final ClassInstanceCreation node=(ClassInstanceCreation)_node.getParent();
+    return node.resolveConstructorBinding();
+  }
+}

@@ -1,0 +1,4 @@
+{
+  String mapped=applyNamespaceMappings(namespace);
+  return _namingStrategy.namespace(mapped);
+}

@@ -1,0 +1,24 @@
+{
+  SIPDialog retval=null;
+  if (transaction instanceof SIPClientTransaction) {
+    String dialogId=((SIPRequest)transaction.getRequest()).getDialogId(false);
+    if (this.earlyDialogTable.get(dialogId) != null) {
+      SIPDialog dialog=this.earlyDialogTable.get(dialogId);
+      if (dialog.getState() == null || dialog.getState() == DialogState.EARLY) {
+        retval=dialog;
+      }
+ else {
+        retval=new SIPDialog(transaction);
+        this.earlyDialogTable.put(dialogId,retval);
+      }
+    }
+ else {
+      retval=new SIPDialog(transaction);
+      this.earlyDialogTable.put(dialogId,retval);
+    }
+  }
+ else {
+    retval=new SIPDialog(transaction);
+  }
+  return retval;
+}

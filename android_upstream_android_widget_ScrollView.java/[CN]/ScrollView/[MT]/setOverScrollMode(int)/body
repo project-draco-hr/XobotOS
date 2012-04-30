@@ -1,0 +1,14 @@
+{
+  if (mode != OVER_SCROLL_NEVER) {
+    if (mEdgeGlowTop == null) {
+      Context context=getContext();
+      mEdgeGlowTop=new EdgeEffect(context);
+      mEdgeGlowBottom=new EdgeEffect(context);
+    }
+  }
+ else {
+    mEdgeGlowTop=null;
+    mEdgeGlowBottom=null;
+  }
+  super.setOverScrollMode(mode);
+}

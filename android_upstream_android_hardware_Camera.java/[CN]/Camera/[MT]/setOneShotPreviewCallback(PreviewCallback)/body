@@ -1,0 +1,6 @@
+{
+  mPreviewCallback=cb;
+  mOneShot=true;
+  mWithBuffer=false;
+  setHasPreviewCallback(cb != null,false);
+}

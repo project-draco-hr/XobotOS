@@ -1,0 +1,4 @@
+SIPMessageListener sipMessageListener
+Pipeline in
+boolean debug
+int maxMessageSize

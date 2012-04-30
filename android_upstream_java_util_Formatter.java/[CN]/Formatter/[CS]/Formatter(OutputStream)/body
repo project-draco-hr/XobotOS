@@ -1,0 +1,4 @@
+{
+  out=new BufferedWriter(new OutputStreamWriter(os,Charset.defaultCharset()));
+  locale=Locale.getDefault();
+}

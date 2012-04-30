@@ -1,0 +1,33 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("setRemoteTag(): " + this + " remoteTag = "+ this.hisTag+ " new tag = "+ hisTag);
+  }
+  if (this.hisTag != null && hisTag != null && !hisTag.equals(this.hisTag)) {
+    if (this.getState() != DialogState.EARLY) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("Dialog is already established -- ignoring remote tag re-assignment");
+      return;
+    }
+ else     if (sipStack.isRemoteTagReassignmentAllowed()) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("UNSAFE OPERATION !  tag re-assignment " + this.hisTag + " trying to set to "+ hisTag+ " can cause unexpected effects ");
+      boolean removed=false;
+      if (this.sipStack.getDialog(dialogId) == this) {
+        this.sipStack.removeDialog(dialogId);
+        removed=true;
+      }
+      this.dialogId=null;
+      this.hisTag=hisTag;
+      if (removed) {
+        if (sipStack.isLoggingEnabled())         sipStack.getStackLogger().logDebug("ReInserting Dialog");
+        this.sipStack.putDialog(this);
+      }
+    }
+  }
+ else {
+    if (hisTag != null) {
+      this.hisTag=hisTag;
+    }
+ else {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logWarning("setRemoteTag : called with null argument ");
+    }
+  }
+}

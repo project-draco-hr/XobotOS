@@ -1,0 +1,29 @@
+{
+  StringBuffer retval=new StringBuffer();
+  while (true) {
+    char next=lookAhead(0);
+    if (next == '\0') {
+      throw new ParseException(this.buffer + "unexpected EOL",this.ptr);
+    }
+ else     if (next == c) {
+      consume(1);
+      break;
+    }
+ else     if (next == '\\') {
+      consume(1);
+      char nextchar=lookAhead(0);
+      if (nextchar == '\0') {
+        throw new ParseException(this.buffer + "unexpected EOL",this.ptr);
+      }
+ else {
+        consume(1);
+        retval.append(nextchar);
+      }
+    }
+ else {
+      consume(1);
+      retval.append(next);
+    }
+  }
+  return retval.toString();
+}

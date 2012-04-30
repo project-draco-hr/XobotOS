@@ -1,0 +1,7 @@
+{
+  Matcher trailingCharsMatcher=pattern.matcher(candidate);
+  if (trailingCharsMatcher.find()) {
+    candidate=candidate.subSequence(0,trailingCharsMatcher.start());
+  }
+  return candidate;
+}

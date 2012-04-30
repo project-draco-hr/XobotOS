@@ -1,0 +1,5 @@
+{
+  final Drawable divider=mDivider;
+  divider.setBounds(bounds);
+  divider.draw(canvas);
+}

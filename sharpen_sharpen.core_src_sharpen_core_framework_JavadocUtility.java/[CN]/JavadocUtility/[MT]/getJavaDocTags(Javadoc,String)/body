@@ -1,0 +1,7 @@
+{
+  if (null == javadoc) {
+    return Collections.emptyList();
+  }
+  final List<TagElement> tags=Types.cast(javadoc.tags());
+  return collectTags(tags,tag,new ArrayList<TagElement>());
+}

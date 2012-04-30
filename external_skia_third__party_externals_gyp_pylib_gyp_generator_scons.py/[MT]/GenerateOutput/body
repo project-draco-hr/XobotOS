@@ -1,0 +1,63 @@
+def GenerateOutput(target_list, target_dicts, data, params):
+    '\n  Generates all the output files for the specified targets.\n  '
+    options = params['options']
+    if options.generator_output:
+
+        def output_path(filename):
+            return filename.replace(params['cwd'], options.generator_output)
+    else:
+
+        def output_path(filename):
+            return filename
+    default_configuration = None
+    for qualified_target in target_list:
+        spec = target_dicts[qualified_target]
+        if (spec['toolset'] != 'target'):
+            raise Exception(('Multiple toolsets not supported in scons build (target %s)' % qualified_target))
+        scons_target = SCons.Target(spec)
+        if scons_target.is_ignored:
+            continue
+        if ((not default_configuration) and (spec['default_configuration'] != 'Default')):
+            default_configuration = spec['default_configuration']
+        (build_file, target) = gyp.common.ParseQualifiedTarget(qualified_target)[:2]
+        output_file = TargetFilename(target, build_file, options.suffix)
+        if options.generator_output:
+            output_file = output_path(output_file)
+        if (not spec.has_key('libraries')):
+            spec['libraries'] = []
+        deps = spec.get('dependencies', [])
+        spec['scons_dependencies'] = []
+        for d in deps:
+            td = target_dicts[d]
+            target_name = td['target_name']
+            spec['scons_dependencies'].append(("Alias('%s')" % target_name))
+            if (td['type'] in ('static_library', 'shared_library')):
+                libname = td.get('product_name', target_name)
+                spec['libraries'].append(('lib' + libname))
+            if (td['type'] == 'loadable_module'):
+                prereqs = spec.get('scons_prerequisites', [])
+                td_target = SCons.Target(td)
+                td_target.target_prefix = '${SHLIBPREFIX}'
+                td_target.target_suffix = '${SHLIBSUFFIX}'
+        GenerateSConscript(output_file, spec, build_file, data[build_file])
+    if (not default_configuration):
+        default_configuration = 'Default'
+    for build_file in sorted(data.keys()):
+        (path, ext) = os.path.splitext(build_file)
+        if (ext != '.gyp'):
+            continue
+        (output_dir, basename) = os.path.split(path)
+        output_filename = (((path + '_main') + options.suffix) + '.scons')
+        all_targets = gyp.common.AllTargets(target_list, target_dicts, build_file)
+        sconscript_files = {}
+        for t in all_targets:
+            scons_target = SCons.Target(target_dicts[t])
+            if scons_target.is_ignored:
+                continue
+            (bf, target) = gyp.common.ParseQualifiedTarget(t)[:2]
+            target_filename = TargetFilename(target, bf, options.suffix)
+            tpath = gyp.common.RelativePath(target_filename, output_dir)
+            sconscript_files[target] = tpath
+        output_filename = output_path(output_filename)
+        if sconscript_files:
+            GenerateSConscriptWrapper(build_file, data[build_file], basename, output_filename, sconscript_files, default_configuration)

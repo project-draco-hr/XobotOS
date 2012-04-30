@@ -1,0 +1,6 @@
+{
+  _insideSuperCtorInvocation=true;
+  boolean retval=super.visit(node);
+  _insideSuperCtorInvocation=false;
+  return retval;
+}

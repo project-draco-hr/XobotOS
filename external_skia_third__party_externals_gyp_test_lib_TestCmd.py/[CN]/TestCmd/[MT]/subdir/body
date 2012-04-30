@@ -1,0 +1,16 @@
+def subdir(self, *subdirs):
+    "Create new subdirectories under the temporary working\n        directory, one for each argument.  An argument may be a list,\n        in which case the list elements are concatenated using the\n        os.path.join() method.  Subdirectories multiple levels deep\n        must be created using a separate argument for each level:\n\n                test.subdir('sub', ['sub', 'dir'], ['sub', 'dir', 'ectory'])\n\n        Returns the number of subdirectories actually created.\n        "
+    count = 0
+    for sub in subdirs:
+        if (sub is None):
+            continue
+        if is_List(sub):
+            sub = apply(os.path.join, tuple(sub))
+        new = os.path.join(self.workdir, sub)
+        try:
+            os.mkdir(new)
+        except OSError:
+            pass
+        else:
+            count = (count + 1)
+    return count

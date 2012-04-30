@@ -1,0 +1,3 @@
+{
+  return (T)my(Bindings.class).findDeclaringNode(binding);
+}

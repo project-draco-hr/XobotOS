@@ -1,0 +1,6 @@
+{
+  if (source == null) {
+    throw new NullPointerException();
+  }
+  return new CollationElementIterator(icuColl.getCollationElementIterator(source));
+}

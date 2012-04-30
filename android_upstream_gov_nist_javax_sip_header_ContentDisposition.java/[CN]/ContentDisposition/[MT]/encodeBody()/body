@@ -1,0 +1,7 @@
+{
+  StringBuffer encoding=new StringBuffer(dispositionType);
+  if (!this.parameters.isEmpty()) {
+    encoding.append(SEMICOLON).append(parameters.encode());
+  }
+  return encoding.toString();
+}

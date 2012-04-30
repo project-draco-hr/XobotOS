@@ -1,0 +1,13 @@
+{
+  if (sipListener == this.getSipListener()) {
+    this.sipListener=null;
+  }
+  boolean found=false;
+  for (Iterator<SipProviderImpl> it=sipStack.getSipProviders(); it.hasNext(); ) {
+    SipProviderImpl nextProvider=(SipProviderImpl)it.next();
+    if (nextProvider.getSipListener() != null)     found=true;
+  }
+  if (!found) {
+    sipStack.sipListener=null;
+  }
+}

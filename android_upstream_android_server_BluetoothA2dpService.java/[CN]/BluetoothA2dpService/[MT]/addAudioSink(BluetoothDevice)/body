@@ -1,0 +1,5 @@
+{
+  if (mAudioDevices.get(device) == null) {
+    mAudioDevices.put(device,BluetoothA2dp.STATE_DISCONNECTED);
+  }
+}

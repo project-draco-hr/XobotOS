@@ -1,0 +1,5 @@
+{
+  this.prepareJavaRepresentation();
+  value.prepareJavaRepresentation();
+  return Logical.or(this,value);
+}

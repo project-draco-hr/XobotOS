@@ -1,0 +1,10 @@
+{
+  writeIndented(name);
+  if (isAbstract) {
+    writeLine(";");
+  }
+ else {
+    writeLine();
+    block.accept(this);
+  }
+}

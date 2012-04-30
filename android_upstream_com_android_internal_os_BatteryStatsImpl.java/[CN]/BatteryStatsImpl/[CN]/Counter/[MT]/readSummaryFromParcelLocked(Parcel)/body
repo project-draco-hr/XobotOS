@@ -1,0 +1,6 @@
+{
+  mLoadedCount=in.readInt();
+  mCount.set(mLoadedCount);
+  mLastCount=0;
+  mUnpluggedCount=mPluggedCount=mLoadedCount;
+}

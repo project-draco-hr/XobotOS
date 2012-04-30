@@ -1,0 +1,5 @@
+{
+  _operator=operator;
+  _lhs=lhs;
+  _rhs=rhs;
+}

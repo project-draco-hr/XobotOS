@@ -1,0 +1,7 @@
+{
+  int newCount=((value.length >> 1) + value.length) + 2;
+  char[] newData=new char[min > newCount ? min : newCount];
+  System.arraycopy(value,0,newData,0,count);
+  value=newData;
+  shared=false;
+}

@@ -1,0 +1,4 @@
+{
+  this._decl=decl;
+  this._flags=null;
+}

@@ -1,0 +1,2 @@
+def write_target(self, fp, pre=''):
+    fp.write('\ntarget_files.extend(input_files)\n')

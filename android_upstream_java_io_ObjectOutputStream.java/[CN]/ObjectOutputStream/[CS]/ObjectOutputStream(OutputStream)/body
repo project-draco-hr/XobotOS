@@ -1,0 +1,11 @@
+{
+  this.output=(output instanceof DataOutputStream) ? (DataOutputStream)output : new DataOutputStream(output);
+  this.enableReplace=false;
+  this.protocolVersion=PROTOCOL_VERSION_2;
+  this.subclassOverridingImplementation=false;
+  resetState();
+  this.nestedException=new StreamCorruptedException();
+  primitiveTypes=this.output;
+  writeStreamHeader();
+  primitiveTypes=null;
+}

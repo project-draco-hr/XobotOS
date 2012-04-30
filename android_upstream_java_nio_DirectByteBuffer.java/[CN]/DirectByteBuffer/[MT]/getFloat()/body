@@ -1,0 +1,9 @@
+{
+  int newPosition=position + SizeOf.FLOAT;
+  if (newPosition > limit) {
+    throw new BufferUnderflowException();
+  }
+  float result=Float.intBitsToFloat(this.block.peekInt(offset + position,order));
+  position=newPosition;
+  return result;
+}

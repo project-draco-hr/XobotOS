@@ -1,0 +1,8 @@
+def up_to_date(self, gyp_file, target=None, **kw):
+    '\n    Verifies that a build of the specified Make target is up to date.\n    '
+    if (target in (None, self.DEFAULT)):
+        message_target = 'all'
+    else:
+        message_target = target
+    kw['stdout'] = ("make: Nothing to be done for `%s'.\n" % message_target)
+    return self.build(gyp_file, target, **kw)

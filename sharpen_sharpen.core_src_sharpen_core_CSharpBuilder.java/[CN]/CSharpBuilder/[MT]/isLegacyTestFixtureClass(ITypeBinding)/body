@@ -1,0 +1,3 @@
+{
+  return (_configuration.junitConversion() && type.getQualifiedName().equals("junit.framework.TestCase"));
+}

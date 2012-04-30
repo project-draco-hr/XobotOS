@@ -1,0 +1,22 @@
+{
+  final IVariableBinding binding=variable.resolveBinding();
+  final ITypeBinding type=binding.getType();
+  final Expression initializer=variable.getInitializer();
+  if (initializer == null)   return createVariableDeclaration(binding,null);
+  if (isZeroLiteral(initializer)) {
+    CSExpression nullPointer=my(CSharpDriver.class).mappedNullPointer(binding);
+    if (nullPointer != null)     return createVariableDeclaration(binding,nullPointer);
+  }
+  final ITypeBinding initType=initializer.resolveTypeBinding();
+  ITypeBinding expected=type;
+  if (isGenericInstance(initType)) {
+    ITypeBinding underlyingLeftType=getUnderlyingGenericType(type);
+    ITypeBinding underlyingRightType=getUnderlyingGenericType(initType);
+    if ((underlyingLeftType != null) && underlyingLeftType.equals(underlyingRightType))     expected=initType;
+  }
+  pushExpectedType(expected);
+  CSExpression mapped=mapExpression(type,initializer);
+  CSVariableDeclaration vdecl=createVariableDeclaration(binding,mapped);
+  popExpectedType();
+  return vdecl;
+}

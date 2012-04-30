@@ -1,0 +1,18 @@
+{
+  try {
+    if (this.messageContentBytes != null) {
+    }
+ else     if (this.messageContentObject != null) {
+      String messageContent=this.messageContentObject.toString();
+      this.messageContentBytes=messageContent.getBytes(getCharset());
+    }
+ else     if (this.messageContent != null) {
+      this.messageContentBytes=messageContent.getBytes(getCharset());
+    }
+    return this.messageContentBytes;
+  }
+ catch (  UnsupportedEncodingException ex) {
+    InternalErrorHandler.handleException(ex);
+    return null;
+  }
+}

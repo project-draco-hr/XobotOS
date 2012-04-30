@@ -1,0 +1,66 @@
+{
+  SIPRequest newRequest=new SIPRequest();
+  newRequest.requestLine=requestLine;
+  Iterator<SIPHeader> headerIterator=this.getHeaders();
+  while (headerIterator.hasNext()) {
+    SIPHeader nextHeader=(SIPHeader)headerIterator.next();
+    if (nextHeader instanceof CSeq) {
+      CSeq newCseq=(CSeq)nextHeader.clone();
+      nextHeader=newCseq;
+      try {
+        newCseq.setMethod(requestLine.getMethod());
+      }
+ catch (      ParseException e) {
+      }
+    }
+ else     if (nextHeader instanceof ViaList) {
+      Via via=(Via)(((ViaList)nextHeader).getFirst().clone());
+      via.removeParameter("branch");
+      nextHeader=via;
+    }
+ else     if (nextHeader instanceof To) {
+      To to=(To)nextHeader;
+      if (switchHeaders) {
+        nextHeader=new From(to);
+        ((From)nextHeader).removeTag();
+      }
+ else {
+        nextHeader=(SIPHeader)to.clone();
+        ((To)nextHeader).removeTag();
+      }
+    }
+ else     if (nextHeader instanceof From) {
+      From from=(From)nextHeader;
+      if (switchHeaders) {
+        nextHeader=new To(from);
+        ((To)nextHeader).removeTag();
+      }
+ else {
+        nextHeader=(SIPHeader)from.clone();
+        ((From)nextHeader).removeTag();
+      }
+    }
+ else     if (nextHeader instanceof ContentLength) {
+      ContentLength cl=(ContentLength)nextHeader.clone();
+      try {
+        cl.setContentLength(0);
+      }
+ catch (      InvalidArgumentException e) {
+      }
+      nextHeader=cl;
+    }
+ else     if (!(nextHeader instanceof CallID) && !(nextHeader instanceof MaxForwards)) {
+      continue;
+    }
+    try {
+      newRequest.attachHeader(nextHeader,false);
+    }
+ catch (    SIPDuplicateHeaderException e) {
+      e.printStackTrace();
+    }
+  }
+  if (MessageFactoryImpl.getDefaultUserAgentHeader() != null) {
+    newRequest.setHeader(MessageFactoryImpl.getDefaultUserAgentHeader());
+  }
+  return newRequest;
+}

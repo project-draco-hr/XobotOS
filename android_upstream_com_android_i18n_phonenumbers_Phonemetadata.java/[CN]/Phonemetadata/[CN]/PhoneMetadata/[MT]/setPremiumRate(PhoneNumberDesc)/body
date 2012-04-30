@@ -1,0 +1,8 @@
+{
+  if (value == null) {
+    throw new NullPointerException();
+  }
+  hasPremiumRate=true;
+  premiumRate_=value;
+  return this;
+}

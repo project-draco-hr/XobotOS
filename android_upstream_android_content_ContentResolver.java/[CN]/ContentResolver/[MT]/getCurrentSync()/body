@@ -1,0 +1,12 @@
+{
+  try {
+    final List<SyncInfo> syncs=getContentService().getCurrentSyncs();
+    if (syncs.isEmpty()) {
+      return null;
+    }
+    return syncs.get(0);
+  }
+ catch (  RemoteException e) {
+    throw new RuntimeException("the ContentService should always be reachable",e);
+  }
+}

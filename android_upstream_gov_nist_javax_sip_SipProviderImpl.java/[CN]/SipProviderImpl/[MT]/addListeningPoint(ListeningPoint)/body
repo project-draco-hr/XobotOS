@@ -1,0 +1,15 @@
+{
+  ListeningPointImpl lp=(ListeningPointImpl)listeningPoint;
+  if (lp.sipProvider != null && lp.sipProvider != this)   throw new ObjectInUseException("Listening point assigned to another provider");
+  String transport=lp.getTransport().toUpperCase();
+  if (this.listeningPoints.isEmpty()) {
+    this.address=listeningPoint.getIPAddress();
+    this.port=listeningPoint.getPort();
+  }
+ else {
+    if ((!this.address.equals(listeningPoint.getIPAddress())) || this.port != listeningPoint.getPort())     throw new ObjectInUseException("Provider already has different IP Address associated");
+  }
+  if (this.listeningPoints.containsKey(transport) && this.listeningPoints.get(transport) != listeningPoint)   throw new ObjectInUseException("Listening point already assigned for transport!");
+  lp.sipProvider=this;
+  this.listeningPoints.put(transport,lp);
+}

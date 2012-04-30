@@ -1,0 +1,15 @@
+{
+  super(computeNativeType(info),computeManagedType(info,flags),name,managedName,flags);
+  this._elementInfo=info;
+  if (info.isClass()) {
+    AbstractNativeTypeBuilder builder=info.getTypeBuilder();
+    if (builder instanceof HelperClassBuilder) {
+      _elementHelper=(HelperClassBuilder)builder;
+      if (_elementHelper.isByRef())       getFlags().add(Flags.BYREF);
+    }
+ else {
+      _elementHelper=null;
+    }
+  }
+ else   _elementHelper=null;
+}

@@ -1,0 +1,3 @@
+{
+  forkedClientTransactionTable.remove(clientTransaction.getTransactionId());
+}

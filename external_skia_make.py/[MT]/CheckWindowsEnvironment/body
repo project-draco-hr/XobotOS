@@ -1,0 +1,20 @@
+def CheckWindowsEnvironment():
+    'For Windows: check environment variables needed for command-line build.\n\n    If those environment variables are missing, try to set them.\n    If environment variables can be set up, this function returns; otherwise,\n    it displays an error message and exits.\n    '
+    try:
+        env_DevEnvDir = os.environ['DevEnvDir']
+        return
+    except KeyError:
+        pass
+    print '\nCould not find Visual Studio environment variables.\nPerhaps you have not yet run vcvars32.bat as described at\nhttp://msdn.microsoft.com/en-us/library/f2ccy3wt.aspx ?'
+    found_path = None
+    try:
+        possible_path = os.path.abspath(os.path.join(os.environ['VS100COMNTOOLS'], os.path.pardir, os.path.pardir, 'VC', 'bin', 'vcvars32.bat'))
+        if os.path.exists(possible_path):
+            found_path = possible_path
+    except KeyError:
+        pass
+    if found_path:
+        print ('\nIt looks like you can run that script at:\n%s' % found_path)
+    else:
+        print '\nUnable to find vcvars32.bat on your system.'
+    sys.exit(1)

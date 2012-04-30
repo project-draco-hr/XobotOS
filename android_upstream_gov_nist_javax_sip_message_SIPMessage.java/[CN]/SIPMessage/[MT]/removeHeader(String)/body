@@ -1,0 +1,29 @@
+{
+  if (headerName == null)   throw new NullPointerException("null arg");
+  String headerNameLowerCase=SIPHeaderNamesCache.toLowerCase(headerName);
+  SIPHeader removed=(SIPHeader)nameTable.remove(headerNameLowerCase);
+  if (removed == null)   return;
+  if (removed instanceof From) {
+    this.fromHeader=null;
+  }
+ else   if (removed instanceof To) {
+    this.toHeader=null;
+  }
+ else   if (removed instanceof CSeq) {
+    this.cSeqHeader=null;
+  }
+ else   if (removed instanceof CallID) {
+    this.callIdHeader=null;
+  }
+ else   if (removed instanceof MaxForwards) {
+    this.maxForwardsHeader=null;
+  }
+ else   if (removed instanceof ContentLength) {
+    this.contentLengthHeader=null;
+  }
+  Iterator<SIPHeader> li=this.headers.iterator();
+  while (li.hasNext()) {
+    SIPHeader sipHeader=(SIPHeader)li.next();
+    if (sipHeader.getName().equalsIgnoreCase(headerNameLowerCase))     li.remove();
+  }
+}

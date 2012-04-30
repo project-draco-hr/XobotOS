@@ -1,0 +1,17 @@
+def start(self, program=None, interpreter=None, arguments=None, universal_newlines=None, **kw):
+    '\n        Starts a program or script for the test environment.\n\n        The specified program will have the original directory\n        prepended unless it is enclosed in a [list].\n        '
+    cmd = self.command_args(program, interpreter, arguments)
+    cmd_string = string.join(map(self.escape, cmd), ' ')
+    if self.verbose:
+        sys.stderr.write((cmd_string + '\n'))
+    if (universal_newlines is None):
+        universal_newlines = self.universal_newlines
+    stdin = kw.get('stdin', None)
+    if (stdin is not None):
+        stdin = subprocess.PIPE
+    combine = kw.get('combine', self.combine)
+    if combine:
+        stderr_value = subprocess.STDOUT
+    else:
+        stderr_value = subprocess.PIPE
+    return Popen(cmd, stdin=stdin, stdout=subprocess.PIPE, stderr=stderr_value, universal_newlines=universal_newlines)

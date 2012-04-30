@@ -1,0 +1,15 @@
+{
+  Thread thread=new Thread(this);
+  thread.setName("TLSMessageProcessorThread");
+  thread.setPriority(Thread.MAX_PRIORITY);
+  thread.setDaemon(true);
+  this.sock=sipStack.getNetworkLayer().createSSLServerSocket(this.getPort(),0,this.getIpAddress());
+  ((SSLServerSocket)this.sock).setNeedClientAuth(false);
+  ((SSLServerSocket)this.sock).setUseClientMode(false);
+  ((SSLServerSocket)this.sock).setWantClientAuth(true);
+  String[] enabledCiphers=((SipStackImpl)sipStack).getEnabledCipherSuites();
+  ((SSLServerSocket)this.sock).setEnabledCipherSuites(enabledCiphers);
+  ((SSLServerSocket)this.sock).setWantClientAuth(true);
+  this.isRunning=true;
+  thread.start();
+}

@@ -1,0 +1,5 @@
+{
+  RequestLine retval=(RequestLine)super.clone();
+  if (this.uri != null)   retval.uri=(GenericURI)this.uri.clone();
+  return retval;
+}

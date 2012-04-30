@@ -1,0 +1,12 @@
+{
+  if (policies == null) {
+    this.policies=null;
+    return;
+  }
+  HashSet<String> pols=new HashSet<String>(policies.size());
+  for (  String certPolicyId : policies) {
+    checkOID(certPolicyId);
+    pols.add(certPolicyId);
+  }
+  this.policies=Collections.unmodifiableSet(pols);
+}

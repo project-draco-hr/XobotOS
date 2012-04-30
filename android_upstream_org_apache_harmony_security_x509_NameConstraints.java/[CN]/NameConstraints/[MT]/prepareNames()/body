@@ -1,0 +1,24 @@
+{
+  permitted_names=new ArrayList[9];
+  if (permittedSubtrees != null) {
+    for (    GeneralSubtree generalSubtree : permittedSubtrees.getSubtrees()) {
+      GeneralName name=generalSubtree.getBase();
+      int tag=name.getTag();
+      if (permitted_names[tag] == null) {
+        permitted_names[tag]=new ArrayList<GeneralName>();
+      }
+      permitted_names[tag].add(name);
+    }
+  }
+  excluded_names=new ArrayList[9];
+  if (excludedSubtrees != null) {
+    for (    GeneralSubtree generalSubtree : excludedSubtrees.getSubtrees()) {
+      GeneralName name=generalSubtree.getBase();
+      int tag=name.getTag();
+      if (excluded_names[tag] == null) {
+        excluded_names[tag]=new ArrayList<GeneralName>();
+      }
+      excluded_names[tag].add(name);
+    }
+  }
+}

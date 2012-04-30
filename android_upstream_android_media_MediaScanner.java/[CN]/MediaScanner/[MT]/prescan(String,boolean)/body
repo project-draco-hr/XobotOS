@@ -1,0 +1,56 @@
+{
+  Cursor c=null;
+  String where=null;
+  String[] selectionArgs=null;
+  if (mFileCache == null) {
+    mFileCache=new HashMap<String,FileCacheEntry>();
+  }
+ else {
+    mFileCache.clear();
+  }
+  if (mPlayLists == null) {
+    mPlayLists=new ArrayList<FileCacheEntry>();
+  }
+ else {
+    mPlayLists.clear();
+  }
+  if (filePath != null) {
+    where=Files.FileColumns.DATA + "=?";
+    selectionArgs=new String[]{filePath};
+  }
+  try {
+    if (prescanFiles) {
+      c=mMediaProvider.query(mFilesUri,FILES_PRESCAN_PROJECTION,where,selectionArgs,null);
+      if (c != null) {
+        mWasEmptyPriorToScan=c.getCount() == 0;
+        while (c.moveToNext()) {
+          long rowId=c.getLong(FILES_PRESCAN_ID_COLUMN_INDEX);
+          String path=c.getString(FILES_PRESCAN_PATH_COLUMN_INDEX);
+          int format=c.getInt(FILES_PRESCAN_FORMAT_COLUMN_INDEX);
+          long lastModified=c.getLong(FILES_PRESCAN_DATE_MODIFIED_COLUMN_INDEX);
+          if (path != null && path.startsWith("/")) {
+            String key=path;
+            if (mCaseInsensitivePaths) {
+              key=path.toLowerCase();
+            }
+            FileCacheEntry entry=new FileCacheEntry(rowId,path,lastModified,format);
+            mFileCache.put(key,entry);
+          }
+        }
+        c.close();
+        c=null;
+      }
+    }
+  }
+  finally {
+    if (c != null) {
+      c.close();
+    }
+  }
+  mOriginalCount=0;
+  c=mMediaProvider.query(mImagesUri,ID_PROJECTION,null,null,null);
+  if (c != null) {
+    mOriginalCount=c.getCount();
+    c.close();
+  }
+}

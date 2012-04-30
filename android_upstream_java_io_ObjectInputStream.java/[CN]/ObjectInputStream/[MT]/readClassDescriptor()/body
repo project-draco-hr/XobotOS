@@ -1,0 +1,16 @@
+{
+  ObjectStreamClass newClassDesc=new ObjectStreamClass();
+  String name=input.readUTF();
+  if (name.length() == 0) {
+    throw new IOException("The stream is corrupted");
+  }
+  newClassDesc.setName(name);
+  newClassDesc.setSerialVersionUID(input.readLong());
+  newClassDesc.setFlags(input.readByte());
+  if (descriptorHandle == -1) {
+    descriptorHandle=nextHandle();
+  }
+  registerObjectRead(newClassDesc,descriptorHandle,false);
+  readFieldDescriptors(newClassDesc);
+  return newClassDesc;
+}

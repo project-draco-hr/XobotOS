@@ -1,0 +1,12 @@
+{
+  PipedReader reader=destination;
+  if (isClosed) {
+    throw new IOException("Pipe is closed");
+  }
+  if (reader == null) {
+    return;
+  }
+synchronized (reader) {
+    reader.notifyAll();
+  }
+}

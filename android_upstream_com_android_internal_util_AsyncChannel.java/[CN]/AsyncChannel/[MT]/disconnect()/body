@@ -1,0 +1,8 @@
+{
+  if ((mConnection != null) && (mSrcContext != null)) {
+    mSrcContext.unbindService(mConnection);
+  }
+  if (mSrcHandler != null) {
+    replyDisconnected(STATUS_SUCCESSFUL);
+  }
+}

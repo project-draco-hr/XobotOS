@@ -1,0 +1,10 @@
+{
+  final boolean changed=super.setFrame(left,top,right,bottom);
+  if (changed) {
+    final boolean visible=getWindowVisibility() == View.VISIBLE;
+    if (mFiltered && visible && mPopup != null && mPopup.isShowing()) {
+      positionPopup();
+    }
+  }
+  return changed;
+}

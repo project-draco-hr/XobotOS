@@ -1,0 +1,6 @@
+{
+  if (mContentType != null) {
+    headers.setContentType("text/html");
+  }
+  headers.setCacheControl("no-store, no-cache");
+}

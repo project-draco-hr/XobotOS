@@ -1,0 +1,4 @@
+{
+  if (etag_cdata(buff,offset,length))   return;
+  etag_basic(buff,offset,length);
+}

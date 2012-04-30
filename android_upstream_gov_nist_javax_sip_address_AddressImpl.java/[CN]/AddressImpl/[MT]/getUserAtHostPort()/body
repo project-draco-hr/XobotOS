@@ -1,0 +1,7 @@
+{
+  if (address instanceof SipUri) {
+    SipUri uri=(SipUri)address;
+    return uri.getUserAtHostPort();
+  }
+ else   return address.toString();
+}

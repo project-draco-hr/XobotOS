@@ -1,0 +1,25 @@
+{
+  pos++;
+  beg=pos;
+  end=beg;
+  while (true) {
+    if (pos == chars.length) {
+      throw new IOException("Invalid distinguished name string");
+    }
+    if (chars[pos] == '"') {
+      pos++;
+      break;
+    }
+ else     if (chars[pos] == '\\') {
+      chars[end]=getEscaped();
+    }
+ else {
+      chars[end]=chars[pos];
+    }
+    pos++;
+    end++;
+  }
+  for (; pos < chars.length && chars[pos] == ' '; pos++) {
+  }
+  return new String(chars,beg,end - beg);
+}

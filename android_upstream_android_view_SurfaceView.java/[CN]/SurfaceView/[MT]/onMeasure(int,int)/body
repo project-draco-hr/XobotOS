@@ -1,0 +1,5 @@
+{
+  int width=mRequestedWidth >= 0 ? resolveSizeAndState(mRequestedWidth,widthMeasureSpec,0) : getDefaultSize(0,widthMeasureSpec);
+  int height=mRequestedHeight >= 0 ? resolveSizeAndState(mRequestedHeight,heightMeasureSpec,0) : getDefaultSize(0,heightMeasureSpec);
+  setMeasuredDimension(width,height);
+}

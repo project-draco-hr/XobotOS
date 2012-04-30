@@ -1,0 +1,50 @@
+{
+  for (  ObjectStreamField fieldDesc : classDesc.fields()) {
+    try {
+      Class<?> type=fieldDesc.getTypeInternal();
+      Field field=classDesc.getReflectionField(fieldDesc);
+      if (field == null) {
+        throw new InvalidClassException(classDesc.getName() + " doesn't have a field " + fieldDesc.getName()+ " of type "+ type);
+      }
+      if (type == byte.class) {
+        output.writeByte(field.getByte(obj));
+      }
+ else       if (type == char.class) {
+        output.writeChar(field.getChar(obj));
+      }
+ else       if (type == double.class) {
+        output.writeDouble(field.getDouble(obj));
+      }
+ else       if (type == float.class) {
+        output.writeFloat(field.getFloat(obj));
+      }
+ else       if (type == int.class) {
+        output.writeInt(field.getInt(obj));
+      }
+ else       if (type == long.class) {
+        output.writeLong(field.getLong(obj));
+      }
+ else       if (type == short.class) {
+        output.writeShort(field.getShort(obj));
+      }
+ else       if (type == boolean.class) {
+        output.writeBoolean(field.getBoolean(obj));
+      }
+ else {
+        Object objField=field.get(obj);
+        if (fieldDesc.isUnshared()) {
+          writeUnshared(objField);
+        }
+ else {
+          writeObject(objField);
+        }
+      }
+    }
+ catch (    IllegalAccessException iae) {
+      throw new AssertionError(iae);
+    }
+catch (    NoSuchFieldError nsf) {
+      throw new InvalidClassException(classDesc.getName());
+    }
+  }
+}

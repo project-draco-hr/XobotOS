@@ -1,0 +1,5 @@
+{
+  final CSTypeReferenceExpression propertyType=isGetter(node) ? mappedReturnType(node) : mappedTypeReference(lastParameter(node).getType());
+  CSProperty p=new CSProperty(propName,propertyType);
+  return p;
+}

@@ -1,0 +1,32 @@
+{
+  if (succeeded) {
+    if (format == MtpConstants.FORMAT_ABSTRACT_AV_PLAYLIST) {
+      String name=path;
+      int lastSlash=name.lastIndexOf('/');
+      if (lastSlash >= 0) {
+        name=name.substring(lastSlash + 1);
+      }
+      if (name.endsWith(".pla")) {
+        name=name.substring(0,name.length() - 4);
+      }
+      ContentValues values=new ContentValues(1);
+      values.put(Audio.Playlists.DATA,path);
+      values.put(Audio.Playlists.NAME,name);
+      values.put(Files.FileColumns.FORMAT,format);
+      values.put(Files.FileColumns.DATE_MODIFIED,System.currentTimeMillis() / 1000);
+      values.put(MediaColumns.MEDIA_SCANNER_NEW_OBJECT_ID,handle);
+      try {
+        Uri uri=mMediaProvider.insert(Audio.Playlists.EXTERNAL_CONTENT_URI,values);
+      }
+ catch (      RemoteException e) {
+        Log.e(TAG,"RemoteException in endSendObject",e);
+      }
+    }
+ else {
+      mMediaScanner.scanMtpFile(path,mVolumeName,handle,format);
+    }
+  }
+ else {
+    deleteFile(handle);
+  }
+}

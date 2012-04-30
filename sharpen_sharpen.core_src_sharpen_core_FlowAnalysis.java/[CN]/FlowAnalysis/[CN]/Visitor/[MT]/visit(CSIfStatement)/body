@@ -1,0 +1,6 @@
+{
+  boolean reachable=false;
+  if (node.trueBlock() != null)   reachable|=run(node.trueBlock());
+  if (node.falseBlock() != null)   reachable|=run(node.falseBlock());
+  if (!reachable)   setUnreachable();
+}

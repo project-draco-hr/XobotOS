@@ -1,0 +1,8 @@
+{
+  try {
+    return builderFactory().newDocumentBuilder().parse(uri);
+  }
+ catch (  Exception e) {
+    throw new RuntimeException(e);
+  }
+}

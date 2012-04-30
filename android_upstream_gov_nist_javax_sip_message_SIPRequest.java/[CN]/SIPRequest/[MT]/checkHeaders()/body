@@ -1,0 +1,46 @@
+{
+  String prefix="Missing a required header : ";
+  if (getCSeq() == null) {
+    throw new ParseException(prefix + CSeqHeader.NAME,0);
+  }
+  if (getTo() == null) {
+    throw new ParseException(prefix + ToHeader.NAME,0);
+  }
+  if (this.callIdHeader == null || this.callIdHeader.getCallId() == null || callIdHeader.getCallId().equals("")) {
+    throw new ParseException(prefix + CallIdHeader.NAME,0);
+  }
+  if (getFrom() == null) {
+    throw new ParseException(prefix + FromHeader.NAME,0);
+  }
+  if (getViaHeaders() == null) {
+    throw new ParseException(prefix + ViaHeader.NAME,0);
+  }
+  if (getTopmostVia() == null)   throw new ParseException("No via header in request! ",0);
+  if (getMethod().equals(Request.NOTIFY)) {
+    if (getHeader(SubscriptionStateHeader.NAME) == null)     throw new ParseException(prefix + SubscriptionStateHeader.NAME,0);
+    if (getHeader(EventHeader.NAME) == null)     throw new ParseException(prefix + EventHeader.NAME,0);
+  }
+ else   if (getMethod().equals(Request.PUBLISH)) {
+    if (getHeader(EventHeader.NAME) == null)     throw new ParseException(prefix + EventHeader.NAME,0);
+  }
+  if (requestLine.getMethod().equals(Request.INVITE) || requestLine.getMethod().equals(Request.SUBSCRIBE) || requestLine.getMethod().equals(Request.REFER)) {
+    if (this.getContactHeader() == null) {
+      if (this.getToTag() == null)       throw new ParseException(prefix + ContactHeader.NAME,0);
+    }
+    if (requestLine.getUri() instanceof SipUri) {
+      String scheme=((SipUri)requestLine.getUri()).getScheme();
+      if ("sips".equalsIgnoreCase(scheme)) {
+        SipUri sipUri=(SipUri)this.getContactHeader().getAddress().getURI();
+        if (!sipUri.getScheme().equals("sips")) {
+          throw new ParseException("Scheme for contact should be sips:" + sipUri,0);
+        }
+      }
+    }
+  }
+  if (this.getContactHeader() == null && (this.getMethod().equals(Request.INVITE) || this.getMethod().equals(Request.REFER) || this.getMethod().equals(Request.SUBSCRIBE))) {
+    throw new ParseException("Contact Header is Mandatory for a SIP INVITE",0);
+  }
+  if (requestLine != null && requestLine.getMethod() != null && getCSeq().getMethod() != null && requestLine.getMethod().compareTo(getCSeq().getMethod()) != 0) {
+    throw new ParseException("CSEQ method mismatch with  Request-Line ",0);
+  }
+}

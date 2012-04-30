@@ -1,0 +1,4 @@
+{
+  enforceNotSealed();
+  mConnection=connection;
+}

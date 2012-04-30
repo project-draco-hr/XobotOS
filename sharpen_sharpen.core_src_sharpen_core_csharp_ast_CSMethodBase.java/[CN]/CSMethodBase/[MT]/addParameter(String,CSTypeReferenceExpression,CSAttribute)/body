@@ -1,0 +1,8 @@
+{
+  CSParameterDeclaration param=new CSParameterDeclaration(name,type);
+  if (attrs != null) {
+    for (    CSAttribute attr : attrs)     param.addAttribute(attr);
+  }
+  _parameters.add(param);
+  return param;
+}

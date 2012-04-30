@@ -1,0 +1,5 @@
+{
+  IVariableBinding binding=variableBinding(node);
+  if (binding == null)   return node.toString();
+  return BindingUtils.qualifiedName(binding);
+}

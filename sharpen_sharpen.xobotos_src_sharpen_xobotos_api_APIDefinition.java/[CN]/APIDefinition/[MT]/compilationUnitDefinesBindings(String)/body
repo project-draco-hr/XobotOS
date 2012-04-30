@@ -1,0 +1,21 @@
+{
+  final ByRef<Boolean> result=new ByRef<Boolean>(false);
+  TemplateVisitor visitor=new TemplateVisitor(){
+    @Override public void accept(    AbstractTemplate template){
+      if (template instanceof IBindingProvider) {
+        IBindingProvider provider=(IBindingProvider)template;
+        if (provider.getBinding() != null)         result.value=true;
+      }
+      if (template instanceof TypeTemplate) {
+        TypeTemplate type=(TypeTemplate)template;
+        if (type.getNativeType() != null)         result.value=true;
+ else         if (type.getNativeStruct() != null)         result.value=true;
+      }
+    }
+  }
+;
+  for (  final NamespaceTemplate def : getNamespaces()) {
+    def.visit(visitor,unitName,VisitMode.All);
+  }
+  return result.value;
+}

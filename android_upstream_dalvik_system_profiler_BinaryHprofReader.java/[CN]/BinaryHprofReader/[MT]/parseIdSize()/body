@@ -1,0 +1,9 @@
+{
+  int idSize=in.readInt();
+  if (TRACE) {
+    System.out.println("\tidSize=" + idSize);
+  }
+  if (idSize != BinaryHprof.ID_SIZE) {
+    throw new MalformedHprofException("Unsupported identifier size: " + idSize);
+  }
+}

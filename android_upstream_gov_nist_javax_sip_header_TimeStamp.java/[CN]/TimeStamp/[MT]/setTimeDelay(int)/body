@@ -1,0 +1,5 @@
+{
+  if (delay < -1)   throw new InvalidArgumentException("Value out of range " + delay);
+  this.delay=delay;
+  this.delayFloat=-1;
+}

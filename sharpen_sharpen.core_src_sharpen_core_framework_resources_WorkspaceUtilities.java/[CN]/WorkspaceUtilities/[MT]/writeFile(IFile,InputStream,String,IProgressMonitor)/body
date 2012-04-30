@@ -1,0 +1,9 @@
+{
+  if (!file.exists()) {
+    file.create(contents,true,monitor);
+  }
+ else {
+    file.setContents(contents,true,true,monitor);
+  }
+  file.setCharset(charset,monitor);
+}

@@ -1,0 +1,8 @@
+{
+  final String className=defaultImplementationFor(service);
+  final Object binding=createInstance(className);
+  if (null == binding) {
+    throw new IllegalArgumentException("Cant find default implementation for " + service.toString() + ": "+ className);
+  }
+  return service.cast(binding);
+}

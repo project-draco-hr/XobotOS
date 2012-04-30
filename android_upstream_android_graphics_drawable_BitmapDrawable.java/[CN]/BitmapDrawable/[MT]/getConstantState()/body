@@ -1,0 +1,4 @@
+{
+  mBitmapState.mChangingConfigurations=getChangingConfigurations();
+  return mBitmapState;
+}

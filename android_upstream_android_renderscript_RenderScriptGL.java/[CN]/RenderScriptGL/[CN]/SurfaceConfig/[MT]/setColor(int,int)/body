@@ -1,0 +1,5 @@
+{
+  validateRange(minimum,preferred,5,8);
+  mColorMin=minimum;
+  mColorPref=preferred;
+}

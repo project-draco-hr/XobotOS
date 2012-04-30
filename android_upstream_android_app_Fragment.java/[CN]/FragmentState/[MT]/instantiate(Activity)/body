@@ -1,0 +1,23 @@
+{
+  if (mInstance != null) {
+    return mInstance;
+  }
+  if (mArguments != null) {
+    mArguments.setClassLoader(activity.getClassLoader());
+  }
+  mInstance=Fragment.instantiate(activity,mClassName,mArguments);
+  if (mSavedFragmentState != null) {
+    mSavedFragmentState.setClassLoader(activity.getClassLoader());
+    mInstance.mSavedFragmentState=mSavedFragmentState;
+  }
+  mInstance.setIndex(mIndex);
+  mInstance.mFromLayout=mFromLayout;
+  mInstance.mRestored=true;
+  mInstance.mFragmentId=mFragmentId;
+  mInstance.mContainerId=mContainerId;
+  mInstance.mTag=mTag;
+  mInstance.mRetainInstance=mRetainInstance;
+  mInstance.mDetached=mDetached;
+  mInstance.mFragmentManager=activity.mFragments;
+  return mInstance;
+}

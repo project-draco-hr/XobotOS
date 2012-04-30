@@ -1,0 +1,3 @@
+{
+  return _type != null ? _type : TypeTemplate.DEFAULT;
+}

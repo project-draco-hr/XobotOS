@@ -1,0 +1,92 @@
+{
+  final ITypeBinding typeBinding=node.resolveBinding();
+  final CSTypeContainer current=getCurrentType(typeBinding);
+  final String typeName=typeName(node);
+  my(CSharpDriver.class).processTypeDeclaration(this,current,node,new ITypeBuilderDelegate(){
+    public CSTypeDeclaration create(){
+      return new CSClass(typeName,CSClassModifier.Static);
+    }
+    public void map(    CSTypeDeclaration raw){
+      raw.visibility(mapVisibility(typeBinding));
+    }
+    public void mapMembers(    CSTypeDeclaration raw,    final IMemberFilter filter){
+      CSharpBuilder.this.mapMembers(node,raw,new IMemberFilter(){
+        public boolean includeMember(        ASTNode member){
+          if ((filter != null) && !filter.includeMember(member))           return false;
+          if (member instanceof TypeDeclaration) {
+            TypeDeclaration tdecl=(TypeDeclaration)member;
+            ITypeBinding binding=tdecl.resolveBinding();
+            return extractIntoRawType(binding);
+          }
+ else           if (member instanceof EnumDeclaration) {
+            return true;
+          }
+ else           if (member instanceof FieldDeclaration) {
+            FieldDeclaration fdecl=(FieldDeclaration)member;
+            if (fdecl.fragments().size() != 1)             return false;
+            VariableDeclarationFragment fragment=(VariableDeclarationFragment)fdecl.fragments().get(0);
+            return isConstField(fdecl,fragment);
+          }
+          return false;
+        }
+      }
+);
+    }
+    public void document(    CSTypeDeclaration raw){
+      CSharpBuilder.this.mapDocumentation(node,raw);
+    }
+    public void fixup(    CSTypeDeclaration raw){
+      for (      CSMember member : raw.members()) {
+        if (member.visibility() != CSVisibility.Public)         member.visibility(CSVisibility.Internal);
+      }
+    }
+  }
+);
+  CSTypeDeclaration type=my(CSharpDriver.class).processTypeDeclaration(this,current,node,new CSharpDriver.ITypeBuilderDelegate(){
+    public CSTypeDeclaration create(){
+      CSTypeDeclaration type=typeDeclarationFor(node);
+      type.startPosition(node.getStartPosition());
+      type.sourceLength(node.getLength());
+      mapTypeParameters(node.typeParameters(),type);
+      return type;
+    }
+    public void map(    CSTypeDeclaration type){
+      mapSuperTypes(node,type);
+      type.visibility(mapVisibility(typeBinding));
+    }
+    public void mapMembers(    CSTypeDeclaration type,    final IMemberFilter filter){
+      CSharpBuilder.this.mapMembers(node,type,new IMemberFilter(){
+        public boolean includeMember(        ASTNode member){
+          if ((filter != null) && !filter.includeMember(member))           return false;
+          if (member instanceof TypeDeclaration) {
+            TypeDeclaration tdecl=(TypeDeclaration)member;
+            ITypeBinding binding=tdecl.resolveBinding();
+            return !extractIntoRawType(binding);
+          }
+ else           if (member instanceof EnumDeclaration) {
+            return false;
+          }
+ else           if (member instanceof FieldDeclaration) {
+            FieldDeclaration fdecl=(FieldDeclaration)member;
+            if (fdecl.fragments().size() != 1)             return true;
+            VariableDeclarationFragment fragment=(VariableDeclarationFragment)fdecl.fragments().get(0);
+            return !isConstField(fdecl,fragment);
+          }
+          return true;
+        }
+      }
+);
+    }
+    public void document(    CSTypeDeclaration type){
+      CSharpBuilder.this.mapDocumentation(node,type);
+      processConversionJavadocTags(node,type);
+    }
+    public void fixup(    CSTypeDeclaration type){
+      adjustMemberVisibility(node,type);
+      autoImplementCloneable(node,type);
+      moveInitializersDependingOnThisReferenceToConstructor(type);
+    }
+  }
+);
+  return type;
+}

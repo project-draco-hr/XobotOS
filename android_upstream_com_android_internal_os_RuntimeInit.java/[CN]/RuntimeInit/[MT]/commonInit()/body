@@ -1,0 +1,27 @@
+{
+  if (DEBUG)   Slog.d(TAG,"Entered RuntimeInit!");
+  Thread.setDefaultUncaughtExceptionHandler(new UncaughtHandler());
+  int hasQwerty=getQwertyKeyboard();
+  if (DEBUG)   Slog.d(TAG,">>>>> qwerty keyboard = " + hasQwerty);
+  if (hasQwerty == 1) {
+    System.setProperty("qwerty","1");
+  }
+  TimezoneGetter.setInstance(new TimezoneGetter(){
+    @Override public String getId(){
+      return SystemProperties.get("persist.sys.timezone");
+    }
+  }
+);
+  TimeZone.setDefault(null);
+  LogManager.getLogManager().reset();
+  new AndroidConfig();
+  String userAgent=getDefaultUserAgent();
+  System.setProperty("http.agent",userAgent);
+  NetworkManagementSocketTagger.install();
+  String trace=SystemProperties.get("ro.kernel.android.tracing");
+  if (trace.equals("1")) {
+    Slog.i(TAG,"NOTE: emulator trace profiling enabled");
+    Debug.enableEmulatorTraceOutput();
+  }
+  initialized=true;
+}

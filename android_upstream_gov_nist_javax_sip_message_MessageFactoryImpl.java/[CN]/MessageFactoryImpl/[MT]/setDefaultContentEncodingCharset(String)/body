@@ -1,0 +1,4 @@
+{
+  if (charset == null)   throw new NullPointerException("Null argument!");
+  MessageFactoryImpl.defaultContentEncodingCharset=charset;
+}

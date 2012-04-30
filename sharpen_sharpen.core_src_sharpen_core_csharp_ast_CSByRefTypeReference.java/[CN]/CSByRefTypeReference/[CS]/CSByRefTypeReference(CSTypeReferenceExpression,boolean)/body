@@ -1,0 +1,4 @@
+{
+  this._elementType=elementType;
+  this._is_out=is_out;
+}

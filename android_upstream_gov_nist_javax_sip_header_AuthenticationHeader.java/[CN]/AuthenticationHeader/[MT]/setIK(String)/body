@@ -1,0 +1,4 @@
+{
+  if (ik == null)   throw new NullPointerException("JAIN-SIP Exception, " + " AuthenticationHeader, setIk(), The auth-param IK parameter is null");
+  setParameter(IK,ik);
+}

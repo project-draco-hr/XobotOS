@@ -1,0 +1,14 @@
+{
+  sentProtocol.encode(buffer);
+  buffer.append(SP);
+  sentBy.encode(buffer);
+  if (!parameters.isEmpty()) {
+    buffer.append(SEMICOLON);
+    parameters.encode(buffer);
+  }
+  if (comment != null) {
+    buffer.append(SP).append(LPAREN).append(comment).append(RPAREN);
+  }
+  if (rPortFlag)   buffer.append(";rport");
+  return buffer;
+}

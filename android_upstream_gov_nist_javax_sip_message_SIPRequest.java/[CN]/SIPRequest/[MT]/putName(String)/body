@@ -1,0 +1,3 @@
+{
+  nameTable.put(name,name);
+}

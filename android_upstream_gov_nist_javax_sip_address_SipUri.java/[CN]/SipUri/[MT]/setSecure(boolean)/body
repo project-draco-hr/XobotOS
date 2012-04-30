@@ -1,0 +1,4 @@
+{
+  if (secure)   this.scheme=SIPS;
+ else   this.scheme=SIP;
+}

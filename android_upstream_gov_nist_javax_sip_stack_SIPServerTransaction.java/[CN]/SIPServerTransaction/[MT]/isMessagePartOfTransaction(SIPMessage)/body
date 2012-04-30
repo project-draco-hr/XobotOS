@@ -1,0 +1,44 @@
+{
+  ViaList viaHeaders;
+  Via topViaHeader;
+  String messageBranch;
+  boolean transactionMatches;
+  transactionMatches=false;
+  String method=messageToTest.getCSeq().getMethod();
+  if ((method.equals(Request.INVITE) || !isTerminated())) {
+    viaHeaders=messageToTest.getViaHeaders();
+    if (viaHeaders != null) {
+      topViaHeader=(Via)viaHeaders.getFirst();
+      messageBranch=topViaHeader.getBranch();
+      if (messageBranch != null) {
+        if (!messageBranch.toLowerCase().startsWith(SIPConstants.BRANCH_MAGIC_COOKIE_LOWER_CASE)) {
+          messageBranch=null;
+        }
+      }
+      if (messageBranch != null && this.getBranch() != null) {
+        if (method.equals(Request.CANCEL)) {
+          transactionMatches=this.getMethod().equals(Request.CANCEL) && getBranch().equalsIgnoreCase(messageBranch) && topViaHeader.getSentBy().equals(((Via)getOriginalRequest().getViaHeaders().getFirst()).getSentBy());
+        }
+ else {
+          transactionMatches=getBranch().equalsIgnoreCase(messageBranch) && topViaHeader.getSentBy().equals(((Via)getOriginalRequest().getViaHeaders().getFirst()).getSentBy());
+        }
+      }
+ else {
+        String originalFromTag=super.fromTag;
+        String thisFromTag=messageToTest.getFrom().getTag();
+        boolean skipFrom=(originalFromTag == null || thisFromTag == null);
+        String originalToTag=super.toTag;
+        String thisToTag=messageToTest.getTo().getTag();
+        boolean skipTo=(originalToTag == null || thisToTag == null);
+        boolean isResponse=(messageToTest instanceof SIPResponse);
+        if (messageToTest.getCSeq().getMethod().equalsIgnoreCase(Request.CANCEL) && !getOriginalRequest().getCSeq().getMethod().equalsIgnoreCase(Request.CANCEL)) {
+          transactionMatches=false;
+        }
+ else         if ((isResponse || getOriginalRequest().getRequestURI().equals(((SIPRequest)messageToTest).getRequestURI())) && (skipFrom || originalFromTag != null && originalFromTag.equalsIgnoreCase(thisFromTag)) && (skipTo || originalToTag != null && originalToTag.equalsIgnoreCase(thisToTag))&& getOriginalRequest().getCallId().getCallId().equalsIgnoreCase(messageToTest.getCallId().getCallId())&& getOriginalRequest().getCSeq().getSeqNumber() == messageToTest.getCSeq().getSeqNumber() && ((!messageToTest.getCSeq().getMethod().equals(Request.CANCEL)) || getOriginalRequest().getMethod().equals(messageToTest.getCSeq().getMethod())) && topViaHeader.equals(getOriginalRequest().getViaHeaders().getFirst())) {
+          transactionMatches=true;
+        }
+      }
+    }
+  }
+  return transactionMatches;
+}

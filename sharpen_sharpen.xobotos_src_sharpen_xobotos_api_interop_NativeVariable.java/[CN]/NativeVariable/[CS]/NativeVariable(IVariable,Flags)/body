@@ -1,0 +1,4 @@
+{
+  this._var=var;
+  this._flags=HelperClassBuilder.buildSet(Flags.class,flags);
+}

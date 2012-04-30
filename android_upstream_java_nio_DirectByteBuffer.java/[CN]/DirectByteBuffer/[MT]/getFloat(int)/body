@@ -1,0 +1,4 @@
+{
+  checkIndex(index,SizeOf.FLOAT);
+  return Float.intBitsToFloat(this.block.peekInt(offset + index,order));
+}

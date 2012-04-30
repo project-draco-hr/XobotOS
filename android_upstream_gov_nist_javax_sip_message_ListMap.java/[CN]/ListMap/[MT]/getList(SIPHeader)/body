@@ -1,0 +1,17 @@
+{
+  if (!initialized)   initializeListMap();
+  try {
+    Class<?> headerClass=sipHeader.getClass();
+    Class<?> listClass=headerListTable.get(headerClass);
+    SIPHeaderList<SIPHeader> shl=(SIPHeaderList<SIPHeader>)listClass.newInstance();
+    shl.setHeaderName(sipHeader.getName());
+    return shl;
+  }
+ catch (  InstantiationException ex) {
+    ex.printStackTrace();
+  }
+catch (  IllegalAccessException ex) {
+    ex.printStackTrace();
+  }
+  return null;
+}

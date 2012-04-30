@@ -1,0 +1,4 @@
+{
+  if (!initialized)   initializeListMap();
+  return (Class<?>)headerListTable.get(sipHdrClass);
+}

@@ -1,0 +1,32 @@
+{
+  if (!this.isServer()) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Dropping Prack -- not a server Dialog");
+    return false;
+  }
+  SIPServerTransaction sipServerTransaction=(SIPServerTransaction)this.getFirstTransaction();
+  SIPResponse sipResponse=sipServerTransaction.getReliableProvisionalResponse();
+  if (sipResponse == null) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Dropping Prack -- ReliableResponse not found");
+    return false;
+  }
+  RAck rack=(RAck)prackRequest.getHeader(RAckHeader.NAME);
+  if (rack == null) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Dropping Prack -- rack header not found");
+    return false;
+  }
+  CSeq cseq=(CSeq)sipResponse.getCSeq();
+  if (!rack.getMethod().equals(cseq.getMethod())) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Dropping Prack -- CSeq Header does not match PRACK");
+    return false;
+  }
+  if (rack.getCSeqNumberLong() != cseq.getSeqNumber()) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Dropping Prack -- CSeq Header does not match PRACK");
+    return false;
+  }
+  RSeq rseq=(RSeq)sipResponse.getHeader(RSeqHeader.NAME);
+  if (rack.getRSequenceNumber() != rseq.getSeqNumber()) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Dropping Prack -- RSeq Header does not match PRACK");
+    return false;
+  }
+  return sipServerTransaction.prackRecieved();
+}

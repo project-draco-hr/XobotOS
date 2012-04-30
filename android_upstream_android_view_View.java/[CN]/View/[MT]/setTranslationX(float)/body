@@ -1,0 +1,12 @@
+{
+  ensureTransformationInfo();
+  final TransformationInfo info=mTransformationInfo;
+  if (info.mTranslationX != translationX) {
+    invalidateParentCaches();
+    invalidate(false);
+    info.mTranslationX=translationX;
+    info.mMatrixDirty=true;
+    mPrivateFlags|=DRAWN;
+    invalidate(false);
+  }
+}

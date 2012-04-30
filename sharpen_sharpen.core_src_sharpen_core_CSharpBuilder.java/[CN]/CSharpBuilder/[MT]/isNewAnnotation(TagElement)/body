@@ -1,0 +1,3 @@
+{
+  return element.getTagName().equals(SharpenAnnotations.SHARPEN_NEW);
+}

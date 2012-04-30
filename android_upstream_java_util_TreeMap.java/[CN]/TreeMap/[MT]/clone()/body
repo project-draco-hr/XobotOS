@@ -1,0 +1,12 @@
+{
+  try {
+    @SuppressWarnings("unchecked") TreeMap<K,V> map=(TreeMap<K,V>)super.clone();
+    map.root=root != null ? root.copy(null) : null;
+    map.entrySet=null;
+    map.keySet=null;
+    return map;
+  }
+ catch (  CloneNotSupportedException e) {
+    throw new AssertionError();
+  }
+}

@@ -1,0 +1,35 @@
+{
+  byte[] clBuf;
+  try {
+    InputStream is=jf.getInputStream(entry);
+    clBuf=Streams.readFully(is);
+  }
+ catch (  IOException e) {
+    return null;
+  }
+  if (packageName != null) {
+    String packageDotName=packageName.replace('/','.');
+    Package packageObj=getPackage(packageDotName);
+    if (packageObj == null) {
+      if (manifest != null) {
+        definePackage(packageDotName,manifest,codeSourceUrl);
+      }
+ else {
+        definePackage(packageDotName,null,null,null,null,null,null,null);
+      }
+    }
+ else {
+      boolean exception=packageObj.isSealed();
+      if (manifest != null) {
+        if (isSealed(manifest,packageName + "/")) {
+          exception=!packageObj.isSealed(codeSourceUrl);
+        }
+      }
+      if (exception) {
+        throw new SecurityException(String.format("Package %s is sealed",packageName));
+      }
+    }
+  }
+  CodeSource codeS=new CodeSource(codeSourceUrl,entry.getCertificates());
+  return defineClass(origName,clBuf,0,clBuf.length,codeS);
+}

@@ -1,0 +1,5 @@
+{
+  if (isTextEditable() && isSuggestionsEnabled()) {
+    getSpellChecker().spellCheck(start,end);
+  }
+}

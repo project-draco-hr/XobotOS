@@ -1,0 +1,12 @@
+{
+  this.sipStack=(SipStackImpl)sipStack;
+  if (defaultRoute != null) {
+    try {
+      this.defaultRoute=(Hop)this.sipStack.getAddressResolver().resolveAddress((Hop)(new HopImpl(defaultRoute)));
+    }
+ catch (    IllegalArgumentException ex) {
+      ((SIPTransactionStack)sipStack).getStackLogger().logError("Invalid default route specification - need host:port/transport");
+      throw ex;
+    }
+  }
+}

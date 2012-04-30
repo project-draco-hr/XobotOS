@@ -1,0 +1,6 @@
+{
+  printPrecedingComments(node);
+  writeIndentation();
+  node.expression().accept(this);
+  writeLine(";");
+}

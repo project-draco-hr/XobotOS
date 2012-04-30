@@ -1,0 +1,8 @@
+{
+  try {
+    finalizer(native_instance);
+  }
+  finally {
+    super.finalize();
+  }
+}

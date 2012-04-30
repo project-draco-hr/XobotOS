@@ -1,0 +1,4 @@
+{
+  scratch[0]=(byte)(oneByte & 0xff);
+  write(scratch,0,1);
+}

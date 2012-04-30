@@ -1,0 +1,3 @@
+{
+  return CaseMapper.toLowerCase(locale,this,value,offset,count);
+}

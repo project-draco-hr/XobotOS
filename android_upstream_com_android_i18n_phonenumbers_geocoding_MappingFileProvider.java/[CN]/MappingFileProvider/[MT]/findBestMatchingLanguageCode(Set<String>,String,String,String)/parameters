@@ -1,0 +1,4 @@
+Set<String> setOfLangs
+String language
+String script
+String region

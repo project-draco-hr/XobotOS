@@ -1,0 +1,7 @@
+{
+  if (this.getSIPStack().isLoggingEnabled()) {
+    this.getSIPStack().getStackLogger().logDebug("setListeningPoint" + this + " listeningPoint = "+ lp);
+  }
+  if (lp.getPort() != this.getPort())   InternalErrorHandler.handleException("lp mismatch with provider",getSIPStack().getStackLogger());
+  this.listeningPoint=lp;
+}

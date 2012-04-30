@@ -1,0 +1,8 @@
+{
+  ListIterator<String> it=methods.listIterator();
+  while (it.hasNext()) {
+    AllowEvents allowEvents=new AllowEvents();
+    allowEvents.setEventType((String)it.next());
+    this.add(allowEvents);
+  }
+}

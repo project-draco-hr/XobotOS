@@ -1,0 +1,86 @@
+{
+  objectOutput.writeBoolean(hasGeneralDesc);
+  if (hasGeneralDesc) {
+    generalDesc_.writeExternal(objectOutput);
+  }
+  objectOutput.writeBoolean(hasFixedLine);
+  if (hasFixedLine) {
+    fixedLine_.writeExternal(objectOutput);
+  }
+  objectOutput.writeBoolean(hasMobile);
+  if (hasMobile) {
+    mobile_.writeExternal(objectOutput);
+  }
+  objectOutput.writeBoolean(hasTollFree);
+  if (hasTollFree) {
+    tollFree_.writeExternal(objectOutput);
+  }
+  objectOutput.writeBoolean(hasPremiumRate);
+  if (hasPremiumRate) {
+    premiumRate_.writeExternal(objectOutput);
+  }
+  objectOutput.writeBoolean(hasSharedCost);
+  if (hasSharedCost) {
+    sharedCost_.writeExternal(objectOutput);
+  }
+  objectOutput.writeBoolean(hasPersonalNumber);
+  if (hasPersonalNumber) {
+    personalNumber_.writeExternal(objectOutput);
+  }
+  objectOutput.writeBoolean(hasVoip);
+  if (hasVoip) {
+    voip_.writeExternal(objectOutput);
+  }
+  objectOutput.writeBoolean(hasPager);
+  if (hasPager) {
+    pager_.writeExternal(objectOutput);
+  }
+  objectOutput.writeBoolean(hasUan);
+  if (hasUan) {
+    uan_.writeExternal(objectOutput);
+  }
+  objectOutput.writeBoolean(hasNoInternationalDialling);
+  if (hasNoInternationalDialling) {
+    noInternationalDialling_.writeExternal(objectOutput);
+  }
+  objectOutput.writeUTF(id_);
+  objectOutput.writeInt(countryCode_);
+  objectOutput.writeUTF(internationalPrefix_);
+  objectOutput.writeBoolean(hasPreferredInternationalPrefix);
+  if (hasPreferredInternationalPrefix) {
+    objectOutput.writeUTF(preferredInternationalPrefix_);
+  }
+  objectOutput.writeBoolean(hasNationalPrefix);
+  if (hasNationalPrefix) {
+    objectOutput.writeUTF(nationalPrefix_);
+  }
+  objectOutput.writeBoolean(hasPreferredExtnPrefix);
+  if (hasPreferredExtnPrefix) {
+    objectOutput.writeUTF(preferredExtnPrefix_);
+  }
+  objectOutput.writeBoolean(hasNationalPrefixForParsing);
+  if (hasNationalPrefixForParsing) {
+    objectOutput.writeUTF(nationalPrefixForParsing_);
+  }
+  objectOutput.writeBoolean(hasNationalPrefixTransformRule);
+  if (hasNationalPrefixTransformRule) {
+    objectOutput.writeUTF(nationalPrefixTransformRule_);
+  }
+  objectOutput.writeBoolean(sameMobileAndFixedLinePattern_);
+  int numberFormatSize=numberFormatSize();
+  objectOutput.writeInt(numberFormatSize);
+  for (int i=0; i < numberFormatSize; i++) {
+    numberFormat_.get(i).writeExternal(objectOutput);
+  }
+  int intlNumberFormatSize=intlNumberFormatSize();
+  objectOutput.writeInt(intlNumberFormatSize);
+  for (int i=0; i < intlNumberFormatSize; i++) {
+    intlNumberFormat_.get(i).writeExternal(objectOutput);
+  }
+  objectOutput.writeBoolean(mainCountryForCode_);
+  objectOutput.writeBoolean(hasLeadingDigits);
+  if (hasLeadingDigits) {
+    objectOutput.writeUTF(leadingDigits_);
+  }
+  objectOutput.writeBoolean(leadingZeroPossible_);
+}

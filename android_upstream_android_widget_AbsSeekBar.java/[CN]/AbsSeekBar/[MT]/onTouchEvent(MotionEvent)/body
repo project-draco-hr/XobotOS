@@ -1,0 +1,59 @@
+{
+  if (!mIsUserSeekable || !isEnabled()) {
+    return false;
+  }
+switch (event.getAction()) {
+case MotionEvent.ACTION_DOWN:
+    if (isInScrollingContainer()) {
+      mTouchDownX=event.getX();
+    }
+ else {
+      setPressed(true);
+      if (mThumb != null) {
+        invalidate(mThumb.getBounds());
+      }
+      onStartTrackingTouch();
+      trackTouchEvent(event);
+      attemptClaimDrag();
+    }
+  break;
+case MotionEvent.ACTION_MOVE:
+if (mIsDragging) {
+  trackTouchEvent(event);
+}
+ else {
+  final float x=event.getX();
+  if (Math.abs(x - mTouchDownX) > mScaledTouchSlop) {
+    setPressed(true);
+    if (mThumb != null) {
+      invalidate(mThumb.getBounds());
+    }
+    onStartTrackingTouch();
+    trackTouchEvent(event);
+    attemptClaimDrag();
+  }
+}
+break;
+case MotionEvent.ACTION_UP:
+if (mIsDragging) {
+trackTouchEvent(event);
+onStopTrackingTouch();
+setPressed(false);
+}
+ else {
+onStartTrackingTouch();
+trackTouchEvent(event);
+onStopTrackingTouch();
+}
+invalidate();
+break;
+case MotionEvent.ACTION_CANCEL:
+if (mIsDragging) {
+onStopTrackingTouch();
+setPressed(false);
+}
+invalidate();
+break;
+}
+return true;
+}

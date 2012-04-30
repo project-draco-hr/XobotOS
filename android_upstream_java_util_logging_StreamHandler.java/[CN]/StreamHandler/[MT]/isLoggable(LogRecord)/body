@@ -1,0 +1,9 @@
+{
+  if (record == null) {
+    return false;
+  }
+  if (this.os != null && super.isLoggable(record)) {
+    return true;
+  }
+  return false;
+}

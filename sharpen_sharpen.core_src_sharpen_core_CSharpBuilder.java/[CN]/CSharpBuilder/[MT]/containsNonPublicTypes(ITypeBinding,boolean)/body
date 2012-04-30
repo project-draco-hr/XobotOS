@@ -1,0 +1,13 @@
+{
+  if (binding.isPrimitive())   return false;
+  if (binding.isTypeVariable())   return false;
+  if (binding.isWildcardType())   return false;
+  if (binding.isArray())   return containsNonPublicTypes(binding.getElementType(),privateOnly);
+  if (binding.isParameterizedType()) {
+    for (    final ITypeBinding tp : binding.getTypeArguments()) {
+      if (containsNonPublicTypes(tp,privateOnly))       return true;
+    }
+  }
+  if (privateOnly)   return Modifier.isPrivate(binding.getModifiers());
+ else   return !Modifier.isPublic(binding.getModifiers());
+}

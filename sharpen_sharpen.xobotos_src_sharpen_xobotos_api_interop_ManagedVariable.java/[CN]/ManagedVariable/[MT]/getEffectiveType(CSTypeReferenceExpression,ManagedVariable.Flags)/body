@@ -1,0 +1,5 @@
+{
+  if (flags == Flags.OUT)   return new CSByRefTypeReference(type,true);
+ else   if (flags == Flags.REF)   return new CSByRefTypeReference(type,false);
+ else   return type;
+}

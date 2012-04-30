@@ -1,0 +1,16 @@
+{
+  final int source=event.getSource();
+  if ((source & InputDevice.SOURCE_CLASS_POINTER) != 0) {
+    addPointerEvent(event);
+  }
+ else   if ((source & InputDevice.SOURCE_CLASS_JOYSTICK) != 0) {
+    logMotionEvent("Joystick",event);
+  }
+ else   if ((source & InputDevice.SOURCE_CLASS_POSITION) != 0) {
+    logMotionEvent("Position",event);
+  }
+ else {
+    logMotionEvent("Generic",event);
+  }
+  return true;
+}

@@ -1,0 +1,6 @@
+{
+  super(source);
+  mHost=host;
+  mPort=port;
+  mTransport=transport;
+}

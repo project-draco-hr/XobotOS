@@ -1,0 +1,6 @@
+{
+  super.onWindowVisibilityChanged(visibility);
+  mWindowVisibility=visibility == VISIBLE;
+  mRequestedVisible=mWindowVisibility && mViewVisibility;
+  updateWindow(false,false);
+}

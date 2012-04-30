@@ -1,0 +1,19 @@
+{
+  if (event == null) {
+    throw new NullPointerException("event == null");
+  }
+  ThreadEvent old=threadIdToThreadEvent.put(event.threadId,event);
+switch (event.type) {
+case START:
+    if (old != null) {
+      throw new IllegalArgumentException("ThreadEvent already registered for id " + event.threadId);
+    }
+  break;
+case END:
+if (old != null && old.type == ThreadEventType.END) {
+  throw new IllegalArgumentException("Duplicate ThreadEvent.end for id " + event.threadId);
+}
+break;
+}
+threadHistory.add(event);
+}

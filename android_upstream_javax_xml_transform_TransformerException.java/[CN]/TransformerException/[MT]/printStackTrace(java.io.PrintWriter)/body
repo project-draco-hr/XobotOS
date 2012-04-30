@@ -1,0 +1,14 @@
+{
+  if (s == null) {
+    s=new java.io.PrintWriter(System.err,true);
+  }
+  try {
+    String locInfo=getLocationAsString();
+    if (null != locInfo) {
+      s.println(locInfo);
+    }
+    super.printStackTrace(s);
+  }
+ catch (  Throwable e) {
+  }
+}

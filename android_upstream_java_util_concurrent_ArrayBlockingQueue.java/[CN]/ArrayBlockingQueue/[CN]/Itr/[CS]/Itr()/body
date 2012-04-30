@@ -1,0 +1,11 @@
+{
+  final ReentrantLock lock=ArrayBlockingQueue.this.lock;
+  lock.lock();
+  try {
+    lastRet=-1;
+    if ((remaining=count) > 0)     nextItem=itemAt(nextIndex=takeIndex);
+  }
+  finally {
+    lock.unlock();
+  }
+}

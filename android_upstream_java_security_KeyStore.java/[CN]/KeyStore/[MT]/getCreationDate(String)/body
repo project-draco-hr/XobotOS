@@ -1,0 +1,6 @@
+{
+  if (!isInit) {
+    throwNotInitialized();
+  }
+  return implSpi.engineGetCreationDate(alias);
+}

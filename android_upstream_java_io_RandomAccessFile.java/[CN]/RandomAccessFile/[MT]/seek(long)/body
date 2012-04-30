@@ -1,0 +1,11 @@
+{
+  if (offset < 0) {
+    throw new IOException("offset < 0: " + offset);
+  }
+  try {
+    Libcore.os.lseek(fd,offset,SEEK_SET);
+  }
+ catch (  ErrnoException errnoException) {
+    throw errnoException.rethrowAsIOException();
+  }
+}

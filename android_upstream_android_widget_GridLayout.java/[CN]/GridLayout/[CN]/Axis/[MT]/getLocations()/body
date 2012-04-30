@@ -1,0 +1,11 @@
+{
+  if (locations == null) {
+    int N=getCount() + 1;
+    locations=new int[N];
+  }
+  if (!locationsValid) {
+    computeLocations(locations);
+    locationsValid=true;
+  }
+  return locations;
+}

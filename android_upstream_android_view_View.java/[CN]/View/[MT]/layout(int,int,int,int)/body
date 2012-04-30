@@ -1,0 +1,22 @@
+{
+  int oldL=mLeft;
+  int oldT=mTop;
+  int oldB=mBottom;
+  int oldR=mRight;
+  boolean changed=setFrame(l,t,r,b);
+  if (changed || (mPrivateFlags & LAYOUT_REQUIRED) == LAYOUT_REQUIRED) {
+    if (ViewDebug.TRACE_HIERARCHY) {
+      ViewDebug.trace(this,ViewDebug.HierarchyTraceType.ON_LAYOUT);
+    }
+    onLayout(changed,l,t,r,b);
+    mPrivateFlags&=~LAYOUT_REQUIRED;
+    if (mOnLayoutChangeListeners != null) {
+      ArrayList<OnLayoutChangeListener> listenersCopy=(ArrayList<OnLayoutChangeListener>)mOnLayoutChangeListeners.clone();
+      int numListeners=listenersCopy.size();
+      for (int i=0; i < numListeners; ++i) {
+        listenersCopy.get(i).onLayoutChange(this,l,t,r,b,oldL,oldT,oldR,oldB);
+      }
+    }
+  }
+  mPrivateFlags&=~FORCE_LAYOUT;
+}

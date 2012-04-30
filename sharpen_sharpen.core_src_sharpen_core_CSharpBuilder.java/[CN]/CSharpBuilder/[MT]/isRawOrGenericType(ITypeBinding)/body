@@ -1,0 +1,4 @@
+{
+  if (type.isArray())   return isRawOrGenericType(type.getElementType());
+  return type.isRawType() || type.isGenericType();
+}

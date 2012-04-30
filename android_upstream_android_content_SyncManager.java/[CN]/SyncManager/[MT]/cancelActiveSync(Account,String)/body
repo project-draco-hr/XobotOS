@@ -1,0 +1,3 @@
+{
+  sendCancelSyncsMessage(account,authority);
+}

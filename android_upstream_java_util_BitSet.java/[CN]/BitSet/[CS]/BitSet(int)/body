@@ -1,0 +1,7 @@
+{
+  if (bitCount < 0) {
+    throw new NegativeArraySizeException();
+  }
+  this.bits=arrayForBits(bitCount);
+  this.longCount=0;
+}

@@ -1,0 +1,16 @@
+{
+  if (getClass() != obj.getClass()) {
+    return false;
+  }
+  UserInfo other=(UserInfo)obj;
+  if (this.userType != other.userType) {
+    return false;
+  }
+  if (!this.user.equalsIgnoreCase(other.user)) {
+    return false;
+  }
+  if (this.password != null && other.password == null)   return false;
+  if (other.password != null && this.password == null)   return false;
+  if (this.password == other.password)   return true;
+  return (this.password.equals(other.password));
+}

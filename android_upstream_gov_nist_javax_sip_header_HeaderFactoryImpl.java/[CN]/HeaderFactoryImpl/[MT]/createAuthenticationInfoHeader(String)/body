@@ -1,0 +1,6 @@
+{
+  if (response == null)   throw new NullPointerException("null arg response");
+  AuthenticationInfo auth=new AuthenticationInfo();
+  auth.setResponse(response);
+  return auth;
+}

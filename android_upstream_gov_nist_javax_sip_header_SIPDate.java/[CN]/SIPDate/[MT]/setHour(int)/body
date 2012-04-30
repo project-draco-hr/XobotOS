@@ -1,0 +1,5 @@
+{
+  if (h < 0 || h > 24)   throw new IllegalArgumentException("Illegal hour : " + h);
+  javaCal=null;
+  hour=h;
+}

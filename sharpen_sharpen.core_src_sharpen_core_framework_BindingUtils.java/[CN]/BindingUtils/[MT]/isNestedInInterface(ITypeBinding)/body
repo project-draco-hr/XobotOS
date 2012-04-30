@@ -1,0 +1,6 @@
+{
+  while ((type=type.getDeclaringClass()) != null) {
+    if (type.isInterface())     return true;
+  }
+  return false;
+}

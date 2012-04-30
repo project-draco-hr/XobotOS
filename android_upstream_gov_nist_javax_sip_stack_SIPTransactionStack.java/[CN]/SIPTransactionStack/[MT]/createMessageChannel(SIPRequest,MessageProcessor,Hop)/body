@@ -1,0 +1,15 @@
+{
+  SIPTransaction returnChannel;
+  Host targetHost=new Host();
+  targetHost.setHostname(nextHop.getHost());
+  HostPort targetHostPort=new HostPort();
+  targetHostPort.setHost(targetHost);
+  targetHostPort.setPort(nextHop.getPort());
+  MessageChannel mc=mp.createMessageChannel(targetHostPort);
+  if (mc == null)   return null;
+  returnChannel=createClientTransaction(request,mc);
+  ((SIPClientTransaction)returnChannel).setViaPort(nextHop.getPort());
+  ((SIPClientTransaction)returnChannel).setViaHost(nextHop.getHost());
+  addTransactionHash(returnChannel);
+  return returnChannel;
+}

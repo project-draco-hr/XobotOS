@@ -1,0 +1,3 @@
+{
+  if (dns != null)   mDnses.add(dns);
+}

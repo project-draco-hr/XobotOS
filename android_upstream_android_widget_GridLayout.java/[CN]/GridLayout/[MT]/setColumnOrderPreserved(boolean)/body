@@ -1,0 +1,5 @@
+{
+  horizontalAxis.setOrderPreserved(columnOrderPreserved);
+  invalidateStructure();
+  requestLayout();
+}

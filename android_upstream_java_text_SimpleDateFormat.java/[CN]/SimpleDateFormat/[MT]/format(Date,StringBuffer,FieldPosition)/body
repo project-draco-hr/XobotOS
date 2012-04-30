@@ -1,0 +1,3 @@
+{
+  return formatImpl(date,buffer,fieldPos,null);
+}

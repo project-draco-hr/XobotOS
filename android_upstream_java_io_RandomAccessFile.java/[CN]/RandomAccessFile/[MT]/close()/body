@@ -1,0 +1,10 @@
+{
+  guard.close();
+synchronized (this) {
+    if (channel != null && channel.isOpen()) {
+      channel.close();
+      channel=null;
+    }
+    IoUtils.close(fd);
+  }
+}

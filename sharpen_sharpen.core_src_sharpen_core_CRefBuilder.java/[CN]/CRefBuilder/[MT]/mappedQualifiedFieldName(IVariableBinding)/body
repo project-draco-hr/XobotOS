@@ -1,0 +1,7 @@
+{
+  String mapped=my(Mappings.class).mappedFieldName(binding);
+  String name=mapped != null ? mapped : identifier(binding.getName());
+  if (name.indexOf('.') > 0)   return name;
+  if (_currentType == binding.getDeclaringClass())   return name;
+  return mappedTypeName(binding.getDeclaringClass()) + "." + name;
+}

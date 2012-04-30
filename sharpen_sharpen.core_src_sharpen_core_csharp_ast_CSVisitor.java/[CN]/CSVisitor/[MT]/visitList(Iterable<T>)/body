@@ -1,0 +1,5 @@
+{
+  for (  CSNode node : nodes) {
+    node.accept(this);
+  }
+}

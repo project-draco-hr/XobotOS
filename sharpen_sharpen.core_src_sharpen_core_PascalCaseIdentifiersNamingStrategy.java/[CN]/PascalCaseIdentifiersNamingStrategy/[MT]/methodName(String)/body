@@ -1,0 +1,4 @@
+{
+  int nameStart=name.lastIndexOf('.');
+  return nameStart < 0 ? identifier(toPascalCase(name)) : name.substring(0,nameStart + 1) + toPascalCase(name.substring(nameStart + 1));
+}

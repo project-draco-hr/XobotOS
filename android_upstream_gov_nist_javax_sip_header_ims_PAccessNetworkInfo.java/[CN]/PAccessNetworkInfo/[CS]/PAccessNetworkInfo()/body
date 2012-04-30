@@ -1,0 +1,4 @@
+{
+  super(PAccessNetworkInfoHeader.NAME);
+  parameters.setSeparator(SEMICOLON);
+}

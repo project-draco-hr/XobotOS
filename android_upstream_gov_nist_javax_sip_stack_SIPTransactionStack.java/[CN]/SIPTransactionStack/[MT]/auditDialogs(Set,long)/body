@@ -1,0 +1,37 @@
+{
+  String auditReport="  Leaked dialogs:\n";
+  int leakedDialogs=0;
+  long currentTime=System.currentTimeMillis();
+  LinkedList dialogs;
+synchronized (dialogTable) {
+    dialogs=new LinkedList(dialogTable.values());
+  }
+  Iterator it=dialogs.iterator();
+  while (it.hasNext()) {
+    SIPDialog itDialog=(SIPDialog)it.next();
+    CallIdHeader callIdHeader=(itDialog != null ? itDialog.getCallId() : null);
+    String callID=(callIdHeader != null ? callIdHeader.getCallId() : null);
+    if (itDialog != null && callID != null && !activeCallIDs.contains(callID)) {
+      if (itDialog.auditTag == 0) {
+        itDialog.auditTag=currentTime;
+      }
+ else {
+        if (currentTime - itDialog.auditTag >= leakedDialogTimer) {
+          leakedDialogs++;
+          DialogState dialogState=itDialog.getState();
+          String dialogReport="dialog id: " + itDialog.getDialogId() + ", dialog state: "+ (dialogState != null ? dialogState.toString() : "null");
+          auditReport+="    " + dialogReport + "\n";
+          itDialog.setState(SIPDialog.TERMINATED_STATE);
+          if (stackLogger.isLoggingEnabled())           stackLogger.logDebug("auditDialogs: leaked " + dialogReport);
+        }
+      }
+    }
+  }
+  if (leakedDialogs > 0) {
+    auditReport+="    Total: " + Integer.toString(leakedDialogs) + " leaked dialogs detected and removed.\n";
+  }
+ else {
+    auditReport=null;
+  }
+  return auditReport;
+}

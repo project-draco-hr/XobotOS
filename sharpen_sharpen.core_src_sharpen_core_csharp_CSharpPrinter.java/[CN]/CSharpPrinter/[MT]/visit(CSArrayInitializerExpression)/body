@@ -1,0 +1,5 @@
+{
+  write("{ ");
+  writeCommaSeparatedList(filterRemovedExpressions(node.expressions()));
+  write(" }");
+}

@@ -1,0 +1,4 @@
+{
+  super(NAME);
+  parameters.setSeparator(COMMA);
+}

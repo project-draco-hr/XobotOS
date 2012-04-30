@@ -1,0 +1,27 @@
+{
+  if (mLayer == null) {
+    if (mAttachInfo == null || mAttachInfo.mHardwareRenderer == null) {
+      return null;
+    }
+    mLayer=mAttachInfo.mHardwareRenderer.createHardwareLayer(mOpaque);
+    mSurface=mAttachInfo.mHardwareRenderer.createSurfaceTexture(mLayer);
+    nSetDefaultBufferSize(mSurface,getWidth(),getHeight());
+    nCreateNativeWindow(mSurface);
+    mUpdateListener=new SurfaceTexture.OnFrameAvailableListener(){
+      @Override public void onFrameAvailable(      SurfaceTexture surfaceTexture){
+synchronized (mLock) {
+          mUpdateLayer=true;
+        }
+        postInvalidateDelayed(0);
+      }
+    }
+;
+    mSurface.setOnFrameAvailableListener(mUpdateListener);
+    if (mListener != null) {
+      mListener.onSurfaceTextureAvailable(mSurface,getWidth(),getHeight());
+    }
+  }
+  applyUpdate();
+  applyTransformMatrix();
+  return mLayer;
+}

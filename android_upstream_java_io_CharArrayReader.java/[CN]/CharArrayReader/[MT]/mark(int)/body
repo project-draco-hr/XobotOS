@@ -1,0 +1,6 @@
+{
+synchronized (lock) {
+    checkNotClosed();
+    markedPos=pos;
+  }
+}

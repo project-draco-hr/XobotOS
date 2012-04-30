@@ -1,0 +1,40 @@
+{
+  if (BindingManager.DEBUG)   Sharpen.Debug("RESOLVE STRUCT: %s",getName());
+  if (_resolved)   return !_resolveFailed;
+  final List<MemberInfo> members=_template.getMembers();
+  _fieldInfo=new ElementInfo[members.size()];
+  for (int i=0; i < members.size(); i++) {
+    final MemberInfo member=members.get(i);
+    IVariableBinding field=findField(getType(),member.getName());
+    if (field == null) {
+      Sharpen.Log(Level.SEVERE,"No such field '%s' in type '%s'",member.getName(),BindingUtils.qualifiedName(getType()));
+      _resolveFailed=true;
+      continue;
+    }
+    if (member.getValue() != null)     continue;
+    MarshalInfo marshal;
+    if (member.getMarshalInfo() != null)     marshal=member.getMarshalInfo().resolve(field.getType());
+ else     marshal=context.getMarshalInfo(field.getType());
+    if (marshal == null) {
+      Sharpen.Log(Level.SEVERE,"Missing marshal info for type '%s' of field '%s'",BindingUtils.qualifiedName(field.getType()),member.getName());
+      _resolveFailed=true;
+      continue;
+    }
+    _fieldInfo[i]=new ElementInfo(field.getType(),marshal,null,Flags.ELEMENT);
+    if (BindingManager.DEBUG)     Sharpen.Debug("STRUCT MEMBER: %s - %s",member.getName(),BindingUtils.qualifiedName(field.getType()));
+    if (!marshal.resolve(context,field.getType())) {
+      Sharpen.Log(Level.SEVERE,"Failed to resolve field '%s' in '%s'",member.getName(),BindingUtils.qualifiedName(getType()));
+      _resolveFailed=true;
+      continue;
+    }
+    if (!marshal.isPrimitiveType()) {
+      Sharpen.Log(Level.SEVERE,"Field '%s' in '%s' is not a primitive type",member.getName(),BindingUtils.qualifiedName(getType()));
+      _resolveFailed=true;
+      continue;
+    }
+    if (BindingManager.DEBUG)     Sharpen.Debug("STRUCT MEMBER DONE: %s - %s",member.getName(),BindingUtils.qualifiedName(field.getType()));
+  }
+  if (BindingManager.DEBUG)   Sharpen.Debug("RESOLVE STRUCT DONE: %s%s",getName(),_resolveFailed ? " - ERROR" : "");
+  _resolved=true;
+  return true;
+}

@@ -1,0 +1,26 @@
+{
+  String headerName=Lexer.getHeaderName(line);
+  String headerValue=Lexer.getHeaderValue(line);
+  if (headerName == null || headerValue == null)   throw new ParseException("The header name or value is null",0);
+  Class parserClass=(Class)parserTable.get(SIPHeaderNamesCache.toLowerCase(headerName));
+  if (parserClass != null) {
+    try {
+      Constructor cons=(Constructor)parserConstructorCache.get(parserClass);
+      if (cons == null) {
+        cons=parserClass.getConstructor(constructorArgs);
+        parserConstructorCache.put(parserClass,cons);
+      }
+      Object[] args=new Object[1];
+      args[0]=line;
+      HeaderParser retval=(HeaderParser)cons.newInstance(args);
+      return retval;
+    }
+ catch (    Exception ex) {
+      InternalErrorHandler.handleException(ex);
+      return null;
+    }
+  }
+ else {
+    return new HeaderParser(line);
+  }
+}

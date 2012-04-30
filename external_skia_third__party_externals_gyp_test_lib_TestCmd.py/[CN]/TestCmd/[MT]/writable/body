@@ -1,0 +1,42 @@
+def writable(self, top, write=1):
+    'Make the specified directory tree writable (write == 1)\n        or not (write == None).\n        '
+    if (sys.platform == 'win32'):
+        if write:
+
+            def do_chmod(fname):
+                try:
+                    os.chmod(fname, stat.S_IWRITE)
+                except OSError:
+                    pass
+        else:
+
+            def do_chmod(fname):
+                try:
+                    os.chmod(fname, stat.S_IREAD)
+                except OSError:
+                    pass
+    elif write:
+
+        def do_chmod(fname):
+            try:
+                st = os.stat(fname)
+            except OSError:
+                pass
+            else:
+                os.chmod(fname, stat.S_IMODE((st[stat.ST_MODE] | 128)))
+    else:
+
+        def do_chmod(fname):
+            try:
+                st = os.stat(fname)
+            except OSError:
+                pass
+            else:
+                os.chmod(fname, stat.S_IMODE((st[stat.ST_MODE] & (~ 128))))
+    if os.path.isfile(top):
+        do_chmod(top)
+    else:
+        col = Collector(top)
+        os.path.walk(top, col, None)
+        for d in col.entries:
+            do_chmod(d)

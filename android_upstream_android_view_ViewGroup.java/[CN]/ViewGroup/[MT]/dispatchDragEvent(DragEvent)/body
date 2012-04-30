@@ -1,0 +1,118 @@
+{
+  boolean retval=false;
+  final float tx=event.mX;
+  final float ty=event.mY;
+  ViewRootImpl root=getViewRootImpl();
+switch (event.mAction) {
+case DragEvent.ACTION_DRAG_STARTED:
+{
+      mCurrentDragView=null;
+      mCurrentDrag=DragEvent.obtain(event);
+      if (mDragNotifiedChildren == null) {
+        mDragNotifiedChildren=new HashSet<View>();
+      }
+ else {
+        mDragNotifiedChildren.clear();
+      }
+      mChildAcceptsDrag=false;
+      final int count=mChildrenCount;
+      final View[] children=mChildren;
+      for (int i=0; i < count; i++) {
+        final View child=children[i];
+        child.mPrivateFlags2&=~View.DRAG_MASK;
+        if (child.getVisibility() == VISIBLE) {
+          final boolean handled=notifyChildOfDrag(children[i]);
+          if (handled) {
+            mChildAcceptsDrag=true;
+          }
+        }
+      }
+      if (mChildAcceptsDrag) {
+        retval=true;
+      }
+    }
+  break;
+case DragEvent.ACTION_DRAG_ENDED:
+{
+  if (mDragNotifiedChildren != null) {
+    for (    View child : mDragNotifiedChildren) {
+      child.dispatchDragEvent(event);
+      child.mPrivateFlags2&=~View.DRAG_MASK;
+      child.refreshDrawableState();
+    }
+    mDragNotifiedChildren.clear();
+    mCurrentDrag.recycle();
+    mCurrentDrag=null;
+  }
+  if (mChildAcceptsDrag) {
+    retval=true;
+  }
+}
+break;
+case DragEvent.ACTION_DRAG_LOCATION:
+{
+final View target=findFrontmostDroppableChildAt(event.mX,event.mY,mLocalPoint);
+if (mCurrentDragView != target) {
+root.setDragFocus(target);
+final int action=event.mAction;
+if (mCurrentDragView != null) {
+  final View view=mCurrentDragView;
+  event.mAction=DragEvent.ACTION_DRAG_EXITED;
+  view.dispatchDragEvent(event);
+  view.mPrivateFlags2&=~View.DRAG_HOVERED;
+  view.refreshDrawableState();
+}
+mCurrentDragView=target;
+if (target != null) {
+  event.mAction=DragEvent.ACTION_DRAG_ENTERED;
+  target.dispatchDragEvent(event);
+  target.mPrivateFlags2|=View.DRAG_HOVERED;
+  target.refreshDrawableState();
+}
+event.mAction=action;
+}
+if (target != null) {
+event.mX=mLocalPoint.x;
+event.mY=mLocalPoint.y;
+retval=target.dispatchDragEvent(event);
+event.mX=tx;
+event.mY=ty;
+}
+}
+break;
+case DragEvent.ACTION_DRAG_EXITED:
+{
+if (mCurrentDragView != null) {
+final View view=mCurrentDragView;
+view.dispatchDragEvent(event);
+view.mPrivateFlags2&=~View.DRAG_HOVERED;
+view.refreshDrawableState();
+mCurrentDragView=null;
+}
+}
+break;
+case DragEvent.ACTION_DROP:
+{
+if (ViewDebug.DEBUG_DRAG) Log.d(View.VIEW_LOG_TAG,"Drop event: " + event);
+View target=findFrontmostDroppableChildAt(event.mX,event.mY,mLocalPoint);
+if (target != null) {
+if (ViewDebug.DEBUG_DRAG) Log.d(View.VIEW_LOG_TAG,"   dispatch drop to " + target);
+event.mX=mLocalPoint.x;
+event.mY=mLocalPoint.y;
+retval=target.dispatchDragEvent(event);
+event.mX=tx;
+event.mY=ty;
+}
+ else {
+if (ViewDebug.DEBUG_DRAG) {
+Log.d(View.VIEW_LOG_TAG,"   not dropped on an accepting view");
+}
+}
+}
+break;
+}
+if (!retval) {
+retval=super.dispatchDragEvent(event);
+}
+return retval;
+}

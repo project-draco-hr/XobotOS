@@ -1,0 +1,84 @@
+def main():
+    'Parses command line and writes output.'
+    try:
+        (opts, _) = getopt.getopt(sys.argv[1:], 'd:b:c:l:t:s:r:f:x:y:', 'default-setting=')
+    except getopt.GetoptError as err:
+        print str(err)
+        usage()
+        sys.exit(2)
+    directory = None
+    config_of_interest = None
+    bench_of_interest = None
+    time_of_interest = None
+    revision_range = '0:'
+    regression_range = '0:'
+    latest_revision = None
+    requested_height = None
+    requested_width = None
+    title = 'Bench graph'
+    settings = {}
+    default_settings = {}
+
+    def parse_range(range):
+        "Takes '<old>[:<new>]' as a string and returns (old, new).\n        Any revision numbers that are dependent on the latest revision number\n        will be filled in based on latest_revision.\n        "
+        (old, _, new) = range.partition(':')
+        old = int(old)
+        if (old < 0):
+            old += latest_revision
+        if (not new):
+            new = latest_revision
+        new = int(new)
+        if (new < 0):
+            new += latest_revision
+        return (old, new)
+
+    def add_setting(settings, setting):
+        'Takes <key>[=<value>] adds {key:value} or {key:True} to settings.'
+        (name, _, value) = setting.partition('=')
+        if (not value):
+            settings[name] = True
+        else:
+            settings[name] = value
+    try:
+        for (option, value) in opts:
+            if (option == '-d'):
+                directory = value
+            elif (option == '-b'):
+                bench_of_interest = value
+            elif (option == '-c'):
+                config_of_interest = value
+            elif (option == '-t'):
+                time_of_interest = value
+            elif (option == '-s'):
+                add_setting(settings, value)
+            elif (option == '-r'):
+                revision_range = value
+            elif (option == '-f'):
+                regression_range = value
+            elif (option == '-x'):
+                requested_width = int(value)
+            elif (option == '-y'):
+                requested_height = int(value)
+            elif (option == '-l'):
+                title = value
+            elif (option == '--default-setting'):
+                add_setting(default_settings, value)
+            else:
+                usage()
+                assert False, 'unhandled option'
+    except ValueError:
+        usage()
+        sys.exit(2)
+    if (directory is None):
+        usage()
+        sys.exit(2)
+    latest_revision = get_latest_revision(directory)
+    (oldest_revision, newest_revision) = parse_range(revision_range)
+    (oldest_regression, newest_regression) = parse_range(regression_range)
+    revision_data_points = parse_dir(directory, default_settings, oldest_revision, newest_revision)
+    all_revision_numbers = revision_data_points.keys()
+    oldest_revision = min(all_revision_numbers)
+    newest_revision = max(all_revision_numbers)
+    lines = create_lines(revision_data_points, settings, bench_of_interest, config_of_interest, time_of_interest)
+    regressions = create_regressions(lines, oldest_regression, newest_regression)
+    output_xhtml(lines, oldest_revision, newest_revision, regressions, requested_width, requested_height, title)

@@ -1,0 +1,9 @@
+{
+  if (!objectsWritten.isEmpty()) {
+    throw new IllegalStateException("Cannot set protocol version when stream in use");
+  }
+  if (version != ObjectStreamConstants.PROTOCOL_VERSION_1 && version != ObjectStreamConstants.PROTOCOL_VERSION_2) {
+    throw new IllegalArgumentException("Unknown protocol: " + version);
+  }
+  protocolVersion=version;
+}

@@ -1,0 +1,7 @@
+{
+  VariableBinding binding=my(BindingManager.class).resolveBinding(_fragment.resolveBinding());
+  if (binding != null) {
+    if (binding.getNativeHandle() != null)     member.visibility(CSVisibility.Internal);
+  }
+  return true;
+}

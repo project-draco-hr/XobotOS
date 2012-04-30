@@ -1,0 +1,6 @@
+{
+synchronized (lock) {
+    checkNotClosed();
+    return ((end - pos) > 0) || in.ready();
+  }
+}

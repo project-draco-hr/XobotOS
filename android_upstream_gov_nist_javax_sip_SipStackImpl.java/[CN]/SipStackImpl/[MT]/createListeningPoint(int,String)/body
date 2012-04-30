@@ -1,0 +1,4 @@
+{
+  if (super.stackAddress == null)   throw new NullPointerException("Stack does not have a default IP Address!");
+  return this.createListeningPoint(super.stackAddress,port,transport);
+}

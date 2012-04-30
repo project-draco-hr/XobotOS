@@ -1,0 +1,15 @@
+{
+  if (address == null)   throw new NullPointerException("null address");
+  if (address.equals("*")) {
+    AddressImpl addressImpl=new AddressImpl();
+    addressImpl.setAddressType(AddressImpl.WILD_CARD);
+    SipURI uri=new SipUri();
+    uri.setUser("*");
+    addressImpl.setURI(uri);
+    return addressImpl;
+  }
+ else {
+    StringMsgParser smp=new StringMsgParser();
+    return smp.parseAddress(address);
+  }
+}

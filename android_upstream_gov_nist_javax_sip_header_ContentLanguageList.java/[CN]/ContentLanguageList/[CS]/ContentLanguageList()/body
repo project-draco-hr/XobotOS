@@ -1,0 +1,3 @@
+{
+  super(ContentLanguage.class,ContentLanguageHeader.NAME);
+}

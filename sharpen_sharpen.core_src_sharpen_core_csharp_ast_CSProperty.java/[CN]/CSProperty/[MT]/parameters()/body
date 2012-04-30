@@ -1,0 +1,6 @@
+{
+  if (null == _parameters) {
+    return Collections.emptyList();
+  }
+  return Collections.unmodifiableList(_parameters);
+}

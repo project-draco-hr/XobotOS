@@ -1,0 +1,5 @@
+{
+  if (getTypeTemplate().removeMember(node))   return false;
+  if (getOutputType().getModeForMember(node) == OutputMode.NOTHING)   return false;
+  return true;
+}

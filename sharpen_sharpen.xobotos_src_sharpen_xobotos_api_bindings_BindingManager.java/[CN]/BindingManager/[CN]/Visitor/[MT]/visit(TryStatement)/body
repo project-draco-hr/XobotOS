@@ -1,0 +1,11 @@
+{
+  node.getBody().accept(this);
+  for (  Object o : node.catchClauses()) {
+    CatchClause clause=(CatchClause)o;
+    pushScope();
+    clause.accept(this);
+    popScope();
+  }
+  if (node.getFinally() != null)   node.getFinally().accept(this);
+  return true;
+}

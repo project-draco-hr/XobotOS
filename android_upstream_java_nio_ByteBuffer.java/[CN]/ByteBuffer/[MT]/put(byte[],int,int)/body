@@ -1,0 +1,10 @@
+{
+  Arrays.checkOffsetAndCount(src.length,srcOffset,byteCount);
+  if (byteCount > remaining()) {
+    throw new BufferOverflowException();
+  }
+  for (int i=srcOffset; i < srcOffset + byteCount; ++i) {
+    put(src[i]);
+  }
+  return this;
+}

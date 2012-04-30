@@ -1,0 +1,4 @@
+{
+  KeySet result=keySet;
+  return result != null ? result : (keySet=new KeySet());
+}

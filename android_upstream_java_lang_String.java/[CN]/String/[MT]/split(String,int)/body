@@ -1,0 +1,4 @@
+{
+  String[] result=java.util.regex.Splitter.fastSplit(regularExpression,this,limit);
+  return result != null ? result : Pattern.compile(regularExpression).split(this,limit);
+}

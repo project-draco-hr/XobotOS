@@ -1,0 +1,9 @@
+{
+  String log;
+  log="<message\nfrom=\"" + source + "\" \nto=\""+ destination+ "\" \ntime=\""+ timeStamp+ "\""+ (this.timeStampHeaderValue != 0 ? "\ntimeStamp = \"" + timeStampHeaderValue + "\"" : "")+ "\nisSender=\""+ isSender+ "\" \ntransactionId=\""+ tid+ "\" \ncallId=\""+ callId+ "\" \nfirstLine=\""+ firstLine.trim()+ "\""+ " \n>\n";
+  log+="<![CDATA[";
+  log+=message;
+  log+="]]>\n";
+  log+="</message>\n";
+  return log;
+}

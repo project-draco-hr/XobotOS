@@ -1,0 +1,4 @@
+{
+  if (flags.contains(Flags.POINTER))   return new CSTypeReference("System.IntPtr");
+ else   return info.getPInvokeType();
+}

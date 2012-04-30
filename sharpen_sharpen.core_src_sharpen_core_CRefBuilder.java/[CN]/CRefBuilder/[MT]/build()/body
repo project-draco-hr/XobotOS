@@ -1,0 +1,12 @@
+{
+switch (_crefTarget.getNodeType()) {
+case ASTNode.SIMPLE_NAME:
+case ASTNode.QUALIFIED_NAME:
+    return mapCRefTarget(_crefTarget,((Name)_crefTarget).resolveBinding());
+case ASTNode.MEMBER_REF:
+  return mapCRefTarget(_crefTarget,((MemberRef)_crefTarget).resolveBinding());
+case ASTNode.METHOD_REF:
+return mapCRefTarget(_crefTarget,((MethodRef)_crefTarget).resolveBinding());
+}
+return null;
+}

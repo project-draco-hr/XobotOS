@@ -1,0 +1,7 @@
+{
+  LinkedHashMap<View,Animator> currentAnimCopy=(LinkedHashMap<View,Animator>)currentChangingAnimations.clone();
+  for (  Animator anim : currentAnimCopy.values()) {
+    anim.start();
+    anim.end();
+  }
+}

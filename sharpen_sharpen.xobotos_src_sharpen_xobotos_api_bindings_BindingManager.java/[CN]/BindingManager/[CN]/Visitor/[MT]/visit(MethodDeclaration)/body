@@ -1,0 +1,51 @@
+{
+  final ITypeEntry entry=_typeStack.peek();
+  final AbstractMethodTemplate<?> template=entry.getTemplate().findMethodTemplate(node);
+  if (template == null)   return false;
+  pushScope();
+  final IMethodBinding methodBinding=node.resolveBinding();
+  MethodBinding binding=template.getBinding();
+  if (binding != null)   _methodBindings.put(methodBinding,binding);
+  final ASTNode parent=node.getParent();
+  final ITypeBinding declaringType;
+  if (parent instanceof TypeDeclaration) {
+    declaringType=((TypeDeclaration)parent).resolveBinding();
+  }
+ else   if (parent instanceof AnonymousClassDeclaration) {
+    declaringType=((AnonymousClassDeclaration)parent).resolveBinding();
+  }
+ else {
+    declaringType=null;
+  }
+  if (declaringType != null) {
+    List<String> visibleMethods=getVisibleMethodNames(declaringType);
+    getScope().addVisibleMethods(visibleMethods);
+  }
+  int index=0;
+  for (  final Object p : node.parameters()) {
+    final VariableDeclaration vdecl=(VariableDeclaration)p;
+    final IVariableBinding vb=vdecl.resolveBinding();
+    ParameterTemplate param=template.findParameterTemplate(index++);
+    if (param != null) {
+      VariableBinding pb=param.getBinding();
+      if (pb != null)       _variableBindings.put(vb,pb);
+    }
+    createVariableDeclaration(vb);
+  }
+  if ((template instanceof MethodTemplate) && (entry instanceof TypeEntry)) {
+    MethodTemplate mt=(MethodTemplate)template;
+    if (Modifier.isNative(node.getModifiers()) || (mt.getNativeMethod() != null))     addNativeMethod((TypeEntry)entry,(MethodTemplate)template,node);
+  }
+  _outputProviderStack.push(template);
+  final OutputType output=getOutputType();
+  final MethodEntry oldMethod=_currentMethod;
+  final IMethodBinding baseMethod=BindingUtils.getBaseMethod(methodBinding,false,false);
+  _currentMethod=new MethodEntry(node,template,baseMethod,output);
+  _methodHash.put(node.resolveBinding(),_currentMethod);
+  Block body=node.getBody();
+  if (body != null)   body.accept(this);
+  popScope();
+  _currentMethod=oldMethod;
+  _outputProviderStack.pop();
+  return false;
+}

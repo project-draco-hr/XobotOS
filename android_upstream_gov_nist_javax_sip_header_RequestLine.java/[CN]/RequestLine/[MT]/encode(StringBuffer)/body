@@ -1,0 +1,13 @@
+{
+  if (method != null) {
+    buffer.append(method);
+    buffer.append(SP);
+  }
+  if (uri != null) {
+    uri.encode(buffer);
+    buffer.append(SP);
+  }
+  buffer.append(sipVersion);
+  buffer.append(NEWLINE);
+  return buffer;
+}

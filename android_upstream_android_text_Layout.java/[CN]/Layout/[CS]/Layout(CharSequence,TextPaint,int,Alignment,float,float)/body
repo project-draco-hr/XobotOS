@@ -1,0 +1,3 @@
+{
+  this(text,paint,width,align,TextDirectionHeuristics.FIRSTSTRONG_LTR,spacingMult,spacingAdd);
+}

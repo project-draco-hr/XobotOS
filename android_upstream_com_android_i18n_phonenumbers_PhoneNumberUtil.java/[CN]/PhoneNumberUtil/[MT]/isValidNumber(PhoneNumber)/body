@@ -1,0 +1,4 @@
+{
+  String regionCode=getRegionCodeForNumber(number);
+  return (isValidRegionCode(regionCode) && isValidNumberForRegion(number,regionCode));
+}

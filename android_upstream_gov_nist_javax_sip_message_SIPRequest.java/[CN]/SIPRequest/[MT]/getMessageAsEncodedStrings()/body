@@ -1,0 +1,8 @@
+{
+  LinkedList retval=super.getMessageAsEncodedStrings();
+  if (requestLine != null) {
+    this.setRequestLineDefaults();
+    retval.addFirst(requestLine.encode());
+  }
+  return retval;
+}

@@ -1,0 +1,4 @@
+{
+  int ret=connectAsyncNative();
+  return (ret == 0) ? true : false;
+}

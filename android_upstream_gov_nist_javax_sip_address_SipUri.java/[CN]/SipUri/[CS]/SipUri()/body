@@ -1,0 +1,6 @@
+{
+  this.scheme=SIP;
+  this.uriParms=new NameValueList();
+  this.qheaders=new NameValueList();
+  this.qheaders.setSeparator("&");
+}

@@ -1,0 +1,4 @@
+{
+  write(node.typeName());
+  writeTypeArguments(node);
+}

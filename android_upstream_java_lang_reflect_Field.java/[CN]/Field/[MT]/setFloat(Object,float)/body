@@ -1,0 +1,3 @@
+{
+  setFField(object,declaringClass,type,slot,flag,TYPE_FLOAT,value);
+}

@@ -1,0 +1,3 @@
+{
+  mCm.acknowledgeLastIncomingGsmSms(success,resultToCause(result),response);
+}

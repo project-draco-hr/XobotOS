@@ -1,0 +1,5 @@
+{
+  LinkedList retval=super.getMessageAsEncodedStrings();
+  if (statusLine != null)   retval.addFirst(statusLine.encode());
+  return retval;
+}

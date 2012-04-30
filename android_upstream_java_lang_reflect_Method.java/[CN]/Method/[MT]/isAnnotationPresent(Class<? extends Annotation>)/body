@@ -1,0 +1,6 @@
+{
+  if (annotationType == null) {
+    throw new NullPointerException("annotationType == null");
+  }
+  return isAnnotationPresent(declaringClass,slot,annotationType);
+}

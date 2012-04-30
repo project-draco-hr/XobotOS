@@ -1,0 +1,78 @@
+{
+switch (message.what) {
+case DO_ATTACH:
+{
+      try {
+        mConnection.attachEngine(this);
+      }
+ catch (      RemoteException e) {
+        Log.w(TAG,"Wallpaper host disappeared",e);
+        return;
+      }
+      Engine engine=onCreateEngine();
+      mEngine=engine;
+      mActiveEngines.add(engine);
+      engine.attach(this);
+      return;
+    }
+case DO_DETACH:
+{
+    mActiveEngines.remove(mEngine);
+    mEngine.detach();
+    return;
+  }
+case DO_SET_DESIRED_SIZE:
+{
+  mEngine.doDesiredSizeChanged(message.arg1,message.arg2);
+  return;
+}
+case MSG_UPDATE_SURFACE:
+mEngine.updateSurface(true,false,false);
+break;
+case MSG_VISIBILITY_CHANGED:
+if (DEBUG) Log.v(TAG,"Visibility change in " + mEngine + ": "+ message.arg1);
+mEngine.doVisibilityChanged(message.arg1 != 0);
+break;
+case MSG_WALLPAPER_OFFSETS:
+{
+mEngine.doOffsetsChanged(true);
+}
+break;
+case MSG_WALLPAPER_COMMAND:
+{
+WallpaperCommand cmd=(WallpaperCommand)message.obj;
+mEngine.doCommand(cmd);
+}
+break;
+case MSG_WINDOW_RESIZED:
+{
+final boolean reportDraw=message.arg1 != 0;
+mEngine.updateSurface(true,false,reportDraw);
+mEngine.doOffsetsChanged(true);
+}
+break;
+case MSG_TOUCH_EVENT:
+{
+boolean skip=false;
+MotionEvent ev=(MotionEvent)message.obj;
+if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+synchronized (mEngine.mLock) {
+if (mEngine.mPendingMove == ev) {
+mEngine.mPendingMove=null;
+}
+ else {
+skip=true;
+}
+}
+}
+if (!skip) {
+if (DEBUG) Log.v(TAG,"Delivering touch event: " + ev);
+mEngine.onTouchEvent(ev);
+}
+ev.recycle();
+}
+break;
+default :
+Log.w(TAG,"Unknown message type " + message.what);
+}
+}

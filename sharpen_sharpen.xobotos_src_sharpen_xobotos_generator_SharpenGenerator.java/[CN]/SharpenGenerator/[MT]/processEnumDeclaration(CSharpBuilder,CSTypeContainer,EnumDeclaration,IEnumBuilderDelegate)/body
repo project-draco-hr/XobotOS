@@ -1,0 +1,19 @@
+{
+  final EnumTemplate template=findEnumTemplate(node);
+  if (template == null)   return null;
+  try {
+    _outputProviderStack.push(template);
+    final OutputType output=getOutputType();
+    final OutputMode mode;
+    if (node.resolveBinding().isNested())     mode=output.getModeForMember(node);
+ else     mode=output.getMode();
+    if (mode == OutputMode.NOTHING)     return null;
+    EnumBuilder builder=new EnumBuilder(template,output,node);
+    CSEnum theEnum=builder.build(csharpBuilder,delegate);
+    if (theEnum != null)     parent.addType(theEnum);
+    return theEnum;
+  }
+  finally {
+    _outputProviderStack.pop();
+  }
+}

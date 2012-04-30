@@ -1,0 +1,6 @@
+{
+  ArrayList<File> result=new ArrayList<File>();
+  splitAndAdd(path1,wantDirectories,result);
+  splitAndAdd(path2,wantDirectories,result);
+  return result;
+}

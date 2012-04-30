@@ -1,0 +1,9 @@
+{
+  mGlVersion=glVersion;
+  mTranslucent=translucent;
+  final String vsyncProperty=SystemProperties.get(DISABLE_VSYNC_PROPERTY,"false");
+  mVsyncDisabled="true".equalsIgnoreCase(vsyncProperty);
+  if (mVsyncDisabled) {
+    Log.d(LOG_TAG,"Disabling v-sync");
+  }
+}

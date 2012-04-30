@@ -1,0 +1,9 @@
+{
+  final Layout layout=widget.getLayout();
+  if (isSelecting(buffer)) {
+    return Selection.extendRight(buffer,layout);
+  }
+ else {
+    return Selection.moveRight(buffer,layout);
+  }
+}

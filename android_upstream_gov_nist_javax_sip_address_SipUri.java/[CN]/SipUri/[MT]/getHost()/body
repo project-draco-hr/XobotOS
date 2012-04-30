@@ -1,0 +1,5 @@
+{
+  if (authority == null)   return null;
+ else   if (authority.getHost() == null)   return null;
+ else   return authority.getHost().encode();
+}

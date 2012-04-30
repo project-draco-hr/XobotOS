@@ -1,0 +1,12 @@
+{
+  if (uri == null)   throw new NullPointerException("null url");
+  String telUrl="tel:" + uri;
+  try {
+    StringMsgParser smp=new StringMsgParser();
+    TelURLImpl timp=(TelURLImpl)smp.parseUrl(telUrl);
+    return (TelURL)timp;
+  }
+ catch (  ParseException ex) {
+    throw new ParseException(ex.getMessage(),0);
+  }
+}

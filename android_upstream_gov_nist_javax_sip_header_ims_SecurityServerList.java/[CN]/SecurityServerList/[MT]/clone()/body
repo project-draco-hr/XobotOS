@@ -1,0 +1,4 @@
+{
+  SecurityServerList retval=new SecurityServerList();
+  return retval.clonehlist(this.hlist);
+}

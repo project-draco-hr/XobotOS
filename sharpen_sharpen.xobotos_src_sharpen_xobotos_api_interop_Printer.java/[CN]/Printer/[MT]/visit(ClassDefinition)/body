@@ -1,0 +1,20 @@
+{
+  if (node.hasDeclaration()) {
+    final String oldClass=_currentClass;
+    _currentClass=_currentClass + node.getName() + "::";
+    writeMemberList(node,null);
+    _currentClass=oldClass;
+  }
+ else {
+    _writer.write("class ");
+    _writer.writeLine(node.getName());
+    _writer.writeLine("{");
+    _writer.indent();
+    writeMemberList(node,Visibility.PUBLIC);
+    writeMemberList(node,Visibility.PROTECTED);
+    writeMemberList(node,Visibility.PRIVATE);
+    _writer.outdent();
+    _writer.writeLine("};");
+    _writer.writeLine();
+  }
+}

@@ -1,0 +1,19 @@
+{
+  SIPServerTransaction serverTransaction=SIPServerTransaction.this;
+  if (serverTransaction.isTerminated()) {
+    this.cancel();
+  }
+ else {
+    ticksLeft--;
+    if (ticksLeft == -1) {
+      serverTransaction.fireReliableResponseRetransmissionTimer();
+      this.ticksLeft=2 * ticks;
+      this.ticks=this.ticksLeft;
+      if (this.ticksLeft >= SIPTransaction.TIMER_H) {
+        this.cancel();
+        setState(TERMINATED_STATE);
+        fireTimeoutTimer();
+      }
+    }
+  }
+}

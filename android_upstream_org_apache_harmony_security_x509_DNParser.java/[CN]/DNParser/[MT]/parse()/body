@@ -1,0 +1,46 @@
+{
+  List<List<AttributeTypeAndValue>> list=new ArrayList<List<AttributeTypeAndValue>>();
+  String attType=nextAT();
+  if (attType == null) {
+    return list;
+  }
+  List<AttributeTypeAndValue> atav=new ArrayList<AttributeTypeAndValue>();
+  while (true) {
+    if (pos == chars.length) {
+      atav.add(new AttributeTypeAndValue(attType,new AttributeValue("",false)));
+      list.add(0,atav);
+      return list;
+    }
+switch (chars[pos]) {
+case '"':
+      atav.add(new AttributeTypeAndValue(attType,new AttributeValue(quotedAV(),hasQE)));
+    break;
+case '#':
+  atav.add(new AttributeTypeAndValue(attType,new AttributeValue(hexAV(),encoded)));
+break;
+case '+':
+case ',':
+case ';':
+atav.add(new AttributeTypeAndValue(attType,new AttributeValue("",false)));
+break;
+default :
+atav.add(new AttributeTypeAndValue(attType,new AttributeValue(escapedAV(),hasQE)));
+}
+if (pos >= chars.length) {
+list.add(0,atav);
+return list;
+}
+if (chars[pos] == ',' || chars[pos] == ';') {
+list.add(0,atav);
+atav=new ArrayList<AttributeTypeAndValue>();
+}
+ else if (chars[pos] != '+') {
+throw new IOException("Invalid distinguished name string");
+}
+pos++;
+attType=nextAT();
+if (attType == null) {
+throw new IOException("Invalid distinguished name string");
+}
+}
+}

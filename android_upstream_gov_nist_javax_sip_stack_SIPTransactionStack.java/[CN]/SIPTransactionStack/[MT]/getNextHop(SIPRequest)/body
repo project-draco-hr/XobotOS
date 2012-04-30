@@ -1,0 +1,15 @@
+{
+  if (this.useRouterForAll) {
+    if (router != null)     return router.getNextHop(sipRequest);
+ else     return null;
+  }
+ else {
+    if (sipRequest.getRequestURI().isSipURI() || sipRequest.getRouteHeaders() != null) {
+      return defaultRouter.getNextHop(sipRequest);
+    }
+ else     if (router != null) {
+      return router.getNextHop(sipRequest);
+    }
+ else     return null;
+  }
+}

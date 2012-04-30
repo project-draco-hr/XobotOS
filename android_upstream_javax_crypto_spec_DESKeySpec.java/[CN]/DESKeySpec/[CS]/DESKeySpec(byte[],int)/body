@@ -1,0 +1,10 @@
+{
+  if (key == null) {
+    throw new NullPointerException("key == null");
+  }
+  if (key.length - offset < DES_KEY_LEN) {
+    throw new InvalidKeyException("key too short");
+  }
+  this.key=new byte[DES_KEY_LEN];
+  System.arraycopy(key,offset,this.key,0,DES_KEY_LEN);
+}

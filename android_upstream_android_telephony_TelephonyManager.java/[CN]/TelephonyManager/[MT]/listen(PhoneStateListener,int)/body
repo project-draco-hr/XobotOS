@@ -1,0 +1,11 @@
+{
+  String pkgForDebug=sContext != null ? sContext.getPackageName() : "<unknown>";
+  try {
+    Boolean notifyNow=(getITelephony() != null);
+    sRegistry.listen(pkgForDebug,listener.callback,events,notifyNow);
+  }
+ catch (  RemoteException ex) {
+  }
+catch (  NullPointerException ex) {
+  }
+}

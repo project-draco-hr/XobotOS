@@ -1,0 +1,9 @@
+{
+  if (alias == null) {
+    throw new NullPointerException("alias == null");
+  }
+  if (!isGetKeyStore) {
+    throw new IllegalStateException("getKeyStore() was not invoked");
+  }
+  return protParameter;
+}

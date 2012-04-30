@@ -1,0 +1,10 @@
+{
+  if (index < 0 || index >= count) {
+    throw indexAndLength(index);
+  }
+  if (shared) {
+    value=value.clone();
+    shared=false;
+  }
+  value[index]=ch;
+}

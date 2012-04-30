@@ -1,0 +1,7 @@
+{
+synchronized (sSync) {
+    if (sGlobals == null) {
+      sGlobals=new Globals(looper);
+    }
+  }
+}

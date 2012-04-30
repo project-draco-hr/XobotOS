@@ -1,0 +1,17 @@
+{
+  BufferedReader lineReader=new BufferedReader(new StringReader(lines));
+  String line;
+  try {
+    while (null != (line=lineReader.readLine())) {
+      if (line.trim().length() > 0) {
+        writeIndentedLine(line);
+      }
+ else {
+        writeLine();
+      }
+    }
+  }
+ catch (  java.io.IOException x) {
+    throw new RuntimeException(x);
+  }
+}

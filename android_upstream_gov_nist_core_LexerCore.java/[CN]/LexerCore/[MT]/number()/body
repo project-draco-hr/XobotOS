@@ -1,0 +1,20 @@
+{
+  int startIdx=ptr;
+  try {
+    if (!isDigit(lookAhead(0))) {
+      throw new ParseException(buffer + ": Unexpected token at " + lookAhead(0),ptr);
+    }
+    consume(1);
+    while (true) {
+      char next=lookAhead(0);
+      if (isDigit(next)) {
+        consume(1);
+      }
+ else       break;
+    }
+    return buffer.substring(startIdx,ptr);
+  }
+ catch (  ParseException ex) {
+    return buffer.substring(startIdx,ptr);
+  }
+}

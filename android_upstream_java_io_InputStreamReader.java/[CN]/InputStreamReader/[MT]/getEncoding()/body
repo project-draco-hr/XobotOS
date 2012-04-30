@@ -1,0 +1,6 @@
+{
+  if (!isOpen()) {
+    return null;
+  }
+  return HistoricalCharsetNames.get(decoder.charset());
+}

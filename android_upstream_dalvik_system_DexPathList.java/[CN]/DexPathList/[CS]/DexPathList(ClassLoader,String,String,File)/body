@@ -1,0 +1,19 @@
+{
+  if (definingContext == null) {
+    throw new NullPointerException("definingContext == null");
+  }
+  if (dexPath == null) {
+    throw new NullPointerException("dexPath == null");
+  }
+  if (optimizedDirectory != null) {
+    if (!optimizedDirectory.exists()) {
+      throw new IllegalArgumentException("optimizedDirectory doesn't exist: " + optimizedDirectory);
+    }
+    if (!(optimizedDirectory.canRead() && optimizedDirectory.canWrite())) {
+      throw new IllegalArgumentException("optimizedDirectory not readable/writable: " + optimizedDirectory);
+    }
+  }
+  this.definingContext=definingContext;
+  this.dexElements=makeDexElements(splitDexPath(dexPath),optimizedDirectory);
+  this.nativeLibraryDirectories=splitLibraryPath(libraryPath);
+}

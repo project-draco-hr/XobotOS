@@ -1,0 +1,20 @@
+{
+  boolean suspendCurrent=false;
+synchronized (threadRefs) {
+    Thread current=Thread.currentThread();
+    for (    Thread thread : threads) {
+      if (thread == current) {
+        suspendCurrent=true;
+      }
+ else {
+        thread.suspend();
+      }
+    }
+  }
+synchronized (groups) {
+    for (    ThreadGroup group : groups) {
+      suspendCurrent|=group.suspendHelper();
+    }
+  }
+  return suspendCurrent;
+}

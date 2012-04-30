@@ -1,0 +1,17 @@
+{
+  for (Class<?> c=this; c != null; c=c.getSuperclass()) {
+    Field result=Class.getDeclaredField(c,name);
+    if (result != null && (result.getModifiers() & Modifier.PUBLIC) != 0) {
+      return result;
+    }
+  }
+  for (Class<?> c=this; c != null; c=c.getSuperclass()) {
+    for (    Class<?> ifc : c.getInterfaces()) {
+      Field result=ifc.getPublicFieldRecursive(name);
+      if (result != null && (result.getModifiers() & Modifier.PUBLIC) != 0) {
+        return result;
+      }
+    }
+  }
+  return null;
+}

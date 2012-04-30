@@ -1,0 +1,15 @@
+import os
+import tempfile
+import shutil
+import subprocess
+if (__name__ == '__main__'):
+
+    def RunTest(description, function, **kwargs):
+        print (('Testing ' + description) + ':'),
+        if function(**kwargs):
+            print 'ok'
+        else:
+            print 'fail'
+    RunTest("ar 'T' flag", TestArSupportsT)
+    RunTest("ar 'T' flag with ccache", TestArSupportsT, cc_command='ccache cc')
+    RunTest('ld --threads', TestLinkerSupportsThreads)

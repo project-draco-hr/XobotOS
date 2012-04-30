@@ -1,0 +1,15 @@
+{
+  if (unlimitedServerTransactionTableSize) {
+    return new SIPServerTransaction(this,encapsulatedMessageChannel);
+  }
+ else {
+    float threshold=((float)(serverTransactionTable.size() - serverTransactionTableLowaterMark)) / ((float)(serverTransactionTableHighwaterMark - serverTransactionTableLowaterMark));
+    boolean decision=Math.random() > 1.0 - threshold;
+    if (decision) {
+      return null;
+    }
+ else {
+      return new SIPServerTransaction(this,encapsulatedMessageChannel);
+    }
+  }
+}

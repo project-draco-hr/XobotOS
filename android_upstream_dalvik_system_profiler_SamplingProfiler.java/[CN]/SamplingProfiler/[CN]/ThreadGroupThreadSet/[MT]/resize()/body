@@ -1,0 +1,5 @@
+{
+  int count=threadGroup.activeCount();
+  threads=new Thread[count * 2];
+  lastThread=0;
+}

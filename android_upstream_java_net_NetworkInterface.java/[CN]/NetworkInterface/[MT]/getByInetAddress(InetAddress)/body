@@ -1,0 +1,11 @@
+{
+  if (address == null) {
+    throw new NullPointerException("address == null");
+  }
+  for (  NetworkInterface networkInterface : getNetworkInterfacesList()) {
+    if (networkInterface.addresses.contains(address)) {
+      return networkInterface;
+    }
+  }
+  return null;
+}

@@ -1,0 +1,5 @@
+{
+  if (!isProfiling()) {
+    mPerfMetrics=mPerformanceCollector.endSnapshot();
+  }
+}

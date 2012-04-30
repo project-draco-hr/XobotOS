@@ -1,0 +1,21 @@
+{
+  if (!binding.isField())   return null;
+  String mapped=my(CSharpDriver.class).mappedVariableName(binding);
+  if (mapped != null)   return mapped;
+  String qualifiedName=BindingUtils.qualifiedName(binding);
+  Configuration.MemberMapping renaming=_configuration.renamedMember(qualifiedName,MemberKind.Field);
+  if (renaming != null)   return renaming.name;
+  Configuration.MemberMapping mapping=_configuration.mappedMember(qualifiedName);
+  if (mapping != null)   return mapping.name;
+  ITypeBinding declaringType=binding.getDeclaringClass();
+  if ((declaringType != null) && declaringType.isInterface()) {
+    final String extracted=extractedInterfaceName(declaringType);
+    return extracted + "." + identifier(binding.getName());
+  }
+  if ((declaringType != null) && declaringType.getTypeDeclaration().isGenericType()) {
+    if (binding.getConstantValue() == null)     return null;
+    final String declaringName=mappedTypeName(declaringType.getTypeDeclaration());
+    return declaringName + "." + identifier(binding.getName());
+  }
+  return null;
+}

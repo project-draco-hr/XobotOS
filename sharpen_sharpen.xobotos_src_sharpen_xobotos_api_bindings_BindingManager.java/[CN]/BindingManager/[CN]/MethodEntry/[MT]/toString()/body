@@ -1,0 +1,3 @@
+{
+  return String.format("MethodEntry[%s:%s:%s]",BindingUtils.qualifiedName(Declaration.resolveBinding()),Template,Output);
+}

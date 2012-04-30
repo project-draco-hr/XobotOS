@@ -1,0 +1,4 @@
+{
+  if (this.hostPort == null)   throw new UnsupportedOperationException("Null hostPort cannot compute hashcode");
+  return this.hostPort.encode().hashCode();
+}

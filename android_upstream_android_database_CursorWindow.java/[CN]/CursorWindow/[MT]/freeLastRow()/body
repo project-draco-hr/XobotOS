@@ -1,0 +1,9 @@
+{
+  acquireReference();
+  try {
+    nativeFreeLastRow(mWindowPtr);
+  }
+  finally {
+    releaseReference();
+  }
+}

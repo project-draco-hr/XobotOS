@@ -1,0 +1,6 @@
+{
+  if (aPort < 0 || aPort > 65535) {
+    throw new IllegalArgumentException("Port out of range: " + aPort);
+  }
+  port=aPort;
+}

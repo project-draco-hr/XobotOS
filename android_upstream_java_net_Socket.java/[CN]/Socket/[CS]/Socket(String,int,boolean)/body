@@ -1,0 +1,4 @@
+{
+  this();
+  tryAllAddresses(hostName,port,null,0,streaming);
+}

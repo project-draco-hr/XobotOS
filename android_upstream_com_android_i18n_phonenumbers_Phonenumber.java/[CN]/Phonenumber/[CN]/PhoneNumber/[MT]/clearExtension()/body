@@ -1,0 +1,5 @@
+{
+  hasExtension=false;
+  extension_="";
+  return this;
+}

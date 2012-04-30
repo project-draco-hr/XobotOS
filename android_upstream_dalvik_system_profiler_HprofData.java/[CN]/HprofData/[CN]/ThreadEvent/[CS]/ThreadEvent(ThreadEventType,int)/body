@@ -1,0 +1,8 @@
+{
+  this.type=ThreadEventType.END;
+  this.objectId=-1;
+  this.threadId=threadId;
+  this.threadName=null;
+  this.groupName=null;
+  this.parentGroupName=null;
+}

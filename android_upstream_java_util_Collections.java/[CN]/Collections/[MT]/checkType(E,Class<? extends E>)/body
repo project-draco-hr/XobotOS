@@ -1,0 +1,6 @@
+{
+  if (obj != null && !type.isInstance(obj)) {
+    throw new ClassCastException("Attempt to insert element of type " + obj.getClass() + " into collection of type "+ type);
+  }
+  return obj;
+}

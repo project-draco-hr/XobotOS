@@ -1,0 +1,40 @@
+{
+  PhoneNumber firstNumber=new PhoneNumber();
+  firstNumber.mergeFrom(firstNumberIn);
+  PhoneNumber secondNumber=new PhoneNumber();
+  secondNumber.mergeFrom(secondNumberIn);
+  firstNumber.clearRawInput();
+  firstNumber.clearCountryCodeSource();
+  firstNumber.clearPreferredDomesticCarrierCode();
+  secondNumber.clearRawInput();
+  secondNumber.clearCountryCodeSource();
+  secondNumber.clearPreferredDomesticCarrierCode();
+  if (firstNumber.hasExtension() && firstNumber.getExtension().length() == 0) {
+    firstNumber.clearExtension();
+  }
+  if (secondNumber.hasExtension() && secondNumber.getExtension().length() == 0) {
+    secondNumber.clearExtension();
+  }
+  if (firstNumber.hasExtension() && secondNumber.hasExtension() && !firstNumber.getExtension().equals(secondNumber.getExtension())) {
+    return MatchType.NO_MATCH;
+  }
+  int firstNumberCountryCode=firstNumber.getCountryCode();
+  int secondNumberCountryCode=secondNumber.getCountryCode();
+  if (firstNumberCountryCode != 0 && secondNumberCountryCode != 0) {
+    if (firstNumber.exactlySameAs(secondNumber)) {
+      return MatchType.EXACT_MATCH;
+    }
+ else     if (firstNumberCountryCode == secondNumberCountryCode && isNationalNumberSuffixOfTheOther(firstNumber,secondNumber)) {
+      return MatchType.SHORT_NSN_MATCH;
+    }
+    return MatchType.NO_MATCH;
+  }
+  firstNumber.setCountryCode(secondNumberCountryCode);
+  if (firstNumber.exactlySameAs(secondNumber)) {
+    return MatchType.NSN_MATCH;
+  }
+  if (isNationalNumberSuffixOfTheOther(firstNumber,secondNumber)) {
+    return MatchType.SHORT_NSN_MATCH;
+  }
+  return MatchType.NO_MATCH;
+}

@@ -1,0 +1,17 @@
+def compute_size(requested_width, requested_height, rev_width, time_height):
+    'Converts potentially empty requested size into a concrete size.\n    \n    (Number?,  Number?) -> (Number, Number)'
+    pic_width = 0
+    pic_height = 0
+    if ((requested_width is not None) and (requested_height is not None)):
+        pic_height = requested_height
+        pic_width = requested_width
+    elif (requested_width is not None):
+        pic_width = requested_width
+        pic_height = (pic_width * (float(time_height) / rev_width))
+    elif (requested_height is not None):
+        pic_height = requested_height
+        pic_width = (pic_height * (float(rev_width) / time_height))
+    else:
+        pic_height = 800
+        pic_width = max((rev_width * 3), (pic_height * (float(rev_width) / time_height)))
+    return (pic_width, pic_height)

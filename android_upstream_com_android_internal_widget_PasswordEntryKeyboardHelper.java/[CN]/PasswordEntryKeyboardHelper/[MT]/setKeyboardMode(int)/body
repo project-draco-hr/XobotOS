@@ -1,0 +1,17 @@
+{
+switch (mode) {
+case KEYBOARD_MODE_ALPHA:
+    mKeyboardView.setKeyboard(mQwertyKeyboard);
+  mKeyboardState=KEYBOARD_STATE_NORMAL;
+final boolean visiblePassword=Settings.System.getInt(mContext.getContentResolver(),Settings.System.TEXT_SHOW_PASSWORD,1) != 0;
+final boolean enablePreview=false;
+mKeyboardView.setPreviewEnabled(visiblePassword && enablePreview);
+break;
+case KEYBOARD_MODE_NUMERIC:
+mKeyboardView.setKeyboard(mNumericKeyboard);
+mKeyboardState=KEYBOARD_STATE_NORMAL;
+mKeyboardView.setPreviewEnabled(false);
+break;
+}
+mKeyboardMode=mode;
+}

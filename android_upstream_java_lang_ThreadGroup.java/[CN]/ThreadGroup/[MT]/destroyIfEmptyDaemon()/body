@@ -1,0 +1,11 @@
+{
+synchronized (threadRefs) {
+    if (isDaemon && !isDestroyed && !threads.iterator().hasNext()) {
+synchronized (groups) {
+        if (groups.isEmpty()) {
+          destroy();
+        }
+      }
+    }
+  }
+}

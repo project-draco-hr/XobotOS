@@ -1,0 +1,4 @@
+def chmod(self, path, mode):
+    'Changes permissions on the specified file or directory\n        path name.'
+    path = self.canonicalize(path)
+    os.chmod(path, mode)

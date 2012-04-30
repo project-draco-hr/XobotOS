@@ -1,0 +1,4 @@
+{
+  PAssertedIdentityList retval=new PAssertedIdentityList();
+  return retval.clonehlist(this.hlist);
+}

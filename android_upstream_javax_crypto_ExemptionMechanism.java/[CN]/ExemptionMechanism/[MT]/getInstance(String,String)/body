@@ -1,0 +1,13 @@
+{
+  if (provider == null) {
+    throw new IllegalArgumentException("provider == null");
+  }
+  Provider impProvider=Security.getProvider(provider);
+  if (impProvider == null) {
+    throw new NoSuchProviderException(provider);
+  }
+  if (algorithm == null) {
+    throw new NullPointerException();
+  }
+  return getInstance(algorithm,impProvider);
+}

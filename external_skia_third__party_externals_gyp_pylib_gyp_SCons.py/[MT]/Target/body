@@ -1,0 +1,2 @@
+def Target(spec):
+    return TargetMap[spec.get('type')](spec)

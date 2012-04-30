@@ -1,0 +1,8 @@
+{
+  if (pos >= 0) {
+    pos=(end + 1) % BUFF_SIZE;
+  }
+ else {
+    throw new IOException("Could not reset the stream: " + "position became invalid or stream has not been marked");
+  }
+}

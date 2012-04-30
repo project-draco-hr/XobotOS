@@ -1,0 +1,14 @@
+def initialize_build_tool(self):
+    "\n    Initializes the .build_tool attribute.\n\n    Searches the .build_tool_list for an executable name on the user's\n    $PATH.  The first tool on the list is used as-is if nothing is found\n    on the current $PATH.\n    "
+    for build_tool in self.build_tool_list:
+        if (not build_tool):
+            continue
+        if os.path.isabs(build_tool):
+            self.build_tool = build_tool
+            return
+        build_tool = self.where_is(build_tool)
+        if build_tool:
+            self.build_tool = build_tool
+            return
+    if self.build_tool_list:
+        self.build_tool = self.build_tool_list[0]

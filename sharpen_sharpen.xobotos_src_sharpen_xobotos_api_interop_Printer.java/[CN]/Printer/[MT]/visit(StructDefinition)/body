@@ -1,0 +1,12 @@
+{
+  _writer.write("struct ");
+  _writer.writeLine(node.getName());
+  _writer.writeLine("{");
+  _writer.indent();
+  for (  AbstractDefinition member : node.getMembers()) {
+    member.accept(this);
+  }
+  _writer.outdent();
+  _writer.writeLine("};");
+  _writer.writeLine();
+}

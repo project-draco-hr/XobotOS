@@ -1,0 +1,6 @@
+{
+  if (this.branch == null) {
+    this.branch=getOriginalRequest().getTopmostVia().getBranch();
+  }
+  return branch;
+}

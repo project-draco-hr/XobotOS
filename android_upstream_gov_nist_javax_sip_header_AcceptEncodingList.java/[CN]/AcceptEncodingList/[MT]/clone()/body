@@ -1,0 +1,5 @@
+{
+  AcceptEncodingList retval=new AcceptEncodingList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

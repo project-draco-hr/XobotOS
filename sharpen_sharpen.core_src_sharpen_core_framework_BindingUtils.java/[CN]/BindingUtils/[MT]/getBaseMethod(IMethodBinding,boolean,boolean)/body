@@ -1,0 +1,19 @@
+{
+  if (!allowStatic && Modifier.isStatic(methodBinding.getModifiers()))   return null;
+  ITypeBinding superclass=methodBinding.getDeclaringClass().getSuperclass();
+  if (null != superclass) {
+    IMethodBinding result=BindingUtils.findOverriddenMethodInHierarchy(superclass,methodBinding);
+    if (null != result)     return result;
+  }
+  if (Modifier.isStatic(methodBinding.getModifiers()))   return null;
+  Set<ITypeBinding> baseInterfaces=new LinkedHashSet<ITypeBinding>();
+  collectInterfaces(baseInterfaces,methodBinding.getDeclaringClass());
+  for (  final ITypeBinding iface : baseInterfaces) {
+    if (!isNestedInInterface(iface) || !isValidCSInterface(iface)) {
+      if (overrideOnly)       continue;
+    }
+    IMethodBinding result=BindingUtils.findOverriddenMethodInType(iface,methodBinding);
+    if (result != null)     return result;
+  }
+  return null;
+}

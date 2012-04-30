@@ -1,0 +1,9 @@
+{
+  if (alias == null) {
+    throw new NullPointerException("alias == null");
+  }
+  if (!isInit) {
+    throwNotInitialized();
+  }
+  return implSpi.engineGetEntry(alias,param);
+}

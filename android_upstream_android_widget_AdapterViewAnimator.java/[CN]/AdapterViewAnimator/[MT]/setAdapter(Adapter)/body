@@ -1,0 +1,15 @@
+{
+  if (mAdapter != null && mDataSetObserver != null) {
+    mAdapter.unregisterDataSetObserver(mDataSetObserver);
+  }
+  mAdapter=adapter;
+  checkFocus();
+  if (mAdapter != null) {
+    mDataSetObserver=new AdapterDataSetObserver();
+    mAdapter.registerDataSetObserver(mDataSetObserver);
+    mItemCount=mAdapter.getCount();
+  }
+  setFocusable(true);
+  mWhichChild=0;
+  showOnly(mWhichChild,false);
+}

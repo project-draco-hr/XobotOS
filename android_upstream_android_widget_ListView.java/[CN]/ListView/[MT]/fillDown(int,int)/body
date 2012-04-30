@@ -1,0 +1,17 @@
+{
+  View selectedView=null;
+  int end=(mBottom - mTop);
+  if ((mGroupFlags & CLIP_TO_PADDING_MASK) == CLIP_TO_PADDING_MASK) {
+    end-=mListPadding.bottom;
+  }
+  while (nextTop < end && pos < mItemCount) {
+    boolean selected=pos == mSelectedPosition;
+    View child=makeAndAddView(pos,nextTop,true,mListPadding.left,selected);
+    nextTop=child.getBottom() + mDividerHeight;
+    if (selected) {
+      selectedView=child;
+    }
+    pos++;
+  }
+  return selectedView;
+}

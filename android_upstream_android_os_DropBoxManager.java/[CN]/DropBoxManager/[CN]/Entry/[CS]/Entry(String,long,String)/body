@@ -1,0 +1,9 @@
+{
+  if (tag == null)   throw new NullPointerException("tag == null");
+  if (text == null)   throw new NullPointerException("text == null");
+  mTag=tag;
+  mTimeMillis=millis;
+  mData=text.getBytes();
+  mFileDescriptor=null;
+  mFlags=IS_TEXT;
+}

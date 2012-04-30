@@ -1,0 +1,11 @@
+{
+  final String fullName=BindingUtils.qualifiedName(type);
+  if (_configuration.typeHasMapping(fullName))   return false;
+  if (fullName.equals("java.lang.Iterable"))   return true;
+  for (  ITypeBinding iface : type.getInterfaces()) {
+    if (isIterableType(iface))     return true;
+  }
+  ITypeBinding parent=type.getSuperclass();
+  if (parent != null)   return isIterableType(parent);
+  return false;
+}

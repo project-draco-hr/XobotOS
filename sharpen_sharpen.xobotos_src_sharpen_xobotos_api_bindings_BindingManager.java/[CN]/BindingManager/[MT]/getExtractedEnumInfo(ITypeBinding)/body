@@ -1,0 +1,5 @@
+{
+  AbstractTypeBinding binding=resolveBinding(type);
+  if (binding instanceof EnumBinding)   return ((EnumBinding)binding).getExtractionInfo();
+  return null;
+}

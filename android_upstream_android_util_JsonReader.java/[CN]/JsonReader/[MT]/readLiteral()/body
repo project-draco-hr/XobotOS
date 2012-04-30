@@ -1,0 +1,11 @@
+{
+  value=nextLiteral(true);
+  if (valueLength == 0) {
+    throw syntaxError("Expected literal value");
+  }
+  token=decodeLiteral();
+  if (token == JsonToken.STRING) {
+    checkLenient();
+  }
+  return token;
+}

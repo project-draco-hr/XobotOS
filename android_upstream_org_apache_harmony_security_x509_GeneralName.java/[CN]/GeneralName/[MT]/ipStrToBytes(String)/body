@@ -1,0 +1,6 @@
+{
+  if (!InetAddress.isNumeric(ip)) {
+    throw new IOException("Not an IP address: " + ip);
+  }
+  return InetAddress.getByName(ip).getAddress();
+}

@@ -1,0 +1,3 @@
+def qa(out):
+    'Stringify input and quote as an xml attribute.'
+    return xml.sax.saxutils.quoteattr(str(out))

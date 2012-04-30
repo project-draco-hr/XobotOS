@@ -1,0 +1,20 @@
+{
+  if (!template.getClass().equals(this.getClass()))   throw new IllegalArgumentException("Bad class " + template.getClass());
+  SIPMessage templateMessage=(SIPMessage)template;
+  Object[] templateHeaders=templateMessage.headers.toArray();
+  for (int i=0; i < templateHeaders.length; i++) {
+    SIPHeader hdr=(SIPHeader)templateHeaders[i];
+    String hdrName=hdr.getHeaderName();
+    List<SIPHeader> myHdrs=this.getHeaderList(hdrName);
+    if (myHdrs == null) {
+      this.attachHeader(hdr);
+    }
+ else {
+      ListIterator<SIPHeader> it=myHdrs.listIterator();
+      while (it.hasNext()) {
+        SIPHeader sipHdr=(SIPHeader)it.next();
+        sipHdr.merge(hdr);
+      }
+    }
+  }
+}

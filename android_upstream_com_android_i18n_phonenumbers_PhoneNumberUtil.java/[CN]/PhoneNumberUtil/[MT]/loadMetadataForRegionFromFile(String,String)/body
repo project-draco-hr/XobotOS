@@ -1,0 +1,15 @@
+{
+  InputStream source=PhoneNumberUtil.class.getResourceAsStream(filePrefix + "_" + regionCode);
+  ObjectInputStream in;
+  try {
+    in=new ObjectInputStream(source);
+    PhoneMetadataCollection metadataCollection=new PhoneMetadataCollection();
+    metadataCollection.readExternal(in);
+    for (    PhoneMetadata metadata : metadataCollection.getMetadataList()) {
+      regionToMetadataMap.put(regionCode,metadata);
+    }
+  }
+ catch (  IOException e) {
+    LOGGER.log(Level.WARNING,e.toString());
+  }
+}

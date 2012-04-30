@@ -1,0 +1,9 @@
+def GetCopyrightBlockAttributes(self, comment_block):
+    'Given a comment block, return a tuple of attributes: (year, holder).\n\n        If comment_block is None, or none of the attributes are found,\n        this will return (None, None).'
+    if (not comment_block):
+        return (None, None)
+    matches = self._attribute_pattern.findall(comment_block)
+    if (not matches):
+        return (None, None)
+    first_match = matches[0]
+    return (first_match[0], first_match[1])

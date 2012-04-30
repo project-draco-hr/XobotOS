@@ -1,0 +1,3 @@
+{
+  super(new PointerType(new TypeReference("char16_t")),new CSTypeReference("System.IntPtr"),"ptr","ptr",Flags.FUNCTION,Flags.PASS_TO_CTOR);
+}

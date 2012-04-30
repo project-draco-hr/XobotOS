@@ -1,0 +1,16 @@
+{
+  Matcher m=iddPattern.matcher(number);
+  if (m.lookingAt()) {
+    int matchEnd=m.end();
+    Matcher digitMatcher=CAPTURING_DIGIT_PATTERN.matcher(number.substring(matchEnd));
+    if (digitMatcher.find()) {
+      String normalizedGroup=normalizeDigitsOnly(digitMatcher.group(1));
+      if (normalizedGroup.equals("0")) {
+        return false;
+      }
+    }
+    number.delete(0,matchEnd);
+    return true;
+  }
+  return false;
+}

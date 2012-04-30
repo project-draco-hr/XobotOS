@@ -1,0 +1,8 @@
+{
+  if (mBaselineAlignBottom) {
+    return getMeasuredHeight();
+  }
+ else {
+    return mBaseline;
+  }
+}

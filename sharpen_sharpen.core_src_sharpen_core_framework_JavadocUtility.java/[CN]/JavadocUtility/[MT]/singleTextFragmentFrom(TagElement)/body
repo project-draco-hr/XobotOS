@@ -1,0 +1,6 @@
+{
+  if (!hasSingleTextFragment(element)) {
+    throw new IllegalArgumentException(ASTUtility.sourceInformation(element) + ": expecting a single textual argument");
+  }
+  return textFragment(fragmentsFrom(element),0);
+}

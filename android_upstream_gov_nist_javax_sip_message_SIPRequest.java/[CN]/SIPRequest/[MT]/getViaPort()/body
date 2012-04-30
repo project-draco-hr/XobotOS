@@ -1,0 +1,5 @@
+{
+  Via via=(Via)this.getViaHeaders().getFirst();
+  if (via.hasPort())   return via.getPort();
+ else   return 5060;
+}

@@ -1,0 +1,33 @@
+{
+  if (port < -1) {
+    throw new MalformedURLException("port < -1: " + port);
+  }
+  if (protocol == null) {
+    throw new NullPointerException("protocol == null");
+  }
+  if (host != null && host.contains(":") && host.charAt(0) != '[') {
+    host="[" + host + "]";
+  }
+  this.protocol=protocol;
+  this.host=host;
+  this.port=port;
+  file=UrlUtils.authoritySafePath(host,file);
+  int hash=file.indexOf("#");
+  if (hash != -1) {
+    this.file=file.substring(0,hash);
+    this.ref=file.substring(hash + 1);
+  }
+ else {
+    this.file=file;
+  }
+  fixURL(false);
+  if (handler == null) {
+    setupStreamHandler();
+    if (streamHandler == null) {
+      throw new MalformedURLException("Unknown protocol: " + protocol);
+    }
+  }
+ else {
+    streamHandler=handler;
+  }
+}

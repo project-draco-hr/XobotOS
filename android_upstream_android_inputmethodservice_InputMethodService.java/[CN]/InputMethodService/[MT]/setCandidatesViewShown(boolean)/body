@@ -1,0 +1,11 @@
+{
+  updateCandidatesVisibility(shown);
+  if (!mShowInputRequested && mWindowVisible != shown) {
+    if (shown) {
+      showWindow(false);
+    }
+ else {
+      hideWindow();
+    }
+  }
+}

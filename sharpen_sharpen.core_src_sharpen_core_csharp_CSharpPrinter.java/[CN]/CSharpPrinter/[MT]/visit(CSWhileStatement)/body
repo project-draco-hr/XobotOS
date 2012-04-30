@@ -1,0 +1,3 @@
+{
+  writeBlockStatement("while",node);
+}

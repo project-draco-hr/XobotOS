@@ -1,0 +1,7 @@
+{
+  _writer.writeIndentation();
+  node.getTarget().accept(this);
+  _writer.write(" = ");
+  node.getSource().accept(this);
+  _writer.writeLine(";");
+}

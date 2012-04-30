@@ -1,0 +1,7 @@
+{
+  String langStr=languageCode.getLanguage();
+  String scriptStr="";
+  String regionStr=languageCode.getCountry();
+  String areaDescription=getAreaDescriptionForNumber(number,langStr,scriptStr,regionStr);
+  return (areaDescription.length() > 0) ? areaDescription : getCountryNameForNumber(number,languageCode);
+}

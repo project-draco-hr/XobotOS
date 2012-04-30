@@ -1,0 +1,24 @@
+def tempdir(self, path=None):
+    'Creates a temporary directory.\n        A unique directory name is generated if no path name is specified.\n        The directory is created, and will be removed when the TestCmd\n        object is destroyed.\n        '
+    if (path is None):
+        try:
+            path = tempfile.mktemp(prefix=tempfile.template)
+        except TypeError:
+            path = tempfile.mktemp()
+    os.mkdir(path)
+    cwd = os.getcwd()
+    try:
+        os.chdir(path)
+        path = os.getcwd()
+    finally:
+        os.chdir(cwd)
+    (drive, rest) = os.path.splitdrive(path)
+    if drive:
+        path = (string.upper(drive) + rest)
+    self._dirlist.append(path)
+    global _Cleanup
+    try:
+        _Cleanup.index(self)
+    except ValueError:
+        _Cleanup.append(self)
+    return path

@@ -1,0 +1,12 @@
+{
+  if ("Dalvik Core Library".equals(System.getProperty("java.specification.name"))) {
+    String className="dalvik.system.profiler.DalvikThreadSampler";
+    try {
+      return (ThreadSampler)Class.forName(className).newInstance();
+    }
+ catch (    Exception e) {
+      System.out.println("Problem creating " + className + ": "+ e);
+    }
+  }
+  return new PortableThreadSampler();
+}

@@ -1,0 +1,23 @@
+def ProcessVariablesAndConditionsInList(the_list, is_late, variables, build_file):
+    index = 0
+    while (index < len(the_list)):
+        item = the_list[index]
+        if isinstance(item, dict):
+            ProcessVariablesAndConditionsInDict(item, is_late, variables, build_file)
+        elif isinstance(item, list):
+            ProcessVariablesAndConditionsInList(item, is_late, variables, build_file)
+        elif isinstance(item, str):
+            expanded = ExpandVariables(item, is_late, variables, build_file)
+            if (isinstance(expanded, str) or isinstance(expanded, int)):
+                the_list[index] = expanded
+            elif isinstance(expanded, list):
+                del the_list[index]
+                for expanded_item in expanded:
+                    the_list.insert(index, expanded_item)
+                    index = (index + 1)
+                continue
+            else:
+                raise ValueError, (((('Variable expansion in this context permits strings and ' + 'lists only, found ') + expanded.__class__.__name__) + ' at ') + index)
+        elif (not isinstance(item, int)):
+            raise TypeError, ((('Unknown type ' + item.__class__.__name__) + ' at index ') + index)
+        index = (index + 1)

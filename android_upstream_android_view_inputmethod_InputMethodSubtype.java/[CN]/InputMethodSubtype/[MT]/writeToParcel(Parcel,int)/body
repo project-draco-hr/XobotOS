@@ -1,0 +1,9 @@
+{
+  dest.writeInt(mSubtypeNameResId);
+  dest.writeInt(mSubtypeIconResId);
+  dest.writeString(mSubtypeLocale);
+  dest.writeString(mSubtypeMode);
+  dest.writeString(mSubtypeExtraValue);
+  dest.writeInt(mIsAuxiliary ? 1 : 0);
+  dest.writeInt(mOverridesImplicitlyEnabledSubtype ? 1 : 0);
+}

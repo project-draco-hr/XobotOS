@@ -1,0 +1,6 @@
+{
+  for (; _current < _args.length; ++_current) {
+    parseArgument(_args[_current]);
+  }
+  validate();
+}

@@ -1,0 +1,45 @@
+{
+  super(context,attrs);
+  Resources res=context.getResources();
+  TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.MultiWaveView);
+  mOuterRadius=a.getDimension(R.styleable.MultiWaveView_outerRadius,mOuterRadius);
+  mHorizontalOffset=a.getDimension(R.styleable.MultiWaveView_horizontalOffset,mHorizontalOffset);
+  mVerticalOffset=a.getDimension(R.styleable.MultiWaveView_verticalOffset,mVerticalOffset);
+  mHitRadius=a.getDimension(R.styleable.MultiWaveView_hitRadius,mHitRadius);
+  mSnapMargin=a.getDimension(R.styleable.MultiWaveView_snapMargin,mSnapMargin);
+  mVibrationDuration=a.getInt(R.styleable.MultiWaveView_vibrationDuration,mVibrationDuration);
+  mFeedbackCount=a.getInt(R.styleable.MultiWaveView_feedbackCount,mFeedbackCount);
+  mHandleDrawable=new TargetDrawable(res,a.getDrawable(R.styleable.MultiWaveView_handleDrawable));
+  mTapRadius=mHandleDrawable.getWidth() / 2;
+  mOuterRing=new TargetDrawable(res,a.getDrawable(R.styleable.MultiWaveView_waveDrawable));
+  final int chevrons[]={R.styleable.MultiWaveView_leftChevronDrawable,R.styleable.MultiWaveView_rightChevronDrawable,R.styleable.MultiWaveView_topChevronDrawable,R.styleable.MultiWaveView_bottomChevronDrawable};
+  for (  int chevron : chevrons) {
+    Drawable chevronDrawable=a.getDrawable(chevron);
+    for (int i=0; i < mFeedbackCount; i++) {
+      mChevronDrawables.add(chevronDrawable != null ? new TargetDrawable(res,chevronDrawable) : null);
+    }
+  }
+  TypedValue outValue=new TypedValue();
+  if (a.getValue(R.styleable.MultiWaveView_targetDrawables,outValue)) {
+    internalSetTargetResources(outValue.resourceId);
+  }
+  if (mTargetDrawables == null || mTargetDrawables.size() == 0) {
+    throw new IllegalStateException("Must specify at least one target drawable");
+  }
+  if (a.getValue(R.styleable.MultiWaveView_targetDescriptions,outValue)) {
+    final int resourceId=outValue.resourceId;
+    if (resourceId == 0) {
+      throw new IllegalStateException("Must specify target descriptions");
+    }
+    setTargetDescriptionsResourceId(resourceId);
+  }
+  if (a.getValue(R.styleable.MultiWaveView_directionDescriptions,outValue)) {
+    final int resourceId=outValue.resourceId;
+    if (resourceId == 0) {
+      throw new IllegalStateException("Must specify direction descriptions");
+    }
+    setDirectionDescriptionsResourceId(resourceId);
+  }
+  a.recycle();
+  setVibrateEnabled(mVibrationDuration > 0);
+}

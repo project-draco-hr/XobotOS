@@ -1,0 +1,4 @@
+{
+  ITypeBinding binding=nestedTypeBinding();
+  return binding.getInterfaces().length > 0 ? binding.getInterfaces()[0] : binding.getSuperclass();
+}

@@ -1,0 +1,110 @@
+{
+  String dialogID=sipResponse.getDialogId(false);
+  SIPDialog sipDialog=this.sipStack.getDialog(dialogID);
+  String method=sipResponse.getCSeq().getMethod();
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("PROCESSING INCOMING RESPONSE: " + sipResponse.encodeMessage());
+  }
+  if (sipStack.checkBranchId() && !Utils.getInstance().responseBelongsToUs(sipResponse)) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logError("Detected stray response -- dropping");
+    }
+    return;
+  }
+  if (listeningPoint == null) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Dropping message: No listening point" + " registered!");
+    return;
+  }
+  SipProviderImpl sipProvider=listeningPoint.getProvider();
+  if (sipProvider == null) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("Dropping message:  no provider");
+    }
+    return;
+  }
+  if (sipProvider.getSipListener() == null) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("Dropping message:  no sipListener registered!");
+    }
+    return;
+  }
+  SIPClientTransaction transaction=(SIPClientTransaction)this.transactionChannel;
+  if (sipDialog == null && transaction != null) {
+    sipDialog=transaction.getDialog(dialogID);
+    if (sipDialog != null && sipDialog.getState() == DialogState.TERMINATED)     sipDialog=null;
+  }
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("Transaction = " + transaction + " sipDialog = "+ sipDialog);
+  if (this.transactionChannel != null) {
+    String originalFrom=((SIPRequest)this.transactionChannel.getRequest()).getFromTag();
+    if (originalFrom == null ^ sipResponse.getFrom().getTag() == null) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("From tag mismatch -- dropping response");
+      return;
+    }
+    if (originalFrom != null && !originalFrom.equalsIgnoreCase(sipResponse.getFrom().getTag())) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("From tag mismatch -- dropping response");
+      return;
+    }
+  }
+  if (sipStack.isDialogCreated(method) && sipResponse.getStatusCode() != 100 && sipResponse.getFrom().getTag() != null && sipResponse.getTo().getTag() != null && sipDialog == null) {
+    if (sipProvider.isAutomaticDialogSupportEnabled()) {
+      if (this.transactionChannel != null) {
+        if (sipDialog == null) {
+          sipDialog=sipStack.createDialog((SIPClientTransaction)this.transactionChannel,sipResponse);
+          this.transactionChannel.setDialog(sipDialog,sipResponse.getDialogId(false));
+        }
+      }
+ else {
+        sipDialog=this.sipStack.createDialog(sipProvider,sipResponse);
+      }
+    }
+  }
+ else {
+    if (sipDialog != null && transaction == null && sipDialog.getState() != DialogState.TERMINATED) {
+      if (sipResponse.getStatusCode() / 100 != 2) {
+        if (sipStack.isLoggingEnabled())         sipStack.getStackLogger().logDebug("status code != 200 ; statusCode = " + sipResponse.getStatusCode());
+      }
+ else       if (sipDialog.getState() == DialogState.TERMINATED) {
+        if (sipStack.isLoggingEnabled()) {
+          sipStack.getStackLogger().logDebug("Dialog is terminated -- dropping response!");
+        }
+        if (sipResponse.getStatusCode() / 100 == 2 && sipResponse.getCSeq().getMethod().equals(Request.INVITE)) {
+          try {
+            Request ackRequest=sipDialog.createAck(sipResponse.getCSeq().getSeqNumber());
+            sipDialog.sendAck(ackRequest);
+          }
+ catch (          Exception ex) {
+            sipStack.getStackLogger().logError("Error creating ack",ex);
+          }
+        }
+        return;
+      }
+ else {
+        boolean ackAlreadySent=false;
+        if (sipDialog.isAckSeen() && sipDialog.getLastAckSent() != null) {
+          if (sipDialog.getLastAckSent().getCSeq().getSeqNumber() == sipResponse.getCSeq().getSeqNumber() && sipResponse.getDialogId(false).equals(sipDialog.getLastAckSent().getDialogId(false))) {
+            ackAlreadySent=true;
+          }
+        }
+        if (ackAlreadySent && sipResponse.getCSeq().getMethod().equals(sipDialog.getMethod())) {
+          try {
+            if (sipStack.isLoggingEnabled())             sipStack.getStackLogger().logDebug("resending ACK");
+            sipDialog.resendAck();
+            return;
+          }
+ catch (          SipException ex) {
+          }
+        }
+      }
+    }
+  }
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("sending response to TU for processing ");
+  if (sipDialog != null && sipResponse.getStatusCode() != 100 && sipResponse.getTo().getTag() != null) {
+    sipDialog.setLastResponse(transaction,sipResponse);
+  }
+  ResponseEventExt responseEvent=new ResponseEventExt(sipProvider,(ClientTransactionExt)transaction,sipDialog,(Response)sipResponse);
+  if (sipResponse.getCSeq().getMethod().equals(Request.INVITE)) {
+    ClientTransactionExt originalTx=this.sipStack.getForkedTransaction(sipResponse.getTransactionId());
+    responseEvent.setOriginalTransaction(originalTx);
+  }
+  sipProvider.handleEvent(responseEvent,transaction);
+}

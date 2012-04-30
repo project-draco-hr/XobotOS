@@ -1,0 +1,4 @@
+{
+  boolean foreign=!(prefix.equals("") || namespace.equals("") || namespace.equals(theSchema.getURI()));
+  return foreign;
+}

@@ -1,0 +1,14 @@
+{
+  boolean retval;
+  if (!other.getClass().equals(this.getClass())) {
+    return false;
+  }
+  RequestLine that=(RequestLine)other;
+  try {
+    retval=this.method.equals(that.method) && this.uri.equals(that.uri) && this.sipVersion.equals(that.sipVersion);
+  }
+ catch (  NullPointerException ex) {
+    retval=false;
+  }
+  return retval;
+}

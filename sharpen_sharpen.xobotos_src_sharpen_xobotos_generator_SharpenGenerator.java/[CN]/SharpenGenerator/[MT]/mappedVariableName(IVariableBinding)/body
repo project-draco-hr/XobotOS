@@ -1,0 +1,5 @@
+{
+  VariableBinding variable=my(BindingManager.class).resolveBinding(binding);
+  if (variable == null)   return null;
+  return variable.rename();
+}

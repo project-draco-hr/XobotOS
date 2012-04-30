@@ -1,0 +1,9 @@
+def report_not_up_to_date(self):
+    '\n    Reports that a build is not up-to-date.\n\n    This provides common reporting for formats that have complicated\n    conditions for checking whether a build is up-to-date.  Formats\n    that expect exact output from the command (make, scons) can\n    just set stdout= when they call the run_build() method.\n    '
+    print 'Build is not up-to-date:'
+    print self.banner('STDOUT ')
+    print self.stdout()
+    stderr = self.stderr()
+    if stderr:
+        print self.banner('STDERR ')
+        print stderr

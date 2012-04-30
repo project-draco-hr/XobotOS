@@ -1,0 +1,9 @@
+{
+  if (isInPlaybackState()) {
+    if (mMediaPlayer.isPlaying()) {
+      mMediaPlayer.pause();
+      mCurrentState=STATE_PAUSED;
+    }
+  }
+  mTargetState=STATE_PAUSED;
+}

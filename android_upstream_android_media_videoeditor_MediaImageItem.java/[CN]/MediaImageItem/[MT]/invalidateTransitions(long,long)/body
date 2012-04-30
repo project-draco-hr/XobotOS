@@ -1,0 +1,13 @@
+{
+  if (mBeginTransition != null) {
+    if (isOverlapping(startTimeMs,durationMs,0,mBeginTransition.getDuration())) {
+      mBeginTransition.invalidate();
+    }
+  }
+  if (mEndTransition != null) {
+    final long transitionDurationMs=mEndTransition.getDuration();
+    if (isOverlapping(startTimeMs,durationMs,getDuration() - transitionDurationMs,transitionDurationMs)) {
+      mEndTransition.invalidate();
+    }
+  }
+}

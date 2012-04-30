@@ -1,0 +1,4 @@
+{
+  Pair<V> current=pair;
+  if (newReference != current.reference || newStamp != current.stamp)   this.pair=Pair.of(newReference,newStamp);
+}

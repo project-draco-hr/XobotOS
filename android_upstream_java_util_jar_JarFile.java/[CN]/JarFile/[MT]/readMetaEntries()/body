@@ -1,0 +1,27 @@
+{
+  ZipEntry[] metaEntries=getMetaEntriesImpl();
+  if (metaEntries == null) {
+    verifier=null;
+    return;
+  }
+  boolean signed=false;
+  for (  ZipEntry entry : metaEntries) {
+    String entryName=entry.getName();
+    if (manifestEntry == null && entryName.equalsIgnoreCase(MANIFEST_NAME)) {
+      manifestEntry=entry;
+      if (verifier == null) {
+        break;
+      }
+    }
+ else {
+      if (verifier != null && (endsWithIgnoreCase(entryName,".SF") || endsWithIgnoreCase(entryName,".DSA") || endsWithIgnoreCase(entryName,".RSA"))) {
+        signed=true;
+        InputStream is=super.getInputStream(entry);
+        verifier.addMetaEntry(entryName,Streams.readFully(is));
+      }
+    }
+  }
+  if (!signed) {
+    verifier=null;
+  }
+}

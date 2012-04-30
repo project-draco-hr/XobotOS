@@ -1,0 +1,5 @@
+{
+  progressMonitor.subTask("source folder: " + srcFolder);
+  project.addSourceFolder(srcFolder);
+  return this;
+}

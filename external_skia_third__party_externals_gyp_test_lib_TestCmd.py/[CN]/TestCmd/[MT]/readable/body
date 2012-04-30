@@ -1,0 +1,37 @@
+def readable(self, top, read=1):
+    'Make the specified directory tree readable (read == 1)\n        or not (read == None).\n\n        This method has no effect on Windows systems, which use a\n        completely different mechanism to control file readability.\n        '
+    if (sys.platform == 'win32'):
+        return
+    if read:
+
+        def do_chmod(fname):
+            try:
+                st = os.stat(fname)
+            except OSError:
+                pass
+            else:
+                os.chmod(fname, stat.S_IMODE((st[stat.ST_MODE] | stat.S_IREAD)))
+    else:
+
+        def do_chmod(fname):
+            try:
+                st = os.stat(fname)
+            except OSError:
+                pass
+            else:
+                os.chmod(fname, stat.S_IMODE((st[stat.ST_MODE] & (~ stat.S_IREAD))))
+    if os.path.isfile(top):
+        do_chmod(top)
+    elif read:
+        do_chmod(top)
+
+        def chmod_entries(arg, dirname, names, do_chmod=do_chmod):
+            for n in names:
+                do_chmod(os.path.join(dirname, n))
+        os.path.walk(top, chmod_entries, None)
+    else:
+        col = Collector(top)
+        os.path.walk(top, col, None)
+        col.entries.reverse()
+        for d in col.entries:
+            do_chmod(d)

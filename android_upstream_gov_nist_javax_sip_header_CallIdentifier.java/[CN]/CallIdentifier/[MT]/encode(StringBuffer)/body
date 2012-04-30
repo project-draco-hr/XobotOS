@@ -1,0 +1,7 @@
+{
+  buffer.append(localId);
+  if (host != null) {
+    buffer.append(AT).append(host);
+  }
+  return buffer;
+}

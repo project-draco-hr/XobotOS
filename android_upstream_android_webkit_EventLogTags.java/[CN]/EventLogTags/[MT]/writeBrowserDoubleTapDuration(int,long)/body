@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(BROWSER_DOUBLE_TAP_DURATION,duration,time);
+}

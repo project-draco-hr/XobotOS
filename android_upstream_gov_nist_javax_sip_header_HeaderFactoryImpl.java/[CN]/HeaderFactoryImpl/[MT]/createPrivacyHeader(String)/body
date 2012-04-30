@@ -1,0 +1,5 @@
+{
+  if (privacyType == null)   throw new NullPointerException("null privacyType arg");
+  Privacy privacy=new Privacy(privacyType);
+  return privacy;
+}

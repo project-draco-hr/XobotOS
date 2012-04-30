@@ -1,0 +1,6 @@
+{
+  if (engine == null) {
+    return false;
+  }
+  return getEngineInfo(engine) != null;
+}

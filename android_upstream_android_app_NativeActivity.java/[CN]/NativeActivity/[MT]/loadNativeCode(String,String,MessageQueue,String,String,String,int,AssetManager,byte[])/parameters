@@ -1,0 +1,9 @@
+String path
+String funcname
+MessageQueue queue
+String internalDataPath
+String obbPath
+String externalDataPath
+int sdkVersion
+AssetManager assetMgr
+byte[] savedState

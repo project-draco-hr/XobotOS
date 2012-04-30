@@ -1,0 +1,43 @@
+{
+  if (lastException != null) {
+    throw lastException;
+  }
+  if (keyStore != null) {
+    isGetKeyStore=true;
+    return keyStore;
+  }
+  try {
+    final KeyStore ks=(providerForKeyStore == null ? KeyStore.getInstance(typeForKeyStore) : KeyStore.getInstance(typeForKeyStore,providerForKeyStore));
+    final char[] passwd;
+    if (protParameter instanceof PasswordProtection) {
+      passwd=((PasswordProtection)protParameter).getPassword();
+    }
+ else     if (protParameter instanceof CallbackHandlerProtection) {
+      passwd=KeyStoreSpi.getPasswordFromCallBack(protParameter);
+    }
+ else {
+      throw new KeyStoreException("protectionParameter is neither " + "PasswordProtection nor CallbackHandlerProtection instance");
+    }
+    if (fileForLoad != null) {
+      FileInputStream fis=null;
+      try {
+        fis=new FileInputStream(fileForLoad);
+        ks.load(fis,passwd);
+      }
+  finally {
+        IoUtils.closeQuietly(fis);
+      }
+    }
+ else {
+      ks.load(new TmpLSParameter(protParameter));
+    }
+    isGetKeyStore=true;
+    return ks;
+  }
+ catch (  KeyStoreException e) {
+    throw lastException=e;
+  }
+catch (  Exception e) {
+    throw lastException=new KeyStoreException(e);
+  }
+}

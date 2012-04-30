@@ -1,0 +1,29 @@
+def WriteTarget(self, spec, config, final_deps):
+    if (spec['type'] == 'none'):
+        if (len(final_deps) == 1):
+            return final_deps[0]
+    output = self.ComputeOutput(spec)
+    output_uses_linker = (spec['type'] in ('executable', 'loadable_module', 'shared_library'))
+    implicit_deps = set()
+    if ('dependencies' in spec):
+        if output_uses_linker:
+            extra_deps = set()
+            for dep in spec['dependencies']:
+                (input, linkable) = self.target_outputs.get(dep, (None, False))
+                if (not input):
+                    continue
+                if linkable:
+                    extra_deps.add(input)
+                elif ('lastchange' not in input):
+                    implicit_deps.add(input)
+            final_deps.extend(list(extra_deps))
+    command_map = {'executable': 'link', 'static_library': 'alink', 'loadable_module': 'solink_module', 'shared_library': 'solink', 'none': 'stamp', }
+    command = command_map[spec['type']]
+    if output_uses_linker:
+        self.WriteVariableList('ldflags', gyp.common.uniquer(map(self.ExpandSpecial, config.get('ldflags', []))))
+        self.WriteVariableList('libs', gyp.common.uniquer(map(self.ExpandSpecial, spec.get('libraries', []))))
+    extra_bindings = []
+    if (command in ('solink', 'solink_module')):
+        extra_bindings.append(('soname', os.path.split(output)[1]))
+    self.ninja.build(output, command, final_deps, implicit=list(implicit_deps), variables=extra_bindings)
+    return output

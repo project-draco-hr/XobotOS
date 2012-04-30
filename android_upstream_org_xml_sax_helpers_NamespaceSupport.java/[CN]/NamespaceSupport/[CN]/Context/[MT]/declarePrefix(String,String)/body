@@ -1,0 +1,26 @@
+{
+  if (!declsOK) {
+    throw new IllegalStateException("can't declare any more prefixes in this context");
+  }
+  if (!declSeen) {
+    copyTables();
+  }
+  if (declarations == null) {
+    declarations=new ArrayList<String>();
+  }
+  prefix=prefix.intern();
+  uri=uri.intern();
+  if ("".equals(prefix)) {
+    if ("".equals(uri)) {
+      defaultNS=null;
+    }
+ else {
+      defaultNS=uri;
+    }
+  }
+ else {
+    prefixTable.put(prefix,uri);
+    uriTable.put(uri,prefix);
+  }
+  declarations.add(prefix);
+}

@@ -1,0 +1,6 @@
+{
+  if (_staticCtor != null)   return _staticCtor;
+  _staticCtor=new CSConstructor(CSConstructorModifier.Static);
+  addMember(_staticCtor);
+  return _staticCtor;
+}

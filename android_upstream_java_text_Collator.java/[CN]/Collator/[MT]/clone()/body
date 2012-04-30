@@ -1,0 +1,10 @@
+{
+  try {
+    Collator clone=(Collator)super.clone();
+    clone.icuColl=(RuleBasedCollatorICU)icuColl.clone();
+    return clone;
+  }
+ catch (  CloneNotSupportedException e) {
+    throw new AssertionError(e);
+  }
+}

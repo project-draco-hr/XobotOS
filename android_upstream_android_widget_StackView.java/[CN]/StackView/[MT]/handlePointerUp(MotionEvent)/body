@@ -1,0 +1,69 @@
+{
+  int pointerIndex=ev.findPointerIndex(mActivePointerId);
+  float newY=ev.getY(pointerIndex);
+  int deltaY=(int)(newY - mInitialY);
+  mLastInteractionTime=System.currentTimeMillis();
+  if (mVelocityTracker != null) {
+    mVelocityTracker.computeCurrentVelocity(1000,mMaximumVelocity);
+    mYVelocity=(int)mVelocityTracker.getYVelocity(mActivePointerId);
+  }
+  if (mVelocityTracker != null) {
+    mVelocityTracker.recycle();
+    mVelocityTracker=null;
+  }
+  if (deltaY > mSwipeThreshold && mSwipeGestureType == GESTURE_SLIDE_DOWN && mStackSlider.mMode == StackSlider.NORMAL_MODE) {
+    mSwipeGestureType=GESTURE_NONE;
+    if (mStackMode == ITEMS_SLIDE_UP) {
+      showPrevious();
+    }
+ else {
+      showNext();
+    }
+    mHighlight.bringToFront();
+  }
+ else   if (deltaY < -mSwipeThreshold && mSwipeGestureType == GESTURE_SLIDE_UP && mStackSlider.mMode == StackSlider.NORMAL_MODE) {
+    mSwipeGestureType=GESTURE_NONE;
+    if (mStackMode == ITEMS_SLIDE_UP) {
+      showNext();
+    }
+ else {
+      showPrevious();
+    }
+    mHighlight.bringToFront();
+  }
+ else   if (mSwipeGestureType == GESTURE_SLIDE_UP) {
+    int duration;
+    float finalYProgress=(mStackMode == ITEMS_SLIDE_DOWN) ? 1 : 0;
+    if (mStackMode == ITEMS_SLIDE_UP || mStackSlider.mMode != StackSlider.NORMAL_MODE) {
+      duration=Math.round(mStackSlider.getDurationForNeutralPosition());
+    }
+ else {
+      duration=Math.round(mStackSlider.getDurationForOffscreenPosition());
+    }
+    StackSlider animationSlider=new StackSlider(mStackSlider);
+    PropertyValuesHolder snapBackY=PropertyValuesHolder.ofFloat("YProgress",finalYProgress);
+    PropertyValuesHolder snapBackX=PropertyValuesHolder.ofFloat("XProgress",0.0f);
+    ObjectAnimator pa=ObjectAnimator.ofPropertyValuesHolder(animationSlider,snapBackX,snapBackY);
+    pa.setDuration(duration);
+    pa.setInterpolator(new LinearInterpolator());
+    pa.start();
+  }
+ else   if (mSwipeGestureType == GESTURE_SLIDE_DOWN) {
+    float finalYProgress=(mStackMode == ITEMS_SLIDE_DOWN) ? 0 : 1;
+    int duration;
+    if (mStackMode == ITEMS_SLIDE_DOWN || mStackSlider.mMode != StackSlider.NORMAL_MODE) {
+      duration=Math.round(mStackSlider.getDurationForNeutralPosition());
+    }
+ else {
+      duration=Math.round(mStackSlider.getDurationForOffscreenPosition());
+    }
+    StackSlider animationSlider=new StackSlider(mStackSlider);
+    PropertyValuesHolder snapBackY=PropertyValuesHolder.ofFloat("YProgress",finalYProgress);
+    PropertyValuesHolder snapBackX=PropertyValuesHolder.ofFloat("XProgress",0.0f);
+    ObjectAnimator pa=ObjectAnimator.ofPropertyValuesHolder(animationSlider,snapBackX,snapBackY);
+    pa.setDuration(duration);
+    pa.start();
+  }
+  mActivePointerId=INVALID_POINTER;
+  mSwipeGestureType=GESTURE_NONE;
+}

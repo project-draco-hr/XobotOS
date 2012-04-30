@@ -1,0 +1,15 @@
+{
+  fileName=file.getPath();
+  if (mode != OPEN_READ && mode != (OPEN_READ | OPEN_DELETE)) {
+    throw new IllegalArgumentException();
+  }
+  if ((mode & OPEN_DELETE) != 0) {
+    fileToDeleteOnClose=file;
+  }
+ else {
+    fileToDeleteOnClose=null;
+  }
+  mRaf=new RandomAccessFile(fileName,"r");
+  readCentralDir();
+  guard.open("close");
+}

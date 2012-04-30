@@ -1,0 +1,16 @@
+{
+  service=ComponentName.readFromParcel(source);
+  pid=source.readInt();
+  uid=source.readInt();
+  process=source.readString();
+  foreground=source.readInt() != 0;
+  activeSince=source.readLong();
+  started=source.readInt() != 0;
+  clientCount=source.readInt();
+  crashCount=source.readInt();
+  lastActivityTime=source.readLong();
+  restarting=source.readLong();
+  flags=source.readInt();
+  clientPackage=source.readString();
+  clientLabel=source.readInt();
+}

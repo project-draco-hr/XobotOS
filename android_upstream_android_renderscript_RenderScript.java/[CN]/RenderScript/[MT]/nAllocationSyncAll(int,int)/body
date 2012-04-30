@@ -1,0 +1,4 @@
+{
+  validate();
+  rsnAllocationSyncAll(mContext,alloc,src);
+}

@@ -1,0 +1,6 @@
+{
+  StringBuffer s=new StringBuffer();
+  s.append(protocol);
+  if (parameters != null && !parameters.isEmpty())   s.append(SEMICOLON).append(parameters.encode());
+  return s.toString();
+}

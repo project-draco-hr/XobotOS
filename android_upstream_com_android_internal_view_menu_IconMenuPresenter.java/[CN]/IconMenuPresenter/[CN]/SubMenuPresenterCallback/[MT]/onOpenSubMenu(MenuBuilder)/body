@@ -1,0 +1,6 @@
+{
+  if (subMenu != null) {
+    mOpenSubMenuId=((SubMenuBuilder)subMenu).getItem().getItemId();
+  }
+  return false;
+}

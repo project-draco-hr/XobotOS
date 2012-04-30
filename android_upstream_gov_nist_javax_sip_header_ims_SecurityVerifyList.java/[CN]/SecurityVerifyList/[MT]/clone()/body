@@ -1,0 +1,4 @@
+{
+  SecurityVerifyList retval=new SecurityVerifyList();
+  return retval.clonehlist(this.hlist);
+}

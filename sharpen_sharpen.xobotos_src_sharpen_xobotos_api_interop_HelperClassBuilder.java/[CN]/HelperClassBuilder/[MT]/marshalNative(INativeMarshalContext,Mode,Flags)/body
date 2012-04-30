@@ -1,0 +1,32 @@
+{
+  final NativeVariable param=NativeVariable.createParameter(context,_structType,"ptr",mode == Mode.OUT ? NativeVariable.Flags.OUT : NativeVariable.Flags.BYREF);
+  EnumSet<NativeVariable.Flags> e=EnumSet.of(NativeVariable.Flags.CLASS);
+  final Expression wrap;
+  if (mode == Mode.OUT) {
+    wrap=null;
+  }
+ else   if (mode == Mode.REF) {
+    wrap=new MethodInvocation(WRAP.expr(),param.getReference());
+    e.add(NativeVariable.Flags.BYREF);
+  }
+ else {
+    wrap=new MethodInvocation(WRAP_CONST.expr(),param.getReference());
+    e.add(NativeVariable.Flags.BYREF);
+    e.add(NativeVariable.Flags.CONST);
+  }
+  final NativeVariable var=NativeVariable.createLocal(context,_nativeType,null,wrap,e);
+  if (mode == Mode.OUT)   context.addArgument(var.getAddressOfExpr());
+ else   if (flags == Flags.ALLOW_NULL)   context.addArgument(var.getReference());
+ else   context.addArgument(var.getDereferenceExpr());
+  if (!isBlittable() && (mode == Mode.REF)) {
+    Expression nullPtr=new NullLiteralExpression();
+    Expression nullCheck=new BinaryOperator("!=",param.getReference(),nullPtr);
+    IfStatement ifStm=new IfStatement(nullCheck);
+    ifStm.getThenBlock().addStatement(new MethodInvocation(MARSHAL_OUT.expr(),var.getDereferenceExpr(),param.getReference()));
+    context.addPostStatement(ifStm);
+  }
+ else   if (mode == Mode.OUT) {
+    context.addPostStatement(new AssignmentStatement(param.getDereferenceExpr(),new MethodInvocation(UNWRAP.expr(),var.getAddressOfExpr())));
+  }
+  if (mode != Mode.OUT)   context.addPostStatement(new DestructorInvocation(var.getReference()));
+}

@@ -1,0 +1,4 @@
+{
+  if (null != _xpath)   return _xpath;
+  return _xpath=newXPath();
+}

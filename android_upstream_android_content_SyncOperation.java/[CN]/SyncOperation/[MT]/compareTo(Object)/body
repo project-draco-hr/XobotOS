@@ -1,0 +1,10 @@
+{
+  SyncOperation other=(SyncOperation)o;
+  if (expedited != other.expedited) {
+    return expedited ? -1 : 1;
+  }
+  if (effectiveRunTime == other.effectiveRunTime) {
+    return 0;
+  }
+  return effectiveRunTime < other.effectiveRunTime ? -1 : 1;
+}

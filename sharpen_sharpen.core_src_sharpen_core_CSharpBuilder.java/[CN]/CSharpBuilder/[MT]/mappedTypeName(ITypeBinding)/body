@@ -1,0 +1,5 @@
+{
+  final String mapped=my(CSharpDriver.class).mappedTypeName(this,type);
+  if (mapped != null)   return mapped;
+  return my(Mappings.class).mappedTypeName(type);
+}

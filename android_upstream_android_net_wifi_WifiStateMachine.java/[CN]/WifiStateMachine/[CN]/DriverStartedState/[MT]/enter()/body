@@ -1,0 +1,27 @@
+{
+  if (DBG)   log(getName() + "\n");
+  EventLog.writeEvent(EVENTLOG_WIFI_STATE_CHANGED,getName());
+  mIsRunning=true;
+  updateBatteryWorkSource(null);
+  WifiNative.setBluetoothCoexistenceScanModeCommand(mBluetoothConnectionActive);
+  setCountryCode();
+  setFrequencyBand();
+  setNetworkDetailedState(DetailedState.DISCONNECTED);
+  WifiNative.stopFilteringMulticastV6Packets();
+  if (mFilteringMulticastV4Packets.get()) {
+    WifiNative.startFilteringMulticastV4Packets();
+  }
+ else {
+    WifiNative.stopFilteringMulticastV4Packets();
+  }
+  if (mIsScanMode) {
+    WifiNative.setScanResultHandlingCommand(SCAN_ONLY_MODE);
+    WifiNative.disconnectCommand();
+    transitionTo(mScanModeState);
+  }
+ else {
+    WifiNative.setScanResultHandlingCommand(CONNECT_MODE);
+    WifiNative.reconnectCommand();
+    transitionTo(mDisconnectedState);
+  }
+}

@@ -1,0 +1,12 @@
+{
+  if (connected) {
+    throw new ProtocolException("Connection already established");
+  }
+  for (  String permittedUserMethod : PERMITTED_USER_METHODS) {
+    if (permittedUserMethod.equals(method)) {
+      this.method=permittedUserMethod;
+      return;
+    }
+  }
+  throw new ProtocolException("Unknown method '" + method + "'; must be one of "+ Arrays.toString(PERMITTED_USER_METHODS));
+}

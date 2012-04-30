@@ -1,0 +1,5 @@
+{
+  AbstractTypeBinding binding=_typeBindings.get(type.getTypeDeclaration());
+  if (binding instanceof TypeBinding)   return (TypeBinding)binding;
+ else   return null;
+}

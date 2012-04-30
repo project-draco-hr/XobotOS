@@ -1,0 +1,9 @@
+{
+  ListIterator<AllowEvents> li=super.hlist.listIterator();
+  LinkedList<String> ll=new LinkedList<String>();
+  while (li.hasNext()) {
+    AllowEvents allowEvents=(AllowEvents)li.next();
+    ll.add(allowEvents.getEventType());
+  }
+  return ll.listIterator();
+}

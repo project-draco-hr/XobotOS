@@ -1,0 +1,16 @@
+{
+  if (algName == null || propName == null) {
+    return null;
+  }
+  String prop="Alg." + propName + "."+ algName;
+  Provider[] providers=getProviders();
+  for (  Provider provider : providers) {
+    for (Enumeration e=provider.propertyNames(); e.hasMoreElements(); ) {
+      String propertyName=(String)e.nextElement();
+      if (propertyName.equalsIgnoreCase(prop)) {
+        return provider.getProperty(propertyName);
+      }
+    }
+  }
+  return null;
+}

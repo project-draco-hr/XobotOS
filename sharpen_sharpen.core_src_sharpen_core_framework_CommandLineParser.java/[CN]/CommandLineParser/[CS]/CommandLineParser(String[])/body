@@ -1,0 +1,4 @@
+{
+  if (null == args)   illegalArgument("args cannot be null");
+  _args=args;
+}

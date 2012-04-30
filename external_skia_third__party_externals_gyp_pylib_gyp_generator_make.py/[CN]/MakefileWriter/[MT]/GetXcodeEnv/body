@@ -1,0 +1,30 @@
+def GetXcodeEnv(self, spec, target_relative_path=False):
+    'Return the environment variables that Xcode would set. See\n    http://developer.apple.com/library/mac/#documentation/DeveloperTools/Reference/XcodeBuildSettingRef/1-Build_Setting_Reference/build_setting_ref.html#//apple_ref/doc/uid/TP40003931-CH3-SW153\n    for a full list.'
+    if (self.flavor != 'mac'):
+        return {}
+    built_products_dir = generator_default_variables['PRODUCT_DIR']
+
+    def StripProductDir(s):
+        assert s.startswith(built_products_dir), s
+        return s[(len(built_products_dir) + 1):]
+    product_name = spec.get('product_name', self.output)
+    if self._InstallImmediately():
+        if product_name.startswith(built_products_dir):
+            product_name = StripProductDir(product_name)
+    srcroot = self.path
+    if target_relative_path:
+        built_products_dir = os.path.relpath(built_products_dir, srcroot)
+        srcroot = '.'
+    env = {'BUILT_PRODUCTS_DIR': built_products_dir, 'CONFIGURATION': '$(BUILDTYPE)', 'PRODUCT_NAME': product_name, 'FULL_PRODUCT_NAME': product_name, 'SRCROOT': srcroot, 'TARGET_BUILD_DIR': built_products_dir, 'TEMP_DIR': '$(TMPDIR)', }
+    if (self.type in ('executable', 'shared_library')):
+        env['EXECUTABLE_NAME'] = os.path.basename(self.output_binary)
+    if (self.type in ('executable', 'static_library', 'shared_library', 'loadable_module')):
+        env['EXECUTABLE_PATH'] = self.xcode_settings.GetExecutablePath()
+    if self.is_mac_bundle:
+        env['CONTENTS_FOLDER_PATH'] = self.xcode_settings.GetBundleContentsFolderPath()
+        env['UNLOCALIZED_RESOURCES_FOLDER_PATH'] = self.xcode_settings.GetBundleResourceFolder()
+        env['INFOPLIST_PATH'] = self.xcode_settings.GetBundlePlistPath()
+        env['EXECUTABLE_PATH'] = QuoteSpaces(env['EXECUTABLE_PATH'])
+        env['CONTENTS_FOLDER_PATH'] = QuoteSpaces(env['CONTENTS_FOLDER_PATH'])
+        env['INFOPLIST_PATH'] = QuoteSpaces(env['INFOPLIST_PATH'])
+    return env

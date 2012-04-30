@@ -1,0 +1,10 @@
+{
+switch (property) {
+case MtpConstants.DEVICE_PROPERTY_SYNCHRONIZATION_PARTNER:
+case MtpConstants.DEVICE_PROPERTY_DEVICE_FRIENDLY_NAME:
+    SharedPreferences.Editor e=mDeviceProperties.edit();
+  e.putString(Integer.toString(property),stringValue);
+return (e.commit() ? MtpConstants.RESPONSE_OK : MtpConstants.RESPONSE_GENERAL_ERROR);
+}
+return MtpConstants.RESPONSE_DEVICE_PROP_NOT_SUPPORTED;
+}

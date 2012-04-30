@@ -1,0 +1,18 @@
+{
+  int startIdx=ptr + 1;
+  if (lookAhead(0) != '\"')   return null;
+  consume(1);
+  while (true) {
+    char next=getNextChar();
+    if (next == '\"') {
+      break;
+    }
+ else     if (next == '\0') {
+      throw new ParseException(this.buffer + " :unexpected EOL",this.ptr);
+    }
+ else     if (next == '\\') {
+      consume(1);
+    }
+  }
+  return buffer.substring(startIdx,ptr - 1);
+}

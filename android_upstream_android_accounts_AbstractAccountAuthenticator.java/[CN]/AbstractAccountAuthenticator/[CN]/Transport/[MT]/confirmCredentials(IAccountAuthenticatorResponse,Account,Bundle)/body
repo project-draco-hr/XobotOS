@@ -1,0 +1,19 @@
+{
+  if (Log.isLoggable(TAG,Log.VERBOSE)) {
+    Log.v(TAG,"confirmCredentials: " + account);
+  }
+  checkBinderPermission();
+  try {
+    final Bundle result=AbstractAccountAuthenticator.this.confirmCredentials(new AccountAuthenticatorResponse(response),account,options);
+    if (Log.isLoggable(TAG,Log.VERBOSE)) {
+      result.keySet();
+      Log.v(TAG,"confirmCredentials: result " + AccountManager.sanitizeResult(result));
+    }
+    if (result != null) {
+      response.onResult(result);
+    }
+  }
+ catch (  Exception e) {
+    handleException(response,"confirmCredentials",account.toString(),e);
+  }
+}

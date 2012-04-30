@@ -1,0 +1,3 @@
+CSharpBuilder builder
+IBuilderDelegate<?> dlg
+CSProperty property

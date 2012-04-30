@@ -1,0 +1,15 @@
+{
+  if (!valueDecoded) {
+    try {
+      decodeExtensionValue();
+    }
+ catch (    IOException ignored) {
+    }
+  }
+  if (extnValueObject instanceof BasicConstraints) {
+    return (BasicConstraints)extnValueObject;
+  }
+ else {
+    return null;
+  }
+}

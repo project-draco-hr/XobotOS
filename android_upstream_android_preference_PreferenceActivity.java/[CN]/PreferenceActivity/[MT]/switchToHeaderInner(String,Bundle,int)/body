@@ -1,0 +1,8 @@
+{
+  getFragmentManager().popBackStack(BACK_STACK_PREFS,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+  Fragment f=Fragment.instantiate(this,fragmentName,args);
+  FragmentTransaction transaction=getFragmentManager().beginTransaction();
+  transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+  transaction.replace(com.android.internal.R.id.prefs,f);
+  transaction.commitAllowingStateLoss();
+}

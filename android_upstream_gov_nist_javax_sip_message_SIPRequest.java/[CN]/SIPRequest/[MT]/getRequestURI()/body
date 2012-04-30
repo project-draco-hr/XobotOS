@@ -1,0 +1,4 @@
+{
+  if (this.requestLine == null)   return null;
+ else   return (javax.sip.address.URI)this.requestLine.getUri();
+}

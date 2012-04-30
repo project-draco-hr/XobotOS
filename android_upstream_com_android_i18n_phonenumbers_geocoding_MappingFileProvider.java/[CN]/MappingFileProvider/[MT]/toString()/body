@@ -1,0 +1,14 @@
+{
+  StringBuilder output=new StringBuilder();
+  for (int i=0; i < numOfEntries; i++) {
+    output.append(countryCallingCodes[i]);
+    output.append('|');
+    SortedSet<String> sortedSetOfLangs=new TreeSet<String>(availableLanguages.get(i));
+    for (    String lang : sortedSetOfLangs) {
+      output.append(lang);
+      output.append(',');
+    }
+    output.append('\n');
+  }
+  return output.toString();
+}

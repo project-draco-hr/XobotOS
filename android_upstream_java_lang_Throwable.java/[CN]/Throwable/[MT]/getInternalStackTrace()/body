@@ -1,0 +1,7 @@
+{
+  if (stackTrace == null) {
+    stackTrace=nativeGetStackTrace(stackState);
+    stackState=null;
+  }
+  return stackTrace;
+}

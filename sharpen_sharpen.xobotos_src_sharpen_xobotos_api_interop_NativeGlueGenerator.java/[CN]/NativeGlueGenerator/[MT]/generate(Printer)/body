@@ -1,0 +1,6 @@
+{
+  Method method=generate();
+  if (method == null)   return false;
+  printer.visit(method);
+  return true;
+}

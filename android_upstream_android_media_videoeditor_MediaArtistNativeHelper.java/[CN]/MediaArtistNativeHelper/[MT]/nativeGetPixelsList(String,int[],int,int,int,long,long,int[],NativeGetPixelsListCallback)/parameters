@@ -1,0 +1,9 @@
+String fileName
+int[] pixelArray
+int width
+int height
+int nosofTN
+long startTimeMs
+long endTimeMs
+int[] indices
+NativeGetPixelsListCallback callback

@@ -1,0 +1,29 @@
+{
+  if (byteCount < 0) {
+    throw new IllegalArgumentException("byteCount < 0: " + byteCount);
+  }
+synchronized (lock) {
+    checkNotClosed();
+    if (byteCount < 1) {
+      return 0;
+    }
+    if (end - pos >= byteCount) {
+      pos+=byteCount;
+      return byteCount;
+    }
+    long read=end - pos;
+    pos=end;
+    while (read < byteCount) {
+      if (fillBuf() == -1) {
+        return read;
+      }
+      if (end - pos >= byteCount - read) {
+        pos+=byteCount - read;
+        return byteCount;
+      }
+      read+=(end - pos);
+      pos=end;
+    }
+    return byteCount;
+  }
+}

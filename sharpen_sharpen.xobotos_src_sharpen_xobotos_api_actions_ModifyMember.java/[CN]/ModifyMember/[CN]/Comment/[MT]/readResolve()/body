@@ -1,0 +1,4 @@
+{
+  if (_text == null)   throw new ConfigurationException("<comment> requires 'text' attribute");
+  return this;
+}

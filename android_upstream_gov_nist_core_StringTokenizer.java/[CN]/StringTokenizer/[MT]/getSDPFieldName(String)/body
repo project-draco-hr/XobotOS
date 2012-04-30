@@ -1,0 +1,12 @@
+{
+  if (line == null)   return null;
+  String fieldName=null;
+  try {
+    int begin=line.indexOf("=");
+    fieldName=line.substring(0,begin);
+  }
+ catch (  IndexOutOfBoundsException e) {
+    return null;
+  }
+  return fieldName;
+}

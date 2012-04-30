@@ -1,0 +1,5 @@
+{
+  node.getParent().accept(this);
+  _writer.write("->");
+  _writer.write(node.getMember());
+}

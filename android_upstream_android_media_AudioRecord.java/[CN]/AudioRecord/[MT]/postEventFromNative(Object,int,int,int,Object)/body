@@ -1,0 +1,10 @@
+{
+  AudioRecord recorder=(AudioRecord)((WeakReference)audiorecord_ref).get();
+  if (recorder == null) {
+    return;
+  }
+  if (recorder.mEventHandler != null) {
+    Message m=recorder.mEventHandler.obtainMessage(what,arg1,arg2,obj);
+    recorder.mEventHandler.sendMessage(m);
+  }
+}

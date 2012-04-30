@@ -1,0 +1,13 @@
+{
+  DataInputStream inputStream=null;
+  try {
+    inputStream=new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
+    return BinaryHprof.readMagic(inputStream) != null;
+  }
+ catch (  IOException e) {
+    return false;
+  }
+ finally {
+    closeQuietly(inputStream);
+  }
+}

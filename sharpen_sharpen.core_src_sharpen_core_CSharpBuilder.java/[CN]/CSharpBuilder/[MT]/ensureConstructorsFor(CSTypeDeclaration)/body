@@ -1,0 +1,5 @@
+{
+  final List<CSConstructor> ctors=type.constructors();
+  if (!ctors.isEmpty())   return ctors;
+  return Collections.singletonList(addDefaultConstructor(type));
+}

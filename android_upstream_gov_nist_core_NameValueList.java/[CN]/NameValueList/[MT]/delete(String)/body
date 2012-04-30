@@ -1,0 +1,10 @@
+{
+  String lcName=name.toLowerCase();
+  if (this.hmap.containsKey(lcName)) {
+    this.hmap.remove(lcName);
+    return true;
+  }
+ else {
+    return false;
+  }
+}

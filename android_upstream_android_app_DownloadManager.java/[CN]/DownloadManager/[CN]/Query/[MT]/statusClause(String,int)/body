@@ -1,0 +1,3 @@
+{
+  return Downloads.Impl.COLUMN_STATUS + operator + "'"+ value+ "'";
+}

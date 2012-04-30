@@ -1,0 +1,6 @@
+{
+  if (timeZone == null) {
+    return false;
+  }
+  return getRawOffset() == timeZone.getRawOffset();
+}

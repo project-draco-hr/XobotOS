@@ -1,0 +1,17 @@
+{
+  List<Arc> mins=new ArrayList<Arc>();
+  List<Arc> maxs=new ArrayList<Arc>();
+  addComponentSizes(mins,getForwardLinks());
+  addComponentSizes(maxs,getBackwardLinks());
+  if (orderPreserved) {
+    for (int i=0; i < getCount(); i++) {
+      include(mins,new Interval(i,i + 1),new MutableInt(0));
+    }
+  }
+  int N=getCount();
+  include(mins,new Interval(0,N),parentMin,false);
+  include(maxs,new Interval(N,0),parentMax,false);
+  Arc[] sMins=topologicalSort(mins);
+  Arc[] sMaxs=topologicalSort(maxs);
+  return append(sMins,sMaxs);
+}

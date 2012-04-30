@@ -1,0 +1,6 @@
+{
+  if (!isInit) {
+    throw new IllegalStateException("ExemptionMechanism is not initialized");
+  }
+  return spiImpl.engineGetOutputSize(inputLen);
+}

@@ -1,0 +1,18 @@
+{
+  int visibility=View.GONE;
+  Drawable icon=null;
+  CharSequence text=null;
+  if (mSearchable.useBadgeIcon()) {
+    icon=mActivityContext.getResources().getDrawable(mSearchable.getIconId());
+    visibility=View.VISIBLE;
+    if (DBG)     Log.d(LOG_TAG,"Using badge icon: " + mSearchable.getIconId());
+  }
+ else   if (mSearchable.useBadgeLabel()) {
+    text=mActivityContext.getResources().getText(mSearchable.getLabelId()).toString();
+    visibility=View.VISIBLE;
+    if (DBG)     Log.d(LOG_TAG,"Using badge label: " + mSearchable.getLabelId());
+  }
+  mBadgeLabel.setCompoundDrawablesWithIntrinsicBounds(icon,null,null,null);
+  mBadgeLabel.setText(text);
+  mBadgeLabel.setVisibility(visibility);
+}

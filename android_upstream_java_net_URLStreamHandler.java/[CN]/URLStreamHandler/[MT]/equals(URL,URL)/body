@@ -1,0 +1,3 @@
+{
+  return sameFile(a,b) && Objects.equal(a.getRef(),b.getRef()) && Objects.equal(a.getQuery(),b.getQuery());
+}

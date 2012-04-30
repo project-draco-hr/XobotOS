@@ -1,0 +1,33 @@
+{
+  checkClosed();
+  Arrays.checkOffsetAndCount(buffer.length,offset,byteCount);
+  if (byteCount == 0) {
+    return 0;
+  }
+  if (!available) {
+    return -1;
+  }
+  int count=0;
+  while (count < byteCount && !def.finished()) {
+    if (def.needsInput()) {
+      int bytesRead=in.read(buf);
+      if (bytesRead == -1) {
+        def.finish();
+      }
+ else {
+        def.setInput(buf,0,bytesRead);
+      }
+    }
+    int bytesDeflated=def.deflate(buf,0,Math.min(buf.length,byteCount - count));
+    if (bytesDeflated == -1) {
+      break;
+    }
+    System.arraycopy(buf,0,buffer,offset + count,bytesDeflated);
+    count+=bytesDeflated;
+  }
+  if (count == 0) {
+    count=-1;
+    available=false;
+  }
+  return count;
+}

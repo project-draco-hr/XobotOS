@@ -1,0 +1,40 @@
+{
+  int l=in.readUint24();
+  if (l == 0) {
+    if (length != 3) {
+      fatalAlert(AlertProtocol.DECODE_ERROR,"DECODE ERROR: incorrect CertificateMessage");
+    }
+    certs=new X509Certificate[0];
+    encoded_certs=new byte[0][0];
+    this.length=3;
+    return;
+  }
+  CertificateFactory cf;
+  try {
+    cf=CertificateFactory.getInstance("X509");
+  }
+ catch (  CertificateException e) {
+    fatalAlert(AlertProtocol.INTERNAL_ERROR,"INTERNAL ERROR",e);
+    return;
+  }
+  ArrayList<X509Certificate> certsList=new ArrayList<X509Certificate>();
+  int size=0;
+  int enc_size=0;
+  while (l > 0) {
+    size=in.readUint24();
+    l-=3;
+    try {
+      certsList.add((X509Certificate)cf.generateCertificate(in));
+    }
+ catch (    CertificateException e) {
+      fatalAlert(AlertProtocol.DECODE_ERROR,"DECODE ERROR",e);
+    }
+    l-=size;
+    enc_size+=size;
+  }
+  certs=certsList.toArray(new X509Certificate[certsList.size()]);
+  this.length=3 + 3 * certs.length + enc_size;
+  if (this.length != length) {
+    fatalAlert(AlertProtocol.DECODE_ERROR,"DECODE ERROR: incorrect CertificateMessage");
+  }
+}

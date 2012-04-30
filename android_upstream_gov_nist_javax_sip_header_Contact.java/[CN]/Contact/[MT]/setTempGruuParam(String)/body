@@ -1,0 +1,3 @@
+{
+  this.parameters.set(ParameterNames.TEMP_GRUU,value);
+}

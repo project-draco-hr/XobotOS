@@ -1,0 +1,11 @@
+{
+  if (position == null) {
+    throw new NullPointerException("position is null");
+  }
+  try {
+    return parse(string,position);
+  }
+ catch (  Exception e) {
+    return null;
+  }
+}

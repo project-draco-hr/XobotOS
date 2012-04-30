@@ -1,0 +1,6 @@
+{
+  super(config);
+  setSource(_builder.getPair().source);
+  setDriver(SharpenGenerator.this);
+  setASTResolver(my(ASTResolver.class));
+}

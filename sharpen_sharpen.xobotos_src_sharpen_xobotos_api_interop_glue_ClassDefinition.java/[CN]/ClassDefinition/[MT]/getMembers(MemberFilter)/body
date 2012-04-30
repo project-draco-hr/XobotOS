@@ -1,0 +1,12 @@
+{
+  List<MemberEntry> retval=new ArrayList<MemberEntry>();
+  memberLoop:   for (  MemberEntry entry : _members) {
+    for (    MemberFilter filter : filters) {
+      if (filter.filter(entry)) {
+        retval.add(entry);
+        continue memberLoop;
+      }
+    }
+  }
+  return Collections.unmodifiableList(retval);
+}

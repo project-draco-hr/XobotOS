@@ -1,0 +1,11 @@
+def WriteXcodeEnv(self, target, spec, target_relative_path=False, additional_settings={}):
+    env = additional_settings
+    env.update(self.GetXcodeEnv(spec, target_relative_path))
+    keys_to_not_absolutify = ('PRODUCT_NAME', 'FULL_PRODUCT_NAME')
+    for k in env:
+        if (not isinstance(env[k], str)):
+            continue
+        v = env[k].replace('\\ ', ' ')
+        if (k not in keys_to_not_absolutify):
+            v = v.replace('$(builddir)', '$(abs_builddir)')
+        self.WriteLn(('%s: export %s := %s' % (target, k, v)))

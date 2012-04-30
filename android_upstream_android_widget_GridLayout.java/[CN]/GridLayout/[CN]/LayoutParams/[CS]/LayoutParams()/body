@@ -1,0 +1,3 @@
+{
+  this(Spec.UNDEFINED,Spec.UNDEFINED);
+}

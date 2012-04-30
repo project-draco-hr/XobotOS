@@ -1,0 +1,4 @@
+IMethodBinding binding
+CSMethod method
+List<CSTypeReferenceExpression> list
+ITypeBinding type

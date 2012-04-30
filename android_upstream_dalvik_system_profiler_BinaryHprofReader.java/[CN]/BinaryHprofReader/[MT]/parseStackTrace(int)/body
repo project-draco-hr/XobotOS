@@ -1,0 +1,41 @@
+{
+  int stackTraceId=in.readInt();
+  int threadId=in.readInt();
+  int frames=in.readInt();
+  if (TRACE) {
+    System.out.println("\tstackTraceId=" + stackTraceId);
+    System.out.println("\tthreadId=" + threadId);
+    System.out.println("\tframes=" + frames);
+  }
+  int expectedLength=4 + 4 + 4+ (frames * BinaryHprof.ID_SIZE);
+  if (recordLength != expectedLength) {
+    throw new MalformedHprofException("Expected stack trace record of size " + expectedLength + " based on number of frames but header "+ "specified a length of  "+ recordLength);
+  }
+  StackTraceElement[] stackFrames=new StackTraceElement[frames];
+  for (int i=0; i < frames; i++) {
+    int stackFrameId=readId();
+    StackTraceElement stackFrame=idToStackFrame.get(stackFrameId);
+    if (TRACE) {
+      System.out.println("\tstackFrameId=" + stackFrameId);
+      System.out.println("\tstackFrame=" + stackFrame);
+    }
+    if (stackFrame == null) {
+      throw new MalformedHprofException("Unknown stack frame id " + stackFrameId);
+    }
+    stackFrames[i]=stackFrame;
+  }
+  HprofData.StackTrace stackTrace=new HprofData.StackTrace(stackTraceId,threadId,stackFrames);
+  if (strict) {
+    hprofData.addStackTrace(stackTrace,new int[1]);
+  }
+ else {
+    int[] countCell=stackTraces.get(stackTrace);
+    if (countCell == null) {
+      hprofData.addStackTrace(stackTrace,new int[1]);
+    }
+  }
+  HprofData.StackTrace old=idToStackTrace.put(stackTraceId,stackTrace);
+  if (old != null) {
+    throw new MalformedHprofException("Duplicate stack trace id: " + stackTraceId);
+  }
+}

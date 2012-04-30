@@ -1,0 +1,3 @@
+{
+  super(dexPath,new File(optimizedDirectory),libraryPath,parent);
+}

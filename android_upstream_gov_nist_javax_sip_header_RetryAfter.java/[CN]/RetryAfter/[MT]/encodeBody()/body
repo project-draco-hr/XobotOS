@@ -1,0 +1,9 @@
+{
+  StringBuffer s=new StringBuffer();
+  if (retryAfter != null)   s.append(retryAfter);
+  if (comment != null)   s.append(SP + LPAREN + comment+ RPAREN);
+  if (!parameters.isEmpty()) {
+    s.append(SEMICOLON + parameters.encode());
+  }
+  return s.toString();
+}

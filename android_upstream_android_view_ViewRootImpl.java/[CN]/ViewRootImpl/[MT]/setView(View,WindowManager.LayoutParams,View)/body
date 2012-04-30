@@ -1,0 +1,118 @@
+{
+synchronized (this) {
+    if (mView == null) {
+      mView=view;
+      mFallbackEventHandler.setView(view);
+      mWindowAttributes.copyFrom(attrs);
+      attrs=mWindowAttributes;
+      if (view instanceof RootViewSurfaceTaker) {
+        mSurfaceHolderCallback=((RootViewSurfaceTaker)view).willYouTakeTheSurface();
+        if (mSurfaceHolderCallback != null) {
+          mSurfaceHolder=new TakenSurfaceHolder();
+          mSurfaceHolder.setFormat(PixelFormat.UNKNOWN);
+        }
+      }
+      if (mSurfaceHolder == null) {
+        enableHardwareAcceleration(attrs);
+      }
+      CompatibilityInfo compatibilityInfo=mCompatibilityInfo.get();
+      mTranslator=compatibilityInfo.getTranslator();
+      if (mTranslator != null) {
+        mSurface.setCompatibilityTranslator(mTranslator);
+      }
+      boolean restore=false;
+      if (mTranslator != null) {
+        restore=true;
+        attrs.backup();
+        mTranslator.translateWindowLayout(attrs);
+      }
+      if (DEBUG_LAYOUT)       Log.d(TAG,"WindowLayout in setView:" + attrs);
+      if (!compatibilityInfo.supportsScreen()) {
+        attrs.flags|=WindowManager.LayoutParams.FLAG_COMPATIBLE_WINDOW;
+        mLastInCompatMode=true;
+      }
+      mSoftInputMode=attrs.softInputMode;
+      mWindowAttributesChanged=true;
+      mWindowAttributesChangesFlag=WindowManager.LayoutParams.EVERYTHING_CHANGED;
+      mAttachInfo.mRootView=view;
+      mAttachInfo.mScalingRequired=mTranslator != null;
+      mAttachInfo.mApplicationScale=mTranslator == null ? 1.0f : mTranslator.applicationScale;
+      if (panelParentView != null) {
+        mAttachInfo.mPanelParentWindowToken=panelParentView.getApplicationWindowToken();
+      }
+      mAdded=true;
+      int res;
+      requestLayout();
+      if ((mWindowAttributes.inputFeatures & WindowManager.LayoutParams.INPUT_FEATURE_NO_INPUT_CHANNEL) == 0) {
+        mInputChannel=new InputChannel();
+      }
+      try {
+        mOrigWindowType=mWindowAttributes.type;
+        res=sWindowSession.add(mWindow,mSeq,mWindowAttributes,getHostVisibility(),mAttachInfo.mContentInsets,mInputChannel);
+      }
+ catch (      RemoteException e) {
+        mAdded=false;
+        mView=null;
+        mAttachInfo.mRootView=null;
+        mInputChannel=null;
+        mFallbackEventHandler.setView(null);
+        unscheduleTraversals();
+        throw new RuntimeException("Adding window failed",e);
+      }
+ finally {
+        if (restore) {
+          attrs.restore();
+        }
+      }
+      if (mTranslator != null) {
+        mTranslator.translateRectInScreenToAppWindow(mAttachInfo.mContentInsets);
+      }
+      mPendingContentInsets.set(mAttachInfo.mContentInsets);
+      mPendingVisibleInsets.set(0,0,0,0);
+      if (DEBUG_LAYOUT)       Log.v(TAG,"Added window " + mWindow);
+      if (res < WindowManagerImpl.ADD_OKAY) {
+        mView=null;
+        mAttachInfo.mRootView=null;
+        mAdded=false;
+        mFallbackEventHandler.setView(null);
+        unscheduleTraversals();
+switch (res) {
+case WindowManagerImpl.ADD_BAD_APP_TOKEN:
+case WindowManagerImpl.ADD_BAD_SUBWINDOW_TOKEN:
+          throw new WindowManagerImpl.BadTokenException("Unable to add window -- token " + attrs.token + " is not valid; is your activity running?");
+case WindowManagerImpl.ADD_NOT_APP_TOKEN:
+        throw new WindowManagerImpl.BadTokenException("Unable to add window -- token " + attrs.token + " is not for an application");
+case WindowManagerImpl.ADD_APP_EXITING:
+      throw new WindowManagerImpl.BadTokenException("Unable to add window -- app for token " + attrs.token + " is exiting");
+case WindowManagerImpl.ADD_DUPLICATE_ADD:
+    throw new WindowManagerImpl.BadTokenException("Unable to add window -- window " + mWindow + " has already been added");
+case WindowManagerImpl.ADD_STARTING_NOT_NEEDED:
+  return;
+case WindowManagerImpl.ADD_MULTIPLE_SINGLETON:
+throw new WindowManagerImpl.BadTokenException("Unable to add window " + mWindow + " -- another window of this type already exists");
+case WindowManagerImpl.ADD_PERMISSION_DENIED:
+throw new WindowManagerImpl.BadTokenException("Unable to add window " + mWindow + " -- permission denied for this window type");
+}
+throw new RuntimeException("Unable to add window -- unknown error code " + res);
+}
+if (view instanceof RootViewSurfaceTaker) {
+mInputQueueCallback=((RootViewSurfaceTaker)view).willYouTakeTheInputQueue();
+}
+if (mInputChannel != null) {
+if (mInputQueueCallback != null) {
+mInputQueue=new InputQueue(mInputChannel);
+mInputQueueCallback.onInputQueueCreated(mInputQueue);
+}
+ else {
+InputQueue.registerInputChannel(mInputChannel,mInputHandler,Looper.myQueue());
+}
+}
+view.assignParent(this);
+mAddedTouchMode=(res & WindowManagerImpl.ADD_FLAG_IN_TOUCH_MODE) != 0;
+mAppVisible=(res & WindowManagerImpl.ADD_FLAG_APP_VISIBLE) != 0;
+if (mAccessibilityManager.isEnabled()) {
+mAccessibilityInteractionConnectionManager.ensureConnection();
+}
+}
+}
+}

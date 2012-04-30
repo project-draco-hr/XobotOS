@@ -1,0 +1,30 @@
+{
+  StringBuffer encoding=new StringBuffer();
+  Iterator<SIPHeader> it=this.headers.iterator();
+  while (it.hasNext()) {
+    SIPHeader siphdr=(SIPHeader)it.next();
+    if (!(siphdr instanceof ContentLength))     encoding.append(siphdr.encode());
+  }
+  for (  String unrecognized : this.unrecognizedHeaders) {
+    encoding.append(unrecognized).append(NEWLINE);
+  }
+  encoding.append(contentLengthHeader.encode()).append(NEWLINE);
+  if (this.messageContentObject != null) {
+    String mbody=this.getContent().toString();
+    encoding.append(mbody);
+  }
+ else   if (this.messageContent != null || this.messageContentBytes != null) {
+    String content=null;
+    try {
+      if (messageContent != null)       content=messageContent;
+ else {
+        content=new String(messageContentBytes,getCharset());
+      }
+    }
+ catch (    UnsupportedEncodingException ex) {
+      InternalErrorHandler.handleException(ex);
+    }
+    encoding.append(content);
+  }
+  return encoding.toString();
+}

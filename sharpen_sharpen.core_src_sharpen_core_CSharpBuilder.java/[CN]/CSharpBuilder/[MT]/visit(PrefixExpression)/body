@@ -1,0 +1,9 @@
+{
+  CSExpression expr;
+  expr=new CSPrefixExpression(node.getOperator().toString(),mapExpression(node.getOperand()));
+  if (expectingType("byte") && node.getOperator() == PrefixExpression.Operator.MINUS) {
+    expr=uncheckedCast("byte",expr);
+  }
+  pushExpression(expr);
+  return false;
+}

@@ -1,0 +1,24 @@
+{
+  String nationalNumber=getNationalSignificantNumber(number);
+  int countryCode=number.getCountryCode();
+  String regionCode=getRegionCodeForCountryCode(countryCode);
+  if (!isValidRegionCode(regionCode)) {
+    return ValidationResult.INVALID_COUNTRY_CODE;
+  }
+  PhoneNumberDesc generalNumDesc=getMetadataForRegion(regionCode).getGeneralDesc();
+  if (!generalNumDesc.hasNationalNumberPattern()) {
+    LOGGER.log(Level.FINER,"Checking if number is possible with incomplete metadata.");
+    int numberLength=nationalNumber.length();
+    if (numberLength < MIN_LENGTH_FOR_NSN) {
+      return ValidationResult.TOO_SHORT;
+    }
+ else     if (numberLength > MAX_LENGTH_FOR_NSN) {
+      return ValidationResult.TOO_LONG;
+    }
+ else {
+      return ValidationResult.IS_POSSIBLE;
+    }
+  }
+  Pattern possibleNumberPattern=regexCache.getPatternForRegex(generalNumDesc.getPossibleNumberPattern());
+  return testNumberLengthAgainstPattern(possibleNumberPattern,nationalNumber);
+}

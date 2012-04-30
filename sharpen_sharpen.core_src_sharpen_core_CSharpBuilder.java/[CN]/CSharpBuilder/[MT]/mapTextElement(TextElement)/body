@@ -1,0 +1,7 @@
+{
+  final String text=element.getText();
+  if (HTML_ANCHOR_PATTERN.matcher(text).find()) {
+    warning(element,"Caution: HTML anchors can result in broken links. Consider using @link instead.");
+  }
+  return new CSDocTextNode(text);
+}

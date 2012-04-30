@@ -1,0 +1,23 @@
+{
+  if ((registrationState != null)) {
+    if (registrationState.equals("reg") || registrationState.equals("unreg")) {
+      try {
+        setParameter(ParameterNamesIms.REGISTRATION_STATE,registrationState);
+      }
+ catch (      ParseException e) {
+        e.printStackTrace();
+      }
+    }
+ else {
+      try {
+        throw new InvalidArgumentException("Value can be either reg or unreg");
+      }
+ catch (      InvalidArgumentException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+ else {
+    throw new NullPointerException("regstate Parameter value is null");
+  }
+}

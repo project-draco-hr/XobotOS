@@ -1,0 +1,4 @@
+{
+  if (flags == Flags.ELEMENT)   throw new ConfigurationException("Cannot directly use Flags.ELEMENT!");
+  return this;
+}

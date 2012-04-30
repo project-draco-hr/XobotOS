@@ -1,0 +1,8 @@
+{
+  StringBuffer sbuf=new StringBuffer();
+  sbuf.append("\n address: ").append(deviceAddress);
+  sbuf.append("\n wps: ").append(wps);
+  sbuf.append("\n groupOwnerIntent: ").append(groupOwnerIntent);
+  sbuf.append("\n persist: ").append(persist.toString());
+  return sbuf.toString();
+}

@@ -1,0 +1,7 @@
+{
+  matchFound=findNextImpl(address,input,matchOffsets);
+  if (matchFound) {
+    findPos=matchOffsets[1];
+  }
+  return matchFound;
+}

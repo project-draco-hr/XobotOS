@@ -1,0 +1,7 @@
+{
+  final Javadoc javadoc=bodyDecl.getJavadoc();
+  if (null == javadoc) {
+    return;
+  }
+  mapJavadocTags(javadoc,member);
+}

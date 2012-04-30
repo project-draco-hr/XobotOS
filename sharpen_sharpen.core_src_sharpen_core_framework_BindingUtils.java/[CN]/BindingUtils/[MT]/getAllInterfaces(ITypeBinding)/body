@@ -1,0 +1,5 @@
+{
+  Set<ITypeBinding> set=new LinkedHashSet<ITypeBinding>();
+  collectInterfaces(set,binding);
+  return Collections.unmodifiableSet(set);
+}

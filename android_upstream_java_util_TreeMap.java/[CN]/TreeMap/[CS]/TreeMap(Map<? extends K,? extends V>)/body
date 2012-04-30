@@ -1,0 +1,6 @@
+{
+  this();
+  for (  Map.Entry<? extends K,? extends V> entry : copyFrom.entrySet()) {
+    putInternal(entry.getKey(),entry.getValue());
+  }
+}

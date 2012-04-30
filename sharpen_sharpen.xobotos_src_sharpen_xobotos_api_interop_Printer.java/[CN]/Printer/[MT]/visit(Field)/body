@@ -1,0 +1,8 @@
+{
+  if (node.hasDeclaration())   return;
+  _writer.writeIndentation();
+  node.getType().accept(this);
+  _writer.write(" ");
+  _writer.write(node.getName());
+  _writer.writeLine(";");
+}

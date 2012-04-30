@@ -1,0 +1,7 @@
+{
+  if (nonceCount < 0)   throw new ParseException("bad value",0);
+  String nc=Integer.toHexString(nonceCount);
+  String base="00000000";
+  nc=base.substring(0,8 - nc.length()) + nc;
+  this.setParameter(ParameterNames.NC,nc);
+}

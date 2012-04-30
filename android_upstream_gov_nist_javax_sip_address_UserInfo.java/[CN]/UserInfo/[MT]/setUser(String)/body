@@ -1,0 +1,9 @@
+{
+  this.user=user;
+  if (user != null && (user.indexOf(POUND) >= 0 || user.indexOf(SEMICOLON) >= 0)) {
+    setUserType(TELEPHONE_SUBSCRIBER);
+  }
+ else {
+    setUserType(USER);
+  }
+}

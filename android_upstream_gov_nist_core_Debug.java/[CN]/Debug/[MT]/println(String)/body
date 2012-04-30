@@ -1,0 +1,3 @@
+{
+  if ((parserDebug || debug) && stackLogger != null)   stackLogger.logDebug(s + "\n");
+}

@@ -1,0 +1,4 @@
+URI projectRoot
+String fileName
+Class<U> klass
+Object variables

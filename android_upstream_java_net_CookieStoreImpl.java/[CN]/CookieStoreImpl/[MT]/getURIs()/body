@@ -1,0 +1,5 @@
+{
+  List<URI> result=new ArrayList<URI>(map.keySet());
+  result.remove(null);
+  return Collections.unmodifiableList(result);
+}

@@ -1,0 +1,10 @@
+{
+  mAbove=above;
+  if (above) {
+    mPopupInlineErrorAboveBackgroundId=getResourceId(mPopupInlineErrorAboveBackgroundId,com.android.internal.R.styleable.Theme_errorMessageAboveBackground);
+  }
+ else {
+    mPopupInlineErrorBackgroundId=getResourceId(mPopupInlineErrorBackgroundId,com.android.internal.R.styleable.Theme_errorMessageBackground);
+  }
+  mView.setBackgroundResource(above ? mPopupInlineErrorAboveBackgroundId : mPopupInlineErrorBackgroundId);
+}

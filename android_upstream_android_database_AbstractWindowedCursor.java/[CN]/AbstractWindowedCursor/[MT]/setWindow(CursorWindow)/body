@@ -1,0 +1,6 @@
+{
+  if (window != mWindow) {
+    closeWindow();
+    mWindow=window;
+  }
+}

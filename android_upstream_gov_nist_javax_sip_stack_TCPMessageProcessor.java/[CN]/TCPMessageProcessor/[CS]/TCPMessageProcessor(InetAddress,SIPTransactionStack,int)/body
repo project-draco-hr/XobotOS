@@ -1,0 +1,6 @@
+{
+  super(ipAddress,port,"tcp",sipStack);
+  this.sipStack=sipStack;
+  this.tcpMessageChannels=new Hashtable();
+  this.incomingTcpMessageChannels=new ArrayList<TCPMessageChannel>();
+}

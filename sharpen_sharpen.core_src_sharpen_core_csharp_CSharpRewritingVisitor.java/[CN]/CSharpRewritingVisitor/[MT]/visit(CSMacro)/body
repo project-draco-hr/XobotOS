@@ -1,0 +1,11 @@
+{
+  final String template=node.template();
+  final Matcher matcher=META_VARIABLE_PATTERN.matcher(template);
+  while (matcher.find()) {
+    Object value=node.resolveVariable(matcher.group(1));
+    if (value instanceof CSNode) {
+      ((CSNode)value).accept(this);
+    }
+    matcher.end();
+  }
+}

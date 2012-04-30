@@ -1,0 +1,26 @@
+{
+  if (closed) {
+    throw new IllegalStateException("JarFile has been closed");
+  }
+  if (manifest != null) {
+    return manifest;
+  }
+  try {
+    InputStream is=super.getInputStream(manifestEntry);
+    if (verifier != null) {
+      verifier.addMetaEntry(manifestEntry.getName(),Streams.readFully(is));
+      is=super.getInputStream(manifestEntry);
+    }
+    try {
+      manifest=new Manifest(is,verifier != null);
+    }
+  finally {
+      is.close();
+    }
+    manifestEntry=null;
+  }
+ catch (  NullPointerException e) {
+    manifestEntry=null;
+  }
+  return manifest;
+}

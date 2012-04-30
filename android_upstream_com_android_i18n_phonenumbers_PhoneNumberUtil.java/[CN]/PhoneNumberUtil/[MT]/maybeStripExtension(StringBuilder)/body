@@ -1,0 +1,13 @@
+{
+  Matcher m=EXTN_PATTERN.matcher(number);
+  if (m.find() && isViablePhoneNumber(number.substring(0,m.start()))) {
+    for (int i=1, length=m.groupCount(); i <= length; i++) {
+      if (m.group(i) != null) {
+        String extension=m.group(i);
+        number.delete(m.start(),number.length());
+        return extension;
+      }
+    }
+  }
+  return "";
+}

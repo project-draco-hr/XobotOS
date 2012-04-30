@@ -1,0 +1,3 @@
+{
+  return (getColumnName(columnIndex).equals(COLUMN_LOCAL_URI)) ? getLocalUri() : super.getString(columnIndex);
+}

@@ -1,0 +1,5 @@
+{
+  if (timeStamp == -1 && timeStampFloat == -1)   return "";
+ else   if (timeStamp != -1)   return Long.toString(timeStamp);
+ else   return Float.toString(timeStampFloat);
+}

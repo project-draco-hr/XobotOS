@@ -1,0 +1,20 @@
+{
+  final IMethodBinding binding=node.resolveBinding();
+  String prefix=_config.getFunctionPrefix();
+  if (prefix == null)   prefix="";
+  String name;
+  if (template.getKind() == Kind.DESTRUCTOR)   name="destructor";
+ else   if (template.getName() != null)   name=template.getName();
+ else   name=binding.getName();
+  String nativeName=template.getNativeName();
+  if (nativeName == null)   nativeName=name;
+  String funcName=String.format("%s_%s_%s",prefix,binding.getDeclaringClass().getName(),name);
+  if (_nativeMethods.containsKey(funcName)) {
+    int index=0;
+    while (_nativeMethods.containsKey(funcName + "_" + index))     index++;
+    funcName=funcName + "_" + index;
+  }
+  NativeMethodBuilder builder=new NativeMethodBuilder(this,node,template,nativeName,funcName,nativeHandle);
+  _nativeMethods.put(funcName,builder);
+  return builder;
+}

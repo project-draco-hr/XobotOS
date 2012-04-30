@@ -1,0 +1,4 @@
+{
+  this._parent=parent;
+  this._member=member;
+}

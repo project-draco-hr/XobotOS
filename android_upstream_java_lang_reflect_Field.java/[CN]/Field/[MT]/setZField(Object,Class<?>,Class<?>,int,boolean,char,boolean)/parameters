@@ -1,0 +1,7 @@
+Object o
+Class<?> declaringClass
+Class<?> type
+int slot
+boolean noAccessCheck
+char descriptor
+boolean z

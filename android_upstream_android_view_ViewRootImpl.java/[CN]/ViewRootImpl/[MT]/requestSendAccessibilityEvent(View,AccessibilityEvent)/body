@@ -1,0 +1,7 @@
+{
+  if (mView == null) {
+    return false;
+  }
+  mAccessibilityManager.sendAccessibilityEvent(event);
+  return true;
+}

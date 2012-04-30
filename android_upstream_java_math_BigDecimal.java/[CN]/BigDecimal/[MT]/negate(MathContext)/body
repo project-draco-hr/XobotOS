@@ -1,0 +1,5 @@
+{
+  BigDecimal result=negate();
+  result.inplaceRound(mc);
+  return result;
+}

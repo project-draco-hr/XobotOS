@@ -1,0 +1,3 @@
+{
+  return this.forkedClientTransactionTable.get(transactionId);
+}

@@ -1,0 +1,3 @@
+{
+  return isExtractViewShown() ? View.GONE : View.INVISIBLE;
+}

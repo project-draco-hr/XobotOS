@@ -1,0 +1,8 @@
+{
+  begin("glPointParameterfv");
+  arg("pname",pname);
+  arg("params",params.toString());
+  end();
+  mgl11.glPointParameterfv(pname,params);
+  checkError();
+}

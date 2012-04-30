@@ -1,0 +1,16 @@
+{
+  if (expectedType != actualType && isSubclassOf(expectedType,actualType))   return new CSCastExpression(mappedTypeReference(expectedType),expression);
+  if (actualType == expectedType)   return expression;
+  if (isJavaLangCharSequence(expectedType) && isJavaLangString(actualType)) {
+    CSReferenceExpression proxy=new CSReferenceExpression("java.lang.CharSequenceProxy.Wrap");
+    CSMethodInvocationExpression mie=new CSMethodInvocationExpression(proxy);
+    mie.addArgument(expression);
+    return mie;
+  }
+  if (actualType.equals(_objectType))   return new CSCastExpression(mappedTypeReference(expectedType),expression);
+  CSExpression casted=my(CSharpDriver.class).castIfNeeded(this,expectedType,actualType,expression);
+  if (casted != null)   return casted;
+  if (expectedType != my(IBindingManager.class).getCharType())   return expression;
+  if (actualType == expectedType)   return expression;
+  return new CSCastExpression(mappedTypeReference(expectedType),expression);
+}

@@ -1,0 +1,21 @@
+{
+  if (_currentType.isInterface() || method.resolveBinding().getDeclaringClass().isInterface()) {
+    return CSMethodModifier.Abstract;
+  }
+  int modifiers=method.getModifiers();
+  if (Modifier.isStatic(modifiers)) {
+    return CSMethodModifier.Static;
+  }
+  if (Modifier.isPrivate(modifiers)) {
+    return CSMethodModifier.None;
+  }
+  boolean override=isOverride(method);
+  if (Modifier.isAbstract(modifiers)) {
+    return override ? CSMethodModifier.AbstractOverride : CSMethodModifier.Abstract;
+  }
+  boolean isFinal=Modifier.isFinal(modifiers);
+  if (override) {
+    return isFinal ? CSMethodModifier.Sealed : modifierIfNewAnnotationNotApplied(method,CSMethodModifier.Override);
+  }
+  return isFinal || _currentType.isSealed() ? CSMethodModifier.None : CSMethodModifier.Virtual;
+}

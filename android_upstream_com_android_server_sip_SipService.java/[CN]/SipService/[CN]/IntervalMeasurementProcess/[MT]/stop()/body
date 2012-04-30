@@ -1,0 +1,13 @@
+{
+synchronized (SipService.this) {
+    if (mSession != null) {
+      mSession.stopKeepAliveProcess();
+      mSession=null;
+    }
+    if (mGroup != null) {
+      mGroup.close();
+      mGroup=null;
+    }
+    mTimer.cancel(this);
+  }
+}

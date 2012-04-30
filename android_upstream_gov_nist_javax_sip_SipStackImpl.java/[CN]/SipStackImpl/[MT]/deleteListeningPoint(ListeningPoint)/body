@@ -1,0 +1,7 @@
+{
+  if (listeningPoint == null)   throw new NullPointerException("null listeningPoint arg");
+  ListeningPointImpl lip=(ListeningPointImpl)listeningPoint;
+  super.removeMessageProcessor(lip.messageProcessor);
+  String key=lip.getKey();
+  this.listeningPoints.remove(key);
+}

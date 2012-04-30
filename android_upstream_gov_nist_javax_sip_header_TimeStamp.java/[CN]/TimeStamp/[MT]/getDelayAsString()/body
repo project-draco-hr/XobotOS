@@ -1,0 +1,5 @@
+{
+  if (delay == -1 && delayFloat == -1)   return "";
+ else   if (delay != -1)   return Integer.toString(delay);
+ else   return Float.toString(delayFloat);
+}

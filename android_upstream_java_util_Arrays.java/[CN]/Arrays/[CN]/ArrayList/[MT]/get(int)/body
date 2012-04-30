@@ -1,0 +1,8 @@
+{
+  try {
+    return a[location];
+  }
+ catch (  ArrayIndexOutOfBoundsException e) {
+    throw java.util.ArrayList.throwIndexOutOfBoundsException(location,a.length);
+  }
+}

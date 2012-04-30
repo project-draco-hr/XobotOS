@@ -1,0 +1,4 @@
+{
+  if (encoding == null)   throw new NullPointerException("JAIN-SIP Exception, " + " encoding is null");
+  contentEncoding=encoding;
+}

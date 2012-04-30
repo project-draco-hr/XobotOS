@@ -1,0 +1,5 @@
+{
+  if (null != infoListener) {
+    mOnInfoListener=infoListener;
+  }
+}

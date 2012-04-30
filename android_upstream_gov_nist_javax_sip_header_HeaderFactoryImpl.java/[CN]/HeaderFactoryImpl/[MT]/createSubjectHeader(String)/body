@@ -1,0 +1,6 @@
+{
+  if (subject == null)   throw new NullPointerException("null subject arg");
+  Subject s=new Subject();
+  s.setSubject(subject);
+  return s;
+}

@@ -1,0 +1,17 @@
+{
+  if (DebugFlags.WEB_VIEW_CORE) {
+    Log.v(LOGTAG,"didFirstLayout standardLoad =" + standardLoad);
+  }
+  mBrowserFrame.didFirstLayout();
+  if (mWebView == null)   return;
+  boolean updateViewState=standardLoad || mRestoredScale > 0;
+  setupViewport(updateViewState);
+  if (!updateViewState) {
+    mWebView.mViewManager.postReadyToDrawAll();
+  }
+  if (WebView.USE_WEBKIT_RINGS || getSettings().supportTouchOnly()) {
+    mWebView.mPrivateHandler.sendEmptyMessage(WebView.SET_TOUCH_HIGHLIGHT_RECTS);
+  }
+  mRestoredX=mRestoredY=0;
+  mRestoredScale=mRestoredTextWrapScale=0;
+}

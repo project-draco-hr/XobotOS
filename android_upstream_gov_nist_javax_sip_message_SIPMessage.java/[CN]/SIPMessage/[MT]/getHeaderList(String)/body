@@ -1,0 +1,10 @@
+{
+  SIPHeader sipHeader=(SIPHeader)nameTable.get(SIPHeaderNamesCache.toLowerCase(headerName));
+  if (sipHeader == null)   return null;
+ else   if (sipHeader instanceof SIPHeaderList)   return (List<SIPHeader>)(((SIPHeaderList<?>)sipHeader).getHeaderList());
+ else {
+    LinkedList<SIPHeader> ll=new LinkedList<SIPHeader>();
+    ll.add(sipHeader);
+    return ll;
+  }
+}

@@ -1,0 +1,4 @@
+{
+  if (minorVersion < 0)   throw new InvalidArgumentException("JAIN-SIP Exception" + ", MimeVersion, setMinorVersion(), the minorVersion parameter is null");
+  this.minorVersion=minorVersion;
+}

@@ -1,0 +1,50 @@
+{
+  _currentContinueLabel=null;
+  CSBlock saved=_currentBlock;
+  final ITypeBinding switchType=node.getExpression().resolveTypeBinding();
+  final ITypeBinding effectiveSwitchType;
+  final IExtractedEnumInfo eei=my(IBindingManager.class).getExtractedEnumInfo(switchType);
+  if (eei != null)   effectiveSwitchType=my(IBindingManager.class).getIntType();
+ else   effectiveSwitchType=switchType;
+  pushExpectedType(effectiveSwitchType);
+  CSExpression expression=mapExpression(node.getExpression());
+  if (eei != null)   expression=new CSMemberReferenceExpression(expression,eei.valueField());
+  popExpectedType();
+  CSSwitchStatement mappedNode=new CSSwitchStatement(node.getStartPosition(),expression);
+  addStatement(mappedNode);
+  CSCaseClause current=null;
+  _currentBlock=null;
+  for (  ASTNode element : Types.<ASTNode>cast(node.statements())) {
+    if (ASTNode.SWITCH_CASE == element.getNodeType()) {
+      CSBlock openCaseBlock=null;
+      if (null == current) {
+        if ((_currentBlock != null) && FlowAnalysis.isReachable(_currentBlock))         openCaseBlock=_currentBlock;
+        current=new CSCaseClause();
+        mappedNode.addCase(current);
+        _currentBlock=current.body();
+      }
+      SwitchCase sc=(SwitchCase)element;
+      if (sc.isDefault()) {
+        current.isDefault(true);
+        if (openCaseBlock != null)         openCaseBlock.addStatement(new CSGotoStatement(Integer.MIN_VALUE,"default"));
+      }
+ else {
+        pushExpectedType(effectiveSwitchType);
+        CSExpression caseExpression=mapExpression(sc.getExpression());
+        current.addExpression(caseExpression);
+        popExpectedType();
+        if (openCaseBlock != null)         openCaseBlock.addStatement(new CSGotoStatement(Integer.MIN_VALUE,caseExpression));
+      }
+      openCaseBlock=null;
+    }
+ else {
+      element.accept(this);
+      current=null;
+    }
+  }
+  if ((_currentBlock != null) && FlowAnalysis.isReachable(_currentBlock)) {
+    _currentBlock.addStatement(new CSBreakStatement(Integer.MIN_VALUE));
+  }
+  _currentBlock=saved;
+  return false;
+}

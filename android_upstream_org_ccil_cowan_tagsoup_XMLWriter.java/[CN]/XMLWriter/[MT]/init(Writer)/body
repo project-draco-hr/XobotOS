@@ -1,0 +1,8 @@
+{
+  setOutput(writer);
+  nsSupport=new NamespaceSupport();
+  prefixTable=new Hashtable();
+  forcedDeclTable=new Hashtable();
+  doneDeclTable=new Hashtable();
+  outputProperties=new Properties();
+}

@@ -1,0 +1,29 @@
+{
+  try {
+    if (!MATCHING_BRACKETS.matcher(candidate).matches()) {
+      return null;
+    }
+    if (leniency.compareTo(Leniency.VALID) >= 0) {
+      if (offset > 0 && !LEAD_CLASS.matcher(candidate).lookingAt()) {
+        char previousChar=text.charAt(offset - 1);
+        if (isCurrencySymbol(previousChar) || isLatinLetter(previousChar)) {
+          return null;
+        }
+      }
+      int lastCharIndex=offset + candidate.length();
+      if (lastCharIndex < text.length()) {
+        char nextChar=text.charAt(lastCharIndex);
+        if (isCurrencySymbol(nextChar) || isLatinLetter(nextChar)) {
+          return null;
+        }
+      }
+    }
+    PhoneNumber number=phoneUtil.parse(candidate,preferredRegion);
+    if (leniency.verify(number,candidate,phoneUtil)) {
+      return new PhoneNumberMatch(offset,candidate,number);
+    }
+  }
+ catch (  NumberParseException e) {
+  }
+  return null;
+}

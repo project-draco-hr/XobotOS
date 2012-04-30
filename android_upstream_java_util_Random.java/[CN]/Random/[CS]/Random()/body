@@ -1,0 +1,3 @@
+{
+  setSeed(System.currentTimeMillis() + System.identityHashCode(this));
+}

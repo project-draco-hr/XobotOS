@@ -1,0 +1,8 @@
+{
+  if (!focused) {
+    if (sourceText instanceof Spannable) {
+      Spannable sp=(Spannable)sourceText;
+      removeVisibleSpans(sp);
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  if (scheme == null)   throw new NullPointerException("bad scheme arg");
+  ProxyAuthenticate p=new ProxyAuthenticate();
+  p.setScheme(scheme);
+  return p;
+}

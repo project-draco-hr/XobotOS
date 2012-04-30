@@ -1,0 +1,4 @@
+{
+  super("PSpecified");
+  p=EmptyArray.BYTE;
+}

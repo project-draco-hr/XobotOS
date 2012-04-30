@@ -1,0 +1,52 @@
+def main():
+    global ANDROID_BUILD_TOP
+    global ICU4C_DIR
+    global ICU_PREBUILT_DIR
+    global ICUDATA
+    global CLDR_VERSION
+    global TMP_DAT_PATH
+    global VERBOSE
+    CLDR_VERSION = '1.9'
+    VERBOSE = False
+    show_help = False
+    try:
+        (opts, args) = getopt.getopt(sys.argv[1:], 'hv', ['help', 'verbose'])
+    except getopt.error:
+        PrintHelpAndExit()
+    for (opt, _) in opts:
+        if (opt in ('-h', '--help')):
+            show_help = True
+        elif (opt in ('-v', '--verbose')):
+            VERBOSE = True
+    if args:
+        show_help = True
+    if show_help:
+        PrintHelpAndExit()
+    ANDROID_BUILD_TOP = os.environ.get('ANDROID_BUILD_TOP')
+    if (not ANDROID_BUILD_TOP):
+        print "$ANDROID_BUILD_TOP not set! Run 'env_setup.sh'."
+        sys.exit(1)
+    ICU4C_DIR = os.path.join(ANDROID_BUILD_TOP, 'external', 'icu4c')
+    stubdata_dir = os.path.join(ICU4C_DIR, 'stubdata')
+    input_files = glob.glob(os.path.join(stubdata_dir, 'icudt[0-9][0-9]l-*.txt'))
+    icu_version = re.sub('([^0-9])', '', os.path.basename(input_files[0]))
+    ICU_PREBUILT_DIR = os.path.join(os.environ.get('ANDROID_EABI_TOOLCHAIN'), '..', '..', '..', ('icu-%s.%s' % (icu_version[0], icu_version[1])))
+    if (not os.path.exists(ICU_PREBUILT_DIR)):
+        print ('%s does not exist!' % ICU_PREBUILT_DIR)
+    ICUDATA = (('icudt' + icu_version) + 'l')
+    full_data_filename = os.path.join(stubdata_dir, (ICUDATA + '-all.dat'))
+    if (not os.path.isfile(full_data_filename)):
+        print ('%s not present.' % full_data_filename)
+        sys.exit(1)
+    TMP_DAT_PATH = os.path.join(ICU4C_DIR, 'tmp')
+    if os.path.exists(TMP_DAT_PATH):
+        shutil.rmtree(TMP_DAT_PATH)
+    os.mkdir(TMP_DAT_PATH)
+    ExtractAllResourceToTempDir()
+    for input_file in sorted(input_files):
+        output_file = (input_file[:(-3)] + 'dat')
+        MakeDat(input_file, stubdata_dir)
+        shutil.copyfile(os.path.join(TMP_DAT_PATH, (ICUDATA + '.dat')), output_file)
+        print ('Generated ICU data: %s' % output_file)
+    shutil.rmtree(TMP_DAT_PATH)
+    os.remove(os.path.join(stubdata_dir, (ICUDATA + '.dat')))

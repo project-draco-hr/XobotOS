@@ -1,0 +1,20 @@
+{
+  String host="";
+  if (url != null) {
+    URI uri=URI.create(url);
+    host=uri.getHost();
+  }
+  if (!isLocalHost(host)) {
+    if (sConnectivityManager == null) {
+      sConnectivityManager=(ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+    }
+    if (sConnectivityManager == null)     return java.net.Proxy.NO_PROXY;
+    ProxyProperties proxyProperties=sConnectivityManager.getProxy();
+    if (proxyProperties != null) {
+      if (!proxyProperties.isExcluded(host)) {
+        return proxyProperties.makeProxy();
+      }
+    }
+  }
+  return java.net.Proxy.NO_PROXY;
+}

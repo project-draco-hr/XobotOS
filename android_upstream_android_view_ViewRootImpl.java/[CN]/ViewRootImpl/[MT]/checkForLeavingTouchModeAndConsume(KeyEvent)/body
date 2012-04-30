@@ -1,0 +1,20 @@
+{
+  if (!mAttachInfo.mInTouchMode) {
+    return false;
+  }
+  final int action=event.getAction();
+  if (action != KeyEvent.ACTION_DOWN && action != KeyEvent.ACTION_MULTIPLE) {
+    return false;
+  }
+  if ((event.getFlags() & KeyEvent.FLAG_KEEP_TOUCH_MODE) != 0) {
+    return false;
+  }
+  if (isNavigationKey(event)) {
+    return ensureTouchMode(false);
+  }
+  if (isTypingKey(event)) {
+    ensureTouchMode(false);
+    return false;
+  }
+  return false;
+}

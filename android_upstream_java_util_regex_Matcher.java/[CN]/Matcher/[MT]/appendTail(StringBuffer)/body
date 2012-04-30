@@ -1,0 +1,6 @@
+{
+  if (appendPos < regionEnd) {
+    buffer.append(input.substring(appendPos,regionEnd));
+  }
+  return buffer;
+}

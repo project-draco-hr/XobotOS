@@ -1,0 +1,7 @@
+{
+  checkOpenAndCreate(true);
+  if (size < 1) {
+    throw new IllegalArgumentException("size < 1");
+  }
+  impl.setOption(SocketOptions.SO_SNDBUF,Integer.valueOf(size));
+}

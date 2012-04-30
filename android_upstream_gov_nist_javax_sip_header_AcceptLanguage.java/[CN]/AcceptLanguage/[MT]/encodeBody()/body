@@ -1,0 +1,10 @@
+{
+  StringBuffer encoding=new StringBuffer();
+  if (languageRange != null) {
+    encoding.append(languageRange);
+  }
+  if (!parameters.isEmpty()) {
+    encoding.append(SEMICOLON).append(parameters.encode());
+  }
+  return encoding.toString();
+}

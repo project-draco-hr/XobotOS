@@ -1,0 +1,4 @@
+InetAddress dst
+int dstPort
+InetAddress localAddress
+int localPort

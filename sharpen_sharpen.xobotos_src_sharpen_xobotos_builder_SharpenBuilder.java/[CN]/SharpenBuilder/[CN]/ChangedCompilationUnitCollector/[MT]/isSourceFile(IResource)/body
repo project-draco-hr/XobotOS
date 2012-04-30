@@ -1,0 +1,7 @@
+{
+  if (resource.getType() != IResource.FILE) {
+    return false;
+  }
+  if (resource.getFileExtension() == null)   return false;
+  return resource.getFileExtension().equals("java");
+}

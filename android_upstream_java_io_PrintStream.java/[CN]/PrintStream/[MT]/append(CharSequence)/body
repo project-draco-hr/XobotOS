@@ -1,0 +1,9 @@
+{
+  if (charSequence == null) {
+    print("null");
+  }
+ else {
+    print(charSequence.toString());
+  }
+  return this;
+}

@@ -1,0 +1,26 @@
+{
+  if ((flags & FLAG_AUTO_REQUERY) == FLAG_AUTO_REQUERY) {
+    flags|=FLAG_REGISTER_CONTENT_OBSERVER;
+    mAutoRequery=true;
+  }
+ else {
+    mAutoRequery=false;
+  }
+  boolean cursorPresent=c != null;
+  mCursor=c;
+  mDataValid=cursorPresent;
+  mContext=context;
+  mRowIDColumn=cursorPresent ? c.getColumnIndexOrThrow("_id") : -1;
+  if ((flags & FLAG_REGISTER_CONTENT_OBSERVER) == FLAG_REGISTER_CONTENT_OBSERVER) {
+    mChangeObserver=new ChangeObserver();
+    mDataSetObserver=new MyDataSetObserver();
+  }
+ else {
+    mChangeObserver=null;
+    mDataSetObserver=null;
+  }
+  if (cursorPresent) {
+    if (mChangeObserver != null)     c.registerContentObserver(mChangeObserver);
+    if (mDataSetObserver != null)     c.registerDataSetObserver(mDataSetObserver);
+  }
+}

@@ -1,0 +1,4 @@
+{
+  if (realm == null)   throw new NullPointerException("JAIN-SIP Exception, " + " AuthenticationHeader, setRealm(), The realm parameter is null");
+  setParameter(ParameterNames.REALM,realm);
+}

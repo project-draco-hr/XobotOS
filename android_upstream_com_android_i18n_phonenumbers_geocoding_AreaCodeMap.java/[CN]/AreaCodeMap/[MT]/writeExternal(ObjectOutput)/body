@@ -1,0 +1,4 @@
+{
+  objectOutput.writeBoolean(areaCodeMapStorage.isFlyweight());
+  areaCodeMapStorage.writeExternal(objectOutput);
+}

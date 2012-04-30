@@ -1,0 +1,45 @@
+{
+  Iterator<SIPClientTransaction> transactionIterator;
+  SIPClientTransaction nextTransaction;
+  SIPClientTransaction currentTransaction;
+  String key=responseReceived.getTransactionId();
+  currentTransaction=(SIPClientTransaction)clientTransactionTable.get(key);
+  if (currentTransaction == null || (!currentTransaction.isMessagePartOfTransaction(responseReceived) && !key.startsWith(SIPConstants.BRANCH_MAGIC_COOKIE_LOWER_CASE))) {
+    transactionIterator=clientTransactionTable.values().iterator();
+    currentTransaction=null;
+    while (transactionIterator.hasNext() && currentTransaction == null) {
+      nextTransaction=(SIPClientTransaction)transactionIterator.next();
+      if (nextTransaction.isMessagePartOfTransaction(responseReceived)) {
+        currentTransaction=nextTransaction;
+      }
+    }
+    if (currentTransaction == null) {
+      if (this.stackLogger.isLoggingEnabled(StackLogger.TRACE_INFO)) {
+        responseMessageChannel.logResponse(responseReceived,System.currentTimeMillis(),"before processing");
+      }
+      return sipMessageFactory.newSIPServerResponse(responseReceived,responseMessageChannel);
+    }
+  }
+  boolean acquired=currentTransaction.acquireSem();
+  if (this.stackLogger.isLoggingEnabled(StackLogger.TRACE_INFO)) {
+    currentTransaction.logResponse(responseReceived,System.currentTimeMillis(),"before processing");
+  }
+  if (acquired) {
+    ServerResponseInterface sri=sipMessageFactory.newSIPServerResponse(responseReceived,currentTransaction);
+    if (sri != null) {
+      currentTransaction.setResponseInterface(sri);
+    }
+ else {
+      if (this.stackLogger.isLoggingEnabled()) {
+        this.stackLogger.logDebug("returning null - serverResponseInterface is null!");
+      }
+      currentTransaction.releaseSem();
+      return null;
+    }
+  }
+ else {
+    if (stackLogger.isLoggingEnabled())     this.stackLogger.logDebug("Could not aquire semaphore !!");
+  }
+  if (acquired)   return currentTransaction;
+ else   return null;
+}

@@ -1,0 +1,5 @@
+String process
+boolean start
+String path
+ParcelFileDescriptor fd
+int profileType

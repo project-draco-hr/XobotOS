@@ -1,0 +1,4 @@
+{
+  checkIndex(index,SizeOf.SHORT);
+  return this.block.peekShort(offset + index,order);
+}

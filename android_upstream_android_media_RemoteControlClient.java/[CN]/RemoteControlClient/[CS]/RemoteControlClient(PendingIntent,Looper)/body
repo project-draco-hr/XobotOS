@@ -1,0 +1,4 @@
+{
+  mRcMediaIntent=mediaButtonIntent;
+  mEventHandler=new EventHandler(this,looper);
+}

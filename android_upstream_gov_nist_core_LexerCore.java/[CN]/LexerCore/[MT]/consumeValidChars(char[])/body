@@ -1,0 +1,36 @@
+{
+  int validCharsLength=validChars.length;
+  try {
+    while (hasMoreChars()) {
+      char nextChar=lookAhead(0);
+      boolean isValid=false;
+      for (int i=0; i < validCharsLength; i++) {
+        char validChar=validChars[i];
+switch (validChar) {
+case ALPHA_VALID_CHARS:
+          isValid=isAlpha(nextChar);
+        break;
+case DIGIT_VALID_CHARS:
+      isValid=isDigit(nextChar);
+    break;
+case ALPHADIGIT_VALID_CHARS:
+  isValid=isAlphaDigit(nextChar);
+break;
+default :
+isValid=nextChar == validChar;
+}
+if (isValid) {
+break;
+}
+}
+if (isValid) {
+consume(1);
+}
+ else {
+break;
+}
+}
+}
+ catch (ParseException ex) {
+}
+}

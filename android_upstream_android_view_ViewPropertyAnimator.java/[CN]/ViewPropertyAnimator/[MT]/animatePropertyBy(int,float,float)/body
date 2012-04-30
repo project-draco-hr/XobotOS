@@ -1,0 +1,22 @@
+{
+  if (mAnimatorMap.size() > 0) {
+    Animator animatorToCancel=null;
+    Set<Animator> animatorSet=mAnimatorMap.keySet();
+    for (    Animator runningAnim : animatorSet) {
+      PropertyBundle bundle=mAnimatorMap.get(runningAnim);
+      if (bundle.cancel(constantName)) {
+        if (bundle.mPropertyMask == NONE) {
+          animatorToCancel=runningAnim;
+          break;
+        }
+      }
+    }
+    if (animatorToCancel != null) {
+      animatorToCancel.cancel();
+    }
+  }
+  NameValuesHolder nameValuePair=new NameValuesHolder(constantName,startValue,byValue);
+  mPendingAnimations.add(nameValuePair);
+  mView.removeCallbacks(mAnimationStarter);
+  mView.post(mAnimationStarter);
+}

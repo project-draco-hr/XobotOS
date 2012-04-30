@@ -1,0 +1,4 @@
+{
+  int len=str.length();
+  for (int i=0; i < len; i++)   buf.putChar(str.charAt(i));
+}

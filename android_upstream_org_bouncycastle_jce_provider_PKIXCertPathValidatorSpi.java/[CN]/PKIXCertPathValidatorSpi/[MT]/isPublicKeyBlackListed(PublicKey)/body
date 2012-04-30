@@ -1,0 +1,13 @@
+{
+  byte[] encoded=publicKey.getEncoded();
+  Digest digest=new OpenSSLDigest.SHA1();
+  digest.update(encoded,0,encoded.length);
+  byte[] out=new byte[digest.getDigestSize()];
+  digest.doFinal(out,0);
+  for (  byte[] sha1 : PUBLIC_KEY_SHA1_BLACKLIST) {
+    if (Arrays.equals(out,sha1)) {
+      return true;
+    }
+  }
+  return false;
+}

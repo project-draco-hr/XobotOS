@@ -1,0 +1,7 @@
+int width
+int height
+long startMs
+long endMs
+int thumbnailCount
+int[] indices
+GetThumbnailListCallback callback

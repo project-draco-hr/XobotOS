@@ -1,0 +1,13 @@
+{
+  try {
+    return new gov.nist.javax.sip.message.MessageFactoryImpl();
+  }
+ catch (  Exception e) {
+    if (e instanceof PeerUnavailableException) {
+      throw (PeerUnavailableException)e;
+    }
+ else {
+      throw new PeerUnavailableException("Failed to create MessageFactory",e);
+    }
+  }
+}

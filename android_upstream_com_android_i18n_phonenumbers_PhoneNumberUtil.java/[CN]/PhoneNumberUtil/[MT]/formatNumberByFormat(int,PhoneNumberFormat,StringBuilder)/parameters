@@ -1,0 +1,3 @@
+int countryCallingCode
+PhoneNumberFormat numberFormat
+StringBuilder formattedNumber

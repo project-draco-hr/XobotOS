@@ -1,0 +1,15 @@
+def build(self, gyp_file, target=None, **kw):
+    '\n    Runs an xcodebuild using the .xcodeproj generated from the specified\n    gyp_file.\n    '
+    arguments = kw.get('arguments', [])[:]
+    arguments.extend(['-project', gyp_file.replace('.gyp', '.xcodeproj')])
+    if (target == self.ALL):
+        arguments.append('-alltargets')
+    elif (target not in (None, self.DEFAULT)):
+        arguments.extend(['-target', target])
+    if self.configuration:
+        arguments.extend(['-configuration', self.configuration])
+    symroot = kw.get('SYMROOT', '$SRCROOT/build')
+    if symroot:
+        arguments.append(('SYMROOT=' + symroot))
+    kw['arguments'] = arguments
+    return self.run(program=self.build_tool, **kw)

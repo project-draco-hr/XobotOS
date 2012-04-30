@@ -1,0 +1,5 @@
+{
+  CSTypeReference tr=new CSTypeReference(_currentType.name());
+  for (  CSTypeParameter tp : _currentType.typeParameters())   tr.addTypeArgument(new CSTypeReference(tp.name()));
+  return tr;
+}

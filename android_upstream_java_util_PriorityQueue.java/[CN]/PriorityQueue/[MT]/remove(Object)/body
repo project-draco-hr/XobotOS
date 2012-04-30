@@ -1,0 +1,12 @@
+{
+  if (o == null) {
+    return false;
+  }
+  for (int targetIndex=0; targetIndex < size; targetIndex++) {
+    if (o.equals(elements[targetIndex])) {
+      removeAt(targetIndex);
+      return true;
+    }
+  }
+  return false;
+}

@@ -1,0 +1,7 @@
+{
+  if (address == null)   throw new NullPointerException("null address");
+  To to=new To();
+  to.setAddress(address);
+  if (tag != null)   to.setTag(tag);
+  return to;
+}

@@ -1,0 +1,4 @@
+{
+  Integer val=Integer.valueOf(value);
+  this.parameters.set(name,val);
+}

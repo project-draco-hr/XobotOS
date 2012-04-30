@@ -1,0 +1,8 @@
+{
+  writeIndented("[");
+  write(node.name());
+  if (!node.arguments().isEmpty()) {
+    writeParameterList(node.arguments());
+  }
+  writeLine("]");
+}

@@ -1,0 +1,39 @@
+{
+  if (SIPDialog.this.highestSequenceNumberAcknowledged < seqno) {
+    dialogDeleteIfNoAckSentTask=null;
+    if (!SIPDialog.this.isBackToBackUserAgent) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logError("ACK Was not sent. killing dialog");
+      if (((SipProviderImpl)sipProvider).getSipListener() instanceof SipListenerExt) {
+        raiseErrorEvent(SIPDialogErrorEvent.DIALOG_ACK_NOT_SENT_TIMEOUT);
+      }
+ else {
+        delete();
+      }
+    }
+ else {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logError("ACK Was not sent. Sending BYE");
+      if (((SipProviderImpl)sipProvider).getSipListener() instanceof SipListenerExt) {
+        raiseErrorEvent(SIPDialogErrorEvent.DIALOG_ACK_NOT_SENT_TIMEOUT);
+      }
+ else {
+        try {
+          Request byeRequest=SIPDialog.this.createRequest(Request.BYE);
+          if (MessageFactoryImpl.getDefaultUserAgentHeader() != null) {
+            byeRequest.addHeader(MessageFactoryImpl.getDefaultUserAgentHeader());
+          }
+          ReasonHeader reasonHeader=new Reason();
+          reasonHeader.setProtocol("SIP");
+          reasonHeader.setCause(1025);
+          reasonHeader.setText("Timed out waiting to send ACK");
+          byeRequest.addHeader(reasonHeader);
+          ClientTransaction byeCtx=SIPDialog.this.getSipProvider().getNewClientTransaction(byeRequest);
+          SIPDialog.this.sendRequest(byeCtx);
+          return;
+        }
+ catch (        Exception ex) {
+          SIPDialog.this.delete();
+        }
+      }
+    }
+  }
+}

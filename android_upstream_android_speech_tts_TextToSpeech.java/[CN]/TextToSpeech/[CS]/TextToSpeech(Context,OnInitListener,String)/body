@@ -1,0 +1,9 @@
+{
+  mContext=context;
+  mInitListener=listener;
+  mRequestedEngine=engine;
+  mEarcons=new HashMap<String,Uri>();
+  mUtterances=new HashMap<String,Uri>();
+  mEnginesHelper=new TtsEngines(mContext);
+  initTts();
+}

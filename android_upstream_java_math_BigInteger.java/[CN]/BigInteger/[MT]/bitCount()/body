@@ -1,0 +1,4 @@
+{
+  prepareJavaRepresentation();
+  return BitLevel.bitCount(this);
+}

@@ -1,0 +1,3 @@
+{
+  uriParms.set(USER,usertype);
+}

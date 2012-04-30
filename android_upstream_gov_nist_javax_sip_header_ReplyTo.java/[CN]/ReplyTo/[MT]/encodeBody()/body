@@ -1,0 +1,14 @@
+{
+  String retval="";
+  if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+    retval+=LESS_THAN;
+  }
+  retval+=address.encode();
+  if (address.getAddressType() == AddressImpl.ADDRESS_SPEC) {
+    retval+=GREATER_THAN;
+  }
+  if (!parameters.isEmpty()) {
+    retval+=SEMICOLON + parameters.encode();
+  }
+  return retval;
+}

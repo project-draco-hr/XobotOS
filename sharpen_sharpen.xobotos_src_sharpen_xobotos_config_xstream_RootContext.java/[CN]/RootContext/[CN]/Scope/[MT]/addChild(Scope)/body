@@ -1,0 +1,4 @@
+{
+  if (child.isFileScope())   _fileScopes.add(child);
+ else   _children.put(child.name(),child);
+}

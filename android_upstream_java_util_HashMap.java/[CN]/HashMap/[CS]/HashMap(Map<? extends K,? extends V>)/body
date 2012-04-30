@@ -1,0 +1,4 @@
+{
+  this(capacityForInitSize(map.size()));
+  constructorPutAll(map);
+}

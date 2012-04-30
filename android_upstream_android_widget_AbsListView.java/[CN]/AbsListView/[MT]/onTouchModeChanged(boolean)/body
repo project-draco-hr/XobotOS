@@ -1,0 +1,26 @@
+{
+  if (isInTouchMode) {
+    hideSelector();
+    if (getHeight() > 0 && getChildCount() > 0) {
+      layoutChildren();
+    }
+    updateSelectorState();
+  }
+ else {
+    int touchMode=mTouchMode;
+    if (touchMode == TOUCH_MODE_OVERSCROLL || touchMode == TOUCH_MODE_OVERFLING) {
+      if (mFlingRunnable != null) {
+        mFlingRunnable.endFling();
+      }
+      if (mPositionScroller != null) {
+        mPositionScroller.stop();
+      }
+      if (mScrollY != 0) {
+        mScrollY=0;
+        invalidateParentCaches();
+        finishGlows();
+        invalidate();
+      }
+    }
+  }
+}

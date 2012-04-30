@@ -1,0 +1,4 @@
+def __init__(self, **kw):
+    'Initialize a new TestCommon instance.  This involves just\n        calling the base class initialization, and then changing directory\n        to the workdir.\n        '
+    apply(TestCmd.__init__, [self], kw)
+    os.chdir(self.workdir)

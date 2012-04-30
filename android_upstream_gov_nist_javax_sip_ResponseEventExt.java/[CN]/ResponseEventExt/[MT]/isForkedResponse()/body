@@ -1,0 +1,3 @@
+{
+  return super.getClientTransaction() == null && m_originalTransaction != null;
+}

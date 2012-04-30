@@ -1,0 +1,5 @@
+{
+  Properties tmp=new Properties();
+  tmp.load(inStream);
+  myPutAll(tmp);
+}

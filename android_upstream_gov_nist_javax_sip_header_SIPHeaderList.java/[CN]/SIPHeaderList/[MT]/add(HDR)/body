@@ -1,0 +1,4 @@
+{
+  hlist.add((HDR)objectToAdd);
+  return true;
+}

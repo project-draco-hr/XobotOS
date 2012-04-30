@@ -1,0 +1,4 @@
+{
+  if (statusLine == null)   return "";
+ else   return statusLine.encode() + super.encode();
+}

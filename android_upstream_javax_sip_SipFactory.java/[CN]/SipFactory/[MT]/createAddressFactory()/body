@@ -1,0 +1,13 @@
+{
+  try {
+    return new gov.nist.javax.sip.address.AddressFactoryImpl();
+  }
+ catch (  Exception e) {
+    if (e instanceof PeerUnavailableException) {
+      throw (PeerUnavailableException)e;
+    }
+ else {
+      throw new PeerUnavailableException("Failed to create AddressFactory",e);
+    }
+  }
+}

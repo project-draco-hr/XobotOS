@@ -1,0 +1,19 @@
+{
+  final int N=Math.min(SUGGESTIONS_MAX_SIZE,suggestions.length);
+  mSuggestions=Arrays.copyOf(suggestions,N);
+  mFlags=flags;
+  if (context != null && locale == null) {
+    mLocaleString=context.getResources().getConfiguration().locale.toString();
+  }
+ else {
+    mLocaleString=locale.toString();
+  }
+  if (notificationTargetClass != null) {
+    mNotificationTargetClassName=notificationTargetClass.getCanonicalName();
+  }
+ else {
+    mNotificationTargetClassName="";
+  }
+  mHashCode=hashCodeInternal(mSuggestions,mLocaleString,mNotificationTargetClassName);
+  initStyle(context);
+}

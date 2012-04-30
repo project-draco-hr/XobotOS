@@ -1,0 +1,6 @@
+{
+  if (left < right && top < bottom) {
+    return nSaveLayerAlpha(mRenderer,left,top,right,bottom,alpha,saveFlags);
+  }
+  return save(saveFlags);
+}

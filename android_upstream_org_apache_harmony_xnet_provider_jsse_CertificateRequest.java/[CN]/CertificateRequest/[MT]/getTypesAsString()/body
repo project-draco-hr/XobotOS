@@ -1,0 +1,13 @@
+{
+  if (types == null) {
+    types=new String[certificate_types.length];
+    for (int i=0; i < types.length; i++) {
+      String type=CipherSuite.getClientKeyType(certificate_types[i]);
+      if (type == null) {
+        fatalAlert(AlertProtocol.DECODE_ERROR,"DECODE ERROR: incorrect CertificateRequest");
+      }
+      types[i]=type;
+    }
+  }
+  return types;
+}

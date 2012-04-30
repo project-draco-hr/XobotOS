@@ -1,0 +1,7 @@
+{
+  if (position == limit) {
+    throw new BufferOverflowException();
+  }
+  byteBuffer.putFloat(position++ * SizeOf.FLOAT,c);
+  return this;
+}

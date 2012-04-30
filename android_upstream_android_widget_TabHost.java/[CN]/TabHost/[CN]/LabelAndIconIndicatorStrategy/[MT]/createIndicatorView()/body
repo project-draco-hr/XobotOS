@@ -1,0 +1,19 @@
+{
+  final Context context=getContext();
+  LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  View tabIndicator=inflater.inflate(mTabLayoutId,mTabWidget,false);
+  final TextView tv=(TextView)tabIndicator.findViewById(R.id.title);
+  final ImageView iconView=(ImageView)tabIndicator.findViewById(R.id.icon);
+  final boolean exclusive=iconView.getVisibility() == View.GONE;
+  final boolean bindIcon=!exclusive || TextUtils.isEmpty(mLabel);
+  tv.setText(mLabel);
+  if (bindIcon && mIcon != null) {
+    iconView.setImageDrawable(mIcon);
+    iconView.setVisibility(VISIBLE);
+  }
+  if (context.getApplicationInfo().targetSdkVersion <= Build.VERSION_CODES.DONUT) {
+    tabIndicator.setBackgroundResource(R.drawable.tab_indicator_v4);
+    tv.setTextColor(context.getResources().getColorStateList(R.color.tab_indicator_text_v4));
+  }
+  return tabIndicator;
+}

@@ -1,0 +1,26 @@
+{
+  setContentView(com.android.internal.R.layout.search_bar);
+  SearchBar searchBar=(SearchBar)findViewById(com.android.internal.R.id.search_bar);
+  searchBar.setSearchDialog(this);
+  mSearchView=(SearchView)findViewById(com.android.internal.R.id.search_view);
+  mSearchView.setIconified(false);
+  mSearchView.setOnCloseListener(mOnCloseListener);
+  mSearchView.setOnQueryTextListener(mOnQueryChangeListener);
+  mSearchView.setOnSuggestionListener(mOnSuggestionSelectionListener);
+  mSearchView.onActionViewExpanded();
+  mCloseSearch=findViewById(com.android.internal.R.id.closeButton);
+  mCloseSearch.setOnClickListener(new View.OnClickListener(){
+    @Override public void onClick(    View v){
+      dismiss();
+    }
+  }
+);
+  mBadgeLabel=(TextView)mSearchView.findViewById(com.android.internal.R.id.search_badge);
+  mSearchAutoComplete=(AutoCompleteTextView)mSearchView.findViewById(com.android.internal.R.id.search_src_text);
+  mAppIcon=(ImageView)findViewById(com.android.internal.R.id.search_app_icon);
+  mSearchPlate=mSearchView.findViewById(com.android.internal.R.id.search_plate);
+  mWorkingSpinner=getContext().getResources().getDrawable(com.android.internal.R.drawable.search_spinner);
+  setWorking(false);
+  mBadgeLabel.setVisibility(View.GONE);
+  mSearchAutoCompleteImeOptions=mSearchAutoComplete.getImeOptions();
+}

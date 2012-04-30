@@ -1,0 +1,9 @@
+{
+  if (observer == null || uri == null) {
+    throw new IllegalArgumentException("You must pass a valid uri and observer");
+  }
+synchronized (mRootNode) {
+    mRootNode.addObserverLocked(uri,observer,notifyForDescendents,mRootNode,Binder.getCallingUid(),Binder.getCallingPid());
+    if (false)     Log.v(TAG,"Registered observer " + observer + " at "+ uri+ " with notifyForDescendents "+ notifyForDescendents);
+  }
+}

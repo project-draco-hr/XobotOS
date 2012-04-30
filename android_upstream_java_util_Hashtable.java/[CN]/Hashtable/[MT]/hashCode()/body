@@ -1,0 +1,12 @@
+{
+  int result=0;
+  for (  Entry<K,V> e : entrySet()) {
+    K key=e.getKey();
+    V value=e.getValue();
+    if (key == this || value == this) {
+      continue;
+    }
+    result+=(key != null ? key.hashCode() : 0) ^ (value != null ? value.hashCode() : 0);
+  }
+  return result;
+}

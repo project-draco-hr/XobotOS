@@ -1,0 +1,12 @@
+def __init__(self, path_provider):
+    self.header = None
+    self.compile_headers = False
+    if (path_provider.flavor == 'mac'):
+        self.header = path_provider.xcode_settings.GetPerTargetSetting('GCC_PREFIX_HEADER')
+        self.compile_headers = (path_provider.xcode_settings.GetPerTargetSetting('GCC_PRECOMPILE_PREFIX_HEADER', default='NO') != 'NO')
+    self.compiled_headers = {}
+    if self.header:
+        self.header = path_provider.Absolutify(self.header)
+        if self.compile_headers:
+            for lang in ['c', 'cc', 'm', 'mm']:
+                self.compiled_headers[lang] = path_provider.Pchify(self.header, lang)

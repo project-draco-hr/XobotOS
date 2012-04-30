@@ -1,0 +1,6 @@
+{
+  if (mState.mBaseColor != color || mState.mUseColor != color) {
+    invalidateSelf();
+    mState.mBaseColor=mState.mUseColor=color;
+  }
+}

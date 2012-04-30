@@ -1,0 +1,11 @@
+{
+  if (name == null) {
+    throw new NullPointerException("Name cannot be null");
+  }
+  try {
+    dn=new Name(substituteNameFromMap(name,keywordMap));
+  }
+ catch (  IOException e) {
+    throw incorrectInputName(e,name);
+  }
+}

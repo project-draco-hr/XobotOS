@@ -1,0 +1,6 @@
+{
+  if (product == null)   throw new NullPointerException("null user agent");
+  UserAgent userAgent=new UserAgent();
+  userAgent.setProduct(product);
+  return userAgent;
+}

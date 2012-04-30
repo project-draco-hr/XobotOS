@@ -1,0 +1,5 @@
+{
+  RouteList retval=new RouteList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

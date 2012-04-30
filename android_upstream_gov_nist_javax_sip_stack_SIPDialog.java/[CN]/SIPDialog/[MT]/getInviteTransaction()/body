@@ -1,0 +1,5 @@
+{
+  DialogTimerTask t=this.timerTask;
+  if (t != null)   return t.transaction;
+ else   return null;
+}

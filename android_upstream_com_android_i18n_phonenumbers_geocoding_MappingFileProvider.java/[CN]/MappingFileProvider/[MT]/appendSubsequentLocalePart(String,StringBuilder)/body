@@ -1,0 +1,5 @@
+{
+  if (subsequentLocalePart.length() > 0) {
+    fullLocale.append('_').append(subsequentLocalePart);
+  }
+}

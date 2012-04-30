@@ -1,0 +1,12 @@
+{
+  final ReentrantLock lock=this.lock;
+  lock.lock();
+  E result;
+  try {
+    result=extract();
+  }
+  finally {
+    lock.unlock();
+  }
+  return result;
+}

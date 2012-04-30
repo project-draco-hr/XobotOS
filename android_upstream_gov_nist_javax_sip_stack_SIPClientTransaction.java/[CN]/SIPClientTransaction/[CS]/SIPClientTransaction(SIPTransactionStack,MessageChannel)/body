@@ -1,0 +1,13 @@
+{
+  super(newSIPStack,newChannelToUse);
+  setBranch(Utils.getInstance().generateBranchId());
+  this.messageProcessor=newChannelToUse.messageProcessor;
+  this.setEncapsulatedChannel(newChannelToUse);
+  this.notifyOnRetransmit=false;
+  this.timeoutIfStillInCallingState=false;
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("Creating clientTransaction " + this);
+    sipStack.getStackLogger().logStackTrace();
+  }
+  this.sipDialogs=new ConcurrentHashMap();
+}

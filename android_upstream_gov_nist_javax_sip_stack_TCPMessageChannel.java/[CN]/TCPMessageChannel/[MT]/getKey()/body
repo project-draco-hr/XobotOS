@@ -1,0 +1,9 @@
+{
+  if (this.key != null) {
+    return this.key;
+  }
+ else {
+    this.key=MessageChannel.getKey(this.peerAddress,this.peerPort,"TCP");
+    return this.key;
+  }
+}

@@ -1,0 +1,3 @@
+def sleep(self, seconds=default_sleep_seconds):
+    'Sleeps at least the specified number of seconds.  If no\n        number is specified, sleeps at least the minimum number of\n        seconds necessary to advance file time stamps on the current\n        system.  Sleeping more seconds is all right.\n        '
+    time.sleep(seconds)

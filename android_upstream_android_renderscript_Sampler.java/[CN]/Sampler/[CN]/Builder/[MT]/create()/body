@@ -1,0 +1,5 @@
+{
+  mRS.validate();
+  int id=mRS.nSamplerCreate(mMag.mID,mMin.mID,mWrapS.mID,mWrapT.mID,mWrapR.mID,mAniso);
+  return new Sampler(id,mRS);
+}

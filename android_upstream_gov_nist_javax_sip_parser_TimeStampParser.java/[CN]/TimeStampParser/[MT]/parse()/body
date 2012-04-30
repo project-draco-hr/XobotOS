@@ -1,0 +1,56 @@
+{
+  if (debug)   dbg_enter("TimeStampParser.parse");
+  TimeStamp timeStamp=new TimeStamp();
+  try {
+    headerName(TokenTypes.TIMESTAMP);
+    timeStamp.setHeaderName(SIPHeaderNames.TIMESTAMP);
+    this.lexer.SPorHT();
+    String firstNumber=this.lexer.number();
+    try {
+      if (lexer.lookAhead(0) == '.') {
+        this.lexer.match('.');
+        String secondNumber=this.lexer.number();
+        String s=firstNumber + "." + secondNumber;
+        float ts=Float.parseFloat(s);
+        timeStamp.setTimeStamp(ts);
+      }
+ else {
+        long ts=Long.parseLong(firstNumber);
+        timeStamp.setTime(ts);
+      }
+    }
+ catch (    NumberFormatException ex) {
+      throw createParseException(ex.getMessage());
+    }
+catch (    InvalidArgumentException ex) {
+      throw createParseException(ex.getMessage());
+    }
+    this.lexer.SPorHT();
+    if (lexer.lookAhead(0) != '\n') {
+      firstNumber=this.lexer.number();
+      try {
+        if (lexer.lookAhead(0) == '.') {
+          this.lexer.match('.');
+          String secondNumber=this.lexer.number();
+          String s=firstNumber + "." + secondNumber;
+          float ts=Float.parseFloat(s);
+          timeStamp.setDelay(ts);
+        }
+ else {
+          int ts=Integer.parseInt(firstNumber);
+          timeStamp.setDelay(ts);
+        }
+      }
+ catch (      NumberFormatException ex) {
+        throw createParseException(ex.getMessage());
+      }
+catch (      InvalidArgumentException ex) {
+        throw createParseException(ex.getMessage());
+      }
+    }
+  }
+  finally {
+    if (debug)     dbg_leave("TimeStampParser.parse");
+  }
+  return timeStamp;
+}

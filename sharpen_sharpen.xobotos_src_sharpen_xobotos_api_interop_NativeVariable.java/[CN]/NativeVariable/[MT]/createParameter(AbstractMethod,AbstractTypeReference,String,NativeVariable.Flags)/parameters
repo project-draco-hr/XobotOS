@@ -1,0 +1,4 @@
+AbstractMethod method
+AbstractTypeReference type
+String name
+NativeVariable.Flags flags

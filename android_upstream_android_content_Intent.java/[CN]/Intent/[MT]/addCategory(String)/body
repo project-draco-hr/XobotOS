@@ -1,0 +1,7 @@
+{
+  if (mCategories == null) {
+    mCategories=new HashSet<String>();
+  }
+  mCategories.add(category.intern());
+  return this;
+}

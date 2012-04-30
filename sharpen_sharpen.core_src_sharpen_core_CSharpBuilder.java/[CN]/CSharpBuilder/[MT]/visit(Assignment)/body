@@ -1,0 +1,48 @@
+{
+  final Expression lhs=node.getLeftHandSide();
+  final Expression rhs=node.getRightHandSide();
+  final ITypeBinding lhsType=lhs.resolveTypeBinding();
+  pushExpectedType(lhsType);
+  final Assignment.Operator op=node.getOperator();
+  if (op == Assignment.Operator.RIGHT_SHIFT_UNSIGNED_ASSIGN) {
+    String type=lhsType.getQualifiedName();
+    if (type == "byte") {
+      pushExpression(new CSInfixExpression(">>",mapExpression(lhs),mapExpression(lhs.resolveTypeBinding(),rhs)));
+    }
+ else {
+      CSExpression mappedLhs=new CSParenthesizedExpression(mapExpression(lhs));
+      CSExpression cast=new CSCastExpression(new CSTypeReference("u" + type),mappedLhs);
+      CSExpression shiftResult=new CSInfixExpression(">>",cast,mapExpression(rhs));
+      shiftResult=new CSParenthesizedExpression(shiftResult);
+      shiftResult=new CSCastExpression(new CSTypeReference(type),shiftResult);
+      pushExpression(new CSInfixExpression("=",mappedLhs,shiftResult));
+    }
+  }
+ else   if ((op == Assignment.Operator.PLUS_ASSIGN) || (op == Assignment.Operator.MINUS_ASSIGN) || (op == Assignment.Operator.TIMES_ASSIGN)|| (op == Assignment.Operator.DIVIDE_ASSIGN)) {
+    ITypeBinding rhsType=rhs.resolveTypeBinding();
+    CSExpression mappedLhs=mapExpression(lhs);
+    CSExpression mappedRhs=mapExpression(lhsType,rhs);
+    final ITypeBinding intType=my(IBindingManager.class).getIntType();
+    final ITypeBinding longType=my(IBindingManager.class).getLongType();
+    final ITypeBinding floatType=my(IBindingManager.class).getFloatType();
+    if (lhsType.equals(intType) && (rhsType.equals(longType) || rhsType.equals(floatType))) {
+      mappedRhs=new CSParenthesizedExpression(mappedRhs);
+      mappedRhs=new CSCastExpression(new CSTypeReference("int"),mappedRhs);
+    }
+    pushExpression(new CSInfixExpression(op.toString(),mappedLhs,mappedRhs));
+  }
+ else   if ((op == Assignment.Operator.ASSIGN) && isZeroLiteral(rhs)) {
+    CSExpression mappedLhs=mapExpression(lhs);
+    CSExpression mappedRhs=mapExpression(lhsType,rhs);
+    CSExpression mapped=my(CSharpDriver.class).mappedNullPointer(lhs);
+    if (mapped != null)     mappedRhs=mapped;
+    pushExpression(new CSInfixExpression(op.toString(),mappedLhs,mappedRhs));
+  }
+ else {
+    CSExpression mappedLhs=mapExpression(lhs);
+    CSExpression mappedRhs=mapExpression(lhsType,rhs);
+    pushExpression(new CSInfixExpression(op.toString(),mappedLhs,mappedRhs));
+  }
+  popExpectedType();
+  return false;
+}

@@ -1,0 +1,9 @@
+{
+  if (msg == null)   msg="";
+  ByteBuffer out=ByteBuffer.allocate(8 + msg.length() * 2);
+  out.order(ChunkHandler.CHUNK_ORDER);
+  out.putInt(errorCode);
+  out.putInt(msg.length());
+  putString(out,msg);
+  return new Chunk(CHUNK_FAIL,out);
+}

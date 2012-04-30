@@ -1,0 +1,13 @@
+{
+  SSLParametersImpl sslParametersLocal=null;
+  IOException instantiationExceptionLocal=null;
+  try {
+    sslParametersLocal=SSLParametersImpl.getDefault();
+  }
+ catch (  KeyManagementException e) {
+    instantiationExceptionLocal=new IOException("Delayed instantiation exception:");
+    instantiationExceptionLocal.initCause(e);
+  }
+  this.sslParameters=sslParametersLocal;
+  this.instantiationException=instantiationExceptionLocal;
+}

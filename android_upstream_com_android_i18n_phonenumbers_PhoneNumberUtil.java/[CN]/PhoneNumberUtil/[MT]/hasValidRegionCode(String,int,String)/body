@@ -1,0 +1,7 @@
+{
+  if (!isValidRegionCode(regionCode)) {
+    LOGGER.log(Level.WARNING,"Number " + number + " has invalid or missing country calling code ("+ countryCallingCode+ ")");
+    return false;
+  }
+  return true;
+}

@@ -1,0 +1,36 @@
+{
+  int version=parcel.readInt();
+  if (version != VERSION && version != 1) {
+    Log.w("SyncStatusInfo","Unknown version: " + version);
+  }
+  authorityId=parcel.readInt();
+  totalElapsedTime=parcel.readLong();
+  numSyncs=parcel.readInt();
+  numSourcePoll=parcel.readInt();
+  numSourceServer=parcel.readInt();
+  numSourceLocal=parcel.readInt();
+  numSourceUser=parcel.readInt();
+  lastSuccessTime=parcel.readLong();
+  lastSuccessSource=parcel.readInt();
+  lastFailureTime=parcel.readLong();
+  lastFailureSource=parcel.readInt();
+  lastFailureMesg=parcel.readString();
+  initialFailureTime=parcel.readLong();
+  pending=parcel.readInt() != 0;
+  initialize=parcel.readInt() != 0;
+  if (version == 1) {
+    periodicSyncTimes=null;
+  }
+ else {
+    int N=parcel.readInt();
+    if (N < 0) {
+      periodicSyncTimes=null;
+    }
+ else {
+      periodicSyncTimes=new ArrayList<Long>();
+      for (int i=0; i < N; i++) {
+        periodicSyncTimes.add(parcel.readLong());
+      }
+    }
+  }
+}

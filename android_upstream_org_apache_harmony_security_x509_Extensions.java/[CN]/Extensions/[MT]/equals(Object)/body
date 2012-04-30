@@ -1,0 +1,7 @@
+{
+  if (!(other instanceof Extensions)) {
+    return false;
+  }
+  Extensions that=(Extensions)other;
+  return (this.extensions == null || this.extensions.isEmpty()) ? (that.extensions == null || that.extensions.isEmpty()) : (this.extensions.equals(that.extensions));
+}

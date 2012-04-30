@@ -1,0 +1,21 @@
+{
+  if (factoryClassName == null) {
+    throw new FactoryConfigurationError("factoryClassName == null");
+  }
+  if (classLoader == null) {
+    classLoader=Thread.currentThread().getContextClassLoader();
+  }
+  try {
+    Class<?> type=classLoader != null ? classLoader.loadClass(factoryClassName) : Class.forName(factoryClassName);
+    return (SAXParserFactory)type.newInstance();
+  }
+ catch (  ClassNotFoundException e) {
+    throw new FactoryConfigurationError(e);
+  }
+catch (  InstantiationException e) {
+    throw new FactoryConfigurationError(e);
+  }
+catch (  IllegalAccessException e) {
+    throw new FactoryConfigurationError(e);
+  }
+}

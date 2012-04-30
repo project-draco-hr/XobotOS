@@ -1,0 +1,10 @@
+{
+  mStreamType=streamType;
+  mFocusDispatcher=afl;
+  mSourceRef=source;
+  mClientId=id;
+  mFocusChangeType=duration;
+  mHandler=hdlr;
+  mPackageName=pn;
+  mCallingUid=uid;
+}

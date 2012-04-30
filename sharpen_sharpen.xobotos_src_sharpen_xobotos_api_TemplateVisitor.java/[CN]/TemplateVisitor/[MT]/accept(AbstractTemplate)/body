@@ -1,0 +1,11 @@
+{
+  if (template instanceof NamespaceTemplate)   accept((NamespaceTemplate)template);
+ else   if (template instanceof CompilationUnitTemplate)   accept((CompilationUnitTemplate)template);
+ else   if (template instanceof TypeTemplate)   accept((TypeTemplate)template);
+ else   if (template instanceof EnumTemplate)   accept((EnumTemplate)template);
+ else   if (template instanceof TypeTemplate)   accept((TypeTemplate)template);
+ else   if (template instanceof EnumTemplate)   accept((EnumTemplate)template);
+ else   if (template instanceof ConstructorTemplate)   accept((ConstructorTemplate)template);
+ else   if (template instanceof MethodTemplate)   accept((MethodTemplate)template);
+ else   if (template instanceof FieldTemplate)   accept((FieldTemplate)template);
+}

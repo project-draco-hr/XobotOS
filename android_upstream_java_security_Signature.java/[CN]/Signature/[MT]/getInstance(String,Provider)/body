@@ -1,0 +1,9 @@
+{
+  if (algorithm == null) {
+    throw new NullPointerException();
+  }
+  if (provider == null) {
+    throw new IllegalArgumentException();
+  }
+  return getSignatureInstance(algorithm,provider);
+}

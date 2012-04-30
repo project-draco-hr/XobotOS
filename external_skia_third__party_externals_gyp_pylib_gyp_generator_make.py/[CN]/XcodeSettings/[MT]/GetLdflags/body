@@ -1,0 +1,54 @@
+def GetLdflags(self, target, configname):
+    'Returns flags that need to be passed to the linker.'
+    self.configname = configname
+    ldflags = []
+
+    def AbsolutifyPrefix(flag, prefix):
+        if flag.startswith(prefix):
+            flag = (prefix + target.Absolutify(flag[len(prefix):]))
+        return flag
+    for ldflag in self._Settings().get('OTHER_LDFLAGS', []):
+        ldflag = AbsolutifyPrefix(ldflag, '-L')
+        ldflag = AbsolutifyPrefix(ldflag, '-Wl,-exported_symbols_list ')
+        ldflags.append(ldflag)
+    if self._Test('DEAD_CODE_STRIPPING', 'YES', default='NO'):
+        ldflags.append('-Wl,-dead_strip')
+    if self._Test('PREBINDING', 'YES', default='NO'):
+        ldflags.append('-Wl,-prebind')
+    self._Appendf(ldflags, 'DYLIB_COMPATIBILITY_VERSION', '-compatibility_version %s')
+    self._Appendf(ldflags, 'DYLIB_CURRENT_VERSION', '-current_version %s')
+    self._Appendf(ldflags, 'MACOSX_DEPLOYMENT_TARGET', '-mmacosx-version-min=%s')
+    if ('SDKROOT' in self._Settings()):
+        ldflags.append(('-isysroot ' + self._SdkPath()))
+    for library_path in self._Settings().get('LIBRARY_SEARCH_PATHS', []):
+        ldflags.append(('-L' + library_path))
+    if ('ORDER_FILE' in self._Settings()):
+        ldflags.append((('-Wl,-order_file ' + '-Wl,') + target.Absolutify(self._Settings()['ORDER_FILE'])))
+    ldflags.append('-arch i386')
+    ldflags.append(('-L' + generator_default_variables['PRODUCT_DIR']))
+    install_name = self.GetPerTargetSetting('LD_DYLIB_INSTALL_NAME')
+    install_base = self.GetPerTargetSetting('DYLIB_INSTALL_NAME_BASE')
+    default_install_name = '$(DYLIB_INSTALL_NAME_BASE:standardizepath)/$(EXECUTABLE_PATH)'
+    if ((not install_name) and install_base):
+        install_name = default_install_name
+    if install_name:
+        if ('$' in install_name):
+            assert (install_name in ('$(DYLIB_INSTALL_NAME_BASE:standardizepath)/$(WRAPPER_NAME)/$(PRODUCT_NAME)', default_install_name)), ("Variables in LD_DYLIB_INSTALL_NAME are not generally supported yet in target '%s' (got '%s')" % (self.spec['target_name'], install_name))
+            if ('/' in install_base):
+                (prefix, rest) = ('', install_base)
+                if install_base.startswith('@'):
+                    (prefix, rest) = install_base.split('/', 1)
+                rest = os.path.normpath(rest)
+                install_base = os.path.join(prefix, rest)
+            install_name = install_name.replace('$(DYLIB_INSTALL_NAME_BASE:standardizepath)', install_base)
+            if self._IsBundle():
+                install_name = install_name.replace('$(WRAPPER_NAME)', self.GetWrapperName())
+                install_name = install_name.replace('$(PRODUCT_NAME)', self.GetProductName())
+            else:
+                assert ('$(WRAPPER_NAME)' not in install_name)
+                assert ('$(PRODUCT_NAME)' not in install_name)
+            install_name = install_name.replace('$(EXECUTABLE_PATH)', self.GetExecutablePath())
+        install_name = QuoteSpaces(install_name)
+        ldflags.append(('-install_name ' + install_name))
+    self.configname = None
+    return ldflags

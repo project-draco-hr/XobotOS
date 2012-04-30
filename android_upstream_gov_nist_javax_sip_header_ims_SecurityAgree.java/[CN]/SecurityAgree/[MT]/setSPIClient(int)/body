@@ -1,0 +1,4 @@
+{
+  if (spic < 0)   throw new InvalidArgumentException("JAIN-SIP " + "Exception, SecurityClient, setSPIClient(), the spi-c parameter is <0");
+  setParameter(ParameterNamesIms.SPI_C,spic);
+}

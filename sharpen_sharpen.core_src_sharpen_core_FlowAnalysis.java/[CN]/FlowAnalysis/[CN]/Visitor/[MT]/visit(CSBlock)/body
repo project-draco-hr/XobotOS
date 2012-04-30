@@ -1,0 +1,8 @@
+{
+  for (  CSStatement statement : node.statements()) {
+    if (!run(statement)) {
+      setUnreachable();
+      break;
+    }
+  }
+}

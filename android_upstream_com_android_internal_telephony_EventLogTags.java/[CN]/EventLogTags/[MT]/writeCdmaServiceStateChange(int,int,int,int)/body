@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(CDMA_SERVICE_STATE_CHANGE,oldstate,olddatastate,newstate,newdatastate);
+}

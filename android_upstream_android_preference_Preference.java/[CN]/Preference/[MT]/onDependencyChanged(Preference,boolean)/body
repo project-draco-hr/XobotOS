@@ -1,0 +1,7 @@
+{
+  if (mDependencyMet == disableDependent) {
+    mDependencyMet=!disableDependent;
+    notifyDependencyChange(shouldDisableDependents());
+    notifyChanged();
+  }
+}

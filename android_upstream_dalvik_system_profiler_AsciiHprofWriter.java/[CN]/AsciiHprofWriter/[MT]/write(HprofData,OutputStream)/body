@@ -1,0 +1,3 @@
+{
+  new AsciiHprofWriter(data,outputStream).write();
+}

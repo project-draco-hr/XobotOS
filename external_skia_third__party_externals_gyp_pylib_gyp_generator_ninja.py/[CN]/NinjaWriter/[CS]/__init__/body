@@ -1,0 +1,8 @@
+def __init__(self, target_outputs, base_dir, build_dir, output_file):
+    '\n    base_dir: path from source root to directory containing this gyp file,\n              by gyp semantics, all input paths are relative to this\n    build_dir: path from source root to build output\n    '
+    self.target_outputs = target_outputs
+    self.base_dir = base_dir
+    self.build_dir = build_dir
+    self.ninja = ninja_syntax.Writer(output_file)
+    self.build_to_base = os.path.join(InvertRelativePath(build_dir), base_dir)
+    self.base_to_build = os.path.join(InvertRelativePath(base_dir), build_dir)

@@ -1,0 +1,5 @@
+def __getitem__(self, key):
+    r = self.base.get(key, None)
+    if (r is None):
+        return 'HB_Script_Common'
+    return r

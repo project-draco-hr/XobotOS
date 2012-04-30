@@ -1,0 +1,7 @@
+{
+  float[] scratch=sScratch;
+synchronized (scratch) {
+    Matrix.setLookAtM(scratch,0,eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ);
+    gl.glMultMatrixf(scratch,0);
+  }
+}

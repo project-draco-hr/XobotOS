@@ -1,0 +1,25 @@
+def GenerateSConscriptWrapper(build_file, build_file_data, name, output_filename, sconscript_files, default_configuration):
+    '\n  Generates the "wrapper" SConscript file (analogous to the Visual Studio\n  solution) that calls all the individual target SConscript files.\n  '
+    output_dir = os.path.dirname(output_filename)
+    src_dir = build_file_data['_DEPTH']
+    src_dir_rel = gyp.common.RelativePath(src_dir, output_dir)
+    if (not src_dir_rel):
+        src_dir_rel = '.'
+    scons_settings = build_file_data.get('scons_settings', {})
+    sconsbuild_dir = scons_settings.get('sconsbuild_dir', '#')
+    scons_tools = scons_settings.get('tools', ['default'])
+    sconscript_file_lines = ['dict(']
+    for target in sorted(sconscript_files.keys()):
+        sconscript = sconscript_files[target]
+        sconscript_file_lines.append(('    %s = %r,' % (target, sconscript)))
+    sconscript_file_lines.append(')')
+    fp = open(output_filename, 'w')
+    fp.write(header)
+    fp.write((_wrapper_template % {'default_configuration': default_configuration, 'name': name, 'scons_tools': repr(scons_tools), 'sconsbuild_dir': repr(sconsbuild_dir), 'sconscript_files': '\n'.join(sconscript_file_lines), 'src_dir': src_dir_rel, }))
+    fp.close()
+    (dir, fname) = os.path.split(output_filename)
+    SConstruct = os.path.join(dir, 'SConstruct')
+    fp = open(SConstruct, 'w')
+    fp.write(header)
+    fp.write(('SConscript(%s)\n' % repr(fname)))
+    fp.close()

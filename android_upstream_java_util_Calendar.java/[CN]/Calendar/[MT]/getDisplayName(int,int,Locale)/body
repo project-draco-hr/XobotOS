@@ -1,0 +1,8 @@
+{
+  if (style == ALL_STYLES) {
+    style=SHORT;
+  }
+  String[] array=getDisplayNameArray(field,style,locale);
+  int value=get(field);
+  return (array != null) ? array[value] : null;
+}

@@ -1,0 +1,4 @@
+def __call__(self, x, y):
+    (key1, value1) = x
+    (key2, value2) = y
+    return cmp(key1, key2)

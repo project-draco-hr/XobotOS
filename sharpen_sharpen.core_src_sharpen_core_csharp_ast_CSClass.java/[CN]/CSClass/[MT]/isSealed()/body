@@ -1,0 +1,3 @@
+{
+  return CSClassModifier.Sealed == _modifier;
+}

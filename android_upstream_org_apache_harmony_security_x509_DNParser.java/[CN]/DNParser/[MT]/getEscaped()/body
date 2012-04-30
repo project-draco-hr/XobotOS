@@ -1,0 +1,27 @@
+{
+  pos++;
+  if (pos == chars.length) {
+    throw new IOException("Invalid distinguished name string");
+  }
+  char ch=chars[pos];
+switch (ch) {
+case '"':
+case '\\':
+    hasQE=true;
+  return ch;
+case ',':
+case '=':
+case '+':
+case '<':
+case '>':
+case '#':
+case ';':
+case ' ':
+case '*':
+case '%':
+case '_':
+return ch;
+default :
+return getUTF8();
+}
+}

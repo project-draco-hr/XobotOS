@@ -1,0 +1,14 @@
+{
+  if (runtimeTypeName == null) {
+    runtimeTypeName=DEFAULT_RUNTIME_TYPE_NAME;
+  }
+  if (configurationClass == null)   throw new IllegalArgumentException("No configuration class specified.");
+  try {
+    Constructor<?> ctor=Class.forName(configurationClass).getDeclaredConstructor(String.class);
+    ctor.setAccessible(true);
+    return (Configuration)ctor.newInstance(runtimeTypeName);
+  }
+ catch (  Exception e) {
+    throw new IllegalArgumentException("Cannot instantiate configuration class: " + configurationClass,e);
+  }
+}

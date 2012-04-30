@@ -1,0 +1,5 @@
+{
+  checkIndex(index,SizeOf.SHORT);
+  Memory.pokeShort(backingArray,offset + index,value,order);
+  return this;
+}

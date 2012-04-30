@@ -1,0 +1,6 @@
+{
+  if (_dllName == null)   throw new ConfigurationException("<native-bindings> is missing <dll-name>");
+  if (_outputDir == null)   throw new ConfigurationException("<native-bindings> is missing <output-dir>");
+  if (_includes == null)   _includes=new ArrayList<String>();
+  return this;
+}

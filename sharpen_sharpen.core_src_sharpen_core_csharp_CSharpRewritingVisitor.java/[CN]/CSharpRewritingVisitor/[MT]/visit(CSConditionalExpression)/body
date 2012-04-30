@@ -1,0 +1,5 @@
+{
+  node.expression().accept(this);
+  node.trueExpression().accept(this);
+  node.falseExpression().accept(this);
+}

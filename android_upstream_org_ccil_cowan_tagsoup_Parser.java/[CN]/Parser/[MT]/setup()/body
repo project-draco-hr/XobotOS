@@ -1,0 +1,21 @@
+{
+  if (theSchema == null)   theSchema=new HTMLSchema();
+  if (theScanner == null)   theScanner=new HTMLScanner();
+  if (theAutoDetector == null) {
+    theAutoDetector=new AutoDetector(){
+      public Reader autoDetectingReader(      InputStream i){
+        return new InputStreamReader(i);
+      }
+    }
+;
+  }
+  theStack=new Element(theSchema.getElementType("<root>"),defaultAttributes);
+  thePCDATA=new Element(theSchema.getElementType("<pcdata>"),defaultAttributes);
+  theNewElement=null;
+  theAttributeName=null;
+  thePITarget=null;
+  theSaved=null;
+  theEntity=0;
+  virginStack=true;
+  theDoctypeName=theDoctypePublicId=theDoctypeSystemId=null;
+}

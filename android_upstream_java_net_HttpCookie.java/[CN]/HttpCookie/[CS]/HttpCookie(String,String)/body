@@ -1,0 +1,8 @@
+{
+  String ntrim=name.trim();
+  if (!isValidName(ntrim)) {
+    throw new IllegalArgumentException();
+  }
+  this.name=ntrim;
+  this.value=value;
+}

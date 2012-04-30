@@ -1,0 +1,3 @@
+{
+  return (other instanceof PProfileKey) && super.equals(other);
+}

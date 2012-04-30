@@ -1,0 +1,15 @@
+{
+  URI alertInfoUri=null;
+  if (this.uri != null) {
+    alertInfoUri=(URI)this.uri;
+  }
+ else {
+    try {
+      alertInfoUri=(URI)new GenericURI(string);
+    }
+ catch (    ParseException e) {
+      ;
+    }
+  }
+  return alertInfoUri;
+}

@@ -1,0 +1,4 @@
+{
+  WWWAuthenticateList retval=new WWWAuthenticateList();
+  return retval.clonehlist(this.hlist);
+}

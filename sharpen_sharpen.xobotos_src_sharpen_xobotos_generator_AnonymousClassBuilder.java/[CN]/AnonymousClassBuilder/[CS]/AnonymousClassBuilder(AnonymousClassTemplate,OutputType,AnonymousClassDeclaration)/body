@@ -1,0 +1,3 @@
+{
+  super(template,CSAnonymousClass.class,output,node);
+}

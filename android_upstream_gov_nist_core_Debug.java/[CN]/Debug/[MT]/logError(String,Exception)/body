@@ -1,0 +1,5 @@
+{
+  if ((parserDebug || debug) && stackLogger != null) {
+    stackLogger.logError(message,ex);
+  }
+}

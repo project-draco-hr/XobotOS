@@ -1,0 +1,4 @@
+{
+  super.addReferencedProject(reference,monitor);
+  addClasspathEntry(JavaCore.newProjectEntry(reference.getFullPath(),true));
+}

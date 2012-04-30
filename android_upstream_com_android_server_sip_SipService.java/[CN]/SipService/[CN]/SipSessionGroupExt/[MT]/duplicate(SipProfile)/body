@@ -1,0 +1,9 @@
+{
+  try {
+    return new SipProfile.Builder(p).setPassword("*").build();
+  }
+ catch (  Exception e) {
+    Log.wtf(TAG,"duplicate()",e);
+    throw new RuntimeException("duplicate profile",e);
+  }
+}

@@ -1,0 +1,13 @@
+{
+  InputStream source=PhoneNumberOfflineGeocoder.class.getResourceAsStream(phonePrefixDataDirectory + fileName);
+  ObjectInputStream in;
+  try {
+    in=new ObjectInputStream(source);
+    AreaCodeMap map=new AreaCodeMap();
+    map.readExternal(in);
+    availablePhonePrefixMaps.put(fileName,map);
+  }
+ catch (  IOException e) {
+    LOGGER.log(Level.WARNING,e.toString());
+  }
+}

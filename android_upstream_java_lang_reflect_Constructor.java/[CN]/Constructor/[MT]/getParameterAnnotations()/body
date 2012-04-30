@@ -1,0 +1,7 @@
+{
+  Annotation[][] parameterAnnotations=Method.getParameterAnnotations(declaringClass,slot);
+  if (parameterAnnotations.length == 0) {
+    return Method.noAnnotations(parameterTypes.length);
+  }
+  return parameterAnnotations;
+}

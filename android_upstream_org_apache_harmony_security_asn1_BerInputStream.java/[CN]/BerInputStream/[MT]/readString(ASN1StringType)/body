@@ -1,0 +1,11 @@
+{
+  if (tag == type.id) {
+    readContent();
+  }
+ else   if (tag == type.constrId) {
+    throw new ASN1Exception("Decoding constructed ASN.1 string type is not provided");
+  }
+ else {
+    throw expected("string");
+  }
+}

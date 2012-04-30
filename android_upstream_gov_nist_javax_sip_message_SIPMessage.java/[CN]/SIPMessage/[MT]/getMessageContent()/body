@@ -1,0 +1,7 @@
+{
+  if (this.messageContent == null && this.messageContentBytes == null)   return null;
+ else   if (this.messageContent == null) {
+    this.messageContent=new String(messageContentBytes,getCharset());
+  }
+  return this.messageContent;
+}

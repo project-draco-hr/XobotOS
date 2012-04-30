@@ -1,0 +1,8 @@
+{
+  peek();
+  JsonToken result=token;
+  token=null;
+  value=null;
+  name=null;
+  return result;
+}

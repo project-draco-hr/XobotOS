@@ -1,0 +1,6 @@
+def IsPathSection(section):
+    while (section[(-1):] in ('=', '+', '?', '!')):
+        section = section[0:(-1)]
+    if ((section in path_sections) or section.endswith('_dir') or section.endswith('_dirs') or section.endswith('_file') or section.endswith('_files') or section.endswith('_path') or section.endswith('_paths')):
+        return True
+    return False

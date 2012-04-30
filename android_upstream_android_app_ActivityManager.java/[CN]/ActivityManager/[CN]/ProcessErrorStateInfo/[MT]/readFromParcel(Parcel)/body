@@ -1,0 +1,10 @@
+{
+  condition=source.readInt();
+  processName=source.readString();
+  pid=source.readInt();
+  uid=source.readInt();
+  tag=source.readString();
+  shortMsg=source.readString();
+  longMsg=source.readString();
+  stackTrace=source.readString();
+}

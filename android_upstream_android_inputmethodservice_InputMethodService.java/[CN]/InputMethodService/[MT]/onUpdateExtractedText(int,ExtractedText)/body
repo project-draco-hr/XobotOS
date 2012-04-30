@@ -1,0 +1,11 @@
+{
+  if (mExtractedToken != token) {
+    return;
+  }
+  if (text != null) {
+    if (mExtractEditText != null) {
+      mExtractedText=text;
+      mExtractEditText.setExtractedText(text);
+    }
+  }
+}

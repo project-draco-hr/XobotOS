@@ -1,0 +1,3 @@
+{
+  NetworkManagementSocketTagger.setThreadSocketStatsTag(-1);
+}

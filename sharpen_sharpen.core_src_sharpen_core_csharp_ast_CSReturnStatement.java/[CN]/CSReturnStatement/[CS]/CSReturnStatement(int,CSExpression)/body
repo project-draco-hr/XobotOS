@@ -1,0 +1,4 @@
+{
+  super(startPosition);
+  _expression=expression;
+}

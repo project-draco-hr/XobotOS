@@ -1,0 +1,4 @@
+{
+  registerDataSetObserver(new ExpandedIndexObserver());
+  findExpandedIndex();
+}

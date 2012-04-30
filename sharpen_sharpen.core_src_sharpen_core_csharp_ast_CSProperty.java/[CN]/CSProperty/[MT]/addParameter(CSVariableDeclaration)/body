@@ -1,0 +1,6 @@
+{
+  if (null == _parameters) {
+    _parameters=new ArrayList<CSVariableDeclaration>();
+  }
+  _parameters.add(parameter);
+}

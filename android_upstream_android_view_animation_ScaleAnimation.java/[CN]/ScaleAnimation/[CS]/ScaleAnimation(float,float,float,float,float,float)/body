@@ -1,0 +1,11 @@
+{
+  mResources=null;
+  mFromX=fromX;
+  mToX=toX;
+  mFromY=fromY;
+  mToY=toY;
+  mPivotXType=ABSOLUTE;
+  mPivotYType=ABSOLUTE;
+  mPivotXValue=pivotX;
+  mPivotYValue=pivotY;
+}

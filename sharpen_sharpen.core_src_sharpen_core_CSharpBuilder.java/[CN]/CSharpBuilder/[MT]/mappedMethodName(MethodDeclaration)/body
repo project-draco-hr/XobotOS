@@ -1,0 +1,3 @@
+{
+  return mappedMethodName(node.resolveBinding());
+}

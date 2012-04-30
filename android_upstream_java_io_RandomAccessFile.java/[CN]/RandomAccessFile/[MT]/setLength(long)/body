@@ -1,0 +1,18 @@
+{
+  if (newLength < 0) {
+    throw new IllegalArgumentException("newLength < 0");
+  }
+  try {
+    Libcore.os.ftruncate(fd,newLength);
+  }
+ catch (  ErrnoException errnoException) {
+    throw errnoException.rethrowAsIOException();
+  }
+  long filePointer=getFilePointer();
+  if (filePointer > newLength) {
+    seek(newLength);
+  }
+  if (syncMetadata) {
+    fd.sync();
+  }
+}

@@ -1,0 +1,17 @@
+{
+  if (request.getRequestLine() == null) {
+    return this.defaultRouter;
+  }
+ else   if (this.useRouterForAll) {
+    return this.router;
+  }
+ else {
+    if (request.getRequestURI().getScheme().equals("sip") || request.getRequestURI().getScheme().equals("sips")) {
+      return this.defaultRouter;
+    }
+ else {
+      if (this.router != null)       return this.router;
+ else       return defaultRouter;
+    }
+  }
+}

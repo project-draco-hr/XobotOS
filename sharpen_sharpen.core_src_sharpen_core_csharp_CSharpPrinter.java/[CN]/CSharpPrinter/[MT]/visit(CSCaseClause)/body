@@ -1,0 +1,15 @@
+{
+  int clauses=0;
+  for (  CSExpression e : node.expressions()) {
+    if (clauses++ > 0)     writeLine();
+    writeIndented("case ");
+    e.accept(this);
+    write(":");
+  }
+  if (node.isDefault()) {
+    if (clauses > 0)     writeLine();
+    writeIndented("default:");
+  }
+  writeLine();
+  node.body().accept(this);
+}

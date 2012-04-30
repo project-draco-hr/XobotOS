@@ -1,0 +1,8 @@
+{
+  final AttachInfo ai=mAttachInfo;
+  if (ai != null) {
+    if (force || ai.mKeepScreenOn || (ai.mSystemUiVisibility != 0)|| ai.mHasSystemUiListeners) {
+      ai.mRecomputeGlobalAttributes=true;
+    }
+  }
+}

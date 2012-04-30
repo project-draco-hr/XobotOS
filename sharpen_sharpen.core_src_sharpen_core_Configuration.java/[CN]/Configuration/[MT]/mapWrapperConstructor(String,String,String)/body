@@ -1,0 +1,4 @@
+{
+  mapMethod(from,to);
+  _systemConvertWellKnownTypes.put(to,wellKnownTypeName);
+}

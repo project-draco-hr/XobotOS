@@ -1,0 +1,4 @@
+{
+  final List<ASTNode> fragments=fragmentsFrom(element);
+  return fragments.size() == 1 && isTextFragment(fragments,0);
+}

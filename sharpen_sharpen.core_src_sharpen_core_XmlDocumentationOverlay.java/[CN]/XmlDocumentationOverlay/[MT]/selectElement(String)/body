@@ -1,0 +1,8 @@
+{
+  try {
+    return (Element)xpath().evaluate(xpath,_document,XPathConstants.NODE);
+  }
+ catch (  XPathExpressionException e) {
+    throw new RuntimeException(e);
+  }
+}

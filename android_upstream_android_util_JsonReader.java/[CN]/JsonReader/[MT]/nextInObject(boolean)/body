@@ -1,0 +1,40 @@
+{
+  if (firstElement) {
+switch (nextNonWhitespace()) {
+case '}':
+      pop();
+    return token=JsonToken.END_OBJECT;
+default :
+  pos--;
+}
+}
+ else {
+switch (nextNonWhitespace()) {
+case '}':
+pop();
+return token=JsonToken.END_OBJECT;
+case ';':
+case ',':
+break;
+default :
+throw syntaxError("Unterminated object");
+}
+}
+int quote=nextNonWhitespace();
+switch (quote) {
+case '\'':
+checkLenient();
+case '"':
+name=nextString((char)quote);
+break;
+default :
+checkLenient();
+pos--;
+name=nextLiteral(false);
+if (name.isEmpty()) {
+throw syntaxError("Expected name");
+}
+}
+replaceTop(JsonScope.DANGLING_NAME);
+return token=JsonToken.NAME;
+}

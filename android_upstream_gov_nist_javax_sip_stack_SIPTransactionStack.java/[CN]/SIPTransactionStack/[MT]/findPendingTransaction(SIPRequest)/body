@@ -1,0 +1,6 @@
+{
+  if (this.stackLogger.isLoggingEnabled()) {
+    this.stackLogger.logDebug("looking for pending tx for :" + requestReceived.getTransactionId());
+  }
+  return (SIPServerTransaction)pendingTransactions.get(requestReceived.getTransactionId());
+}

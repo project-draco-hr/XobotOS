@@ -1,0 +1,19 @@
+{
+  ClassLoader cl=Thread.currentThread().getContextClassLoader();
+  if (cl != null) {
+    try {
+      return ResourceBundle.getBundle(resourceBundleName,Locale.getDefault(),cl);
+    }
+ catch (    MissingResourceException ignored) {
+    }
+  }
+  cl=ClassLoader.getSystemClassLoader();
+  if (cl != null) {
+    try {
+      return ResourceBundle.getBundle(resourceBundleName,Locale.getDefault(),cl);
+    }
+ catch (    MissingResourceException ignored) {
+    }
+  }
+  throw new MissingResourceException("Failed to load the specified resource bundle \"" + resourceBundleName + "\"",resourceBundleName,null);
+}

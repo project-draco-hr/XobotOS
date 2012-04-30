@@ -1,0 +1,3 @@
+{
+  return convertPattern(pattern,PATTERN_CHARS,formatData.getLocalPatternChars(),false);
+}

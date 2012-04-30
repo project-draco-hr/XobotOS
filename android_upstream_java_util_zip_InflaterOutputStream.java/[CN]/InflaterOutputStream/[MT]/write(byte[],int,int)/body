@@ -1,0 +1,6 @@
+{
+  checkClosed();
+  Arrays.checkOffsetAndCount(bytes.length,offset,byteCount);
+  inf.setInput(bytes,offset,byteCount);
+  write();
+}

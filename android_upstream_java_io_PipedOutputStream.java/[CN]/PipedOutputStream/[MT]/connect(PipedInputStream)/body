@@ -1,0 +1,15 @@
+{
+  if (stream == null) {
+    throw new NullPointerException();
+  }
+synchronized (stream) {
+    if (this.target != null) {
+      throw new IOException("Already connected");
+    }
+    if (stream.isConnected) {
+      throw new IOException("Pipe already connected");
+    }
+    stream.establishConnection();
+    this.target=stream;
+  }
+}

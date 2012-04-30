@@ -1,0 +1,4 @@
+{
+  if (alg == null)   throw new NullPointerException("JAIN-SIP " + "Exception, SecurityClient, setAlgorithm(), the algorithm parameter is null");
+  setParameter(ParameterNamesIms.ALG,alg);
+}

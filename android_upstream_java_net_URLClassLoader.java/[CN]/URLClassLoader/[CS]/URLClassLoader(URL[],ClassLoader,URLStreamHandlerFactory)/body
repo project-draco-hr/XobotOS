@@ -1,0 +1,16 @@
+{
+  super(parent);
+  this.factory=factory;
+  int nbUrls=searchUrls.length;
+  originalUrls=new ArrayList<URL>(nbUrls);
+  handlerList=new ArrayList<URLHandler>(nbUrls);
+  searchList=Collections.synchronizedList(new ArrayList<URL>(nbUrls));
+  for (int i=0; i < nbUrls; i++) {
+    originalUrls.add(searchUrls[i]);
+    try {
+      searchList.add(createSearchURL(searchUrls[i]));
+    }
+ catch (    MalformedURLException e) {
+    }
+  }
+}

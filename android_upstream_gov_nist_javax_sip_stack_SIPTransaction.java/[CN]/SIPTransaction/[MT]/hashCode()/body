@@ -1,0 +1,4 @@
+{
+  if (this.transactionId == null)   return -1;
+ else   return this.transactionId.hashCode();
+}

@@ -1,0 +1,8 @@
+{
+  final IMethodBinding actual=originalMethodBinding(binding);
+  final MemberMapping customMapping=my(CSharpDriver.class).mappedMethod(binding);
+  if (customMapping != null)   return customMapping;
+  final MemberMapping mapping=_configuration.mappedMember(BindingUtils.qualifiedSignature(actual));
+  if (null != mapping)   return mapping;
+  return _configuration.mappedMember(qualifiedName(actual));
+}

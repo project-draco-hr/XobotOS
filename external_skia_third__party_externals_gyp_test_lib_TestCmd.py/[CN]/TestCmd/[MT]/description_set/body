@@ -1,0 +1,3 @@
+def description_set(self, description):
+    'Set the description of the functionality being tested.\n        '
+    self.description = description

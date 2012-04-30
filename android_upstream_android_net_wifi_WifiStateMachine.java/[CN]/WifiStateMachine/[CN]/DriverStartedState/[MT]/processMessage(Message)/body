@@ -1,0 +1,78 @@
+{
+  if (DBG)   log(getName() + message.toString() + "\n");
+  boolean eventLoggingEnabled=true;
+switch (message.what) {
+case CMD_SET_SCAN_TYPE:
+    if (message.arg1 == SCAN_ACTIVE) {
+      WifiNative.setScanModeCommand(true);
+    }
+ else {
+      WifiNative.setScanModeCommand(false);
+    }
+  break;
+case CMD_START_SCAN:
+eventLoggingEnabled=false;
+WifiNative.scanCommand(message.arg1 == SCAN_ACTIVE);
+mScanResultIsPending=true;
+break;
+case CMD_SET_HIGH_PERF_MODE:
+setHighPerfModeEnabledNative(message.arg1 == 1);
+break;
+case CMD_SET_COUNTRY_CODE:
+String country=(String)message.obj;
+if (DBG) log("set country code " + country);
+if (!WifiNative.setCountryCodeCommand(country.toUpperCase())) {
+loge("Failed to set country code " + country);
+}
+break;
+case CMD_SET_FREQUENCY_BAND:
+int band=message.arg1;
+if (DBG) log("set frequency band " + band);
+if (WifiNative.setBandCommand(band)) {
+mFrequencyBand.set(band);
+startScan(true);
+}
+ else {
+loge("Failed to set frequency band " + band);
+}
+break;
+case CMD_BLUETOOTH_ADAPTER_STATE_CHANGE:
+mBluetoothConnectionActive=(message.arg1 != BluetoothAdapter.STATE_DISCONNECTED);
+WifiNative.setBluetoothCoexistenceScanModeCommand(mBluetoothConnectionActive);
+break;
+case CMD_STOP_DRIVER:
+mWakeLock.acquire();
+WifiNative.stopDriverCommand();
+transitionTo(mDriverStoppingState);
+mWakeLock.release();
+break;
+case CMD_START_PACKET_FILTERING:
+if (message.arg1 == MULTICAST_V6) {
+WifiNative.startFilteringMulticastV6Packets();
+}
+ else if (message.arg1 == MULTICAST_V4) {
+WifiNative.startFilteringMulticastV4Packets();
+}
+ else {
+loge("Illegal arugments to CMD_START_PACKET_FILTERING");
+}
+break;
+case CMD_STOP_PACKET_FILTERING:
+if (message.arg1 == MULTICAST_V6) {
+WifiNative.stopFilteringMulticastV6Packets();
+}
+ else if (message.arg1 == MULTICAST_V4) {
+WifiNative.stopFilteringMulticastV4Packets();
+}
+ else {
+loge("Illegal arugments to CMD_STOP_PACKET_FILTERING");
+}
+break;
+default :
+return NOT_HANDLED;
+}
+if (eventLoggingEnabled) {
+EventLog.writeEvent(EVENTLOG_WIFI_EVENT_HANDLED,message.what);
+}
+return HANDLED;
+}

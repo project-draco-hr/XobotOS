@@ -1,0 +1,16 @@
+{
+  if (this.getParameterValue(parameterName) != null) {
+    try {
+      if (this.getParameterValue(parameterName) instanceof String) {
+        return Float.parseFloat(this.getParameter(parameterName));
+      }
+ else {
+        return ((Float)getParameterValue(parameterName)).floatValue();
+      }
+    }
+ catch (    NumberFormatException ex) {
+      return -1;
+    }
+  }
+ else   return -1;
+}

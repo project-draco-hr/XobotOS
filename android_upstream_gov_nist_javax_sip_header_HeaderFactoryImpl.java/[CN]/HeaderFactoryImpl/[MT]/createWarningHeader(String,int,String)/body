@@ -1,0 +1,8 @@
+{
+  if (agent == null)   throw new NullPointerException("null arg");
+  Warning warning=new Warning();
+  warning.setAgent(agent);
+  warning.setCode(code);
+  warning.setText(comment);
+  return warning;
+}

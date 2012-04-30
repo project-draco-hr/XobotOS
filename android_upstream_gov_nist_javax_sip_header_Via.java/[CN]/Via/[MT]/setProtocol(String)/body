@@ -1,0 +1,5 @@
+{
+  if (protocol == null)   throw new NullPointerException("JAIN-SIP Exception, " + "Via, setProtocol(), the protocol parameter is null.");
+  if (sentProtocol == null)   sentProtocol=new Protocol();
+  sentProtocol.setProtocol(protocol);
+}

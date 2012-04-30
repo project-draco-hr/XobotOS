@@ -1,0 +1,10 @@
+{
+  String to[]={"Session-Expires: 30\n","Session-Expires: 45;refresher=uac\n"};
+  for (int i=0; i < to.length; i++) {
+    SessionExpiresParser tp=new SessionExpiresParser(to[i]);
+    SessionExpires t=(SessionExpires)tp.parse();
+    System.out.println("encoded = " + t.encode());
+    System.out.println("\ntime=" + t.getExpires());
+    if (t.getParameter("refresher") != null)     System.out.println("refresher=" + t.getParameter("refresher"));
+  }
+}

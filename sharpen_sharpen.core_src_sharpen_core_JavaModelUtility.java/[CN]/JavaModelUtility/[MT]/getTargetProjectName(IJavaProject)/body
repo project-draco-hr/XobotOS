@@ -1,0 +1,3 @@
+{
+  return project.getElementName() + SharpenConstants.SHARPENED_PROJECT_SUFFIX;
+}

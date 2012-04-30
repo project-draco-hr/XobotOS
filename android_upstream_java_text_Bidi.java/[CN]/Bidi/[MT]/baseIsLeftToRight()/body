@@ -1,0 +1,3 @@
+{
+  return baseLevel % 2 == 0 ? true : false;
+}

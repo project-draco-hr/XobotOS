@@ -1,0 +1,3 @@
+{
+  _members.add(createEntry(member,member.getVisibility()));
+}

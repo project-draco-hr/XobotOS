@@ -1,0 +1,5 @@
+{
+  super.onAttachedToWindow();
+  registerReceivers();
+  mAttachedToWindow=true;
+}

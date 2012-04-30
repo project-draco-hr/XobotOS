@@ -1,0 +1,9 @@
+{
+  s.defaultReadObject();
+  try {
+    checkValid();
+  }
+ catch (  Exception ex) {
+    throw new StreamCorruptedException(ex.getMessage());
+  }
+}

@@ -1,0 +1,7 @@
+{
+  Drawable drawable=getActivityIconWithCache(mSearchable.getSearchActivity());
+  if (drawable != null) {
+    return drawable;
+  }
+  return mContext.getPackageManager().getDefaultActivityIcon();
+}

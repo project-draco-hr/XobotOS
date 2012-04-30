@@ -1,0 +1,6 @@
+{
+  if (_name == null)   throw new ConfigurationException("Missing 'name' in <native-handle>");
+  if (_type == null)   throw new ConfigurationException("Missing 'type' in <native-handle>");
+  if (_nativeClass == null)   throw new ConfigurationException("Missing 'native-class' in <native-handle>");
+  return this;
+}

@@ -1,0 +1,4 @@
+{
+  if (flags != Flags.ELEMENT)   return expr;
+  return new CSConditionalExpression(expr,new CSBoolLiteralExpression(true),new CSBoolLiteralExpression(false));
+}

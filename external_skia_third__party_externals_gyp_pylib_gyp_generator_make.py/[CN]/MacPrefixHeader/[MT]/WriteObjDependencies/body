@@ -1,0 +1,11 @@
+def WriteObjDependencies(self, compilable, objs, writer):
+    'Writes dependencies from the object files in |objs| to the corresponding\n    precompiled header file. |compilable[i]| has to be the source file belonging\n    to |objs[i]|.'
+    if ((not self.header) or (not self.compile_headers)):
+        return
+    writer.WriteLn('# Dependencies from obj files to their precompiled headers')
+    for (source, obj) in zip(compilable, objs):
+        ext = os.path.splitext(source)[1]
+        lang = {'.c': 'c', '.cpp': 'cc', '.cc': 'cc', '.cxx': 'cc', '.m': 'm', '.mm': 'mm', }.get(ext, None)
+        if lang:
+            writer.WriteLn(('%s: %s' % (obj, self._Gch(lang))))
+    writer.WriteLn('# End precompiled header dependencies')

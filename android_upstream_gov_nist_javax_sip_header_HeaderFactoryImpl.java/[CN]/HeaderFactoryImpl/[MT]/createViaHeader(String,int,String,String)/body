@@ -1,0 +1,16 @@
+{
+  if (host == null || transport == null)   throw new NullPointerException("null arg");
+  Via via=new Via();
+  if (branch != null)   via.setBranch(branch);
+  if (host.indexOf(':') >= 0 && host.indexOf('[') < 0) {
+    if (stripAddressScopeZones) {
+      int zoneStart=host.indexOf('%');
+      if (zoneStart != -1)       host=host.substring(0,zoneStart);
+    }
+    host='[' + host + ']';
+  }
+  via.setHost(host);
+  via.setPort(port);
+  via.setTransport(transport);
+  return via;
+}

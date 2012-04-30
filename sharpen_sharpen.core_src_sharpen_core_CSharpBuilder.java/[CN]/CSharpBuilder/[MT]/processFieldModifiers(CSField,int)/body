@@ -1,0 +1,14 @@
+{
+  if (Modifier.isStatic(modifiers)) {
+    field.addModifier(CSFieldModifier.Static);
+  }
+  if (Modifier.isFinal(modifiers)) {
+    field.addModifier(CSFieldModifier.Readonly);
+  }
+  if (Modifier.isTransient(modifiers)) {
+    field.addAttribute(new CSAttribute(mappedTypeName("System.NonSerialized")));
+  }
+  if (Modifier.isVolatile(modifiers)) {
+    field.addModifier(CSFieldModifier.Volatile);
+  }
+}

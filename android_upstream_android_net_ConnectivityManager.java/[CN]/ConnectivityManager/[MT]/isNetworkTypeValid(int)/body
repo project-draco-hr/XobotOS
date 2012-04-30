@@ -1,0 +1,3 @@
+{
+  return networkType >= 0 && networkType <= MAX_NETWORK_TYPE;
+}

@@ -1,0 +1,3 @@
+{
+  return this.addressType == WILD_CARD;
+}

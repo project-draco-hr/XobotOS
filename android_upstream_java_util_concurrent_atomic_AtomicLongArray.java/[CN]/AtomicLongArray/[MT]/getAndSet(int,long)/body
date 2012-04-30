@@ -1,0 +1,7 @@
+{
+  long offset=checkedByteOffset(i);
+  while (true) {
+    long current=getRaw(offset);
+    if (compareAndSetRaw(offset,current,newValue))     return current;
+  }
+}

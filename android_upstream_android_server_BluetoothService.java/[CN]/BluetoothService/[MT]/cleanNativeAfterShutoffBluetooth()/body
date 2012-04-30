@@ -1,0 +1,4 @@
+{
+  mAdapterProperties.clear();
+  disableNative();
+}

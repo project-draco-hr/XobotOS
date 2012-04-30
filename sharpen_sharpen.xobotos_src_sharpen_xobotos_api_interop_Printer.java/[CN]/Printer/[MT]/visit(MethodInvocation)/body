@@ -1,0 +1,6 @@
+{
+  node.getExpression().accept(this);
+  _writer.write("(");
+  visitCommaSeparatedList(node.getArguments());
+  _writer.writeBlock(")");
+}

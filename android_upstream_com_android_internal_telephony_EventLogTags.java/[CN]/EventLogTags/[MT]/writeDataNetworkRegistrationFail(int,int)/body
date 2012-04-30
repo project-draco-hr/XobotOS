@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(DATA_NETWORK_REGISTRATION_FAIL,opNumeric,cid);
+}

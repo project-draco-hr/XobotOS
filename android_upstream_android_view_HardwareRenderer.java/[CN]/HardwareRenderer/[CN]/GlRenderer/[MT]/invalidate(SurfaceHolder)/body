@@ -1,0 +1,16 @@
+{
+  sEgl.eglMakeCurrent(sEglDisplay,EGL_NO_SURFACE,EGL_NO_SURFACE,EGL_NO_CONTEXT);
+  if (mEglSurface != null && mEglSurface != EGL_NO_SURFACE) {
+    sEgl.eglDestroySurface(sEglDisplay,mEglSurface);
+    mEglSurface=null;
+    setEnabled(false);
+  }
+  if (holder.getSurface().isValid()) {
+    if (!createSurface(holder)) {
+      return;
+    }
+    if (mCanvas != null) {
+      setEnabled(true);
+    }
+  }
+}

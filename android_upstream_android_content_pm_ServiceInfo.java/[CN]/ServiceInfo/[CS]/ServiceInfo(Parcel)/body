@@ -1,0 +1,5 @@
+{
+  super(source);
+  permission=source.readString();
+  flags=source.readInt();
+}

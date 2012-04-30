@@ -1,0 +1,27 @@
+{
+  RecordRouteList recordRouteList=new RecordRouteList();
+  if (debug)   dbg_enter("RecordRouteParser.parse");
+  try {
+    this.lexer.match(TokenTypes.RECORD_ROUTE);
+    this.lexer.SPorHT();
+    this.lexer.match(':');
+    this.lexer.SPorHT();
+    while (true) {
+      RecordRoute recordRoute=new RecordRoute();
+      super.parse(recordRoute);
+      recordRouteList.add(recordRoute);
+      this.lexer.SPorHT();
+      char la=lexer.lookAhead(0);
+      if (la == ',') {
+        this.lexer.match(',');
+        this.lexer.SPorHT();
+      }
+ else       if (la == '\n')       break;
+ else       throw createParseException("unexpected char");
+    }
+    return recordRouteList;
+  }
+  finally {
+    if (debug)     dbg_leave("RecordRouteParser.parse");
+  }
+}

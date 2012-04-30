@@ -1,0 +1,8 @@
+{
+  if ((template == null) || (template.getNativeMethod() == null) || (type.NativeType == null))   return;
+  final NativeMethod method=template.getNativeMethod();
+  final IMethodBinding binding=node.resolveBinding();
+  NativeMethodEntry entry=new NativeMethodEntry(type.NativeType,node,method);
+  _nativeMethods.put(binding,entry);
+  _nativeMethodList.add(entry);
+}

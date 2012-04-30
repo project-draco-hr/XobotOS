@@ -1,0 +1,3 @@
+ASTNode node
+String pattern
+boolean regex

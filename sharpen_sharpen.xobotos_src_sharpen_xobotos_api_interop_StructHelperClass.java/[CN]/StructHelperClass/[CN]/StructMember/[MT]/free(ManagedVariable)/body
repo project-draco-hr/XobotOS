@@ -1,0 +1,4 @@
+{
+  if (!isClass())   return null;
+  return new CSExpressionStatement(-1,new CSMethodInvocationExpression(getHelper().FREE_MANAGED_PTR.expr(),getReference(obj)));
+}

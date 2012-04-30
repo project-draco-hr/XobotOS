@@ -1,0 +1,7 @@
+def where_is(self, file, path=None, pathext=None):
+    'Find an executable file.\n        '
+    if is_List(file):
+        file = apply(os.path.join, tuple(file))
+    if (not os.path.isabs(file)):
+        file = where_is(file, path, pathext)
+    return file

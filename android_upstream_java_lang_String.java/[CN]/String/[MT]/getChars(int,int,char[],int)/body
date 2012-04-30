@@ -1,0 +1,8 @@
+{
+  if (start >= 0 && start <= end && end <= count) {
+    System.arraycopy(value,start + offset,buffer,index,end - start);
+  }
+ else {
+    throw startEndAndLength(start,end);
+  }
+}

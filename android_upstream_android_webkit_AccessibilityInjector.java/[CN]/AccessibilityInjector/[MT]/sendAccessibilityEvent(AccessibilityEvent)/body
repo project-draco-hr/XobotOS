@@ -1,0 +1,9 @@
+{
+  if (DEBUG) {
+    Log.d(LOG_TAG,"Dispatching: " + event);
+  }
+  AccessibilityManager accessibilityManager=AccessibilityManager.getInstance(mWebView.getContext());
+  if (accessibilityManager.isEnabled()) {
+    accessibilityManager.sendAccessibilityEvent(event);
+  }
+}

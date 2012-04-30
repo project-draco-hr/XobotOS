@@ -1,0 +1,3 @@
+{
+  super(ProxyAuthorization.class,ProxyAuthorizationHeader.NAME);
+}

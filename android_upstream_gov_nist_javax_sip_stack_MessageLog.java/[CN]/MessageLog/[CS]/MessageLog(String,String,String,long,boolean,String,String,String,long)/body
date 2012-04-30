@@ -1,0 +1,13 @@
+{
+  if (message == null || message.equals(""))   throw new IllegalArgumentException("null msg");
+  this.message=message;
+  this.source=source;
+  this.destination=destination;
+  if (timeStamp < 0)   throw new IllegalArgumentException("negative ts");
+  this.timeStamp=timeStamp;
+  this.isSender=isSender;
+  this.firstLine=firstLine;
+  this.tid=tid;
+  this.callId=callId;
+  this.timeStampHeaderValue=timestampVal;
+}

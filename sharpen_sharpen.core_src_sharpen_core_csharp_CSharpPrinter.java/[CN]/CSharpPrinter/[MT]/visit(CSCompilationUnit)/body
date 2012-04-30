@@ -1,0 +1,17 @@
+{
+  beginEnclosingIfDefs(node);
+  List<CSUsing> usings=printableUsingList(node.usings());
+  for (  CSUsing using : usings) {
+    using.accept(this);
+  }
+  if (usings.size() > 0)   _writer.writeLine();
+  if (null != node.namespace()) {
+    writeLine("namespace " + node.namespace());
+    enterBody();
+  }
+  writeLineSeparatedList(node.types());
+  if (null != node.namespace()) {
+    leaveBody();
+  }
+  endEnclosingIfDefs(node);
+}

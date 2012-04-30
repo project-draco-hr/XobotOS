@@ -1,0 +1,6 @@
+{
+  if (sipHeader == null || index == 1)   throw new NoSuchElementException();
+  toRemove=true;
+  index=1;
+  return (Object)sipHeader;
+}

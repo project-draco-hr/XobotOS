@@ -1,0 +1,4 @@
+{
+  if (flags == Flags.ELEMENT)   return new CSTypeReference("System.IntPtr");
+ else   return _nativeHandle.getManagedType();
+}

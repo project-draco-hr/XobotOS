@@ -1,0 +1,6 @@
+{
+  if (minExpires < 0)   throw new InvalidArgumentException("bad minExpires " + minExpires);
+  MinExpires min=new MinExpires();
+  min.setExpires(minExpires);
+  return min;
+}

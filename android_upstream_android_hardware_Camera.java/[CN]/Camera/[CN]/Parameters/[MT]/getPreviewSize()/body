@@ -1,0 +1,4 @@
+{
+  String pair=get(KEY_PREVIEW_SIZE);
+  return strToSize(pair);
+}

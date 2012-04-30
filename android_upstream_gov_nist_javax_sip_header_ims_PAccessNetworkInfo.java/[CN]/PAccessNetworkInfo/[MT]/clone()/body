@@ -1,0 +1,4 @@
+{
+  PAccessNetworkInfo retval=(PAccessNetworkInfo)super.clone();
+  return retval;
+}

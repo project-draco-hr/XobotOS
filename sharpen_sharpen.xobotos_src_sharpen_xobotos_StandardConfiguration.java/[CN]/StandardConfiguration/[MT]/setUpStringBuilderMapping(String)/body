@@ -1,0 +1,10 @@
+{
+  mapType(typeName,"System.Text.StringBuilder");
+  mapProperty(typeName + ".length","Length");
+  mapProperty(typeName + ".setLength","Length");
+  mapMethod(typeName + ".append","Append");
+  mapMethod(typeName + ".append(char)","Append");
+  mapMethod(typeName + ".insert","Insert");
+  mapMethod(typeName + ".deleteCharAt",sharpenStringMethod("DeleteCharAt"));
+  mapMethod(typeName + ".setCharAt",sharpenStringMethod("SetCharAt"));
+}

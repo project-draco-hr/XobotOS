@@ -1,0 +1,51 @@
+{
+  AcceptEncodingList acceptEncodingList=new AcceptEncodingList();
+  if (debug)   dbg_enter("AcceptEncodingParser.parse");
+  try {
+    headerName(TokenTypes.ACCEPT_ENCODING);
+    if (lexer.lookAhead(0) == '\n') {
+      AcceptEncoding acceptEncoding=new AcceptEncoding();
+      acceptEncodingList.add(acceptEncoding);
+    }
+ else {
+      while (lexer.lookAhead(0) != '\n') {
+        AcceptEncoding acceptEncoding=new AcceptEncoding();
+        if (lexer.lookAhead(0) != ';') {
+          lexer.match(TokenTypes.ID);
+          Token value=lexer.getNextToken();
+          acceptEncoding.setEncoding(value.getTokenValue());
+        }
+        while (lexer.lookAhead(0) == ';') {
+          this.lexer.match(';');
+          this.lexer.SPorHT();
+          this.lexer.match('q');
+          this.lexer.SPorHT();
+          this.lexer.match('=');
+          this.lexer.SPorHT();
+          lexer.match(TokenTypes.ID);
+          Token value=lexer.getNextToken();
+          try {
+            float qv=Float.parseFloat(value.getTokenValue());
+            acceptEncoding.setQValue(qv);
+          }
+ catch (          NumberFormatException ex) {
+            throw createParseException(ex.getMessage());
+          }
+catch (          InvalidArgumentException ex) {
+            throw createParseException(ex.getMessage());
+          }
+          this.lexer.SPorHT();
+        }
+        acceptEncodingList.add(acceptEncoding);
+        if (lexer.lookAhead(0) == ',') {
+          this.lexer.match(',');
+          this.lexer.SPorHT();
+        }
+      }
+    }
+    return acceptEncodingList;
+  }
+  finally {
+    if (debug)     dbg_leave("AcceptEncodingParser.parse");
+  }
+}

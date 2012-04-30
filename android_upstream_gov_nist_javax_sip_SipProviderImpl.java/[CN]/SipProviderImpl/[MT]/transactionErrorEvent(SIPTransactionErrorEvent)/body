@@ -1,0 +1,54 @@
+{
+  SIPTransaction transaction=(SIPTransaction)transactionErrorEvent.getSource();
+  if (transactionErrorEvent.getErrorID() == SIPTransactionErrorEvent.TRANSPORT_ERROR) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("TransportError occured on " + transaction);
+    }
+    Object errorObject=transactionErrorEvent.getSource();
+    Timeout timeout=Timeout.TRANSACTION;
+    TimeoutEvent ev=null;
+    if (errorObject instanceof SIPServerTransaction) {
+      ev=new TimeoutEvent(this,(ServerTransaction)errorObject,timeout);
+    }
+ else {
+      SIPClientTransaction clientTx=(SIPClientTransaction)errorObject;
+      Hop hop=clientTx.getNextHop();
+      if (sipStack.getRouter() instanceof RouterExt) {
+        ((RouterExt)sipStack.getRouter()).transactionTimeout(hop);
+      }
+      ev=new TimeoutEvent(this,(ClientTransaction)errorObject,timeout);
+    }
+    this.handleEvent(ev,(SIPTransaction)errorObject);
+  }
+ else   if (transactionErrorEvent.getErrorID() == SIPTransactionErrorEvent.TIMEOUT_ERROR) {
+    Object errorObject=transactionErrorEvent.getSource();
+    Timeout timeout=Timeout.TRANSACTION;
+    TimeoutEvent ev=null;
+    if (errorObject instanceof SIPServerTransaction) {
+      ev=new TimeoutEvent(this,(ServerTransaction)errorObject,timeout);
+    }
+ else {
+      SIPClientTransaction clientTx=(SIPClientTransaction)errorObject;
+      Hop hop=clientTx.getNextHop();
+      if (sipStack.getRouter() instanceof RouterExt) {
+        ((RouterExt)sipStack.getRouter()).transactionTimeout(hop);
+      }
+      ev=new TimeoutEvent(this,(ClientTransaction)errorObject,timeout);
+    }
+    this.handleEvent(ev,(SIPTransaction)errorObject);
+  }
+ else   if (transactionErrorEvent.getErrorID() == SIPTransactionErrorEvent.TIMEOUT_RETRANSMIT) {
+    Object errorObject=transactionErrorEvent.getSource();
+    Transaction tx=(Transaction)errorObject;
+    if (tx.getDialog() != null)     InternalErrorHandler.handleException("Unexpected event !",this.sipStack.getStackLogger());
+    Timeout timeout=Timeout.RETRANSMIT;
+    TimeoutEvent ev=null;
+    if (errorObject instanceof SIPServerTransaction) {
+      ev=new TimeoutEvent(this,(ServerTransaction)errorObject,timeout);
+    }
+ else {
+      ev=new TimeoutEvent(this,(ClientTransaction)errorObject,timeout);
+    }
+    this.handleEvent(ev,(SIPTransaction)errorObject);
+  }
+}

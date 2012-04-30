@@ -1,0 +1,14 @@
+{
+  Class<?> clazz=findLoadedClass(className);
+  if (clazz == null) {
+    try {
+      clazz=parent.loadClass(className,false);
+    }
+ catch (    ClassNotFoundException e) {
+    }
+    if (clazz == null) {
+      clazz=findClass(className);
+    }
+  }
+  return clazz;
+}

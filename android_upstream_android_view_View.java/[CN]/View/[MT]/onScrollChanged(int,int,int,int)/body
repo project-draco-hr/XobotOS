@@ -1,0 +1,10 @@
+{
+  if (AccessibilityManager.getInstance(mContext).isEnabled()) {
+    postSendViewScrolledAccessibilityEventCallback();
+  }
+  mBackgroundSizeChanged=true;
+  final AttachInfo ai=mAttachInfo;
+  if (ai != null) {
+    ai.mViewScrollChanged=true;
+  }
+}

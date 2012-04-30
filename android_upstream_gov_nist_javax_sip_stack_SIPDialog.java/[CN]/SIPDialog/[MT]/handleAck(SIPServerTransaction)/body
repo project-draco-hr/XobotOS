@@ -1,0 +1,37 @@
+{
+  SIPRequest sipRequest=ackTransaction.getOriginalRequest();
+  if (isAckSeen() && getRemoteSeqNumber() == sipRequest.getCSeq().getSeqNumber()) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("ACK already seen by dialog -- dropping Ack" + " retransmission");
+    }
+    acquireTimerTaskSem();
+    try {
+      if (this.timerTask != null) {
+        this.timerTask.cancel();
+        this.timerTask=null;
+      }
+    }
+  finally {
+      releaseTimerTaskSem();
+    }
+    return false;
+  }
+ else   if (this.getState() == DialogState.TERMINATED) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Dialog is terminated -- dropping ACK");
+    return false;
+  }
+ else {
+    SIPServerTransaction tr=getInviteTransaction();
+    SIPResponse sipResponse=(tr != null ? tr.getLastResponse() : null);
+    if (tr != null && sipResponse != null && sipResponse.getStatusCode() / 100 == 2 && sipResponse.getCSeq().getMethod().equals(Request.INVITE) && sipResponse.getCSeq().getSeqNumber() == sipRequest.getCSeq().getSeqNumber()) {
+      ackTransaction.setDialog(this,sipResponse.getDialogId(false));
+      ackReceived(sipRequest);
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("ACK for 2XX response --- sending to TU ");
+      return true;
+    }
+ else {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug(" INVITE transaction not found  -- Discarding ACK");
+      return false;
+    }
+  }
+}

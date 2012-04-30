@@ -1,0 +1,18 @@
+{
+  for (  Object tag : javadoc.tags()) {
+    try {
+      TagElement element=(TagElement)tag;
+      String tagName=element.getTagName();
+      if (null == tagName) {
+        mapJavadocSummary(member,element);
+      }
+ else {
+        processTagElement(member,element);
+      }
+    }
+ catch (    Exception x) {
+      warning((ASTNode)tag,x.getMessage());
+      x.printStackTrace();
+    }
+  }
+}

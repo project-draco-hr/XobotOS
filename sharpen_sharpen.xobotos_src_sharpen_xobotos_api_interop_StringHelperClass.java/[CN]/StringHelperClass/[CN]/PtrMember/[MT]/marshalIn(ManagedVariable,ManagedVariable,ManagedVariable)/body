@@ -1,0 +1,4 @@
+{
+  CSExpression marshal=new CSReferenceExpression("Marshal.StringToHGlobalUni");
+  return new CSExpressionStatement(-1,new CSInfixExpression("=",getReference(obj),new CSMethodInvocationExpression(marshal,arg.getReference())));
+}

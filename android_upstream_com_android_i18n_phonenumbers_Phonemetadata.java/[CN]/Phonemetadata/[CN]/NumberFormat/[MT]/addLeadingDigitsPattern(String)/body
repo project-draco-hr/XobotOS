@@ -1,0 +1,7 @@
+{
+  if (value == null) {
+    throw new NullPointerException();
+  }
+  leadingDigitsPattern_.add(value);
+  return this;
+}

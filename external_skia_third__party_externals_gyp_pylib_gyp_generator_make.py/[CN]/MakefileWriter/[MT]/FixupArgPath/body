@@ -1,0 +1,4 @@
+def FixupArgPath(self, arg):
+    if (('/' in arg) or ('.h.' in arg)):
+        return self.Absolutify(arg)
+    return arg

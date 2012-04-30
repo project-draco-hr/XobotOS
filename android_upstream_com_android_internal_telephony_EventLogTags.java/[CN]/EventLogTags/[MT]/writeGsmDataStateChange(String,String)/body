@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(GSM_DATA_STATE_CHANGE,oldstate,newstate);
+}

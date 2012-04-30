@@ -1,0 +1,15 @@
+{
+  List<HttpCookie> result=new ArrayList<HttpCookie>();
+  for (  List<HttpCookie> list : map.values()) {
+    for (Iterator<HttpCookie> i=list.iterator(); i.hasNext(); ) {
+      HttpCookie cookie=i.next();
+      if (cookie.hasExpired()) {
+        i.remove();
+      }
+ else       if (!result.contains(cookie)) {
+        result.add(cookie);
+      }
+    }
+  }
+  return Collections.unmodifiableList(result);
+}

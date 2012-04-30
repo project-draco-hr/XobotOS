@@ -1,0 +1,4 @@
+{
+  throwIfCursorIsClosed();
+  return mCount;
+}

@@ -1,0 +1,6 @@
+{
+synchronized (mLock) {
+    throwIfCursorIsClosed();
+    mCursor.onMove(mCursor.getPosition(),position);
+  }
+}

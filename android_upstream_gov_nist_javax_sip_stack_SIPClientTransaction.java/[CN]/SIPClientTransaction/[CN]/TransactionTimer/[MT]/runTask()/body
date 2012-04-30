@@ -1,0 +1,34 @@
+{
+  SIPClientTransaction clientTransaction;
+  SIPTransactionStack sipStack;
+  clientTransaction=SIPClientTransaction.this;
+  sipStack=clientTransaction.sipStack;
+  if (clientTransaction.isTerminated()) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("removing  = " + clientTransaction + " isReliable "+ clientTransaction.isReliable());
+    }
+    sipStack.removeTransaction(clientTransaction);
+    try {
+      this.cancel();
+    }
+ catch (    IllegalStateException ex) {
+      if (!sipStack.isAlive())       return;
+    }
+    if ((!sipStack.cacheClientConnections) && clientTransaction.isReliable()) {
+      int newUseCount=--clientTransaction.getMessageChannel().useCount;
+      if (newUseCount <= 0) {
+        TimerTask myTimer=new LingerTimer();
+        sipStack.getTimer().schedule(myTimer,SIPTransactionStack.CONNECTION_LINGER_TIME * 1000);
+      }
+    }
+ else {
+      if (sipStack.isLoggingEnabled() && clientTransaction.isReliable()) {
+        int useCount=clientTransaction.getMessageChannel().useCount;
+        if (sipStack.isLoggingEnabled())         sipStack.getStackLogger().logDebug("Client Use Count = " + useCount);
+      }
+    }
+  }
+ else {
+    clientTransaction.fireTimer();
+  }
+}

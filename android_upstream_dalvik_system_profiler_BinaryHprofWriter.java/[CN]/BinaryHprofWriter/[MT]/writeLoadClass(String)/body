@@ -1,0 +1,15 @@
+{
+  Integer identifier=classNameToId.get(className);
+  if (identifier != null) {
+    return identifier;
+  }
+  int id=nextClassId++;
+  classNameToId.put(className,id);
+  int classNameId=writeString(className);
+  writeRecordHeader(BinaryHprof.Tag.LOAD_CLASS,0,BinaryHprof.Tag.LOAD_CLASS.maximumSize);
+  out.writeInt(id);
+  writeId(0);
+  out.writeInt(0);
+  writeId(classNameId);
+  return id;
+}

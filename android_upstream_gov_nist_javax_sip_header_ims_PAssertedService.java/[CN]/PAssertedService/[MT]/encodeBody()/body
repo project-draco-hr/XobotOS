@@ -1,0 +1,13 @@
+{
+  StringBuffer retval=new StringBuffer();
+  retval.append(ParameterNamesIms.SERVICE_ID);
+  if (this.subServiceIds != null) {
+    retval.append(ParameterNamesIms.SERVICE_ID_LABEL).append(".");
+    retval.append(this.getSubserviceIdentifiers());
+  }
+ else   if (this.subAppIds != null) {
+    retval.append(ParameterNamesIms.APPLICATION_ID_LABEL).append(".");
+    retval.append(this.getApplicationIdentifiers());
+  }
+  return retval.toString();
+}

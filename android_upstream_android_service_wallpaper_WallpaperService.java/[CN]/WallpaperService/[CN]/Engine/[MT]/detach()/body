@@ -1,0 +1,32 @@
+{
+  if (mDestroyed) {
+    return;
+  }
+  mDestroyed=true;
+  if (mVisible) {
+    mVisible=false;
+    if (DEBUG)     Log.v(TAG,"onVisibilityChanged(false): " + this);
+    onVisibilityChanged(false);
+  }
+  reportSurfaceDestroyed();
+  if (DEBUG)   Log.v(TAG,"onDestroy(): " + this);
+  onDestroy();
+  unregisterReceiver(mReceiver);
+  if (mCreated) {
+    try {
+      if (DEBUG)       Log.v(TAG,"Removing window and destroying surface " + mSurfaceHolder.getSurface() + " of: "+ this);
+      if (mInputChannel != null) {
+        InputQueue.unregisterInputChannel(mInputChannel);
+      }
+      mSession.remove(mWindow);
+    }
+ catch (    RemoteException e) {
+    }
+    mSurfaceHolder.mSurface.release();
+    mCreated=false;
+    if (mInputChannel != null) {
+      mInputChannel.dispose();
+      mInputChannel=null;
+    }
+  }
+}

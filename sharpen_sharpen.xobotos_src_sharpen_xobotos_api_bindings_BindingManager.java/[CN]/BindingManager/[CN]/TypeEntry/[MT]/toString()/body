@@ -1,0 +1,3 @@
+{
+  return String.format("TypeEntry[%s:%s:%s]",BindingUtils.qualifiedName(Declaration.resolveBinding()),Template,Output);
+}

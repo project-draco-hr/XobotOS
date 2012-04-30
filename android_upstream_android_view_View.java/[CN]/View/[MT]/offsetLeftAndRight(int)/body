@@ -1,0 +1,34 @@
+{
+  if (offset != 0) {
+    updateMatrix();
+    final boolean matrixIsIdentity=mTransformationInfo == null || mTransformationInfo.mMatrixIsIdentity;
+    if (matrixIsIdentity) {
+      final ViewParent p=mParent;
+      if (p != null && mAttachInfo != null) {
+        final Rect r=mAttachInfo.mTmpInvalRect;
+        int minLeft;
+        int maxRight;
+        if (offset < 0) {
+          minLeft=mLeft + offset;
+          maxRight=mRight;
+        }
+ else {
+          minLeft=mLeft;
+          maxRight=mRight + offset;
+        }
+        r.set(0,0,maxRight - minLeft,mBottom - mTop);
+        p.invalidateChild(this,r);
+      }
+    }
+ else {
+      invalidate(false);
+    }
+    mLeft+=offset;
+    mRight+=offset;
+    if (!matrixIsIdentity) {
+      mPrivateFlags|=DRAWN;
+      invalidate(false);
+    }
+    invalidateParentIfNeeded();
+  }
+}

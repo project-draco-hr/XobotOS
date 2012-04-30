@@ -1,0 +1,50 @@
+def run(self, program=None, interpreter=None, arguments=None, chdir=None, stdin=None, universal_newlines=None):
+    'Runs a test of the program or script for the test\n        environment.  Standard output and error output are saved for\n        future retrieval via the stdout() and stderr() methods.\n\n        The specified program will have the original directory\n        prepended unless it is enclosed in a [list].\n        '
+    if chdir:
+        oldcwd = os.getcwd()
+        if (not os.path.isabs(chdir)):
+            chdir = os.path.join(self.workpath(chdir))
+        if self.verbose:
+            sys.stderr.write((('chdir(' + chdir) + ')\n'))
+        os.chdir(chdir)
+    p = self.start(program, interpreter, arguments, universal_newlines, stdin=stdin)
+    if stdin:
+        if is_List(stdin):
+            for line in stdin:
+                p.stdin.write(line)
+        else:
+            p.stdin.write(stdin)
+        p.stdin.close()
+    out = p.stdout.read()
+    if (p.stderr is None):
+        err = ''
+    else:
+        err = p.stderr.read()
+    try:
+        close_output = p.close_output
+    except AttributeError:
+        p.stdout.close()
+        if (not (p.stderr is None)):
+            p.stderr.close()
+    else:
+        close_output()
+    self._stdout.append(out)
+    self._stderr.append(err)
+    self.status = p.wait()
+    if (not self.status):
+        self.status = 0
+    if chdir:
+        os.chdir(oldcwd)
+    if (self.verbose >= 2):
+        write = sys.stdout.write
+        write(('============ STATUS: %d\n' % self.status))
+        out = self.stdout()
+        if (out or (self.verbose >= 3)):
+            write(('============ BEGIN STDOUT (len=%d):\n' % len(out)))
+            write(out)
+            write('============ END STDOUT\n')
+        err = self.stderr()
+        if (err or (self.verbose >= 3)):
+            write(('============ BEGIN STDERR (len=%d)\n' % len(err)))
+            write(err)
+            write('============ END STDERR\n')

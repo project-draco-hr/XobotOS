@@ -1,0 +1,8 @@
+{
+  IconMenuView.LayoutParams lp=(IconMenuView.LayoutParams)getLayoutParams();
+  if (lp == null) {
+    lp=new IconMenuView.LayoutParams(IconMenuView.LayoutParams.MATCH_PARENT,IconMenuView.LayoutParams.MATCH_PARENT);
+  }
+  lp.desiredWidth=(int)Layout.getDesiredWidth(getText(),getPaint());
+  return lp;
+}

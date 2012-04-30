@@ -1,0 +1,4 @@
+{
+  if (p == null)   throw new NullPointerException("JAIN-SIP Exception," + "Priority, setPriority(), the priority parameter is null");
+  priority=p;
+}

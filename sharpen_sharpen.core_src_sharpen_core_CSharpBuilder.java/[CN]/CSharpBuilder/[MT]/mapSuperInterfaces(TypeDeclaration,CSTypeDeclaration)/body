@@ -1,0 +1,16 @@
+{
+  final ITypeBinding serializable=my(IBindingManager.class).getSerializableType();
+  for (  Object itf : node.superInterfaceTypes()) {
+    Type iface=(Type)itf;
+    ITypeBinding binding=iface.resolveBinding();
+    if (binding == serializable) {
+      continue;
+    }
+ else {
+      type.addBaseType(mappedTypeReference(iface));
+    }
+  }
+  if (!type.isInterface() && node.resolveBinding().isSubTypeCompatible(serializable)) {
+    type.addAttribute(new CSAttribute("System.Serializable"));
+  }
+}

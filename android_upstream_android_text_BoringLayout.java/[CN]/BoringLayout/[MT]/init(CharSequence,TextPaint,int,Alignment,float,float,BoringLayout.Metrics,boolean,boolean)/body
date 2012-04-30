@@ -1,0 +1,39 @@
+{
+  int spacing;
+  if (source instanceof String && align == Layout.Alignment.ALIGN_NORMAL) {
+    mDirect=source.toString();
+  }
+ else {
+    mDirect=null;
+  }
+  mPaint=paint;
+  if (includepad) {
+    spacing=metrics.bottom - metrics.top;
+  }
+ else {
+    spacing=metrics.descent - metrics.ascent;
+  }
+  if (spacingmult != 1 || spacingadd != 0) {
+    spacing=(int)(spacing * spacingmult + spacingadd + 0.5f);
+  }
+  mBottom=spacing;
+  if (includepad) {
+    mDesc=spacing + metrics.top;
+  }
+ else {
+    mDesc=spacing + metrics.ascent;
+  }
+  if (trustWidth) {
+    mMax=metrics.width;
+  }
+ else {
+    TextLine line=TextLine.obtain();
+    line.set(paint,source,0,source.length(),Layout.DIR_LEFT_TO_RIGHT,Layout.DIRS_ALL_LEFT_TO_RIGHT,false,null);
+    mMax=(int)FloatMath.ceil(line.metrics(null));
+    TextLine.recycle(line);
+  }
+  if (includepad) {
+    mTopPadding=metrics.top - metrics.ascent;
+    mBottomPadding=metrics.bottom - metrics.descent;
+  }
+}

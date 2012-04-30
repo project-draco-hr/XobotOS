@@ -1,0 +1,9 @@
+{
+  final CSAnonymousClassBuilder listenerBuilder=mapAnonymousEventListener(node);
+  final CSMemberReferenceExpression handlerMethodRef=new CSMemberReferenceExpression(listenerBuilder.createConstructorInvocation(),eventListenerMethodName(listenerBuilder));
+  final CSReferenceExpression delegateType=new CSReferenceExpression(eventHandlerType);
+  patchEventListener(listenerBuilder,eventArgsType);
+  CSConstructorInvocationExpression delegateConstruction=new CSConstructorInvocationExpression(delegateType);
+  delegateConstruction.addArgument(handlerMethodRef);
+  pushExpression(new CSInfixExpression("+=",mapMethodTargetExpression(node),delegateConstruction));
+}

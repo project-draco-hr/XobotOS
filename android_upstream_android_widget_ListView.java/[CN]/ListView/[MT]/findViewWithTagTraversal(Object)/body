@@ -1,0 +1,15 @@
+{
+  View v;
+  v=super.findViewWithTagTraversal(tag);
+  if (v == null) {
+    v=findViewWithTagInHeadersOrFooters(mHeaderViewInfos,tag);
+    if (v != null) {
+      return v;
+    }
+    v=findViewWithTagInHeadersOrFooters(mFooterViewInfos,tag);
+    if (v != null) {
+      return v;
+    }
+  }
+  return v;
+}

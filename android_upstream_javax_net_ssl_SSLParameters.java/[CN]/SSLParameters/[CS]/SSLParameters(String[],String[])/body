@@ -1,0 +1,4 @@
+{
+  setCipherSuites(cipherSuites);
+  setProtocols(protocols);
+}

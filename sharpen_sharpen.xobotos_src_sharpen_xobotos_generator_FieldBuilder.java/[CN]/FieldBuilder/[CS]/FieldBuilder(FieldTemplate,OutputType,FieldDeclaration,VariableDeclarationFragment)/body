@@ -1,0 +1,4 @@
+{
+  super(template,CSField.class,output,node);
+  this._fragment=fragment;
+}

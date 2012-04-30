@@ -1,0 +1,21 @@
+{
+  int stackFrameId=readId();
+  String methodName=readString();
+  String methodSignature=readString();
+  String file=readString();
+  String className=readClass();
+  int line=in.readInt();
+  if (TRACE) {
+    System.out.println("\tstackFrameId=" + stackFrameId);
+    System.out.println("\tclassName=" + className);
+    System.out.println("\tmethodName=" + methodName);
+    System.out.println("\tmethodSignature=" + methodSignature);
+    System.out.println("\tfile=" + file);
+    System.out.println("\tline=" + line);
+  }
+  StackTraceElement stackFrame=new StackTraceElement(className,methodName,file,line);
+  StackTraceElement old=idToStackFrame.put(stackFrameId,stackFrame);
+  if (old != null) {
+    throw new MalformedHprofException("Duplicate stack frame id: " + stackFrameId);
+  }
+}

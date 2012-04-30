@@ -1,0 +1,5 @@
+{
+  int firstLineFeed=s.indexOf("\n");
+  int lastLineFeed=s.lastIndexOf("\n");
+  return s.substring(firstLineFeed + 1,lastLineFeed);
+}

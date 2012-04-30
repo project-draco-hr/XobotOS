@@ -1,0 +1,3 @@
+def built_file_must_not_match(self, name, contents, **kw):
+    '\n    Fails the test if the contents of the specified built file name\n    match the specified contents.\n    '
+    return self.must_not_match(self.built_file_path(name, **kw), contents)

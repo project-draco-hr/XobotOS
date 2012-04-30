@@ -1,0 +1,4 @@
+{
+  if (this.dialogState == NULL_STATE)   return null;
+  return DialogState.getObject(this.dialogState);
+}

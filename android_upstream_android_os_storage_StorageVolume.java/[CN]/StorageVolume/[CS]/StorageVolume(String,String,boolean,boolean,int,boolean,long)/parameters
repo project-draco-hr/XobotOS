@@ -1,0 +1,7 @@
+String path
+String description
+boolean removable
+boolean emulated
+int mtpReserveSpace
+boolean allowMassStorage
+long maxFileSize

@@ -1,0 +1,10 @@
+{
+  try {
+    super.sendMessage(this.pendingReliableResponse);
+  }
+ catch (  IOException e) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logException(e);
+    this.setState(TransactionState.TERMINATED);
+    raiseErrorEvent(SIPTransactionErrorEvent.TRANSPORT_ERROR);
+  }
+}

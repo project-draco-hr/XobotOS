@@ -1,0 +1,19 @@
+{
+  if (nationalNumber.length() == 0) {
+    return false;
+  }
+  StringBuilder numberWithoutCountryCallingCode=new StringBuilder();
+  int countryCode=phoneUtil.extractCountryCode(nationalNumber,numberWithoutCountryCallingCode);
+  if (countryCode == 0) {
+    return false;
+  }
+  nationalNumber.setLength(0);
+  nationalNumber.append(numberWithoutCountryCallingCode);
+  String newRegionCode=phoneUtil.getRegionCodeForCountryCode(countryCode);
+  if (!newRegionCode.equals(defaultCountry)) {
+    currentMetaData=getMetadataForRegion(newRegionCode);
+  }
+  String countryCodeString=Integer.toString(countryCode);
+  prefixBeforeNationalNumber.append(countryCodeString).append(" ");
+  return true;
+}

@@ -1,0 +1,11 @@
+{
+  ITypeBinding[] interfaces=binding.getInterfaces();
+  for (int i=0; i < interfaces.length; ++i) {
+    ITypeBinding interfaceBinding=interfaces[i];
+    if (interfaceList.contains(interfaceBinding)) {
+      continue;
+    }
+    collectInterfaces(interfaceList,interfaceBinding);
+    interfaceList.add(interfaceBinding);
+  }
+}

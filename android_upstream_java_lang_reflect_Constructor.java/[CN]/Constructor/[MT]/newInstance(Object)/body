@@ -1,0 +1,3 @@
+{
+  return constructNative(args,declaringClass,parameterTypes,slot,flag);
+}

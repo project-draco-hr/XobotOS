@@ -1,0 +1,10 @@
+{
+  if (!isBlittable()) {
+    super.buildWrap(wrap,src);
+    return;
+  }
+  ConstructorInvocation ctorCall=new ConstructorInvocation(getRealNativeType());
+  ctorCall.addArgument(_lengthMember.getReference(src));
+  ctorCall.addArgument(_ptrMember.getReference(src));
+  wrap.getBody().addStatement(new ReturnStatement(ctorCall));
+}

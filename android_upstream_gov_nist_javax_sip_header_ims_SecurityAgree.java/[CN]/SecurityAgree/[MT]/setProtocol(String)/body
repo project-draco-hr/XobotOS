@@ -1,0 +1,4 @@
+{
+  if (prot == null)   throw new NullPointerException("JAIN-SIP " + "Exception, SecurityClient, setProtocol(), the protocol parameter is null");
+  setParameter(ParameterNamesIms.PROT,prot);
+}

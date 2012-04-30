@@ -1,0 +1,3 @@
+{
+  return (ContentEncodingHeader)getHeaderLowerCase(CONTENT_ENCODING_LOWERCASE);
+}

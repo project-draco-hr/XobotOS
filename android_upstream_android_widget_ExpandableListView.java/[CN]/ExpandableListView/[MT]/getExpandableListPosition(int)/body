@@ -1,0 +1,10 @@
+{
+  if (isHeaderOrFooterPosition(flatListPosition)) {
+    return PACKED_POSITION_VALUE_NULL;
+  }
+  final int adjustedPosition=getFlatPositionForConnector(flatListPosition);
+  PositionMetadata pm=mConnector.getUnflattenedPos(adjustedPosition);
+  long packedPos=pm.position.getPackedPosition();
+  pm.recycle();
+  return packedPos;
+}

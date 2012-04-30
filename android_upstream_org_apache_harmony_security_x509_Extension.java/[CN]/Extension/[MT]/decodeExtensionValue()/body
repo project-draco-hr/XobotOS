@@ -1,0 +1,66 @@
+{
+  if (valueDecoded) {
+    return;
+  }
+  valueDecoded=true;
+  if (Arrays.equals(extnID,SUBJ_KEY_ID)) {
+    extnValueObject=SubjectKeyIdentifier.decode(extnValue);
+  }
+ else   if (Arrays.equals(extnID,KEY_USAGE)) {
+    extnValueObject=new KeyUsage(extnValue);
+  }
+ else   if (Arrays.equals(extnID,SUBJECT_ALT_NAME)) {
+    extnValueObject=new AlternativeName(AlternativeName.SUBJECT,extnValue);
+  }
+ else   if (Arrays.equals(extnID,ISSUER_ALTERNATIVE_NAME)) {
+    extnValueObject=new AlternativeName(AlternativeName.SUBJECT,extnValue);
+  }
+ else   if (Arrays.equals(extnID,BASIC_CONSTRAINTS)) {
+    extnValueObject=new BasicConstraints(extnValue);
+  }
+ else   if (Arrays.equals(extnID,NAME_CONSTRAINTS)) {
+    extnValueObject=NameConstraints.decode(extnValue);
+  }
+ else   if (Arrays.equals(extnID,CERTIFICATE_POLICIES)) {
+    extnValueObject=CertificatePolicies.decode(extnValue);
+  }
+ else   if (Arrays.equals(extnID,AUTH_KEY_ID)) {
+    extnValueObject=AuthorityKeyIdentifier.decode(extnValue);
+  }
+ else   if (Arrays.equals(extnID,POLICY_CONSTRAINTS)) {
+    extnValueObject=new PolicyConstraints(extnValue);
+  }
+ else   if (Arrays.equals(extnID,EXTENDED_KEY_USAGE)) {
+    extnValueObject=new ExtendedKeyUsage(extnValue);
+  }
+ else   if (Arrays.equals(extnID,INHIBIT_ANY_POLICY)) {
+    extnValueObject=new InhibitAnyPolicy(extnValue);
+  }
+ else   if (Arrays.equals(extnID,CERTIFICATE_ISSUER)) {
+    extnValueObject=new CertificateIssuer(extnValue);
+  }
+ else   if (Arrays.equals(extnID,CRL_DISTR_POINTS)) {
+    extnValueObject=CRLDistributionPoints.decode(extnValue);
+  }
+ else   if (Arrays.equals(extnID,CERTIFICATE_ISSUER)) {
+    extnValueObject=new ReasonCode(extnValue);
+  }
+ else   if (Arrays.equals(extnID,INVALIDITY_DATE)) {
+    extnValueObject=new InvalidityDate(extnValue);
+  }
+ else   if (Arrays.equals(extnID,REASON_CODE)) {
+    extnValueObject=new ReasonCode(extnValue);
+  }
+ else   if (Arrays.equals(extnID,CRL_NUMBER)) {
+    extnValueObject=new CRLNumber(extnValue);
+  }
+ else   if (Arrays.equals(extnID,ISSUING_DISTR_POINTS)) {
+    extnValueObject=IssuingDistributionPoint.decode(extnValue);
+  }
+ else   if (Arrays.equals(extnID,AUTHORITY_INFO_ACCESS)) {
+    extnValueObject=InfoAccessSyntax.decode(extnValue);
+  }
+ else   if (Arrays.equals(extnID,SUBJECT_INFO_ACCESS)) {
+    extnValueObject=InfoAccessSyntax.decode(extnValue);
+  }
+}

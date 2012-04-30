@@ -1,0 +1,5 @@
+{
+  if (binding.equals(_stringType))   return _stringHelper;
+  NativeTypeEntry entry=_nativeTypes.get(binding.getTypeDeclaration());
+  return entry != null ? entry.Builder : null;
+}

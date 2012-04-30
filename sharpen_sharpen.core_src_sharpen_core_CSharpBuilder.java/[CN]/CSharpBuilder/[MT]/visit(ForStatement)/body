@@ -1,0 +1,49 @@
+{
+  consumeContinueLabel(new Function<CSBlock>(){
+    public CSBlock apply(){
+      List<CSExpression> initializers=new ArrayList<CSExpression>();
+      int count=0;
+      for (      final Object i : node.initializers()) {
+        if (i instanceof VariableDeclarationExpression) {
+          VariableDeclarationExpression vde=(VariableDeclarationExpression)i;
+          count+=vde.fragments().size();
+        }
+      }
+      CSBlock declBlock=null;
+      if (count > 0)       declBlock=new CSBlock();
+      for (      final Object i : node.initializers()) {
+        if (!(i instanceof VariableDeclarationExpression)) {
+          initializers.add(mapExpression((Expression)i));
+          continue;
+        }
+        VariableDeclarationExpression vde=(VariableDeclarationExpression)i;
+        for (        final Object f : vde.fragments()) {
+          VariableDeclarationFragment fragment=(VariableDeclarationFragment)f;
+          CSVariableDeclaration decl=createVariableDeclaration(fragment);
+          CSDeclarationExpression expr=new CSDeclarationExpression(decl);
+          if (count > 1)           declBlock.addStatement(new CSExpressionStatement(-1,expr));
+ else           initializers.add(expr);
+        }
+      }
+      CSForStatement stmt=new CSForStatement(node.getStartPosition(),mapExpression(node.getExpression()));
+      for (      CSExpression i : initializers) {
+        stmt.addInitializer(i);
+      }
+      for (      Object u : node.updaters()) {
+        stmt.addUpdater(mapExpression((Expression)u));
+      }
+      visitBlock(stmt.body(),node.getBody());
+      if (declBlock != null) {
+        declBlock.addStatement(stmt);
+        addStatement(declBlock);
+        return declBlock;
+      }
+ else {
+        addStatement(stmt);
+        return stmt.body();
+      }
+    }
+  }
+);
+  return false;
+}

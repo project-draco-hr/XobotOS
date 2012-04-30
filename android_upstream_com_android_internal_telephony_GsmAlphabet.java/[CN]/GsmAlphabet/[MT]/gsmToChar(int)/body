@@ -1,0 +1,8 @@
+{
+  if (gsmChar >= 0 && gsmChar < 128) {
+    return sLanguageTables[0].charAt(gsmChar);
+  }
+ else {
+    return ' ';
+  }
+}

@@ -1,0 +1,10 @@
+{
+  try {
+    _delegate.write(s);
+    _delegate.write(_lineSeparator);
+    _column=0;
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+}

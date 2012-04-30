@@ -1,0 +1,4 @@
+{
+  if (this.firstTransactionSeen == false)   return this.serverTransactionFlag;
+ else   return this.firstTransactionIsServerTransaction;
+}

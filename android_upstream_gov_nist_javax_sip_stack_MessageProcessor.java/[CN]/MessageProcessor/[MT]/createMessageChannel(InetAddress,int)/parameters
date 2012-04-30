@@ -1,0 +1,2 @@
+InetAddress targetHost
+int port

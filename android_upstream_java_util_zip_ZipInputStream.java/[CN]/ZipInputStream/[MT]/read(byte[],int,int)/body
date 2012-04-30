@@ -1,0 +1,48 @@
+{
+  checkClosed();
+  Arrays.checkOffsetAndCount(buffer.length,offset,byteCount);
+  if (inf.finished() || currentEntry == null) {
+    return -1;
+  }
+  if (currentEntry.compressionMethod == ZipEntry.STORED) {
+    int csize=(int)currentEntry.size;
+    if (inRead >= csize) {
+      return -1;
+    }
+    if (lastRead >= len) {
+      lastRead=0;
+      if ((len=in.read(buf)) == -1) {
+        eof=true;
+        return -1;
+      }
+      entryIn+=len;
+    }
+    int toRead=byteCount > (len - lastRead) ? len - lastRead : byteCount;
+    if ((csize - inRead) < toRead) {
+      toRead=csize - inRead;
+    }
+    System.arraycopy(buf,lastRead,buffer,offset,toRead);
+    lastRead+=toRead;
+    inRead+=toRead;
+    crc.update(buffer,offset,toRead);
+    return toRead;
+  }
+  if (inf.needsInput()) {
+    fill();
+    if (len > 0) {
+      entryIn+=len;
+    }
+  }
+  int read;
+  try {
+    read=inf.inflate(buffer,offset,byteCount);
+  }
+ catch (  DataFormatException e) {
+    throw new ZipException(e.getMessage());
+  }
+  if (read == 0 && inf.finished()) {
+    return -1;
+  }
+  crc.update(buffer,offset,read);
+  return read;
+}

@@ -1,0 +1,3 @@
+def CalculateVariables(default_variables, params):
+    generator_flags = params.get('generator_flags', {})
+    default_variables['OS'] = generator_flags.get('os', 'linux')

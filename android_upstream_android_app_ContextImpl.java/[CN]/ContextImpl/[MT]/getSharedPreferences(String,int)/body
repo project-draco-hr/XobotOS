@@ -1,0 +1,16 @@
+{
+  SharedPreferencesImpl sp;
+synchronized (sSharedPrefs) {
+    sp=sSharedPrefs.get(name);
+    if (sp == null) {
+      File prefsFile=getSharedPrefsFile(name);
+      sp=new SharedPreferencesImpl(prefsFile,mode);
+      sSharedPrefs.put(name,sp);
+      return sp;
+    }
+  }
+  if ((mode & Context.MODE_MULTI_PROCESS) != 0 || getApplicationInfo().targetSdkVersion < android.os.Build.VERSION_CODES.HONEYCOMB) {
+    sp.startReloadIfChangedUnexpectedly();
+  }
+  return sp;
+}

@@ -1,0 +1,15 @@
+{
+  String nationalNumber=getNationalSignificantNumber(number);
+  for (  String regionCode : regionCodes) {
+    PhoneMetadata metadata=getMetadataForRegion(regionCode);
+    if (metadata.hasLeadingDigits()) {
+      if (regexCache.getPatternForRegex(metadata.getLeadingDigits()).matcher(nationalNumber).lookingAt()) {
+        return regionCode;
+      }
+    }
+ else     if (getNumberTypeHelper(nationalNumber,metadata) != PhoneNumberType.UNKNOWN) {
+      return regionCode;
+    }
+  }
+  return null;
+}

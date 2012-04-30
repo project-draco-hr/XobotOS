@@ -1,0 +1,21 @@
+{
+  try {
+    String key=MessageChannel.getKey(host,port,"TLS");
+    if (tlsMessageChannels.get(key) != null) {
+      return (TLSMessageChannel)this.tlsMessageChannels.get(key);
+    }
+ else {
+      TLSMessageChannel retval=new TLSMessageChannel(host,port,sipStack,this);
+      this.tlsMessageChannels.put(key,retval);
+      retval.isCached=true;
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logDebug("key " + key);
+        sipStack.getStackLogger().logDebug("Creating " + retval);
+      }
+      return retval;
+    }
+  }
+ catch (  UnknownHostException ex) {
+    throw new IOException(ex.getMessage());
+  }
+}

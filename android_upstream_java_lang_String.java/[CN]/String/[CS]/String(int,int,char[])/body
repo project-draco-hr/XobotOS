@@ -1,0 +1,5 @@
+{
+  this.value=chars;
+  this.offset=offset;
+  this.count=charCount;
+}

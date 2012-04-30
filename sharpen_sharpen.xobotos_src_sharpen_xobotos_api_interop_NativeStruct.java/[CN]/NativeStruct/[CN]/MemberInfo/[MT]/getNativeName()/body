@@ -1,0 +1,3 @@
+{
+  return _nativeName != null ? _nativeName : _name;
+}

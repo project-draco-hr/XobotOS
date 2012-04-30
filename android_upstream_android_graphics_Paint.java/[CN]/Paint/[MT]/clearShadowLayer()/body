@@ -1,0 +1,4 @@
+{
+  hasShadow=false;
+  nSetShadowLayer(0,0,0,0);
+}

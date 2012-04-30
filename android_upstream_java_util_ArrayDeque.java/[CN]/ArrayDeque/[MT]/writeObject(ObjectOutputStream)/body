@@ -1,0 +1,6 @@
+{
+  s.defaultWriteObject();
+  s.writeInt(size());
+  int mask=elements.length - 1;
+  for (int i=head; i != tail; i=(i + 1) & mask)   s.writeObject(elements[i]);
+}

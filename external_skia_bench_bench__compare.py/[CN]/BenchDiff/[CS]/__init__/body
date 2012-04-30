@@ -1,0 +1,8 @@
+def __init__(self, old, new):
+    self.old = old
+    self.new = new
+    self.diff = (old.time - new.time)
+    diffp = 0
+    if (old.time != 0):
+        diffp = (self.diff / old.time)
+    self.diffp = diffp

@@ -1,0 +1,9 @@
+{
+  if (messageContent == null)   throw new IllegalArgumentException("messgeContent is null");
+  ContentType ct=new ContentType(type,subType);
+  this.setHeader(ct);
+  this.messageContent=messageContent;
+  this.messageContentBytes=null;
+  this.messageContentObject=null;
+  computeContentLength(messageContent);
+}

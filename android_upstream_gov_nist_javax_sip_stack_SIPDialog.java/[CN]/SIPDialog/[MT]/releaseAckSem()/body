@@ -1,0 +1,8 @@
+{
+  if (this.isBackToBackUserAgent) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("releaseAckSem]" + this);
+    }
+    this.ackSem.release();
+  }
+}

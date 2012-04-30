@@ -1,0 +1,7 @@
+def GetCflagsC(self, configname):
+    'Returns flags that need to be added to .c, and .m compilations.'
+    self.configname = configname
+    cflags_c = []
+    self._Appendf(cflags_c, 'GCC_C_LANGUAGE_STANDARD', '-std=%s')
+    self.configname = None
+    return cflags_c

@@ -1,0 +1,17 @@
+{
+  if (DBG)   logd(getName() + message.toString());
+switch (message.what) {
+case WifiMonitor.SUP_DISCONNECTION_EVENT:
+    logd("Supplicant connection lost");
+  WifiNative.closeSupplicantConnection();
+transitionTo(mP2pDisabledState);
+break;
+case WifiP2pManager.ENABLE_P2P:
+case WifiP2pManager.DISABLE_P2P:
+deferMessage(message);
+break;
+default :
+return NOT_HANDLED;
+}
+return HANDLED;
+}

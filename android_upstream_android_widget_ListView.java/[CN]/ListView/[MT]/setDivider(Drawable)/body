@@ -1,0 +1,12 @@
+{
+  if (divider != null) {
+    mDividerHeight=divider.getIntrinsicHeight();
+  }
+ else {
+    mDividerHeight=0;
+  }
+  mDivider=divider;
+  mDividerIsOpaque=divider == null || divider.getOpacity() == PixelFormat.OPAQUE;
+  requestLayout();
+  invalidate();
+}

@@ -1,0 +1,5 @@
+{
+synchronized (messageProcessors) {
+    return (MessageProcessor[])messageProcessors.toArray(new MessageProcessor[0]);
+  }
+}

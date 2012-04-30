@@ -1,0 +1,16 @@
+{
+  if (debug)   dbg_enter("parse");
+  try {
+    headerName(TokenTypes.JOIN_TO);
+    Join join=new Join();
+    this.lexer.SPorHT();
+    String callId=lexer.byteStringNoSemicolon();
+    this.lexer.SPorHT();
+    super.parse(join);
+    join.setCallId(callId);
+    return join;
+  }
+  finally {
+    if (debug)     dbg_leave("parse");
+  }
+}

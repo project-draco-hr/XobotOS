@@ -1,0 +1,5 @@
+{
+  super(type,type.getName(),builder,new CSTypeReference(BindingUtils.qualifiedName(type)),template.getNativeType(),true,false);
+  this._template=template;
+  this._resolved=false;
+}

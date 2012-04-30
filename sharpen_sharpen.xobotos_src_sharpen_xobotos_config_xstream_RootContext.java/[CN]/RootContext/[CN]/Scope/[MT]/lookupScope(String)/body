@@ -1,0 +1,8 @@
+{
+  if (key.equals(".."))   return _parent;
+  if (_children.containsKey(key))   return _children.get(key);
+  for (  final Scope child : _fileScopes) {
+    if (child.containsKey(key))     return child.get(key);
+  }
+  return null;
+}

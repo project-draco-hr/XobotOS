@@ -1,0 +1,8 @@
+{
+  if (mHasMenu != hasMenu) {
+    mHasMenu=hasMenu;
+    if (isAdded() && !isHidden()) {
+      mFragmentManager.invalidateOptionsMenu();
+    }
+  }
+}

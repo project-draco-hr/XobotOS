@@ -1,0 +1,15 @@
+{
+  int animAttr=-1;
+switch (transit) {
+case FragmentTransaction.TRANSIT_FRAGMENT_OPEN:
+    animAttr=enter ? com.android.internal.R.styleable.FragmentAnimation_fragmentOpenEnterAnimation : com.android.internal.R.styleable.FragmentAnimation_fragmentOpenExitAnimation;
+  break;
+case FragmentTransaction.TRANSIT_FRAGMENT_CLOSE:
+animAttr=enter ? com.android.internal.R.styleable.FragmentAnimation_fragmentCloseEnterAnimation : com.android.internal.R.styleable.FragmentAnimation_fragmentCloseExitAnimation;
+break;
+case FragmentTransaction.TRANSIT_FRAGMENT_FADE:
+animAttr=enter ? com.android.internal.R.styleable.FragmentAnimation_fragmentFadeEnterAnimation : com.android.internal.R.styleable.FragmentAnimation_fragmentFadeExitAnimation;
+break;
+}
+return animAttr;
+}

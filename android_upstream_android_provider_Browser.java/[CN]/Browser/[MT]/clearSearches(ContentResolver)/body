@@ -1,0 +1,8 @@
+{
+  try {
+    cr.delete(Searches.CONTENT_URI,null,null);
+  }
+ catch (  IllegalStateException e) {
+    Log.e(LOGTAG,"clearSearches",e);
+  }
+}

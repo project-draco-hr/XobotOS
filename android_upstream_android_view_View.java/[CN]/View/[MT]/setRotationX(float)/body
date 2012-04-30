@@ -1,0 +1,12 @@
+{
+  ensureTransformationInfo();
+  final TransformationInfo info=mTransformationInfo;
+  if (info.mRotationX != rotationX) {
+    invalidateParentCaches();
+    invalidate(false);
+    info.mRotationX=rotationX;
+    info.mMatrixDirty=true;
+    mPrivateFlags|=DRAWN;
+    invalidate(false);
+  }
+}

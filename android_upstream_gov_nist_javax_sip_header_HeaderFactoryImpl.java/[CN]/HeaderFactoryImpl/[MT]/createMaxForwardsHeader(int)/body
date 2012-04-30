@@ -1,0 +1,6 @@
+{
+  if (maxForwards < 0 || maxForwards > 255)   throw new InvalidArgumentException("bad maxForwards arg " + maxForwards);
+  MaxForwards m=new MaxForwards();
+  m.setMaxForwards(maxForwards);
+  return m;
+}

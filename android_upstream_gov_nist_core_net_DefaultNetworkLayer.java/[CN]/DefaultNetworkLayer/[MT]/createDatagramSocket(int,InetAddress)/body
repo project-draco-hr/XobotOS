@@ -1,0 +1,13 @@
+{
+  if (laddr.isMulticastAddress()) {
+    try {
+      MulticastSocket ds=new MulticastSocket(port);
+      ds.joinGroup(laddr);
+      return ds;
+    }
+ catch (    IOException e) {
+      throw new SocketException(e.getLocalizedMessage());
+    }
+  }
+ else   return new DatagramSocket(port,laddr);
+}

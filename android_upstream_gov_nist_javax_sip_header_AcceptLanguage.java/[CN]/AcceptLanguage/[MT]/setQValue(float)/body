@@ -1,0 +1,5 @@
+{
+  if (q < 0.0 || q > 1.0)   throw new InvalidArgumentException("qvalue out of range!");
+  if (q == -1)   this.removeParameter("q");
+ else   this.setParameter(new NameValue("q",Float.valueOf(q)));
+}

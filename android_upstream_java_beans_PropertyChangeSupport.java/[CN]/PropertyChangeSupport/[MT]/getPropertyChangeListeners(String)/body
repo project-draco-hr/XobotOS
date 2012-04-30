@@ -1,0 +1,9 @@
+{
+  List<PropertyChangeListener> result=new ArrayList<PropertyChangeListener>();
+  for (  PropertyChangeListener p : listeners) {
+    if (p instanceof PropertyChangeListenerProxy && Objects.equal(propertyName,((PropertyChangeListenerProxy)p).getPropertyName())) {
+      result.add(p);
+    }
+  }
+  return result.toArray(new PropertyChangeListener[result.size()]);
+}

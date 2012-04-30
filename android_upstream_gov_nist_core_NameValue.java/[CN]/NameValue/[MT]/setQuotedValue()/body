@@ -1,0 +1,4 @@
+{
+  isQuotedString=true;
+  this.quotes=Separators.DOUBLE_QUOTE;
+}

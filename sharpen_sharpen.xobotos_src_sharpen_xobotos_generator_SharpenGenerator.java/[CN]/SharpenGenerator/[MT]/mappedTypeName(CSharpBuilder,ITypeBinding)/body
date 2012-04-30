@@ -1,0 +1,8 @@
+{
+  final AbstractTypeBinding type=my(BindingManager.class).resolveBinding(binding);
+  if (type != null) {
+    TypeMapping mapping=type.getMapping();
+    if (mapping != null)     return mapping.name;
+  }
+  return null;
+}

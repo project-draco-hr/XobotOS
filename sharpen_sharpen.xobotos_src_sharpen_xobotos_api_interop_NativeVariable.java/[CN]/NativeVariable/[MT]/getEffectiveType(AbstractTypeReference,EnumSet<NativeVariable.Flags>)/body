@@ -1,0 +1,12 @@
+{
+  if (flags.contains(Flags.OUT)) {
+    return new PointerType(new PointerType(type));
+  }
+ else   if (flags.contains(Flags.BYREF)) {
+    if (flags.contains(Flags.CONST))     return new ConstPointerType(type);
+ else     return new PointerType(type);
+  }
+ else   if (flags.contains(Flags.CONST))   return new ConstReferenceType(type);
+ else   if (flags.contains(Flags.REF))   return new ReferenceType(type);
+ else   return type;
+}

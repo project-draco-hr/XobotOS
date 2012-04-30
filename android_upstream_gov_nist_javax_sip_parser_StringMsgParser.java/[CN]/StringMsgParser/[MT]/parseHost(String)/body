@@ -1,0 +1,4 @@
+{
+  Lexer lexer=new Lexer("charLexer",host);
+  return new HostNameParser(lexer).host();
+}

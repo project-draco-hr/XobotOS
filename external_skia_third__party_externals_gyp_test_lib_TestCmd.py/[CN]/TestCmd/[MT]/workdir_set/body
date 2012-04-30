@@ -1,0 +1,7 @@
+def workdir_set(self, path):
+    "Creates a temporary working directory with the specified\n        path name.  If the path is a null string (''), a unique\n        directory name is created.\n        "
+    if (path != None):
+        if (path == ''):
+            path = None
+        path = self.tempdir(path)
+    self.workdir = path

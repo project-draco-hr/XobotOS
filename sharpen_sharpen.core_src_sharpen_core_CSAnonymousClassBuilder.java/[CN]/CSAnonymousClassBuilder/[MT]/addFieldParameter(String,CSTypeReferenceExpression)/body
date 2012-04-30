@@ -1,0 +1,3 @@
+{
+  addFieldParameter(CSharpCode.newPrivateReadonlyField(name,type));
+}

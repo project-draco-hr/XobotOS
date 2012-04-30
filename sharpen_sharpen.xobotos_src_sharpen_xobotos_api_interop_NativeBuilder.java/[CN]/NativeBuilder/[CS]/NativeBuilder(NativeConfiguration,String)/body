@@ -1,0 +1,11 @@
+{
+  this._config=config;
+  this._name=name;
+  this._sourceName=_name + ".cpp";
+  this._headerName=_name + ".h";
+  _unit=new CompilationUnit(name);
+  _unit.getIncludeSection().addIncludes(config);
+  String prefix=config.getFunctionPrefix();
+  if (prefix != null)   _functionPrefix=prefix + "_" + name.replace('.','_');
+ else   _functionPrefix=name.replace('.','_');
+}

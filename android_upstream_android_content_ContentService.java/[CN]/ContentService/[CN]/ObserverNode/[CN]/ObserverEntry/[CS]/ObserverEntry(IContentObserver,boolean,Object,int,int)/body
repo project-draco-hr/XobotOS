@@ -1,0 +1,13 @@
+{
+  this.observersLock=observersLock;
+  observer=o;
+  uid=_uid;
+  pid=_pid;
+  notifyForDescendents=n;
+  try {
+    observer.asBinder().linkToDeath(this,0);
+  }
+ catch (  RemoteException e) {
+    binderDied();
+  }
+}

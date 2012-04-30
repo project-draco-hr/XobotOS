@@ -1,0 +1,6 @@
+{
+  super.init(event);
+  mEventType=event.mEventType;
+  mEventTime=event.mEventTime;
+  mPackageName=event.mPackageName;
+}

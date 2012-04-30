@@ -1,0 +1,5 @@
+{
+  this.uri=requestURI;
+  this.method=method;
+  this.sipVersion="SIP/2.0";
+}

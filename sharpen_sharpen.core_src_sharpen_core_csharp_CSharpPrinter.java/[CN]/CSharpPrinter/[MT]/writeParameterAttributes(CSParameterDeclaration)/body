@@ -1,0 +1,11 @@
+{
+  if (node.attributes() == null)   return;
+  for (  CSAttribute attr : node.attributes()) {
+    write("[");
+    write(attr.name());
+    if (!attr.arguments().isEmpty()) {
+      writeParameterList(attr.arguments());
+    }
+    write("] ");
+  }
+}

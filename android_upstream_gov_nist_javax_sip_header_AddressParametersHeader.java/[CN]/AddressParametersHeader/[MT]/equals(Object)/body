@@ -1,0 +1,8 @@
+{
+  if (this == other)   return true;
+  if (other instanceof HeaderAddress && other instanceof Parameters) {
+    final HeaderAddress o=(HeaderAddress)other;
+    return this.getAddress().equals(o.getAddress()) && this.equalParameters((Parameters)o);
+  }
+  return false;
+}

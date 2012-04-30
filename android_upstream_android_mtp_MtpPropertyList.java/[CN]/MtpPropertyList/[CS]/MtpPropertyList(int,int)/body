@@ -1,0 +1,7 @@
+{
+  mMaxCount=maxCount;
+  mResult=result;
+  mObjectHandles=new int[maxCount];
+  mPropertyCodes=new int[maxCount];
+  mDataTypes=new int[maxCount];
+}

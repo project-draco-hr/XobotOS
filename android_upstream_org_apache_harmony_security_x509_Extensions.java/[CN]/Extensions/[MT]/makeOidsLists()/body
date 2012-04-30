@@ -1,0 +1,20 @@
+{
+  if (extensions == null) {
+    return;
+  }
+  int size=extensions.size();
+  critical=new HashSet<String>(size);
+  noncritical=new HashSet<String>(size);
+  for (  Extension extension : extensions) {
+    String oid=extension.getExtnID();
+    if (extension.getCritical()) {
+      if (!SUPPORTED_CRITICAL.contains(oid)) {
+        hasUnsupported=true;
+      }
+      critical.add(oid);
+    }
+ else {
+      noncritical.add(oid);
+    }
+  }
+}

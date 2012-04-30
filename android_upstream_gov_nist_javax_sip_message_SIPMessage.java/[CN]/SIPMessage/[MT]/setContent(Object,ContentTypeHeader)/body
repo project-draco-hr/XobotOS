@@ -1,0 +1,15 @@
+{
+  if (content == null)   throw new NullPointerException("null content");
+  this.setHeader(contentTypeHeader);
+  this.messageContent=null;
+  this.messageContentBytes=null;
+  this.messageContentObject=null;
+  if (content instanceof String) {
+    this.messageContent=(String)content;
+  }
+ else   if (content instanceof byte[]) {
+    this.messageContentBytes=(byte[])content;
+  }
+ else   this.messageContentObject=content;
+  computeContentLength(content);
+}

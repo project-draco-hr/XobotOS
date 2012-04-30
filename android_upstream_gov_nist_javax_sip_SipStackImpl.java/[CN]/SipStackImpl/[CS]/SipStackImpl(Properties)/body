@@ -1,0 +1,301 @@
+{
+  this();
+  String address=configurationProperties.getProperty("javax.sip.IP_ADDRESS");
+  try {
+    if (address != null) {
+      super.setHostAddress(address);
+    }
+  }
+ catch (  java.net.UnknownHostException ex) {
+    throw new PeerUnavailableException("bad address " + address);
+  }
+  String name=configurationProperties.getProperty("javax.sip.STACK_NAME");
+  if (name == null)   throw new PeerUnavailableException("stack name is missing");
+  super.setStackName(name);
+  String stackLoggerClassName=configurationProperties.getProperty("gov.nist.javax.sip.STACK_LOGGER");
+  if (stackLoggerClassName == null)   stackLoggerClassName="gov.nist.core.LogWriter";
+  try {
+    Class<?> stackLoggerClass=Class.forName(stackLoggerClassName);
+    Class<?>[] constructorArgs=new Class[0];
+    Constructor<?> cons=stackLoggerClass.getConstructor(constructorArgs);
+    Object[] args=new Object[0];
+    StackLogger stackLogger=(StackLogger)cons.newInstance(args);
+    stackLogger.setStackProperties(configurationProperties);
+    super.setStackLogger(stackLogger);
+  }
+ catch (  InvocationTargetException ex1) {
+    throw new IllegalArgumentException("Cound not instantiate stack logger " + stackLoggerClassName + "- check that it is present on the classpath and that there is a no-args constructor defined",ex1);
+  }
+catch (  Exception ex) {
+    throw new IllegalArgumentException("Cound not instantiate stack logger " + stackLoggerClassName + "- check that it is present on the classpath and that there is a no-args constructor defined",ex);
+  }
+  String serverLoggerClassName=configurationProperties.getProperty("gov.nist.javax.sip.SERVER_LOGGER");
+  if (serverLoggerClassName == null)   serverLoggerClassName="gov.nist.javax.sip.stack.ServerLog";
+  try {
+    Class<?> serverLoggerClass=Class.forName(serverLoggerClassName);
+    Class<?>[] constructorArgs=new Class[0];
+    Constructor<?> cons=serverLoggerClass.getConstructor(constructorArgs);
+    Object[] args=new Object[0];
+    this.serverLogger=(ServerLogger)cons.newInstance(args);
+    serverLogger.setSipStack(this);
+    serverLogger.setStackProperties(configurationProperties);
+  }
+ catch (  InvocationTargetException ex1) {
+    throw new IllegalArgumentException("Cound not instantiate server logger " + stackLoggerClassName + "- check that it is present on the classpath and that there is a no-args constructor defined",ex1);
+  }
+catch (  Exception ex) {
+    throw new IllegalArgumentException("Cound not instantiate server logger " + stackLoggerClassName + "- check that it is present on the classpath and that there is a no-args constructor defined",ex);
+  }
+  this.outboundProxy=configurationProperties.getProperty("javax.sip.OUTBOUND_PROXY");
+  this.defaultRouter=new DefaultRouter(this,outboundProxy);
+  String routerPath=configurationProperties.getProperty("javax.sip.ROUTER_PATH");
+  if (routerPath == null)   routerPath="gov.nist.javax.sip.stack.DefaultRouter";
+  try {
+    Class<?> routerClass=Class.forName(routerPath);
+    Class<?>[] constructorArgs=new Class[2];
+    constructorArgs[0]=javax.sip.SipStack.class;
+    constructorArgs[1]=String.class;
+    Constructor<?> cons=routerClass.getConstructor(constructorArgs);
+    Object[] args=new Object[2];
+    args[0]=(SipStack)this;
+    args[1]=outboundProxy;
+    Router router=(Router)cons.newInstance(args);
+    super.setRouter(router);
+  }
+ catch (  InvocationTargetException ex1) {
+    getStackLogger().logError("could not instantiate router -- invocation target problem",(Exception)ex1.getCause());
+    throw new PeerUnavailableException("Cound not instantiate router - check constructor",ex1);
+  }
+catch (  Exception ex) {
+    getStackLogger().logError("could not instantiate router",(Exception)ex.getCause());
+    throw new PeerUnavailableException("Could not instantiate router",ex);
+  }
+  String useRouterForAll=configurationProperties.getProperty("javax.sip.USE_ROUTER_FOR_ALL_URIS");
+  this.useRouterForAll=true;
+  if (useRouterForAll != null) {
+    this.useRouterForAll="true".equalsIgnoreCase(useRouterForAll);
+  }
+  String extensionMethods=configurationProperties.getProperty("javax.sip.EXTENSION_METHODS");
+  if (extensionMethods != null) {
+    java.util.StringTokenizer st=new java.util.StringTokenizer(extensionMethods);
+    while (st.hasMoreTokens()) {
+      String em=st.nextToken(":");
+      if (em.equalsIgnoreCase(Request.BYE) || em.equalsIgnoreCase(Request.INVITE) || em.equalsIgnoreCase(Request.SUBSCRIBE)|| em.equalsIgnoreCase(Request.NOTIFY)|| em.equalsIgnoreCase(Request.ACK)|| em.equalsIgnoreCase(Request.OPTIONS))       throw new PeerUnavailableException("Bad extension method " + em);
+ else       this.addExtensionMethod(em);
+    }
+  }
+  String keyStoreFile=configurationProperties.getProperty("javax.net.ssl.keyStore");
+  String trustStoreFile=configurationProperties.getProperty("javax.net.ssl.trustStore");
+  if (keyStoreFile != null) {
+    if (trustStoreFile == null) {
+      trustStoreFile=keyStoreFile;
+    }
+    String keyStorePassword=configurationProperties.getProperty("javax.net.ssl.keyStorePassword");
+    try {
+      this.networkLayer=new SslNetworkLayer(trustStoreFile,keyStoreFile,keyStorePassword.toCharArray(),configurationProperties.getProperty("javax.net.ssl.keyStoreType"));
+    }
+ catch (    Exception e1) {
+      getStackLogger().logError("could not instantiate SSL networking",e1);
+    }
+  }
+  super.isAutomaticDialogSupportEnabled=configurationProperties.getProperty("javax.sip.AUTOMATIC_DIALOG_SUPPORT","on").equalsIgnoreCase("on");
+  super.isAutomaticDialogErrorHandlingEnabled=configurationProperties.getProperty("gov.nist.javax.sip.AUTOMATIC_DIALOG_ERROR_HANDLING","true").equals(Boolean.TRUE.toString());
+  if (super.isAutomaticDialogSupportEnabled) {
+    super.isAutomaticDialogErrorHandlingEnabled=true;
+  }
+  if (configurationProperties.getProperty("gov.nist.javax.sip.MAX_LISTENER_RESPONSE_TIME") != null) {
+    super.maxListenerResponseTime=Integer.parseInt(configurationProperties.getProperty("gov.nist.javax.sip.MAX_LISTENER_RESPONSE_TIME"));
+    if (super.maxListenerResponseTime <= 0)     throw new PeerUnavailableException("Bad configuration parameter gov.nist.javax.sip.MAX_LISTENER_RESPONSE_TIME : should be positive");
+  }
+ else {
+    super.maxListenerResponseTime=-1;
+  }
+  this.deliverTerminatedEventForAck=configurationProperties.getProperty("gov.nist.javax.sip.DELIVER_TERMINATED_EVENT_FOR_ACK","false").equalsIgnoreCase("true");
+  this.deliverUnsolicitedNotify=configurationProperties.getProperty("gov.nist.javax.sip.DELIVER_UNSOLICITED_NOTIFY","false").equalsIgnoreCase("true");
+  String forkedSubscriptions=configurationProperties.getProperty("javax.sip.FORKABLE_EVENTS");
+  if (forkedSubscriptions != null) {
+    StringTokenizer st=new StringTokenizer(forkedSubscriptions);
+    while (st.hasMoreTokens()) {
+      String nextEvent=st.nextToken();
+      this.forkedEvents.add(nextEvent);
+    }
+  }
+  final String NETWORK_LAYER_KEY="gov.nist.javax.sip.NETWORK_LAYER";
+  if (configurationProperties.containsKey(NETWORK_LAYER_KEY)) {
+    String path=configurationProperties.getProperty(NETWORK_LAYER_KEY);
+    try {
+      Class<?> clazz=Class.forName(path);
+      Constructor<?> c=clazz.getConstructor(new Class[0]);
+      networkLayer=(NetworkLayer)c.newInstance(new Object[0]);
+    }
+ catch (    Exception e) {
+      throw new PeerUnavailableException("can't find or instantiate NetworkLayer implementation: " + path);
+    }
+  }
+  final String ADDRESS_RESOLVER_KEY="gov.nist.javax.sip.ADDRESS_RESOLVER";
+  if (configurationProperties.containsKey(ADDRESS_RESOLVER_KEY)) {
+    String path=configurationProperties.getProperty(ADDRESS_RESOLVER_KEY);
+    try {
+      Class<?> clazz=Class.forName(path);
+      Constructor<?> c=clazz.getConstructor(new Class[0]);
+      this.addressResolver=(AddressResolver)c.newInstance(new Object[0]);
+    }
+ catch (    Exception e) {
+      throw new PeerUnavailableException("can't find or instantiate AddressResolver implementation: " + path);
+    }
+  }
+  String maxConnections=configurationProperties.getProperty("gov.nist.javax.sip.MAX_CONNECTIONS");
+  if (maxConnections != null) {
+    try {
+      this.maxConnections=new Integer(maxConnections).intValue();
+    }
+ catch (    NumberFormatException ex) {
+      if (isLoggingEnabled())       getStackLogger().logError("max connections - bad value " + ex.getMessage());
+    }
+  }
+  String threadPoolSize=configurationProperties.getProperty("gov.nist.javax.sip.THREAD_POOL_SIZE");
+  if (threadPoolSize != null) {
+    try {
+      this.threadPoolSize=new Integer(threadPoolSize).intValue();
+    }
+ catch (    NumberFormatException ex) {
+      if (isLoggingEnabled())       this.getStackLogger().logError("thread pool size - bad value " + ex.getMessage());
+    }
+  }
+  String serverTransactionTableSize=configurationProperties.getProperty("gov.nist.javax.sip.MAX_SERVER_TRANSACTIONS");
+  if (serverTransactionTableSize != null) {
+    try {
+      this.serverTransactionTableHighwaterMark=new Integer(serverTransactionTableSize).intValue();
+      this.serverTransactionTableLowaterMark=this.serverTransactionTableHighwaterMark * 80 / 100;
+    }
+ catch (    NumberFormatException ex) {
+      if (isLoggingEnabled())       this.getStackLogger().logError("transaction table size - bad value " + ex.getMessage());
+    }
+  }
+ else {
+    this.unlimitedServerTransactionTableSize=true;
+  }
+  String clientTransactionTableSize=configurationProperties.getProperty("gov.nist.javax.sip.MAX_CLIENT_TRANSACTIONS");
+  if (clientTransactionTableSize != null) {
+    try {
+      this.clientTransactionTableHiwaterMark=new Integer(clientTransactionTableSize).intValue();
+      this.clientTransactionTableLowaterMark=this.clientTransactionTableLowaterMark * 80 / 100;
+    }
+ catch (    NumberFormatException ex) {
+      if (isLoggingEnabled())       this.getStackLogger().logError("transaction table size - bad value " + ex.getMessage());
+    }
+  }
+ else {
+    this.unlimitedClientTransactionTableSize=true;
+  }
+  super.cacheServerConnections=true;
+  String flag=configurationProperties.getProperty("gov.nist.javax.sip.CACHE_SERVER_CONNECTIONS");
+  if (flag != null && "false".equalsIgnoreCase(flag.trim())) {
+    super.cacheServerConnections=false;
+  }
+  super.cacheClientConnections=true;
+  String cacheflag=configurationProperties.getProperty("gov.nist.javax.sip.CACHE_CLIENT_CONNECTIONS");
+  if (cacheflag != null && "false".equalsIgnoreCase(cacheflag.trim())) {
+    super.cacheClientConnections=false;
+  }
+  String readTimeout=configurationProperties.getProperty("gov.nist.javax.sip.READ_TIMEOUT");
+  if (readTimeout != null) {
+    try {
+      int rt=Integer.parseInt(readTimeout);
+      if (rt >= 100) {
+        super.readTimeout=rt;
+      }
+ else {
+        System.err.println("Value too low " + readTimeout);
+      }
+    }
+ catch (    NumberFormatException nfe) {
+      if (isLoggingEnabled())       getStackLogger().logError("Bad read timeout " + readTimeout);
+    }
+  }
+  String stunAddr=configurationProperties.getProperty("gov.nist.javax.sip.STUN_SERVER");
+  if (stunAddr != null)   this.getStackLogger().logWarning("Ignoring obsolete property " + "gov.nist.javax.sip.STUN_SERVER");
+  String maxMsgSize=configurationProperties.getProperty("gov.nist.javax.sip.MAX_MESSAGE_SIZE");
+  try {
+    if (maxMsgSize != null) {
+      super.maxMessageSize=new Integer(maxMsgSize).intValue();
+      if (super.maxMessageSize < 4096)       super.maxMessageSize=4096;
+    }
+ else {
+      super.maxMessageSize=0;
+    }
+  }
+ catch (  NumberFormatException ex) {
+    if (isLoggingEnabled())     getStackLogger().logError("maxMessageSize - bad value " + ex.getMessage());
+  }
+  String rel=configurationProperties.getProperty("gov.nist.javax.sip.REENTRANT_LISTENER");
+  this.reEntrantListener=(rel != null && "true".equalsIgnoreCase(rel));
+  String interval=configurationProperties.getProperty("gov.nist.javax.sip.THREAD_AUDIT_INTERVAL_IN_MILLISECS");
+  if (interval != null) {
+    try {
+      getThreadAuditor().setPingIntervalInMillisecs(Long.valueOf(interval).longValue() / 2);
+    }
+ catch (    NumberFormatException ex) {
+      if (isLoggingEnabled())       getStackLogger().logError("THREAD_AUDIT_INTERVAL_IN_MILLISECS - bad value [" + interval + "] "+ ex.getMessage());
+    }
+  }
+  this.setNon2XXAckPassedToListener(Boolean.valueOf(configurationProperties.getProperty("gov.nist.javax.sip.PASS_INVITE_NON_2XX_ACK_TO_LISTENER","false")).booleanValue());
+  this.generateTimeStampHeader=Boolean.valueOf(configurationProperties.getProperty("gov.nist.javax.sip.AUTO_GENERATE_TIMESTAMP","false")).booleanValue();
+  String messageLogFactoryClasspath=configurationProperties.getProperty("gov.nist.javax.sip.LOG_FACTORY");
+  if (messageLogFactoryClasspath != null) {
+    try {
+      Class<?> clazz=Class.forName(messageLogFactoryClasspath);
+      Constructor<?> c=clazz.getConstructor(new Class[0]);
+      this.logRecordFactory=(LogRecordFactory)c.newInstance(new Object[0]);
+    }
+ catch (    Exception ex) {
+      if (isLoggingEnabled())       getStackLogger().logError("Bad configuration value for LOG_FACTORY -- using default logger");
+      this.logRecordFactory=new DefaultMessageLogFactory();
+    }
+  }
+ else {
+    this.logRecordFactory=new DefaultMessageLogFactory();
+  }
+  boolean computeContentLength=configurationProperties.getProperty("gov.nist.javax.sip.COMPUTE_CONTENT_LENGTH_FROM_MESSAGE_BODY","false").equalsIgnoreCase("true");
+  StringMsgParser.setComputeContentLengthFromMessage(computeContentLength);
+  String tlsClientProtocols=configurationProperties.getProperty("gov.nist.javax.sip.TLS_CLIENT_PROTOCOLS");
+  if (tlsClientProtocols != null) {
+    StringTokenizer st=new StringTokenizer(tlsClientProtocols," ,");
+    String[] protocols=new String[st.countTokens()];
+    int i=0;
+    while (st.hasMoreTokens()) {
+      protocols[i++]=st.nextToken();
+    }
+    this.enabledProtocols=protocols;
+  }
+  super.rfc2543Supported=configurationProperties.getProperty("gov.nist.javax.sip.RFC_2543_SUPPORT_ENABLED","true").equalsIgnoreCase("true");
+  super.cancelClientTransactionChecked=configurationProperties.getProperty("gov.nist.javax.sip.CANCEL_CLIENT_TRANSACTION_CHECKED","true").equalsIgnoreCase("true");
+  super.logStackTraceOnMessageSend=configurationProperties.getProperty("gov.nist.javax.sip.LOG_STACK_TRACE_ON_MESSAGE_SEND","false").equalsIgnoreCase("true");
+  if (isLoggingEnabled())   getStackLogger().logDebug("created Sip stack. Properties = " + configurationProperties);
+  InputStream in=getClass().getResourceAsStream("/TIMESTAMP");
+  if (in != null) {
+    BufferedReader streamReader=new BufferedReader(new InputStreamReader(in));
+    try {
+      String buildTimeStamp=streamReader.readLine();
+      if (in != null) {
+        in.close();
+      }
+      getStackLogger().setBuildTimeStamp(buildTimeStamp);
+    }
+ catch (    IOException ex) {
+      getStackLogger().logError("Could not open build timestamp.");
+    }
+  }
+  String bufferSize=configurationProperties.getProperty("gov.nist.javax.sip.RECEIVE_UDP_BUFFER_SIZE",MAX_DATAGRAM_SIZE.toString());
+  int bufferSizeInteger=new Integer(bufferSize).intValue();
+  super.setReceiveUdpBufferSize(bufferSizeInteger);
+  bufferSize=configurationProperties.getProperty("gov.nist.javax.sip.SEND_UDP_BUFFER_SIZE",MAX_DATAGRAM_SIZE.toString());
+  bufferSizeInteger=new Integer(bufferSize).intValue();
+  super.setSendUdpBufferSize(bufferSizeInteger);
+  boolean congetstionControlEnabled=Boolean.parseBoolean(configurationProperties.getProperty("gov.nist.javax.sip.CONGESTION_CONTROL_ENABLED",Boolean.TRUE.toString()));
+  super.stackDoesCongestionControl=congetstionControlEnabled;
+  super.isBackToBackUserAgent=Boolean.parseBoolean(configurationProperties.getProperty("gov.nist.javax.sip.IS_BACK_TO_BACK_USER_AGENT",Boolean.FALSE.toString()));
+  super.checkBranchId=Boolean.parseBoolean(configurationProperties.getProperty("gov.nist.javax.sip.REJECT_STRAY_RESPONSES",Boolean.FALSE.toString()));
+  super.isDialogTerminatedEventDeliveredForNullDialog=(Boolean.parseBoolean(configurationProperties.getProperty("gov.nist.javax.sip.DELIVER_TERMINATED_EVENT_FOR_NULL_DIALOG",Boolean.FALSE.toString())));
+  super.maxForkTime=Integer.parseInt(configurationProperties.getProperty("gov.nist.javax.sip.MAX_FORK_TIME_SECONDS","0"));
+}

@@ -1,0 +1,11 @@
+{
+  stream.defaultReadObject();
+  int cap=stream.readInt();
+  if (cap < size) {
+    throw new InvalidObjectException("Capacity: " + cap + " < size: "+ size);
+  }
+  array=(cap == 0 ? EmptyArray.OBJECT : new Object[cap]);
+  for (int i=0; i < size; i++) {
+    array[i]=stream.readObject();
+  }
+}

@@ -1,0 +1,5 @@
+{
+  this();
+  this.seqno=Long.valueOf(seqno);
+  this.method=SIPRequest.getCannonicalName(method);
+}

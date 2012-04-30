@@ -1,0 +1,5 @@
+{
+  super(PAssociatedURIHeader.NAME);
+  this.address=new AddressImpl();
+  this.address.setURI(associatedURI);
+}

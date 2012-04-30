@@ -1,0 +1,60 @@
+{
+  if (numberToParse == null) {
+    throw new NumberParseException(NumberParseException.ErrorType.NOT_A_NUMBER,"The phone number supplied was null.");
+  }
+  String number=extractPossibleNumber(numberToParse);
+  if (!isViablePhoneNumber(number)) {
+    throw new NumberParseException(NumberParseException.ErrorType.NOT_A_NUMBER,"The string supplied did not seem to be a phone number.");
+  }
+  if (checkRegion && !checkRegionForParsing(number,defaultRegion)) {
+    throw new NumberParseException(NumberParseException.ErrorType.INVALID_COUNTRY_CODE,"Missing or invalid default region.");
+  }
+  if (keepRawInput) {
+    phoneNumber.setRawInput(numberToParse);
+  }
+  StringBuilder nationalNumber=new StringBuilder(number);
+  String extension=maybeStripExtension(nationalNumber);
+  if (extension.length() > 0) {
+    phoneNumber.setExtension(extension);
+  }
+  PhoneMetadata regionMetadata=getMetadataForRegion(defaultRegion);
+  StringBuilder normalizedNationalNumber=new StringBuilder();
+  int countryCode=maybeExtractCountryCode(nationalNumber.toString(),regionMetadata,normalizedNationalNumber,keepRawInput,phoneNumber);
+  if (countryCode != 0) {
+    String phoneNumberRegion=getRegionCodeForCountryCode(countryCode);
+    if (!phoneNumberRegion.equals(defaultRegion)) {
+      regionMetadata=getMetadataForRegion(phoneNumberRegion);
+    }
+  }
+ else {
+    normalize(nationalNumber);
+    normalizedNationalNumber.append(nationalNumber);
+    if (defaultRegion != null) {
+      countryCode=regionMetadata.getCountryCode();
+      phoneNumber.setCountryCode(countryCode);
+    }
+ else     if (keepRawInput) {
+      phoneNumber.clearCountryCodeSource();
+    }
+  }
+  if (normalizedNationalNumber.length() < MIN_LENGTH_FOR_NSN) {
+    throw new NumberParseException(NumberParseException.ErrorType.TOO_SHORT_NSN,"The string supplied is too short to be a phone number.");
+  }
+  if (regionMetadata != null) {
+    String carrierCode=maybeStripNationalPrefixAndCarrierCode(normalizedNationalNumber,regionMetadata);
+    if (keepRawInput) {
+      phoneNumber.setPreferredDomesticCarrierCode(carrierCode);
+    }
+  }
+  int lengthOfNationalNumber=normalizedNationalNumber.length();
+  if (lengthOfNationalNumber < MIN_LENGTH_FOR_NSN) {
+    throw new NumberParseException(NumberParseException.ErrorType.TOO_SHORT_NSN,"The string supplied is too short to be a phone number.");
+  }
+  if (lengthOfNationalNumber > MAX_LENGTH_FOR_NSN) {
+    throw new NumberParseException(NumberParseException.ErrorType.TOO_LONG,"The string supplied is too long to be a phone number.");
+  }
+  if (normalizedNationalNumber.charAt(0) == '0') {
+    phoneNumber.setItalianLeadingZero(true);
+  }
+  phoneNumber.setNationalNumber(Long.parseLong(normalizedNationalNumber.toString()));
+}

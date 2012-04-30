@@ -1,0 +1,14 @@
+{
+  ManagedVariable handle=new ManagedVariable(context.getVariableName("handle"),getNativeHandleInterface(),new CSNullLiteralExpression());
+  CSExpression nullCheck=new CSInfixExpression("!=",handle.getReference(),new CSNullLiteralExpression());
+  CSIfStatement cleanup=new CSIfStatement(-1,nullCheck);
+  cleanup.trueBlock().addStatement(new CSMethodInvocationExpression(new CSMemberReferenceExpression(handle.getReference(),"Free")));
+  context.addDeclaration(handle.getDeclaration(),cleanup);
+  CSExpression marshal=new CSInfixExpression("=",handle.getReference(),new CSMethodInvocationExpression(GET_PINNED_PTR.expr(),expr));
+  context.addPreStatement(new CSExpressionStatement(-1,marshal));
+  CSExpression addrRef=new CSMemberReferenceExpression(handle.getReference(),"Address");
+  CSExpression arg;
+  if (flags == Flags.ALLOW_NULL)   arg=new CSConditionalExpression(nullCheck,addrRef,new CSReferenceExpression("System.IntPtr.Zero"));
+ else   arg=addrRef;
+  context.addParameter(null,new CSTypeReference("System.IntPtr"),arg);
+}

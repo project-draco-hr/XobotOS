@@ -1,0 +1,16 @@
+{
+synchronized (mScoClients) {
+    if (mStartcount != 0) {
+      try {
+        mCb.unlinkToDeath(this,0);
+      }
+ catch (      NoSuchElementException e) {
+        Log.w(TAG,"clearCount() mStartcount: " + mStartcount + " != 0 but not registered to binder");
+      }
+    }
+    mStartcount=0;
+    if (stopSco) {
+      requestScoState(BluetoothHeadset.STATE_AUDIO_DISCONNECTED);
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  Via topVia=null;
+  if (!this.getViaHeaders().isEmpty()) {
+    topVia=(Via)this.getViaHeaders().getFirst();
+  }
+  if (topVia != null && topVia.getBranch() != null && topVia.getBranch().toUpperCase().startsWith(SIPConstants.BRANCH_MAGIC_COOKIE_UPPER_CASE)) {
+    if (this.getCSeq().getMethod().equals(Request.CANCEL))     return (topVia.getBranch() + ":" + this.getCSeq().getMethod()).toLowerCase();
+ else     return topVia.getBranch().toLowerCase();
+  }
+ else {
+    StringBuffer retval=new StringBuffer();
+    From from=(From)this.getFrom();
+    To to=(To)this.getTo();
+    if (from.hasTag())     retval.append(from.getTag()).append("-");
+    String cid=this.callIdHeader.getCallId();
+    retval.append(cid).append("-");
+    retval.append(this.cSeqHeader.getSequenceNumber()).append("-").append(this.cSeqHeader.getMethod());
+    if (topVia != null) {
+      retval.append("-").append(topVia.getSentBy().encode());
+      if (!topVia.getSentBy().hasPort()) {
+        retval.append("-").append(5060);
+      }
+    }
+    if (this.getCSeq().getMethod().equals(Request.CANCEL)) {
+      retval.append(Request.CANCEL);
+    }
+    return retval.toString().toLowerCase().replace(":","-").replace("@","-") + Utils.getSignature();
+  }
+}

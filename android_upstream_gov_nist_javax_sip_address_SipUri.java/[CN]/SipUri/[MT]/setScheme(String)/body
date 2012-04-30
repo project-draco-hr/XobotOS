@@ -1,0 +1,4 @@
+{
+  if (scheme.compareToIgnoreCase(SIP) != 0 && scheme.compareToIgnoreCase(SIPS) != 0)   throw new IllegalArgumentException("bad scheme " + scheme);
+  this.scheme=scheme.toLowerCase();
+}

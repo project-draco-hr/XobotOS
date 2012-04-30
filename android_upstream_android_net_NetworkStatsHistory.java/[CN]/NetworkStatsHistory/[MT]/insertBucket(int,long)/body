@@ -1,0 +1,31 @@
+{
+  if (bucketCount >= bucketStart.length) {
+    final int newLength=Math.max(bucketStart.length,10) * 3 / 2;
+    bucketStart=Arrays.copyOf(bucketStart,newLength);
+    if (activeTime != null)     activeTime=Arrays.copyOf(activeTime,newLength);
+    if (rxBytes != null)     rxBytes=Arrays.copyOf(rxBytes,newLength);
+    if (rxPackets != null)     rxPackets=Arrays.copyOf(rxPackets,newLength);
+    if (txBytes != null)     txBytes=Arrays.copyOf(txBytes,newLength);
+    if (txPackets != null)     txPackets=Arrays.copyOf(txPackets,newLength);
+    if (operations != null)     operations=Arrays.copyOf(operations,newLength);
+  }
+  if (index < bucketCount) {
+    final int dstPos=index + 1;
+    final int length=bucketCount - index;
+    System.arraycopy(bucketStart,index,bucketStart,dstPos,length);
+    if (activeTime != null)     System.arraycopy(activeTime,index,activeTime,dstPos,length);
+    if (rxBytes != null)     System.arraycopy(rxBytes,index,rxBytes,dstPos,length);
+    if (rxPackets != null)     System.arraycopy(rxPackets,index,rxPackets,dstPos,length);
+    if (txBytes != null)     System.arraycopy(txBytes,index,txBytes,dstPos,length);
+    if (txPackets != null)     System.arraycopy(txPackets,index,txPackets,dstPos,length);
+    if (operations != null)     System.arraycopy(operations,index,operations,dstPos,length);
+  }
+  bucketStart[index]=start;
+  setLong(activeTime,index,0L);
+  setLong(rxBytes,index,0L);
+  setLong(rxPackets,index,0L);
+  setLong(txBytes,index,0L);
+  setLong(txPackets,index,0L);
+  setLong(operations,index,0L);
+  bucketCount++;
+}

@@ -1,0 +1,9 @@
+{
+  for (  Key shiftKey : mShiftKeys) {
+    if (shiftKey != null) {
+      shiftKey.on=shiftLocked;
+      shiftKey.icon=mShiftLockIcon;
+    }
+  }
+  mShiftState=shiftLocked ? SHIFT_LOCKED : SHIFT_ON;
+}

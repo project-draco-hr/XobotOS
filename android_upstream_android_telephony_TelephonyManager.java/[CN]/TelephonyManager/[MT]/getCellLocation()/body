@@ -1,0 +1,14 @@
+{
+  try {
+    Bundle bundle=getITelephony().getCellLocation();
+    CellLocation cl=CellLocation.newFromBundle(bundle);
+    if (cl.isEmpty())     return null;
+    return cl;
+  }
+ catch (  RemoteException ex) {
+    return null;
+  }
+catch (  NullPointerException ex) {
+    return null;
+  }
+}

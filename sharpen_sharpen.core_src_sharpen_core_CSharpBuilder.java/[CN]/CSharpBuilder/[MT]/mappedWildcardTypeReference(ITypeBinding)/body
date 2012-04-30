@@ -1,0 +1,12 @@
+{
+  final ITypeBinding bound=type.getBound();
+  if (_currentWildcardParams != null) {
+    String tp=_currentWildcardParams.get(type);
+    if (tp != null)     return new CSTypeReference(tp);
+  }
+  if (bound != null)   return mappedTypeReference(bound);
+  if (_currentType != null) {
+    if (_currentType.typeParameters().size() == 1)     return new CSTypeReference(_currentType.typeParameters().get(0).name());
+  }
+  return OBJECT_TYPE_REFERENCE;
+}

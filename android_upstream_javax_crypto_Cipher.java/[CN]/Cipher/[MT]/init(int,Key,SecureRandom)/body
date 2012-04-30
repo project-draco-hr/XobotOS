@@ -1,0 +1,5 @@
+{
+  checkMode(opmode);
+  spiImpl.engineInit(opmode,key,random);
+  mode=opmode;
+}

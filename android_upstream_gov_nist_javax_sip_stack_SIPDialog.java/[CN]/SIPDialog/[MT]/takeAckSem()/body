@@ -1,0 +1,25 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("[takeAckSem " + this);
+  }
+  try {
+    if (!this.ackSem.tryAcquire(2,TimeUnit.SECONDS)) {
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logError("Cannot aquire ACK semaphore");
+      }
+      if (sipStack.isLoggingEnabled()) {
+        sipStack.getStackLogger().logDebug("Semaphore previously acquired at " + this.stackTrace);
+        sipStack.getStackLogger().logStackTrace();
+      }
+      return false;
+    }
+    if (sipStack.isLoggingEnabled()) {
+      this.recordStackTrace();
+    }
+  }
+ catch (  InterruptedException ex) {
+    sipStack.getStackLogger().logError("Cannot aquire ACK semaphore");
+    return false;
+  }
+  return true;
+}

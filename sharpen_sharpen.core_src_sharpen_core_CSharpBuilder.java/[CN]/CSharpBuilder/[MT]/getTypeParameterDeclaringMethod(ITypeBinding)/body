@@ -1,0 +1,8 @@
+{
+  if (type.isWildcardType()) {
+    ITypeBinding bound=type.getBound();
+    if (bound != null)     return getTypeParameterDeclaringMethod(bound);
+  }
+  if (type.isArray())   return getTypeParameterDeclaringMethod(type.getElementType());
+  return type.getDeclaringMethod();
+}

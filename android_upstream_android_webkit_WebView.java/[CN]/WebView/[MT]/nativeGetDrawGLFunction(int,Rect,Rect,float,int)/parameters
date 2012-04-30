@@ -1,0 +1,5 @@
+int nativeInstance
+Rect rect
+Rect viewRect
+float scale
+int extras

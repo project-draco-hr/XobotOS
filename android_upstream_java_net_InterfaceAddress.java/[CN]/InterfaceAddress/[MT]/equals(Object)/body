@@ -1,0 +1,10 @@
+{
+  if (obj == this) {
+    return true;
+  }
+  if (!(obj instanceof InterfaceAddress)) {
+    return false;
+  }
+  InterfaceAddress rhs=(InterfaceAddress)obj;
+  return ((address == null) ? rhs.address == null : address.equals(rhs.address)) && (rhs.prefixLength == prefixLength) && ((broadcastAddress == null) ? rhs.broadcastAddress == null : broadcastAddress.equals(rhs.broadcastAddress));
+}

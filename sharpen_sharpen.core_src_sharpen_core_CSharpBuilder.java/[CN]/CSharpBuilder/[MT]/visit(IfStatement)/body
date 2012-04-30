@@ -1,0 +1,21 @@
+{
+  Expression expression=node.getExpression();
+  Object constValue=constValue(expression);
+  if (null != constValue) {
+    if (isTrue(constValue)) {
+      node.getThenStatement().accept(this);
+    }
+ else {
+      if (null != node.getElseStatement()) {
+        node.getElseStatement().accept(this);
+      }
+    }
+  }
+ else {
+    CSIfStatement stmt=new CSIfStatement(node.getStartPosition(),mapExpression(expression));
+    visitBlock(stmt.trueBlock(),node.getThenStatement());
+    visitBlock(stmt.falseBlock(),node.getElseStatement());
+    addStatement(stmt);
+  }
+  return false;
+}

@@ -1,0 +1,4 @@
+{
+  mGradientState.mChangingConfigurations=getChangingConfigurations();
+  return mGradientState;
+}

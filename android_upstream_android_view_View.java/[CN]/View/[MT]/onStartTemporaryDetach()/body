@@ -1,0 +1,4 @@
+{
+  removeUnsetPressCallback();
+  mPrivateFlags|=CANCEL_NEXT_UP_EVENT;
+}

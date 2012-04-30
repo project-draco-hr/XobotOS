@@ -1,0 +1,3 @@
+{
+  return NativeIDN.toUnicode(input,flags);
+}

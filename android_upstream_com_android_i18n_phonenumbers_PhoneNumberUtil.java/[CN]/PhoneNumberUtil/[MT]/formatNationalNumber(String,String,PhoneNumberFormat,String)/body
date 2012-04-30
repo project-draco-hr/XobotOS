@@ -1,0 +1,10 @@
+{
+  PhoneMetadata metadata=getMetadataForRegion(regionCode);
+  List<NumberFormat> intlNumberFormats=metadata.intlNumberFormats();
+  List<NumberFormat> availableFormats=(intlNumberFormats.size() == 0 || numberFormat == PhoneNumberFormat.NATIONAL) ? metadata.numberFormats() : metadata.intlNumberFormats();
+  String formattedNationalNumber=formatAccordingToFormats(number,availableFormats,numberFormat,carrierCode);
+  if (numberFormat == PhoneNumberFormat.RFC3966) {
+    formattedNationalNumber=SEPARATOR_PATTERN.matcher(formattedNationalNumber).replaceAll("-");
+  }
+  return formattedNationalNumber;
+}

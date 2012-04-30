@@ -1,0 +1,3 @@
+{
+  return getOffsetToLeftRightOf(offset,true);
+}

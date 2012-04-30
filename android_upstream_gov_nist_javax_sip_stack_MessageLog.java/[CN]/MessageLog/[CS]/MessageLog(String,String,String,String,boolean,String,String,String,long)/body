@@ -1,0 +1,19 @@
+{
+  if (message == null || message.equals(""))   throw new IllegalArgumentException("null msg");
+  this.message=message;
+  this.source=source;
+  this.destination=destination;
+  try {
+    long ts=Long.parseLong(timeStamp);
+    if (ts < 0)     throw new IllegalArgumentException("Bad time stamp ");
+    this.timeStamp=ts;
+  }
+ catch (  NumberFormatException ex) {
+    throw new IllegalArgumentException("Bad number format " + timeStamp);
+  }
+  this.isSender=isSender;
+  this.firstLine=firstLine;
+  this.tid=tid;
+  this.callId=callId;
+  this.timeStampHeaderValue=timeStampHeaderValue;
+}

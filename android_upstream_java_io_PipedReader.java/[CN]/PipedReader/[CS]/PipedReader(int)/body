@@ -1,0 +1,6 @@
+{
+  if (pipeSize <= 0) {
+    throw new IllegalArgumentException("pipe size " + pipeSize + " too small");
+  }
+  buffer=new char[pipeSize];
+}

@@ -1,0 +1,3 @@
+def match_re(self, lines, res):
+    'Compare actual and expected file contents.\n        '
+    return match_re(lines, res)

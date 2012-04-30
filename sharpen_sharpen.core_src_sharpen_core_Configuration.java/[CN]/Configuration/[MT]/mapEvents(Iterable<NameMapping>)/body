@@ -1,0 +1,5 @@
+{
+  for (  NameMapping m : eventMappings) {
+    mapEvent(m.from,m.to);
+  }
+}

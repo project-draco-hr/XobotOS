@@ -1,0 +1,6 @@
+{
+  if (getLayout() == null)   return -1;
+  final int line=getLineAtCoordinate(y);
+  final int offset=getOffsetAtCoordinate(line,x);
+  return offset;
+}

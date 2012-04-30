@@ -1,0 +1,3 @@
+{
+  addProblem(node,kind,String.format(message,args));
+}

@@ -1,0 +1,8 @@
+{
+  GenericObjectList retval=(GenericObjectList)super.clone();
+  for (ListIterator<GenericObject> iter=retval.listIterator(); iter.hasNext(); ) {
+    GenericObject obj=(GenericObject)((GenericObject)iter.next()).clone();
+    iter.set(obj);
+  }
+  return retval;
+}

@@ -1,0 +1,24 @@
+{
+  if (!uri.isAbsolute()) {
+    throw new IllegalArgumentException("URI is not absolute: " + uri);
+  }
+ else   if (!uri.getRawSchemeSpecificPart().startsWith("/")) {
+    throw new IllegalArgumentException("URI is not hierarchical: " + uri);
+  }
+  if (!"file".equals(uri.getScheme())) {
+    throw new IllegalArgumentException("Expected file scheme in URI: " + uri);
+  }
+  String rawPath=uri.getRawPath();
+  if (rawPath == null || rawPath.isEmpty()) {
+    throw new IllegalArgumentException("Expected non-empty path in URI: " + uri);
+  }
+  if (uri.getRawAuthority() != null) {
+    throw new IllegalArgumentException("Found authority in URI: " + uri);
+  }
+  if (uri.getRawQuery() != null) {
+    throw new IllegalArgumentException("Found query in URI: " + uri);
+  }
+  if (uri.getRawFragment() != null) {
+    throw new IllegalArgumentException("Found fragment in URI: " + uri);
+  }
+}

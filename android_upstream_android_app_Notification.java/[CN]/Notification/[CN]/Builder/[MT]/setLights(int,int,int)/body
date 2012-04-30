@@ -1,0 +1,6 @@
+{
+  mLedArgb=argb;
+  mLedOnMs=onMs;
+  mLedOffMs=offMs;
+  return this;
+}

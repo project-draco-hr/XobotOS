@@ -1,0 +1,3 @@
+{
+  return listenerType.getDeclaredMethods()[0];
+}

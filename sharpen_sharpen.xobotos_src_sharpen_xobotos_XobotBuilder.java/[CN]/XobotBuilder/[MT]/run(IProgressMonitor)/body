@@ -1,0 +1,80 @@
+{
+  Sharpen.Log(Level.INFO,"Starting build");
+  try {
+    checkFileList();
+  }
+ catch (  Exception e) {
+    Sharpen.Log(e,"Cannot compute file list");
+    return false;
+  }
+  int countModified=0;
+  for (  final Entry<ICompilationUnit,Boolean> entry : _sources.entrySet()) {
+    if (!entry.getValue())     continue;
+    ++countModified;
+    _mustParse.put(entry.getKey(),true);
+  }
+  if (countModified < 1) {
+    Sharpen.Log(Level.INFO,"Nothing to do.");
+    return true;
+  }
+  List<ICompilationUnit> parsingList=new ArrayList<ICompilationUnit>();
+  for (  final Entry<ICompilationUnit,Boolean> entry : _mustParse.entrySet()) {
+    if (!entry.getValue())     continue;
+    parsingList.add(entry.getKey());
+  }
+  final int totalWork=parsingList.size() * PARSING_PRICE + countModified * (GENERATING_PRICE + OUTPUT_PRICE);
+  Sharpen.Log(Level.INFO,"Converting %d files (must parse %d).",countModified,parsingList.size());
+  monitor.beginTask("Converting",totalWork);
+  final List<CompilationUnitPair> pairs=stage1_parse(parsingList,monitor);
+  if (monitor.isCanceled() || (pairs == null) || (pairs.size() == 0))   return false;
+  if (!stage1b_checkForErrors(pairs)) {
+    Sharpen.Log(Level.SEVERE,"Found errors while parsing compilation units; aborting!");
+    return false;
+  }
+  AST ast=pairs.get(0).ast.getAST();
+  final BindingManager bindings=new BindingManager(ast,_configFile.getNativeConfig());
+  final ByRef<Map<ICompilationUnit,CompilationUnitBuilder>> builders=new ByRef<Map<ICompilationUnit,CompilationUnitBuilder>>();
+  Environments.runWith(Environments.newClosedEnvironment(_api,bindings,_config),new Runnable(){
+    @Override public void run(){
+      builders.value=stage2_preprocess(bindings,pairs);
+    }
+  }
+);
+  if (monitor.isCanceled())   return false;
+  if (builders.value == null) {
+    Sharpen.Log(Level.SEVERE,"Found errors while pre-processing; aborting!");
+    return false;
+  }
+  final List<CompilationUnitPair> modifiedPairs=new ArrayList<CompilationUnitPair>();
+  final List<CompilationUnitBuilder> modified=new ArrayList<CompilationUnitBuilder>();
+  for (  final CompilationUnitBuilder builder : builders.value.values()) {
+    if (_sources.get(builder.getPair().source)) {
+      modifiedPairs.add(builder.getPair());
+      modified.add(builder);
+    }
+  }
+  final ASTResolver resolver=new DefaultASTResolver(modifiedPairs);
+  final ByRef<Boolean> ok=new ByRef<Boolean>();
+  Environments.runWith(Environments.newClosedEnvironment(_api,bindings,_config,_configFile,resolver),new Runnable(){
+    @Override public void run(){
+      ok.value=stage3_generate(monitor,modified);
+    }
+  }
+);
+  if (monitor.isCanceled() || !ok.value)   return false;
+  Environments.runWith(Environments.newClosedEnvironment(_api,bindings,_config,_configFile,resolver),new Runnable(){
+    @Override public void run(){
+      ok.value=bindings.postProcess();
+    }
+  }
+);
+  if (monitor.isCanceled() || !ok.value)   return false;
+  Environments.runWith(Environments.newClosedEnvironment(_api,bindings,_config,_configFile,resolver),new Runnable(){
+    @Override public void run(){
+      ok.value=stage4_save_output(monitor,modified);
+    }
+  }
+);
+  if (monitor.isCanceled() || !ok.value)   return false;
+  return stage5_generate_csproj();
+}

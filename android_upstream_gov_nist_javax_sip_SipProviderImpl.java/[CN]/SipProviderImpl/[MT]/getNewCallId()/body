@@ -1,0 +1,10 @@
+{
+  String callId=Utils.getInstance().generateCallIdentifier(this.getListeningPoint().getIPAddress());
+  CallID callid=new CallID();
+  try {
+    callid.setCallId(callId);
+  }
+ catch (  java.text.ParseException ex) {
+  }
+  return callid;
+}

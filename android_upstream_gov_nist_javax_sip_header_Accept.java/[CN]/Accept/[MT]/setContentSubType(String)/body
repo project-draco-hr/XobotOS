@@ -1,0 +1,4 @@
+{
+  if (mediaRange == null)   mediaRange=new MediaRange();
+  mediaRange.setSubtype(subtype);
+}

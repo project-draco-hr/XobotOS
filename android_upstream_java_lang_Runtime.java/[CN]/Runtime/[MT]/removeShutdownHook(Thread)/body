@@ -1,0 +1,11 @@
+{
+  if (hook == null) {
+    throw new NullPointerException("Hook may not be null.");
+  }
+  if (shuttingDown) {
+    throw new IllegalStateException("VM already shutting down");
+  }
+synchronized (shutdownHooks) {
+    return shutdownHooks.remove(hook);
+  }
+}

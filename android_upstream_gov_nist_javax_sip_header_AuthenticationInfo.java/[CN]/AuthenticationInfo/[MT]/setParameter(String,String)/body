@@ -1,0 +1,14 @@
+{
+  if (name == null)   throw new NullPointerException("null name");
+  NameValue nv=super.parameters.getNameValue(name.toLowerCase());
+  if (nv == null) {
+    nv=new NameValue(name,value);
+    if (name.equalsIgnoreCase(ParameterNames.QOP) || name.equalsIgnoreCase(ParameterNames.NEXT_NONCE) || name.equalsIgnoreCase(ParameterNames.REALM)|| name.equalsIgnoreCase(ParameterNames.CNONCE)|| name.equalsIgnoreCase(ParameterNames.NONCE)|| name.equalsIgnoreCase(ParameterNames.OPAQUE)|| name.equalsIgnoreCase(ParameterNames.USERNAME)|| name.equalsIgnoreCase(ParameterNames.DOMAIN)|| name.equalsIgnoreCase(ParameterNames.NEXT_NONCE)|| name.equalsIgnoreCase(ParameterNames.RESPONSE_AUTH)) {
+      if (value == null)       throw new NullPointerException("null value");
+      if (value.startsWith(Separators.DOUBLE_QUOTE))       throw new ParseException(value + " : Unexpected DOUBLE_QUOTE",0);
+      nv.setQuotedValue();
+    }
+    super.setParameter(nv);
+  }
+ else   nv.setValueAsObject(value);
+}

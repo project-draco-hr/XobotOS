@@ -1,0 +1,3 @@
+{
+  theDTDHandler=(handler == null) ? this : handler;
+}

@@ -1,0 +1,6 @@
+{
+  SIPTransaction sipTransaction=SIPTransaction.this;
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("LingerTimer : " + sipTransaction.getTransactionId());
+  }
+}

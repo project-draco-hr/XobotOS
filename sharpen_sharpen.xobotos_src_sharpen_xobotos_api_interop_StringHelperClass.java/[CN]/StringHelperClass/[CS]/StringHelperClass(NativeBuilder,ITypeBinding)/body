@@ -1,0 +1,3 @@
+{
+  super(type,"String",builder,new CSTypeReference("string"),new TypeReference("NativeString"),true,true);
+}

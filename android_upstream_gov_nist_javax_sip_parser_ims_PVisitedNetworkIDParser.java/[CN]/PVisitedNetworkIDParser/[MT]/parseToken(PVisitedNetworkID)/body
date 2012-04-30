@@ -1,0 +1,6 @@
+{
+  lexer.match(TokenTypes.ID);
+  Token token=lexer.getNextToken();
+  visitedNetworkID.setVisitedNetworkID(token);
+  super.parse(visitedNetworkID);
+}

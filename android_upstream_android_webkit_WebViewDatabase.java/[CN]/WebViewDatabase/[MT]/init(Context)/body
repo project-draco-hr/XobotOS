@@ -1,0 +1,11 @@
+{
+  if (mInitialized) {
+    return;
+  }
+  initDatabase(context);
+  if (!JniUtil.useChromiumHttpStack()) {
+    initCacheDatabase(context);
+  }
+  mInitialized=true;
+  notify();
+}

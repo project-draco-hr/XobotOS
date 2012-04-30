@@ -1,0 +1,4 @@
+{
+  if (other instanceof ContentLength)   return true;
+ else   return false;
+}

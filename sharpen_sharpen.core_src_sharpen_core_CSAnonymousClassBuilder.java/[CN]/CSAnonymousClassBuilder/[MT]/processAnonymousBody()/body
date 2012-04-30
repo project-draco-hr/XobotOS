@@ -1,0 +1,6 @@
+{
+  CSTypeDeclaration saved=_currentType;
+  _currentType=_type;
+  visit(_node.bodyDeclarations());
+  _currentType=saved;
+}

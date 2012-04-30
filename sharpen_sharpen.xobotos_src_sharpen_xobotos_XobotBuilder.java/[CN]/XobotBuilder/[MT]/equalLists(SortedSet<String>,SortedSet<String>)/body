@@ -1,0 +1,10 @@
+{
+  if (a.size() != b.size())   return false;
+  final int count=a.size();
+  String[] array_a=a.toArray(new String[count]);
+  String[] array_b=b.toArray(new String[count]);
+  for (int i=0; i < count; i++) {
+    if (!array_a[i].equals(array_b[i]))     return false;
+  }
+  return true;
+}

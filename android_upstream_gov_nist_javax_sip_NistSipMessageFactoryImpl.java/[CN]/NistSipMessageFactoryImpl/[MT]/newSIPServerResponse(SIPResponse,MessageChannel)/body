@@ -1,0 +1,19 @@
+{
+  SIPTransactionStack theStack=(SIPTransactionStack)messageChannel.getSIPStack();
+  SIPTransaction tr=(SIPTransaction)((SIPTransactionStack)theStack).findTransaction(sipResponse,false);
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("Found Transaction " + tr + " for "+ sipResponse);
+  if (tr != null) {
+    if (tr.getState() == null) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("Dropping response - null transaction state");
+      return null;
+    }
+ else     if (TransactionState.COMPLETED == tr.getState() && sipResponse.getStatusCode() / 100 == 1) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("Dropping response - late arriving " + sipResponse.getStatusCode());
+      return null;
+    }
+  }
+  DialogFilter retval=new DialogFilter(sipStack);
+  retval.transactionChannel=tr;
+  retval.listeningPoint=messageChannel.getMessageProcessor().getListeningPoint();
+  return retval;
+}

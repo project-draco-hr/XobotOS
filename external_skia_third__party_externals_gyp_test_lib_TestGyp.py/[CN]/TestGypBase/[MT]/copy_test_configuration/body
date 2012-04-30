@@ -1,0 +1,17 @@
+def copy_test_configuration(self, source_dir, dest_dir):
+    "\n    Copies the test configuration from the specified source_dir\n    (the directory in which the test script lives) to the\n    specified dest_dir (a temporary working directory).\n\n    This ignores all files and directories that begin with\n    the string 'gyptest', and all '.svn' subdirectories.\n    "
+    for (root, dirs, files) in os.walk(source_dir):
+        if ('.svn' in dirs):
+            dirs.remove('.svn')
+        dirs = [d for d in dirs if (not d.startswith('gyptest'))]
+        files = [f for f in files if (not f.startswith('gyptest'))]
+        for dirname in dirs:
+            source = os.path.join(root, dirname)
+            destination = source.replace(source_dir, dest_dir)
+            os.mkdir(destination)
+            if (sys.platform != 'win32'):
+                shutil.copystat(source, destination)
+        for filename in files:
+            source = os.path.join(root, filename)
+            destination = source.replace(source_dir, dest_dir)
+            shutil.copy2(source, destination)

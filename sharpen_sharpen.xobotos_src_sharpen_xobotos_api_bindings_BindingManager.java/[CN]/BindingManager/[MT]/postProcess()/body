@@ -1,0 +1,8 @@
+{
+  if (_sharedNativeBuilder == null)   return true;
+  _sharedNativeBuilder.build(true);
+  _stringHelper.createManagedType(_sharedTypedef);
+  for (  ArrayHelperClass helper : _sharedArrayHelpers.values())   helper.createManagedType(_sharedTypedef);
+  if (!_sharedNativeBuilder.printManagedType(_sharedManagedBuilder))   return false;
+  return _sharedNativeBuilder.writeOutput();
+}

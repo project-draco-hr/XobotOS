@@ -1,0 +1,3 @@
+{
+  return (descendingSet != null) ? descendingSet : (descendingSet=new TreeSet<E>(backingMap.descendingMap()));
+}

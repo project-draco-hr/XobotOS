@@ -1,0 +1,11 @@
+{
+  while (klass != null) {
+    ReadIncludeFile annotation=klass.getAnnotation(ReadIncludeFile.class);
+    if (annotation == null) {
+      klass=klass.getSuperclass();
+      continue;
+    }
+    processIncludeFile(klass,annotation,obj);
+    return;
+  }
+}

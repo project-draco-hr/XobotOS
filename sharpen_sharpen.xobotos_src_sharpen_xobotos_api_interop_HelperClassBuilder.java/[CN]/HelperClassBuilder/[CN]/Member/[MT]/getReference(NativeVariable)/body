@@ -1,0 +1,5 @@
+{
+  Expression varRef=var.getMemberAccess(_name);
+  if (var.isTarget() && isFunction())   varRef=new MethodInvocation(varRef);
+  return varRef;
+}

@@ -1,0 +1,10 @@
+{
+  printPrecedingComments(node);
+  if (node.target() != null) {
+    writeIndented("goto case ");
+    node.target().accept(this);
+    write(";");
+    writeLine();
+  }
+ else   writeIndentedLine("goto " + node.label() + ";");
+}

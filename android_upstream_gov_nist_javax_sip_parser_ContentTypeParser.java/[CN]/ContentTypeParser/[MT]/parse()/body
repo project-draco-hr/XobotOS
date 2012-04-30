@@ -1,0 +1,22 @@
+{
+  ContentType contentType=new ContentType();
+  if (debug)   dbg_enter("ContentTypeParser.parse");
+  try {
+    this.headerName(TokenTypes.CONTENT_TYPE);
+    lexer.match(TokenTypes.ID);
+    Token type=lexer.getNextToken();
+    this.lexer.SPorHT();
+    contentType.setContentType(type.getTokenValue());
+    lexer.match('/');
+    lexer.match(TokenTypes.ID);
+    Token subType=lexer.getNextToken();
+    this.lexer.SPorHT();
+    contentType.setContentSubType(subType.getTokenValue());
+    super.parse(contentType);
+    this.lexer.match('\n');
+  }
+  finally {
+    if (debug)     dbg_leave("ContentTypeParser.parse");
+  }
+  return contentType;
+}

@@ -1,0 +1,21 @@
+{
+  mSealed=false;
+  mBooleanProperties=0;
+  mCurrentItemIndex=UNDEFINED;
+  mItemCount=UNDEFINED;
+  mFromIndex=UNDEFINED;
+  mToIndex=UNDEFINED;
+  mScrollX=UNDEFINED;
+  mScrollY=UNDEFINED;
+  mMaxScrollX=UNDEFINED;
+  mMaxScrollY=UNDEFINED;
+  mAddedCount=UNDEFINED;
+  mRemovedCount=UNDEFINED;
+  mClassName=null;
+  mContentDescription=null;
+  mBeforeText=null;
+  mParcelableData=null;
+  mText.clear();
+  mSourceViewId=View.NO_ID;
+  mSourceWindowId=View.NO_ID;
+}

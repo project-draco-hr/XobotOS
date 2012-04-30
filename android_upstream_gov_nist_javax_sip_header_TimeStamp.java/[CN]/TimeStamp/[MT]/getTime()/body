@@ -1,0 +1,3 @@
+{
+  return this.timeStamp == -1 ? (long)timeStampFloat : timeStamp;
+}

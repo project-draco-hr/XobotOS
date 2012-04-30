@@ -1,0 +1,5 @@
+{
+  for (  Helper helper : _helpers) {
+    if (GENERATE_ALL || helper.isUsed())     helper.add();
+  }
+}

@@ -1,0 +1,14 @@
+{
+  if (binding != null) {
+    ITypeBinding[] ptypes=binding.getParameterTypes();
+    for (int i=0; i < ptypes.length; i++) {
+      Expression expr=(Expression)arguments.get(i);
+      mie.addArgument(mapExpression(ptypes[i],expr));
+    }
+  }
+ else {
+    for (    Object arg : arguments) {
+      addArgument(mie,(Expression)arg,null);
+    }
+  }
+}

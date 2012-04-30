@@ -1,0 +1,6 @@
+{
+  if (host == null)   throw new NullPointerException("the host parameter in the Warning header is null");
+ else {
+    this.agent=host;
+  }
+}

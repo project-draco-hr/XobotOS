@@ -1,0 +1,10 @@
+{
+switch (msg.what) {
+case MESSAGE_TIMED_OUT:
+    Session session=(Session)msg.obj;
+  session.onTimedOut();
+break;
+default :
+throw new IllegalStateException("unhandled message: " + msg.what);
+}
+}

@@ -1,0 +1,6 @@
+{
+  mPrivateFlags&=~PREPRESSED;
+  mPrivateFlags|=PRESSED;
+  refreshDrawableState();
+  checkForLongClick(ViewConfiguration.getTapTimeout());
+}

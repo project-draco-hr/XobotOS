@@ -1,0 +1,10 @@
+{
+  String fromTag=this.getFromTag();
+  String cseq=this.cSeqHeader.toString();
+  String callId=this.callIdHeader.getCallId();
+  String requestUri=this.getRequestURI().toString();
+  if (fromTag != null) {
+    return new StringBuffer().append(requestUri).append(":").append(fromTag).append(":").append(cseq).append(":").append(callId).toString();
+  }
+ else   return null;
+}

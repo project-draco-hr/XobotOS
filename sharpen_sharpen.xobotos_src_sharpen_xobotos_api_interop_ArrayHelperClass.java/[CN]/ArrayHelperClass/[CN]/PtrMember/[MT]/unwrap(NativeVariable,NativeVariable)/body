@@ -1,0 +1,34 @@
+{
+  if (isBlittable()) {
+    return new AssignmentStatement(getReference(dest),(new MethodInvocation(src.getMemberAccess("takeOwnership"))));
+  }
+  Block block=new Block();
+  Expression alloc;
+  if (TRACK_ALLOCATIONS) {
+    alloc=new MethodInvocation(new TemplateFunctionReference("MarshalHelper::allocArray",getNativeType()),_lengthMember.getReference(src));
+  }
+ else {
+    alloc=new ArrayCreationExpression(getNativeType(),_lengthMember.getReference(src));
+  }
+  block.addStatement(new AssignmentStatement(getReference(dest),alloc));
+  LocalVariable i=new LocalVariable(new TypeReference("uint32_t"),"i");
+  Expression init=new NumberLiteralExpression(0);
+  Expression iRef=new VariableReference(i);
+  Expression check=new BinaryOperator("<",iRef,_lengthMember.getReference(src));
+  Expression update=new PostfixIncrement(i);
+  ForStatement forStm=new ForStatement(i,init,check,update);
+  Expression targetIdx=new IndexedExpression(getReference(dest),iRef);
+  Expression srcIdx=getIndex(src,iRef);
+  if (!isClass()) {
+    forStm.getBody().addStatement(new AssignmentStatement(targetIdx,srcIdx));
+  }
+ else   if (isByRef()) {
+    forStm.getBody().addStatement(new AssignmentStatement(targetIdx,new MethodInvocation(getHelper().UNWRAP.expr(),srcIdx)));
+  }
+ else {
+    Expression targetAddr=new AddressOfExpression(targetIdx);
+    forStm.getBody().addStatement(new MethodInvocation(getHelper().DEEP_UNWRAP.expr(),srcIdx,targetAddr));
+  }
+  block.addStatement(forStm);
+  return block;
+}

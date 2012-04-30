@@ -1,0 +1,8 @@
+def stdout(self, run=None):
+    'Returns the standard output from the specified run number.\n        If there is no specified run number, then returns the standard\n        output of the last run.  If the run number is less than zero,\n        then returns the standard output from that many runs back from\n        the current run.\n        '
+    if (not run):
+        run = len(self._stdout)
+    elif (run < 0):
+        run = (len(self._stdout) + run)
+    run = (run - 1)
+    return self._stdout[run]

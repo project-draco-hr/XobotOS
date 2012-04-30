@@ -1,0 +1,9 @@
+{
+  StringBuffer encoding=new StringBuffer();
+  gov.nist.core.NameValue nv=getNameValue(ParameterNamesIms.ICID_VALUE);
+  nv.encode(encoding);
+  if (parameters.containsKey(ParameterNamesIms.ICID_GENERATED_AT))   encoding.append(SEMICOLON).append(ParameterNamesIms.ICID_GENERATED_AT).append(EQUALS).append(getICIDGeneratedAt());
+  if (parameters.containsKey(ParameterNamesIms.TERM_IOI))   encoding.append(SEMICOLON).append(ParameterNamesIms.TERM_IOI).append(EQUALS).append(getTerminatingIOI());
+  if (parameters.containsKey(ParameterNamesIms.ORIG_IOI))   encoding.append(SEMICOLON).append(ParameterNamesIms.ORIG_IOI).append(EQUALS).append(getOriginatingIOI());
+  return encoding.toString();
+}

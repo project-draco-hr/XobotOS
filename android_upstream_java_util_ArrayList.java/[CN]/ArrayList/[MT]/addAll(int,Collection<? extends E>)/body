@@ -1,0 +1,27 @@
+{
+  int s=size;
+  if (index > s || index < 0) {
+    throwIndexOutOfBoundsException(index,s);
+  }
+  Object[] newPart=collection.toArray();
+  int newPartSize=newPart.length;
+  if (newPartSize == 0) {
+    return false;
+  }
+  Object[] a=array;
+  int newSize=s + newPartSize;
+  if (newSize <= a.length) {
+    System.arraycopy(a,index,a,index + newPartSize,s - index);
+  }
+ else {
+    int newCapacity=newCapacity(newSize - 1);
+    Object[] newArray=new Object[newCapacity];
+    System.arraycopy(a,0,newArray,0,index);
+    System.arraycopy(a,index,newArray,index + newPartSize,s - index);
+    array=a=newArray;
+  }
+  System.arraycopy(newPart,0,a,index,newPartSize);
+  size=newSize;
+  modCount++;
+  return true;
+}

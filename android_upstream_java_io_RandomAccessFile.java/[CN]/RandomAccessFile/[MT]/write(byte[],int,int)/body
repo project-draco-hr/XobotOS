@@ -1,0 +1,6 @@
+{
+  IoBridge.write(fd,buffer,byteOffset,byteCount);
+  if (syncMetadata) {
+    fd.sync();
+  }
+}

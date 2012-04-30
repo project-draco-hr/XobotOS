@@ -1,0 +1,12 @@
+{
+  id=source.readInt();
+  persistentId=source.readInt();
+  if (source.readInt() != 0) {
+    baseIntent=Intent.CREATOR.createFromParcel(source);
+  }
+ else {
+    baseIntent=null;
+  }
+  origActivity=ComponentName.readFromParcel(source);
+  description=TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
+}

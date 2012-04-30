@@ -1,0 +1,5 @@
+{
+  ProxyAuthorizationList retval=new ProxyAuthorizationList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

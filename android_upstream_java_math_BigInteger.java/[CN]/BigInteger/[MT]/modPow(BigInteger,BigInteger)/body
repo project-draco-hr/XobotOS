@@ -1,0 +1,7 @@
+{
+  if (m.signum() <= 0) {
+    throw new ArithmeticException("m.signum() <= 0");
+  }
+  BigInteger base=exponent.signum() < 0 ? modInverse(m) : this;
+  return new BigInteger(BigInt.modExp(base.getBigInt(),exponent.getBigInt(),m.getBigInt()));
+}

@@ -1,0 +1,78 @@
+{
+  WarningList warningList=new WarningList();
+  if (debug)   dbg_enter("WarningParser.parse");
+  try {
+    headerName(TokenTypes.WARNING);
+    while (lexer.lookAhead(0) != '\n') {
+      Warning warning=new Warning();
+      warning.setHeaderName(SIPHeaderNames.WARNING);
+      this.lexer.match(TokenTypes.ID);
+      Token token=lexer.getNextToken();
+      try {
+        int code=Integer.parseInt(token.getTokenValue());
+        warning.setCode(code);
+      }
+ catch (      NumberFormatException ex) {
+        throw createParseException(ex.getMessage());
+      }
+catch (      InvalidArgumentException ex) {
+        throw createParseException(ex.getMessage());
+      }
+      this.lexer.SPorHT();
+      this.lexer.match(TokenTypes.ID);
+      token=lexer.getNextToken();
+      if (lexer.lookAhead(0) == ':') {
+        this.lexer.match(':');
+        this.lexer.match(TokenTypes.ID);
+        Token token2=lexer.getNextToken();
+        warning.setAgent(token.getTokenValue() + ":" + token2.getTokenValue());
+      }
+ else {
+        warning.setAgent(token.getTokenValue());
+      }
+      this.lexer.SPorHT();
+      String text=this.lexer.quotedString();
+      warning.setText(text);
+      this.lexer.SPorHT();
+      warningList.add(warning);
+      while (lexer.lookAhead(0) == ',') {
+        this.lexer.match(',');
+        this.lexer.SPorHT();
+        warning=new Warning();
+        this.lexer.match(TokenTypes.ID);
+        Token tok=lexer.getNextToken();
+        try {
+          int code=Integer.parseInt(tok.getTokenValue());
+          warning.setCode(code);
+        }
+ catch (        NumberFormatException ex) {
+          throw createParseException(ex.getMessage());
+        }
+catch (        InvalidArgumentException ex) {
+          throw createParseException(ex.getMessage());
+        }
+        this.lexer.SPorHT();
+        this.lexer.match(TokenTypes.ID);
+        tok=lexer.getNextToken();
+        if (lexer.lookAhead(0) == ':') {
+          this.lexer.match(':');
+          this.lexer.match(TokenTypes.ID);
+          Token token2=lexer.getNextToken();
+          warning.setAgent(tok.getTokenValue() + ":" + token2.getTokenValue());
+        }
+ else {
+          warning.setAgent(tok.getTokenValue());
+        }
+        this.lexer.SPorHT();
+        text=this.lexer.quotedString();
+        warning.setText(text);
+        this.lexer.SPorHT();
+        warningList.add(warning);
+      }
+    }
+  }
+  finally {
+    if (debug)     dbg_leave("WarningParser.parse");
+  }
+  return warningList;
+}

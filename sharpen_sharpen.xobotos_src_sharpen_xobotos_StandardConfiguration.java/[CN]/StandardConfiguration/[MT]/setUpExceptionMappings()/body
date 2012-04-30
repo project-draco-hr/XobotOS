@@ -1,0 +1,28 @@
+{
+  mapType("java.lang.Throwable","System.Exception");
+  mapProperty("java.lang.Throwable.getMessage","Message");
+  mapProperty("java.lang.Throwable.initCause","InnerException");
+  mapProperty("java.lang.Throwable.getCause","InnerException");
+  mapMethod("java.lang.Throwable.fillInStackTrace",miscRuntimeMethod("FillInStackTrace"));
+  mapMethod("java.lang.Throwable.setStackTrace",miscRuntimeMethod("SetStackTrace"));
+  mapProperty("java.lang.Throwable.getStackTrace","StackTrace");
+  mapType("java.lang.Error","System.Exception");
+  mapType("java.lang.OutOfMemoryError","System.OutOfMemoryException");
+  mapType("java.lang.Exception","System.Exception");
+  mapType("java.lang.ClassCastException","System.InvalidCastException");
+  mapType("java.lang.NullPointerException","System.ArgumentNullException");
+  mapType("java.lang.IllegalArgumentException","System.ArgumentException");
+  mapType("java.lang.IllegalStateException","System.InvalidOperationException");
+  mapType("java.lang.InterruptedException","System.Exception");
+  mapType("java.lang.IndexOutOfBoundsException","System.IndexOutOfRangeException");
+  mapType("java.lang.UnsupportedOperationException","System.NotSupportedException");
+  mapType("java.lang.ArrayIndexOutOfBoundsException","System.IndexOutOfRangeException");
+  mapType("java.lang.NoSuchMethodError","System.MissingMethodException");
+  mapType("java.lang.NumberFormatException","System.ArgumentException");
+  mapType("java.io.IOException","System.IO.IOException");
+  mapType("java.net.SocketException","System.Net.Sockets.SocketException");
+  mapType("java.lang.SecurityException","System.Security.SecurityException");
+  mapMethod("java.lang.ArrayIndexOutOfBoundsException.ArrayIndexOutOfBoundsException(int)",sharpenUtilMethod("IndexOutOfRangeCtor"));
+  mapMethod("java.lang.ArrayIndexOutOfBoundsException.ArrayIndexOutOfBoundsException(int,int)",sharpenUtilMethod("IndexOutOfRangeCtor"));
+  mapMethod("java.lang.ArrayIndexOutOfBoundsException.ArrayIndexOutOfBoundsException(int,int,int)",sharpenUtilMethod("IndexOutOfRangeCtor"));
+}

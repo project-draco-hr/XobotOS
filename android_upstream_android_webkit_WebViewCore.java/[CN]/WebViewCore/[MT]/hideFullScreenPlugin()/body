@@ -1,0 +1,6 @@
+{
+  if (mWebView == null) {
+    return;
+  }
+  mWebView.mPrivateHandler.obtainMessage(WebView.HIDE_FULLSCREEN).sendToTarget();
+}

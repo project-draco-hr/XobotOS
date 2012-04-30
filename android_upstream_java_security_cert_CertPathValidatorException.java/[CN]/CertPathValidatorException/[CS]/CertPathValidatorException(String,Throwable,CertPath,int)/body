@@ -1,0 +1,11 @@
+{
+  super(msg,cause);
+  if ((certPath == null) && (index != -1)) {
+    throw new IllegalArgumentException("Index should be -1 when CertPath is null");
+  }
+  if ((certPath != null) && ((index < -1) || (index >= certPath.getCertificates().size()))) {
+    throw new IndexOutOfBoundsException();
+  }
+  this.certPath=certPath;
+  this.index=index;
+}

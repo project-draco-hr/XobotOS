@@ -1,0 +1,9 @@
+{
+  IMethodBinding currentMethod=currentMethodDeclarationBinding();
+  for (  IVariableBinding variable : builder.capturedVariables()) {
+    IMethodBinding method=variable.getDeclaringMethod();
+    if (method != currentMethod) {
+      _capturedVariables.add(variable);
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("null address!");
+  ServiceRoute serviceRoute=new ServiceRoute();
+  serviceRoute.setAddress(address);
+  return serviceRoute;
+}

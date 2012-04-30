@@ -1,0 +1,3 @@
+{
+  return (Integer.parseInt(getParameter(ParameterNamesIms.SPI_C)));
+}

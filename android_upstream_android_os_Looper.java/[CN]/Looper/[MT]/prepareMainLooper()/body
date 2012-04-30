@@ -1,0 +1,5 @@
+{
+  prepare();
+  setMainLooper(myLooper());
+  myLooper().mQueue.mQuitAllowed=false;
+}

@@ -1,0 +1,4 @@
+{
+  write(node.operator());
+  node.operand().accept(this);
+}

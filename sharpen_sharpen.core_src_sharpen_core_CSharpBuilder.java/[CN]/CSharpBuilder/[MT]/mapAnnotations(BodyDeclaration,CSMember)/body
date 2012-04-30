@@ -1,0 +1,13 @@
+{
+  for (  Object m : node.modifiers()) {
+    if (!(m instanceof Annotation)) {
+      continue;
+    }
+    if (isIgnoredAnnotation((Annotation)m)) {
+      continue;
+    }
+    if (m instanceof MarkerAnnotation) {
+      mapMarkerAnnotation((MarkerAnnotation)m,member);
+    }
+  }
+}

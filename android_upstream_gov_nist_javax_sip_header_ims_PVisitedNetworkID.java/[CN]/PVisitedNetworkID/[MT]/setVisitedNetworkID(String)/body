@@ -1,0 +1,5 @@
+{
+  if (networkID == null)   throw new NullPointerException(" the networkID parameter is null");
+  this.networkID=networkID;
+  this.isQuoted=true;
+}

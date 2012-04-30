@@ -1,0 +1,6 @@
+def TargetFilename(target, build_file=None, output_suffix=''):
+    'Returns the .scons file name for the specified target.\n  '
+    if (build_file is None):
+        (build_file, target) = gyp.common.ParseQualifiedTarget(target)[:2]
+    output_file = os.path.join(os.path.dirname(build_file), ((target + output_suffix) + '.scons'))
+    return output_file

@@ -1,0 +1,36 @@
+{
+  if (enumeratingThreads) {
+synchronized (threadRefs) {
+      for (int i=threadRefs.size() - 1; i >= 0; --i) {
+        Thread thread=threadRefs.get(i).get();
+        if (thread != null && thread.isAlive()) {
+          if (enumerationIndex >= enumeration.length) {
+            return enumerationIndex;
+          }
+          enumeration[enumerationIndex++]=thread;
+        }
+      }
+    }
+  }
+ else {
+synchronized (groups) {
+      for (int i=groups.size() - 1; i >= 0; --i) {
+        if (enumerationIndex >= enumeration.length) {
+          return enumerationIndex;
+        }
+        enumeration[enumerationIndex++]=groups.get(i);
+      }
+    }
+  }
+  if (recurse) {
+synchronized (groups) {
+      for (      ThreadGroup group : groups) {
+        if (enumerationIndex >= enumeration.length) {
+          return enumerationIndex;
+        }
+        enumerationIndex=group.enumerateGeneric(enumeration,recurse,enumerationIndex,enumeratingThreads);
+      }
+    }
+  }
+  return enumerationIndex;
+}

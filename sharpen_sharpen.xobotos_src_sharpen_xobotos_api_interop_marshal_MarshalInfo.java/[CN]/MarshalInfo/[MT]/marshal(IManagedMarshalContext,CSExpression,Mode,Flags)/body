@@ -1,0 +1,5 @@
+{
+  final CSTypeReferenceExpression type=getPInvokeType(mode,flags);
+  CSExpression arg=marshalIn(expr,mode,flags);
+  context.addParameter(null,type,arg);
+}

@@ -1,0 +1,11 @@
+{
+  if (!cdataElement) {
+    writeEsc(ch,start,len,false);
+  }
+ else {
+    for (int i=start; i < start + len; i++) {
+      write(ch[i]);
+    }
+  }
+  super.characters(ch,start,len);
+}

@@ -1,0 +1,5 @@
+{
+  byte[] bytes=((String)out.content).getBytes(Charsets.UTF_8);
+  out.content=bytes;
+  out.length=bytes.length;
+}

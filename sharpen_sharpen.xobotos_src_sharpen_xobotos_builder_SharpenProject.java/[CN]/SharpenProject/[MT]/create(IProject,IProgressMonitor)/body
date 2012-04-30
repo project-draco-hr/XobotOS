@@ -1,0 +1,11 @@
+{
+  if (!project.hasNature(SharpenNature.NATURE_ID)) {
+    return null;
+  }
+  ISharpenProject cached=(ISharpenProject)project.getSessionProperty(PROJECT_SESSION_KEY);
+  if (null == cached) {
+    cached=new SharpenProject(project);
+    project.setSessionProperty(PROJECT_SESSION_KEY,cached);
+  }
+  return cached;
+}

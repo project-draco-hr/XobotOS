@@ -1,0 +1,5 @@
+{
+  e.checkValid();
+  mRS=rs;
+  mElement=e;
+}

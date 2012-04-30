@@ -1,0 +1,9 @@
+{
+  if (index < 0) {
+    return 0;
+  }
+ else   if (index > mIndexMax) {
+    return mIndexMax;
+  }
+  return index;
+}

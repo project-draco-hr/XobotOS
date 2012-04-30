@@ -1,0 +1,14 @@
+{
+synchronized (this) {
+    if (mSipSession == null) {
+      throw new SipException("No call to answer");
+    }
+    try {
+      mAudioStream=new AudioStream(InetAddress.getByName(getLocalIp()));
+      mSipSession.answerCall(createAnswer(mPeerSd).encode(),timeout);
+    }
+ catch (    IOException e) {
+      throw new SipException("answerCall()",e);
+    }
+  }
+}

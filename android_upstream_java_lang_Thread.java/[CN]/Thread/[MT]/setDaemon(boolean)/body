@@ -1,0 +1,8 @@
+{
+  if (hasBeenStarted) {
+    throw new IllegalThreadStateException("Thread already started.");
+  }
+  if (vmThread == null) {
+    daemon=isDaemon;
+  }
+}

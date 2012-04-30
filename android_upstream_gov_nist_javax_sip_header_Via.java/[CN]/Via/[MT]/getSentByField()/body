@@ -1,0 +1,4 @@
+{
+  if (sentBy != null)   return sentBy.encode();
+  return null;
+}

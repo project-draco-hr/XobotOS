@@ -1,0 +1,11 @@
+{
+  this.input=(input instanceof DataInputStream) ? (DataInputStream)input : new DataInputStream(input);
+  primitiveTypes=new DataInputStream(this);
+  enableResolve=false;
+  this.subclassOverridingImplementation=false;
+  resetState();
+  nestedLevels=0;
+  primitiveData=this.input;
+  readStreamHeader();
+  primitiveData=emptyStream;
+}

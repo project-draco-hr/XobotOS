@@ -1,0 +1,5 @@
+def run(self, *args, **kw):
+    '\n    Executes a program by calling the superclass .run() method.\n\n    This exists to provide a common place to filter out keyword\n    arguments implemented in this layer, without having to update\n    the tool-specific subclasses or clutter the tests themselves\n    with platform-specific code.\n    '
+    if kw.has_key('SYMROOT'):
+        del kw['SYMROOT']
+    super(TestGypBase, self).run(*args, **kw)

@@ -1,0 +1,5 @@
+{
+  if (mPendingResult != null) {
+    mPendingResult.mAbortBroadcast=false;
+  }
+}

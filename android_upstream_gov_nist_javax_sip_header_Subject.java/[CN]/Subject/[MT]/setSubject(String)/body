@@ -1,0 +1,4 @@
+{
+  if (subject == null)   throw new NullPointerException("JAIN-SIP Exception, " + " Subject, setSubject(), the subject parameter is null");
+  this.subject=subject;
+}

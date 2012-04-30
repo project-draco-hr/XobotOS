@@ -1,0 +1,3 @@
+{
+  return _configuration.isIgnoredAnnotation(qualifiedName(m.resolveAnnotationBinding().getAnnotationType()));
+}

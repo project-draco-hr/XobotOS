@@ -1,0 +1,19 @@
+{
+  writeMemberHeader(node);
+  if (node.isInterface()) {
+    if (node.partial())     _writer.write("partial ");
+    write("interface " + node.name());
+  }
+ else   if (node instanceof CSClass) {
+    CSClass classNode=(CSClass)node;
+    write(classModifier(classNode.modifier()));
+    if (node.partial())     _writer.write("partial ");
+    write("class " + node.name());
+  }
+ else {
+    write("struct " + node.name());
+  }
+  writeTypeParameters(node);
+  writeBaseTypes(node);
+  writeTypeParameterConstraints(node.typeParameters());
+}

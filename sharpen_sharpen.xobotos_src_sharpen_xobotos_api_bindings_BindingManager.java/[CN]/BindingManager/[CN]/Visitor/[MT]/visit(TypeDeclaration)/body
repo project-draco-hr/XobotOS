@@ -1,0 +1,44 @@
+{
+  final TypeTemplate template=getCurrentType().findTypeTemplate(node);
+  if (template == null)   return false;
+  final ITypeBinding typeBinding=node.resolveBinding();
+  final NativeTypeEntry nativeType;
+  if (template.getNativeType() != null) {
+    if (_nativeTypeContainer == null)     _nativeTypeContainer=typeBinding;
+    nativeType=new NativeTypeEntry(typeBinding,template.getNativeType());
+    _nativeTypes.put(typeBinding,nativeType);
+    _nativeTypeList.add(nativeType);
+  }
+ else   if (template.getNativeHandle() != null) {
+    if (_nativeTypeContainer == null)     _nativeTypeContainer=typeBinding;
+    nativeType=new NativeTypeEntry(typeBinding,template.getNativeHandle());
+    _nativeTypes.put(typeBinding,nativeType);
+    _nativeTypeList.add(nativeType);
+  }
+ else   if (template.getNativeStruct() != null) {
+    if (_nativeTypeContainer == null)     _nativeTypeContainer=typeBinding;
+    nativeType=new NativeTypeEntry(typeBinding,template.getNativeStruct());
+    _nativeTypes.put(typeBinding,nativeType);
+    _nativeTypeList.add(nativeType);
+  }
+ else {
+    nativeType=null;
+  }
+  _outputProviderStack.push(template);
+  final OutputType output=getOutputType();
+  TypeEntry type=new TypeEntry(node,template,output,nativeType);
+  _typeStack.push(type);
+  TypeBinding binding=template.getBinding();
+  if (binding != null) {
+    _typeBindings.put(typeBinding,binding);
+    if (binding.isEventInterface())     checkValidEventInterface(node);
+  }
+  for (  final Object o : node.bodyDeclarations()) {
+    if (!(o instanceof ASTNode))     continue;
+    ASTNode member=(ASTNode)o;
+    member.accept(this);
+  }
+  _typeStack.pop();
+  _outputProviderStack.pop();
+  return false;
+}

@@ -1,0 +1,4 @@
+{
+  mShapeState.mPaint.setDither(dither);
+  invalidateSelf();
+}

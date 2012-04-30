@@ -1,0 +1,20 @@
+{
+switch (keyCode) {
+case KeyEvent.KEYCODE_DPAD_CENTER:
+case KeyEvent.KEYCODE_ENTER:
+    if (!isEnabled()) {
+      return true;
+    }
+  if (isClickable() && isPressed() && mSelectedPosition >= 0 && mAdapter != null && mSelectedPosition < mAdapter.getCount()) {
+    final View view=getChildAt(mSelectedPosition - mFirstPosition);
+    if (view != null) {
+      performItemClick(view,mSelectedPosition,mSelectedRowId);
+      view.setPressed(false);
+    }
+    setPressed(false);
+    return true;
+  }
+break;
+}
+return super.onKeyUp(keyCode,event);
+}

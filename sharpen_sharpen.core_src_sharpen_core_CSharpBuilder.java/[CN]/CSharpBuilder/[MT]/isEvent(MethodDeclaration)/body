@@ -1,0 +1,3 @@
+{
+  return eventTagFor(declaring) != null;
+}

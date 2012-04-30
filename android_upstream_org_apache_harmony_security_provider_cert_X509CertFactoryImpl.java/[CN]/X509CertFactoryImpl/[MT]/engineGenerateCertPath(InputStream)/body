@@ -1,0 +1,6 @@
+{
+  if (inStream == null) {
+    throw new CertificateException("inStream == null");
+  }
+  return engineGenerateCertPath(inStream,"PkiPath");
+}

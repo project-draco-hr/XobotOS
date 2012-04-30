@@ -1,0 +1,3 @@
+{
+  return normalizeHelper(number,ALPHA_PHONE_MAPPINGS,false);
+}

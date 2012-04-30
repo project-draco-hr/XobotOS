@@ -1,0 +1,7 @@
+{
+  if (translator != null) {
+    float appScale=translator.applicationScale;
+    mCompatibleMatrix=new Matrix();
+    mCompatibleMatrix.setScale(appScale,appScale);
+  }
+}

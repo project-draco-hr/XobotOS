@@ -1,0 +1,6 @@
+{
+  _writer.write(node.getName());
+  _writer.write("<");
+  visitCommaSeparatedList(node.getArguments());
+  _writer.writeBlock(">");
+}

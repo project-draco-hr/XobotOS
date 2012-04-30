@@ -1,0 +1,17 @@
+{
+  SIPRequest originalRequest=this.getOriginalRequest();
+  if (originalRequest == null)   throw new SipException("bad state " + getState());
+  if (!getMethod().equals(Request.INVITE)) {
+    throw new SipException("Can only ACK an INVITE!");
+  }
+ else   if (lastResponse == null) {
+    throw new SipException("bad Transaction state");
+  }
+ else   if (lastResponse.getStatusCode() < 200) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("lastResponse = " + lastResponse);
+    }
+    throw new SipException("Cannot ACK a provisional response!");
+  }
+  return originalRequest.createErrorAck((To)lastResponse.getTo());
+}

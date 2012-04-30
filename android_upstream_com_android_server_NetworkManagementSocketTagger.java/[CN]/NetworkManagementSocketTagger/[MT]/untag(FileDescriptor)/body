@@ -1,0 +1,6 @@
+{
+  if (LOGD) {
+    Log.i(TAG,"untagSocket(" + fd.getInt$() + ")");
+  }
+  unTagSocketFd(fd);
+}

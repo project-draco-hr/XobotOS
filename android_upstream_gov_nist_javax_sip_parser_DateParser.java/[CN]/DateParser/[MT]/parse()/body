@@ -1,0 +1,22 @@
+{
+  if (debug)   dbg_enter("DateParser.parse");
+  try {
+    headerName(TokenTypes.DATE);
+    wkday();
+    lexer.match(',');
+    lexer.match(' ');
+    Calendar cal=date();
+    lexer.match(' ');
+    time(cal);
+    lexer.match(' ');
+    String tzone=this.lexer.ttoken().toLowerCase();
+    if (!"gmt".equals(tzone))     throw createParseException("Bad Time Zone " + tzone);
+    this.lexer.match('\n');
+    SIPDateHeader retval=new SIPDateHeader();
+    retval.setDate(cal);
+    return retval;
+  }
+  finally {
+    if (debug)     dbg_leave("DateParser.parse");
+  }
+}

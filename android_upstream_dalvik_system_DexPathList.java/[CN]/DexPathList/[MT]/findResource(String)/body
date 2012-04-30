@@ -1,0 +1,9 @@
+{
+  for (  Element element : dexElements) {
+    URL url=element.findResource(name);
+    if (url != null) {
+      return url;
+    }
+  }
+  return null;
+}

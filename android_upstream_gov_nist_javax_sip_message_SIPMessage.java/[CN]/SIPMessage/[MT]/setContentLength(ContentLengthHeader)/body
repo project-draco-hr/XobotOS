@@ -1,0 +1,7 @@
+{
+  try {
+    this.contentLengthHeader.setContentLength(contentLength.getContentLength());
+  }
+ catch (  InvalidArgumentException ex) {
+  }
+}

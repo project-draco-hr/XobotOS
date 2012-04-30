@@ -1,0 +1,3 @@
+{
+  return hideSoftInputFromWindow(windowToken,flags,null);
+}

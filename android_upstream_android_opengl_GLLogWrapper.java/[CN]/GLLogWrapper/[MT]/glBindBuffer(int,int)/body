@@ -1,0 +1,8 @@
+{
+  begin("glBindBuffer");
+  arg("target",target);
+  arg("buffer",buffer);
+  end();
+  mgl11.glBindBuffer(target,buffer);
+  checkError();
+}

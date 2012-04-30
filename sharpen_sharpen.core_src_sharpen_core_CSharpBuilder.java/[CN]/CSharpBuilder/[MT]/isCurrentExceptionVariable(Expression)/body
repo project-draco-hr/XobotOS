@@ -1,0 +1,6 @@
+{
+  if (!(exception instanceof SimpleName)) {
+    return false;
+  }
+  return ((SimpleName)exception).resolveBinding() == _currentExceptionVariable;
+}

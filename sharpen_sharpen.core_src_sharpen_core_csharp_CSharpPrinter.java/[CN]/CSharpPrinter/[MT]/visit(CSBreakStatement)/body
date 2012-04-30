@@ -1,0 +1,4 @@
+{
+  printPrecedingComments(node);
+  writeIndentedLine("break;");
+}

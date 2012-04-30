@@ -1,0 +1,4 @@
+IManagedMarshalContext context
+CSExpression expr
+Mode mode
+Flags flags

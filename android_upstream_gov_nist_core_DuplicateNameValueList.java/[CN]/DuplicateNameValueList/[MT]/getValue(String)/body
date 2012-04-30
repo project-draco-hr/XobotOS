@@ -1,0 +1,5 @@
+{
+  Collection nv=this.getNameValue(name.toLowerCase());
+  if (nv != null)   return nv;
+ else   return null;
+}

@@ -1,0 +1,5 @@
+{
+  for (int i=index; i < fragments.size(); ++i) {
+    node.addFragment(mapTagElementFragment((ASTNode)fragments.get(i)));
+  }
+}

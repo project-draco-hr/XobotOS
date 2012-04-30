@@ -1,0 +1,6 @@
+def canonicalize(self, path):
+    if is_List(path):
+        path = apply(os.path.join, tuple(path))
+    if (not os.path.isabs(path)):
+        path = os.path.join(self.workdir, path)
+    return path

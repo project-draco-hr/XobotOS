@@ -1,0 +1,14 @@
+{
+synchronized (mStaticInit) {
+    if (!mInitialized) {
+      try {
+        InputMethodManager imm=InputMethodManager.getInstance(mainLooper);
+        sWindowSession=Display.getWindowManager().openSession(imm.getClient(),imm.getInputContext());
+        mInitialized=true;
+      }
+ catch (      RemoteException e) {
+      }
+    }
+    return sWindowSession;
+  }
+}

@@ -1,0 +1,7 @@
+{
+  ClassLoader cl=ResourceBundle.class.getClassLoader();
+  if (cl == null) {
+    cl=ClassLoader.getSystemClassLoader();
+  }
+  return cl;
+}

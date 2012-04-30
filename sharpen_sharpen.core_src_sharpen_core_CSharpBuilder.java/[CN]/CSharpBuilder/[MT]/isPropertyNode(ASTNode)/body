@@ -1,0 +1,6 @@
+{
+  if (node.getNodeType() != ASTNode.METHOD_DECLARATION) {
+    return false;
+  }
+  return isProperty((MethodDeclaration)node);
+}

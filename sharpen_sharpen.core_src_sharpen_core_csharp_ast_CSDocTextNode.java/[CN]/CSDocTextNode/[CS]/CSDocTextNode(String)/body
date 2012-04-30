@@ -1,0 +1,6 @@
+{
+  if (null == text) {
+    throw new IllegalArgumentException("text");
+  }
+  _text=text;
+}

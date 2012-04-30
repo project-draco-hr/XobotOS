@@ -1,0 +1,6 @@
+{
+  if (value == null) {
+    throw new IllegalArgumentException("the bind value at index " + index + " is null");
+  }
+  bind(Cursor.FIELD_TYPE_BLOB,index,value);
+}

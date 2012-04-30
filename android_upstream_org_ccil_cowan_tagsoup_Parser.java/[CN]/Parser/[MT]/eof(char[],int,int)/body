@@ -1,0 +1,8 @@
+{
+  if (virginStack)   rectify(thePCDATA);
+  while (theStack.next() != null) {
+    pop();
+  }
+  if (!(theSchema.getURI().equals("")))   theContentHandler.endPrefixMapping(theSchema.getPrefix());
+  theContentHandler.endDocument();
+}

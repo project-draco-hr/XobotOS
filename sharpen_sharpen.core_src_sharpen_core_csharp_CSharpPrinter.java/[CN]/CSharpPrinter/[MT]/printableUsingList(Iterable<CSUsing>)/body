@@ -1,0 +1,18 @@
+{
+  List<CSUsing> list=new ArrayList<CSUsing>();
+  for (  CSUsing using : usings) {
+    list.add(using);
+  }
+  Collections.sort(list,new Comparator<CSUsing>(){
+    public int compare(    CSUsing a,    CSUsing b){
+      boolean ia=a.namespace().startsWith("System");
+      boolean ib=b.namespace().startsWith("System");
+      if (ia && ib)       return a.namespace().compareTo(b.namespace());
+ else       if (ia)       return -1;
+ else       if (ib)       return 1;
+ else       return a.namespace().compareTo(b.namespace());
+    }
+  }
+);
+  return list;
+}

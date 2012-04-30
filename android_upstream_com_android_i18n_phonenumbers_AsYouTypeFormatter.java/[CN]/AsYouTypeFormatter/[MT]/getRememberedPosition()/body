@@ -1,0 +1,13 @@
+{
+  if (!ableToFormat) {
+    return originalPosition;
+  }
+  int accruedInputIndex=0, currentOutputIndex=0;
+  while (accruedInputIndex < positionToRemember && currentOutputIndex < currentOutput.length()) {
+    if (accruedInputWithoutFormatting.charAt(accruedInputIndex) == currentOutput.charAt(currentOutputIndex)) {
+      accruedInputIndex++;
+    }
+    currentOutputIndex++;
+  }
+  return currentOutputIndex;
+}

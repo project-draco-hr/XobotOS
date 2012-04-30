@@ -1,0 +1,28 @@
+{
+  prefixSizeInBytes=objectInput.readInt();
+  descIndexSizeInBytes=objectInput.readInt();
+  int sizeOfLengths=objectInput.readInt();
+  possibleLengths.clear();
+  for (int i=0; i < sizeOfLengths; i++) {
+    possibleLengths.add(objectInput.readInt());
+  }
+  int descriptionPoolSize=objectInput.readInt();
+  if (descriptionPool == null || descriptionPool.length < descriptionPoolSize) {
+    descriptionPool=new String[descriptionPoolSize];
+  }
+  for (int i=0; i < descriptionPoolSize; i++) {
+    String description=objectInput.readUTF();
+    descriptionPool[i]=description;
+  }
+  numOfEntries=objectInput.readInt();
+  if (phoneNumberPrefixes == null || phoneNumberPrefixes.capacity() < numOfEntries) {
+    phoneNumberPrefixes=ByteBuffer.allocate(numOfEntries * prefixSizeInBytes);
+  }
+  if (descriptionIndexes == null || descriptionIndexes.capacity() < numOfEntries) {
+    descriptionIndexes=ByteBuffer.allocate(numOfEntries * descIndexSizeInBytes);
+  }
+  for (int i=0; i < numOfEntries; i++) {
+    readExternalWord(objectInput,prefixSizeInBytes,phoneNumberPrefixes,i);
+    readExternalWord(objectInput,descIndexSizeInBytes,descriptionIndexes,i);
+  }
+}

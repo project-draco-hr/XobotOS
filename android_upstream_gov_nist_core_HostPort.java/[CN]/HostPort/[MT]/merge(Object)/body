@@ -1,0 +1,4 @@
+{
+  super.merge(mergeObject);
+  if (port == -1)   port=((HostPort)mergeObject).port;
+}

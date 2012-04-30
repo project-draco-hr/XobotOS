@@ -1,0 +1,4 @@
+String name
+CSTypeReferenceExpression type
+CSExpression init
+ManagedVariable.Flags flags

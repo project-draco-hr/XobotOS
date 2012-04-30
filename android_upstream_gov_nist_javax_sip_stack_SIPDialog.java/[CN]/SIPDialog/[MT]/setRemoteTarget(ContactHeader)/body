@@ -1,0 +1,7 @@
+{
+  this.remoteTarget=contact.getAddress();
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("Dialog.setRemoteTarget: " + this.remoteTarget);
+    sipStack.getStackLogger().logStackTrace();
+  }
+}

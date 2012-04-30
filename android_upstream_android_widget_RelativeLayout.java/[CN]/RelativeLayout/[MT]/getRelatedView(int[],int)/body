@@ -1,0 +1,16 @@
+{
+  int id=rules[relation];
+  if (id != 0) {
+    DependencyGraph.Node node=mGraph.mKeyNodes.get(id);
+    if (node == null)     return null;
+    View v=node.view;
+    while (v.getVisibility() == View.GONE) {
+      rules=((LayoutParams)v.getLayoutParams()).getRules();
+      node=mGraph.mKeyNodes.get((rules[relation]));
+      if (node == null)       return null;
+      v=node.view;
+    }
+    return v;
+  }
+  return null;
+}

@@ -1,0 +1,39 @@
+{
+  try {
+    if (this.getState() == null || !this.isMapped)     return;
+    boolean inv=isInviteTransaction();
+    TransactionState s=this.getState();
+    if ((inv && TransactionState.CALLING == s) || (!inv && (TransactionState.TRYING == s || TransactionState.PROCEEDING == s))) {
+      if (lastRequest != null) {
+        if (sipStack.generateTimeStampHeader && lastRequest.getHeader(TimeStampHeader.NAME) != null) {
+          long milisec=System.currentTimeMillis();
+          TimeStamp timeStamp=new TimeStamp();
+          try {
+            timeStamp.setTimeStamp(milisec);
+          }
+ catch (          InvalidArgumentException ex) {
+            InternalErrorHandler.handleException(ex);
+          }
+          lastRequest.setHeader(timeStamp);
+        }
+        super.sendMessage(lastRequest);
+        if (this.notifyOnRetransmit) {
+          TimeoutEvent txTimeout=new TimeoutEvent(this.getSipProvider(),this,Timeout.RETRANSMIT);
+          this.getSipProvider().handleEvent(txTimeout,this);
+        }
+        if (this.timeoutIfStillInCallingState && this.getState() == TransactionState.CALLING) {
+          this.callingStateTimeoutCount--;
+          if (callingStateTimeoutCount == 0) {
+            TimeoutEvent timeoutEvent=new TimeoutEvent(this.getSipProvider(),this,Timeout.RETRANSMIT);
+            this.getSipProvider().handleEvent(timeoutEvent,this);
+            this.timeoutIfStillInCallingState=false;
+          }
+        }
+      }
+    }
+  }
+ catch (  IOException e) {
+    this.raiseIOExceptionEvent();
+    raiseErrorEvent(SIPTransactionErrorEvent.TRANSPORT_ERROR);
+  }
+}

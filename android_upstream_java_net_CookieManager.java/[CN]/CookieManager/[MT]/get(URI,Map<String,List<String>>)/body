@@ -1,0 +1,12 @@
+{
+  if (uri == null || requestHeaders == null) {
+    throw new IllegalArgumentException();
+  }
+  List<HttpCookie> result=new ArrayList<HttpCookie>();
+  for (  HttpCookie cookie : store.get(uri)) {
+    if (HttpCookie.pathMatches(cookie,uri) && HttpCookie.secureMatches(cookie,uri) && HttpCookie.portMatches(cookie,uri)) {
+      result.add(cookie);
+    }
+  }
+  return cookiesToHeaders(result);
+}

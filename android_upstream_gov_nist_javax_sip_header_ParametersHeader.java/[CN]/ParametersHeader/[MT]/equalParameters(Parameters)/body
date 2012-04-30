@@ -1,0 +1,18 @@
+{
+  if (this == other)   return true;
+  for (Iterator i=this.getParameterNames(); i.hasNext(); ) {
+    String pname=(String)i.next();
+    String p1=this.getParameter(pname);
+    String p2=other.getParameter(pname);
+    if (p1 == null ^ p2 == null)     return false;
+ else     if (p1 != null && !p1.equalsIgnoreCase(p2))     return false;
+  }
+  for (Iterator i=other.getParameterNames(); i.hasNext(); ) {
+    String pname=(String)i.next();
+    String p1=other.getParameter(pname);
+    String p2=this.getParameter(pname);
+    if (p1 == null ^ p2 == null)     return false;
+ else     if (p1 != null && !p1.equalsIgnoreCase(p2))     return false;
+  }
+  return true;
+}

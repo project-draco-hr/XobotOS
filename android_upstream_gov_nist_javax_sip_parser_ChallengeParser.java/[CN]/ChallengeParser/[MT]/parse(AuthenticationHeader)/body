@@ -1,0 +1,20 @@
+{
+  this.lexer.SPorHT();
+  lexer.match(TokenTypes.ID);
+  Token type=lexer.getNextToken();
+  this.lexer.SPorHT();
+  header.setScheme(type.getTokenValue());
+  try {
+    while (lexer.lookAhead(0) != '\n') {
+      this.parseParameter(header);
+      this.lexer.SPorHT();
+      char la=lexer.lookAhead(0);
+      if (la == '\n' || la == '\0')       break;
+      this.lexer.match(',');
+      this.lexer.SPorHT();
+    }
+  }
+ catch (  ParseException ex) {
+    throw ex;
+  }
+}

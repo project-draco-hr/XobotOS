@@ -1,0 +1,7 @@
+{
+  this.mBaseStationId=bundle.getInt("baseStationId",mBaseStationId);
+  this.mBaseStationLatitude=bundle.getInt("baseStationLatitude",mBaseStationLatitude);
+  this.mBaseStationLongitude=bundle.getInt("baseStationLongitude",mBaseStationLongitude);
+  this.mSystemId=bundle.getInt("systemId",mSystemId);
+  this.mNetworkId=bundle.getInt("networkId",mNetworkId);
+}

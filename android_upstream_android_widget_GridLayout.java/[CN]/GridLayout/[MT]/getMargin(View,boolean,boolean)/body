@@ -1,0 +1,13 @@
+{
+  if (alignmentMode == ALIGN_MARGINS) {
+    return getMargin1(view,horizontal,leading);
+  }
+ else {
+    Axis axis=horizontal ? horizontalAxis : verticalAxis;
+    int[] margins=leading ? axis.getLeadingMargins() : axis.getTrailingMargins();
+    LayoutParams lp=getLayoutParams(view);
+    Spec spec=horizontal ? lp.columnSpec : lp.rowSpec;
+    int index=leading ? spec.span.min : spec.span.max;
+    return margins[index];
+  }
+}

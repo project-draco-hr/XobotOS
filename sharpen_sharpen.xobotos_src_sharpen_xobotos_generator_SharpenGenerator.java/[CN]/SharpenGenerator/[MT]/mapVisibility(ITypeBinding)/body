@@ -1,0 +1,5 @@
+{
+  final AbstractTypeBinding typeBinding=my(BindingManager.class).resolveBinding(binding);
+  if (typeBinding == null)   return null;
+  return mapVisibility(typeBinding);
+}

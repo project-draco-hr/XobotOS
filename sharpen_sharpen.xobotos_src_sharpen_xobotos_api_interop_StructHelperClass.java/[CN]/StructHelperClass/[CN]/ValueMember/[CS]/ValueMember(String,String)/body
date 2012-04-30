@@ -1,0 +1,4 @@
+{
+  super(null,null,null,name,Flags.HAS_VALUE);
+  this._value=value;
+}

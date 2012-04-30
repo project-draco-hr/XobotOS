@@ -1,0 +1,19 @@
+{
+  try {
+    writeHeader(data.getStartMillis());
+    writeControlSettings(data.getFlags(),data.getDepth());
+    for (    HprofData.ThreadEvent event : data.getThreadHistory()) {
+      writeThreadEvent(event);
+    }
+    Set<HprofData.Sample> samples=data.getSamples();
+    int total=0;
+    for (    HprofData.Sample sample : samples) {
+      total+=sample.count;
+      writeStackTrace(sample.stackTrace);
+    }
+    writeCpuSamples(total,samples);
+  }
+  finally {
+    out.flush();
+  }
+}

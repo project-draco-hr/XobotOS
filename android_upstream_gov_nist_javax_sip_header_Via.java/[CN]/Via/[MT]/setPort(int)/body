@@ -1,0 +1,7 @@
+{
+  if (port != -1 && (port < 1 || port > 65535)) {
+    throw new InvalidArgumentException("Port value out of range -1, [1..65535]");
+  }
+  if (sentBy == null)   sentBy=new HostPort();
+  sentBy.setPort(port);
+}

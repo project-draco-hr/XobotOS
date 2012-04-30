@@ -1,0 +1,4 @@
+{
+  if (d < 1 || d > 31)   throw new IllegalArgumentException("Illegal Day of the month " + Integer.toString(d));
+  day=d;
+}

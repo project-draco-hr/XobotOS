@@ -1,0 +1,7 @@
+{
+  node.type().accept(this);
+  final CSBlock addBlock=node.getAddBlock();
+  if (addBlock != null)   addBlock.accept(this);
+  final CSBlock removeBlock=node.getRemoveBlock();
+  if (removeBlock != null)   removeBlock.accept(this);
+}

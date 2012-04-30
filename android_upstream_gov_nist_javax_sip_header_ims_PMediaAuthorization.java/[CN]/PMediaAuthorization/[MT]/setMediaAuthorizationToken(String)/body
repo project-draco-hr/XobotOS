@@ -1,0 +1,4 @@
+{
+  if (token == null || token.length() == 0)   throw new InvalidArgumentException(" the Media-Authorization-Token parameter is null or empty");
+  this.token=token;
+}

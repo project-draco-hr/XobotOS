@@ -1,0 +1,4 @@
+def run_gyp(self, gyp_file, *args, **kw):
+    '\n    Runs gyp against the specified gyp_file with the specified args.\n    '
+    args = (('--depth=.', ('--format=' + self.format), gyp_file) + args)
+    return self.run(program=self.gyp, arguments=args, **kw)

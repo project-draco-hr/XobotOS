@@ -1,0 +1,6 @@
+{
+  if (!hasAnnotation(klass) || (key == null) || key.isEmpty())   return null;
+  Scope scope=new Scope(_stack.peek(),key,null);
+  _stack.push(scope);
+  return scope;
+}

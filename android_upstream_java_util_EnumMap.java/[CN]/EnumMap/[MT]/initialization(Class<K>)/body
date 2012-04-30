@@ -1,0 +1,7 @@
+{
+  keyType=type;
+  keys=Enum.getSharedConstants(keyType);
+  enumSize=keys.length;
+  values=new Object[enumSize];
+  hasMapping=new boolean[enumSize];
+}

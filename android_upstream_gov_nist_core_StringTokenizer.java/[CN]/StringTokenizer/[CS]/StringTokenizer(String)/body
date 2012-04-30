@@ -1,0 +1,5 @@
+{
+  this.buffer=buffer;
+  bufferLen=buffer.length();
+  ptr=0;
+}

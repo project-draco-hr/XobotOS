@@ -1,0 +1,4 @@
+{
+  if (state == null)   throw new NullPointerException("JAIN-SIP " + "Exception, SubscriptionState, setState(), the state parameter is null");
+  this.state=state;
+}

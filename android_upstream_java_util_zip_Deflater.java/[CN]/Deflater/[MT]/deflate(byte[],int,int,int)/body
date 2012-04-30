@@ -1,0 +1,6 @@
+{
+  if (flush != NO_FLUSH && flush != SYNC_FLUSH && flush != FULL_FLUSH) {
+    throw new IllegalArgumentException("Bad flush value: " + flush);
+  }
+  return deflateImpl(buf,offset,byteCount,flush);
+}

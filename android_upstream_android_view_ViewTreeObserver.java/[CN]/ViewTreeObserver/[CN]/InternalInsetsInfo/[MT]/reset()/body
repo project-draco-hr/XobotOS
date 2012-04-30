@@ -1,0 +1,6 @@
+{
+  contentInsets.setEmpty();
+  visibleInsets.setEmpty();
+  touchableRegion.setEmpty();
+  mTouchableInsets=TOUCHABLE_INSETS_FRAME;
+}

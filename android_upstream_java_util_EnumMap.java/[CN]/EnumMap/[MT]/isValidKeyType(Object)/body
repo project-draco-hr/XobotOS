@@ -1,0 +1,6 @@
+{
+  if (key != null && keyType.isInstance(key)) {
+    return true;
+  }
+  return false;
+}

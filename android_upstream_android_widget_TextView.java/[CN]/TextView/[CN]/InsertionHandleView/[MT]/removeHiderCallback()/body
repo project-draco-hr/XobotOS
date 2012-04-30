@@ -1,0 +1,5 @@
+{
+  if (mHider != null) {
+    TextView.this.removeCallbacks(mHider);
+  }
+}

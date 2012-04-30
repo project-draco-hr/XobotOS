@@ -1,0 +1,5 @@
+{
+  setAction(action);
+  mData=uri;
+  mComponent=new ComponentName(packageContext,cls);
+}

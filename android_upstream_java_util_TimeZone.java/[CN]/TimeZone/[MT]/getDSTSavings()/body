@@ -1,0 +1,3 @@
+{
+  return useDaylightTime() ? 3600000 : 0;
+}

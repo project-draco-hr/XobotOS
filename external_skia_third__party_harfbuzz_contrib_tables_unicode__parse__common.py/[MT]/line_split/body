@@ -1,0 +1,6 @@
+def line_split(line):
+    'Split a line based on a semicolon separator.'
+
+    def normalise(word):
+        return word.lstrip().rstrip()
+    return [normalise(x) for x in line.split(';')]

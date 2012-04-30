@@ -1,0 +1,15 @@
+{
+  if (provider == null) {
+    throw new IllegalArgumentException();
+  }
+  if (type == null) {
+    throw new NullPointerException();
+  }
+  try {
+    Object spi=ENGINE.getInstance(type,provider,null);
+    return new KeyStore((KeyStoreSpi)spi,provider,type);
+  }
+ catch (  Exception e) {
+    throw new KeyStoreException(e);
+  }
+}

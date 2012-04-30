@@ -1,0 +1,17 @@
+{
+  if (eof)   return;
+  int bytesRead=in.read(inputBuffer);
+  boolean success;
+  if (bytesRead == -1) {
+    eof=true;
+    success=coder.process(EMPTY,0,0,true);
+  }
+ else {
+    success=coder.process(inputBuffer,0,bytesRead,false);
+  }
+  if (!success) {
+    throw new Base64DataException("bad base-64");
+  }
+  outputEnd=coder.op;
+  outputStart=0;
+}

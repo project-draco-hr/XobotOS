@@ -1,0 +1,4 @@
+{
+  this.lexer=new LexerCore("charLexer",hname);
+  stripAddressScopeZones=Boolean.getBoolean("gov.nist.core.STRIP_ADDR_SCOPES");
+}

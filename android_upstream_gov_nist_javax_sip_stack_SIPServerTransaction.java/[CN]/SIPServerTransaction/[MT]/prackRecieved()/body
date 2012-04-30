@@ -1,0 +1,7 @@
+{
+  if (this.pendingReliableResponse == null)   return false;
+  if (provisionalResponseTask != null)   this.provisionalResponseTask.cancel();
+  this.pendingReliableResponse=null;
+  this.provisionalResponseSem.release();
+  return true;
+}

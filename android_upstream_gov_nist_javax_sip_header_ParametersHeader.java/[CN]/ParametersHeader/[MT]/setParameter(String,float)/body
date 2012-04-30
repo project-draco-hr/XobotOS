@@ -1,0 +1,11 @@
+{
+  Float val=Float.valueOf(value);
+  NameValue nv=parameters.getNameValue(name);
+  if (nv != null) {
+    nv.setValueAsObject(val);
+  }
+ else {
+    nv=new NameValue(name,val);
+    this.parameters.set(nv);
+  }
+}

@@ -1,0 +1,11 @@
+{
+  if (length > pos) {
+    throw new IOException("Pushback buffer full");
+  }
+  Arrays.checkOffsetAndCount(buffer.length,offset,length);
+  if (buf == null) {
+    throw streamClosed();
+  }
+  System.arraycopy(buffer,offset,buf,pos - length,length);
+  pos=pos - length;
+}

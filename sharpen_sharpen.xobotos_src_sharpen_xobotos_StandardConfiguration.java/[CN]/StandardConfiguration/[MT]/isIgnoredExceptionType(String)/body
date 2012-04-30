@@ -1,0 +1,3 @@
+{
+  return exceptionType.equals("java.lang.CloneNotSupportedException");
+}

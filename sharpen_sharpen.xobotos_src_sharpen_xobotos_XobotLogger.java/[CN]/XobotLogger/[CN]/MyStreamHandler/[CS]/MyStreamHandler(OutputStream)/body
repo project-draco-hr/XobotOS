@@ -1,0 +1,4 @@
+{
+  super();
+  printStream=new PrintStream(stream,true);
+}

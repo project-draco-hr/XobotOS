@@ -1,0 +1,14 @@
+def WriteActions(self, actions, extra_sources, prebuild):
+    all_outputs = []
+    for action in actions:
+        name = action['action_name']
+        description = self.GenerateDescription('ACTION', action.get('message', None), name)
+        rule_name = self.WriteNewNinjaRule(name, action['action'], description)
+        inputs = [self.GypPathToNinja(i) for i in action['inputs']]
+        if int(action.get('process_outputs_as_sources', False)):
+            extra_sources += action['outputs']
+        outputs = [self.GypPathToNinja(o) for o in action['outputs']]
+        self.ninja.build(outputs, rule_name, inputs, order_only=prebuild)
+        all_outputs += outputs
+        self.ninja.newline()
+    return all_outputs

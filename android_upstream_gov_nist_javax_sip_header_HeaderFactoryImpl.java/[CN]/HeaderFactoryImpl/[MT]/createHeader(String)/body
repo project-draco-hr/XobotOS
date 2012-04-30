@@ -1,0 +1,28 @@
+{
+  StringMsgParser smp=new StringMsgParser();
+  SIPHeader sipHeader=smp.parseSIPHeader(headerText.trim());
+  if (sipHeader instanceof SIPHeaderList) {
+    if (((SIPHeaderList)sipHeader).size() > 1) {
+      throw new ParseException("Only singleton allowed " + headerText,0);
+    }
+ else     if (((SIPHeaderList)sipHeader).size() == 0) {
+      try {
+        return (Header)((SIPHeaderList)sipHeader).getMyClass().newInstance();
+      }
+ catch (      InstantiationException ex) {
+        ex.printStackTrace();
+        return null;
+      }
+catch (      IllegalAccessException ex) {
+        ex.printStackTrace();
+        return null;
+      }
+    }
+ else {
+      return (Header)((SIPHeaderList)sipHeader).getFirst();
+    }
+  }
+ else {
+    return (Header)sipHeader;
+  }
+}

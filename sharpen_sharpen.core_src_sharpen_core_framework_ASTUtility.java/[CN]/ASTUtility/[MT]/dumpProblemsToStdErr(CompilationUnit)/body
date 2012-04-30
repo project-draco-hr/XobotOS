@@ -1,0 +1,10 @@
+{
+  boolean hasErrors=false;
+  for (  IProblem problem : ast.getProblems()) {
+    if (problem.isError()) {
+      dumpProblem(problem);
+      hasErrors=true;
+    }
+  }
+  return hasErrors;
+}

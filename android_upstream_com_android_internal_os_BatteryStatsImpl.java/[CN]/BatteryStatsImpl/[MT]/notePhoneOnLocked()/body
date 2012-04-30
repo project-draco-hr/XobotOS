@@ -1,0 +1,9 @@
+{
+  if (!mPhoneOn) {
+    mHistoryCur.states|=HistoryItem.STATE_PHONE_IN_CALL_FLAG;
+    if (DEBUG_HISTORY)     Slog.v(TAG,"Phone on to: " + Integer.toHexString(mHistoryCur.states));
+    addHistoryRecordLocked(SystemClock.elapsedRealtime());
+    mPhoneOn=true;
+    mPhoneOnTimer.startRunningLocked(this);
+  }
+}

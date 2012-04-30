@@ -1,0 +1,9 @@
+{
+  acquireReference();
+  try {
+    return nativeGetType(mWindowPtr,row - mStartPos,column);
+  }
+  finally {
+    releaseReference();
+  }
+}

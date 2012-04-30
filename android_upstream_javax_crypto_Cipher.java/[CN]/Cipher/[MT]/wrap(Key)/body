@@ -1,0 +1,6 @@
+{
+  if (mode != WRAP_MODE) {
+    throw new IllegalStateException();
+  }
+  return spiImpl.engineWrap(key);
+}

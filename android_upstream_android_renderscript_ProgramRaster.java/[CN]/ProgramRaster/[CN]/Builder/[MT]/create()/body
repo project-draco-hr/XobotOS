@@ -1,0 +1,5 @@
+{
+  mRS.validate();
+  int id=mRS.nProgramRasterCreate(mPointSprite,mCullMode.mID);
+  return new ProgramRaster(id,mRS);
+}

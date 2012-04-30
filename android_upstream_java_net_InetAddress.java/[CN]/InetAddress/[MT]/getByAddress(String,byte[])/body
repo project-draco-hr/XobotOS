@@ -1,0 +1,3 @@
+{
+  return getByAddress(hostName,ipAddress,0);
+}

@@ -1,0 +1,3 @@
+{
+  return _projectRoot.getPath() + File.separatorChar + fileName;
+}

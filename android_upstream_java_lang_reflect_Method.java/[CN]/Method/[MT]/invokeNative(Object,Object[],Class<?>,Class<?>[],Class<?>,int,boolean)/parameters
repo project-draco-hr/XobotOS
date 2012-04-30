@@ -1,0 +1,7 @@
+Object obj
+Object[] args
+Class<?> declaringClass
+Class<?>[] parameterTypes
+Class<?> returnType
+int slot
+boolean noAccessCheck

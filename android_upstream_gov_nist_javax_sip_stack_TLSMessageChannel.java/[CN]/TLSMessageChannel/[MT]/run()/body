@@ -1,0 +1,68 @@
+{
+  Pipeline hispipe=null;
+  hispipe=new Pipeline(myClientInputStream,sipStack.readTimeout,((SIPTransactionStack)sipStack).getTimer());
+  myParser=new PipelinedMsgParser(this,hispipe,this.sipStack.getMaxMessageSize());
+  myParser.processInput();
+  int bufferSize=4096;
+  this.tlsMessageProcessor.useCount++;
+  this.isRunning=true;
+  try {
+    while (true) {
+      try {
+        byte[] msg=new byte[bufferSize];
+        int nbytes=myClientInputStream.read(msg,0,bufferSize);
+        if (nbytes == -1) {
+          hispipe.write("\r\n\r\n".getBytes("UTF-8"));
+          try {
+            if (sipStack.maxConnections != -1) {
+synchronized (tlsMessageProcessor) {
+                tlsMessageProcessor.nConnections--;
+                tlsMessageProcessor.notify();
+              }
+            }
+            hispipe.close();
+            mySock.close();
+          }
+ catch (          IOException ioex) {
+          }
+          return;
+        }
+        hispipe.write(msg,0,nbytes);
+      }
+ catch (      IOException ex) {
+        try {
+          hispipe.write("\r\n\r\n".getBytes("UTF-8"));
+        }
+ catch (        Exception e) {
+        }
+        try {
+          if (sipStack.isLoggingEnabled())           sipStack.getStackLogger().logDebug("IOException  closing sock " + ex);
+          try {
+            if (sipStack.maxConnections != -1) {
+synchronized (tlsMessageProcessor) {
+                tlsMessageProcessor.nConnections--;
+                tlsMessageProcessor.notify();
+              }
+            }
+            mySock.close();
+            hispipe.close();
+          }
+ catch (          IOException ioex) {
+          }
+        }
+ catch (        Exception ex1) {
+        }
+        return;
+      }
+catch (      Exception ex) {
+        InternalErrorHandler.handleException(ex);
+      }
+    }
+  }
+  finally {
+    this.isRunning=false;
+    this.tlsMessageProcessor.remove(this);
+    this.tlsMessageProcessor.useCount--;
+    this.myParser.close();
+  }
+}

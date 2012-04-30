@@ -1,0 +1,5 @@
+{
+  short[] result=new short[2];
+  checkStatus(getParameter(PARAM_LEVEL_RANGE,result));
+  return result;
+}

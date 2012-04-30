@@ -1,0 +1,4 @@
+{
+  this.ticks=SIPTransaction.T1;
+  this.ticksLeft=this.ticks;
+}

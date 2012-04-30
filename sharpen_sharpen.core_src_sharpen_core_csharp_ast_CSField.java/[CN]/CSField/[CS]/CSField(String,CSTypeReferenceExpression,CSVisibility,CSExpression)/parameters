@@ -1,0 +1,4 @@
+String name
+CSTypeReferenceExpression type
+CSVisibility visibility
+CSExpression initializer

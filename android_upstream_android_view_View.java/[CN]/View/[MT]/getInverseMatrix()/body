@@ -1,0 +1,15 @@
+{
+  final TransformationInfo info=mTransformationInfo;
+  if (info != null) {
+    updateMatrix();
+    if (info.mInverseMatrixDirty) {
+      if (info.mInverseMatrix == null) {
+        info.mInverseMatrix=new Matrix();
+      }
+      info.mMatrix.invert(info.mInverseMatrix);
+      info.mInverseMatrixDirty=false;
+    }
+    return info.mInverseMatrix;
+  }
+  return Matrix.IDENTITY_MATRIX;
+}

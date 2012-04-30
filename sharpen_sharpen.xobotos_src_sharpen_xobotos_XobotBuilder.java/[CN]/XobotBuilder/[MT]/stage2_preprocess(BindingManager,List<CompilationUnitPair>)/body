@@ -1,0 +1,17 @@
+{
+  Map<ICompilationUnit,CompilationUnitBuilder> builders=new HashMap<ICompilationUnit,CompilationUnitBuilder>();
+  boolean foundErrors=false;
+  for (  final CompilationUnitPair pair : sources) {
+    CompilationUnitBuilder builder=_api.preprocess(pair);
+    if (builder == null) {
+      Sharpen.Log(Level.SEVERE,"Preprocessor failed on %s",getUnitName(pair.source));
+      continue;
+    }
+    builders.put(pair.source,builder);
+  }
+  if (foundErrors)   return null;
+  if (!bindings.resolveTypes()) {
+    Sharpen.Log(Level.SEVERE,"Failed to resolve some types!");
+  }
+  return builders;
+}

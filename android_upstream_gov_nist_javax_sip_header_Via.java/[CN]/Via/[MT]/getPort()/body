@@ -1,0 +1,4 @@
+{
+  if (sentBy == null)   return -1;
+  return sentBy.getPort();
+}

@@ -1,0 +1,6 @@
+def GypPathToNinja(self, path):
+    'Translate a gyp path to a ninja path.\n\n    See the above discourse on path conversions.'
+    if path.startswith('$!'):
+        return self.ExpandSpecial(path)
+    assert ('$' not in path), path
+    return os.path.normpath(os.path.join(self.build_to_base, path))

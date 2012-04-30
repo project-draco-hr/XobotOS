@@ -1,0 +1,4 @@
+{
+  this(elementType);
+  _length=length;
+}

@@ -1,0 +1,10 @@
+{
+  if ((offset | length) < 0 || data.length < offset + length) {
+    throw new ArrayIndexOutOfBoundsException();
+  }
+  Bitmap bm=nativeDecodeByteArray(data,offset,length,opts);
+  if (bm == null && opts != null && opts.inBitmap != null) {
+    throw new IllegalArgumentException("Problem decoding into existing bitmap");
+  }
+  return bm;
+}

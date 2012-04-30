@@ -1,0 +1,3 @@
+{
+  return mSensors.get(sensor.getHandle());
+}

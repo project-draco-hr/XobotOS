@@ -1,0 +1,3 @@
+{
+  return deflateImpl(buf,offset,byteCount,flushParm);
+}

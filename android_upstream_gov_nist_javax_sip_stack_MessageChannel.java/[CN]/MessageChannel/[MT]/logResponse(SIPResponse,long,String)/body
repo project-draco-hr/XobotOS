@@ -1,0 +1,10 @@
+{
+  int peerport=getPeerPort();
+  if (peerport == 0 && sipResponse.getContactHeaders() != null) {
+    ContactHeader contact=(ContactHeader)sipResponse.getContactHeaders().getFirst();
+    peerport=((AddressImpl)contact.getAddress()).getPort();
+  }
+  String from=getPeerAddress().toString() + ":" + peerport;
+  String to=this.getHost() + ":" + getPort();
+  this.getSIPStack().serverLogger.logMessage(sipResponse,from,to,status,false,receptionTime);
+}

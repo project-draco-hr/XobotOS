@@ -1,0 +1,8 @@
+{
+  SipUri retval=(SipUri)super.clone();
+  if (this.authority != null)   retval.authority=(Authority)this.authority.clone();
+  if (this.uriParms != null)   retval.uriParms=(NameValueList)this.uriParms.clone();
+  if (this.qheaders != null)   retval.qheaders=(NameValueList)this.qheaders.clone();
+  if (this.telephoneSubscriber != null)   retval.telephoneSubscriber=(TelephoneNumber)this.telephoneSubscriber.clone();
+  return retval;
+}

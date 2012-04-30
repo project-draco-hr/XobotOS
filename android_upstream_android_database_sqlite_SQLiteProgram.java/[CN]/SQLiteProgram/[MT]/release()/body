@@ -1,0 +1,8 @@
+{
+  if (mCompiledSql == null) {
+    return;
+  }
+  mDatabase.releaseCompiledSqlObj(mSql,mCompiledSql);
+  mCompiledSql=null;
+  nStatement=0;
+}

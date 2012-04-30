@@ -1,0 +1,33 @@
+{
+  if (debug)   dbg_enter("local_phone_number");
+  TelephoneNumber tn=new TelephoneNumber();
+  tn.setGlobal(false);
+  NameValueList nv=null;
+  String b=null;
+  try {
+    b=local_number();
+    tn.setPhoneNumber(b);
+    if (lexer.hasMoreChars()) {
+      Token tok=this.lexer.peekNextToken();
+switch (tok.getTokenType()) {
+case SEMICOLON:
+{
+          if (inBrackets) {
+            this.lexer.consume(1);
+            nv=tel_parameters();
+            tn.setParameters(nv);
+          }
+          break;
+        }
+default :
+{
+        break;
+      }
+  }
+}
+}
+  finally {
+if (debug) dbg_leave("local_phone_number");
+}
+return tn;
+}

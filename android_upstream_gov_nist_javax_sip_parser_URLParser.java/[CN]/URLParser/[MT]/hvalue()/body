@@ -1,0 +1,35 @@
+{
+  StringBuffer retval=new StringBuffer();
+  while (lexer.hasMoreChars()) {
+    char la=lexer.lookAhead(0);
+    boolean isValidChar=false;
+switch (la) {
+case '+':
+case '?':
+case ':':
+case '[':
+case ']':
+case '/':
+case '$':
+case '_':
+case '-':
+case '"':
+case '!':
+case '~':
+case '*':
+case '.':
+case '(':
+case ')':
+      isValidChar=true;
+  }
+  if (isValidChar || Lexer.isAlphaDigit(la)) {
+    lexer.consume(1);
+    retval.append(la);
+  }
+ else   if (la == '%') {
+    retval.append(escaped());
+  }
+ else   break;
+}
+return retval.toString();
+}

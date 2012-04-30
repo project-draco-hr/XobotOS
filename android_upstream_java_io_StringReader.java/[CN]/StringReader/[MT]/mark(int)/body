@@ -1,0 +1,9 @@
+{
+  if (readLimit < 0) {
+    throw new IllegalArgumentException();
+  }
+synchronized (lock) {
+    checkNotClosed();
+    markpos=pos;
+  }
+}

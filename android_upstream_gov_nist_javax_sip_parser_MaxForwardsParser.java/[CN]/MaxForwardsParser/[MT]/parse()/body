@@ -1,0 +1,21 @@
+{
+  if (debug)   dbg_enter("MaxForwardsParser.enter");
+  try {
+    MaxForwards contentLength=new MaxForwards();
+    headerName(TokenTypes.MAX_FORWARDS);
+    String number=this.lexer.number();
+    contentLength.setMaxForwards(Integer.parseInt(number));
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return contentLength;
+  }
+ catch (  InvalidArgumentException ex) {
+    throw createParseException(ex.getMessage());
+  }
+catch (  NumberFormatException ex) {
+    throw createParseException(ex.getMessage());
+  }
+ finally {
+    if (debug)     dbg_leave("MaxForwardsParser.leave");
+  }
+}

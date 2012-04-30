@@ -1,0 +1,16 @@
+{
+  if (a == null) {
+    stringRepresentation+=getIndentation();
+    stringRepresentation+="<null>\n";
+    return;
+  }
+  if (a.compareTo("}") == 0 || a.compareTo("]") == 0) {
+    indentation--;
+  }
+  stringRepresentation+=getIndentation();
+  stringRepresentation+=a;
+  stringRepresentation+="\n";
+  if (a.compareTo("{") == 0 || a.compareTo("[") == 0) {
+    indentation++;
+  }
+}

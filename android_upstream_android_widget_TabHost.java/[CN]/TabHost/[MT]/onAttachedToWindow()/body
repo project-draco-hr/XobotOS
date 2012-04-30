@@ -1,0 +1,5 @@
+{
+  super.onAttachedToWindow();
+  final ViewTreeObserver treeObserver=getViewTreeObserver();
+  treeObserver.addOnTouchModeChangeListener(this);
+}

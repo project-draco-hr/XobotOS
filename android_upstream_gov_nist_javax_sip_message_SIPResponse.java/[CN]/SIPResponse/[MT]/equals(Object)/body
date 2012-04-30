@@ -1,0 +1,5 @@
+{
+  if (!this.getClass().equals(other.getClass()))   return false;
+  SIPResponse that=(SIPResponse)other;
+  return statusLine.equals(that.statusLine) && super.equals(other);
+}

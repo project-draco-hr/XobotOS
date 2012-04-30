@@ -1,0 +1,21 @@
+{
+  boolean dataChanged=mDataChanged;
+  if (dataChanged) {
+    post(new Runnable(){
+      public void run(){
+        handleDataChanged();
+        if (mWhichChild >= getWindowSize()) {
+          mWhichChild=0;
+          showOnly(mWhichChild,false);
+        }
+ else         if (mOldItemCount != getCount()) {
+          showOnly(mWhichChild,false);
+        }
+        refreshChildren();
+        requestLayout();
+      }
+    }
+);
+  }
+  mDataChanged=false;
+}

@@ -1,0 +1,9 @@
+{
+  if (this.isCancelled)   return;
+  try {
+    pipeline.close();
+  }
+ catch (  IOException ex) {
+    InternalErrorHandler.handleException(ex);
+  }
+}

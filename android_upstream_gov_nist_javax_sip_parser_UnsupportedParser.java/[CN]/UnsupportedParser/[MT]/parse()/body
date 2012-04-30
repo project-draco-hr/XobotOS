@@ -1,0 +1,31 @@
+{
+  UnsupportedList unsupportedList=new UnsupportedList();
+  if (debug)   dbg_enter("UnsupportedParser.parse");
+  try {
+    headerName(TokenTypes.UNSUPPORTED);
+    while (lexer.lookAhead(0) != '\n') {
+      this.lexer.SPorHT();
+      Unsupported unsupported=new Unsupported();
+      unsupported.setHeaderName(SIPHeaderNames.UNSUPPORTED);
+      this.lexer.match(TokenTypes.ID);
+      Token token=lexer.getNextToken();
+      unsupported.setOptionTag(token.getTokenValue());
+      this.lexer.SPorHT();
+      unsupportedList.add(unsupported);
+      while (lexer.lookAhead(0) == ',') {
+        this.lexer.match(',');
+        this.lexer.SPorHT();
+        unsupported=new Unsupported();
+        this.lexer.match(TokenTypes.ID);
+        token=lexer.getNextToken();
+        unsupported.setOptionTag(token.getTokenValue());
+        this.lexer.SPorHT();
+        unsupportedList.add(unsupported);
+      }
+    }
+  }
+  finally {
+    if (debug)     dbg_leave("UnsupportedParser.parse");
+  }
+  return unsupportedList;
+}

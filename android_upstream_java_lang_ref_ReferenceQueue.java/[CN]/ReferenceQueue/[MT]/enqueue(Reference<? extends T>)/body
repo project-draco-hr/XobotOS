@@ -1,0 +1,10 @@
+{
+  if (head == null) {
+    reference.queueNext=reference;
+  }
+ else {
+    reference.queueNext=head;
+  }
+  head=reference;
+  notify();
+}

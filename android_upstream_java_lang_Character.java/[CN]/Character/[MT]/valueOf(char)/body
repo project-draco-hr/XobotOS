@@ -1,0 +1,3 @@
+{
+  return c < 128 ? SMALL_VALUES[c] : new Character(c);
+}

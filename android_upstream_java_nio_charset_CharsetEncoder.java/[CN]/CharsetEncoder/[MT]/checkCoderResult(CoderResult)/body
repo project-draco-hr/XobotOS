@@ -1,0 +1,8 @@
+{
+  if (malformedInputAction == CodingErrorAction.REPORT && result.isMalformed()) {
+    throw new MalformedInputException(result.length());
+  }
+ else   if (unmappableCharacterAction == CodingErrorAction.REPORT && result.isUnmappable()) {
+    throw new UnmappableCharacterException(result.length());
+  }
+}

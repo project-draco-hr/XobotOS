@@ -1,0 +1,4 @@
+{
+  checkOpen();
+  return !((Boolean)impl.getOption(SocketOptions.IP_MULTICAST_LOOP)).booleanValue();
+}

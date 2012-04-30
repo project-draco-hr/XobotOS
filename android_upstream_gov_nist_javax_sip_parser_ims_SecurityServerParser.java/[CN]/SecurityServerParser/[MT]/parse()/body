@@ -1,0 +1,12 @@
+{
+  dbg_enter("SecuriryServer parse");
+  try {
+    headerName(TokenTypes.SECURITY_SERVER);
+    SecurityServer secServer=new SecurityServer();
+    SecurityServerList secServerList=(SecurityServerList)super.parse(secServer);
+    return secServerList;
+  }
+  finally {
+    dbg_leave("SecuriryServer parse");
+  }
+}

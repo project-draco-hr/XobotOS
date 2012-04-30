@@ -1,0 +1,9 @@
+{
+  if (debug)   dbg_enter("domainLabel");
+  try {
+    lexer.consumeValidChars(VALID_DOMAIN_LABEL_CHAR);
+  }
+  finally {
+    if (debug)     dbg_leave("domainLabel");
+  }
+}

@@ -1,0 +1,4 @@
+Scope scope
+Object parent
+Class<?> klass
+Object result

@@ -1,0 +1,10 @@
+{
+  this._environment=environment;
+  this._projectRoot=projectRoot;
+  this._klass=klass;
+  this._strategy=new MarshallingStrategy(this);
+  _referenceEntries=new ArrayList<ReferenceEntry>();
+  _stack=new Stack<Scope>();
+  _rootScope=new Scope(null,null,fileName);
+  _stack.push(_rootScope);
+}

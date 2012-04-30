@@ -1,0 +1,6 @@
+{
+  adnLikeFiles.clear();
+  mUsimPhoneBookManager.reset();
+  clearWaiters();
+  clearUserWriters();
+}

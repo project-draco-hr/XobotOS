@@ -1,0 +1,5 @@
+{
+  checkIndex(index,SizeOf.DOUBLE);
+  this.block.pokeLong(offset + index,Double.doubleToRawLongBits(value),order);
+  return this;
+}

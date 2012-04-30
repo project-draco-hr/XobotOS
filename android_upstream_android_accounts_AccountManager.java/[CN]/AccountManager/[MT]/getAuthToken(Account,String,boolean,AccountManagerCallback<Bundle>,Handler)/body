@@ -1,0 +1,3 @@
+{
+  return getAuthToken(account,authTokenType,null,notifyAuthFailure,callback,handler);
+}

@@ -1,0 +1,19 @@
+{
+  final char PADDING_CHAR=0x00;
+  int lengthBytes=input.length;
+  int lengthSeptets=(lengthBytes * 8) / 7;
+  String decoded;
+  if (lengthBytes % 7 == 0) {
+    if (lengthBytes > 0) {
+      if ((input[lengthBytes - 1] >> 1) == PADDING_CHAR) {
+        lengthSeptets=lengthSeptets - 1;
+      }
+    }
+  }
+  decoded=GsmAlphabet.gsm7BitPackedToString(input,0,lengthSeptets);
+  if (null == decoded) {
+    Log.e(TAG,"Decoding of GSM packed string failed");
+    decoded="";
+  }
+  return decoded;
+}

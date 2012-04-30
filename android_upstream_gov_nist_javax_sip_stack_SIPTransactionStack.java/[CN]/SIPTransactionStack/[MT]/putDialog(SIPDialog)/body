@@ -1,0 +1,15 @@
+{
+  String dialogId=dialog.getDialogId();
+  if (dialogTable.containsKey(dialogId)) {
+    if (stackLogger.isLoggingEnabled()) {
+      stackLogger.logDebug("putDialog: dialog already exists" + dialogId + " in table = "+ dialogTable.get(dialogId));
+    }
+    return;
+  }
+  if (stackLogger.isLoggingEnabled()) {
+    stackLogger.logDebug("putDialog dialogId=" + dialogId + " dialog = "+ dialog);
+  }
+  dialog.setStack(this);
+  if (stackLogger.isLoggingEnabled())   stackLogger.logStackTrace();
+  dialogTable.put(dialogId,dialog);
+}

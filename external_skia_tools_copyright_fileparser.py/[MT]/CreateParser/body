@@ -1,0 +1,6 @@
+def CreateParser(filepath):
+    'Returns a Parser as appropriate for the file at this filepath.\n    '
+    if (filepath.endswith('.cpp') or filepath.endswith('.h') or filepath.endswith('.c')):
+        return CParser()
+    else:
+        return None

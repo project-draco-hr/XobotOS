@@ -1,0 +1,6 @@
+{
+  byte[] msg=sipMessage.encodeAsBytes(this.getTransport());
+  long time=System.currentTimeMillis();
+  this.sendMessage(msg,sipMessage instanceof SIPRequest);
+  if (this.sipStack.getStackLogger().isLoggingEnabled(ServerLogger.TRACE_MESSAGES))   logMessage(sipMessage,peerAddress,peerPort,time);
+}

@@ -1,0 +1,26 @@
+{
+  super.onDetachedFromWindow();
+  final ViewTreeObserver observer=getViewTreeObserver();
+  if (mPreDrawState != PREDRAW_NOT_REGISTERED) {
+    observer.removeOnPreDrawListener(this);
+    mPreDrawState=PREDRAW_NOT_REGISTERED;
+  }
+  if (mError != null) {
+    hideError();
+  }
+  if (mBlink != null) {
+    mBlink.removeCallbacks(mBlink);
+  }
+  if (mInsertionPointCursorController != null) {
+    mInsertionPointCursorController.onDetached();
+  }
+  if (mSelectionModifierCursorController != null) {
+    mSelectionModifierCursorController.onDetached();
+  }
+  hideControllers();
+  resetResolvedDrawables();
+  if (mSpellChecker != null) {
+    mSpellChecker.closeSession();
+    mSpellChecker=null;
+  }
+}

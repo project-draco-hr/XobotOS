@@ -1,0 +1,10 @@
+def create_regressions(lines, start_x, end_x):
+    'Creates regression data from line segments.\n    \n    ({Label:[(x,y)] | [n].x <= [n+1].x}, Number, Number)\n        -> {Label:LinearRegression}'
+    regressions = {}
+    for (label, line) in lines.iteritems():
+        regression_line = [p for p in line if (start_x <= p[0] <= end_x)]
+        if (len(regression_line) < 2):
+            continue
+        regression = bench_util.LinearRegression(regression_line)
+        regressions[label] = regression
+    return regressions

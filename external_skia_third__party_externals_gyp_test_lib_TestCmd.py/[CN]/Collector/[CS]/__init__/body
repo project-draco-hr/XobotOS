@@ -1,0 +1,2 @@
+def __init__(self, top):
+    self.entries = [top]

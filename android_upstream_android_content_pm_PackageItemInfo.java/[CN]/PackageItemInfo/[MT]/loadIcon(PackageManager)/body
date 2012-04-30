@@ -1,0 +1,9 @@
+{
+  if (icon != 0) {
+    Drawable dr=pm.getDrawable(packageName,icon,getApplicationInfo());
+    if (dr != null) {
+      return dr;
+    }
+  }
+  return loadDefaultIcon(pm);
+}

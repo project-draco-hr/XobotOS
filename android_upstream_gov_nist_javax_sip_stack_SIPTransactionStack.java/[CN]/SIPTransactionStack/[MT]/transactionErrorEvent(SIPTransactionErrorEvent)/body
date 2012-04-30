@@ -1,0 +1,11 @@
+{
+  SIPTransaction transaction=(SIPTransaction)transactionErrorEvent.getSource();
+  if (transactionErrorEvent.getErrorID() == SIPTransactionErrorEvent.TRANSPORT_ERROR) {
+    transaction.setState(SIPTransaction.TERMINATED_STATE);
+    if (transaction instanceof SIPServerTransaction) {
+      ((SIPServerTransaction)transaction).collectionTime=0;
+    }
+    transaction.disableTimeoutTimer();
+    transaction.disableRetransmissionTimer();
+  }
+}

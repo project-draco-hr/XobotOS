@@ -1,0 +1,17 @@
+{
+  for (  final ReferenceEntry entry : _referenceEntries) {
+    Object reference=_rootScope.lookup(entry.attribute.substring(1));
+    if (reference == null) {
+      _rootScope.lookup(entry.attribute.substring(1));
+      Sharpen.Log(Level.SEVERE,"Invalid reference '%s'",entry.attribute);
+      throw new ConfigurationException("Invalid reference '%s'",entry.attribute);
+    }
+    try {
+      entry.field.setAccessible(true);
+      entry.field.set(entry.instance,reference);
+    }
+ catch (    Exception e) {
+      throw new ConfigurationException("Cannot set field '%s'",entry.field);
+    }
+  }
+}

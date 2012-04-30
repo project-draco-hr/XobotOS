@@ -1,0 +1,45 @@
+{
+  if (!isEnabled() || !mFlingable) {
+    return false;
+  }
+switch (event.getActionMasked()) {
+case MotionEvent.ACTION_DOWN:
+    mLastMotionEventY=mLastDownEventY=event.getY();
+  removeAllCallbacks();
+mShowInputControlsAnimator.cancel();
+mDimSelectorWheelAnimator.cancel();
+mBeginEditOnUpEvent=false;
+mAdjustScrollerOnUpEvent=true;
+if (mSelectorWheelState == SELECTOR_WHEEL_STATE_LARGE) {
+boolean scrollersFinished=mFlingScroller.isFinished() && mAdjustScroller.isFinished();
+if (!scrollersFinished) {
+mFlingScroller.forceFinished(true);
+mAdjustScroller.forceFinished(true);
+onScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
+}
+mBeginEditOnUpEvent=scrollersFinished;
+mAdjustScrollerOnUpEvent=true;
+hideInputControls();
+return true;
+}
+if (isEventInViewHitRect(event,mInputText) || (!mIncrementButton.isShown() && isEventInViewHitRect(event,mIncrementButton)) || (!mDecrementButton.isShown() && isEventInViewHitRect(event,mDecrementButton))) {
+mAdjustScrollerOnUpEvent=false;
+setSelectorWheelState(SELECTOR_WHEEL_STATE_LARGE);
+hideInputControls();
+return true;
+}
+break;
+case MotionEvent.ACTION_MOVE:
+float currentMoveY=event.getY();
+int deltaDownY=(int)Math.abs(currentMoveY - mLastDownEventY);
+if (deltaDownY > mTouchSlop) {
+mBeginEditOnUpEvent=false;
+onScrollStateChange(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
+setSelectorWheelState(SELECTOR_WHEEL_STATE_LARGE);
+hideInputControls();
+return true;
+}
+break;
+}
+return false;
+}

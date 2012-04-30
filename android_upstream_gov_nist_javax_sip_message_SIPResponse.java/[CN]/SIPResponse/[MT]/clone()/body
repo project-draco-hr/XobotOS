@@ -1,0 +1,5 @@
+{
+  SIPResponse retval=(SIPResponse)super.clone();
+  if (this.statusLine != null)   retval.statusLine=(StatusLine)this.statusLine.clone();
+  return retval;
+}

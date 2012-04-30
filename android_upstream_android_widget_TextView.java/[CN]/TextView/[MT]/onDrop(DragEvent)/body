@@ -1,0 +1,41 @@
+{
+  StringBuilder content=new StringBuilder("");
+  ClipData clipData=event.getClipData();
+  final int itemCount=clipData.getItemCount();
+  for (int i=0; i < itemCount; i++) {
+    Item item=clipData.getItemAt(i);
+    content.append(item.coerceToText(TextView.this.mContext));
+  }
+  final int offset=getOffsetForPosition(event.getX(),event.getY());
+  Object localState=event.getLocalState();
+  DragLocalState dragLocalState=null;
+  if (localState instanceof DragLocalState) {
+    dragLocalState=(DragLocalState)localState;
+  }
+  boolean dragDropIntoItself=dragLocalState != null && dragLocalState.sourceTextView == this;
+  if (dragDropIntoItself) {
+    if (offset >= dragLocalState.start && offset < dragLocalState.end) {
+      return;
+    }
+  }
+  final int originalLength=mText.length();
+  long minMax=prepareSpacesAroundPaste(offset,offset,content);
+  int min=extractRangeStartFromLong(minMax);
+  int max=extractRangeEndFromLong(minMax);
+  Selection.setSelection((Spannable)mText,max);
+  ((Editable)mText).replace(min,max,content);
+  if (dragDropIntoItself) {
+    int dragSourceStart=dragLocalState.start;
+    int dragSourceEnd=dragLocalState.end;
+    if (max <= dragSourceStart) {
+      final int shift=mText.length() - originalLength;
+      dragSourceStart+=shift;
+      dragSourceEnd+=shift;
+    }
+    ((Editable)mText).delete(dragSourceStart,dragSourceEnd);
+    if ((dragSourceStart == 0 || Character.isSpaceChar(mTransformed.charAt(dragSourceStart - 1))) && (dragSourceStart == mText.length() || Character.isSpaceChar(mTransformed.charAt(dragSourceStart)))) {
+      final int pos=dragSourceStart == mText.length() ? dragSourceStart - 1 : dragSourceStart;
+      ((Editable)mText).delete(pos,pos + 1);
+    }
+  }
+}

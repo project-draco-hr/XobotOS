@@ -1,0 +1,9 @@
+{
+  if (--retransmissionTicksLeft == 0) {
+    if (2 * prevRetransmissionTicks <= T2)     this.retransmissionTicksLeft=2 * prevRetransmissionTicks;
+ else     this.retransmissionTicksLeft=prevRetransmissionTicks;
+    this.prevRetransmissionTicks=retransmissionTicksLeft;
+    return true;
+  }
+ else   return false;
+}

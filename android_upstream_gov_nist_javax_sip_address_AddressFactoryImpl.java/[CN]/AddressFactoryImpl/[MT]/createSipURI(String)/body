@@ -1,0 +1,11 @@
+{
+  if (uri == null)   throw new NullPointerException("null URI");
+  try {
+    StringMsgParser smp=new StringMsgParser();
+    SipUri sipUri=smp.parseSIPUrl(uri);
+    return (SipURI)sipUri;
+  }
+ catch (  ParseException ex) {
+    throw new ParseException(ex.getMessage(),0);
+  }
+}

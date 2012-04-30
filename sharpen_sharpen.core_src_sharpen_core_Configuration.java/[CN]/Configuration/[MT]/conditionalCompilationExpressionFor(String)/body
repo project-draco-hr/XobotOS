@@ -1,0 +1,8 @@
+{
+  for (  String current : _conditionalCompilations.keySet()) {
+    if (isSubPackage(current,packageName)) {
+      return _conditionalCompilations.get(current);
+    }
+  }
+  return null;
+}

@@ -1,0 +1,4 @@
+{
+  ViaList retval=new ViaList();
+  return retval.clonehlist(this.hlist);
+}

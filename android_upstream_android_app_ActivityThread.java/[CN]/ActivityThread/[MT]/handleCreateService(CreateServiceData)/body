@@ -1,0 +1,34 @@
+{
+  unscheduleGcIdler();
+  LoadedApk packageInfo=getPackageInfoNoCheck(data.info.applicationInfo,data.compatInfo);
+  Service service=null;
+  try {
+    java.lang.ClassLoader cl=packageInfo.getClassLoader();
+    service=(Service)cl.loadClass(data.info.name).newInstance();
+  }
+ catch (  Exception e) {
+    if (!mInstrumentation.onException(service,e)) {
+      throw new RuntimeException("Unable to instantiate service " + data.info.name + ": "+ e.toString(),e);
+    }
+  }
+  try {
+    if (localLOGV)     Slog.v(TAG,"Creating service " + data.info.name);
+    ContextImpl context=new ContextImpl();
+    context.init(packageInfo,null,this);
+    Application app=packageInfo.makeApplication(false,mInstrumentation);
+    context.setOuterContext(service);
+    service.attach(context,this,data.info.name,data.token,app,ActivityManagerNative.getDefault());
+    service.onCreate();
+    mServices.put(data.token,service);
+    try {
+      ActivityManagerNative.getDefault().serviceDoneExecuting(data.token,0,0,0);
+    }
+ catch (    RemoteException e) {
+    }
+  }
+ catch (  Exception e) {
+    if (!mInstrumentation.onException(service,e)) {
+      throw new RuntimeException("Unable to create service " + data.info.name + ": "+ e.toString(),e);
+    }
+  }
+}

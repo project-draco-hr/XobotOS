@@ -1,0 +1,118 @@
+def generate_api(lines):
+    externs = []
+    i = 0
+    skipFunctions = ['glDrawArrays', 'glDrawElements']
+    extendFunctions = ['glCopyTexImage2D', 'glCopyTexSubImage2D', 'glReadPixels', 'glShaderSource', 'glTexImage2D', 'glTexSubImage2D']
+    contextFunctions = ['glUseProgram', 'glEnableVertexAttribArray', 'glDisableVertexAttribArray', 'glVertexAttribPointer', 'glBindBuffer', 'glBufferData', 'glBufferSubData', 'glDeleteBuffers']
+    for line in lines:
+        if (line.find('API_ENTRY(') >= 0):
+            returnType = line[0:line.find(' API_ENTRY(')]
+            functionName = line[(line.find('(') + 1):line.find(')')]
+            parameterList = line[(line.find(')(') + 2):line.find(') {')]
+            if (functionName in skipFunctions):
+                sys.stderr.write(("!\n! skipping function '%s'\n!\n" % functionName))
+                continue
+            parameters = parameterList.split(',')
+            paramIndex = 0
+            if ((line.find('*') >= 0) and ((line.find('*') < line.find(':')) or (line.find('*') > line.rfind(':')))):
+                if (not (functionName in extendFunctions)):
+                    extern = ('%s Debug_%s(%s);' % (returnType, functionName, RemoveAnnotation(parameterList)))
+                    sys.stderr.write(('%s should be hand written\n' % extern))
+                    print '// FIXME: this function has pointers, it should be hand written'
+                    externs.append(extern)
+            print ('%s Debug_%s(%s)\n{' % (returnType, functionName, RemoveAnnotation(parameterList)))
+            print '    glesv2debugger::Message msg;'
+            if (parameterList == 'void'):
+                parameters = []
+            arguments = ''
+            paramNames = []
+            inout = ''
+            getData = ''
+            callerMembers = ''
+            setCallerMembers = ''
+            setMsgParameters = ''
+            for parameter in parameters:
+                const = parameter.find('const')
+                parameter = parameter.replace('const', '')
+                parameter = parameter.strip()
+                paramType = parameter.split(' ')[0]
+                paramName = parameter.split(' ')[1]
+                annotation = ''
+                arguments += paramName
+                if (parameter.find(':') >= 0):
+                    assert (inout == '')
+                    sys.stderr.write(('%s is annotated: %s \n' % (functionName, paramType)))
+                    inout = paramType.split(':')[2]
+                    annotation = paramType.split(':')[1]
+                    paramType = paramType.split(':')[0]
+                    count = 1
+                    countArg = ''
+                    if (annotation.find('*') >= 0):
+                        count = int(annotation.split('*')[0])
+                        countArg = annotation.split('*')[1]
+                        assert (countArg in paramNames)
+                    elif (annotation in paramNames):
+                        count = 1
+                        countArg = annotation
+                    elif (annotation == 'GLstring'):
+                        annotation = ('strlen(%s)' % paramName)
+                    else:
+                        count = int(annotation)
+                    setMsgParameters += ('    msg.set_arg%d(ToInt(%s));\n' % (paramIndex, paramName))
+                    if (paramType.find('void') >= 0):
+                        getData += ('    msg.mutable_data()->assign(reinterpret_cast<const char *>(%s), %s * sizeof(char));' % (paramName, annotation))
+                    else:
+                        getData += ('    msg.mutable_data()->assign(reinterpret_cast<const char *>(%s), %s * sizeof(%s));' % (paramName, annotation, paramType))
+                    paramType += '*'
+                elif ((paramType == 'GLfloat') or (paramType == 'GLclampf') or (paramType.find('*') >= 0)):
+                    setMsgParameters += ('    msg.set_arg%d(ToInt(%s));\n' % (paramIndex, paramName))
+                else:
+                    setMsgParameters += ('    msg.set_arg%d(%s);\n' % (paramIndex, paramName))
+                if (paramIndex < (len(parameters) - 1)):
+                    arguments += ', '
+                if (const >= 0):
+                    paramType = ('const ' + paramType)
+                paramNames.append(paramName)
+                paramIndex += 1
+                callerMembers += ('        %s %s;\n' % (paramType, paramName))
+                setCallerMembers += ('    caller.%s = %s;\n' % (paramName, paramName))
+            print '    struct : public FunctionCall {'
+            print callerMembers
+            print '        const int * operator()(gl_hooks_t::gl_t const * const _c, glesv2debugger::Message & msg) {'
+            if (inout in ['out', 'inout']):
+                print '            nsecs_t c0 = systemTime(timeMode);'
+            if (returnType == 'void'):
+                print ('            _c->%s(%s);' % (functionName, arguments))
+            else:
+                print ('            const int * ret = reinterpret_cast<const int *>(_c->%s(%s));' % (functionName, arguments))
+                print '            msg.set_ret(ToInt(ret));'
+            if (inout in ['out', 'inout']):
+                print '            msg.set_time((systemTime(timeMode) - c0) * 1e-6f);'
+                print ('        ' + getData)
+            if (functionName in extendFunctions):
+                print ('#ifdef EXTEND_AFTER_CALL_Debug_%s\n            EXTEND_AFTER_CALL_Debug_%s;\n#endif' % (functionName, functionName))
+            if (functionName in contextFunctions):
+                print ('            getDbgContextThreadSpecific()->%s(%s);' % (functionName, arguments))
+            if (returnType == 'void'):
+                print '            return 0;'
+            else:
+                print '            return ret;'
+            print '        }\n    } caller;'
+            print setCallerMembers
+            print setMsgParameters
+            if ((line.find('*') >= 0) or (line.find(':') >= 0)):
+                print '    // FIXME: check for pointer usage'
+            if (inout in ['in', 'inout']):
+                print getData
+            if (functionName in extendFunctions):
+                print ('#ifdef EXTEND_Debug_%s\n    EXTEND_Debug_%s;\n#endif' % (functionName, functionName))
+            print ('    int * ret = MessageLoop(caller, msg, glesv2debugger::Message_Function_%s);' % functionName)
+            if (returnType != 'void'):
+                if (returnType == 'GLboolean'):
+                    print '    return static_cast<GLboolean>(reinterpret_cast<int>(ret));'
+                else:
+                    print ('    return reinterpret_cast<%s>(ret);' % returnType)
+            print '}\n'
+    print '// FIXME: the following functions should be written by hand'
+    for extern in externs:
+        print extern

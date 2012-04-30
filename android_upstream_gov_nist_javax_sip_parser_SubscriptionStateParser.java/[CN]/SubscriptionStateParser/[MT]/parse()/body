@@ -1,0 +1,73 @@
+{
+  if (debug)   dbg_enter("SubscriptionStateParser.parse");
+  SubscriptionState subscriptionState=new SubscriptionState();
+  try {
+    headerName(TokenTypes.SUBSCRIPTION_STATE);
+    subscriptionState.setHeaderName(SIPHeaderNames.SUBSCRIPTION_STATE);
+    lexer.match(TokenTypes.ID);
+    Token token=lexer.getNextToken();
+    subscriptionState.setState(token.getTokenValue());
+    while (lexer.lookAhead(0) == ';') {
+      this.lexer.match(';');
+      this.lexer.SPorHT();
+      lexer.match(TokenTypes.ID);
+      token=lexer.getNextToken();
+      String value=token.getTokenValue();
+      if (value.equalsIgnoreCase("reason")) {
+        this.lexer.match('=');
+        this.lexer.SPorHT();
+        lexer.match(TokenTypes.ID);
+        token=lexer.getNextToken();
+        value=token.getTokenValue();
+        subscriptionState.setReasonCode(value);
+      }
+ else       if (value.equalsIgnoreCase("expires")) {
+        this.lexer.match('=');
+        this.lexer.SPorHT();
+        lexer.match(TokenTypes.ID);
+        token=lexer.getNextToken();
+        value=token.getTokenValue();
+        try {
+          int expires=Integer.parseInt(value);
+          subscriptionState.setExpires(expires);
+        }
+ catch (        NumberFormatException ex) {
+          throw createParseException(ex.getMessage());
+        }
+catch (        InvalidArgumentException ex) {
+          throw createParseException(ex.getMessage());
+        }
+      }
+ else       if (value.equalsIgnoreCase("retry-after")) {
+        this.lexer.match('=');
+        this.lexer.SPorHT();
+        lexer.match(TokenTypes.ID);
+        token=lexer.getNextToken();
+        value=token.getTokenValue();
+        try {
+          int retryAfter=Integer.parseInt(value);
+          subscriptionState.setRetryAfter(retryAfter);
+        }
+ catch (        NumberFormatException ex) {
+          throw createParseException(ex.getMessage());
+        }
+catch (        InvalidArgumentException ex) {
+          throw createParseException(ex.getMessage());
+        }
+      }
+ else {
+        this.lexer.match('=');
+        this.lexer.SPorHT();
+        lexer.match(TokenTypes.ID);
+        Token secondToken=lexer.getNextToken();
+        String secondValue=secondToken.getTokenValue();
+        subscriptionState.setParameter(value,secondValue);
+      }
+      this.lexer.SPorHT();
+    }
+  }
+  finally {
+    if (debug)     dbg_leave("SubscriptionStateParser.parse");
+  }
+  return subscriptionState;
+}

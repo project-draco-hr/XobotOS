@@ -1,0 +1,4 @@
+{
+  if (response == null)   throw new NullPointerException("Null parameter");
+  this.setParameter(RESPONSE,response);
+}

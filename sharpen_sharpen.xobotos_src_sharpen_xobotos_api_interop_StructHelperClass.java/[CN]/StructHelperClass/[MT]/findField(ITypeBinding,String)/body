@@ -1,0 +1,6 @@
+{
+  for (  final IVariableBinding field : type.getDeclaredFields()) {
+    if (field.getName().equals(name))     return field;
+  }
+  return null;
+}

@@ -1,0 +1,36 @@
+{
+  final List arguments=node.arguments();
+  final IMethodBinding actualMethod=node.resolveMethodBinding();
+  final ITypeBinding[] actualTypes=actualMethod.getParameterTypes();
+  final IMethodBinding originalMethod=actualMethod.getMethodDeclaration();
+  final ITypeBinding[] originalTypes=originalMethod.getParameterTypes();
+  for (int i=0; i < arguments.size(); ++i) {
+    final Expression arg=(Expression)arguments.get(i);
+    if (i >= originalTypes.length) {
+      addArgument(mie,arg,null);
+      continue;
+    }
+    if (isGenericRuntimeParameterIdiom(originalMethod,originalTypes[i])) {
+      if (isClassLiteral(arg)) {
+        mie.addTypeArgument(genericRuntimeTypeIdiomType(actualTypes[i]));
+        continue;
+      }
+      ITypeBinding argType=arg.resolveTypeBinding();
+      if (isJavaLangClass(argType) && argType.getTypeArguments().length == 1) {
+        mie.addTypeArgument(genericRuntimeTypeIdiomType(argType));
+        continue;
+      }
+    }
+ else     if (isJavaLangClass(originalTypes[i])) {
+      ITypeBinding[] ota=originalTypes[i].getTypeArguments();
+      ITypeBinding[] ata=actualTypes[i].getTypeArguments();
+      if (ota.length == 1 && ata.length == 1 && ota[0].getName().startsWith("?")) {
+        mie.addTypeArgument(mappedTypeReference(ata[0]));
+        continue;
+      }
+    }
+    CSExpression expr=my(CSharpDriver.class).mappedMethodInvocationArgument(this,node,i,arg);
+    if (expr != null)     mie.addArgument(expr);
+  }
+  adjustJUnitArguments(mie,node);
+}

@@ -1,0 +1,5 @@
+def write_target(self, fp, src_dir='', pre=''):
+    '\n    Writes the lines necessary to build this target.\n    '
+    fp.write(('\n' + pre))
+    fp.write(('_outputs = %s\n' % self.builder_call()))
+    fp.write('target_files.extend(_outputs)\n')

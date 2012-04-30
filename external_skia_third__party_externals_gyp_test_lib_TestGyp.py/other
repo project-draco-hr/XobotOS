@@ -1,0 +1,11 @@
+'\nTestGyp.py:  a testing framework for GYP integration tests.\n'
+import os
+import re
+import shutil
+import stat
+import sys
+import tempfile
+import TestCommon
+from TestCommon import __all__
+__all__.extend(['TestGyp'])
+format_class_list = [TestGypGypd, TestGypMake, TestGypMSVS, TestGypNinja, TestGypSCons, TestGypXcode]

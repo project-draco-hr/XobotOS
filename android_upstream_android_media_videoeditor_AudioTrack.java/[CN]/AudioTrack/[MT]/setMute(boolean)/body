@@ -1,0 +1,4 @@
+{
+  mMANativeHelper.setGeneratePreview(true);
+  mMuted=muted;
+}

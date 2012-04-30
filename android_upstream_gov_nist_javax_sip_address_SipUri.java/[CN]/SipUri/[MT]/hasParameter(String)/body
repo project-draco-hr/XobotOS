@@ -1,0 +1,3 @@
+{
+  return uriParms.getValue(name) != null;
+}

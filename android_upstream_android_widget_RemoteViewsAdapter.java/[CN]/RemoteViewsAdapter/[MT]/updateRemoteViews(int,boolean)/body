@@ -1,0 +1,33 @@
+{
+  if (!mServiceConnection.isConnected())   return;
+  IRemoteViewsFactory factory=mServiceConnection.getRemoteViewsFactory();
+  RemoteViews remoteViews=null;
+  long itemId=0;
+  try {
+    remoteViews=factory.getViewAt(position);
+    itemId=factory.getItemId(position);
+  }
+ catch (  RemoteException e) {
+    Log.e(TAG,"Error in updateRemoteViews(" + position + "): "+ e.getMessage());
+    return;
+  }
+catch (  RuntimeException e) {
+    Log.e(TAG,"Error in updateRemoteViews(" + position + "): "+ e.getMessage());
+    return;
+  }
+  if (remoteViews == null) {
+    Log.e(TAG,"Error in updateRemoteViews(" + position + "): "+ " null RemoteViews "+ "returned from RemoteViewsFactory.");
+    return;
+  }
+synchronized (mCache) {
+    mCache.insert(position,remoteViews,itemId,isRequested);
+    final RemoteViews rv=remoteViews;
+    final int typeId=mCache.getMetaDataAt(position).typeId;
+    mMainQueue.post(new Runnable(){
+      @Override public void run(){
+        mRequestedViews.notifyOnRemoteViewsLoaded(position,rv,typeId);
+      }
+    }
+);
+  }
+}

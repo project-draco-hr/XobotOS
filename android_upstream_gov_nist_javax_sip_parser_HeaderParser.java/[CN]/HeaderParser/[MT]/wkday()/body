@@ -1,0 +1,18 @@
+{
+  dbg_enter("wkday");
+  try {
+    String tok=lexer.ttoken();
+    String id=tok.toLowerCase();
+    if (TokenNames.MON.equalsIgnoreCase(id))     return Calendar.MONDAY;
+ else     if (TokenNames.TUE.equalsIgnoreCase(id))     return Calendar.TUESDAY;
+ else     if (TokenNames.WED.equalsIgnoreCase(id))     return Calendar.WEDNESDAY;
+ else     if (TokenNames.THU.equalsIgnoreCase(id))     return Calendar.THURSDAY;
+ else     if (TokenNames.FRI.equalsIgnoreCase(id))     return Calendar.FRIDAY;
+ else     if (TokenNames.SAT.equalsIgnoreCase(id))     return Calendar.SATURDAY;
+ else     if (TokenNames.SUN.equalsIgnoreCase(id))     return Calendar.SUNDAY;
+ else     throw createParseException("bad wkday");
+  }
+  finally {
+    dbg_leave("wkday");
+  }
+}

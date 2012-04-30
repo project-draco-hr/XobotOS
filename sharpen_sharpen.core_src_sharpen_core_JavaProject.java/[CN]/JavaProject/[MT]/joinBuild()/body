@@ -1,0 +1,3 @@
+{
+  joinBuild(ResourcesPlugin.FAMILY_MANUAL_BUILD);
+}

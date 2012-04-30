@@ -1,0 +1,7 @@
+{
+  encoding=null;
+  if (generalNames == null) {
+    generalNames=new ArrayList<GeneralName>();
+  }
+  generalNames.add(name);
+}

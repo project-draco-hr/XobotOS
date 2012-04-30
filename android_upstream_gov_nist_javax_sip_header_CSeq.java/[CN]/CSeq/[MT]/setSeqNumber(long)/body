@@ -1,0 +1,5 @@
+{
+  if (sequenceNumber < 0)   throw new InvalidArgumentException("JAIN-SIP Exception, CSeq, setSequenceNumber(), " + "the sequence number parameter is < 0 : " + sequenceNumber);
+ else   if (sequenceNumber > ((long)1) << 32 - 1)   throw new InvalidArgumentException("JAIN-SIP Exception, CSeq, setSequenceNumber(), " + "the sequence number parameter is too large : " + sequenceNumber);
+  seqno=Long.valueOf(sequenceNumber);
+}

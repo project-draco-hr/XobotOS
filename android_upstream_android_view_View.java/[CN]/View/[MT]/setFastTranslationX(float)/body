@@ -1,0 +1,6 @@
+{
+  ensureTransformationInfo();
+  final TransformationInfo info=mTransformationInfo;
+  info.mTranslationX=x;
+  info.mMatrixDirty=true;
+}

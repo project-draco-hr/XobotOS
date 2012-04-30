@@ -1,0 +1,69 @@
+{
+  XMLReader r;
+  if (hasOption(options,"--reuse")) {
+    if (theParser == null)     theParser=new Parser();
+    r=theParser;
+  }
+ else {
+    r=new Parser();
+  }
+  theSchema=new HTMLSchema();
+  r.setProperty(Parser.schemaProperty,theSchema);
+  if (hasOption(options,"--nocdata")) {
+    r.setFeature(Parser.CDATAElementsFeature,false);
+  }
+  if (hasOption(options,"--nons") || hasOption(options,"--html")) {
+    r.setFeature(Parser.namespacesFeature,false);
+  }
+  if (hasOption(options,"--nobogons")) {
+    r.setFeature(Parser.ignoreBogonsFeature,true);
+  }
+  if (hasOption(options,"--any")) {
+    r.setFeature(Parser.bogonsEmptyFeature,false);
+  }
+ else   if (hasOption(options,"--emptybogons")) {
+    r.setFeature(Parser.bogonsEmptyFeature,true);
+  }
+  if (hasOption(options,"--norootbogons")) {
+    r.setFeature(Parser.rootBogonsFeature,false);
+  }
+  if (hasOption(options,"--nodefaults")) {
+    r.setFeature(Parser.defaultAttributesFeature,false);
+  }
+  if (hasOption(options,"--nocolons")) {
+    r.setFeature(Parser.translateColonsFeature,true);
+  }
+  if (hasOption(options,"--norestart")) {
+    r.setFeature(Parser.restartElementsFeature,false);
+  }
+  if (hasOption(options,"--ignorable")) {
+    r.setFeature(Parser.ignorableWhitespaceFeature,true);
+  }
+  if (hasOption(options,"--pyxin")) {
+    r.setProperty(Parser.scannerProperty,new PYXScanner());
+  }
+  Writer w;
+  if (theOutputEncoding == null) {
+    w=new OutputStreamWriter(os);
+  }
+ else {
+    w=new OutputStreamWriter(os,theOutputEncoding);
+  }
+  ContentHandler h=chooseContentHandler(w);
+  r.setContentHandler(h);
+  if (hasOption(options,"--lexical") && h instanceof LexicalHandler) {
+    r.setProperty(Parser.lexicalHandlerProperty,h);
+  }
+  InputSource s=new InputSource();
+  if (src != "") {
+    s.setSystemId(src);
+  }
+ else {
+    s.setByteStream(System.in);
+  }
+  if (hasOption(options,"--encoding=")) {
+    String encoding=(String)options.get("--encoding=");
+    if (encoding != null)     s.setEncoding(encoding);
+  }
+  r.parse(s);
+}

@@ -1,0 +1,21 @@
+{
+  if (otherObject == null) {
+    return false;
+  }
+  if (!otherObject.getClass().equals(this.getClass())) {
+    return false;
+  }
+  NameValueList other=(NameValueList)otherObject;
+  if (hmap.size() != other.hmap.size()) {
+    return false;
+  }
+  Iterator<String> li=this.hmap.keySet().iterator();
+  while (li.hasNext()) {
+    String key=(String)li.next();
+    NameValue nv1=this.getNameValue(key);
+    NameValue nv2=(NameValue)other.hmap.get(key);
+    if (nv2 == null)     return false;
+ else     if (!nv2.equals(nv1))     return false;
+  }
+  return true;
+}

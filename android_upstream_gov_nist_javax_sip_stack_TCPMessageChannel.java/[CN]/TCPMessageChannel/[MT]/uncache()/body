@@ -1,0 +1,5 @@
+{
+  if (isCached && !isRunning) {
+    this.tcpMessageProcessor.remove(this);
+  }
+}

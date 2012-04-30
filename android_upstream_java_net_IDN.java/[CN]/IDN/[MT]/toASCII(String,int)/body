@@ -1,0 +1,3 @@
+{
+  return NativeIDN.toASCII(input,flags);
+}

@@ -1,0 +1,3 @@
+{
+  return mMeasuredHeight & MEASURED_SIZE_MASK;
+}

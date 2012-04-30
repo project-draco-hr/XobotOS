@@ -1,0 +1,14 @@
+{
+  String dialogId=((SIPRequest)transaction.getRequest()).getDialogId(false);
+  SIPDialog retval=null;
+  if (this.earlyDialogTable.get(dialogId) != null) {
+    retval=this.earlyDialogTable.get(dialogId);
+    if (sipResponse.isFinalResponse()) {
+      this.earlyDialogTable.remove(dialogId);
+    }
+  }
+ else {
+    retval=new SIPDialog(transaction,sipResponse);
+  }
+  return retval;
+}

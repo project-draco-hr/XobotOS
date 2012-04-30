@@ -1,0 +1,18 @@
+{
+  Expression lo=node.getLeftOperand();
+  ITypeBinding loType=lo.resolveTypeBinding();
+  ITypeBinding type=node.getRightOperand().resolveBinding();
+  if (isJavaLangCharSequence(loType) && isJavaLangString(type)) {
+    CSReferenceExpression re=new CSReferenceExpression("java.lang.CharSequenceProxy.IsStringProxy");
+    CSMethodInvocationExpression mie=new CSMethodInvocationExpression(re);
+    mie.addArgument(mapExpression(lo));
+    pushExpression(mie);
+    return false;
+  }
+ else   if (isJavaLangString(loType) && isJavaLangCharSequence(type)) {
+    pushExpression(new CSBoolLiteralExpression(true));
+    return false;
+  }
+  pushExpression(new CSInfixExpression("is",mapExpression(lo),mappedTypeReference(type)));
+  return false;
+}

@@ -1,0 +1,37 @@
+{
+  curFlags&=~(WindowManager.LayoutParams.FLAG_IGNORE_CHEEK_PRESSES | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE| WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH| WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS| WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM| WindowManager.LayoutParams.FLAG_SPLIT_TOUCH);
+  if (mIgnoreCheekPress) {
+    curFlags|=WindowManager.LayoutParams.FLAG_IGNORE_CHEEK_PRESSES;
+  }
+  if (!mFocusable) {
+    curFlags|=WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+    if (mInputMethodMode == INPUT_METHOD_NEEDED) {
+      curFlags|=WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
+    }
+  }
+ else   if (mInputMethodMode == INPUT_METHOD_NOT_NEEDED) {
+    curFlags|=WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
+  }
+  if (!mTouchable) {
+    curFlags|=WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+  }
+  if (mOutsideTouchable) {
+    curFlags|=WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
+  }
+  if (!mClippingEnabled) {
+    curFlags|=WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
+  }
+  if (isSplitTouchEnabled()) {
+    curFlags|=WindowManager.LayoutParams.FLAG_SPLIT_TOUCH;
+  }
+  if (mLayoutInScreen) {
+    curFlags|=WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+  }
+  if (mLayoutInsetDecor) {
+    curFlags|=WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR;
+  }
+  if (mNotTouchModal) {
+    curFlags|=WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+  }
+  return curFlags;
+}

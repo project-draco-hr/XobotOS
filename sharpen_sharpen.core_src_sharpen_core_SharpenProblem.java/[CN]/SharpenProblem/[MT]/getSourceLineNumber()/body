@@ -1,0 +1,4 @@
+{
+  if (_node != null)   return ASTUtility.lineNumber(_ast,_node);
+ else   return -1;
+}

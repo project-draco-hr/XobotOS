@@ -1,0 +1,28 @@
+{
+  final ITypeBinding type=node.resolveBinding();
+  final ITypeBinding declType=type.getDeclaringClass().getTypeDeclaration();
+  if (!type.isInterface() || !type.isNested()) {
+    addProblem(node,"Type '%s' is not a valid even interface.",BindingUtils.qualifiedName(type));
+    return false;
+  }
+  for (  ASTNode member : Types.<ASTNode>cast(node.bodyDeclarations())) {
+    if (!(member instanceof MethodDeclaration)) {
+      addProblem(node,"Event interface '%s' must only contain methods.",BindingUtils.qualifiedName(type));
+      return false;
+    }
+  }
+  for (  MethodDeclaration method : node.getMethods()) {
+    final IMethodBinding binding=method.resolveBinding();
+    final ITypeBinding[] ptypes=binding.getParameterTypes();
+    if (ptypes.length < 1) {
+      addProblem(node,"Method '%s' in event interface must have at least one parameter.",BindingUtils.qualifiedSignature(binding));
+      return false;
+    }
+    ITypeBinding sender=ptypes[0];
+    if (!sender.getTypeDeclaration().equals(declType)) {
+      addProblem(node,"Method '%s' in event interface has invalid first argument.",BindingUtils.qualifiedSignature(binding));
+      return false;
+    }
+  }
+  return true;
+}

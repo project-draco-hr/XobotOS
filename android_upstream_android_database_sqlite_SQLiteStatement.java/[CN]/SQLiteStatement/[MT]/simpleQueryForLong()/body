@@ -1,0 +1,14 @@
+{
+  try {
+    long timeStart=acquireAndLock(READ);
+    long retValue=native_1x1_long();
+    mDatabase.logTimeStat(mSql,timeStart);
+    return retValue;
+  }
+ catch (  SQLiteDoneException e) {
+    throw new SQLiteDoneException("expected 1 row from this query but query returned no data. check the query: " + mSql);
+  }
+ finally {
+    releaseAndUnlock();
+  }
+}

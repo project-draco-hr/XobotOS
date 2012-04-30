@@ -1,0 +1,4 @@
+{
+  final MethodDeclaration dec=declaringNode(binding);
+  return dec != null && SharpenAnnotations.hasIgnoreAnnotation(dec);
+}

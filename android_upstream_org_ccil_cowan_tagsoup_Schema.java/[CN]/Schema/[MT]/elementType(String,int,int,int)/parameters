@@ -1,0 +1,4 @@
+String name
+int model
+int memberOf
+int flags

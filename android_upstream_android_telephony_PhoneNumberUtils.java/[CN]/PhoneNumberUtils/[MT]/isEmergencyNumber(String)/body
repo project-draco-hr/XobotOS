@@ -1,0 +1,17 @@
+{
+  if (number == null)   return false;
+  number=extractNetworkPortionAlt(number);
+  String numbers=SystemProperties.get("ril.ecclist");
+  if (TextUtils.isEmpty(numbers)) {
+    numbers=SystemProperties.get("ro.ril.ecclist");
+  }
+  if (!TextUtils.isEmpty(numbers)) {
+    for (    String emergencyNum : numbers.split(",")) {
+      if (number.startsWith(emergencyNum)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  return (number.startsWith("112") || number.startsWith("911"));
+}

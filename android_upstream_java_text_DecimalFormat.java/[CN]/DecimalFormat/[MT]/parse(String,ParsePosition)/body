@@ -1,0 +1,25 @@
+{
+  Number number=dform.parse(string,position);
+  if (number == null) {
+    return null;
+  }
+  if (this.isParseBigDecimal()) {
+    if (number instanceof Long) {
+      return new BigDecimal(number.longValue());
+    }
+    if ((number instanceof Double) && !((Double)number).isInfinite() && !((Double)number).isNaN()) {
+      return new BigDecimal(number.toString());
+    }
+    if (number instanceof BigInteger) {
+      return new BigDecimal(number.toString());
+    }
+    return number;
+  }
+  if ((number instanceof BigDecimal) || (number instanceof BigInteger)) {
+    return new Double(number.doubleValue());
+  }
+  if (this.isParseIntegerOnly() && number.equals(NEGATIVE_ZERO_DOUBLE)) {
+    return Long.valueOf(0);
+  }
+  return number;
+}

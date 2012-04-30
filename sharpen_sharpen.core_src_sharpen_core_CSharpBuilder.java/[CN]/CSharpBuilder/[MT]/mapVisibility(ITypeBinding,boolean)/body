@@ -1,0 +1,10 @@
+{
+  CSVisibility vis=my(CSharpDriver.class).mapVisibility(type);
+  if (vis != null)   return vis;
+  if (type.isPrimitive())   return CSVisibility.Public;
+  if (type.isArray())   vis=mapVisibility(type.getElementType());
+ else   vis=mapVisibility(type.getModifiers());
+  if (recursive)   return vis;
+  if (type.getSuperclass() != null)   vis=adjustVisibility(type,type.getSuperclass(),vis);
+  return vis;
+}

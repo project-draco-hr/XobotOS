@@ -1,0 +1,27 @@
+{
+  NameValueList nvList=new NameValueList();
+  NameValue nv;
+  while (true) {
+    String pname=paramNameOrValue();
+    if (pname.equalsIgnoreCase("phone-context")) {
+      nv=phone_context();
+    }
+ else {
+      if (lexer.lookAhead(0) == '=') {
+        lexer.consume(1);
+        String value=paramNameOrValue();
+        nv=new NameValue(pname,value,false);
+      }
+ else {
+        nv=new NameValue(pname,"",true);
+      }
+    }
+    nvList.set(nv);
+    if (lexer.lookAhead(0) == ';') {
+      lexer.consume(1);
+    }
+ else {
+      return nvList;
+    }
+  }
+}

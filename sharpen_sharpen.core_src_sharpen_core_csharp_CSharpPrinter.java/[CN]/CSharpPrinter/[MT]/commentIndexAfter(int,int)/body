@@ -1,0 +1,8 @@
+{
+  for (int i=startIndex; i < _comments.size(); ++i) {
+    if (_comments.get(i).startPosition() > endStartPosition) {
+      return i;
+    }
+  }
+  return -1;
+}

@@ -1,0 +1,18 @@
+{
+  HashMap<K,V> result;
+  try {
+    result=(HashMap<K,V>)super.clone();
+  }
+ catch (  CloneNotSupportedException e) {
+    throw new AssertionError(e);
+  }
+  result.makeTable(table.length);
+  result.entryForNullKey=null;
+  result.size=0;
+  result.keySet=null;
+  result.entrySet=null;
+  result.values=null;
+  result.init();
+  result.constructorPutAll(this);
+  return result;
+}

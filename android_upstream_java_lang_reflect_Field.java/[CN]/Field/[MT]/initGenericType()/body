@@ -1,0 +1,12 @@
+{
+  if (!genericTypesAreInitialized) {
+    String signatureAttribute=getSignatureAttribute();
+    GenericSignatureParser parser=new GenericSignatureParser(declaringClass.getClassLoader());
+    parser.parseForField(this.declaringClass,signatureAttribute);
+    genericType=parser.fieldType;
+    if (genericType == null) {
+      genericType=getType();
+    }
+    genericTypesAreInitialized=true;
+  }
+}

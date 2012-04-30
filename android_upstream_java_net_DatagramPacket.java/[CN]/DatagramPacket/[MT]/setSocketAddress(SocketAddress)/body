@@ -1,0 +1,11 @@
+{
+  if (!(sockAddr instanceof InetSocketAddress)) {
+    throw new IllegalArgumentException("Socket address not an InetSocketAddress: " + (sockAddr == null ? null : sockAddr.getClass()));
+  }
+  InetSocketAddress inetAddr=(InetSocketAddress)sockAddr;
+  if (inetAddr.isUnresolved()) {
+    throw new IllegalArgumentException("Socket address unresolved: " + sockAddr);
+  }
+  port=inetAddr.getPort();
+  address=inetAddr.getAddress();
+}

@@ -1,0 +1,5 @@
+{
+  if (member instanceof CSField)   return isStatic((CSField)member);
+  if (member instanceof CSMethod)   return isStatic((CSMethod)member);
+  return false;
+}

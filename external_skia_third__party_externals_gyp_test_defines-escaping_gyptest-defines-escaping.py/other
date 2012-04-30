@@ -1,0 +1,84 @@
+'\nVerifies build of an executable with C++ define specified by a gyp define using\nvarious special characters such as quotes, commas, etc.\n'
+import os
+import TestGyp
+test = TestGyp.TestGyp()
+try:
+    os.environ['GYP_DEFINES'] = 'test_format=\'\\n%s\\n\' test_args=\'"Simple test of %s with a literal"\''
+    test.run_gyp('defines-escaping.gyp')
+finally:
+    del os.environ['GYP_DEFINES']
+test.build('defines-escaping.gyp')
+expect = '\nSimple test of %s with a literal\n'
+test.run_built_executable('defines_escaping', stdout=expect)
+try:
+    os.environ['GYP_DEFINES'] = 'test_format=\'\\n%s and %s\\n\' test_args=\'"foo", "bar"\''
+    test.run_gyp('defines-escaping.gyp')
+finally:
+    del os.environ['GYP_DEFINES']
+test.sleep()
+test.touch('defines-escaping.c')
+test.build('defines-escaping.gyp')
+expect = '\nfoo and bar\n'
+test.run_built_executable('defines_escaping', stdout=expect)
+try:
+    os.environ['GYP_DEFINES'] = 'test_format=\'\\n%s %s %s %s %s\\n\' test_args=\'"\\"These,\\"", "\\"words,\\"", "\\"are,\\"", "\\"in,\\"", "\\"quotes.\\""\''
+    test.run_gyp('defines-escaping.gyp')
+finally:
+    del os.environ['GYP_DEFINES']
+test.sleep()
+test.touch('defines-escaping.c')
+test.build('defines-escaping.gyp')
+expect = '\n"These," "words," "are," "in," "quotes."\n'
+test.run_built_executable('defines_escaping', stdout=expect)
+try:
+    os.environ['GYP_DEFINES'] = 'test_format=\'\\n%s %s %s %s %s\\n\' test_args="\\"\'These,\'\\", \\"\'words,\'\\", \\"\'are,\'\\", \\"\'in,\'\\", \\"\'quotes.\'\\"" '
+    test.run_gyp('defines-escaping.gyp')
+finally:
+    del os.environ['GYP_DEFINES']
+test.sleep()
+test.touch('defines-escaping.c')
+test.build('defines-escaping.gyp')
+expect = "\n'These,' 'words,' 'are,' 'in,' 'quotes.'\n"
+test.run_built_executable('defines_escaping', stdout=expect)
+try:
+    os.environ['GYP_DEFINES'] = 'test_format=\'\\n%s\\n%s\\n%s\\n\' test_args=\'"\\\\\\"1 visible slash\\\\\\"", "\\\\\\\\\\"2 visible slashes\\\\\\\\\\"", "\\\\\\\\\\\\\\"3 visible slashes\\\\\\\\\\\\\\""\''
+    test.run_gyp('defines-escaping.gyp')
+finally:
+    del os.environ['GYP_DEFINES']
+test.sleep()
+test.touch('defines-escaping.c')
+test.build('defines-escaping.gyp')
+expect = '\n\\"1 visible slash\\"\n\\\\"2 visible slashes\\\\"\n\\\\\\"3 visible slashes\\\\\\"\n'
+test.run_built_executable('defines_escaping', stdout=expect)
+try:
+    os.environ['GYP_DEFINES'] = 'test_format=\'\\n%s\\n\' test_args=\'"$foo, &quot; `foo`;"\''
+    test.run_gyp('defines-escaping.gyp')
+finally:
+    del os.environ['GYP_DEFINES']
+test.sleep()
+test.touch('defines-escaping.c')
+test.build('defines-escaping.gyp')
+expect = '\n$foo, &quot; `foo`;\n'
+test.run_built_executable('defines_escaping', stdout=expect)
+if (not ((test.format == 'msvs') and test.uses_msbuild)):
+    try:
+        os.environ['GYP_DEFINES'] = 'test_format=\'%s\' test_args=\'"%PATH%"\''
+        test.run_gyp('defines-escaping.gyp')
+    finally:
+        del os.environ['GYP_DEFINES']
+    test.sleep()
+    test.touch('defines-escaping.c')
+    test.build('defines-escaping.gyp')
+    expect = '%PATH%'
+    test.run_built_executable('defines_escaping', stdout=expect)
+try:
+    os.environ['GYP_DEFINES'] = 'test_format=\'\\n%s\\n%s\\n\' test_args=\'"\\\\, \\\\\\\\;", "\\"\\\\, \\\\\\\\;\\""\''
+    test.run_gyp('defines-escaping.gyp')
+finally:
+    del os.environ['GYP_DEFINES']
+test.sleep()
+test.touch('defines-escaping.c')
+test.build('defines-escaping.gyp')
+expect = '\n\\, \\\\;\n"\\, \\\\;"\n'
+test.run_built_executable('defines_escaping', stdout=expect)
+test.pass_test()

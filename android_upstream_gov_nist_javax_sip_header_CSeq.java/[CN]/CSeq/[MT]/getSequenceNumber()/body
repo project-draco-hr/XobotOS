@@ -1,0 +1,4 @@
+{
+  if (this.seqno == null)   return 0;
+ else   return this.seqno.intValue();
+}

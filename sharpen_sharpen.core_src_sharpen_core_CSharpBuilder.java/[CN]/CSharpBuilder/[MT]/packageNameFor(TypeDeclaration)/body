@@ -1,0 +1,4 @@
+{
+  ITypeBinding type=node.resolveBinding();
+  return type.getPackage().getName();
+}

@@ -1,0 +1,4 @@
+{
+  this.undeclaredThrowable=exception;
+  initCause(exception);
+}

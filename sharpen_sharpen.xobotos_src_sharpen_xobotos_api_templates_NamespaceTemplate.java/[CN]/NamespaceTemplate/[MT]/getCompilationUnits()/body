@@ -1,0 +1,24 @@
+{
+  List<CompilationUnitTemplate> list=null;
+  if (_includeFiles != null) {
+    list=new ArrayList<CompilationUnitTemplate>();
+    for (    final IncludeFile file : _includeFiles) {
+      list.add(file.getContents());
+    }
+  }
+  if (_templateIncludeFiles != null) {
+    for (    final TemplateIncludeFile file : _templateIncludeFiles) {
+      NamespaceTemplateSection nsts=file.getContents();
+      List<CompilationUnitTemplate> units=nsts.getCompilationUnits();
+      if (units != null) {
+        if (list == null)         list=new ArrayList<CompilationUnitTemplate>();
+        list.addAll(units);
+      }
+    }
+  }
+  if (_compilationUnits != null) {
+    if (list == null)     list=new ArrayList<CompilationUnitTemplate>();
+    list.addAll(_compilationUnits);
+  }
+  return unmodifiable(list);
+}

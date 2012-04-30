@@ -1,0 +1,56 @@
+{
+  if (isTypeReference(node)) {
+    return mappedTypeReference(node.resolveTypeBinding());
+  }
+ else   if (_currentExpression != null) {
+    return null;
+  }
+  final IBinding b=node.resolveBinding();
+  final IVariableBinding vb=b instanceof IVariableBinding ? (IVariableBinding)b : null;
+  if (vb == null) {
+    if (target != null)     return new CSMemberReferenceExpression(target,identifier(node));
+ else     return new CSReferenceExpression(identifier(node));
+  }
+  final String ident=identifier(vb.getName());
+  final ITypeBinding cls=vb.getDeclaringClass();
+  if (cls != null) {
+    ITypeBinding intType=my(IBindingManager.class).getIntType();
+    IExtractedEnumInfo eei=my(IBindingManager.class).getExtractedEnumInfo(cls);
+    if ((eei != null) && (intType.equals(getExpectedType()))) {
+      return new CSMemberReferenceExpression(mappedTypeReference(cls),ident + "_ID");
+    }
+    if (isStaticImport(vb,_ast.imports()))     return new CSMemberReferenceExpression(mappedTypeReference(cls),ident);
+ else     if (cls.isEnum() && ident.indexOf('.') == -1) {
+      CSExpression expr=my(CSharpDriver.class).mappedEnumAccess(this,node,vb);
+      if (expr != null)       return expr;
+      return new CSMemberReferenceExpression(mappedTypeReference(cls),ident);
+    }
+  }
+  final String mapped;
+  if (vb.isField())   mapped=mappedFieldName(vb);
+ else   mapped=mappedVariableName(vb);
+  if (null != mapped) {
+    if (isBoolLiteral(mapped)) {
+      return new CSBoolLiteralExpression(Boolean.parseBoolean(mapped));
+    }
+ else     if ((target == null) || (mapped.indexOf('.') > 0)) {
+      return new CSReferenceExpression(mapped);
+    }
+ else {
+      return new CSMemberReferenceExpression(target,mapped);
+    }
+  }
+  final CSExpression expr;
+  if (target != null) {
+    expr=new CSMemberReferenceExpression(target,ident);
+  }
+ else {
+    expr=new CSReferenceExpression(ident);
+  }
+  final IVariableInfo info=my(IBindingManager.class).getVariableInfo(vb);
+  if (info != null) {
+    CSTypeReferenceExpression autoCast=info.autoCast();
+    if (autoCast != null)     return new CSCastExpression(autoCast,expr);
+  }
+  return expr;
+}

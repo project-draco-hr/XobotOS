@@ -1,0 +1,3 @@
+{
+  return containsJavadoc(method,SharpenAnnotations.SHARPEN_NEW) ? CSMethodModifier.None : modifier;
+}

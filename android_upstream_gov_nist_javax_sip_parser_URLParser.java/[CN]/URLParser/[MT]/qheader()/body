@@ -1,0 +1,6 @@
+{
+  String name=lexer.getNextToken('=');
+  lexer.consume(1);
+  String value=hvalue();
+  return new NameValue(name,value,false);
+}

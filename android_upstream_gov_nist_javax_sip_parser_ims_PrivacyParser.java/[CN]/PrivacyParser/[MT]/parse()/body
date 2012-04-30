@@ -1,0 +1,31 @@
+{
+  if (debug)   dbg_enter("PrivacyParser.parse");
+  PrivacyList privacyList=new PrivacyList();
+  try {
+    this.headerName(TokenTypes.PRIVACY);
+    while (lexer.lookAhead(0) != '\n') {
+      this.lexer.SPorHT();
+      Privacy privacy=new Privacy();
+      privacy.setHeaderName(SIPHeaderNamesIms.PRIVACY);
+      this.lexer.match(TokenTypes.ID);
+      Token token=lexer.getNextToken();
+      privacy.setPrivacy(token.getTokenValue());
+      this.lexer.SPorHT();
+      privacyList.add(privacy);
+      while (lexer.lookAhead(0) == ';') {
+        this.lexer.match(';');
+        this.lexer.SPorHT();
+        privacy=new Privacy();
+        this.lexer.match(TokenTypes.ID);
+        token=lexer.getNextToken();
+        privacy.setPrivacy(token.getTokenValue());
+        this.lexer.SPorHT();
+        privacyList.add(privacy);
+      }
+    }
+    return privacyList;
+  }
+  finally {
+    if (debug)     dbg_leave("PrivacyParser.parse");
+  }
+}

@@ -1,0 +1,8 @@
+{
+  if (value == null) {
+    throw new NullPointerException();
+  }
+  hasMobile=true;
+  mobile_=value;
+  return this;
+}

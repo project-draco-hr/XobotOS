@@ -1,0 +1,26 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("creating new TLSMessageChannel (incoming)");
+    sipStack.getStackLogger().logStackTrace();
+  }
+  mySock=(SSLSocket)sock;
+  if (sock instanceof SSLSocket) {
+    SSLSocket sslSock=(SSLSocket)sock;
+    sslSock.setNeedClientAuth(true);
+    this.handshakeCompletedListener=new HandshakeCompletedListenerImpl(this);
+    sslSock.addHandshakeCompletedListener(this.handshakeCompletedListener);
+    sslSock.startHandshake();
+  }
+  peerAddress=mySock.getInetAddress();
+  myAddress=msgProcessor.getIpAddress().getHostAddress();
+  myClientInputStream=mySock.getInputStream();
+  mythread=new Thread(this);
+  mythread.setDaemon(true);
+  mythread.setName("TLSMessageChannelThread");
+  this.sipStack=sipStack;
+  this.tlsMessageProcessor=msgProcessor;
+  this.myPort=this.tlsMessageProcessor.getPort();
+  this.peerPort=mySock.getPort();
+  super.messageProcessor=msgProcessor;
+  mythread.start();
+}

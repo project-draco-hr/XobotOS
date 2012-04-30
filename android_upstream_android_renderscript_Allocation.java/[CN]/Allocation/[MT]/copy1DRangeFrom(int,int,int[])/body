@@ -1,0 +1,4 @@
+{
+  validateIsInt32();
+  copy1DRangeFromUnchecked(off,count,d);
+}

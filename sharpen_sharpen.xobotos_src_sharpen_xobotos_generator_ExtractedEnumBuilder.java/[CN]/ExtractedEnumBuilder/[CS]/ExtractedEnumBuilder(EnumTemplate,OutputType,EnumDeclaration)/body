@@ -1,0 +1,3 @@
+{
+  super(ExtractedEnumTemplate.DEFAULT,CSTypeDeclaration.class,output,node);
+}

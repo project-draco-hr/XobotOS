@@ -1,0 +1,29 @@
+{
+  if (this.timer != null)   this.timer.cancel();
+  timer=null;
+  this.pendingTransactions.clear();
+  this.toExit=true;
+synchronized (this) {
+    this.notifyAll();
+  }
+synchronized (this.clientTransactionTable) {
+    clientTransactionTable.notifyAll();
+  }
+synchronized (this.messageProcessors) {
+    MessageProcessor[] processorList;
+    processorList=getMessageProcessors();
+    for (int processorIndex=0; processorIndex < processorList.length; processorIndex++) {
+      removeMessageProcessor(processorList[processorIndex]);
+    }
+    this.ioHandler.closeAll();
+  }
+  try {
+    Thread.sleep(1000);
+  }
+ catch (  InterruptedException ex) {
+  }
+  this.clientTransactionTable.clear();
+  this.serverTransactionTable.clear();
+  this.dialogTable.clear();
+  this.serverLogger.closeLogFile();
+}

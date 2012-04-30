@@ -1,0 +1,5 @@
+{
+  BodyDeclaration typeDeclaration=findDeclaringNode(node.resolveBinding());
+  if (null == typeDeclaration)   return false;
+  return hasRemoveAnnotation(typeDeclaration);
+}

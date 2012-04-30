@@ -1,0 +1,7 @@
+{
+  fromServiceId=fromId;
+  toServiceId=toId;
+  fromCodeScheme=fromScheme;
+  toCodeScheme=toScheme;
+  this.selected=selected;
+}

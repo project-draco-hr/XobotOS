@@ -1,0 +1,6 @@
+{
+  super.onStopTrackingTouch();
+  if (mOnSeekBarChangeListener != null) {
+    mOnSeekBarChangeListener.onStopTrackingTouch(this);
+  }
+}

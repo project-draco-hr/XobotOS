@@ -1,0 +1,167 @@
+{
+  String retval=null;
+switch (rc) {
+case TRYING:
+    retval="Trying";
+  break;
+case RINGING:
+retval="Ringing";
+break;
+case CALL_IS_BEING_FORWARDED:
+retval="Call is being forwarded";
+break;
+case QUEUED:
+retval="Queued";
+break;
+case SESSION_PROGRESS:
+retval="Session progress";
+break;
+case OK:
+retval="OK";
+break;
+case ACCEPTED:
+retval="Accepted";
+break;
+case MULTIPLE_CHOICES:
+retval="Multiple choices";
+break;
+case MOVED_PERMANENTLY:
+retval="Moved permanently";
+break;
+case MOVED_TEMPORARILY:
+retval="Moved Temporarily";
+break;
+case USE_PROXY:
+retval="Use proxy";
+break;
+case ALTERNATIVE_SERVICE:
+retval="Alternative service";
+break;
+case BAD_REQUEST:
+retval="Bad request";
+break;
+case UNAUTHORIZED:
+retval="Unauthorized";
+break;
+case PAYMENT_REQUIRED:
+retval="Payment required";
+break;
+case FORBIDDEN:
+retval="Forbidden";
+break;
+case NOT_FOUND:
+retval="Not found";
+break;
+case METHOD_NOT_ALLOWED:
+retval="Method not allowed";
+break;
+case NOT_ACCEPTABLE:
+retval="Not acceptable";
+break;
+case PROXY_AUTHENTICATION_REQUIRED:
+retval="Proxy Authentication required";
+break;
+case REQUEST_TIMEOUT:
+retval="Request timeout";
+break;
+case GONE:
+retval="Gone";
+break;
+case TEMPORARILY_UNAVAILABLE:
+retval="Temporarily Unavailable";
+break;
+case REQUEST_ENTITY_TOO_LARGE:
+retval="Request entity too large";
+break;
+case REQUEST_URI_TOO_LONG:
+retval="Request-URI too large";
+break;
+case UNSUPPORTED_MEDIA_TYPE:
+retval="Unsupported media type";
+break;
+case UNSUPPORTED_URI_SCHEME:
+retval="Unsupported URI Scheme";
+break;
+case BAD_EXTENSION:
+retval="Bad extension";
+break;
+case EXTENSION_REQUIRED:
+retval="Etension Required";
+break;
+case INTERVAL_TOO_BRIEF:
+retval="Interval too brief";
+break;
+case CALL_OR_TRANSACTION_DOES_NOT_EXIST:
+retval="Call leg/Transaction does not exist";
+break;
+case LOOP_DETECTED:
+retval="Loop detected";
+break;
+case TOO_MANY_HOPS:
+retval="Too many hops";
+break;
+case ADDRESS_INCOMPLETE:
+retval="Address incomplete";
+break;
+case AMBIGUOUS:
+retval="Ambiguous";
+break;
+case BUSY_HERE:
+retval="Busy here";
+break;
+case REQUEST_TERMINATED:
+retval="Request Terminated";
+break;
+case NOT_ACCEPTABLE_HERE:
+retval="Not Acceptable here";
+break;
+case BAD_EVENT:
+retval="Bad Event";
+break;
+case REQUEST_PENDING:
+retval="Request Pending";
+break;
+case SERVER_INTERNAL_ERROR:
+retval="Server Internal Error";
+break;
+case UNDECIPHERABLE:
+retval="Undecipherable";
+break;
+case NOT_IMPLEMENTED:
+retval="Not implemented";
+break;
+case BAD_GATEWAY:
+retval="Bad gateway";
+break;
+case SERVICE_UNAVAILABLE:
+retval="Service unavailable";
+break;
+case SERVER_TIMEOUT:
+retval="Gateway timeout";
+break;
+case VERSION_NOT_SUPPORTED:
+retval="SIP version not supported";
+break;
+case MESSAGE_TOO_LARGE:
+retval="Message Too Large";
+break;
+case BUSY_EVERYWHERE:
+retval="Busy everywhere";
+break;
+case DECLINE:
+retval="Decline";
+break;
+case DOES_NOT_EXIST_ANYWHERE:
+retval="Does not exist anywhere";
+break;
+case SESSION_NOT_ACCEPTABLE:
+retval="Session Not acceptable";
+break;
+case CONDITIONAL_REQUEST_FAILED:
+retval="Conditional request failed";
+break;
+default :
+retval="Unknown Status";
+}
+return retval;
+}

@@ -1,0 +1,8 @@
+{
+  mTotalTime=mLoadedTime=in.readLong() * 1000;
+  mLastTime=0;
+  mUnpluggedTime=mTotalTime;
+  mCount=mLoadedCount=in.readInt();
+  mLastCount=0;
+  mUnpluggedCount=mCount;
+}

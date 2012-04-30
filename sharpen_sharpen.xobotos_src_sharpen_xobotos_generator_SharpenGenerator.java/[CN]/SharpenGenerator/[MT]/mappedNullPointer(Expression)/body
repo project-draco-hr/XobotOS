@@ -1,0 +1,15 @@
+{
+  VariableBinding variable=lookupVariableBinding(expr);
+  if (variable != null) {
+    if (variable.getNativeHandle() != null)     return new CSNullLiteralExpression();
+    if (variable.isPointer())     return new CSReferenceExpression("System.IntPtr.Zero");
+    return null;
+  }
+  if (expr instanceof MethodInvocation) {
+    IMethodBinding method=((MethodInvocation)expr).resolveMethodBinding();
+    MethodBinding binding=my(BindingManager.class).resolveBinding(method);
+    if (binding == null)     return null;
+    if (binding.getNativeHandle() != null)     return new CSNullLiteralExpression();
+  }
+  return null;
+}

@@ -1,0 +1,8 @@
+{
+  isSimplePath=true;
+  if (mDetectSimplePaths) {
+    mLastDirection=null;
+    if (rects != null)     rects.setEmpty();
+  }
+  native_reset(mNativePath);
+}

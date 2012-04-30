@@ -1,0 +1,4 @@
+{
+  final CSExpression length=new CSMemberReferenceExpression(arg.getReference(),"Length");
+  return new CSExpressionStatement(-1,new CSInfixExpression("=",getReference(obj),length));
+}

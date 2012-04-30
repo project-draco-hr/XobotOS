@@ -1,0 +1,8 @@
+{
+  if (level < DEFAULT_COMPRESSION || level > BEST_COMPRESSION) {
+    throw new IllegalArgumentException();
+  }
+  compressLevel=level;
+  streamHandle=createStream(compressLevel,strategy,noHeader);
+  guard.open("end");
+}

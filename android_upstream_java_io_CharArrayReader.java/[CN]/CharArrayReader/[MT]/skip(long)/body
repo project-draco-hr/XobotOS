@@ -1,0 +1,18 @@
+{
+synchronized (lock) {
+    checkNotClosed();
+    if (charCount <= 0) {
+      return 0;
+    }
+    long skipped=0;
+    if (charCount < this.count - pos) {
+      pos=pos + (int)charCount;
+      skipped=charCount;
+    }
+ else {
+      skipped=this.count - pos;
+      pos=this.count;
+    }
+    return skipped;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  int threadNameId=writeString(e.threadName);
+  int groupNameId=writeString(e.groupName);
+  int parentGroupNameId=writeString(e.parentGroupName);
+  writeRecordHeader(BinaryHprof.Tag.START_THREAD,0,BinaryHprof.Tag.START_THREAD.maximumSize);
+  out.writeInt(e.threadId);
+  writeId(e.objectId);
+  out.writeInt(0);
+  writeId(threadNameId);
+  writeId(groupNameId);
+  writeId(parentGroupNameId);
+}

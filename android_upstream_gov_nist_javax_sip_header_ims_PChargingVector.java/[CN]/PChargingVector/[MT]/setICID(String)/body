@@ -1,0 +1,4 @@
+{
+  if (icid == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Charging-Vector, setICID(), the icid parameter is null.");
+  setParameter(ParameterNamesIms.ICID_VALUE,icid);
+}

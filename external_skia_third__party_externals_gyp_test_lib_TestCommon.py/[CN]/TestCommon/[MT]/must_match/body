@@ -1,0 +1,11 @@
+def must_match(self, file, expect, mode='rb'):
+    'Matches the contents of the specified file (first argument)\n        against the expected contents (second argument).  The expected\n        contents are a list of lines or a string which will be split\n        on newlines.\n        '
+    file_contents = self.read(file, mode)
+    try:
+        self.fail_test((not self.match(file_contents, expect)))
+    except KeyboardInterrupt:
+        raise
+    except:
+        print ("Unexpected contents of `%s'" % file)
+        self.diff(expect, file_contents, 'contents ')
+        raise

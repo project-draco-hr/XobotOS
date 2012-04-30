@@ -1,0 +1,4 @@
+{
+  if (contentLength < 0)   throw new InvalidArgumentException("JAIN-SIP Exception" + ", ContentLength, setContentLength(), the contentLength parameter is <0");
+  this.contentLength=Integer.valueOf(contentLength);
+}

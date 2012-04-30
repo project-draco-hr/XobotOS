@@ -1,0 +1,15 @@
+{
+  if (debug)   dbg_enter("ReasonParser.parse");
+  try {
+    headerName(TokenTypes.REFERENCES);
+    References references=new References();
+    this.lexer.SPorHT();
+    String callId=lexer.byteStringNoSemicolon();
+    references.setCallId(callId);
+    super.parse(references);
+    return references;
+  }
+  finally {
+    if (debug)     dbg_leave("ReferencesParser.parse");
+  }
+}

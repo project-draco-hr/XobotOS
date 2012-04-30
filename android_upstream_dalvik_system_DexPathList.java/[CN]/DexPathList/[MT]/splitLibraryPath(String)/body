@@ -1,0 +1,4 @@
+{
+  ArrayList<File> result=splitPaths(path,System.getProperty("java.library.path","."),true);
+  return result.toArray(new File[result.size()]);
+}

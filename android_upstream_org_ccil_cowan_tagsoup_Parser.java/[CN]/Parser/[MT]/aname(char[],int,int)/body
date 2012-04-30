@@ -1,0 +1,4 @@
+{
+  if (theNewElement == null)   return;
+  theAttributeName=makeName(buff,offset,length).toLowerCase();
+}

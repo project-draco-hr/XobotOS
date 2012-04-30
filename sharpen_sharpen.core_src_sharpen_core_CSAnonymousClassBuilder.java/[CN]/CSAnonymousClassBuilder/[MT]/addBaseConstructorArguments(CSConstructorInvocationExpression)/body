@@ -1,0 +1,22 @@
+{
+  final List arguments=constructorArguments();
+  if (arguments.isEmpty()) {
+    return;
+  }
+  final IMethodBinding ctor=constructorBinding();
+  final ITypeBinding[] ctorParameterTypes=ctor.getParameterTypes();
+  final CSConstructorInvocationExpression cci;
+  if (_constructor.chainedConstructorInvocation() != null)   cci=_constructor.chainedConstructorInvocation();
+ else {
+    cci=new CSConstructorInvocationExpression(new CSBaseExpression());
+    _constructor.chainedConstructorInvocation(cci);
+  }
+  for (int i=0; i < ctorParameterTypes.length; ++i) {
+    ITypeBinding parameterType=ctorParameterTypes[i];
+    Expression argument=(Expression)arguments.get(i);
+    String parameterName="baseArg" + (i + 1);
+    _constructor.addParameter(parameterName,mappedTypeReference(parameterType));
+    cci.addArgument(new CSReferenceExpression(parameterName));
+    invocation.addArgument(_parent.mapExpression(argument));
+  }
+}

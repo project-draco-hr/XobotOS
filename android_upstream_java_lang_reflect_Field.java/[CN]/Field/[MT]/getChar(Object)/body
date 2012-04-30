@@ -1,0 +1,3 @@
+{
+  return getCField(object,declaringClass,type,slot,flag,TYPE_CHAR);
+}

@@ -1,0 +1,33 @@
+{
+  Expression expr=node.getExpression();
+  ITypeBinding exprType=expr.resolveTypeBinding();
+  ITypeBinding type=node.getType().resolveBinding();
+  if (isJavaLangCharSequence(exprType) && isJavaLangString(type)) {
+    CSReferenceExpression re=new CSReferenceExpression("java.lang.CharSequenceProxy.UnWrap");
+    CSMethodInvocationExpression mie=new CSMethodInvocationExpression(re);
+    mie.addArgument(mapExpression(expr));
+    pushExpression(mie);
+    return false;
+  }
+ else   if (isJavaLangString(exprType) && isJavaLangCharSequence(type)) {
+    CSReferenceExpression re=new CSReferenceExpression("java.lang.CharSequenceProxy.Wrap");
+    CSMethodInvocationExpression mie=new CSMethodInvocationExpression(re);
+    mie.addArgument(mapExpression(expr));
+    pushExpression(mie);
+    return false;
+  }
+ else   if (isJavaLangNumber(type)) {
+    pushExpression(mapExpression(expr));
+    return false;
+  }
+  final CSTypeReferenceExpression target=mappedTypeReference(type);
+  final CSExpression mappedExpr=mapExpression(expr);
+  if (isTypeVariable(type) && isTypeVariable(exprType)) {
+    CSExpression objectCast=new CSCastExpression(OBJECT_TYPE_REFERENCE,mappedExpr);
+    pushExpression(new CSCastExpression(target,objectCast));
+    return false;
+  }
+  pushExpression(new CSCastExpression(target,mappedExpr));
+  if (type.equals(my(IBindingManager.class).getByteType()))   pushExpression(new CSUncheckedExpression(popExpression()));
+  return false;
+}

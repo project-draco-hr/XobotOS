@@ -1,0 +1,21 @@
+{
+  List<String> fragments=new LinkedList<String>();
+  for (  Object fragment : element.fragments()) {
+    if (fragment instanceof TextElement) {
+      TextElement textElement=(TextElement)fragment;
+      String text=textElement.getText();
+      int index=findSentenceClosure(text);
+      if (index > -1) {
+        fragments.add(text.substring(0,index + 1));
+        return fragments;
+      }
+ else {
+        fragments.add(text);
+      }
+    }
+ else {
+      break;
+    }
+  }
+  return null;
+}

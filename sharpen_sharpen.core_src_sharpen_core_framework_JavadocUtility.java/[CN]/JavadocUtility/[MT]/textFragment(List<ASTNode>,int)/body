@@ -1,0 +1,3 @@
+{
+  return ((TextElement)fragments.get(index)).getText().trim();
+}

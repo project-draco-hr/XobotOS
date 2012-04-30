@@ -1,0 +1,4 @@
+{
+  checkSynchronousHint();
+  mPendingResult.mResultCode=code;
+}

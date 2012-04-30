@@ -1,0 +1,12 @@
+{
+  if (mergeList == null)   return;
+  Iterator it1=this.listIterator();
+  Iterator it2=mergeList.listIterator();
+  while (it1.hasNext()) {
+    GenericObject outerObj=(GenericObject)it1.next();
+    while (it2.hasNext()) {
+      Object innerObj=it2.next();
+      outerObj.merge(innerObj);
+    }
+  }
+}

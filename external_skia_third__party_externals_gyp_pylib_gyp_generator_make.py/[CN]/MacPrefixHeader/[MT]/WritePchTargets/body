@@ -1,0 +1,15 @@
+def WritePchTargets(self, writer):
+    'Writes make rules to compile the prefix headers.'
+    if ((not self.header) or (not self.compile_headers)):
+        return
+    writer.WriteLn((self._Gch('c') + ': GYP_PCH_CFLAGS := -x c-header $(DEFS_$(BUILDTYPE)) $(INCS_$(BUILDTYPE)) $(CFLAGS_$(BUILDTYPE)) $(CFLAGS_C_$(BUILDTYPE))'))
+    writer.WriteLn((self._Gch('cc') + ': GYP_PCH_CCFLAGS := -x c++-header $(DEFS_$(BUILDTYPE)) $(INCS_$(BUILDTYPE)) $(CFLAGS_$(BUILDTYPE)) $(CFLAGS_CC_$(BUILDTYPE))'))
+    writer.WriteLn((self._Gch('m') + ': GYP_PCH_OBJCFLAGS := -x objective-c-header $(DEFS_$(BUILDTYPE)) $(INCS_$(BUILDTYPE)) $(CFLAGS_$(BUILDTYPE)) $(CFLAGS_C_$(BUILDTYPE)) $(CFLAGS_OBJC_$(BUILDTYPE))'))
+    writer.WriteLn((self._Gch('mm') + ': GYP_PCH_OBJCXXFLAGS := -x objective-c++-header $(DEFS_$(BUILDTYPE)) $(INCS_$(BUILDTYPE)) $(CFLAGS_$(BUILDTYPE)) $(CFLAGS_CC_$(BUILDTYPE)) $(CFLAGS_OBJCC_$(BUILDTYPE))'))
+    for lang in self.compiled_headers:
+        writer.WriteLn(('%s: %s FORCE_DO_CMD' % (self._Gch(lang), self.header)))
+        writer.WriteLn(('\t@$(call do_cmd,pch_%s,1)' % lang))
+        writer.WriteLn('')
+        assert (' ' not in self._Gch(lang)), ('Spaces in gch filenames not supported (%s)' % self._Gch(lang))
+        writer.WriteLn(('all_deps += %s' % self._Gch(lang)))
+        writer.WriteLn('')

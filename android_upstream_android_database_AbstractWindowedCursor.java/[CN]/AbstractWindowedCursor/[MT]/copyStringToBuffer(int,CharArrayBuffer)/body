@@ -1,0 +1,4 @@
+{
+  checkPosition();
+  mWindow.copyStringToBuffer(mPos,columnIndex,buffer);
+}

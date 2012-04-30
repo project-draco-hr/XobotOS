@@ -1,0 +1,3 @@
+{
+  return getBField(object,declaringClass,type,slot,flag,TYPE_BYTE);
+}

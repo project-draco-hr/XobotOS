@@ -1,0 +1,8 @@
+{
+  writeSeparatedList(nodes,new Closure(){
+    public void execute(){
+      writeLine();
+    }
+  }
+);
+}

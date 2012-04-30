@@ -1,0 +1,3 @@
+{
+  write(Boolean.toString(node.booleanValue()));
+}

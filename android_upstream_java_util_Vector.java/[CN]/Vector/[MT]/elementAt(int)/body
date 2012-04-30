@@ -1,0 +1,6 @@
+{
+  if (location < elementCount) {
+    return (E)elementData[location];
+  }
+  throw arrayIndexOutOfBoundsException(location,elementCount);
+}

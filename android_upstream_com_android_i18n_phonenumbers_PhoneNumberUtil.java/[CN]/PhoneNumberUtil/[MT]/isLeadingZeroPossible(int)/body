@@ -1,0 +1,7 @@
+{
+  PhoneMetadata mainMetadataForCallingCode=getMetadataForRegion(getRegionCodeForCountryCode(countryCallingCode));
+  if (mainMetadataForCallingCode == null) {
+    return false;
+  }
+  return mainMetadataForCallingCode.isLeadingZeroPossible();
+}

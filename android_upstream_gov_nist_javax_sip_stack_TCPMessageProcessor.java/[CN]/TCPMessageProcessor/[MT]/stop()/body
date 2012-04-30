@@ -1,0 +1,19 @@
+{
+  isRunning=false;
+  try {
+    sock.close();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  Collection en=tcpMessageChannels.values();
+  for (Iterator it=en.iterator(); it.hasNext(); ) {
+    TCPMessageChannel next=(TCPMessageChannel)it.next();
+    next.close();
+  }
+  for (Iterator incomingMCIterator=incomingTcpMessageChannels.iterator(); incomingMCIterator.hasNext(); ) {
+    TCPMessageChannel next=(TCPMessageChannel)incomingMCIterator.next();
+    next.close();
+  }
+  this.notify();
+}

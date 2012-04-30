@@ -1,0 +1,3 @@
+{
+  return ipaddress[0] == 0 && ipaddress[1] == 0 && ipaddress[2] == 0 && ipaddress[3] == 0;
+}

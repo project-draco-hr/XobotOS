@@ -1,0 +1,8 @@
+{
+  enforceSealed();
+  if (!canPerformRequestOverConnection(mAccessibilityViewId)) {
+    return false;
+  }
+  AccessibilityInteractionClient client=AccessibilityInteractionClient.getInstance();
+  return client.performAccessibilityAction(mConnection,mAccessibilityWindowId,mAccessibilityViewId,action);
+}

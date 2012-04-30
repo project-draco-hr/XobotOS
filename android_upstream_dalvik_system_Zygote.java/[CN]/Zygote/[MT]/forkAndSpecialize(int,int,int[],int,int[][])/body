@@ -1,0 +1,6 @@
+{
+  preFork();
+  int pid=nativeForkAndSpecialize(uid,gid,gids,debugFlags,rlimits);
+  postFork();
+  return pid;
+}

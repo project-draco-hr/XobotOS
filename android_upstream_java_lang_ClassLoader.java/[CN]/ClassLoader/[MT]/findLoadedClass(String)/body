@@ -1,0 +1,6 @@
+{
+  ClassLoader loader;
+  if (this == BootClassLoader.getInstance())   loader=null;
+ else   loader=this;
+  return VMClassLoader.findLoadedClass(loader,className);
+}

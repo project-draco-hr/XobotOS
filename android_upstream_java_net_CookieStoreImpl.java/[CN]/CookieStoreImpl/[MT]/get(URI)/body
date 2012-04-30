@@ -1,0 +1,37 @@
+{
+  if (uri == null) {
+    throw new NullPointerException("uri == null");
+  }
+  List<HttpCookie> result=new ArrayList<HttpCookie>();
+  List<HttpCookie> cookiesForUri=map.get(uri);
+  if (cookiesForUri != null) {
+    for (Iterator<HttpCookie> i=cookiesForUri.iterator(); i.hasNext(); ) {
+      HttpCookie cookie=i.next();
+      if (cookie.hasExpired()) {
+        i.remove();
+      }
+ else {
+        result.add(cookie);
+      }
+    }
+  }
+  for (  Map.Entry<URI,List<HttpCookie>> entry : map.entrySet()) {
+    if (uri.equals(entry.getKey())) {
+      continue;
+    }
+    List<HttpCookie> entryCookies=entry.getValue();
+    for (Iterator<HttpCookie> i=entryCookies.iterator(); i.hasNext(); ) {
+      HttpCookie cookie=i.next();
+      if (!HttpCookie.domainMatches(cookie.getDomain(),uri.getHost())) {
+        continue;
+      }
+      if (cookie.hasExpired()) {
+        i.remove();
+      }
+ else       if (!result.contains(cookie)) {
+        result.add(cookie);
+      }
+    }
+  }
+  return Collections.unmodifiableList(result);
+}

@@ -1,0 +1,5 @@
+{
+  FieldAccessFinder finder=new FieldAccessFinder();
+  node.accept(finder);
+  return findDeclaringNode(finder.field);
+}

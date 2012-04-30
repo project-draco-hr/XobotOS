@@ -1,0 +1,5 @@
+{
+  CSTypeReferenceExpression type=my(CSharpDriver.class).mappedVariableType(binding);
+  if (type != null)   return type;
+  return mappedTypeReference(binding.getType());
+}

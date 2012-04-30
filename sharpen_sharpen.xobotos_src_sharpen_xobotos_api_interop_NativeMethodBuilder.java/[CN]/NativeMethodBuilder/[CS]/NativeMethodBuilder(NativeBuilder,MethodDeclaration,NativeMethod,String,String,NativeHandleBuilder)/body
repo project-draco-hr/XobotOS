@@ -1,0 +1,8 @@
+{
+  this._builder=builder;
+  this._nativeHandle=handleBuilder;
+  this._node=method;
+  this._native=template;
+  this._nativeName=name;
+  this._nativeFunctionName=funcName;
+}

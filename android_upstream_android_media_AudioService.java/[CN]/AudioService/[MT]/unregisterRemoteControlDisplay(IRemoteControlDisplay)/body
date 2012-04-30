@@ -1,0 +1,24 @@
+{
+  if (DEBUG_RC)   Log.d(TAG,"<<< unregisterRemoteControlDisplay(" + rcd + ")");
+synchronized (mRCStack) {
+    if ((rcd == null) || (rcd != mRcDisplay)) {
+      if (DEBUG_RC)       Log.w(TAG,"    trying to unregister unregistered RCD");
+      return;
+    }
+    rcDisplay_stopDeathMonitor_syncRcStack();
+    mRcDisplay=null;
+    Iterator<RemoteControlStackEntry> stackIterator=mRCStack.iterator();
+    while (stackIterator.hasNext()) {
+      RemoteControlStackEntry rcse=stackIterator.next();
+      if (rcse.mRcClient != null) {
+        try {
+          rcse.mRcClient.unplugRemoteControlDisplay(rcd);
+        }
+ catch (        RemoteException e) {
+          Log.e(TAG,"Error disconnecting remote control display to client: " + e);
+          e.printStackTrace();
+        }
+      }
+    }
+  }
+}

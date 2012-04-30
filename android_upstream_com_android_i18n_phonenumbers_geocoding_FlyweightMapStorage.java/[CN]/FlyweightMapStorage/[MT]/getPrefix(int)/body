@@ -1,0 +1,3 @@
+{
+  return readWordFromBuffer(phoneNumberPrefixes,prefixSizeInBytes,index);
+}

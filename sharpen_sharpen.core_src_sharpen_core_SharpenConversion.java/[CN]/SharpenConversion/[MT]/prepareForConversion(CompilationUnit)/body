@@ -1,0 +1,10 @@
+{
+  deleteProblemMarkers();
+  WarningHandler warningHandler=new WarningHandler(){
+    @Override public void warning(    ASTNode node,    String message){
+      createProblemMarker(ast,node,message,false);
+    }
+  }
+;
+  _configuration.setWarningHandler(warningHandler);
+}

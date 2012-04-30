@@ -1,0 +1,14 @@
+{
+  if (location >= 0 && location < elementCount) {
+    elementCount--;
+    int size=elementCount - location;
+    if (size > 0) {
+      System.arraycopy(elementData,location + 1,elementData,location,size);
+    }
+    elementData[elementCount]=null;
+    modCount++;
+  }
+ else {
+    throw arrayIndexOutOfBoundsException(location,elementCount);
+  }
+}

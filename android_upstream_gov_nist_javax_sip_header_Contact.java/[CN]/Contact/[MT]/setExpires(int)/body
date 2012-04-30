@@ -1,0 +1,4 @@
+{
+  Integer deltaSeconds=Integer.valueOf(expiryDeltaSeconds);
+  this.parameters.set(EXPIRES,deltaSeconds);
+}

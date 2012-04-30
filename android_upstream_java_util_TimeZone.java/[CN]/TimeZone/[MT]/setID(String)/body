@@ -1,0 +1,6 @@
+{
+  if (id == null) {
+    throw new NullPointerException();
+  }
+  ID=id;
+}

@@ -1,0 +1,8 @@
+{
+  if (!setupNativeDataNative()) {
+    return false;
+  }
+  switchConnectable(false);
+  updateSdpRecords();
+  return true;
+}

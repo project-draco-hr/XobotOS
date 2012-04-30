@@ -1,0 +1,9 @@
+{
+  myListIterator=this.listIterator(0);
+  try {
+    return (GenericObject)myListIterator.next();
+  }
+ catch (  NoSuchElementException ex) {
+    return null;
+  }
+}

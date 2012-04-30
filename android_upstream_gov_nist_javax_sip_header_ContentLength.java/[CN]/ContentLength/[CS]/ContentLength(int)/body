@@ -1,0 +1,4 @@
+{
+  super(NAME);
+  this.contentLength=Integer.valueOf(length);
+}

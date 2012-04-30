@@ -1,0 +1,29 @@
+{
+  mContext=context;
+  mPm=mContext.getPackageManager();
+  mPermsList=new ArrayList<PermissionInfo>();
+  Set<PermissionInfo> permSet=new HashSet<PermissionInfo>();
+  if (pkg == null) {
+    return;
+  }
+  if (pkg.requestedPermissions != null) {
+    ArrayList<String> strList=pkg.requestedPermissions;
+    int size=strList.size();
+    if (size > 0) {
+      extractPerms(strList.toArray(new String[size]),permSet);
+    }
+  }
+  if (pkg.mSharedUserId != null) {
+    int sharedUid;
+    try {
+      sharedUid=mPm.getUidForSharedUser(pkg.mSharedUserId);
+      getAllUsedPermissions(sharedUid,permSet);
+    }
+ catch (    NameNotFoundException e) {
+      Log.w(TAG,"Could'nt retrieve shared user id for:" + pkg.packageName);
+    }
+  }
+  for (  PermissionInfo tmpInfo : permSet) {
+    mPermsList.add(tmpInfo);
+  }
+}

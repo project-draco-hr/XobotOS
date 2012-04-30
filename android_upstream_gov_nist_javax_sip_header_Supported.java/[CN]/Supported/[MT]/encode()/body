@@ -1,0 +1,6 @@
+{
+  String retval=headerName + COLON;
+  if (optionTag != null)   retval+=SP + optionTag;
+  retval+=NEWLINE;
+  return retval;
+}

@@ -1,0 +1,4 @@
+{
+  if (callid == null)   throw new NullPointerException("Null arg!");
+  return this.authorizationHeaders.get(callid);
+}

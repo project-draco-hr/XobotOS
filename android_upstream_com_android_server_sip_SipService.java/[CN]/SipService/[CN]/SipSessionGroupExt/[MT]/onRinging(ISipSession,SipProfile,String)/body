@@ -1,0 +1,20 @@
+{
+  if (DEBUGV)   Log.d(TAG,"<<<<< onRinging()");
+  SipSessionGroup.SipSessionImpl session=(SipSessionGroup.SipSessionImpl)s;
+synchronized (SipService.this) {
+    try {
+      if (!isRegistered() || callingSelf(this,session)) {
+        session.endCall();
+        return;
+      }
+      addPendingSession(session);
+      Intent intent=SipManager.createIncomingCallBroadcast(session.getCallId(),sessionDescription);
+      if (DEBUG)       Log.d(TAG," ringing~~ " + getUri() + ": "+ caller.getUri()+ ": "+ session.getCallId()+ " "+ mIncomingCallPendingIntent);
+      mIncomingCallPendingIntent.send(mContext,SipManager.INCOMING_CALL_RESULT_CODE,intent);
+    }
+ catch (    PendingIntent.CanceledException e) {
+      Log.w(TAG,"pendingIntent is canceled, drop incoming call");
+      session.endCall();
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  this(transaction.getSipProvider());
+  SIPRequest sipRequest=(SIPRequest)transaction.getRequest();
+  this.callIdHeader=sipRequest.getCallId();
+  this.earlyDialogId=sipRequest.getDialogId(false);
+  if (transaction == null)   throw new NullPointerException("Null tx");
+  this.sipStack=transaction.sipStack;
+  this.sipProvider=(SipProviderImpl)transaction.getSipProvider();
+  if (sipProvider == null)   throw new NullPointerException("Null Provider!");
+  this.addTransaction(transaction);
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("Creating a dialog : " + this);
+    sipStack.getStackLogger().logDebug("provider port = " + this.sipProvider.getListeningPoint().getPort());
+    sipStack.getStackLogger().logStackTrace();
+  }
+  this.isBackToBackUserAgent=sipStack.isBackToBackUserAgent;
+  addEventListener(sipStack);
+}

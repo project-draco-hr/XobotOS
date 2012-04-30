@@ -1,0 +1,15 @@
+{
+  if (!JniUtil.useChromiumHttpStack()) {
+    setCookie(url,value);
+    return;
+  }
+  WebAddress uri;
+  try {
+    uri=new WebAddress(url);
+  }
+ catch (  ParseException ex) {
+    Log.e(LOGTAG,"Bad address: " + url);
+    return;
+  }
+  nativeSetCookie(uri.toString(),value,privateBrowsing);
+}

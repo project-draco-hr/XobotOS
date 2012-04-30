@@ -1,0 +1,10 @@
+{
+  Object spi=ENGINE.getInstance(algorithm,provider,null);
+  if (spi instanceof Signature) {
+    Signature result=(Signature)spi;
+    result.algorithm=algorithm;
+    result.provider=provider;
+    return result;
+  }
+  return new SignatureImpl((SignatureSpi)spi,provider,algorithm);
+}

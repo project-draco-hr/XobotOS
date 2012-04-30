@@ -1,0 +1,9 @@
+{
+  for (int i=_outputProviderStack.size() - 1; i >= 0; i--) {
+    IOutputProvider provider=_outputProviderStack.get(i);
+    if (provider == null)     continue;
+    OutputType type=provider.getOutputType();
+    if (type != null)     return type;
+  }
+  return OutputType.NAKED_STUB;
+}

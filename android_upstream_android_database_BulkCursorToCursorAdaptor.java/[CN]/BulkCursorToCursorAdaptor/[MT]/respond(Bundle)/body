@@ -1,0 +1,10 @@
+{
+  throwIfCursorIsClosed();
+  try {
+    return mBulkCursor.respond(extras);
+  }
+ catch (  RemoteException e) {
+    Log.w(TAG,"respond() threw RemoteException, returning an empty bundle.",e);
+    return Bundle.EMPTY;
+  }
+}

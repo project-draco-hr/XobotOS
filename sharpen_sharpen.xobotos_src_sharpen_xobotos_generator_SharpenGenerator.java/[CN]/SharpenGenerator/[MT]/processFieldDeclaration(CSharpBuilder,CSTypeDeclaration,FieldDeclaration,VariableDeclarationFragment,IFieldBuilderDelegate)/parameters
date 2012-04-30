@@ -1,0 +1,5 @@
+CSharpBuilder csharpBuilder
+CSTypeDeclaration parent
+FieldDeclaration node
+VariableDeclarationFragment fragment
+IFieldBuilderDelegate delegate

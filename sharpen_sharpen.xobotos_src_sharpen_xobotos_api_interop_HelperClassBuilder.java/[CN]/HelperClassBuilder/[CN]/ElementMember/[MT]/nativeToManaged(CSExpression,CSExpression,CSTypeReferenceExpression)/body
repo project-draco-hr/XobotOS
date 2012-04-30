@@ -1,0 +1,6 @@
+{
+  CSExpression marshal;
+  if (isClass())   marshal=new CSMethodInvocationExpression(getHelper().NATIVE_TO_MANAGED.expr(),addr);
+ else   marshal=getMarshalPtrToStructure(addr,type);
+  return new CSExpressionStatement(-1,new CSInfixExpression("=",expr,marshal));
+}

@@ -1,0 +1,6 @@
+{
+  if (_nativeBuilder != null) {
+    if (!_nativeBuilder.build(_needsHeader))     return false;
+  }
+  return true;
+}

@@ -1,0 +1,28 @@
+def GenerateOutput(target_list, target_dicts, data, params):
+    "Generate .sln and .vcproj files.\n\n  This is the entry point for this generator.\n  Arguments:\n    target_list: List of target pairs: 'base/base.gyp:base'.\n    target_dicts: Dict of target properties keyed on target pair.\n    data: Dictionary containing per .gyp data.\n  "
+    global fixpath_prefix
+    options = params['options']
+    msvs_version = params['msvs_version']
+    (target_list, target_dicts) = _ShardTargets(target_list, target_dicts)
+    configs = set()
+    for qualified_target in target_list:
+        spec = target_dicts[qualified_target]
+        for (config_name, config) in spec['configurations'].iteritems():
+            configs.add(_ConfigFullName(config_name, config))
+    configs = list(configs)
+    project_objects = _CreateProjectObjects(target_list, target_dicts, options, msvs_version)
+    for project in project_objects.values():
+        fixpath_prefix = project.fixpath_prefix
+        _GenerateProject(project, options, msvs_version)
+    fixpath_prefix = None
+    for build_file in data:
+        if (build_file[(-4):] != '.gyp'):
+            continue
+        sln_path = ((build_file[:(-4)] + options.suffix) + '.sln')
+        if options.generator_output:
+            sln_path = os.path.join(options.generator_output, sln_path)
+        sln_projects = gyp.common.BuildFileTargets(target_list, build_file)
+        sln_projects += gyp.common.DeepDependencyTargets(target_dicts, sln_projects)
+        root_entries = _GatherSolutionFolders(sln_projects, project_objects, flat=msvs_version.FlatSolution())
+        sln = MSVSNew.MSVSSolution(sln_path, entries=root_entries, variants=configs, websiteProperties=False, version=msvs_version)
+        sln.Write()

@@ -1,0 +1,8 @@
+{
+  for (int i=0; i < commands.length; ++i) {
+    if (commands[i].getBuilderName().equals(SharpenBuilder.BUILDER_ID)) {
+      return true;
+    }
+  }
+  return false;
+}

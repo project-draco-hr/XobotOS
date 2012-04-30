@@ -1,0 +1,6 @@
+{
+  int result=17;
+  result=31 * result + stackTrace.hashCode();
+  result=31 * result + count;
+  return result;
+}

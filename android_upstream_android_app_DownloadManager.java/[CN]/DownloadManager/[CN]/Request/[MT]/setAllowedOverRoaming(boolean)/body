@@ -1,0 +1,4 @@
+{
+  mRoamingAllowed=allowed;
+  return this;
+}

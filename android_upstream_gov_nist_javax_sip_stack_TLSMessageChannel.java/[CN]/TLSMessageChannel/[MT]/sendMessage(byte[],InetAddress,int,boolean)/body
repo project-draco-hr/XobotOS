@@ -1,0 +1,17 @@
+{
+  if (message == null || receiverAddress == null)   throw new IllegalArgumentException("Null argument");
+  Socket sock=this.sipStack.ioHandler.sendBytes(this.messageProcessor.getIpAddress(),receiverAddress,receiverPort,"TLS",message,retry,this);
+  if (sock != mySock && sock != null) {
+    try {
+      if (mySock != null)       mySock.close();
+    }
+ catch (    IOException ex) {
+    }
+    mySock=sock;
+    this.myClientInputStream=mySock.getInputStream();
+    Thread mythread=new Thread(this);
+    mythread.setDaemon(true);
+    mythread.setName("TLSMessageChannelThread");
+    mythread.start();
+  }
+}

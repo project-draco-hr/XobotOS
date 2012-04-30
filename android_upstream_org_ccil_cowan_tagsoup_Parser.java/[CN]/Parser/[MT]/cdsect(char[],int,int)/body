@@ -1,0 +1,5 @@
+{
+  theLexicalHandler.startCDATA();
+  pcdata(buff,offset,length);
+  theLexicalHandler.endCDATA();
+}

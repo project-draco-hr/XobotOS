@@ -1,0 +1,4 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("enableTimeoutTimer " + this + " tickCount "+ tickCount+ " currentTickCount = "+ timeoutTimerTicksLeft);
+  timeoutTimerTicksLeft=tickCount;
+}

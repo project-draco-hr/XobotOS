@@ -1,0 +1,5 @@
+{
+  _constructor=new CSConstructor();
+  _constructor.visibility(CSVisibility.Public);
+  _type.addMember(_constructor);
+}

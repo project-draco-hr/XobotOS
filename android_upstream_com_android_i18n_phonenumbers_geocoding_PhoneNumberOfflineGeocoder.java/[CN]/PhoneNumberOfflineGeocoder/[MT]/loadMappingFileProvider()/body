@@ -1,0 +1,11 @@
+{
+  InputStream source=PhoneNumberOfflineGeocoder.class.getResourceAsStream(phonePrefixDataDirectory + "config");
+  ObjectInputStream in;
+  try {
+    in=new ObjectInputStream(source);
+    mappingFileProvider.readExternal(in);
+  }
+ catch (  IOException e) {
+    LOGGER.log(Level.WARNING,e.toString());
+  }
+}

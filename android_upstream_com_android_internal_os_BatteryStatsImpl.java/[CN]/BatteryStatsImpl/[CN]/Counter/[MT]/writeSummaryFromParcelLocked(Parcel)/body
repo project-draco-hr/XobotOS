@@ -1,0 +1,4 @@
+{
+  int count=mCount.get();
+  out.writeInt(count);
+}

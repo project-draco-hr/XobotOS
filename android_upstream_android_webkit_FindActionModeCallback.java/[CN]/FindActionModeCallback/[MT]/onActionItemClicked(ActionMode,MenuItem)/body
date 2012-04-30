@@ -1,0 +1,17 @@
+{
+  if (mWebView == null) {
+    throw new AssertionError("No WebView for FindActionModeCallback::onActionItemClicked");
+  }
+  mInput.hideSoftInputFromWindow(mWebView.getWindowToken(),0);
+switch (item.getItemId()) {
+case com.android.internal.R.id.find_prev:
+    findNext(false);
+  break;
+case com.android.internal.R.id.find_next:
+findNext(true);
+break;
+default :
+return false;
+}
+return true;
+}

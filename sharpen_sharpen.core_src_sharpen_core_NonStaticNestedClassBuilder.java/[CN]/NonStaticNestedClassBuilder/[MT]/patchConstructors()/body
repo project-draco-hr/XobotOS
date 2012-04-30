@@ -1,0 +1,11 @@
+{
+  final List<CSConstructor> ctors=_convertedType.constructors();
+  if (ctors.isEmpty()) {
+    introduceConstructor();
+  }
+ else {
+    for (    CSConstructor ctor : ctors) {
+      patchConstructor(ctor);
+    }
+  }
+}

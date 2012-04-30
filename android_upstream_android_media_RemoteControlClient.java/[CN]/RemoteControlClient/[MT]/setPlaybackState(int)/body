@@ -1,0 +1,9 @@
+{
+synchronized (mCacheLock) {
+    if (mPlaybackState != state) {
+      mPlaybackState=state;
+      mPlaybackStateChangeTimeMs=SystemClock.elapsedRealtime();
+      sendPlaybackState_syncCacheLock();
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  pw.println("\nRemote Control stack entries:");
+synchronized (mRCStack) {
+    Iterator<RemoteControlStackEntry> stackIterator=mRCStack.iterator();
+    while (stackIterator.hasNext()) {
+      RemoteControlStackEntry rcse=stackIterator.next();
+      pw.println("  pi: " + rcse.mMediaIntent + "  -- ercvr: "+ rcse.mReceiverComponent+ "  -- client: "+ rcse.mRcClient+ "  -- uid: "+ rcse.mCallingUid);
+    }
+  }
+}

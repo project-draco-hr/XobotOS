@@ -1,0 +1,4 @@
+{
+  mPhone=phone;
+  mContext=phone.getContext();
+}

@@ -1,0 +1,5 @@
+{
+  if (!getPauseDuringPreparing()) {
+    super.start();
+  }
+}

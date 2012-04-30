@@ -1,0 +1,14 @@
+{
+  List<MemberEntry> members=node.getMembers(new MemberFilter(){
+    @Override public boolean filter(    MemberEntry entry){
+      return (entry.Declaration != null) && (entry.Visibility == visibility);
+    }
+  }
+);
+  if (members.size() == 0)   return;
+  writeVisibility(visibility);
+  _writer.indent();
+  for (  MemberEntry member : members)   member.Declaration.accept(this);
+  _writer.outdent();
+  _writer.writeLine();
+}

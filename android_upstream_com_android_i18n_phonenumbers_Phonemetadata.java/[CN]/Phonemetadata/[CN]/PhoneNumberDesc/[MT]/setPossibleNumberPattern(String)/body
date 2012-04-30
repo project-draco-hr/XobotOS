@@ -1,0 +1,5 @@
+{
+  hasPossibleNumberPattern=true;
+  possibleNumberPattern_=value;
+  return this;
+}

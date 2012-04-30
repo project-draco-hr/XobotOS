@@ -1,0 +1,8 @@
+'\nVerifies build of an executable with C++ defines.\n'
+import TestGyp
+test = TestGyp.TestGyp()
+test.run_gyp('defines.gyp')
+test.build('defines.gyp')
+expect = 'FOO is defined\nVALUE is 1\n'
+test.run_built_executable('defines', stdout=expect)
+test.pass_test()

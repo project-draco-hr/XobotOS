@@ -1,0 +1,4 @@
+{
+  mSearchAutoComplete.setDropDownDismissedOnCompletion(false);
+  mSearchAutoComplete.setForceIgnoreOutsideTouch(false);
+}

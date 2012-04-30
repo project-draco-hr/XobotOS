@@ -1,0 +1,8 @@
+{
+  if (state) {
+    set(index);
+  }
+ else {
+    clear(index);
+  }
+}

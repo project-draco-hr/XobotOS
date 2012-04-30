@@ -1,0 +1,9 @@
+{
+  try {
+    char nextChar=lookAhead(0);
+    return isTokenChar(nextChar);
+  }
+ catch (  ParseException ex) {
+    return false;
+  }
+}

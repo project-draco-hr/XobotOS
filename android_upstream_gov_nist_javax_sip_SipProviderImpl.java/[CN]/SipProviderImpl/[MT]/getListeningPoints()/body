@@ -1,0 +1,5 @@
+{
+  ListeningPoint[] retval=new ListeningPointImpl[this.listeningPoints.size()];
+  this.listeningPoints.values().toArray(retval);
+  return retval;
+}

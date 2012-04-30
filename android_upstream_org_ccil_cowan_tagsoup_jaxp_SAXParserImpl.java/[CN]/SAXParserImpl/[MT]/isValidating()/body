@@ -1,0 +1,8 @@
+{
+  try {
+    return parser.getFeature(Parser.validationFeature);
+  }
+ catch (  SAXException sex) {
+    throw new RuntimeException(sex.getMessage());
+  }
+}

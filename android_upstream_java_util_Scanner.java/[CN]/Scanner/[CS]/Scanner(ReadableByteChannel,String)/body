@@ -1,0 +1,10 @@
+{
+  if (src == null) {
+    throw new NullPointerException("src == null");
+  }
+  if (charsetName == null) {
+    throw new IllegalArgumentException("charsetName == null");
+  }
+  input=Channels.newReader(src,charsetName);
+  initialization();
+}

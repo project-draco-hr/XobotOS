@@ -1,0 +1,13 @@
+{
+  Object val=getParameterValue(parameterName);
+  if (val == null) {
+    return false;
+  }
+ else   if (val instanceof Boolean) {
+    return ((Boolean)val).booleanValue();
+  }
+ else   if (val instanceof String) {
+    return Boolean.valueOf((String)val).booleanValue();
+  }
+ else   return false;
+}

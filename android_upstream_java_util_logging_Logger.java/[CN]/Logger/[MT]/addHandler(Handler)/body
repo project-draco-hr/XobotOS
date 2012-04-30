@@ -1,0 +1,10 @@
+{
+  if (handler == null) {
+    throw new NullPointerException("handler == null");
+  }
+  if (this.isNamed) {
+    LogManager.getLogManager().checkAccess();
+  }
+  this.handlers.add(handler);
+  updateDalvikLogHandler();
+}

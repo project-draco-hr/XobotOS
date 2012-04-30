@@ -1,0 +1,6 @@
+String a
+String[] b
+int[][] c
+Object d
+Object[] e
+Object[][][][] f

@@ -1,0 +1,26 @@
+{
+  try {
+    final Bundle accountManagerResult=accountManagerFuture.getResult();
+    final Intent intent=(Intent)accountManagerResult.getParcelable(AccountManager.KEY_INTENT);
+    if (intent != null) {
+      mPendingRequest=REQUEST_ADD_ACCOUNT;
+      mExistingAccounts=AccountManager.get(this).getAccounts();
+      intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_NEW_TASK);
+      startActivityForResult(intent,REQUEST_ADD_ACCOUNT);
+      return;
+    }
+  }
+ catch (  OperationCanceledException e) {
+    setResult(Activity.RESULT_CANCELED);
+    finish();
+    return;
+  }
+catch (  IOException e) {
+  }
+catch (  AuthenticatorException e) {
+  }
+  Bundle bundle=new Bundle();
+  bundle.putString(AccountManager.KEY_ERROR_MESSAGE,"error communicating with server");
+  setResult(Activity.RESULT_OK,new Intent().putExtras(bundle));
+  finish();
+}

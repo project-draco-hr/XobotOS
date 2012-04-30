@@ -1,0 +1,37 @@
+{
+  SIPResponse newResponse;
+  Iterator headerIterator;
+  SIPHeader nextHeader;
+  newResponse=new SIPResponse();
+  try {
+    newResponse.setStatusCode(statusCode);
+  }
+ catch (  ParseException ex) {
+    throw new IllegalArgumentException("Bad code " + statusCode);
+  }
+  if (reasonPhrase != null)   newResponse.setReasonPhrase(reasonPhrase);
+ else   newResponse.setReasonPhrase(SIPResponse.getReasonPhrase(statusCode));
+  headerIterator=getHeaders();
+  while (headerIterator.hasNext()) {
+    nextHeader=(SIPHeader)headerIterator.next();
+    if (nextHeader instanceof From || nextHeader instanceof To || nextHeader instanceof ViaList|| nextHeader instanceof CallID|| (nextHeader instanceof RecordRouteList && mustCopyRR(statusCode))|| nextHeader instanceof CSeq|| nextHeader instanceof TimeStamp) {
+      try {
+        newResponse.attachHeader((SIPHeader)nextHeader.clone(),false);
+      }
+ catch (      SIPDuplicateHeaderException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  if (MessageFactoryImpl.getDefaultServerHeader() != null) {
+    newResponse.setHeader(MessageFactoryImpl.getDefaultServerHeader());
+  }
+  if (newResponse.getStatusCode() == 100) {
+    newResponse.getTo().removeParameter("tag");
+  }
+  ServerHeader server=MessageFactoryImpl.getDefaultServerHeader();
+  if (server != null) {
+    newResponse.setHeader(server);
+  }
+  return newResponse;
+}

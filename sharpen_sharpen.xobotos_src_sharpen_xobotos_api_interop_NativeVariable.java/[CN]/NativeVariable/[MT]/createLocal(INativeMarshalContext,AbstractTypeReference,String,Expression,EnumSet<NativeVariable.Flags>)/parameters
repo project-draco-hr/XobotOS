@@ -1,0 +1,5 @@
+INativeMarshalContext context
+AbstractTypeReference type
+String name
+Expression init
+EnumSet<NativeVariable.Flags> flags

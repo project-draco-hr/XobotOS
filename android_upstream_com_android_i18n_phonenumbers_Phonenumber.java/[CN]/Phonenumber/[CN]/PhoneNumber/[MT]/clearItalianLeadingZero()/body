@@ -1,0 +1,5 @@
+{
+  hasItalianLeadingZero=false;
+  italianLeadingZero_=false;
+  return this;
+}

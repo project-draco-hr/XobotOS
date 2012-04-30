@@ -1,0 +1,15 @@
+{
+  IBinding binding=reference.resolveBinding();
+switch (binding.getKind()) {
+case IBinding.METHOD:
+{
+      return ((IMethodBinding)binding).getDeclaringClass().getTypeDeclaration();
+    }
+case IBinding.VARIABLE:
+{
+    IVariableBinding variable=(IVariableBinding)binding;
+    return variable.getDeclaringClass().getTypeDeclaration();
+  }
+}
+return null;
+}

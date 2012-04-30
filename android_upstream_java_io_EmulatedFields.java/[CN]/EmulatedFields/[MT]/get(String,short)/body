@@ -1,0 +1,4 @@
+{
+  ObjectSlot slot=findMandatorySlot(name,short.class);
+  return slot.defaulted ? defaultValue : ((Short)slot.fieldValue).shortValue();
+}

@@ -1,0 +1,6 @@
+{
+synchronized (sLock) {
+    initFormatStringsLocked();
+    return sStatusTimeFormat.format(millis);
+  }
+}

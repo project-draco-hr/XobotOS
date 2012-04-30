@@ -1,0 +1,17 @@
+{
+  if (requestURI == null || method == null || callId == null || cSeq == null || from == null || to == null || via == null || maxForwards == null || content == null || contentType == null)   throw new NullPointerException("missing parameters");
+  SIPRequest sipRequest=new SIPRequest();
+  sipRequest.setRequestURI(requestURI);
+  sipRequest.setMethod(method);
+  sipRequest.setCallId(callId);
+  sipRequest.setCSeq(cSeq);
+  sipRequest.setFrom(from);
+  sipRequest.setTo(to);
+  sipRequest.setVia(via);
+  sipRequest.setMaxForwards(maxForwards);
+  sipRequest.setContent(content,contentType);
+  if (userAgent != null) {
+    sipRequest.setHeader(userAgent);
+  }
+  return sipRequest;
+}

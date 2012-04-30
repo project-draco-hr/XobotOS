@@ -1,0 +1,11 @@
+{
+  if (index < 0) {
+    checkIndex(index);
+  }
+  int arrayIndex=index / 64;
+  if (arrayIndex >= longCount) {
+    return;
+  }
+  bits[arrayIndex]&=~(1L << index);
+  shrinkSize();
+}

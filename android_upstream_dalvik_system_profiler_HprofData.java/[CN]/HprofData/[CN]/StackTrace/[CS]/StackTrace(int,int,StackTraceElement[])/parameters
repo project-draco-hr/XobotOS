@@ -1,0 +1,3 @@
+int stackTraceId
+int threadId
+StackTraceElement[] stackFrames

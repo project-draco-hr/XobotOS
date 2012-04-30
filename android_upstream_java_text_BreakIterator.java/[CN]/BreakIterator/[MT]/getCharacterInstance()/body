@@ -1,0 +1,3 @@
+{
+  return getCharacterInstance(Locale.getDefault());
+}

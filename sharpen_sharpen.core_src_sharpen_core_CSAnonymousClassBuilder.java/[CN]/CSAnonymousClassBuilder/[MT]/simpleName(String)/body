@@ -1,0 +1,5 @@
+{
+  final int index=typeName.lastIndexOf('.');
+  if (index < 0)   return typeName;
+  return typeName.substring(index + 1);
+}

@@ -1,0 +1,4 @@
+{
+  String allowedProviders=Settings.Secure.getString(cr,LOCATION_PROVIDERS_ALLOWED);
+  return TextUtils.delimitedStringContains(allowedProviders,',',provider);
+}

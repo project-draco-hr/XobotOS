@@ -1,0 +1,4 @@
+{
+  resolveLayoutDirectionIfNeeded();
+  return ((mPrivateFlags2 & LAYOUT_DIRECTION_RESOLVED_RTL) == LAYOUT_DIRECTION_RESOLVED_RTL) ? LAYOUT_DIRECTION_RTL : LAYOUT_DIRECTION_LTR;
+}

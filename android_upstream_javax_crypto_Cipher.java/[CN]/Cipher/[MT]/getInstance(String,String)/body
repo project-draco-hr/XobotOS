@@ -1,0 +1,10 @@
+{
+  if (provider == null) {
+    throw new IllegalArgumentException("provider == null");
+  }
+  Provider p=Security.getProvider(provider);
+  if (p == null) {
+    throw new NoSuchProviderException("Provider not available: " + provider);
+  }
+  return getInstance(transformation,p);
+}

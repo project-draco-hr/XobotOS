@@ -1,0 +1,7 @@
+{
+  if (majorVersion < 0 || minorVersion < 0)   throw new javax.sip.InvalidArgumentException("bad major/minor version");
+  MimeVersion m=new MimeVersion();
+  m.setMajorVersion(majorVersion);
+  m.setMinorVersion(minorVersion);
+  return m;
+}

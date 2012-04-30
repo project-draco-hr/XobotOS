@@ -1,0 +1,15 @@
+{
+  try {
+    final IBinding binding=imp.resolveBinding();
+    if (binding == null)     return false;
+switch (binding.getKind()) {
+case IBinding.TYPE:
+      return imp.isOnDemand() && field.getDeclaringClass() == binding;
+case IBinding.VARIABLE:
+    return binding == field;
+}
+}
+ catch (Exception e) {
+}
+return false;
+}

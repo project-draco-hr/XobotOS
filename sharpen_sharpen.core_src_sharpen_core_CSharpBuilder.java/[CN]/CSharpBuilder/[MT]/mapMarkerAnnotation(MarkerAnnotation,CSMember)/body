@@ -1,0 +1,11 @@
+{
+  final IAnnotationBinding binding=annotation.resolveAnnotationBinding();
+  String name=mappedTypeName(binding.getAnnotationType());
+  if (name.equals("System.Obsolete") || name.equals("System.ObsoleteAttribute")) {
+    for (    CSAttribute old : member.attributes()) {
+      if (old.name().equals("System.Obsolete") || old.name().equals("System.ObsoleteAttribute"))       return;
+    }
+  }
+  final CSAttribute attribute=new CSAttribute(name);
+  member.addAttribute(attribute);
+}

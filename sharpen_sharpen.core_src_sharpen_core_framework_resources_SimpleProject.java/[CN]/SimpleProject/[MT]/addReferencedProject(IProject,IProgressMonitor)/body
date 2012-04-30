@@ -1,0 +1,4 @@
+{
+  if (null == reference)   throw new IllegalArgumentException("reference");
+  WorkspaceUtilities.addProjectReference(_project,reference,monitor);
+}

@@ -1,0 +1,56 @@
+{
+  super(notifier,context,ci,unitTestMode);
+  if (ci instanceof SimulatedRadioControl) {
+    mSimulatedRadioControl=(SimulatedRadioControl)ci;
+  }
+  mCM.setPhoneType(Phone.PHONE_TYPE_GSM);
+  mCT=new GsmCallTracker(this);
+  mSST=new GsmServiceStateTracker(this);
+  mSMS=new GsmSMSDispatcher(this,mSmsStorageMonitor,mSmsUsageMonitor);
+  mIccFileHandler=new SIMFileHandler(this);
+  mIccRecords=new SIMRecords(this);
+  mDataConnectionTracker=new GsmDataConnectionTracker(this);
+  mIccCard=new SimCard(this);
+  if (!unitTestMode) {
+    mSimPhoneBookIntManager=new SimPhoneBookInterfaceManager(this);
+    mSimSmsIntManager=new SimSmsInterfaceManager(this,mSMS);
+    mSubInfo=new PhoneSubInfo(this);
+  }
+  mStkService=CatService.getInstance(mCM,mIccRecords,mContext,mIccFileHandler,mIccCard);
+  mCM.registerForAvailable(this,EVENT_RADIO_AVAILABLE,null);
+  mIccRecords.registerForRecordsLoaded(this,EVENT_SIM_RECORDS_LOADED,null);
+  mCM.registerForOffOrNotAvailable(this,EVENT_RADIO_OFF_OR_NOT_AVAILABLE,null);
+  mCM.registerForOn(this,EVENT_RADIO_ON,null);
+  mCM.setOnUSSD(this,EVENT_USSD,null);
+  mCM.setOnSuppServiceNotification(this,EVENT_SSN,null);
+  mSST.registerForNetworkAttached(this,EVENT_REGISTERED_TO_NETWORK,null);
+  if (false) {
+    try {
+      debugSocket=new ServerSocket();
+      debugSocket.setReuseAddress(true);
+      debugSocket.bind(new InetSocketAddress("127.0.0.1",6666));
+      debugPortThread=new Thread(new Runnable(){
+        public void run(){
+          for (; ; ) {
+            try {
+              Socket sock;
+              sock=debugSocket.accept();
+              Log.i(LOG_TAG,"New connection; resetting radio");
+              mCM.resetRadio(null);
+              sock.close();
+            }
+ catch (            IOException ex) {
+              Log.w(LOG_TAG,"Exception accepting socket",ex);
+            }
+          }
+        }
+      }
+,"GSMPhone debug");
+      debugPortThread.start();
+    }
+ catch (    IOException ex) {
+      Log.w(LOG_TAG,"Failure to open com.android.internal.telephony.debug socket",ex);
+    }
+  }
+  SystemProperties.set(TelephonyProperties.CURRENT_ACTIVE_PHONE,new Integer(Phone.PHONE_TYPE_GSM).toString());
+}

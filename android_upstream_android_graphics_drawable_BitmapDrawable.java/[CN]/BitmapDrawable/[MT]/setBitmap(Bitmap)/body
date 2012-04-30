@@ -1,0 +1,12 @@
+{
+  if (bitmap != mBitmap) {
+    mBitmap=bitmap;
+    if (bitmap != null) {
+      computeBitmapSize();
+    }
+ else {
+      mBitmapWidth=mBitmapHeight=-1;
+    }
+    invalidateSelf();
+  }
+}

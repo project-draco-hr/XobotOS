@@ -1,0 +1,4 @@
+{
+  final String eventArgsType=getEventArgsType(node);
+  return buildEventHandlerTypeName(node,eventArgsType);
+}

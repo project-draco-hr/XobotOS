@@ -1,0 +1,10 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("Setting response interface for " + this + " to "+ newRespondTo);
+    if (newRespondTo == null) {
+      sipStack.getStackLogger().logStackTrace();
+      sipStack.getStackLogger().logDebug("WARNING -- setting to null!");
+    }
+  }
+  respondTo=newRespondTo;
+}

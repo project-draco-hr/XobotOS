@@ -1,0 +1,3 @@
+{
+  return cr.query(Bookmarks.CONTENT_URI,new String[]{Bookmarks.URL},Bookmarks.IS_FOLDER + " = 0",null,null);
+}

@@ -1,0 +1,28 @@
+{
+  if (ViewDebug.TRACE_HIERARCHY) {
+    ViewDebug.trace(this,ViewDebug.HierarchyTraceType.INVALIDATE);
+  }
+  if (skipInvalidate()) {
+    return;
+  }
+  if ((mPrivateFlags & (DRAWN | HAS_BOUNDS)) == (DRAWN | HAS_BOUNDS) || (mPrivateFlags & DRAWING_CACHE_VALID) == DRAWING_CACHE_VALID || (mPrivateFlags & INVALIDATED) != INVALIDATED) {
+    mPrivateFlags&=~DRAWING_CACHE_VALID;
+    mPrivateFlags|=INVALIDATED;
+    mPrivateFlags|=DIRTY;
+    final ViewParent p=mParent;
+    final AttachInfo ai=mAttachInfo;
+    if (!HardwareRenderer.RENDER_DIRTY_REGIONS) {
+      if (p != null && ai != null && ai.mHardwareAccelerated) {
+        p.invalidateChild(this,null);
+        return;
+      }
+    }
+    if (p != null && ai != null && l < r && t < b) {
+      final int scrollX=mScrollX;
+      final int scrollY=mScrollY;
+      final Rect tmpr=ai.mTmpInvalRect;
+      tmpr.set(l - scrollX,t - scrollY,r - scrollX,b - scrollY);
+      p.invalidateChild(this,tmpr);
+    }
+  }
+}

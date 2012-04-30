@@ -1,0 +1,4 @@
+{
+  super(obj,reader,converterLookup,mapper);
+  this._root=root;
+}

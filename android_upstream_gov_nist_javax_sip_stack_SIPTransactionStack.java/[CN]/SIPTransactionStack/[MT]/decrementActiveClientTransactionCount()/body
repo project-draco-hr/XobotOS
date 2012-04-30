@@ -1,0 +1,7 @@
+{
+  if (this.activeClientTransactionCount.decrementAndGet() <= this.clientTransactionTableLowaterMark && !this.unlimitedClientTransactionTableSize) {
+synchronized (this.clientTransactionTable) {
+      clientTransactionTable.notify();
+    }
+  }
+}

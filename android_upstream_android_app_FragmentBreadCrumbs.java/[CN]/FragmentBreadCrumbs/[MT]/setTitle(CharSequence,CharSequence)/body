@@ -1,0 +1,4 @@
+{
+  mTopEntry=createBackStackEntry(title,shortTitle);
+  updateCrumbs();
+}

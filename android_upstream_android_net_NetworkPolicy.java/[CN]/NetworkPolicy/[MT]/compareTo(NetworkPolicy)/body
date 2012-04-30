@@ -1,0 +1,9 @@
+{
+  if (another == null || another.limitBytes == LIMIT_DISABLED) {
+    return -1;
+  }
+  if (limitBytes == LIMIT_DISABLED || another.limitBytes < limitBytes) {
+    return 1;
+  }
+  return 0;
+}

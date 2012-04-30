@@ -1,0 +1,7 @@
+{
+  checkTimeStyle(timeStyle);
+  checkDateStyle(dateStyle);
+  LocaleData localeData=LocaleData.get(locale);
+  String pattern=localeData.getDateFormat(dateStyle) + " " + localeData.getTimeFormat(timeStyle);
+  return new SimpleDateFormat(pattern,locale);
+}

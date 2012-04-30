@@ -1,0 +1,3 @@
+{
+  return getClass().getName() + "[direction: " + direction+ " baseLevel: "+ baseLevel+ " length: "+ length+ " runs: "+ Arrays.toString(runs)+ "]";
+}

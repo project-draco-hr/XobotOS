@@ -1,0 +1,7 @@
+{
+  Object[] newElements=new Object[elements.length + 1];
+  System.arraycopy(elements,0,newElements,0,index);
+  newElements[index]=e;
+  System.arraycopy(elements,index,newElements,index + 1,elements.length - index);
+  elements=newElements;
+}

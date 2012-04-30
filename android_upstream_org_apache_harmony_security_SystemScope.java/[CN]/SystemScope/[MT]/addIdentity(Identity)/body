@@ -1,0 +1,17 @@
+{
+  if (identity == null) {
+    throw new NullPointerException("identity == null");
+  }
+  String name=identity.getName();
+  if (names.containsKey(name)) {
+    throw new KeyManagementException("name '" + name + "' is already used");
+  }
+  PublicKey key=identity.getPublicKey();
+  if (key != null && keys.containsKey(key)) {
+    throw new KeyManagementException("key '" + key + "' is already used");
+  }
+  names.put(name,identity);
+  if (key != null) {
+    keys.put(key,identity);
+  }
+}

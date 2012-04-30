@@ -1,0 +1,62 @@
+{
+  URI root=_project.getLocationURI();
+  File output=getProjectFile(csprojFile.getPath());
+  File fileList=getProjectFile(csprojFile.getFileListFile());
+  File template=getProjectFile(csprojFile.getTemplateFile());
+  try {
+    ArrayList<String> allFiles=new ArrayList<String>();
+    URI path=_outputFolder.getLocationURI();
+    collectAllFiles(allFiles,root,new File(path),".cs");
+    for (    final String extra : _sourceInfo.getExtraCSharpSources()) {
+      File extraPath=_project.getLocation().append(extra).toFile();
+      collectAllFiles(allFiles,root,extraPath,".cs");
+    }
+    for (    NameMapping mapping : csprojFile.getPathMappings()) {
+      for (int i=0; i < allFiles.size(); i++) {
+        String file=allFiles.get(i);
+        allFiles.set(i,file.replaceAll(mapping.from,mapping.to));
+      }
+    }
+    String line;
+    SortedSet<String> sortedList=new TreeSet<String>();
+    sortedList.addAll(allFiles);
+    if (fileList.exists()) {
+      FileInputStream listStream=new FileInputStream(fileList);
+      BufferedReader listReader=new BufferedReader(new InputStreamReader(listStream));
+      SortedSet<String> savedFileList=new TreeSet<String>();
+      while ((line=listReader.readLine()) != null)       savedFileList.add(line);
+      listStream.close();
+      if (equalLists(sortedList,savedFileList))       return true;
+    }
+    FileOutputStream listOutputStream=new FileOutputStream(fileList);
+    PrintStream listWriter=new PrintStream(listOutputStream);
+    for (    final String file : sortedList)     listWriter.println(file);
+    listWriter.close();
+    listOutputStream.close();
+    FileInputStream templateStream=new FileInputStream(template);
+    BufferedReader templateReader=new BufferedReader(new InputStreamReader(templateStream));
+    FileOutputStream outputStream=new FileOutputStream(output);
+    PrintStream writer=new PrintStream(outputStream);
+    while ((line=templateReader.readLine()) != null) {
+      if (!line.trim().equals("@FILELIST@")) {
+        writer.println(line);
+        continue;
+      }
+      writer.println("  <ItemGroup>");
+      for (      final String file : allFiles) {
+        final String windowsPath=file.replace('/','\\');
+        writer.printf("    <Compile Include=\"%s\" />",windowsPath);
+        writer.println();
+      }
+      writer.println("  </ItemGroup>");
+    }
+    templateStream.close();
+    writer.close();
+    outputStream.close();
+    return true;
+  }
+ catch (  Exception e) {
+    Sharpen.Log(e,"Cannot write csproj file '%s'",csprojFile);
+    return false;
+  }
+}

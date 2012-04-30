@@ -1,0 +1,12 @@
+{
+  for (Class<?> c=this; c != null; c=c.getSuperclass()) {
+    for (    Field field : Class.getDeclaredFields(c,true)) {
+      result.add(field);
+    }
+  }
+  for (Class<?> c=this; c != null; c=c.getSuperclass()) {
+    for (    Class<?> ifc : c.getInterfaces()) {
+      ifc.getPublicFieldsRecursive(result);
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  if (title == null && mTitle != null || title != null && !title.equals(mTitle)) {
+    mTitleRes=0;
+    mTitle=title;
+    notifyChanged();
+  }
+}

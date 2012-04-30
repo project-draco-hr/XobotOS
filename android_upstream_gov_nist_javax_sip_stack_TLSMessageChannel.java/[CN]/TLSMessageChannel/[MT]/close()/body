@@ -1,0 +1,9 @@
+{
+  try {
+    if (mySock != null)     mySock.close();
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Closing message Channel " + this);
+  }
+ catch (  IOException ex) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Error closing socket " + ex);
+  }
+}

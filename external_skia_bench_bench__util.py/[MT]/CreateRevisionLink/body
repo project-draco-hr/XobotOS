@@ -1,0 +1,3 @@
+def CreateRevisionLink(revision_number):
+    "Returns HTML displaying the given revision number and linking to\n    that revision's change page at code.google.com, e.g.\n    http://code.google.com/p/skia/source/detail?r=2056\n    "
+    return ('<a href="http://code.google.com/p/skia/source/detail?r=%s">%s</a>' % (revision_number, revision_number))

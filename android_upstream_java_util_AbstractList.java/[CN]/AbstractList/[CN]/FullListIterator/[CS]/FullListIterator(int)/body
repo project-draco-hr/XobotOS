@@ -1,0 +1,8 @@
+{
+  if (start >= 0 && start <= size()) {
+    pos=start - 1;
+  }
+ else {
+    throw new IndexOutOfBoundsException();
+  }
+}

@@ -1,0 +1,23 @@
+{
+  final StringBuilder sb=new StringBuilder("PackageStats{");
+  sb.append(Integer.toHexString(System.identityHashCode(this)));
+  sb.append(" packageName=");
+  sb.append(packageName);
+  sb.append(",codeSize=");
+  sb.append(codeSize);
+  sb.append(",dataSize=");
+  sb.append(dataSize);
+  sb.append(",cacheSize=");
+  sb.append(cacheSize);
+  sb.append(",externalCodeSize=");
+  sb.append(externalCodeSize);
+  sb.append(",externalDataSize=");
+  sb.append(externalDataSize);
+  sb.append(",externalCacheSize=");
+  sb.append(externalCacheSize);
+  sb.append(",externalMediaSize=");
+  sb.append(externalMediaSize);
+  sb.append(",externalObbSize=");
+  sb.append(externalObbSize);
+  return sb.toString();
+}

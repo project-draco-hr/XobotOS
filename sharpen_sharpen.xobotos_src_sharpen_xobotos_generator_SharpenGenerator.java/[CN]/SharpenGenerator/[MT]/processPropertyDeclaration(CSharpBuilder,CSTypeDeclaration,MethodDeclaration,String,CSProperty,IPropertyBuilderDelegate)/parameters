@@ -1,0 +1,6 @@
+CSharpBuilder csharpBuilder
+CSTypeDeclaration parent
+MethodDeclaration node
+String name
+CSProperty property
+IPropertyBuilderDelegate delegate

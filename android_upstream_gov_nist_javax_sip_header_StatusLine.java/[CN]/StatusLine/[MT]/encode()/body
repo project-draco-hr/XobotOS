@@ -1,0 +1,6 @@
+{
+  String encoding=SIPConstants.SIP_VERSION_STRING + SP + statusCode;
+  if (reasonPhrase != null)   encoding+=SP + reasonPhrase;
+  encoding+=NEWLINE;
+  return encoding;
+}

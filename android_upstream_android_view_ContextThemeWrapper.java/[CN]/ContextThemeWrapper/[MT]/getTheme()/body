@@ -1,0 +1,8 @@
+{
+  if (mTheme != null) {
+    return mTheme;
+  }
+  mThemeResource=Resources.selectDefaultTheme(mThemeResource,getApplicationInfo().targetSdkVersion);
+  initializeTheme();
+  return mTheme;
+}

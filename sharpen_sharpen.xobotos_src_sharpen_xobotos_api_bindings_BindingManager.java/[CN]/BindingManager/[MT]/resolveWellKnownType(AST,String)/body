@@ -1,0 +1,5 @@
+{
+  ITypeBinding type=ast.resolveWellKnownType(name);
+  if (type == null)   throw new RuntimeException(String.format("Cannot resolve well known type '%s'",name));
+  return type;
+}

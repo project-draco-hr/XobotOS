@@ -1,0 +1,3 @@
+{
+  setBoolean(LOCKOUT_PERMANENT_KEY,locked);
+}

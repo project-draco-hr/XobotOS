@@ -1,0 +1,7 @@
+{
+  IFolder folder=safeGetFolder(path);
+  IPackageFragmentRoot root=_javaProject.getPackageFragmentRoot(folder);
+  IClasspathEntry newSourceEntry=JavaCore.newSourceEntry(root.getPath(),new IPath[]{});
+  addClasspathEntry(newSourceEntry);
+  return root;
+}

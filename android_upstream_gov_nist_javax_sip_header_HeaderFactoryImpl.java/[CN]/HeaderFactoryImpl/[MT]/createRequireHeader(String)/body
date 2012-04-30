@@ -1,0 +1,6 @@
+{
+  if (optionTag == null)   throw new NullPointerException("null optionTag");
+  Require require=new Require();
+  require.setOptionTag(optionTag);
+  return require;
+}

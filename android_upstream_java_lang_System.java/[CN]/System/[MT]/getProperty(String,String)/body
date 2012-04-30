@@ -1,0 +1,6 @@
+{
+  if (prop.isEmpty()) {
+    throw new IllegalArgumentException();
+  }
+  return getProperties().getProperty(prop,defaultValue);
+}

@@ -1,0 +1,6 @@
+{
+  if (bitLength < 2) {
+    throw new ArithmeticException("bitLength < 2: " + bitLength);
+  }
+  setBigInt(BigInt.generatePrimeDefault(bitLength));
+}

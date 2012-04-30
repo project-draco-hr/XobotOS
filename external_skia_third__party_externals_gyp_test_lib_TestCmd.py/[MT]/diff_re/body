@@ -1,0 +1,23 @@
+def diff_re(a, b, fromfile='', tofile='', fromfiledate='', tofiledate='', n=3, lineterm='\n'):
+    '\n    A simple "diff" of two sets of lines when the expected lines\n    are regular expressions.  This is a really dumb thing that\n    just compares each line in turn, so it doesn\'t look for\n    chunks of matching lines and the like--but at least it lets\n    you know exactly which line first didn\'t compare correctl...\n    '
+    result = []
+    diff = (len(a) - len(b))
+    if (diff < 0):
+        a = (a + ([''] * (- diff)))
+    elif (diff > 0):
+        b = (b + ([''] * diff))
+    i = 0
+    for (aline, bline) in zip(a, b):
+        s = (('^' + aline) + '$')
+        try:
+            expr = re.compile(s)
+        except re.error as e:
+            msg = 'Regular expression error in %s: %s'
+            raise re.error, (msg % (repr(s), e[0]))
+        if (not expr.search(bline)):
+            result.append(('%sc%s' % ((i + 1), (i + 1))))
+            result.append(('< ' + repr(a[i])))
+            result.append('---')
+            result.append(('> ' + repr(b[i])))
+        i = (i + 1)
+    return result

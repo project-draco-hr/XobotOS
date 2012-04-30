@@ -1,0 +1,8 @@
+{
+synchronized (lock) {
+    if (buf == null) {
+      throw new IOException("Reader is closed");
+    }
+    return (buf.length - pos > 0 || in.ready());
+  }
+}

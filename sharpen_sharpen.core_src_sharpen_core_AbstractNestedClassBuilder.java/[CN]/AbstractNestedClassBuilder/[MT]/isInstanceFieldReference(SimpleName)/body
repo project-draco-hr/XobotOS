@@ -1,0 +1,5 @@
+{
+  IBinding binding=name.resolveBinding();
+  if (IBinding.VARIABLE != binding.getKind())   return false;
+  return ((IVariableBinding)binding).isField();
+}

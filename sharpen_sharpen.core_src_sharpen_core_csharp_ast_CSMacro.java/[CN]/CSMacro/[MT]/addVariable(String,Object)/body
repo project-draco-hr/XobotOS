@@ -1,0 +1,6 @@
+{
+  if (_variables.containsKey(name)) {
+    throw new IllegalArgumentException("Variable '" + name + "' already set!");
+  }
+  _variables.put(name,value);
+}

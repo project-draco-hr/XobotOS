@@ -1,0 +1,4 @@
+{
+  enforceNotSealed();
+  mItemCount=itemCount;
+}

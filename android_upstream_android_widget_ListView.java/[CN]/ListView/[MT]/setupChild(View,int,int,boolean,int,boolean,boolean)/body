@@ -1,0 +1,70 @@
+{
+  final boolean isSelected=selected && shouldShowSelector();
+  final boolean updateChildSelected=isSelected != child.isSelected();
+  final int mode=mTouchMode;
+  final boolean isPressed=mode > TOUCH_MODE_DOWN && mode < TOUCH_MODE_SCROLL && mMotionPosition == position;
+  final boolean updateChildPressed=isPressed != child.isPressed();
+  final boolean needToMeasure=!recycled || updateChildSelected || child.isLayoutRequested();
+  AbsListView.LayoutParams p=(AbsListView.LayoutParams)child.getLayoutParams();
+  if (p == null) {
+    p=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT,0);
+  }
+  p.viewType=mAdapter.getItemViewType(position);
+  if ((recycled && !p.forceAdd) || (p.recycledHeaderFooter && p.viewType == AdapterView.ITEM_VIEW_TYPE_HEADER_OR_FOOTER)) {
+    attachViewToParent(child,flowDown ? -1 : 0,p);
+  }
+ else {
+    p.forceAdd=false;
+    if (p.viewType == AdapterView.ITEM_VIEW_TYPE_HEADER_OR_FOOTER) {
+      p.recycledHeaderFooter=true;
+    }
+    addViewInLayout(child,flowDown ? -1 : 0,p,true);
+  }
+  if (updateChildSelected) {
+    child.setSelected(isSelected);
+  }
+  if (updateChildPressed) {
+    child.setPressed(isPressed);
+  }
+  if (mChoiceMode != CHOICE_MODE_NONE && mCheckStates != null) {
+    if (child instanceof Checkable) {
+      ((Checkable)child).setChecked(mCheckStates.get(position));
+    }
+ else     if (getContext().getApplicationInfo().targetSdkVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+      child.setActivated(mCheckStates.get(position));
+    }
+  }
+  if (needToMeasure) {
+    int childWidthSpec=ViewGroup.getChildMeasureSpec(mWidthMeasureSpec,mListPadding.left + mListPadding.right,p.width);
+    int lpHeight=p.height;
+    int childHeightSpec;
+    if (lpHeight > 0) {
+      childHeightSpec=MeasureSpec.makeMeasureSpec(lpHeight,MeasureSpec.EXACTLY);
+    }
+ else {
+      childHeightSpec=MeasureSpec.makeMeasureSpec(0,MeasureSpec.UNSPECIFIED);
+    }
+    child.measure(childWidthSpec,childHeightSpec);
+  }
+ else {
+    cleanupLayoutState(child);
+  }
+  final int w=child.getMeasuredWidth();
+  final int h=child.getMeasuredHeight();
+  final int childTop=flowDown ? y : y - h;
+  if (needToMeasure) {
+    final int childRight=childrenLeft + w;
+    final int childBottom=childTop + h;
+    child.layout(childrenLeft,childTop,childRight,childBottom);
+  }
+ else {
+    child.offsetLeftAndRight(childrenLeft - child.getLeft());
+    child.offsetTopAndBottom(childTop - child.getTop());
+  }
+  if (mCachingStarted && !child.isDrawingCacheEnabled()) {
+    child.setDrawingCacheEnabled(true);
+  }
+  if (recycled && (((AbsListView.LayoutParams)child.getLayoutParams()).scrappedFromPosition) != position) {
+    child.jumpDrawablesToCurrentState();
+  }
+}

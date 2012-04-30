@@ -1,0 +1,7 @@
+{
+  PipedInputStream stream=target;
+  if (stream != null) {
+    stream.done();
+    target=null;
+  }
+}

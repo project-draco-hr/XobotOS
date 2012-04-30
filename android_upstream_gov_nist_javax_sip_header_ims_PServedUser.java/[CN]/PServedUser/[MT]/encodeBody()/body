@@ -1,0 +1,7 @@
+{
+  StringBuffer retval=new StringBuffer();
+  retval.append(address.encode());
+  if (parameters.containsKey(ParameterNamesIms.REGISTRATION_STATE))   retval.append(SEMICOLON).append(ParameterNamesIms.REGISTRATION_STATE).append(EQUALS).append(this.getRegistrationState());
+  if (parameters.containsKey(ParameterNamesIms.SESSION_CASE))   retval.append(SEMICOLON).append(ParameterNamesIms.SESSION_CASE).append(EQUALS).append(this.getSessionCase());
+  return retval.toString();
+}

@@ -1,0 +1,7 @@
+{
+  for (  Member member : _members) {
+    if (member.hasValue())     continue;
+    _struct.addMember(member.createField());
+    _managedStruct.addMember(member.createManagedField());
+  }
+}

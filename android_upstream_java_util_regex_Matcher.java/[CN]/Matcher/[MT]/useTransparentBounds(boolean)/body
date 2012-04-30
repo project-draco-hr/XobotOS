@@ -1,0 +1,5 @@
+{
+  transparentBounds=value;
+  useTransparentBoundsImpl(address,value);
+  return this;
+}

@@ -1,0 +1,29 @@
+{
+  int currentVideoLayerId=-1;
+  boolean backFromFullScreenMode=false;
+  if (mHTML5VideoView != null) {
+    currentVideoLayerId=mHTML5VideoView.getVideoLayerId();
+    backFromFullScreenMode=mHTML5VideoView.fullScreenExited();
+  }
+  if (backFromFullScreenMode || currentVideoLayerId != videoLayerId || mHTML5VideoView.surfaceTextureDeleted()) {
+    if (mHTML5VideoView != null) {
+      if (!backFromFullScreenMode) {
+        mHTML5VideoView.pauseAndDispatch(mCurrentProxy);
+      }
+      mHTML5VideoView.release();
+    }
+    mCurrentProxy=proxy;
+    mHTML5VideoView=new HTML5VideoInline(videoLayerId,time,false);
+    mHTML5VideoView.setVideoURI(url,mCurrentProxy);
+    mHTML5VideoView.prepareDataAndDisplayMode(proxy);
+  }
+ else   if (mCurrentProxy == proxy) {
+    if (!mHTML5VideoView.isPlaying()) {
+      mHTML5VideoView.seekTo(time);
+      mHTML5VideoView.start();
+    }
+  }
+ else   if (mCurrentProxy != null) {
+    proxy.dispatchOnEnded();
+  }
+}

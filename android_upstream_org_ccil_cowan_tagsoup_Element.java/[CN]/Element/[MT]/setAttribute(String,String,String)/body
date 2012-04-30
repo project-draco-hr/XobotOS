@@ -1,0 +1,3 @@
+{
+  theType.setAttribute(theAtts,name,type,value);
+}

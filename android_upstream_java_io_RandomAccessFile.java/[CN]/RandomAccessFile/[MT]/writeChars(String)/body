@@ -1,0 +1,3 @@
+{
+  write(str.getBytes("UTF-16BE"));
+}

@@ -1,0 +1,14 @@
+{
+  if (replacement == null) {
+    throw new IllegalArgumentException("replacement == null");
+  }
+  if (replacement.isEmpty()) {
+    throw new IllegalArgumentException("replacement.isEmpty()");
+  }
+  if (replacement.length() > maxCharsPerByte()) {
+    throw new IllegalArgumentException("replacement length > maxCharsPerByte: " + replacement.length() + " > "+ maxCharsPerByte());
+  }
+  replacementChars=replacement;
+  implReplaceWith(replacement);
+  return this;
+}

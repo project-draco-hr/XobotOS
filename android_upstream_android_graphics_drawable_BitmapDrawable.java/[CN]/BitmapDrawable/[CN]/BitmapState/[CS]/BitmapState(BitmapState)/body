@@ -1,0 +1,10 @@
+{
+  this(bitmapState.mBitmap);
+  mChangingConfigurations=bitmapState.mChangingConfigurations;
+  mGravity=bitmapState.mGravity;
+  mTileModeX=bitmapState.mTileModeX;
+  mTileModeY=bitmapState.mTileModeY;
+  mTargetDensity=bitmapState.mTargetDensity;
+  mPaint=new Paint(bitmapState.mPaint);
+  mRebuildShader=bitmapState.mRebuildShader;
+}

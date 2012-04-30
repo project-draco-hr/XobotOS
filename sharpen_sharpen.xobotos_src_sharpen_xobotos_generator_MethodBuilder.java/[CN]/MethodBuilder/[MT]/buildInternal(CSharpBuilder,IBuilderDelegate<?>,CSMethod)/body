@@ -1,0 +1,6 @@
+{
+  if (_native != null) {
+    if (buildNative(method))     return true;
+  }
+  return super.buildInternal(builder,dlg,method);
+}

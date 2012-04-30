@@ -1,0 +1,8 @@
+{
+  final AbstractTypeReference type=getNativeType();
+  final NativeVariable param=context.createParameter(null,type);
+  Expression expr;
+  if ((mode == Mode.IN) || (mode == Mode.INSTANCE))   expr=new DereferenceExpression(param.getReference());
+ else   expr=param.getReference();
+  context.addArgument(expr);
+}

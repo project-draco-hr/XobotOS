@@ -1,0 +1,16 @@
+{
+  ITypeBinding expected=getExpectedType();
+  if ((expected != null) && expected.isArray())   pushExpectedType(expected.getElementType());
+ else   pushExpectedType(node.getType().getElementType().resolveBinding());
+  if (node.dimensions().size() > 1) {
+    if (null != node.getInitializer()) {
+      notImplemented(node);
+    }
+    pushExpression(unfoldMultiArrayCreation(node));
+  }
+ else {
+    pushExpression(mapSingleArrayCreation(node));
+  }
+  popExpectedType();
+  return false;
+}

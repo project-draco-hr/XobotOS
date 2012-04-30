@@ -1,0 +1,15 @@
+{
+  if (cookie == null) {
+    throw new NullPointerException("cookie == null");
+  }
+  uri=cookiesUri(uri);
+  List<HttpCookie> cookies=map.get(uri);
+  if (cookies == null) {
+    cookies=new ArrayList<HttpCookie>();
+    map.put(uri,cookies);
+  }
+ else {
+    cookies.remove(cookie);
+  }
+  cookies.add(cookie);
+}

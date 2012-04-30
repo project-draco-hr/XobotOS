@@ -1,0 +1,3 @@
+{
+  return doChmod(ownerOnly ? S_IRUSR : (S_IRUSR | S_IRGRP | S_IROTH),readable);
+}

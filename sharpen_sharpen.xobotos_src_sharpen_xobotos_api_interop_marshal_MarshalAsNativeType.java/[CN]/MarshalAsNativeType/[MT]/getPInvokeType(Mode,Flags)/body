@@ -1,0 +1,5 @@
+{
+  CSTypeReferenceExpression type=_builder.getPInvokeType();
+  if (mode == Mode.OUT)   return new CSByRefTypeReference(type,true);
+ else   return type;
+}

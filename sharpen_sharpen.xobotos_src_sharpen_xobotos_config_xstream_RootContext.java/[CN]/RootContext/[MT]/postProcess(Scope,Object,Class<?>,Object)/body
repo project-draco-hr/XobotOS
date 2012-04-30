@@ -1,0 +1,5 @@
+{
+  checkIncludeFile(klass,result);
+  setRootContextField(klass,result);
+  if (scope != null)   setIdField(klass,result);
+}

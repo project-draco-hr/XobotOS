@@ -1,0 +1,14 @@
+{
+  SIPServerTransaction serverTransaction=SIPServerTransaction.this;
+  TransactionState realState=serverTransaction.getRealState();
+  if (realState == null || TransactionState.TRYING == realState) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug(" sending Trying current state = " + serverTransaction.getRealState());
+    try {
+      serverTransaction.sendMessage(serverTransaction.getOriginalRequest().createResponse(100,"Trying"));
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug(" trying sent " + serverTransaction.getRealState());
+    }
+ catch (    IOException ex) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logError("IO error sending  TRYING");
+    }
+  }
+}

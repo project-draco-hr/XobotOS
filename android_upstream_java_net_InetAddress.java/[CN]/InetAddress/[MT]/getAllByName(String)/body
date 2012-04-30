@@ -1,0 +1,3 @@
+{
+  return getAllByNameImpl(host).clone();
+}

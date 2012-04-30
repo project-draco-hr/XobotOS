@@ -1,0 +1,28 @@
+{
+  ResourceBundle rb=r.getResourceBundle();
+  String pattern=r.getMessage();
+  if (rb != null && pattern != null) {
+    String message;
+    try {
+      message=rb.getString(pattern);
+    }
+ catch (    Exception e) {
+      message=null;
+    }
+    if (message == null) {
+      message=pattern;
+      append(sb,1,"message",message);
+    }
+ else {
+      append(sb,1,"message",message);
+      append(sb,1,"key",pattern);
+      append(sb,1,"catalog",r.getResourceBundleName());
+    }
+  }
+ else   if (pattern != null) {
+    append(sb,1,"message",pattern);
+  }
+ else {
+    sb.append(indent).append("<message/>");
+  }
+}

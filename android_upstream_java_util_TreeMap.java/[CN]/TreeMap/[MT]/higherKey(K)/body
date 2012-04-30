@@ -1,0 +1,4 @@
+{
+  Entry<K,V> entry=find(key,HIGHER);
+  return entry != null ? entry.getKey() : null;
+}

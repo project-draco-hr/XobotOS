@@ -1,0 +1,22 @@
+{
+  if (!util.isValidNumber(number) || !containsOnlyValidXChars(number,candidate,util) || containsMoreThanOneSlash(candidate)) {
+    return false;
+  }
+  String[] formattedNumberGroups=getNationalNumberGroups(util,number);
+  StringBuilder normalizedCandidate=normalizeDigits(candidate,true);
+  int fromIndex=0;
+  for (int i=0; i < formattedNumberGroups.length; i++) {
+    fromIndex=normalizedCandidate.indexOf(formattedNumberGroups[i],fromIndex);
+    if (fromIndex < 0) {
+      return false;
+    }
+    fromIndex+=formattedNumberGroups[i].length();
+    if (i == 0 && fromIndex < normalizedCandidate.length()) {
+      if (Character.isDigit(normalizedCandidate.charAt(fromIndex))) {
+        String nationalSignificantNumber=util.getNationalSignificantNumber(number);
+        return normalizedCandidate.substring(fromIndex - formattedNumberGroups[i].length()).startsWith(nationalSignificantNumber);
+      }
+    }
+  }
+  return normalizedCandidate.substring(fromIndex).contains(number.getExtension());
+}

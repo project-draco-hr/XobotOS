@@ -1,0 +1,14 @@
+{
+  if (matchObj == null)   return true;
+ else   if (!matchObj.getClass().equals(this.getClass())) {
+    return false;
+  }
+ else   if (matchObj == this)   return true;
+  SIPResponse that=(SIPResponse)matchObj;
+  StatusLine rline=that.statusLine;
+  if (this.statusLine == null && rline != null)   return false;
+ else   if (this.statusLine == rline)   return super.match(matchObj);
+ else {
+    return statusLine.match(that.statusLine) && super.match(matchObj);
+  }
+}

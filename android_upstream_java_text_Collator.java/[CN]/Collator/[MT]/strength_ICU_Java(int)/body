@@ -1,0 +1,18 @@
+{
+  int javaValue=value;
+switch (value) {
+case RuleBasedCollatorICU.VALUE_PRIMARY:
+    javaValue=Collator.PRIMARY;
+  break;
+case RuleBasedCollatorICU.VALUE_SECONDARY:
+javaValue=Collator.SECONDARY;
+break;
+case RuleBasedCollatorICU.VALUE_TERTIARY:
+javaValue=Collator.TERTIARY;
+break;
+case RuleBasedCollatorICU.VALUE_IDENTICAL:
+javaValue=Collator.IDENTICAL;
+break;
+}
+return javaValue;
+}

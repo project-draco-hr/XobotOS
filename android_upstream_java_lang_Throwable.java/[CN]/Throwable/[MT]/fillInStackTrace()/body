@@ -1,0 +1,5 @@
+{
+  stackState=nativeFillInStackTrace();
+  stackTrace=null;
+  return this;
+}

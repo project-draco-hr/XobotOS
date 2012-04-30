@@ -1,0 +1,6 @@
+def RemoveAnnotation(line):
+    if (line.find(':') >= 0):
+        annotation = line[line.find(':'):line.find(' ', line.find(':'))]
+        return line.replace(annotation, '*')
+    else:
+        return line

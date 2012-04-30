@@ -1,0 +1,3 @@
+{
+  mPrograms.remove(closable);
+}

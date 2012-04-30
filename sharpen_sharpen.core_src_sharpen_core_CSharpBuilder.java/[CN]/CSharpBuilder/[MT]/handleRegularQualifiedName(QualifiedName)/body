@@ -1,0 +1,44 @@
+{
+  IVariableBinding vb=variableBinding(node);
+  if (vb != null) {
+    String mapped=mappedFieldName(vb);
+    if (null != mapped) {
+      if (isBoolLiteral(mapped)) {
+        pushExpression(new CSBoolLiteralExpression(Boolean.parseBoolean(mapped)));
+        return;
+      }
+      if (isMappingToStaticMember(mapped)) {
+        pushExpression(new CSReferenceExpression(mapped));
+      }
+ else {
+        pushMemberReferenceExpression(node.getQualifier(),mapped);
+      }
+      return;
+    }
+  }
+  Name qualifier=node.getQualifier();
+  String name=identifier(node.getName().getIdentifier());
+  if ((vb != null) && vb.getDeclaringClass().isEnum()) {
+    ITypeBinding type=vb.getDeclaringClass();
+    CSExpression expr=my(CSharpDriver.class).mappedEnumAccess(this,qualifier,vb);
+    if (expr != null) {
+      pushExpression(expr);
+      return;
+    }
+    if (my(IBindingManager.class).getExtractedEnumInfo(type) != null) {
+      final ITypeBinding intType=my(IBindingManager.class).getIntType();
+      if (intType.equals(getExpectedType())) {
+        CSExpression typeRef=mappedTypeReference(type);
+        pushExpression(new CSMemberReferenceExpression(typeRef,name + "_ID"));
+        return;
+      }
+    }
+  }
+  if ((vb != null) && Modifier.isStatic(vb.getModifiers())) {
+    ITypeBinding type=vb.getDeclaringClass();
+    pushExpression(new CSMemberReferenceExpression(mappedTypeReference(type),name));
+  }
+ else {
+    pushMemberReferenceExpression(qualifier,name);
+  }
+}

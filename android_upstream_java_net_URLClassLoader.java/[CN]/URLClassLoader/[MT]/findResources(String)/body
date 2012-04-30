@@ -1,0 +1,15 @@
+{
+  if (name == null) {
+    return null;
+  }
+  ArrayList<URL> result=new ArrayList<URL>();
+  int n=0;
+  while (true) {
+    URLHandler handler=getHandler(n++);
+    if (handler == null) {
+      break;
+    }
+    handler.findResources(name,result);
+  }
+  return Collections.enumeration(result);
+}

@@ -1,0 +1,4 @@
+{
+  IMethodBinding original=BindingUtils.findMethodDefininition(binding,my(CompilationUnit.class).getAST());
+  return (null != original) ? original : binding;
+}

@@ -1,0 +1,4 @@
+{
+  ObjectSlot slot=findMandatorySlot(name,int.class);
+  return slot.defaulted ? defaultValue : ((Integer)slot.fieldValue).intValue();
+}

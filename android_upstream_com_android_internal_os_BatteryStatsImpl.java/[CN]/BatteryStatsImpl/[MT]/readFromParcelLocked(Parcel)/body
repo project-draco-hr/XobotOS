@@ -1,0 +1,94 @@
+{
+  int magic=in.readInt();
+  if (magic != MAGIC) {
+    throw new ParcelFormatException("Bad magic number");
+  }
+  readHistory(in,false);
+  mStartCount=in.readInt();
+  mBatteryUptime=in.readLong();
+  mBatteryLastUptime=0;
+  mBatteryRealtime=in.readLong();
+  mBatteryLastRealtime=0;
+  mScreenOn=false;
+  mScreenOnTimer=new StopwatchTimer(null,-1,null,mUnpluggables,in);
+  for (int i=0; i < NUM_SCREEN_BRIGHTNESS_BINS; i++) {
+    mScreenBrightnessTimer[i]=new StopwatchTimer(null,-100 - i,null,mUnpluggables,in);
+  }
+  mInputEventCounter=new Counter(mUnpluggables,in);
+  mPhoneOn=false;
+  mPhoneOnTimer=new StopwatchTimer(null,-2,null,mUnpluggables,in);
+  for (int i=0; i < SignalStrength.NUM_SIGNAL_STRENGTH_BINS; i++) {
+    mPhoneSignalStrengthsTimer[i]=new StopwatchTimer(null,-200 - i,null,mUnpluggables,in);
+  }
+  mPhoneSignalScanningTimer=new StopwatchTimer(null,-200 + 1,null,mUnpluggables,in);
+  for (int i=0; i < NUM_DATA_CONNECTION_TYPES; i++) {
+    mPhoneDataConnectionsTimer[i]=new StopwatchTimer(null,-300 - i,null,mUnpluggables,in);
+  }
+  mWifiOn=false;
+  mWifiOnTimer=new StopwatchTimer(null,-2,null,mUnpluggables,in);
+  mGlobalWifiRunning=false;
+  mGlobalWifiRunningTimer=new StopwatchTimer(null,-2,null,mUnpluggables,in);
+  mBluetoothOn=false;
+  mBluetoothOnTimer=new StopwatchTimer(null,-2,null,mUnpluggables,in);
+  mUptime=in.readLong();
+  mUptimeStart=in.readLong();
+  mLastUptime=0;
+  mRealtime=in.readLong();
+  mRealtimeStart=in.readLong();
+  mLastRealtime=0;
+  mOnBattery=in.readInt() != 0;
+  mOnBatteryInternal=false;
+  mTrackBatteryPastUptime=in.readLong();
+  mTrackBatteryUptimeStart=in.readLong();
+  mTrackBatteryPastRealtime=in.readLong();
+  mTrackBatteryRealtimeStart=in.readLong();
+  mUnpluggedBatteryUptime=in.readLong();
+  mUnpluggedBatteryRealtime=in.readLong();
+  mDischargeUnplugLevel=in.readInt();
+  mDischargeCurrentLevel=in.readInt();
+  mLowDischargeAmountSinceCharge=in.readInt();
+  mHighDischargeAmountSinceCharge=in.readInt();
+  mDischargeAmountScreenOn=in.readInt();
+  mDischargeAmountScreenOnSinceCharge=in.readInt();
+  mDischargeAmountScreenOff=in.readInt();
+  mDischargeAmountScreenOffSinceCharge=in.readInt();
+  mLastWriteTime=in.readLong();
+  mMobileDataRx[STATS_LAST]=in.readLong();
+  mMobileDataRx[STATS_SINCE_UNPLUGGED]=-1;
+  mMobileDataTx[STATS_LAST]=in.readLong();
+  mMobileDataTx[STATS_SINCE_UNPLUGGED]=-1;
+  mTotalDataRx[STATS_LAST]=in.readLong();
+  mTotalDataRx[STATS_SINCE_UNPLUGGED]=-1;
+  mTotalDataTx[STATS_LAST]=in.readLong();
+  mTotalDataTx[STATS_SINCE_UNPLUGGED]=-1;
+  mRadioDataUptime=in.readLong();
+  mRadioDataStart=-1;
+  mBluetoothPingCount=in.readInt();
+  mBluetoothPingStart=-1;
+  mKernelWakelockStats.clear();
+  int NKW=in.readInt();
+  for (int ikw=0; ikw < NKW; ikw++) {
+    if (in.readInt() != 0) {
+      String wakelockName=in.readString();
+      in.readInt();
+      SamplingTimer kwlt=new SamplingTimer(mUnpluggables,mOnBattery,in);
+      mKernelWakelockStats.put(wakelockName,kwlt);
+    }
+  }
+  mPartialTimers.clear();
+  mFullTimers.clear();
+  mWindowTimers.clear();
+  mWifiRunningTimers.clear();
+  mFullWifiLockTimers.clear();
+  mScanWifiLockTimers.clear();
+  mWifiMulticastTimers.clear();
+  sNumSpeedSteps=in.readInt();
+  int numUids=in.readInt();
+  mUidStats.clear();
+  for (int i=0; i < numUids; i++) {
+    int uid=in.readInt();
+    Uid u=new Uid(uid);
+    u.readFromParcelLocked(mUnpluggables,in);
+    mUidStats.append(uid,u);
+  }
+}

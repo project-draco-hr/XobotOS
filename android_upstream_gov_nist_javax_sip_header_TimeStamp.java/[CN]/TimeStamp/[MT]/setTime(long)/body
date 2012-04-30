@@ -1,0 +1,5 @@
+{
+  if (timeStamp < -1)   throw new InvalidArgumentException("Illegal timestamp");
+  this.timeStamp=timeStamp;
+  this.timeStampFloat=-1;
+}

@@ -1,0 +1,29 @@
+{
+  if (DEBUG)   Log.v(TAG,"hide: " + fragment);
+  if (!fragment.mHidden) {
+    fragment.mHidden=true;
+    if (fragment.mView != null) {
+      Animator anim=loadAnimator(fragment,transition,true,transitionStyle);
+      if (anim != null) {
+        anim.setTarget(fragment.mView);
+        final Fragment finalFragment=fragment;
+        anim.addListener(new AnimatorListenerAdapter(){
+          @Override public void onAnimationEnd(          Animator animation){
+            if (finalFragment.mView != null) {
+              finalFragment.mView.setVisibility(View.GONE);
+            }
+          }
+        }
+);
+        anim.start();
+      }
+ else {
+        fragment.mView.setVisibility(View.GONE);
+      }
+    }
+    if (fragment.mAdded && fragment.mHasMenu && fragment.mMenuVisible) {
+      mNeedMenuInvalidate=true;
+    }
+    fragment.onHiddenChanged(true);
+  }
+}

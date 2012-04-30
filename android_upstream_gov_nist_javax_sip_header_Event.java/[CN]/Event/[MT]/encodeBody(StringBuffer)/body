@@ -1,0 +1,8 @@
+{
+  if (eventType != null)   buffer.append(eventType);
+  if (!parameters.isEmpty()) {
+    buffer.append(SEMICOLON);
+    this.parameters.encode(buffer);
+  }
+  return buffer;
+}

@@ -1,0 +1,55 @@
+{
+  try {
+    Calendar retval=Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+    String s1=lexer.number();
+    int day=Integer.parseInt(s1);
+    if (day <= 0 || day > 31)     throw createParseException("Bad day ");
+    retval.set(Calendar.DAY_OF_MONTH,day);
+    lexer.match(' ');
+    String month=lexer.ttoken().toLowerCase();
+    if (month.equals("jan")) {
+      retval.set(Calendar.MONTH,Calendar.JANUARY);
+    }
+ else     if (month.equals("feb")) {
+      retval.set(Calendar.MONTH,Calendar.FEBRUARY);
+    }
+ else     if (month.equals("mar")) {
+      retval.set(Calendar.MONTH,Calendar.MARCH);
+    }
+ else     if (month.equals("apr")) {
+      retval.set(Calendar.MONTH,Calendar.APRIL);
+    }
+ else     if (month.equals("may")) {
+      retval.set(Calendar.MONTH,Calendar.MAY);
+    }
+ else     if (month.equals("jun")) {
+      retval.set(Calendar.MONTH,Calendar.JUNE);
+    }
+ else     if (month.equals("jul")) {
+      retval.set(Calendar.MONTH,Calendar.JULY);
+    }
+ else     if (month.equals("aug")) {
+      retval.set(Calendar.MONTH,Calendar.AUGUST);
+    }
+ else     if (month.equals("sep")) {
+      retval.set(Calendar.MONTH,Calendar.SEPTEMBER);
+    }
+ else     if (month.equals("oct")) {
+      retval.set(Calendar.MONTH,Calendar.OCTOBER);
+    }
+ else     if (month.equals("nov")) {
+      retval.set(Calendar.MONTH,Calendar.NOVEMBER);
+    }
+ else     if (month.equals("dec")) {
+      retval.set(Calendar.MONTH,Calendar.DECEMBER);
+    }
+    lexer.match(' ');
+    String s2=lexer.number();
+    int yr=Integer.parseInt(s2);
+    retval.set(Calendar.YEAR,yr);
+    return retval;
+  }
+ catch (  Exception ex) {
+    throw createParseException("bad date field");
+  }
+}

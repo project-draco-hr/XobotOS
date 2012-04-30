@@ -1,0 +1,6 @@
+def run_built_executable(self, name, *args, **kw):
+    '\n    Runs an executable built by scons.\n    '
+    configuration = self.configuration_dirname()
+    os.environ['LD_LIBRARY_PATH'] = os.path.join(configuration, 'lib')
+    program = [self.built_file_path(name, type=self.EXECUTABLE, **kw)]
+    return self.run(program=program, *args, **kw)

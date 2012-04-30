@@ -1,0 +1,6 @@
+{
+  super("operator");
+  this._sourceType=source;
+  this._targetType=target;
+  this._implicit=implicit;
+}

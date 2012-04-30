@@ -1,0 +1,10 @@
+{
+  int startIdx=ptr;
+  while (ptr < bufferLen && buffer.charAt(ptr) != '\n') {
+    ptr++;
+  }
+  if (ptr < bufferLen && buffer.charAt(ptr) == '\n') {
+    ptr++;
+  }
+  return buffer.substring(startIdx,ptr);
+}

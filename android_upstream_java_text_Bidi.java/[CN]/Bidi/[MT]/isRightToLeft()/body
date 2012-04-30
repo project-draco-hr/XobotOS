@@ -1,0 +1,3 @@
+{
+  return direction == UBiDiDirection_UBIDI_RTL;
+}

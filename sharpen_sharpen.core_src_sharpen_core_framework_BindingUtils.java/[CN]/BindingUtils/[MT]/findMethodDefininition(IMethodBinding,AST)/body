@@ -1,0 +1,32 @@
+{
+  if (null == method) {
+    return null;
+  }
+  IMethodBinding definition=null;
+  ITypeBinding type=method.getDeclaringClass();
+  ITypeBinding[] interfaces=type.getInterfaces();
+  for (int i=0; i < interfaces.length; i++) {
+    IMethodBinding res=findOverriddenMethodInHierarchy(interfaces[i],method);
+    if (res != null) {
+      definition=res;
+      break;
+    }
+  }
+  if (type.getSuperclass() != null) {
+    IMethodBinding res=findOverriddenMethodInHierarchy(type.getSuperclass(),method);
+    if (res != null && !Modifier.isPrivate(res.getModifiers())) {
+      definition=res;
+    }
+  }
+ else   if (type.isInterface() && null != typeResolver) {
+    IMethodBinding res=findOverriddenMethodInHierarchy(typeResolver.resolveWellKnownType("java.lang.Object"),method);
+    if (res != null) {
+      definition=res;
+    }
+  }
+  IMethodBinding def=findMethodDefininition(definition,typeResolver);
+  if (def != null) {
+    return def;
+  }
+  return definition;
+}

@@ -1,0 +1,5 @@
+{
+  if (mRcDisplay != null) {
+    mRcDisplayDeathHandler.unlinkToRcDisplayDeath();
+  }
+}

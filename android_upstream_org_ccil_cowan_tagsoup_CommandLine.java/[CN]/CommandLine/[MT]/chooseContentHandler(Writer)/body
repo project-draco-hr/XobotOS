@@ -1,0 +1,40 @@
+{
+  XMLWriter x;
+  if (hasOption(options,"--pyx")) {
+    return new PYXWriter(w);
+  }
+  x=new XMLWriter(w);
+  if (hasOption(options,"--html")) {
+    x.setOutputProperty(XMLWriter.METHOD,"html");
+    x.setOutputProperty(XMLWriter.OMIT_XML_DECLARATION,"yes");
+  }
+  if (hasOption(options,"--method=")) {
+    String method=(String)options.get("--method=");
+    if (method != null) {
+      x.setOutputProperty(XMLWriter.METHOD,method);
+    }
+  }
+  if (hasOption(options,"--doctype-public=")) {
+    String doctype_public=(String)options.get("--doctype-public=");
+    if (doctype_public != null) {
+      x.setOutputProperty(XMLWriter.DOCTYPE_PUBLIC,doctype_public);
+    }
+  }
+  if (hasOption(options,"--doctype-system=")) {
+    String doctype_system=(String)options.get("--doctype-system=");
+    if (doctype_system != null) {
+      x.setOutputProperty(XMLWriter.DOCTYPE_SYSTEM,doctype_system);
+    }
+  }
+  if (hasOption(options,"--output-encoding=")) {
+    theOutputEncoding=(String)options.get("--output-encoding=");
+    if (theOutputEncoding != null) {
+      x.setOutputProperty(XMLWriter.ENCODING,theOutputEncoding);
+    }
+  }
+  if (hasOption(options,"--omit-xml-declaration")) {
+    x.setOutputProperty(XMLWriter.OMIT_XML_DECLARATION,"yes");
+  }
+  x.setPrefix(theSchema.getURI(),"");
+  return x;
+}

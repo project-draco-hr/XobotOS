@@ -1,0 +1,9 @@
+{
+  HostPort targetHostPort=new HostPort();
+  targetHostPort.setHost(new Host(ipAddress));
+  targetHostPort.setPort(port);
+  MessageChannel messageChannel=this.messageProcessor.createMessageChannel(targetHostPort);
+  SIPRequest siprequest=new SIPRequest();
+  siprequest.setNullRequest();
+  messageChannel.sendMessage(siprequest);
+}

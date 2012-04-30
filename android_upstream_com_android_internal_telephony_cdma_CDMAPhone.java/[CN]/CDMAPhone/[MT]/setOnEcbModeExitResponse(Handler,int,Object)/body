@@ -1,0 +1,3 @@
+{
+  mEcmExitRespRegistrant=new Registrant(h,what,obj);
+}

@@ -1,0 +1,4 @@
+{
+  if (!TRACK_ALLOCATIONS)   return new ArrayDestructorInvocation(getReference(obj));
+  return new ExpressionStatement(new MethodInvocation(new TemplateFunctionReference("MarshalHelper::freeArray",new TypeReference("char16_t")),getReference(obj),_length.getReference(obj)));
+}

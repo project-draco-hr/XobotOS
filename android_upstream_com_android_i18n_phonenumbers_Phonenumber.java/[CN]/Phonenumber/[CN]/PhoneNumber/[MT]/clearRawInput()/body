@@ -1,0 +1,5 @@
+{
+  hasRawInput=false;
+  rawInput_="";
+  return this;
+}

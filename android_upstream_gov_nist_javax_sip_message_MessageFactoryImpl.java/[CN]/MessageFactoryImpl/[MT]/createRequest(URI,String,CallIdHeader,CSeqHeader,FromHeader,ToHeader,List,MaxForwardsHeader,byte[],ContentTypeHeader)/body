@@ -1,0 +1,18 @@
+{
+  if (requestURI == null || method == null || callId == null || cSeq == null || from == null || to == null || via == null || maxForwards == null || content == null || contentType == null)   throw new ParseException("JAIN-SIP Exception, some parameters are missing" + ", unable to create the request",0);
+  SIPRequest sipRequest=new SIPRequest();
+  sipRequest.setRequestURI(requestURI);
+  sipRequest.setMethod(method);
+  sipRequest.setCallId(callId);
+  sipRequest.setCSeq(cSeq);
+  sipRequest.setFrom(from);
+  sipRequest.setTo(to);
+  sipRequest.setVia(via);
+  sipRequest.setMaxForwards(maxForwards);
+  sipRequest.setHeader((ContentType)contentType);
+  sipRequest.setMessageContent(content);
+  if (userAgent != null) {
+    sipRequest.setHeader(userAgent);
+  }
+  return sipRequest;
+}

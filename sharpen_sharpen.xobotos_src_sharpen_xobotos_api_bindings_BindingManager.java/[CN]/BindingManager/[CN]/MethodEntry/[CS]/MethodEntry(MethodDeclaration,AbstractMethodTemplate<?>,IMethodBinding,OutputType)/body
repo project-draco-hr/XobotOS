@@ -1,0 +1,6 @@
+{
+  this.Declaration=node;
+  this.Template=template;
+  this.BaseMethod=baseMethod;
+  this.Output=output;
+}

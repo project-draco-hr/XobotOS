@@ -1,0 +1,4 @@
+{
+  authParams=new NameValueList();
+  authParams.setSeparator(COMMA);
+}

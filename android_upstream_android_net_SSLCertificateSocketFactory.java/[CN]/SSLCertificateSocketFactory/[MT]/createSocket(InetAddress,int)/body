@@ -1,0 +1,5 @@
+{
+  OpenSSLSocketImpl s=(OpenSSLSocketImpl)getDelegate().createSocket(addr,port);
+  s.setHandshakeTimeout(mHandshakeTimeoutMillis);
+  return s;
+}

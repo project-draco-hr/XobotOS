@@ -1,0 +1,6 @@
+{
+  String retval;
+  if (statusLine != null)   retval=statusLine.encode() + super.encode();
+ else   retval=super.encode();
+  return retval;
+}

@@ -1,0 +1,16 @@
+{
+  String unitName=getUnitName(cu);
+  IFolder folder;
+  String fileName;
+  int pos=unitName.lastIndexOf('.');
+  if (pos > 0) {
+    folder=_outputFolder.getFolder(unitName.substring(0,pos).replace('.','/'));
+    fileName=unitName.substring(pos + 1) + ".cs";
+  }
+ else {
+    folder=_outputFolder;
+    fileName=unitName + ".cs";
+  }
+  WorkspaceUtilities.initializeTree(folder,null);
+  WorkspaceUtilities.writeText(folder.getFile(fileName),convertedContents.getBuffer().toString());
+}

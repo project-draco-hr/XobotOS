@@ -1,0 +1,11 @@
+{
+  String key;
+  int pos=reference.indexOf('/');
+  if (pos < 0)   key=reference;
+ else   key=reference.substring(0,pos);
+  Scope scope=lookupScope(key);
+  if (scope == null)   return null;
+  if (pos < 0)   return scope.value();
+  String rest=reference.substring(pos + 1);
+  return scope.lookup(rest);
+}

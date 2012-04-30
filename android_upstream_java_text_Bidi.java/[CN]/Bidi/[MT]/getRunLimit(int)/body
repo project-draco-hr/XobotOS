@@ -1,0 +1,3 @@
+{
+  return unidirectional ? length : runs[run].getLimit();
+}

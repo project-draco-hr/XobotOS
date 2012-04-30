@@ -1,0 +1,44 @@
+{
+switch (ev.getActionMasked()) {
+case MotionEvent.ACTION_DOWN:
+{
+      startTouchUpFilter(getCurrentCursorOffset());
+      mTouchToWindowOffsetX=ev.getRawX() - mPositionX;
+      mTouchToWindowOffsetY=ev.getRawY() - mPositionY;
+      final PositionListener positionListener=getPositionListener();
+      mLastParentX=positionListener.getPositionX();
+      mLastParentY=positionListener.getPositionY();
+      mIsDragging=true;
+      break;
+    }
+case MotionEvent.ACTION_MOVE:
+{
+    final float rawX=ev.getRawX();
+    final float rawY=ev.getRawY();
+    final float previousVerticalOffset=mTouchToWindowOffsetY - mLastParentY;
+    final float currentVerticalOffset=rawY - mPositionY - mLastParentY;
+    float newVerticalOffset;
+    if (previousVerticalOffset < mIdealVerticalOffset) {
+      newVerticalOffset=Math.min(currentVerticalOffset,mIdealVerticalOffset);
+      newVerticalOffset=Math.max(newVerticalOffset,previousVerticalOffset);
+    }
+ else {
+      newVerticalOffset=Math.max(currentVerticalOffset,mIdealVerticalOffset);
+      newVerticalOffset=Math.min(newVerticalOffset,previousVerticalOffset);
+    }
+    mTouchToWindowOffsetY=newVerticalOffset + mLastParentY;
+    final float newPosX=rawX - mTouchToWindowOffsetX + mHotspotX;
+    final float newPosY=rawY - mTouchToWindowOffsetY + mTouchOffsetY;
+    updatePosition(newPosX,newPosY);
+    break;
+  }
+case MotionEvent.ACTION_UP:
+filterOnTouchUp();
+mIsDragging=false;
+break;
+case MotionEvent.ACTION_CANCEL:
+mIsDragging=false;
+break;
+}
+return true;
+}

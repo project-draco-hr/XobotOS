@@ -1,0 +1,6 @@
+{
+  if (mode != ENCRYPT_MODE && mode != DECRYPT_MODE) {
+    throw new IllegalStateException();
+  }
+  return spiImpl.engineDoFinal(null,0,0);
+}

@@ -1,0 +1,6 @@
+{
+  Object[] newElements=new Object[elements.length - (to - from)];
+  System.arraycopy(elements,0,newElements,0,from);
+  System.arraycopy(elements,to,newElements,from,elements.length - to);
+  elements=newElements;
+}

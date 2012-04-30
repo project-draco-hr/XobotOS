@@ -1,0 +1,4 @@
+{
+  project.getProject().setPersistentProperty(key,value);
+  return this;
+}

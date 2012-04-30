@@ -1,0 +1,7 @@
+{
+  Arrays.checkOffsetAndCount(array.length,start,byteCount);
+  ByteBuffer buf=new ReadWriteHeapByteBuffer(array);
+  buf.position=start;
+  buf.limit=start + byteCount;
+  return buf;
+}

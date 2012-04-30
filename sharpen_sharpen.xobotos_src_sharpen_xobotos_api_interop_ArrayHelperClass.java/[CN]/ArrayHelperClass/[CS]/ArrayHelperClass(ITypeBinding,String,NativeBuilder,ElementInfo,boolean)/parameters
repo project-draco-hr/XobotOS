@@ -1,0 +1,5 @@
+ITypeBinding type
+String name
+NativeBuilder builder
+ElementInfo elementInfo
+boolean isShared

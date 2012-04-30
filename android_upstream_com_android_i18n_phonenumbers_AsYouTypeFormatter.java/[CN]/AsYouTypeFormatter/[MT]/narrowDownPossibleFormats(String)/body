@@ -1,0 +1,14 @@
+{
+  int indexOfLeadingDigitsPattern=leadingDigits.length() - MIN_LEADING_DIGITS_LENGTH;
+  Iterator<NumberFormat> it=possibleFormats.iterator();
+  while (it.hasNext()) {
+    NumberFormat format=it.next();
+    if (format.leadingDigitsPatternSize() > indexOfLeadingDigitsPattern) {
+      Pattern leadingDigitsPattern=regexCache.getPatternForRegex(format.getLeadingDigitsPattern(indexOfLeadingDigitsPattern));
+      Matcher m=leadingDigitsPattern.matcher(leadingDigits);
+      if (!m.lookingAt()) {
+        it.remove();
+      }
+    }
+  }
+}

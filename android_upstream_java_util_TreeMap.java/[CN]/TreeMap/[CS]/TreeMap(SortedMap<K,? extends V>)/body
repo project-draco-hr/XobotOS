@@ -1,0 +1,12 @@
+{
+  Comparator<? super K> sourceComparator=copyFrom.comparator();
+  if (sourceComparator != null) {
+    this.comparator=sourceComparator;
+  }
+ else {
+    this.comparator=(Comparator<? super K>)NATURAL_ORDER;
+  }
+  for (  Map.Entry<K,? extends V> entry : copyFrom.entrySet()) {
+    putInternal(entry.getKey(),entry.getValue());
+  }
+}

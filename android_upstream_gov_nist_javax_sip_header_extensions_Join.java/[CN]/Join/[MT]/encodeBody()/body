@@ -1,0 +1,10 @@
+{
+  if (callId == null)   return null;
+ else {
+    String retVal=callId;
+    if (!parameters.isEmpty()) {
+      retVal+=SEMICOLON + parameters.encode();
+    }
+    return retVal;
+  }
+}

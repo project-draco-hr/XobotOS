@@ -1,0 +1,17 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("Setting dialog state for " + this + "newState = "+ state);
+    sipStack.getStackLogger().logStackTrace();
+    if (state != NULL_STATE && state != this.dialogState)     if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug(this + "  old dialog state is " + this.getState());
+      sipStack.getStackLogger().logDebug(this + "  New dialog state is " + DialogState.getObject(state));
+    }
+  }
+  this.dialogState=state;
+  if (state == TERMINATED_STATE) {
+    if (sipStack.getTimer() != null) {
+      sipStack.getTimer().schedule(new LingerTimer(),DIALOG_LINGER_TIME * 1000);
+    }
+    this.stopTimer();
+  }
+}

@@ -1,0 +1,6 @@
+{
+  mapProperty("java.lang.System.in","java.io.Console.In");
+  mapProperty("java.lang.System.out","java.io.Console.Out");
+  mapProperty("java.lang.System.err","java.io.Console.Error");
+  mapProperty("java.lang.System.lineSeparator","System.Environment.NewLine");
+}

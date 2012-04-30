@@ -1,0 +1,22 @@
+{
+  String currentName=theStack.name();
+  if (CDATAElements && (theStack.flags() & Schema.F_CDATA) != 0) {
+    boolean realTag=(length == currentName.length());
+    if (realTag) {
+      for (int i=0; i < length; i++) {
+        if (Character.toLowerCase(buff[offset + i]) != Character.toLowerCase(currentName.charAt(i))) {
+          realTag=false;
+          break;
+        }
+      }
+    }
+    if (!realTag) {
+      theContentHandler.characters(etagchars,0,2);
+      theContentHandler.characters(buff,offset,length);
+      theContentHandler.characters(etagchars,2,1);
+      theScanner.startCDATA();
+      return true;
+    }
+  }
+  return false;
+}

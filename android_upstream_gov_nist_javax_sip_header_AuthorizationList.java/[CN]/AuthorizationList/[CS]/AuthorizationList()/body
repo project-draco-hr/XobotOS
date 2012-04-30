@@ -1,0 +1,3 @@
+{
+  super(Authorization.class,Authorization.NAME);
+}

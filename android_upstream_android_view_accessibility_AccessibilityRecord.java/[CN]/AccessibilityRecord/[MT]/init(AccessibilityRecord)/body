@@ -1,0 +1,22 @@
+{
+  mSealed=record.mSealed;
+  mBooleanProperties=record.mBooleanProperties;
+  mCurrentItemIndex=record.mCurrentItemIndex;
+  mItemCount=record.mItemCount;
+  mFromIndex=record.mFromIndex;
+  mToIndex=record.mToIndex;
+  mScrollX=record.mScrollX;
+  mScrollY=record.mScrollY;
+  mMaxScrollX=record.mMaxScrollX;
+  mMaxScrollY=record.mMaxScrollY;
+  mAddedCount=record.mAddedCount;
+  mRemovedCount=record.mRemovedCount;
+  mClassName=record.mClassName;
+  mContentDescription=record.mContentDescription;
+  mBeforeText=record.mBeforeText;
+  mParcelableData=record.mParcelableData;
+  mText.addAll(record.mText);
+  mSourceWindowId=record.mSourceWindowId;
+  mSourceViewId=record.mSourceViewId;
+  mConnection=record.mConnection;
+}

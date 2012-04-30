@@ -1,0 +1,3 @@
+{
+  new Throwable("stack dump").printStackTrace();
+}

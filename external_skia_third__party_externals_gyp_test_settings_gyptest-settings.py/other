@@ -1,0 +1,6 @@
+"\nSmoke-tests 'settings' blocks.\n"
+import TestGyp
+test = TestGyp.TestGyp(formats=['make', 'scons'])
+test.run_gyp('settings.gyp')
+test.build('test.gyp', test.ALL)
+test.pass_test()

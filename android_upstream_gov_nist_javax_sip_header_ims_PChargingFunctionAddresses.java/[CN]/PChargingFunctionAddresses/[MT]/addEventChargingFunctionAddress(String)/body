@@ -1,0 +1,4 @@
+{
+  if (ecfAddress == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Charging-Function-Addresses, setEventChargingFunctionAddress(), the ecfAddress parameter is null.");
+  this.parameters.set(ParameterNamesIms.ECF,ecfAddress);
+}

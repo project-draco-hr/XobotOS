@@ -1,0 +1,5 @@
+{
+  Scope scope=_stack.peek();
+  while (!scope.isRoot() && !scope.parent().isFileScope())   scope=scope.parent();
+  return scope;
+}

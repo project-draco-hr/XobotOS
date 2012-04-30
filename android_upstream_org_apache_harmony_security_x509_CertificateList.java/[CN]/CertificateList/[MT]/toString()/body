@@ -1,0 +1,7 @@
+{
+  StringBuilder result=new StringBuilder();
+  tbsCertList.dumpValue(result);
+  result.append("\nSignature Value:\n");
+  result.append(Array.toString(signatureValue,""));
+  return result.toString();
+}

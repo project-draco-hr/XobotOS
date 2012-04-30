@@ -1,0 +1,6 @@
+{
+  if (!isClosed()) {
+    Log.e(TAG,"MemoryFile.finalize() called while ashmem still open");
+    close();
+  }
+}

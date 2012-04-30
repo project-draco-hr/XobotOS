@@ -1,0 +1,4 @@
+{
+  buildWorkingProcs();
+  return mWorkingProcs.size();
+}

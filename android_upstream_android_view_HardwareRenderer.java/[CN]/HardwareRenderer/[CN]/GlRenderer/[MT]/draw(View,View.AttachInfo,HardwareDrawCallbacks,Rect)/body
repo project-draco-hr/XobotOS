@@ -1,0 +1,60 @@
+{
+  if (canDraw()) {
+    if (!hasDirtyRegions()) {
+      dirty=null;
+    }
+    attachInfo.mIgnoreDirtyState=true;
+    attachInfo.mDrawingTime=SystemClock.uptimeMillis();
+    view.mPrivateFlags|=View.DRAWN;
+    final int surfaceState=checkCurrent();
+    if (surfaceState != SURFACE_STATE_ERROR) {
+      if (surfaceState == SURFACE_STATE_UPDATED) {
+        dirty=null;
+      }
+      onPreDraw(dirty);
+      HardwareCanvas canvas=mCanvas;
+      attachInfo.mHardwareCanvas=canvas;
+      int saveCount=canvas.save();
+      callbacks.onHardwarePreDraw(canvas);
+      try {
+        view.mRecreateDisplayList=(view.mPrivateFlags & View.INVALIDATED) == View.INVALIDATED;
+        view.mPrivateFlags&=~View.INVALIDATED;
+        DisplayList displayList=view.getDisplayList();
+        if (displayList != null) {
+          if (canvas.drawDisplayList(displayList,view.getWidth(),view.getHeight(),mRedrawClip)) {
+            if (mRedrawClip.isEmpty() || view.getParent() == null) {
+              view.invalidate();
+            }
+ else {
+              view.getParent().invalidateChild(view,mRedrawClip);
+            }
+            mRedrawClip.setEmpty();
+          }
+        }
+ else {
+          view.draw(canvas);
+        }
+        if (DEBUG_DIRTY_REGION) {
+          if (mDebugPaint == null) {
+            mDebugPaint=new Paint();
+            mDebugPaint.setColor(0x7fff0000);
+          }
+          if (dirty != null && (mFrameCount++ & 1) == 0) {
+            canvas.drawRect(dirty,mDebugPaint);
+          }
+        }
+      }
+  finally {
+        callbacks.onHardwarePostDraw(canvas);
+        canvas.restoreToCount(saveCount);
+        view.mRecreateDisplayList=false;
+      }
+      onPostDraw();
+      attachInfo.mIgnoreDirtyState=false;
+      sEgl.eglSwapBuffers(sEglDisplay,mEglSurface);
+      checkEglErrors();
+      return dirty == null;
+    }
+  }
+  return false;
+}

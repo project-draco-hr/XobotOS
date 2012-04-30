@@ -1,0 +1,9 @@
+{
+  final HashSet<String> members=new HashSet<String>();
+  for (  CSMember member : type.members()) {
+    if (member instanceof CSType)     continue;
+    if (isStatic(member))     continue;
+    members.add(member.name());
+  }
+  return members;
+}

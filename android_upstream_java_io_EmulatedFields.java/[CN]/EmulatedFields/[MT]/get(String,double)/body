@@ -1,0 +1,4 @@
+{
+  ObjectSlot slot=findMandatorySlot(name,double.class);
+  return slot.defaulted ? defaultValue : ((Double)slot.fieldValue).doubleValue();
+}

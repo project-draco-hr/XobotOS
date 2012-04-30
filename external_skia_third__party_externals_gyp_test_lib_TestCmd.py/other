@@ -1,0 +1,252 @@
+'\nTestCmd.py:  a testing framework for commands and scripts.\n\nThe TestCmd module provides a framework for portable automated testing\nof executable commands and scripts (in any language, not just Python),\nespecially commands and scripts that require file system interaction.\n\nIn addition to running tests and evaluating conditions, the TestCmd\nmodule manages and cleans up one or more temporary workspace\ndirectories, and provides methods for creating files and directories in\nthose workspace directories from in-line data, here-documents), allowing\ntests to be completely self-contained.\n\nA TestCmd environment object is created via the usual invocation:\n\n    import TestCmd\n    test = TestCmd.TestCmd()\n\nThere are a bunch of keyword arguments available at instantiation:\n\n    test = TestCmd.TestCmd(description = \'string\',\n                           program = \'program_or_script_to_test\',\n                           interpreter = \'script_interpreter\',\n                           workdir = \'prefix\',\n                           subdir = \'subdir\',\n                           verbose = Boolean,\n                           match = default_match_function,\n                           diff = default_diff_function,\n                           combine = Boolean)\n\nThere are a bunch of methods that let you do different things:\n\n    test.verbose_set(1)\n\n    test.description_set(\'string\')\n\n    test.program_set(\'program_or_script_to_test\')\n\n    test.interpreter_set(\'script_interpreter\')\n    test.interpreter_set([\'script_interpreter\', \'arg\'])\n\n    test.workdir_set(\'prefix\')\n    test.workdir_set(\'\')\n\n    test.workpath(\'file\')\n    test.workpath(\'subdir\', \'file\')\n\n    test.subdir(\'subdir\', ...)\n\n    test.rmdir(\'subdir\', ...)\n\n    test.write(\'file\', "contents\n")\n    test.write([\'subdir\', \'file\'], "contents\n")\n\n    test.read(\'file\')\n    test.read([\'subdir\', \'file\'])\n    test.read(\'file\', mode)\n    test.read([\'subdir\', \'file\'], mode)\n\n    test.writable(\'dir\', 1)\n    test.writable(\'dir\', None)\n\n    test.preserve(condition, ...)\n\n    test.cleanup(condition)\n\n    test.command_args(program = \'program_or_script_to_run\',\n                      interpreter = \'script_interpreter\',\n                      arguments = \'arguments to pass to program\')\n\n    test.run(program = \'program_or_script_to_run\',\n             interpreter = \'script_interpreter\',\n             arguments = \'arguments to pass to program\',\n             chdir = \'directory_to_chdir_to\',\n             stdin = \'input to feed to the program\n\')\n             universal_newlines = True)\n\n    p = test.start(program = \'program_or_script_to_run\',\n                   interpreter = \'script_interpreter\',\n                   arguments = \'arguments to pass to program\',\n                   universal_newlines = None)\n\n    test.finish(self, p)\n\n    test.pass_test()\n    test.pass_test(condition)\n    test.pass_test(condition, function)\n\n    test.fail_test()\n    test.fail_test(condition)\n    test.fail_test(condition, function)\n    test.fail_test(condition, function, skip)\n\n    test.no_result()\n    test.no_result(condition)\n    test.no_result(condition, function)\n    test.no_result(condition, function, skip)\n\n    test.stdout()\n    test.stdout(run)\n\n    test.stderr()\n    test.stderr(run)\n\n    test.symlink(target, link)\n\n    test.banner(string)\n    test.banner(string, width)\n\n    test.diff(actual, expected)\n\n    test.match(actual, expected)\n\n    test.match_exact("actual 1\nactual 2\n", "expected 1\nexpected 2\n")\n    test.match_exact(["actual 1\n", "actual 2\n"],\n                     ["expected 1\n", "expected 2\n"])\n\n    test.match_re("actual 1\nactual 2\n", regex_string)\n    test.match_re(["actual 1\n", "actual 2\n"], list_of_regexes)\n\n    test.match_re_dotall("actual 1\nactual 2\n", regex_string)\n    test.match_re_dotall(["actual 1\n", "actual 2\n"], list_of_regexes)\n\n    test.tempdir()\n    test.tempdir(\'temporary-directory\')\n\n    test.sleep()\n    test.sleep(seconds)\n\n    test.where_is(\'foo\')\n    test.where_is(\'foo\', \'PATH1:PATH2\')\n    test.where_is(\'foo\', \'PATH1;PATH2\', \'.suffix3;.suffix4\')\n\n    test.unlink(\'file\')\n    test.unlink(\'subdir\', \'file\')\n\nThe TestCmd module provides pass_test(), fail_test(), and no_result()\nunbound functions that report test results for use with the Aegis change\nmanagement system.  These methods terminate the test immediately,\nreporting PASSED, FAILED, or NO RESULT respectively, and exiting with\nstatus 0 (success), 1 or 2 respectively.  This allows for a distinction\nbetween an actual failed test and a test that could not be properly\nevaluated because of an external condition (such as a full file system\nor incorrect permissions).\n\n    import TestCmd\n\n    TestCmd.pass_test()\n    TestCmd.pass_test(condition)\n    TestCmd.pass_test(condition, function)\n\n    TestCmd.fail_test()\n    TestCmd.fail_test(condition)\n    TestCmd.fail_test(condition, function)\n    TestCmd.fail_test(condition, function, skip)\n\n    TestCmd.no_result()\n    TestCmd.no_result(condition)\n    TestCmd.no_result(condition, function)\n    TestCmd.no_result(condition, function, skip)\n\nThe TestCmd module also provides unbound functions that handle matching\nin the same way as the match_*() methods described above.\n\n    import TestCmd\n\n    test = TestCmd.TestCmd(match = TestCmd.match_exact)\n\n    test = TestCmd.TestCmd(match = TestCmd.match_re)\n\n    test = TestCmd.TestCmd(match = TestCmd.match_re_dotall)\n\nThe TestCmd module provides unbound functions that can be used for the\n"diff" argument to TestCmd.TestCmd instantiation:\n\n    import TestCmd\n\n    test = TestCmd.TestCmd(match = TestCmd.match_re,\n                           diff = TestCmd.diff_re)\n\n    test = TestCmd.TestCmd(diff = TestCmd.simple_diff)\n\nThe "diff" argument can also be used with standard difflib functions:\n\n    import difflib\n\n    test = TestCmd.TestCmd(diff = difflib.context_diff)\n\n    test = TestCmd.TestCmd(diff = difflib.unified_diff)\n\nLastly, the where_is() method also exists in an unbound function\nversion.\n\n    import TestCmd\n\n    TestCmd.where_is(\'foo\')\n    TestCmd.where_is(\'foo\', \'PATH1:PATH2\')\n    TestCmd.where_is(\'foo\', \'PATH1;PATH2\', \'.suffix3;.suffix4\')\n'
+__author__ = 'Steven Knight <knight at baldmt dot com>'
+__revision__ = 'TestCmd.py 0.37.D001 2010/01/11 16:55:50 knight'
+__version__ = '0.37'
+import errno
+import os
+import os.path
+import re
+import shutil
+import stat
+import string
+import sys
+import tempfile
+import time
+import traceback
+import types
+import UserList
+__all__ = ['diff_re', 'fail_test', 'no_result', 'pass_test', 'match_exact', 'match_re', 'match_re_dotall', 'python_executable', 'TestCmd']
+try:
+    import difflib
+except ImportError:
+    __all__.append('simple_diff')
+try:
+    from UserString import UserString
+except ImportError:
+
+
+    class UserString:
+        pass
+if hasattr(types, 'UnicodeType'):
+
+    def is_String(e):
+        return ((type(e) is types.StringType) or (type(e) is types.UnicodeType) or isinstance(e, UserString))
+else:
+
+    def is_String(e):
+        return ((type(e) is types.StringType) or isinstance(e, UserString))
+tempfile.template = 'testcmd.'
+if (os.name in ('posix', 'nt')):
+    tempfile.template = (('testcmd.' + str(os.getpid())) + '.')
+else:
+    tempfile.template = 'testcmd.'
+re_space = re.compile('\\s')
+_Cleanup = []
+_chain_to_exitfunc = None
+try:
+    import atexit
+except ImportError:
+    try:
+        _chain_to_exitfunc = sys.exitfunc
+    except AttributeError:
+        pass
+    sys.exitfunc = _clean
+else:
+    atexit.register(_clean)
+try:
+    zip
+except NameError:
+
+    def zip(*lists):
+        result = []
+        for i in xrange(min(map(len, lists))):
+            result.append(tuple(map((lambda l, i=i: l[i]), lists)))
+        return result
+try:
+    import difflib
+except ImportError:
+    pass
+else:
+
+    def simple_diff(a, b, fromfile='', tofile='', fromfiledate='', tofiledate='', n=3, lineterm='\n'):
+        '\n        A function with the same calling signature as difflib.context_diff\n        (diff -c) and difflib.unified_diff (diff -u) but which prints\n        output like the simple, unadorned \'diff" command.\n        '
+        sm = difflib.SequenceMatcher(None, a, b)
+
+        def comma(x1, x2):
+            return ((((x1 + 1) == x2) and str(x2)) or ('%s,%s' % ((x1 + 1), x2)))
+        result = []
+        for (op, a1, a2, b1, b2) in sm.get_opcodes():
+            if (op == 'delete'):
+                result.append(('%sd%d' % (comma(a1, a2), b1)))
+                result.extend(map((lambda l: ('< ' + l)), a[a1:a2]))
+            elif (op == 'insert'):
+                result.append(('%da%s' % (a1, comma(b1, b2))))
+                result.extend(map((lambda l: ('> ' + l)), b[b1:b2]))
+            elif (op == 'replace'):
+                result.append(('%sc%s' % (comma(a1, a2), comma(b1, b2))))
+                result.extend(map((lambda l: ('< ' + l)), a[a1:a2]))
+                result.append('---')
+                result.extend(map((lambda l: ('> ' + l)), b[b1:b2]))
+        return result
+if (os.name == 'java'):
+    python_executable = os.path.join(sys.prefix, 'jython')
+else:
+    python_executable = sys.executable
+if (sys.platform == 'win32'):
+    default_sleep_seconds = 2
+
+    def where_is(file, path=None, pathext=None):
+        if (path is None):
+            path = os.environ['PATH']
+        if is_String(path):
+            path = string.split(path, os.pathsep)
+        if (pathext is None):
+            pathext = os.environ['PATHEXT']
+        if is_String(pathext):
+            pathext = string.split(pathext, os.pathsep)
+        for ext in pathext:
+            if (string.lower(ext) == string.lower(file[(- len(ext)):])):
+                pathext = ['']
+                break
+        for dir in path:
+            f = os.path.join(dir, file)
+            for ext in pathext:
+                fext = (f + ext)
+                if os.path.isfile(fext):
+                    return fext
+        return None
+else:
+
+    def where_is(file, path=None, pathext=None):
+        if (path is None):
+            path = os.environ['PATH']
+        if is_String(path):
+            path = string.split(path, os.pathsep)
+        for dir in path:
+            f = os.path.join(dir, file)
+            if os.path.isfile(f):
+                try:
+                    st = os.stat(f)
+                except OSError:
+                    continue
+                if (stat.S_IMODE(st[stat.ST_MODE]) & 73):
+                    return f
+        return None
+    default_sleep_seconds = 1
+try:
+    import subprocess
+except ImportError:
+    import new
+    subprocess = new.module('subprocess')
+    subprocess.PIPE = 'PIPE'
+    subprocess.STDOUT = 'STDOUT'
+    subprocess.mswindows = (sys.platform == 'win32')
+    try:
+        import popen2
+        popen2.Popen3
+    except AttributeError:
+
+
+        class Popen3:
+            universal_newlines = 1
+
+            def __init__(self, command, **kw):
+                if ((sys.platform == 'win32') and (command[0] == '"')):
+                    command = (('"' + command) + '"')
+                (stdin, stdout, stderr) = os.popen3((' ' + command))
+                self.stdin = stdin
+                self.stdout = stdout
+                self.stderr = stderr
+
+            def close_output(self):
+                self.stdout.close()
+                self.resultcode = self.stderr.close()
+
+            def wait(self):
+                resultcode = self.resultcode
+                if os.WIFEXITED(resultcode):
+                    return os.WEXITSTATUS(resultcode)
+                elif os.WIFSIGNALED(resultcode):
+                    return os.WTERMSIG(resultcode)
+                else:
+                    return None
+    else:
+        try:
+            popen2.Popen4
+        except AttributeError:
+
+
+            class Popen4(popen2.Popen3):
+                childerr = None
+
+                def __init__(self, cmd, bufsize=(-1)):
+                    (p2cread, p2cwrite) = os.pipe()
+                    (c2pread, c2pwrite) = os.pipe()
+                    self.pid = os.fork()
+                    if (self.pid == 0):
+                        os.dup2(p2cread, 0)
+                        os.dup2(c2pwrite, 1)
+                        os.dup2(c2pwrite, 2)
+                        for i in range(3, popen2.MAXFD):
+                            try:
+                                os.close(i)
+                            except:
+                                pass
+                        try:
+                            os.execvp(cmd[0], cmd)
+                        finally:
+                            os._exit(1)
+                        os._exit(1)
+                    os.close(p2cread)
+                    self.tochild = os.fdopen(p2cwrite, 'w', bufsize)
+                    os.close(c2pwrite)
+                    self.fromchild = os.fdopen(c2pread, 'r', bufsize)
+                    popen2._active.append(self)
+            popen2.Popen4 = Popen4
+
+
+        class Popen3(popen2.Popen3, popen2.Popen4):
+            universal_newlines = 1
+
+            def __init__(self, command, **kw):
+                if (kw.get('stderr') == 'STDOUT'):
+                    apply(popen2.Popen4.__init__, (self, command, 1))
+                else:
+                    apply(popen2.Popen3.__init__, (self, command, 1))
+                self.stdin = self.tochild
+                self.stdout = self.fromchild
+                self.stderr = self.childerr
+
+            def wait(self, *args, **kw):
+                resultcode = apply(popen2.Popen3.wait, ((self,) + args), kw)
+                if os.WIFEXITED(resultcode):
+                    return os.WEXITSTATUS(resultcode)
+                elif os.WIFSIGNALED(resultcode):
+                    return os.WTERMSIG(resultcode)
+                else:
+                    return None
+    subprocess.Popen = Popen3
+PIPE = subprocess.PIPE
+if subprocess.mswindows:
+    from win32file import ReadFile, WriteFile
+    from win32pipe import PeekNamedPipe
+    import msvcrt
+else:
+    import select
+    import fcntl
+    try:
+        fcntl.F_GETFL
+    except AttributeError:
+        fcntl.F_GETFL = 3
+    try:
+        fcntl.F_SETFL
+    except AttributeError:
+        fcntl.F_SETFL = 4
+disconnect_message = 'Other end disconnected!'
+try:
+    object
+except NameError:
+
+
+    class object:
+        pass

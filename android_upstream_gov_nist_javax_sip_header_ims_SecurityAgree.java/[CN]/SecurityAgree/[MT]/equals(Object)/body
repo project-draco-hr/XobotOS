@@ -1,0 +1,7 @@
+{
+  if (other instanceof SecurityAgreeHeader) {
+    SecurityAgreeHeader o=(SecurityAgreeHeader)other;
+    return (this.getSecurityMechanism().equals(o.getSecurityMechanism()) && this.equalParameters((Parameters)o));
+  }
+  return false;
+}

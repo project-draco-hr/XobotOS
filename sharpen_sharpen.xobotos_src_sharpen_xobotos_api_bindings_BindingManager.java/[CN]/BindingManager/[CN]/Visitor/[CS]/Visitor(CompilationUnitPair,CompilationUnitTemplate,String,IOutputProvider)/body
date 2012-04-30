@@ -1,0 +1,9 @@
+{
+  this._pair=pair;
+  this._template=template;
+  this._name=name;
+  this._unit=new CSCompilationUnit();
+  if (defaultOutput != null)   _outputProviderStack.push(defaultOutput);
+  _outputProviderStack.push(template);
+  _generator=new Generator(defaultOutput);
+}

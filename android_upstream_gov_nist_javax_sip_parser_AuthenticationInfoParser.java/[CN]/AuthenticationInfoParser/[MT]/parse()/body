@@ -1,0 +1,24 @@
+{
+  if (debug)   dbg_enter("AuthenticationInfoParser.parse");
+  try {
+    headerName(TokenTypes.AUTHENTICATION_INFO);
+    AuthenticationInfo authenticationInfo=new AuthenticationInfo();
+    authenticationInfo.setHeaderName(SIPHeaderNames.AUTHENTICATION_INFO);
+    this.lexer.SPorHT();
+    NameValue nv=super.nameValue();
+    authenticationInfo.setParameter(nv);
+    this.lexer.SPorHT();
+    while (lexer.lookAhead(0) == ',') {
+      this.lexer.match(',');
+      this.lexer.SPorHT();
+      nv=super.nameValue();
+      authenticationInfo.setParameter(nv);
+      this.lexer.SPorHT();
+    }
+    this.lexer.SPorHT();
+    return authenticationInfo;
+  }
+  finally {
+    if (debug)     dbg_leave("AuthenticationInfoParser.parse");
+  }
+}

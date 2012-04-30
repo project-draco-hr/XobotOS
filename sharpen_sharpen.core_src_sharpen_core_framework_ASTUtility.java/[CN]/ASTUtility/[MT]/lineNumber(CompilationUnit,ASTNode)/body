@@ -1,0 +1,3 @@
+{
+  return ast.lineNumber(node.getStartPosition());
+}

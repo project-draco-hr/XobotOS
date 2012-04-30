@@ -1,0 +1,10 @@
+{
+synchronized (outputStream) {
+    int chunksize=8 * 1024;
+    for (int p=0; p < length; p+=chunksize) {
+      int chunk=p + chunksize < length ? chunksize : length - p;
+      outputStream.write(bytes,p,chunk);
+    }
+  }
+  outputStream.flush();
+}

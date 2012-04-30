@@ -1,0 +1,16 @@
+{
+  SamplingProfilerIntegration.start();
+  CloseGuard.setEnabled(false);
+  Process.setArgV0("<pre-initialized>");
+  Looper.prepareMainLooper();
+  if (sMainThreadHandler == null) {
+    sMainThreadHandler=new Handler();
+  }
+  ActivityThread thread=new ActivityThread();
+  thread.attach(false);
+  if (false) {
+    Looper.myLooper().setMessageLogging(new LogPrinter(Log.DEBUG,"ActivityThread"));
+  }
+  Looper.loop();
+  throw new RuntimeException("Main thread loop unexpectedly exited");
+}

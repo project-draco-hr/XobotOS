@@ -1,0 +1,7 @@
+{
+  if (newLevel == null) {
+    throw new NullPointerException();
+  }
+  LogManager.getLogManager().checkAccess();
+  this.level=newLevel;
+}

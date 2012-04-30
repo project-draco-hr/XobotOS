@@ -1,0 +1,4 @@
+{
+  if (stackLogger.isLoggingEnabled())   stackLogger.logDebug("putPendingTransaction: " + tr);
+  this.pendingTransactions.put(tr.getTransactionId(),tr);
+}

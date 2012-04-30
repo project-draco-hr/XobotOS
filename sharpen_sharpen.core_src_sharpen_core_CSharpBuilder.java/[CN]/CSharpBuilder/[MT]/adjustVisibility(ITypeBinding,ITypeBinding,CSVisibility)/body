@@ -1,0 +1,17 @@
+{
+  CSVisibility typeVisibility=mapVisibility(memberType,true);
+  if (typeVisibility == CSVisibility.Protected && vis == CSVisibility.Internal)   vis=CSVisibility.Protected;
+ else   if (typeVisibility == CSVisibility.Private)   vis=CSVisibility.Private;
+ else   if (typeVisibility == CSVisibility.Internal) {
+    if ((vis == CSVisibility.Protected) || (vis == CSVisibility.ProtectedInternal) || (vis == CSVisibility.Public))     vis=CSVisibility.Internal;
+  }
+  if (memberType.isParameterizedType()) {
+    List<ITypeBinding> tp=new ArrayList<ITypeBinding>();
+    for (    ITypeBinding ta : type.getTypeParameters())     tp.add(ta);
+    for (    ITypeBinding ta : memberType.getTypeArguments()) {
+      if (tp.contains(ta))       continue;
+      vis=adjustVisibility(type,ta,vis);
+    }
+  }
+  return vis;
+}

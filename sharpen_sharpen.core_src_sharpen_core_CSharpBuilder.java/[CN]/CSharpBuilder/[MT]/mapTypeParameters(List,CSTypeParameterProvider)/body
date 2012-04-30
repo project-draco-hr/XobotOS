@@ -1,0 +1,5 @@
+{
+  for (  Object item : typeParameters) {
+    type.addTypeParameter(mapTypeParameter((TypeParameter)item));
+  }
+}

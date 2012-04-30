@@ -1,0 +1,10 @@
+{
+  if (mPreferenceManager.shouldCommit()) {
+    try {
+      editor.apply();
+    }
+ catch (    AbstractMethodError unused) {
+      editor.commit();
+    }
+  }
+}

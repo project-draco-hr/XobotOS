@@ -1,0 +1,10 @@
+{
+  String key=messageChannel.getKey();
+  TLSMessageChannel currentChannel=(TLSMessageChannel)tlsMessageChannels.get(key);
+  if (currentChannel != null) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("Closing " + key);
+    currentChannel.close();
+  }
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("Caching " + key);
+  this.tlsMessageChannels.put(key,messageChannel);
+}

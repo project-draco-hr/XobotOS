@@ -1,0 +1,3 @@
+{
+  super(policyMask,DETECT_NETWORK,null);
+}

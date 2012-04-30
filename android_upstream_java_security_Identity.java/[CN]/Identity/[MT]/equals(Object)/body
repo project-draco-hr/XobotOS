@@ -1,0 +1,13 @@
+{
+  if (this == obj) {
+    return true;
+  }
+  if (!(obj instanceof Identity)) {
+    return false;
+  }
+  Identity i=(Identity)obj;
+  if (Objects.equal(name,i.name) && (Objects.equal(scope,i.scope))) {
+    return true;
+  }
+  return identityEquals(i);
+}

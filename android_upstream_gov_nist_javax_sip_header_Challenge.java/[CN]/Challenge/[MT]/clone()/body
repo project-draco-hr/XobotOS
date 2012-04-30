@@ -1,0 +1,5 @@
+{
+  Challenge retval=(Challenge)super.clone();
+  if (this.authParams != null)   retval.authParams=(NameValueList)this.authParams.clone();
+  return retval;
+}

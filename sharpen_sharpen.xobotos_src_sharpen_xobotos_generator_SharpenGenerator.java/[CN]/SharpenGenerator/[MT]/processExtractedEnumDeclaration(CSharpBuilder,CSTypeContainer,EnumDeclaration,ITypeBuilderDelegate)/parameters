@@ -1,0 +1,4 @@
+CSharpBuilder csharpBuilder
+CSTypeContainer parent
+EnumDeclaration node
+ITypeBuilderDelegate delegate

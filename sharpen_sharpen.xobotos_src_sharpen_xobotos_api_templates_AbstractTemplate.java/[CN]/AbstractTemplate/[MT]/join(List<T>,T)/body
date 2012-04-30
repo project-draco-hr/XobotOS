@@ -1,0 +1,7 @@
+{
+  if ((baseList == null) && (member == null))   return null;
+  List<T> list=new ArrayList<T>();
+  if (member != null)   list.add(member);
+  if (baseList != null)   list.addAll(baseList);
+  return Collections.unmodifiableList(list);
+}

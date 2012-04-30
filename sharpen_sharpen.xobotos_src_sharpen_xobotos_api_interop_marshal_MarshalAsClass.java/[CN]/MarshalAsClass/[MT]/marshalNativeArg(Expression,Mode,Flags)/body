@@ -1,0 +1,5 @@
+{
+  if ((flags == Flags.ALLOW_NULL) || (_overrideFlags == Flags.ALLOW_NULL) || (flags == Flags.ELEMENT))   return expr;
+  if ((mode == null) || (mode == Mode.IN) || (mode == Mode.INSTANCE))   return new DereferenceExpression(expr);
+  return expr;
+}

@@ -1,0 +1,11 @@
+{
+synchronized (lock) {
+    if (encoder != null) {
+      drainEncoder();
+      flushBytes(false);
+      out.close();
+      encoder=null;
+      bytes=null;
+    }
+  }
+}

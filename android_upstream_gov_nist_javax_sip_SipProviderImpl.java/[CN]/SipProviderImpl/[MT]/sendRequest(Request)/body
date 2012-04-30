@@ -1,0 +1,42 @@
+{
+  if (!sipStack.isAlive())   throw new SipException("Stack is stopped.");
+  if (((SIPRequest)request).getRequestLine() != null && request.getMethod().equals(Request.ACK)) {
+    Dialog dialog=sipStack.getDialog(((SIPRequest)request).getDialogId(false));
+    if (dialog != null && dialog.getState() != null) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logWarning("Dialog exists -- you may want to use Dialog.sendAck() " + dialog.getState());
+    }
+  }
+  Hop hop=sipStack.getRouter((SIPRequest)request).getNextHop(request);
+  if (hop == null)   throw new SipException("could not determine next hop!");
+  SIPRequest sipRequest=(SIPRequest)request;
+  if ((!sipRequest.isNullRequest()) && sipRequest.getTopmostVia() == null)   throw new SipException("Invalid SipRequest -- no via header!");
+  try {
+    if (!sipRequest.isNullRequest()) {
+      Via via=sipRequest.getTopmostVia();
+      String branch=via.getBranch();
+      if (branch == null || branch.length() == 0) {
+        via.setBranch(sipRequest.getTransactionId());
+      }
+    }
+    MessageChannel messageChannel=null;
+    if (this.listeningPoints.containsKey(hop.getTransport().toUpperCase()))     messageChannel=sipStack.createRawMessageChannel(this.getListeningPoint(hop.getTransport()).getIPAddress(),this.getListeningPoint(hop.getTransport()).getPort(),hop);
+    if (messageChannel != null) {
+      messageChannel.sendMessage((SIPMessage)sipRequest,hop);
+    }
+ else {
+      throw new SipException("Could not create a message channel for " + hop.toString());
+    }
+  }
+ catch (  IOException ex) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logException(ex);
+    }
+    throw new SipException("IO Exception occured while Sending Request",ex);
+  }
+catch (  ParseException ex1) {
+    InternalErrorHandler.handleException(ex1);
+  }
+ finally {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("done sending " + request.getMethod() + " to hop "+ hop);
+  }
+}

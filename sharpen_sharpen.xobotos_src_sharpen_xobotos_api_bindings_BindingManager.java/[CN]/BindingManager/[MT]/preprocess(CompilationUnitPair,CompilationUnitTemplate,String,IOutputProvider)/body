@@ -1,0 +1,7 @@
+{
+  Visitor visitor=new Visitor(pair,template,name,defaultOutput);
+  _compilationUnits.put(pair.ast,visitor);
+  pair.ast.accept(visitor);
+  visitor.setup();
+  return visitor;
+}

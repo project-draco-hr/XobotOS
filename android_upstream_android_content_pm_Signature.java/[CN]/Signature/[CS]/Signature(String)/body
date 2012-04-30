@@ -1,0 +1,15 @@
+{
+  final byte[] input=text.getBytes();
+  final int N=input.length;
+  if (N % 2 != 0) {
+    throw new IllegalArgumentException("text size " + N + " is not even");
+  }
+  final byte[] sig=new byte[N / 2];
+  int sigIndex=0;
+  for (int i=0; i < N; ) {
+    final int hi=parseHexDigit(input[i++]);
+    final int lo=parseHexDigit(input[i++]);
+    sig[sigIndex++]=(byte)((hi << 4) | lo);
+  }
+  mSignature=sig;
+}

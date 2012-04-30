@@ -1,0 +1,9 @@
+{
+  computeContentLength(content);
+  if ((!computeContentLength) && this.contentLengthHeader.getContentLength() < givenLength) {
+    throw new ParseException("Invalid content length " + this.contentLengthHeader.getContentLength() + " / "+ givenLength,0);
+  }
+  messageContentBytes=content;
+  messageContent=null;
+  messageContentObject=null;
+}

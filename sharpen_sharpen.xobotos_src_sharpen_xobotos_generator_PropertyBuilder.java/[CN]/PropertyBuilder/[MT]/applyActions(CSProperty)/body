@@ -1,0 +1,5 @@
+{
+  ModifyProperty action=getTemplate().getModificationAction();
+  if (action != null)   action.modify(this,getASTNode(),property);
+  return true;
+}

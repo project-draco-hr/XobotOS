@@ -1,0 +1,3 @@
+{
+  return this.getParameter(ParameterNames.CNONCE);
+}

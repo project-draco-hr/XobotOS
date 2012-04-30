@@ -1,0 +1,7 @@
+{
+  while (t != null) {
+    if (t.isEqualTo(tbase))     return true;
+    t=t.getSuperclass();
+  }
+  return false;
+}

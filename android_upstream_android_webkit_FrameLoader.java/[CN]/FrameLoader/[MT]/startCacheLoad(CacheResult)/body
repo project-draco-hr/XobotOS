@@ -1,0 +1,13 @@
+{
+  if (DebugFlags.FRAME_LOADER) {
+    Log.v(LOGTAG,"FrameLoader: loading from cache: " + mListener.url());
+  }
+  CacheLoader cacheLoader=new CacheLoader(mListener,result);
+  mListener.setCacheLoader(cacheLoader);
+  if (mListener.isSynchronous()) {
+    cacheLoader.load();
+  }
+ else {
+    WebViewWorker.getHandler().obtainMessage(WebViewWorker.MSG_ADD_STREAMLOADER,cacheLoader).sendToTarget();
+  }
+}

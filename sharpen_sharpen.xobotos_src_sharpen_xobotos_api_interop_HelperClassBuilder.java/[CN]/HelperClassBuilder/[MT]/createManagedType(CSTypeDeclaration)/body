@@ -1,0 +1,4 @@
+{
+  parent.addMember(_managedHelper);
+  return true;
+}

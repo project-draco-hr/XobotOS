@@ -1,0 +1,8 @@
+def stderr(self, run=None):
+    'Returns the error output from the specified run number.\n        If there is no specified run number, then returns the error\n        output of the last run.  If the run number is less than zero,\n        then returns the error output from that many runs back from the\n        current run.\n        '
+    if (not run):
+        run = len(self._stderr)
+    elif (run < 0):
+        run = (len(self._stderr) + run)
+    run = (run - 1)
+    return self._stderr[run]

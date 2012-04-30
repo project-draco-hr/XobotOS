@@ -1,0 +1,10 @@
+{
+  type.accept(this);
+  write(" ");
+  write(name);
+  if (null != initializer) {
+    write(" = ");
+    initializer.accept(this);
+  }
+  writeLine(";");
+}

@@ -1,0 +1,12 @@
+{
+  cm.unregisterForAvailable(this);
+  cm.unregisterForRadioStateChanged(this);
+  cm.unregisterForVoiceNetworkStateChanged(this);
+  cm.unregisterForSIMReady(this);
+  phone.mIccRecords.unregisterForRecordsLoaded(this);
+  cm.unSetOnSignalStrengthUpdate(this);
+  cm.unSetOnRestrictedStateChanged(this);
+  cm.unSetOnNITZTime(this);
+  cr.unregisterContentObserver(this.mAutoTimeObserver);
+  cr.unregisterContentObserver(this.mAutoTimeZoneObserver);
+}

@@ -1,0 +1,8 @@
+{
+  System.out.print("ERROR: ");
+  System.out.println(error);
+  System.out.println();
+  System.out.println("usage: HprofBinaryToAscii <binary-hprof-file>");
+  System.out.println();
+  System.out.println("Reads a binary hprof file and print it in ASCII format");
+}

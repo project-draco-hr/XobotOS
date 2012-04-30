@@ -1,0 +1,8 @@
+{
+  enqueueAction(new Runnable(){
+    @Override public void run(){
+      popBackStackState(mActivity.mHandler,name,-1,flags);
+    }
+  }
+,false);
+}

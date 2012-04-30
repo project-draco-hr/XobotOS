@@ -1,0 +1,4 @@
+{
+  EntrySet result=entrySet;
+  return result != null ? result : (entrySet=new EntrySet());
+}

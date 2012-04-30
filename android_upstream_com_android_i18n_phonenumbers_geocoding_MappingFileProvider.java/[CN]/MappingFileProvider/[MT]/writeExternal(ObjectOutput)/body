@@ -1,0 +1,12 @@
+{
+  objectOutput.writeInt(numOfEntries);
+  for (int i=0; i < numOfEntries; i++) {
+    objectOutput.writeInt(countryCallingCodes[i]);
+    Set<String> setOfLangs=availableLanguages.get(i);
+    int numOfLangs=setOfLangs.size();
+    objectOutput.writeInt(numOfLangs);
+    for (    String lang : setOfLangs) {
+      objectOutput.writeUTF(lang);
+    }
+  }
+}

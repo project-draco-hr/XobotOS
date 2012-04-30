@@ -1,0 +1,21 @@
+{
+  StringBuffer s=new StringBuffer();
+  if (debug)   dbg_enter("base_phone_number");
+  try {
+    int lc=0;
+    while (lexer.hasMoreChars()) {
+      char w=lexer.lookAhead(0);
+      if (Lexer.isDigit(w) || w == '-' || w == '.' || w == '(' || w == ')') {
+        lexer.consume(1);
+        s.append(w);
+        lc++;
+      }
+ else       if (lc > 0)       break;
+ else       throw createParseException("unexpected " + w);
+    }
+    return s.toString();
+  }
+  finally {
+    if (debug)     dbg_leave("base_phone_number");
+  }
+}

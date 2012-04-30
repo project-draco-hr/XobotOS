@@ -1,0 +1,14 @@
+{
+  if (expectedModCount == modCount) {
+    try {
+      E result=get(pos);
+      lastPosition=pos;
+      pos--;
+      return result;
+    }
+ catch (    IndexOutOfBoundsException e) {
+      throw new NoSuchElementException();
+    }
+  }
+  throw new ConcurrentModificationException();
+}

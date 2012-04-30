@@ -1,0 +1,4 @@
+{
+  if (name.equals("mutable") || name.equals("namespace"))   return "_" + name;
+  return name;
+}

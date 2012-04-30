@@ -1,0 +1,4 @@
+{
+  checkOpenAndCreate(true);
+  return (Boolean)impl.getOption(SocketOptions.SO_OOBINLINE);
+}

@@ -1,0 +1,17 @@
+{
+  if (in == null) {
+    throw streamClosed();
+  }
+  if (byteCount <= 0) {
+    return 0;
+  }
+  int numSkipped=0;
+  if (pos < buf.length) {
+    numSkipped+=(byteCount < buf.length - pos) ? byteCount : buf.length - pos;
+    pos+=numSkipped;
+  }
+  if (numSkipped < byteCount) {
+    numSkipped+=in.skip(byteCount - numSkipped);
+  }
+  return numSkipped;
+}

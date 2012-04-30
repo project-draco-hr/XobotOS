@@ -1,0 +1,3 @@
+String number
+Map<Character,Character> normalizationReplacements
+boolean removeNonMatches

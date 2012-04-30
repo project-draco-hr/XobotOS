@@ -1,0 +1,7 @@
+{
+  if (number.length() < MIN_LENGTH_FOR_NSN) {
+    return false;
+  }
+  Matcher m=VALID_PHONE_NUMBER_PATTERN.matcher(number);
+  return m.matches();
+}

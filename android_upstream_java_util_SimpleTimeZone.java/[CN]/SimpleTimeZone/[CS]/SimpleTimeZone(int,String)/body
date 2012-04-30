@@ -1,0 +1,4 @@
+{
+  setID(name);
+  rawOffset=offset;
+}

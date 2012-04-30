@@ -1,0 +1,5 @@
+{
+  ListeningPointImpl lp=(ListeningPointImpl)listeningPoint;
+  if (lp.messageProcessor.inUse())   throw new ObjectInUseException("Object is in use");
+  this.listeningPoints.remove(lp.getTransport().toUpperCase());
+}

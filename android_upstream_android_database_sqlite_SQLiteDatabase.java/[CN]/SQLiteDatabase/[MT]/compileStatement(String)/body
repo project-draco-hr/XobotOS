@@ -1,0 +1,4 @@
+{
+  verifyDbIsOpen();
+  return new SQLiteStatement(this,sql,null);
+}

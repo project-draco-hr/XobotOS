@@ -1,0 +1,13 @@
+{
+  if (mScrollX != x || mScrollY != y) {
+    int oldX=mScrollX;
+    int oldY=mScrollY;
+    mScrollX=x;
+    mScrollY=y;
+    invalidateParentCaches();
+    onScrollChanged(mScrollX,mScrollY,oldX,oldY);
+    if (!awakenScrollBars()) {
+      invalidate(true);
+    }
+  }
+}

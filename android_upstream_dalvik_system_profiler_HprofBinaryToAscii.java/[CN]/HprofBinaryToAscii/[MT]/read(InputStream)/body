@@ -1,0 +1,6 @@
+{
+  BinaryHprofReader reader=new BinaryHprofReader(inputStream);
+  reader.setStrict(false);
+  reader.read();
+  return reader.getHprofData();
+}

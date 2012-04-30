@@ -1,0 +1,4 @@
+{
+  int retval=bytes[ptr++] & 0xFF;
+  return retval;
+}

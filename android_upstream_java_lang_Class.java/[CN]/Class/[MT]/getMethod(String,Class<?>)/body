@@ -1,0 +1,7 @@
+{
+  Member member=getConstructorOrMethod(name,true,true,parameterTypes);
+  if (member instanceof Constructor) {
+    throw new NoSuchMethodException(name);
+  }
+  return (Method)member;
+}

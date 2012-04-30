@@ -1,0 +1,5 @@
+{
+  String name=my(CSharpDriver.class).mappedVariableName(binding);
+  if (name == null)   name=binding.getName();
+  return new CSVariableDeclaration(identifier(name),type,initializer);
+}

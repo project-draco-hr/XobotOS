@@ -1,0 +1,4 @@
+{
+  mShapeState.mChangingConfigurations=getChangingConfigurations();
+  return mShapeState;
+}

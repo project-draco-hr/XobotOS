@@ -1,0 +1,10 @@
+{
+  if (isLoggingEnabled()) {
+    getStackLogger().logDebug("stopStack -- stoppping the stack");
+  }
+  this.stopStack();
+  this.sipProviders=new LinkedList<SipProviderImpl>();
+  this.listeningPoints=new Hashtable<String,ListeningPointImpl>();
+  if (this.eventScanner != null)   this.eventScanner.forceStop();
+  this.eventScanner=null;
+}

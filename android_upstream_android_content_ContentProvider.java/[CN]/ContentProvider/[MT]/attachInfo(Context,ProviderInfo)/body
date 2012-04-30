@@ -1,0 +1,14 @@
+{
+  AsyncTask.init();
+  if (mContext == null) {
+    mContext=context;
+    mMyUid=Process.myUid();
+    if (info != null) {
+      setReadPermission(info.readPermission);
+      setWritePermission(info.writePermission);
+      setPathPermissions(info.pathPermissions);
+      mExported=info.exported;
+    }
+    ContentProvider.this.onCreate();
+  }
+}

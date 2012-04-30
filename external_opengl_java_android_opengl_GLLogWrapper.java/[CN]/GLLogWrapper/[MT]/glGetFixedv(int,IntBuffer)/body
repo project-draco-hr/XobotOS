@@ -1,0 +1,8 @@
+{
+  begin("glGetFixedv");
+  arg("pname",pname);
+  arg("params",params.toString());
+  end();
+  mgl11.glGetFixedv(pname,params);
+  checkError();
+}

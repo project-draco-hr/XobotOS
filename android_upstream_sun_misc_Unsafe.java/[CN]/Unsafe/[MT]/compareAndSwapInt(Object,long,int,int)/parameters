@@ -1,0 +1,4 @@
+Object obj
+long offset
+int expectedValue
+int newValue

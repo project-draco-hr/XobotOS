@@ -1,0 +1,7 @@
+{
+  for (  String projectReference : projectReferences) {
+    final IProject reference=WorkspaceUtilities.getProject(projectReference);
+    project.addReferencedProject(reference,null);
+  }
+  return this;
+}

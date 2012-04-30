@@ -1,0 +1,4 @@
+{
+  mWaitingApns=waitingApns;
+  mWaitingApnsPermanentFailureCountDown.set(mWaitingApns.size());
+}

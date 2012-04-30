@@ -1,0 +1,26 @@
+{
+  final URI projectRoot=my(APIDefinition.class).getProjectRoot();
+  final String outputDir=my(ConfigFile.class).getSourceInfo().getOutputFolder();
+  final String outputPath=projectRoot.getPath() + File.separatorChar + outputDir+ File.separatorChar+ _config.getOutputDir();
+  if (!new File(outputPath).exists())   new File(outputPath).mkdirs();
+  final String fullSourceName=outputPath + File.separatorChar + _name+ ".cs";
+  FileWriter output;
+  try {
+    output=new FileWriter(fullSourceName);
+  }
+ catch (  IOException e) {
+    Sharpen.Log(e,"Cannot create managed glue file '%s'",fullSourceName);
+    return false;
+  }
+  CSharpPrinter printer=new CSharpPrinter();
+  printer.setWriter(output);
+  printer.print(unit);
+  try {
+    output.close();
+  }
+ catch (  IOException e) {
+    Sharpen.Log(e,"Cannot create managed glue file '%s'",fullSourceName);
+    return false;
+  }
+  return true;
+}

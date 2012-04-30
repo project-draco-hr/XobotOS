@@ -1,0 +1,3 @@
+{
+  theEntityResolver=(resolver == null) ? this : resolver;
+}

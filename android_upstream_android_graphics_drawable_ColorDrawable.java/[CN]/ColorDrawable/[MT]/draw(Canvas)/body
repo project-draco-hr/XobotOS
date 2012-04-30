@@ -1,0 +1,6 @@
+{
+  if ((mState.mUseColor >>> 24) != 0) {
+    mPaint.setColor(mState.mUseColor);
+    canvas.drawRect(getBounds(),mPaint);
+  }
+}

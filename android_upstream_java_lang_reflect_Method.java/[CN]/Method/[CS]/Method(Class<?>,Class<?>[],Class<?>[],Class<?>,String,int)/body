@@ -1,0 +1,8 @@
+{
+  this.declaringClass=declaring;
+  this.name=name;
+  this.slot=slot;
+  this.parameterTypes=paramTypes;
+  this.exceptionTypes=exceptTypes;
+  this.returnType=returnType;
+}

@@ -1,0 +1,25 @@
+{
+  if (header == null || header.length() == 0)   return;
+  HeaderParser headerParser=null;
+  try {
+    headerParser=ParserFactory.createParser(header + "\n");
+  }
+ catch (  ParseException ex) {
+    this.parseExceptionListener.handleException(ex,message,null,header,rawStringMessage);
+    return;
+  }
+  try {
+    SIPHeader sipHeader=headerParser.parse();
+    message.attachHeader(sipHeader,false);
+  }
+ catch (  ParseException ex) {
+    if (this.parseExceptionListener != null) {
+      String headerName=Lexer.getHeaderName(header);
+      Class headerClass=NameMap.getClassFromName(headerName);
+      if (headerClass == null) {
+        headerClass=ExtensionHeaderImpl.class;
+      }
+      this.parseExceptionListener.handleException(ex,message,headerClass,header,rawStringMessage);
+    }
+  }
+}

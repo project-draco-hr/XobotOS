@@ -1,0 +1,9 @@
+{
+  if (type == null) {
+    throw new NullPointerException("type == null");
+  }
+  if (protectionParameter == null) {
+    throw new NullPointerException("protectionParameter == null");
+  }
+  return new BuilderImpl(null,protectionParameter,null,type,provider);
+}

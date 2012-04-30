@@ -1,0 +1,9 @@
+Canvas c
+int start
+int limit
+boolean runIsRtl
+float x
+int top
+int y
+int bottom
+boolean needWidth

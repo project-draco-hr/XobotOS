@@ -1,0 +1,8 @@
+{
+  if (depth > Short.MAX_VALUE) {
+    throw new IllegalArgumentException("depth too large for binary hprof: " + depth + " > "+ Short.MAX_VALUE);
+  }
+  writeRecordHeader(BinaryHprof.Tag.CONTROL_SETTINGS,0,BinaryHprof.Tag.CONTROL_SETTINGS.maximumSize);
+  out.writeInt(flags);
+  out.writeShort((short)depth);
+}

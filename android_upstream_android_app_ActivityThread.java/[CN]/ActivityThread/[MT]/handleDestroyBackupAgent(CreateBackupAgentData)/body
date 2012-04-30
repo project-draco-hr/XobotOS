@@ -1,0 +1,19 @@
+{
+  if (DEBUG_BACKUP)   Slog.v(TAG,"handleDestroyBackupAgent: " + data);
+  LoadedApk packageInfo=getPackageInfoNoCheck(data.appInfo,data.compatInfo);
+  String packageName=packageInfo.mPackageName;
+  BackupAgent agent=mBackupAgents.get(packageName);
+  if (agent != null) {
+    try {
+      agent.onDestroy();
+    }
+ catch (    Exception e) {
+      Slog.w(TAG,"Exception thrown in onDestroy by backup agent of " + data.appInfo);
+      e.printStackTrace();
+    }
+    mBackupAgents.remove(packageName);
+  }
+ else {
+    Slog.w(TAG,"Attempt to destroy unknown backup agent " + data);
+  }
+}

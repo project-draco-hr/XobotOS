@@ -1,0 +1,6 @@
+{
+  if (!nativeInterfaces()) {
+    return name;
+  }
+  return "I" + name;
+}

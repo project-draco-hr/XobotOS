@@ -1,0 +1,3 @@
+def match(self, lines, matches):
+    'Compare actual and expected file contents.\n        '
+    return self.match_function(lines, matches)

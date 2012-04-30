@@ -1,0 +1,5 @@
+import os
+import sys
+outfile = sys.argv[1]
+if (os.path.exists('dep_1.txt') and os.path.exists('dep_2.txt') and os.path.exists('dep_3.txt')):
+    open(outfile, 'w')

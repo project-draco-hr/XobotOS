@@ -1,0 +1,34 @@
+{
+  String auditReport="  Leaked transactions:\n";
+  int leakedTransactions=0;
+  long currentTime=System.currentTimeMillis();
+  LinkedList transactionsList=new LinkedList(transactionsMap.values());
+  Iterator it=transactionsList.iterator();
+  while (it.hasNext()) {
+    SIPTransaction sipTransaction=(SIPTransaction)it.next();
+    if (sipTransaction != null) {
+      if (sipTransaction.auditTag == 0) {
+        sipTransaction.auditTag=currentTime;
+      }
+ else {
+        if (currentTime - sipTransaction.auditTag >= a_nLeakedTransactionTimer) {
+          leakedTransactions++;
+          TransactionState transactionState=sipTransaction.getState();
+          SIPRequest origRequest=sipTransaction.getOriginalRequest();
+          String origRequestMethod=(origRequest != null ? origRequest.getMethod() : null);
+          String transactionReport=sipTransaction.getClass().getName() + ", state: " + (transactionState != null ? transactionState.toString() : "null")+ ", OR: "+ (origRequestMethod != null ? origRequestMethod : "null");
+          auditReport+="    " + transactionReport + "\n";
+          removeTransaction(sipTransaction);
+          if (isLoggingEnabled())           stackLogger.logDebug("auditTransactions: leaked " + transactionReport);
+        }
+      }
+    }
+  }
+  if (leakedTransactions > 0) {
+    auditReport+="    Total: " + Integer.toString(leakedTransactions) + " leaked transactions detected and removed.\n";
+  }
+ else {
+    auditReport=null;
+  }
+  return auditReport;
+}

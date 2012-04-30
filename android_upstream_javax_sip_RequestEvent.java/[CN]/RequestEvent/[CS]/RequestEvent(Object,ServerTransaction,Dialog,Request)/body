@@ -1,0 +1,6 @@
+{
+  super(source);
+  mDialog=dialog;
+  mRequest=request;
+  mServerTransaction=serverTransaction;
+}

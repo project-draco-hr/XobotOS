@@ -1,0 +1,4 @@
+{
+  if (sequenceNumber <= 0 || sequenceNumber > ((long)1) << 32 - 1)   throw new InvalidArgumentException("Bad seq number " + sequenceNumber);
+  this.sequenceNumber=sequenceNumber;
+}

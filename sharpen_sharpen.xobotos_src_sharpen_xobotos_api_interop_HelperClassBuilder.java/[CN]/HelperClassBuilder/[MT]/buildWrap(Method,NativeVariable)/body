@@ -1,0 +1,10 @@
+{
+  ConstructorInvocation ctorCall=new ConstructorInvocation(_nativeType);
+  for (  Member member : _members) {
+    if (member.passToConstructor())     ctorCall.addArgument(member.getReference(src));
+  }
+  NativeVariable retval=NativeVariable.createLocal(method.getBody(),_nativeType,"retval",ctorCall,NativeVariable.Flags.BYREF);
+  Expression srcDeref=src.getDereferenceExpr();
+  method.getBody().addStatement(new MethodInvocation(DEEP_WRAP.expr(),srcDeref,retval.getReference()));
+  method.getBody().addStatement(new ReturnStatement(retval.getReference()));
+}

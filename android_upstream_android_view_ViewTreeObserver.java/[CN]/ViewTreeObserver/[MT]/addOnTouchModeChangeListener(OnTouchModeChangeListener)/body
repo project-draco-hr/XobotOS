@@ -1,0 +1,7 @@
+{
+  checkIsAlive();
+  if (mOnTouchModeChangeListeners == null) {
+    mOnTouchModeChangeListeners=new CopyOnWriteArrayList<OnTouchModeChangeListener>();
+  }
+  mOnTouchModeChangeListeners.add(listener);
+}

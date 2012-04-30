@@ -1,0 +1,4 @@
+{
+  getWindow().setContentView(view,params);
+  initActionBar();
+}

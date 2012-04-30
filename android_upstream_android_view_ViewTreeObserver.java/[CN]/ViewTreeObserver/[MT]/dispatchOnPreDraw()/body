@@ -1,0 +1,11 @@
+{
+  boolean cancelDraw=false;
+  if (mOnPreDrawListeners != null && mOnPreDrawListeners.size() > 0) {
+    final ArrayList<OnPreDrawListener> listeners=(ArrayList<OnPreDrawListener>)mOnPreDrawListeners.clone();
+    int numListeners=listeners.size();
+    for (int i=0; i < numListeners; ++i) {
+      cancelDraw|=!(listeners.get(i).onPreDraw());
+    }
+  }
+  return cancelDraw;
+}

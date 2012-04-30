@@ -1,0 +1,28 @@
+{
+  String token=node.getToken();
+  CSExpression literal=new CSNumberLiteralExpression(token);
+  if (expectingType("byte") && token.startsWith("-")) {
+    literal=uncheckedCast("byte",literal);
+  }
+ else   if (token.startsWith("0x")) {
+    if (token.endsWith("l") || token.endsWith("L")) {
+      literal=uncheckedCast("long",literal);
+    }
+ else {
+      literal=uncheckedCast("int",literal);
+    }
+  }
+ else   if (token.startsWith("0") && token.indexOf('.') == -1 && Character.isDigit(token.charAt(token.length() - 1))) {
+    try {
+      int n=Integer.parseInt(token,8);
+      if (n != 0)       literal=new CSNumberLiteralExpression("0x" + Integer.toHexString(n));
+    }
+ catch (    NumberFormatException ex) {
+    }
+  }
+ else   if (token.endsWith(".f")) {
+    literal=new CSNumberLiteralExpression(token.substring(0,token.length() - 2) + ".0f");
+  }
+  pushExpression(literal);
+  return false;
+}

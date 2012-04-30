@@ -1,0 +1,10 @@
+{
+  StackTraceElement[] stackFrames=thread.getStackTrace();
+  if (stackFrames.length == 0) {
+    return null;
+  }
+  if (stackFrames.length > depth) {
+    stackFrames=Arrays.copyOfRange(stackFrames,0,depth);
+  }
+  return stackFrames;
+}

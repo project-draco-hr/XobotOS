@@ -1,0 +1,43 @@
+{
+  SIPRequest sipRequest=(SIPRequest)transaction.getOriginalRequest();
+  if (firstTransactionSeen && !firstTransactionId.equals(transaction.getBranchId()) && transaction.getMethod().equals(firstTransactionMethod)) {
+    this.reInviteFlag=true;
+  }
+  if (firstTransactionSeen == false) {
+    storeFirstTransactionInfo(this,transaction);
+    if (sipRequest.getMethod().equals(Request.SUBSCRIBE))     this.eventHeader=(EventHeader)sipRequest.getHeader(EventHeader.NAME);
+    this.setLocalParty(sipRequest);
+    this.setRemoteParty(sipRequest);
+    this.setCallId(sipRequest);
+    if (this.originalRequest == null) {
+      this.originalRequest=sipRequest;
+    }
+    if (this.method == null) {
+      this.method=sipRequest.getMethod();
+    }
+    if (transaction instanceof SIPServerTransaction) {
+      this.hisTag=sipRequest.getFrom().getTag();
+    }
+ else {
+      setLocalSequenceNumber(sipRequest.getCSeq().getSeqNumber());
+      this.originalLocalSequenceNumber=localSequenceNumber;
+      this.myTag=sipRequest.getFrom().getTag();
+      if (myTag == null)       if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logError("The request's From header is missing the required Tag parameter.");
+    }
+  }
+ else   if (transaction.getMethod().equals(firstTransactionMethod) && firstTransactionIsServerTransaction != transaction.isServerTransaction()) {
+    storeFirstTransactionInfo(this,transaction);
+    this.setLocalParty(sipRequest);
+    this.setRemoteParty(sipRequest);
+    this.setCallId(sipRequest);
+    this.originalRequest=sipRequest;
+    this.method=sipRequest.getMethod();
+  }
+  if (transaction instanceof SIPServerTransaction)   setRemoteSequenceNumber(sipRequest.getCSeq().getSeqNumber());
+  this.lastTransaction=transaction;
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("Transaction Added " + this + myTag+ "/"+ hisTag);
+    sipStack.getStackLogger().logDebug("TID = " + transaction.getTransactionId() + "/"+ transaction.isServerTransaction());
+    sipStack.getStackLogger().logStackTrace();
+  }
+}

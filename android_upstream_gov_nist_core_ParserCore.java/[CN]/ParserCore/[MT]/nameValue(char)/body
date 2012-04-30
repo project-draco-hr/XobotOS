@@ -1,0 +1,43 @@
+{
+  if (debug)   dbg_enter("nameValue");
+  try {
+    lexer.match(LexerCore.ID);
+    Token name=lexer.getNextToken();
+    lexer.SPorHT();
+    try {
+      boolean quoted=false;
+      char la=lexer.lookAhead(0);
+      if (la == separator) {
+        lexer.consume(1);
+        lexer.SPorHT();
+        String str=null;
+        boolean isFlag=false;
+        if (lexer.lookAhead(0) == '\"') {
+          str=lexer.quotedString();
+          quoted=true;
+        }
+ else {
+          lexer.match(LexerCore.ID);
+          Token value=lexer.getNextToken();
+          str=value.tokenValue;
+          if (str == null) {
+            str="";
+            isFlag=true;
+          }
+        }
+        NameValue nv=new NameValue(name.tokenValue,str,isFlag);
+        if (quoted)         nv.setQuotedValue();
+        return nv;
+      }
+ else {
+        return new NameValue(name.tokenValue,"",true);
+      }
+    }
+ catch (    ParseException ex) {
+      return new NameValue(name.tokenValue,null,false);
+    }
+  }
+  finally {
+    if (debug)     dbg_leave("nameValue");
+  }
+}

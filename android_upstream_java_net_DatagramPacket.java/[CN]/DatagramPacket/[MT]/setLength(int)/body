@@ -1,0 +1,4 @@
+{
+  setLengthOnly(length);
+  this.capacity=length;
+}

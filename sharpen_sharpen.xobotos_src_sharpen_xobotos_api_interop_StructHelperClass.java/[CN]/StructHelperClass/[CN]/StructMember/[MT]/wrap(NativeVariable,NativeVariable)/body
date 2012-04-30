@@ -1,0 +1,11 @@
+{
+  if (!isClass()) {
+    Expression expr=getElementInfo().marshalNativeArg(getReference(src));
+    return new AssignmentStatement(getReference(dest),expr);
+  }
+ else   if (isByRef())   return new AssignmentStatement(getReference(dest),new MethodInvocation(getHelper().WRAP.expr(),getReference(src)));
+ else {
+    Expression destAddr=new AddressOfExpression(getReference(dest));
+    return new ExpressionStatement(new MethodInvocation(getHelper().WRAP.expr(),getReference(src),destAddr));
+  }
+}

@@ -1,0 +1,5 @@
+{
+  if (_parent == null)   return String.format("RootScope[/:%s]",_fileName);
+ else   if (_fileName != null)   return String.format("FileScope[%s:%s]",getPath(),_fileName);
+  return String.format("Scope[%s:%s]",getPath(),_value != null ? _value.toString() : "null");
+}

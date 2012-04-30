@@ -1,0 +1,3 @@
+{
+  return getFField(object,declaringClass,type,slot,flag,TYPE_FLOAT);
+}

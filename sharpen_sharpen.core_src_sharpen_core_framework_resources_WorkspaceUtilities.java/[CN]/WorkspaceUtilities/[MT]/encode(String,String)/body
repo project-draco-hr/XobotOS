@@ -1,0 +1,10 @@
+{
+  try {
+    return new ByteArrayInputStream(text.getBytes(charset));
+  }
+ catch (  UnsupportedEncodingException e) {
+    e.printStackTrace();
+    throwCoreException(e);
+  }
+  return null;
+}

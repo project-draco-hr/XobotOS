@@ -1,0 +1,6 @@
+{
+  for (  final AbstractAction action : getTypeTemplate().getActions()) {
+    action.apply(this,getMember().type());
+  }
+  return true;
+}

@@ -1,0 +1,17 @@
+{
+  long ident=Binder.clearCallingIdentity();
+  try {
+    BackupAgent.this.onRestoreFile(data,size,type,domain,path,mode,mtime);
+  }
+ catch (  IOException e) {
+    throw new RuntimeException(e);
+  }
+ finally {
+    Binder.restoreCallingIdentity(ident);
+    try {
+      callbackBinder.opComplete(token);
+    }
+ catch (    RemoteException e) {
+    }
+  }
+}

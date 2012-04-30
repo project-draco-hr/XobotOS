@@ -1,0 +1,10 @@
+{
+  if (provider == null || provider.isEmpty()) {
+    throw new IllegalArgumentException();
+  }
+  Provider p=Security.getProvider(provider);
+  if (p == null) {
+    throw new NoSuchProviderException(provider);
+  }
+  return getInstance(algorithm,p);
+}

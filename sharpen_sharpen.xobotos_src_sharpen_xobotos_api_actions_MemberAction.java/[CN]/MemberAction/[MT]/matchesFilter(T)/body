@@ -1,0 +1,8 @@
+{
+  if (_filters == null)   return Match.POSITIVE;
+  for (  final Filter filter : _filters) {
+    Match match=filter.matches(node);
+    if (match != Match.NO_MATCH)     return match;
+  }
+  return Match.NO_MATCH;
+}

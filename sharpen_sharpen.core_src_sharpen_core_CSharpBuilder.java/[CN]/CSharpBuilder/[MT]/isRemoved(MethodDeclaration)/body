@@ -1,0 +1,3 @@
+{
+  return hasRemoveAnnotation(node) || isRemoved(node.resolveBinding());
+}

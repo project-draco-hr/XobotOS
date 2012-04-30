@@ -1,0 +1,24 @@
+{
+  SyncMessenger sm=SyncMessenger.obtain();
+  try {
+    if (dstMessenger != null && msg != null) {
+      msg.replyTo=sm.mMessenger;
+synchronized (sm.mHandler.mLockObject) {
+        dstMessenger.send(msg);
+        sm.mHandler.mLockObject.wait();
+      }
+    }
+ else {
+      sm.mHandler.mResultMsg=null;
+    }
+  }
+ catch (  InterruptedException e) {
+    sm.mHandler.mResultMsg=null;
+  }
+catch (  RemoteException e) {
+    sm.mHandler.mResultMsg=null;
+  }
+  Message resultMsg=sm.mHandler.mResultMsg;
+  sm.recycle();
+  return resultMsg;
+}

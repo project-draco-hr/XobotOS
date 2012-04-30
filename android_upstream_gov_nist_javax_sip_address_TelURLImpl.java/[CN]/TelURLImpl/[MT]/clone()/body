@@ -1,0 +1,5 @@
+{
+  TelURLImpl retval=(TelURLImpl)super.clone();
+  if (this.telephoneNumber != null)   retval.telephoneNumber=(TelephoneNumber)this.telephoneNumber.clone();
+  return retval;
+}

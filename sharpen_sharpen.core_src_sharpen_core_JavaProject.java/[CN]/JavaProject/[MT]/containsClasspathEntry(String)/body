@@ -1,0 +1,7 @@
+{
+  for (  IClasspathEntry entry : _javaProject.getRawClasspath()) {
+    if (IClasspathEntry.CPE_LIBRARY != entry.getEntryKind())     continue;
+    if (entry.getPath().toFile().getAbsolutePath().equals(absolutePath))     return true;
+  }
+  return false;
+}

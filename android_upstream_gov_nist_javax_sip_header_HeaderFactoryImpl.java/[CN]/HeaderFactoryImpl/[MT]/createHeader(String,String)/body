@@ -1,0 +1,5 @@
+{
+  if (headerName == null)   throw new NullPointerException("header name is null");
+  String hdrText=new StringBuffer().append(headerName).append(":").append(headerValue).toString();
+  return createHeader(hdrText);
+}

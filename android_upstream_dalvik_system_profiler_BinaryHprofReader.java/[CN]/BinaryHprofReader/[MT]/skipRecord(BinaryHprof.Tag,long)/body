@@ -1,0 +1,9 @@
+{
+  if (TRACE) {
+    System.out.println("\tskipping recordLength=" + recordLength);
+  }
+  long skipped=in.skip(recordLength);
+  if (skipped != recordLength) {
+    throw new EOFException("Expected to skip " + recordLength + " bytes but only skipped "+ skipped+ " bytes");
+  }
+}

@@ -1,0 +1,5 @@
+{
+  ModifyField action=getTemplate().getModificationAction();
+  if (action != null)   action.modify(this,getASTNode(),field);
+  return true;
+}

@@ -1,0 +1,6 @@
+{
+  in.defaultReadObject();
+  BigInt bigInt=new BigInt();
+  bigInt.putBigEndian(magnitude,signum < 0);
+  setBigInt(bigInt);
+}

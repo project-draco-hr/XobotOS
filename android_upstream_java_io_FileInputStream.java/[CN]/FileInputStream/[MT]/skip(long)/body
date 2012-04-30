@@ -1,0 +1,15 @@
+{
+  if (byteCount < 0) {
+    throw new IOException("byteCount < 0: " + byteCount);
+  }
+  try {
+    Libcore.os.lseek(fd,byteCount,SEEK_CUR);
+    return byteCount;
+  }
+ catch (  ErrnoException errnoException) {
+    if (errnoException.errno == ESPIPE) {
+      return super.skip(byteCount);
+    }
+    throw errnoException.rethrowAsIOException();
+  }
+}

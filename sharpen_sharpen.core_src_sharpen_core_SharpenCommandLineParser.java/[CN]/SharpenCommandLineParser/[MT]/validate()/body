@@ -1,0 +1,5 @@
+{
+  if (_cmdLine.project == null) {
+    illegalArgument("unspecified source folder");
+  }
+}

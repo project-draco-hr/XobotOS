@@ -1,0 +1,10 @@
+{
+  if (arcs == null) {
+    arcs=createArcs();
+  }
+  if (!arcsValid) {
+    computeArcs();
+    arcsValid=true;
+  }
+  return arcs;
+}

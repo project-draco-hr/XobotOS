@@ -1,0 +1,12 @@
+{
+  StringBuffer dbname=new StringBuffer();
+  this.lexer.match(LESS_THAN);
+  while (this.lexer.hasMoreChars()) {
+    char next=this.lexer.getNextChar();
+    if (next != '>' && next != '\n') {
+      dbname.append(next);
+    }
+  }
+  userDatabase.setDatabaseName(dbname.toString());
+  super.parse(userDatabase);
+}

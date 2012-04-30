@@ -1,0 +1,6 @@
+def __init__(self, bench, config, time_type, time, settings):
+    self.bench = bench
+    self.config = config
+    self.time_type = time_type
+    self.time = time
+    self.settings = settings

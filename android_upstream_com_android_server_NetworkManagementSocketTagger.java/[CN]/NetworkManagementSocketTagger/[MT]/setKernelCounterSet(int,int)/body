@@ -1,0 +1,6 @@
+{
+  int errno=native_setCounterSet(counterSet,uid);
+  if (errno < 0) {
+    Log.w(TAG,"setKernelCountSet(" + uid + ", "+ counterSet+ ") failed with errno "+ errno);
+  }
+}

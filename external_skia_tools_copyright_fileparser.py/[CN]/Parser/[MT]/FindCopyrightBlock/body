@@ -1,0 +1,7 @@
+def FindCopyrightBlock(self, comment_blocks):
+    "Given a list of comment block strings, return the one that seems\n        like the most likely copyright block.\n\n        Returns None if comment_blocks was empty, or if we couldn't find\n        a comment block that contains copyright info."
+    if (not comment_blocks):
+        return None
+    for block in comment_blocks:
+        if self._copyright_pattern.search(block):
+            return block

@@ -1,0 +1,6 @@
+{
+synchronized (mStartLock) {
+    mEarcons.put(earcon,makeResourceUri(packagename,resourceId));
+    return SUCCESS;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  this._ast=ast;
+  this._node=node;
+  this._kind=kind;
+  this._message=message;
+}

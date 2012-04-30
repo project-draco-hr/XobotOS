@@ -1,0 +1,5 @@
+{
+  CSAttribute attr=new CSAttribute("Sharpen.MarshalHelper");
+  attr.addArgument(new CSStringLiteralExpression("@\"" + _nativeType.getTypeName() + "\""));
+  return attr;
+}

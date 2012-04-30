@@ -1,0 +1,6 @@
+def run_built_executable(self, name, *args, **kw):
+    '\n    Runs an executable built by xcodebuild.\n    '
+    configuration = self.configuration_dirname()
+    os.environ['DYLD_LIBRARY_PATH'] = os.path.join('build', configuration)
+    program = [self.built_file_path(name, type=self.EXECUTABLE, **kw)]
+    return self.run(program=program, *args, **kw)

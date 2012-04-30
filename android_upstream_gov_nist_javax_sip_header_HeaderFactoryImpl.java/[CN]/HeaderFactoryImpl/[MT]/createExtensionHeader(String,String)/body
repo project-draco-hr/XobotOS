@@ -1,0 +1,7 @@
+{
+  if (name == null)   throw new NullPointerException("bad name");
+  gov.nist.javax.sip.header.ExtensionHeaderImpl ext=new gov.nist.javax.sip.header.ExtensionHeaderImpl();
+  ext.setName(name);
+  ext.setValue(value);
+  return ext;
+}

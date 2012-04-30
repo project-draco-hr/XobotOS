@@ -1,0 +1,9 @@
+{
+  _writer.writeIndentation();
+  _writer.write("return");
+  if (node.hasReturnValue()) {
+    _writer.write(" ");
+    node.getExpression().accept(this);
+  }
+  _writer.writeLine(";");
+}

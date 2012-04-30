@@ -1,0 +1,25 @@
+{
+  try {
+    Via via=new Via();
+    if (this.sentByHostPort != null) {
+      via.setSentBy(sentByHostPort);
+      via.setTransport(this.getTransport());
+    }
+ else {
+      Host host=new Host();
+      host.setHostname(this.getIpAddress().getHostAddress());
+      via.setHost(host);
+      via.setPort(this.getPort());
+      via.setTransport(this.getTransport());
+    }
+    return via;
+  }
+ catch (  ParseException ex) {
+    ex.printStackTrace();
+    return null;
+  }
+catch (  InvalidArgumentException ex) {
+    ex.printStackTrace();
+    return null;
+  }
+}

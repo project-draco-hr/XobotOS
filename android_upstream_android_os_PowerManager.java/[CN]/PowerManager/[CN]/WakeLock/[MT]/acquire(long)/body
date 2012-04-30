@@ -1,0 +1,6 @@
+{
+synchronized (mToken) {
+    acquireLocked();
+    mHandler.postDelayed(mReleaser,timeout);
+  }
+}

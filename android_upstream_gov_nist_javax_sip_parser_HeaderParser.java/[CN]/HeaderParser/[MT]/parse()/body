@@ -1,0 +1,8 @@
+{
+  String name=lexer.getNextToken(':');
+  lexer.consume(1);
+  String body=lexer.getLine().trim();
+  ExtensionHeaderImpl retval=new ExtensionHeaderImpl(name);
+  retval.setValue(body);
+  return retval;
+}

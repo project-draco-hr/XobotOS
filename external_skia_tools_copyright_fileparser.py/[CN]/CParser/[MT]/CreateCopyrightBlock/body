@@ -1,0 +1,7 @@
+def CreateCopyrightBlock(self, year, holder):
+    'Returns a copyright block suitable for this language, with the\n        given attributes.\n\n        @param year year in which to hold copyright (defaults to DEFAULT_YEAR)\n        @param holder holder of copyright (defaults to DEFAULT_HOLDER)\n        '
+    if (not year):
+        year = self.DEFAULT_YEAR
+    if (not holder):
+        holder = self.DEFAULT_HOLDER
+    return (self.COPYRIGHT_BLOCK_FORMAT % (year, holder))

@@ -1,0 +1,8 @@
+{
+  try {
+    return Libcore.os.stat(path).st_mtime * 1000L;
+  }
+ catch (  ErrnoException errnoException) {
+    return 0;
+  }
+}

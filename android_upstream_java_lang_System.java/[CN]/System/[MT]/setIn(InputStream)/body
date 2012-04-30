@@ -1,0 +1,3 @@
+{
+  setFieldImpl("in","Ljava/io/InputStream;",newIn);
+}

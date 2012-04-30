@@ -1,0 +1,12 @@
+{
+  ITypeBinding binding=nestedTypeBinding().getDeclaringClass().getTypeDeclaration();
+  ITypeBinding to=target.getDeclaringClass().getTypeDeclaration();
+  CSExpression enclosing=new CSReferenceExpression(fieldName);
+  while (binding != to) {
+    binding=binding.getDeclaringClass();
+    if (null == binding)     break;
+    binding=binding.getTypeDeclaration();
+    enclosing=new CSMemberReferenceExpression(enclosing,"_enclosing");
+  }
+  return enclosing;
+}

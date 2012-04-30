@@ -1,0 +1,42 @@
+{
+  int totalSamples=in.readInt();
+  int samplesCount=in.readInt();
+  if (TRACE) {
+    System.out.println("\ttotalSamples=" + totalSamples);
+    System.out.println("\tsamplesCount=" + samplesCount);
+  }
+  int expectedLength=4 + 4 + (samplesCount * (4 + 4));
+  if (recordLength != expectedLength) {
+    throw new MalformedHprofException("Expected CPU samples record of size " + expectedLength + " based on number of samples but header "+ "specified a length of  "+ recordLength);
+  }
+  int total=0;
+  for (int i=0; i < samplesCount; i++) {
+    int count=in.readInt();
+    int stackTraceId=in.readInt();
+    if (TRACE) {
+      System.out.println("\tcount=" + count);
+      System.out.println("\tstackTraceId=" + stackTraceId);
+    }
+    HprofData.StackTrace stackTrace=idToStackTrace.get(stackTraceId);
+    if (stackTrace == null) {
+      throw new MalformedHprofException("Unknown stack trace id " + stackTraceId);
+    }
+    if (count == 0) {
+      throw new MalformedHprofException("Zero sample count for stack trace " + stackTrace);
+    }
+    int[] countCell=stackTraces.get(stackTrace);
+    if (strict) {
+      if (countCell[0] != 0) {
+        throw new MalformedHprofException("Setting sample count of stack trace " + stackTrace + " to "+ count+ " found it was already initialized to "+ countCell[0]);
+      }
+    }
+ else {
+      count+=countCell[0];
+    }
+    countCell[0]=count;
+    total+=count;
+  }
+  if (strict && totalSamples != total) {
+    throw new MalformedHprofException("Expected a total of " + totalSamples + " samples but saw "+ total);
+  }
+}

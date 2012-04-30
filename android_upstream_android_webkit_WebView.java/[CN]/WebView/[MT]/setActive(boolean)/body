@@ -1,0 +1,30 @@
+{
+  if (active) {
+    if (hasFocus()) {
+      mDrawCursorRing=true;
+      setFocusControllerActive(true);
+      if (mNativeClass != 0) {
+        recordButtons(null,true,false,true);
+      }
+    }
+ else {
+      if (!inEditingMode()) {
+        mDrawCursorRing=false;
+        setFocusControllerActive(false);
+      }
+    }
+  }
+ else {
+    if (!mZoomManager.isZoomPickerVisible()) {
+      mDrawCursorRing=false;
+    }
+    mKeysPressed.clear();
+    mPrivateHandler.removeMessages(SWITCH_TO_LONGPRESS);
+    mTouchMode=TOUCH_DONE_MODE;
+    if (mNativeClass != 0) {
+      recordButtons(null,false,false,true);
+    }
+    setFocusControllerActive(false);
+  }
+  invalidate();
+}

@@ -1,0 +1,4 @@
+{
+  if (message == null)   throw new NullPointerException("JAIN-SIP Exception " + ", ErrorInfoHeader, setErrorMessage(), the message parameter is null");
+  setParameter("message",message);
+}

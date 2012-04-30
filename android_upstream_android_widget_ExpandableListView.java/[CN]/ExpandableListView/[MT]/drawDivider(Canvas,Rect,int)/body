@@ -1,0 +1,16 @@
+{
+  int flatListPosition=childIndex + mFirstPosition;
+  if (flatListPosition >= 0) {
+    final int adjustedPosition=getFlatPositionForConnector(flatListPosition);
+    PositionMetadata pos=mConnector.getUnflattenedPos(adjustedPosition);
+    if ((pos.position.type == ExpandableListPosition.CHILD) || (pos.isExpanded() && pos.groupMetadata.lastChildFlPos != pos.groupMetadata.flPos)) {
+      final Drawable divider=mChildDivider;
+      divider.setBounds(bounds);
+      divider.draw(canvas);
+      pos.recycle();
+      return;
+    }
+    pos.recycle();
+  }
+  super.drawDivider(canvas,bounds,flatListPosition);
+}

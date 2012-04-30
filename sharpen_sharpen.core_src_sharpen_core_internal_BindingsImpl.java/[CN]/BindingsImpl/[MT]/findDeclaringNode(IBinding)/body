@@ -1,0 +1,6 @@
+{
+  final ASTNode declaringNode=_ast.findDeclaringNode(binding);
+  if (null != declaringNode)   return (T)declaringNode;
+  if (null == _resolver)   return null;
+  return (T)_resolver.findDeclaringNode(binding);
+}

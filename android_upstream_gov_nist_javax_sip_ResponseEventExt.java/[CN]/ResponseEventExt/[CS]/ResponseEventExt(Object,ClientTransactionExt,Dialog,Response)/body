@@ -1,0 +1,4 @@
+{
+  super(source,clientTransaction,dialog,response);
+  m_originalTransaction=clientTransaction;
+}

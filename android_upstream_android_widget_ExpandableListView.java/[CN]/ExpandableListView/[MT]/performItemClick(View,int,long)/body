@@ -1,0 +1,7 @@
+{
+  if (isHeaderOrFooterPosition(position)) {
+    return super.performItemClick(v,position,id);
+  }
+  final int adjustedPosition=getFlatPositionForConnector(position);
+  return handleItemClick(v,adjustedPosition,id);
+}

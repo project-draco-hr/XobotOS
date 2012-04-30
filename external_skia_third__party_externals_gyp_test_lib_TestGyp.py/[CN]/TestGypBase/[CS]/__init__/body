@@ -1,0 +1,33 @@
+def __init__(self, gyp=None, *args, **kw):
+    self.origin_cwd = os.path.abspath(os.path.dirname(sys.argv[0]))
+    if (not gyp):
+        gyp = os.environ.get('TESTGYP_GYP')
+        if (not gyp):
+            if (sys.platform == 'win32'):
+                gyp = 'gyp.bat'
+            else:
+                gyp = 'gyp'
+    self.gyp = os.path.abspath(gyp)
+    self.initialize_build_tool()
+    if (not kw.has_key('match')):
+        kw['match'] = TestCommon.match_exact
+    workdir = os.path.join('out', kw.get('workdir', 'testworkarea'))
+    try:
+        os.makedirs(workdir)
+    except OSError:
+        pass
+    kw['workdir'] = tempfile.mktemp(prefix='testgyp.', dir=workdir)
+    formats = kw.get('formats', [])
+    if kw.has_key('formats'):
+        del kw['formats']
+    super(TestGypBase, self).__init__(*args, **kw)
+    excluded_formats = set([f for f in formats if (f[0] == '!')])
+    included_formats = (set(formats) - excluded_formats)
+    if ((('!' + self.format) in excluded_formats) or (included_formats and (self.format not in included_formats))):
+        msg = 'Invalid test for %r format; skipping test.\n'
+        self.skip_test((msg % self.format))
+    self.copy_test_configuration(self.origin_cwd, self.workdir)
+    self.set_configuration(None)
+    os.environ['HOME'] = self.workpath()
+    if ('GYP_DEFINES' in os.environ):
+        del os.environ['GYP_DEFINES']

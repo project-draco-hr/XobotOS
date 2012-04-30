@@ -1,0 +1,8 @@
+{
+  StringBuilder builder=new StringBuilder();
+  for (  String part : name.split("\\.")) {
+    if (builder.length() > 0)     builder.append('.');
+    builder.append(namespacePart(part));
+  }
+  return builder.toString();
+}

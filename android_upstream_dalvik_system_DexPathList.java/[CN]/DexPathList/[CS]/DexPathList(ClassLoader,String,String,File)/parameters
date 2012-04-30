@@ -1,0 +1,4 @@
+ClassLoader definingContext
+String dexPath
+String libraryPath
+File optimizedDirectory

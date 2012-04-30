@@ -1,0 +1,28 @@
+{
+  int tokenStartIndex;
+  boolean findComplete=false;
+  while (!findComplete) {
+    if (matcher.find()) {
+      findComplete=true;
+      if (matcher.start() == findStartIndex && matcher.end() == bufferLength) {
+        if (!inputExhausted) {
+          readMore();
+          resetMatcher();
+          findComplete=false;
+        }
+      }
+    }
+ else {
+      if (!inputExhausted) {
+        readMore();
+        resetMatcher();
+      }
+ else {
+        return -1;
+      }
+    }
+  }
+  tokenStartIndex=matcher.end();
+  findStartIndex=matcher.end();
+  return tokenStartIndex;
+}

@@ -1,0 +1,7 @@
+{
+  if (_names == null)   return true;
+  for (  final String name : _names) {
+    if (matchesName(node,name,_regex))     return true;
+  }
+  return false;
+}

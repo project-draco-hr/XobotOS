@@ -1,0 +1,27 @@
+{
+  CSVisibility vis=my(CSharpDriver.class).mapVisibility(binding);
+  if (vis != null)   return vis;
+  IMethodBinding overriden=getBaseMethod(binding,false,false);
+  if (overriden != null) {
+    vis=mapVisibility(overriden);
+    if (vis == CSVisibility.ProtectedInternal && !overriden.getDeclaringClass().isFromSource())     vis=CSVisibility.Protected;
+    return vis;
+  }
+ else   if (binding.getDeclaringClass().isInterface()) {
+    return CSVisibility.Public;
+  }
+  vis=mapVisibility(binding.getModifiers());
+  final ITypeBinding declaringClass=binding.getDeclaringClass();
+  final boolean isNestedPrivate=declaringClass.isNested() && Modifier.isPrivate(declaringClass.getModifiers());
+  final IMethodBinding declaration=binding.getMethodDeclaration();
+  if (!isNestedPrivate) {
+    if (containsNonPublicTypes(declaration,true)) {
+      vis=CSVisibility.Private;
+    }
+ else     if (containsNonPublicTypes(declaration,false))     vis=CSVisibility.Internal;
+  }
+ else {
+    if (vis == CSVisibility.Private)     vis=CSVisibility.Internal;
+  }
+  return vis;
+}

@@ -1,0 +1,7 @@
+{
+  if (activity == null || message == null) {
+    throw new NullPointerException();
+  }
+  enforceResumed(activity);
+  mNfcActivityManager.setNdefPushMessage(activity,message);
+}

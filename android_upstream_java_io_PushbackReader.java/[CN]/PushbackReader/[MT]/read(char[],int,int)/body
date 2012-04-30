@@ -1,0 +1,27 @@
+{
+synchronized (lock) {
+    checkNotClosed();
+    Arrays.checkOffsetAndCount(buffer.length,offset,count);
+    int copiedChars=0;
+    int copyLength=0;
+    int newOffset=offset;
+    if (pos < buf.length) {
+      copyLength=(buf.length - pos >= count) ? count : buf.length - pos;
+      System.arraycopy(buf,pos,buffer,newOffset,copyLength);
+      newOffset+=copyLength;
+      copiedChars+=copyLength;
+      pos+=copyLength;
+    }
+    if (copyLength == count) {
+      return count;
+    }
+    int inCopied=in.read(buffer,newOffset,count - copiedChars);
+    if (inCopied > 0) {
+      return inCopied + copiedChars;
+    }
+    if (copiedChars == 0) {
+      return inCopied;
+    }
+    return copiedChars;
+  }
+}

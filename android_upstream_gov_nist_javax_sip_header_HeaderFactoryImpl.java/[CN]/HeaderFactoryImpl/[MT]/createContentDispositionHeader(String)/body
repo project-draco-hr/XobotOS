@@ -1,0 +1,6 @@
+{
+  if (contentDisposition == null)   throw new NullPointerException("null arg contentDisposition");
+  ContentDisposition c=new ContentDisposition();
+  c.setDispositionType(contentDisposition);
+  return c;
+}

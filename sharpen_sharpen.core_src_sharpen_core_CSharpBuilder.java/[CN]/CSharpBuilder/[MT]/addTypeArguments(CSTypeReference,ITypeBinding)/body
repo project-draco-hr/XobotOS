@@ -1,0 +1,9 @@
+{
+  if (_addTypeArguments(typeRef,type))   return;
+  final ITypeBinding[] tparams=type.getTypeDeclaration().getTypeParameters();
+  for (  ITypeBinding tparam : tparams) {
+    ITypeBinding sclass=mapTypeParameterExtendedType(tparam);
+    if (sclass == null)     typeRef.addTypeArgument(OBJECT_TYPE_REFERENCE);
+ else     typeRef.addTypeArgument(mappedTypeReference(sclass));
+  }
+}

@@ -1,0 +1,9 @@
+{
+  final Destructor dtor=node.getDefinition();
+  _writer.writeIndentation();
+  _writer.writeBlock("~");
+  dtor.getType().accept(this);
+  _writer.write("(");
+  visitCommaSeparatedList(dtor.getParameters());
+  _writer.writeLine(");");
+}

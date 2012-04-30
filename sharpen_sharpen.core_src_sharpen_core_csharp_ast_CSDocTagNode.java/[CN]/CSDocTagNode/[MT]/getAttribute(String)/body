@@ -1,0 +1,8 @@
+{
+  for (  CSDocAttributeNode attribute : attributes()) {
+    if (attribute.name().equals(attributeName)) {
+      return attribute.value();
+    }
+  }
+  return null;
+}

@@ -1,0 +1,9 @@
+{
+  count=0;
+  viewTypeCount=1;
+  hasStableIds=true;
+  mUserLoadingView=null;
+  mFirstView=null;
+  mFirstViewHeight=0;
+  mTypeIdIndexMap.clear();
+}

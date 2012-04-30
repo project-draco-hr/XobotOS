@@ -1,0 +1,17 @@
+{
+  if (getGeneratedImageClip() != null) {
+    new File(getGeneratedImageClip()).delete();
+    setGeneratedImageClip(null);
+    setRegenerateClip(true);
+  }
+  if (mScaledFilename != null) {
+    if (mFileName != mScaledFilename) {
+      new File(mScaledFilename).delete();
+    }
+    mScaledFilename=null;
+  }
+  if (mDecodedFilename != null) {
+    new File(mDecodedFilename).delete();
+    mDecodedFilename=null;
+  }
+}

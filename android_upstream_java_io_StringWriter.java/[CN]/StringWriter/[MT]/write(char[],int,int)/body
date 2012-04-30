@@ -1,0 +1,7 @@
+{
+  Arrays.checkOffsetAndCount(chars.length,offset,count);
+  if (count == 0) {
+    return;
+  }
+  buf.append(chars,offset,count);
+}

@@ -1,0 +1,5 @@
+{
+  RequestLine requestLine=(RequestLine)this.requestLine.clone();
+  requestLine.setMethod("BYE");
+  return this.createSIPRequest(requestLine,switchHeaders);
+}

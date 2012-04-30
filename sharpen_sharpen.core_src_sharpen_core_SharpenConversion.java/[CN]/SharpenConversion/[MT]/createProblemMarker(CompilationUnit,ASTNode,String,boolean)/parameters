@@ -1,0 +1,4 @@
+CompilationUnit ast
+ASTNode node
+String message
+boolean isError

@@ -1,0 +1,12 @@
+{
+  checkOpenAndCreate(true);
+  if (on && timeout < 0) {
+    throw new IllegalArgumentException("timeout < 0");
+  }
+  if (on) {
+    impl.setOption(SocketOptions.SO_LINGER,Integer.valueOf(timeout));
+  }
+ else {
+    impl.setOption(SocketOptions.SO_LINGER,Boolean.FALSE);
+  }
+}

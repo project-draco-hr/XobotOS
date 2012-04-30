@@ -1,0 +1,8 @@
+{
+  if (_outputType != null) {
+    sb.append(':');
+    sb.append(_outputType);
+  }
+  if (_partial)   sb.append(":partial");
+  super.print(sb);
+}

@@ -1,0 +1,61 @@
+{
+  SIPDialog dialog=null;
+  String method=sipResponse.getCSeq().getMethod();
+  String dialogId=sipResponse.getDialogId(false);
+  if (method.equals(Request.CANCEL) && lastRequest != null) {
+    SIPClientTransaction ict=(SIPClientTransaction)lastRequest.getInviteTransaction();
+    if (ict != null) {
+      dialog=ict.defaultDialog;
+    }
+  }
+ else {
+    dialog=this.getDialog(dialogId);
+  }
+  if (dialog == null) {
+    int code=sipResponse.getStatusCode();
+    if ((code > 100 && code < 300) && (sipResponse.getToTag() != null || sipStack.isRfc2543Supported()) && sipStack.isDialogCreated(method)) {
+synchronized (this) {
+        if (defaultDialog != null) {
+          if (sipResponse.getFromTag() != null) {
+            SIPResponse dialogResponse=defaultDialog.getLastResponse();
+            String defaultDialogId=defaultDialog.getDialogId();
+            if (dialogResponse == null || (method.equals(Request.SUBSCRIBE) && dialogResponse.getCSeq().getMethod().equals(Request.NOTIFY) && defaultDialogId.equals(dialogId))) {
+              defaultDialog.setLastResponse(this,sipResponse);
+              dialog=defaultDialog;
+            }
+ else {
+              dialog=sipStack.getDialog(dialogId);
+              if (dialog == null) {
+                if (defaultDialog.isAssigned()) {
+                  dialog=sipStack.createDialog(this,sipResponse);
+                }
+              }
+            }
+            if (dialog != null) {
+              this.setDialog(dialog,dialog.getDialogId());
+            }
+ else {
+              sipStack.getStackLogger().logError("dialog is unexpectedly null",new NullPointerException());
+            }
+          }
+ else {
+            throw new RuntimeException("Response without from-tag");
+          }
+        }
+ else {
+          if (sipStack.isAutomaticDialogSupportEnabled) {
+            dialog=sipStack.createDialog(this,sipResponse);
+            this.setDialog(dialog,dialog.getDialogId());
+          }
+        }
+      }
+    }
+ else {
+      dialog=defaultDialog;
+    }
+  }
+ else {
+    dialog.setLastResponse(this,sipResponse);
+  }
+  this.processResponse(sipResponse,incomingChannel,dialog);
+}

@@ -1,0 +1,8 @@
+{
+  super.onDestroyView();
+  if (mDialog != null) {
+    mViewDestroyed=true;
+    mDialog.dismiss();
+    mDialog=null;
+  }
+}

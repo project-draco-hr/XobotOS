@@ -1,0 +1,5 @@
+{
+  ModifyEnum action=getTemplate().getModificationAction();
+  if (action != null)   action.modify(this,getASTNode(),theEnum);
+  return true;
+}

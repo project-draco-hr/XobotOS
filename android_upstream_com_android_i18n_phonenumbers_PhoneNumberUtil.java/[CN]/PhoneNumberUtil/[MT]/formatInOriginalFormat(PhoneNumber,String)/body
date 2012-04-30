@@ -1,0 +1,19 @@
+{
+  if (number.hasRawInput() && !isValidNumber(number)) {
+    return number.getRawInput();
+  }
+  if (!number.hasCountryCodeSource()) {
+    return format(number,PhoneNumberFormat.NATIONAL);
+  }
+switch (number.getCountryCodeSource()) {
+case FROM_NUMBER_WITH_PLUS_SIGN:
+    return format(number,PhoneNumberFormat.INTERNATIONAL);
+case FROM_NUMBER_WITH_IDD:
+  return formatOutOfCountryCallingNumber(number,regionCallingFrom);
+case FROM_NUMBER_WITHOUT_PLUS_SIGN:
+return format(number,PhoneNumberFormat.INTERNATIONAL).substring(1);
+case FROM_DEFAULT_COUNTRY:
+default :
+return format(number,PhoneNumberFormat.NATIONAL);
+}
+}

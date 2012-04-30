@@ -1,0 +1,5 @@
+{
+  HostPort hp=this.getHostPort();
+  if (hp == null)   return -1;
+  return hp.getPort();
+}

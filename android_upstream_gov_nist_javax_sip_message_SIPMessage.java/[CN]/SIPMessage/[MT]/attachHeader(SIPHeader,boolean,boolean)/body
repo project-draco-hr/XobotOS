@@ -1,0 +1,71 @@
+{
+  if (header == null) {
+    throw new NullPointerException("null header");
+  }
+  SIPHeader h;
+  if (ListMap.hasList(header) && !SIPHeaderList.class.isAssignableFrom(header.getClass())) {
+    SIPHeaderList<SIPHeader> hdrList=ListMap.getList(header);
+    hdrList.add(header);
+    h=hdrList;
+  }
+ else {
+    h=header;
+  }
+  String headerNameLowerCase=SIPHeaderNamesCache.toLowerCase(h.getName());
+  if (replaceFlag) {
+    nameTable.remove(headerNameLowerCase);
+  }
+ else   if (nameTable.containsKey(headerNameLowerCase) && !(h instanceof SIPHeaderList)) {
+    if (h instanceof ContentLength) {
+      try {
+        ContentLength cl=(ContentLength)h;
+        contentLengthHeader.setContentLength(cl.getContentLength());
+      }
+ catch (      InvalidArgumentException e) {
+      }
+    }
+    return;
+  }
+  SIPHeader originalHeader=(SIPHeader)getHeader(header.getName());
+  if (originalHeader != null) {
+    Iterator<SIPHeader> li=headers.iterator();
+    while (li.hasNext()) {
+      SIPHeader next=(SIPHeader)li.next();
+      if (next.equals(originalHeader)) {
+        li.remove();
+      }
+    }
+  }
+  if (!nameTable.containsKey(headerNameLowerCase)) {
+    nameTable.put(headerNameLowerCase,h);
+    headers.add(h);
+  }
+ else {
+    if (h instanceof SIPHeaderList) {
+      SIPHeaderList<?> hdrlist=(SIPHeaderList<?>)nameTable.get(headerNameLowerCase);
+      if (hdrlist != null)       hdrlist.concatenate((SIPHeaderList)h,top);
+ else       nameTable.put(headerNameLowerCase,h);
+    }
+ else {
+      nameTable.put(headerNameLowerCase,h);
+    }
+  }
+  if (h instanceof From) {
+    this.fromHeader=(From)h;
+  }
+ else   if (h instanceof ContentLength) {
+    this.contentLengthHeader=(ContentLength)h;
+  }
+ else   if (h instanceof To) {
+    this.toHeader=(To)h;
+  }
+ else   if (h instanceof CSeq) {
+    this.cSeqHeader=(CSeq)h;
+  }
+ else   if (h instanceof CallID) {
+    this.callIdHeader=(CallID)h;
+  }
+ else   if (h instanceof MaxForwards) {
+    this.maxForwardsHeader=(MaxForwards)h;
+  }
+}

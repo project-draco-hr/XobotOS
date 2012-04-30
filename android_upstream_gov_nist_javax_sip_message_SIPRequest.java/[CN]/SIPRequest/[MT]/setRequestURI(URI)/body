@@ -1,0 +1,10 @@
+{
+  if (uri == null) {
+    throw new NullPointerException("Null request URI");
+  }
+  if (this.requestLine == null) {
+    this.requestLine=new RequestLine();
+  }
+  this.requestLine.setUri((GenericURI)uri);
+  this.nullRequest=false;
+}

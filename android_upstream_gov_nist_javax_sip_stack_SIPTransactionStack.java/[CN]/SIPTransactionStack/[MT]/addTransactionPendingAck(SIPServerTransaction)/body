@@ -1,0 +1,6 @@
+{
+  String branchId=((SIPRequest)serverTransaction.getRequest()).getTopmostVia().getBranch();
+  if (branchId != null) {
+    this.terminatedServerTransactionsPendingAck.put(branchId,serverTransaction);
+  }
+}

@@ -1,0 +1,16 @@
+{
+  int count=0;
+synchronized (threadRefs) {
+    for (    Thread thread : threads) {
+      if (thread.isAlive()) {
+        count++;
+      }
+    }
+  }
+synchronized (groups) {
+    for (    ThreadGroup group : groups) {
+      count+=group.activeCount();
+    }
+  }
+  return count;
+}

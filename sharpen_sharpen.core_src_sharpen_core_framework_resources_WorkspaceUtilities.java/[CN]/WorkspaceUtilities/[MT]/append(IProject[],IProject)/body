@@ -1,0 +1,6 @@
+{
+  IProject[] newProjects=new IProject[projects.length + 1];
+  System.arraycopy(projects,0,newProjects,0,projects.length);
+  newProjects[projects.length]=project;
+  return newProjects;
+}

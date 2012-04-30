@@ -1,0 +1,10 @@
+{
+  if (_namespaces.contains(namespace))   return;
+  int pos=namespace.lastIndexOf(".");
+  if (pos == -1) {
+    _namespaces.add(namespace);
+    return;
+  }
+  _namespaces.add(namespace.substring(pos + 1));
+  registerNamespace(namespace.substring(0,pos));
+}

@@ -1,0 +1,5 @@
+{
+  mTN.mGravity=gravity;
+  mTN.mX=xOffset;
+  mTN.mY=yOffset;
+}

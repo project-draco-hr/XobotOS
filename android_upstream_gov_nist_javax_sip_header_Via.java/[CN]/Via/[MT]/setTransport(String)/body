@@ -1,0 +1,5 @@
+{
+  if (transport == null)   throw new NullPointerException("JAIN-SIP Exception, " + "Via, setTransport(), the transport parameter is null.");
+  if (sentProtocol == null)   sentProtocol=new Protocol();
+  sentProtocol.setTransport(transport);
+}

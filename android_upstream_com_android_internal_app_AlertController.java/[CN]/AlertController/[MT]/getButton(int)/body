@@ -1,0 +1,12 @@
+{
+switch (whichButton) {
+case DialogInterface.BUTTON_POSITIVE:
+    return mButtonPositive;
+case DialogInterface.BUTTON_NEGATIVE:
+  return mButtonNegative;
+case DialogInterface.BUTTON_NEUTRAL:
+return mButtonNeutral;
+default :
+return null;
+}
+}

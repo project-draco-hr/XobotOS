@@ -1,0 +1,6 @@
+{
+  if (icid == null)   throw new NullPointerException("null icid arg!");
+  PChargingVector chargingVector=new PChargingVector();
+  chargingVector.setICID(icid);
+  return chargingVector;
+}

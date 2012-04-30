@@ -1,0 +1,6 @@
+{
+  LoaderInfo info=new LoaderInfo(id,args,(LoaderManager.LoaderCallbacks<Object>)callback);
+  Loader<Object> loader=callback.onCreateLoader(id,args);
+  info.mLoader=(Loader<Object>)loader;
+  return info;
+}

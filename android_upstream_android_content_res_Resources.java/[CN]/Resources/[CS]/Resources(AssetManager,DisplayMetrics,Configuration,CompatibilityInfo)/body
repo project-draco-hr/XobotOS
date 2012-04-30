@@ -1,0 +1,7 @@
+{
+  mAssets=assets;
+  mMetrics.setToDefaults();
+  mCompatibilityInfo=compInfo;
+  updateConfiguration(config,metrics);
+  assets.ensureStringBlocks();
+}

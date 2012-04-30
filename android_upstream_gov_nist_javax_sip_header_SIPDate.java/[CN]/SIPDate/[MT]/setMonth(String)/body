@@ -1,0 +1,42 @@
+{
+  sipMonth=m;
+  if (sipMonth.compareToIgnoreCase(JAN) == 0) {
+    month=Calendar.JANUARY;
+  }
+ else   if (sipMonth.compareToIgnoreCase(FEB) == 0) {
+    month=Calendar.FEBRUARY;
+  }
+ else   if (sipMonth.compareToIgnoreCase(MAR) == 0) {
+    month=Calendar.MARCH;
+  }
+ else   if (sipMonth.compareToIgnoreCase(APR) == 0) {
+    month=Calendar.APRIL;
+  }
+ else   if (sipMonth.compareToIgnoreCase(MAY) == 0) {
+    month=Calendar.MAY;
+  }
+ else   if (sipMonth.compareToIgnoreCase(JUN) == 0) {
+    month=Calendar.JUNE;
+  }
+ else   if (sipMonth.compareToIgnoreCase(JUL) == 0) {
+    month=Calendar.JULY;
+  }
+ else   if (sipMonth.compareToIgnoreCase(AUG) == 0) {
+    month=Calendar.AUGUST;
+  }
+ else   if (sipMonth.compareToIgnoreCase(SEP) == 0) {
+    month=Calendar.SEPTEMBER;
+  }
+ else   if (sipMonth.compareToIgnoreCase(OCT) == 0) {
+    month=Calendar.OCTOBER;
+  }
+ else   if (sipMonth.compareToIgnoreCase(NOV) == 0) {
+    month=Calendar.NOVEMBER;
+  }
+ else   if (sipMonth.compareToIgnoreCase(DEC) == 0) {
+    month=Calendar.DECEMBER;
+  }
+ else {
+    throw new IllegalArgumentException("Illegal Month :" + m);
+  }
+}

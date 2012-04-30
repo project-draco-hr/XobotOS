@@ -1,0 +1,4 @@
+{
+  enforceWritePermission(uri);
+  return ContentProvider.this.bulkInsert(uri,initialValues);
+}

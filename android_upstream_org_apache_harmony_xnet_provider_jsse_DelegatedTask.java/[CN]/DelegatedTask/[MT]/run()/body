@@ -1,0 +1,10 @@
+{
+synchronized (handshaker) {
+    try {
+      action.run();
+    }
+ catch (    RuntimeException e) {
+      handshaker.delegatedTaskErr=e;
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  if (hostPort == null)   hostPort=new HostPort();
+  hostPort.setHost(host);
+}

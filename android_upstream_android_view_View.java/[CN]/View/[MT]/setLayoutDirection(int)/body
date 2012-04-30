@@ -1,0 +1,6 @@
+{
+  if (getLayoutDirection() != layoutDirection) {
+    resetResolvedLayoutDirection();
+    setFlags(layoutDirection,LAYOUT_DIRECTION_MASK);
+  }
+}

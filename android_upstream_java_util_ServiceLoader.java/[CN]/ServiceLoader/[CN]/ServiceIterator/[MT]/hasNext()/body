@@ -1,0 +1,6 @@
+{
+  if (!isRead) {
+    readClass();
+  }
+  return (queue != null && !queue.isEmpty());
+}

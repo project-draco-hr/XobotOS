@@ -1,0 +1,7 @@
+def must_exist(self, *files):
+    'Ensures that the specified file(s) must exist.  An individual\n        file be specified as a list of directory names, in which case the\n        pathname will be constructed by concatenating them.  Exits FAILED\n        if any of the files does not exist.\n        '
+    files = map((lambda x: ((is_List(x) and apply(os.path.join, x)) or x)), files)
+    missing = filter((lambda x: (not os.path.exists(x))), files)
+    if missing:
+        print ("Missing files: `%s'" % string.join(missing, "', `"))
+        self.fail_test(missing)

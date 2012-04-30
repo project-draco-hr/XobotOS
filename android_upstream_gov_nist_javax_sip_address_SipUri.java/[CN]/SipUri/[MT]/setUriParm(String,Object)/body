@@ -1,0 +1,4 @@
+{
+  NameValue nv=new NameValue(name,value);
+  uriParms.set(nv);
+}

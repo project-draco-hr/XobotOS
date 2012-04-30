@@ -1,0 +1,9 @@
+{
+  try {
+    runTask();
+  }
+ catch (  Throwable e) {
+    System.out.println("SIP stack timer task failed due to exception:");
+    e.printStackTrace();
+  }
+}

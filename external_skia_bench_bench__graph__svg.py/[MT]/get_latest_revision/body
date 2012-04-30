@@ -1,0 +1,14 @@
+def get_latest_revision(directory):
+    'Returns the latest revision number found within this directory.\n    '
+    latest_revision_found = (-1)
+    for bench_file in os.listdir(directory):
+        file_name_match = re.match('bench_r(\\d+)_(\\S+)', bench_file)
+        if (file_name_match is None):
+            continue
+        revision = int(file_name_match.group(1))
+        if (revision > latest_revision_found):
+            latest_revision_found = revision
+    if (latest_revision_found < 0):
+        return None
+    else:
+        return latest_revision_found

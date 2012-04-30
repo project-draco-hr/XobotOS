@@ -1,0 +1,9 @@
+{
+  if (addr == null || addr.length != 16) {
+    throw new UnknownHostException("Not an IPv6 address: " + Arrays.toString(addr));
+  }
+  if (scope_id < 0) {
+    scope_id=0;
+  }
+  return new Inet6Address(addr,host,scope_id);
+}

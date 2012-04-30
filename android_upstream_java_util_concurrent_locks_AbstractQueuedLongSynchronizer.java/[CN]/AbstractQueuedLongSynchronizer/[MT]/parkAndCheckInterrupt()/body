@@ -1,0 +1,4 @@
+{
+  LockSupport.park(this);
+  return Thread.interrupted();
+}

@@ -1,0 +1,8 @@
+{
+  super.onLayout(changed,left,top,right,bottom);
+  if (!mScrollWheelAndFadingEdgesInitialized) {
+    mScrollWheelAndFadingEdgesInitialized=true;
+    initializeSelectorWheel();
+    initializeFadingEdges();
+  }
+}

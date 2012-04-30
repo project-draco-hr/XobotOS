@@ -1,0 +1,5 @@
+{
+  mBaseLayer=0;
+  mInvalRegion=new Region();
+  mContentSize=new Point();
+}

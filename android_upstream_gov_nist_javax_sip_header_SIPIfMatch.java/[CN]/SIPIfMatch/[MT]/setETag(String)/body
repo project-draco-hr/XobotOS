@@ -1,0 +1,4 @@
+{
+  if (etag == null)   throw new NullPointerException("JAIN-SIP Exception," + "SIP-If-Match, setETag(), the etag parameter is null");
+  this.entityTag=etag;
+}

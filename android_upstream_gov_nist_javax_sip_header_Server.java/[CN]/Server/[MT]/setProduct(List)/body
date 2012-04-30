@@ -1,0 +1,4 @@
+{
+  if (product == null)   throw new NullPointerException("JAIN-SIP Exception, UserAgent, " + "setProduct(), the " + " product parameter is null");
+  productTokens=product;
+}

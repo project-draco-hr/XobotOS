@@ -1,0 +1,3 @@
+{
+  super(ProxyAuthenticate.class,ProxyAuthenticateHeader.NAME);
+}

@@ -1,0 +1,3 @@
+{
+  return findMemberTemplate(node,AnonymousClassTemplate.DEFAULT,AnonymousClassTemplate.class);
+}

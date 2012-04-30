@@ -1,0 +1,18 @@
+{
+  checkNotClosed();
+  if (buffer == null) {
+    throw new NullPointerException("buffer == null");
+  }
+  byte[] internalBuffer=buf;
+  if (length >= internalBuffer.length) {
+    flushInternal();
+    out.write(buffer,offset,length);
+    return;
+  }
+  Arrays.checkOffsetAndCount(buffer.length,offset,length);
+  if (length > (internalBuffer.length - count)) {
+    flushInternal();
+  }
+  System.arraycopy(buffer,offset,internalBuffer,count,length);
+  count+=length;
+}

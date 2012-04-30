@@ -1,0 +1,13 @@
+{
+  invalidate();
+  int curs=getSelectionStart();
+  if (curs >= 0 || (mGravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM) {
+    registerForPreDraw();
+  }
+  if (curs >= 0) {
+    mHighlightPathBogus=true;
+    makeBlink();
+    bringPointIntoView(curs);
+  }
+  checkForResize();
+}

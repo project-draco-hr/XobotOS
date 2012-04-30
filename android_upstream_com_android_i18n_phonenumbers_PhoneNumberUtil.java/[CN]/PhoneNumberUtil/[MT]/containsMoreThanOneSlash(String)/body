@@ -1,0 +1,4 @@
+{
+  int firstSlashIndex=candidate.indexOf('/');
+  return (firstSlashIndex > 0 && candidate.substring(firstSlashIndex + 1).contains("/"));
+}

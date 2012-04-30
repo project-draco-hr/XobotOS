@@ -1,0 +1,5 @@
+{
+  BigInt bigInt=new BigInt();
+  bigInt.putDecString(value);
+  setBigInt(bigInt);
+}

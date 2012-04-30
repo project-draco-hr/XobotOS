@@ -1,0 +1,8 @@
+{
+synchronized (mFocusListenerLock) {
+    if (mAudioFocusIdListenerMap.containsKey(getIdForAudioFocusListener(l))) {
+      return;
+    }
+    mAudioFocusIdListenerMap.put(getIdForAudioFocusListener(l),l);
+  }
+}

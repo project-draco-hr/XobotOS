@@ -1,0 +1,20 @@
+{
+  SIPResponse sipResponse=sipRequest.createResponse(Response.BAD_REQUEST);
+  if (reasonPhrase != null)   sipResponse.setReasonPhrase(reasonPhrase);
+  ServerHeader serverHeader=MessageFactoryImpl.getDefaultServerHeader();
+  if (serverHeader != null) {
+    sipResponse.setHeader(serverHeader);
+  }
+  try {
+    if (sipRequest.getMethod().equals(Request.INVITE)) {
+      sipStack.addTransactionPendingAck(transaction);
+    }
+    transaction.sendResponse(sipResponse);
+    transaction.releaseSem();
+  }
+ catch (  Exception ex) {
+    sipStack.getStackLogger().logError("Problem sending error response",ex);
+    transaction.releaseSem();
+    sipStack.removeTransaction(transaction);
+  }
+}

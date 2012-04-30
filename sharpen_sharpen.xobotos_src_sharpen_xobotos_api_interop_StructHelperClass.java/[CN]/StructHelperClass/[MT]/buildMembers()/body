@@ -1,0 +1,12 @@
+{
+  if (!_resolved)   throw new IllegalStateException();
+  if (_resolveFailed)   return;
+  final NamingStrategy ns=my(Configuration.class).getNamingStrategy();
+  final List<MemberInfo> members=_template.getMembers();
+  for (int i=0; i < members.size(); i++) {
+    final MemberInfo member=members.get(i);
+    final String name=ns.identifier(member.getName());
+    if (member.getValue() != null)     addMember(new ValueMember(name,member.getValue()));
+ else     addMember(new StructMember(_fieldInfo[i],member.getNativeName(),name,member.getMode()));
+  }
+}

@@ -1,0 +1,4 @@
+{
+  pushExpression(new CSBoolLiteralExpression(node.booleanValue()));
+  return false;
+}

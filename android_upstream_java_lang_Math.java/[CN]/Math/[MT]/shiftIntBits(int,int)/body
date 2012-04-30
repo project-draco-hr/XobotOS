@@ -1,0 +1,22 @@
+{
+  if (digits > 0) {
+    return bits << digits;
+  }
+  int absDigits=-digits;
+  if (!(Integer.numberOfLeadingZeros(bits & ~Float.SIGN_MASK) <= (32 - absDigits))) {
+    return 0;
+  }
+  int ret=bits >> absDigits;
+  boolean halfBit=((bits >> (absDigits - 1)) & 0x1) == 1;
+  if (halfBit) {
+    if (Integer.numberOfTrailingZeros(bits) < (absDigits - 1)) {
+      ret=ret + 1;
+    }
+    if (Integer.numberOfTrailingZeros(bits) == (absDigits - 1)) {
+      if ((ret & 0x1) == 1) {
+        ret=ret + 1;
+      }
+    }
+  }
+  return ret;
+}

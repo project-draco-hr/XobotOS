@@ -1,0 +1,9 @@
+{
+  if (!mScanWifiLockOut) {
+    mScanWifiLockOut=true;
+    if (mScanWifiLockTimer == null) {
+      mScanWifiLockTimer=new StopwatchTimer(Uid.this,SCAN_WIFI_LOCK,mScanWifiLockTimers,mUnpluggables);
+    }
+    mScanWifiLockTimer.startRunningLocked(BatteryStatsImpl.this);
+  }
+}

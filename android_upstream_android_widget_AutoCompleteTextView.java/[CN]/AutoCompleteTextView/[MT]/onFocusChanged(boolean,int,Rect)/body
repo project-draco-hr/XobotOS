@@ -1,0 +1,9 @@
+{
+  super.onFocusChanged(focused,direction,previouslyFocusedRect);
+  if (!focused) {
+    performValidation();
+  }
+  if (!focused && !mPopup.isDropDownAlwaysVisible()) {
+    dismissDropDown();
+  }
+}

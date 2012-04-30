@@ -1,0 +1,47 @@
+{
+  writer.print(prefix);
+  writer.print("mId=");
+  writer.print(mId);
+  writer.print(" mArgs=");
+  writer.println(mArgs);
+  writer.print(prefix);
+  writer.print("mCallbacks=");
+  writer.println(mCallbacks);
+  writer.print(prefix);
+  writer.print("mLoader=");
+  writer.println(mLoader);
+  if (mLoader != null) {
+    mLoader.dump(prefix + "  ",fd,writer,args);
+  }
+  if (mHaveData || mDeliveredData) {
+    writer.print(prefix);
+    writer.print("mHaveData=");
+    writer.print(mHaveData);
+    writer.print("  mDeliveredData=");
+    writer.println(mDeliveredData);
+    writer.print(prefix);
+    writer.print("mData=");
+    writer.println(mData);
+  }
+  writer.print(prefix);
+  writer.print("mStarted=");
+  writer.print(mStarted);
+  writer.print(" mReportNextStart=");
+  writer.print(mReportNextStart);
+  writer.print(" mDestroyed=");
+  writer.println(mDestroyed);
+  writer.print(prefix);
+  writer.print("mRetaining=");
+  writer.print(mRetaining);
+  writer.print(" mRetainingStarted=");
+  writer.print(mRetainingStarted);
+  writer.print(" mListenerRegistered=");
+  writer.println(mListenerRegistered);
+  if (mPendingLoader != null) {
+    writer.print(prefix);
+    writer.println("Pending Loader ");
+    writer.print(mPendingLoader);
+    writer.println(":");
+    mPendingLoader.dump(prefix + "  ",fd,writer,args);
+  }
+}

@@ -1,0 +1,2 @@
+def NumOutputs(self):
+    return self._num_outputs

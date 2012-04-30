@@ -1,0 +1,9 @@
+{
+  ViaList vList=new ViaList();
+  ListIterator it=viaList.listIterator();
+  while (it.hasNext()) {
+    Via via=(Via)it.next();
+    vList.add(via);
+  }
+  this.setHeader(vList);
+}

@@ -1,0 +1,8 @@
+{
+  this();
+  this.sipMessageListener=sipMessageListener;
+  rawInputStream=in;
+  this.maxMessageSize=maxMessageSize;
+  mythread=new Thread(this);
+  mythread.setName("PipelineThread-" + getNewUid());
+}

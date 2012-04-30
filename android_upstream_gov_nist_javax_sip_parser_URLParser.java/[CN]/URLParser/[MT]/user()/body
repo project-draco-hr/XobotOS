@@ -1,0 +1,20 @@
+{
+  if (debug)   dbg_enter("user");
+  try {
+    int startIdx=lexer.getPtr();
+    while (lexer.hasMoreChars()) {
+      char la=lexer.lookAhead(0);
+      if (isUnreserved(la) || isUserUnreserved(la)) {
+        lexer.consume(1);
+      }
+ else       if (isEscaped()) {
+        lexer.consume(3);
+      }
+ else       break;
+    }
+    return lexer.getBuffer().substring(startIdx,lexer.getPtr());
+  }
+  finally {
+    if (debug)     dbg_leave("user");
+  }
+}

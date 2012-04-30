@@ -1,0 +1,6 @@
+{
+  if (isMainType(node)) {
+    setCompilationUnitElementName(type.name());
+  }
+  return type;
+}

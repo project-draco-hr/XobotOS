@@ -1,0 +1,9 @@
+{
+  for (  CSAttribute at : _attributes) {
+    if (at.name().equals(name)) {
+      _attributes.remove(at);
+      return true;
+    }
+  }
+  return false;
+}

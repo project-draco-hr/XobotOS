@@ -1,0 +1,8 @@
+{
+  return runAction(new Action<Boolean>(){
+    @Override public Boolean run(    ITextToSpeechService service) throws RemoteException {
+      return service.isSpeaking();
+    }
+  }
+,false,"isSpeaking");
+}

@@ -1,0 +1,7 @@
+{
+  final EnumTemplate template=getCurrentType().findEnumTemplate(node);
+  if (template == null)   return false;
+  EnumBinding binding=template.getBinding();
+  if (binding != null)   _typeBindings.put(node.resolveBinding(),binding);
+  return false;
+}

@@ -1,0 +1,23 @@
+{
+synchronized (impl) {
+    if (impl.cancelled) {
+      throw new IllegalStateException("Timer was canceled");
+    }
+    long when=delay + System.currentTimeMillis();
+    if (when < 0) {
+      throw new IllegalArgumentException("Illegal delay to start the TimerTask: " + when);
+    }
+synchronized (task.lock) {
+      if (task.isScheduled()) {
+        throw new IllegalStateException("TimerTask is scheduled already");
+      }
+      if (task.cancelled) {
+        throw new IllegalStateException("TimerTask is canceled");
+      }
+      task.when=when;
+      task.period=period;
+      task.fixedRate=fixed;
+    }
+    impl.insertTask(task);
+  }
+}

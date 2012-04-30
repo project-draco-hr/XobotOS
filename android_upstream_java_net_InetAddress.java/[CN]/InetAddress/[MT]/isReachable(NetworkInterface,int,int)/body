@@ -1,0 +1,40 @@
+{
+  if (ttl < 0 || timeout < 0) {
+    throw new IllegalArgumentException("ttl < 0 || timeout < 0");
+  }
+  if (networkInterface == null) {
+    return isReachable(this,null,timeout);
+  }
+  List<InetAddress> sourceAddresses=Collections.list(networkInterface.getInetAddresses());
+  if (sourceAddresses.isEmpty()) {
+    return false;
+  }
+  final InetAddress destinationAddress=this;
+  final CountDownLatch latch=new CountDownLatch(sourceAddresses.size());
+  final AtomicBoolean isReachable=new AtomicBoolean(false);
+  for (  final InetAddress sourceAddress : sourceAddresses) {
+    new Thread(){
+      @Override public void run(){
+        try {
+          if (isReachable(destinationAddress,sourceAddress,timeout)) {
+            isReachable.set(true);
+            while (latch.getCount() > 0) {
+              latch.countDown();
+            }
+          }
+        }
+ catch (        IOException ignored) {
+        }
+        latch.countDown();
+      }
+    }
+.start();
+  }
+  try {
+    latch.await();
+  }
+ catch (  InterruptedException ignored) {
+    Thread.currentThread().interrupt();
+  }
+  return isReachable.get();
+}

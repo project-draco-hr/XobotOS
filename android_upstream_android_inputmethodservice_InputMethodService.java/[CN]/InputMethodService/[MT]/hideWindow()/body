@@ -1,0 +1,10 @@
+{
+  finishViews();
+  mImm.setImeWindowStatus(mToken,0,mBackDisposition);
+  if (mWindowVisible) {
+    mWindow.hide();
+    mWindowVisible=false;
+    onWindowHidden();
+    mWindowWasVisible=false;
+  }
+}

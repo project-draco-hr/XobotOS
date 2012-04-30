@@ -1,0 +1,54 @@
+{
+  if (!isEnabled()) {
+    return false;
+  }
+  if (mVelocityTracker == null) {
+    mVelocityTracker=VelocityTracker.obtain();
+  }
+  mVelocityTracker.addMovement(ev);
+  int action=ev.getActionMasked();
+switch (action) {
+case MotionEvent.ACTION_MOVE:
+    float currentMoveY=ev.getY();
+  if (mBeginEditOnUpEvent || mScrollState != OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+    int deltaDownY=(int)Math.abs(currentMoveY - mLastDownEventY);
+    if (deltaDownY > mTouchSlop) {
+      mBeginEditOnUpEvent=false;
+      onScrollStateChange(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
+    }
+  }
+int deltaMoveY=(int)(currentMoveY - mLastMotionEventY);
+scrollBy(0,deltaMoveY);
+invalidate();
+mLastMotionEventY=currentMoveY;
+break;
+case MotionEvent.ACTION_UP:
+if (mBeginEditOnUpEvent) {
+setSelectorWheelState(SELECTOR_WHEEL_STATE_SMALL);
+showInputControls(mShowInputControlsAnimimationDuration);
+mInputText.requestFocus();
+return true;
+}
+VelocityTracker velocityTracker=mVelocityTracker;
+velocityTracker.computeCurrentVelocity(1000,mMaximumFlingVelocity);
+int initialVelocity=(int)velocityTracker.getYVelocity();
+if (Math.abs(initialVelocity) > mMinimumFlingVelocity) {
+fling(initialVelocity);
+onScrollStateChange(OnScrollListener.SCROLL_STATE_FLING);
+}
+ else {
+if (mAdjustScrollerOnUpEvent) {
+if (mFlingScroller.isFinished() && mAdjustScroller.isFinished()) {
+postAdjustScrollerCommand(0);
+}
+}
+ else {
+postAdjustScrollerCommand(SHOW_INPUT_CONTROLS_DELAY_MILLIS);
+}
+}
+mVelocityTracker.recycle();
+mVelocityTracker=null;
+break;
+}
+return true;
+}

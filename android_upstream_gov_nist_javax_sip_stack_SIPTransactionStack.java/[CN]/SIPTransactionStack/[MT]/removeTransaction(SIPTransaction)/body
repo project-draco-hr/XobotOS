@@ -1,0 +1,40 @@
+{
+  if (stackLogger.isLoggingEnabled()) {
+    stackLogger.logDebug("Removing Transaction = " + sipTransaction.getTransactionId() + " transaction = "+ sipTransaction);
+  }
+  if (sipTransaction instanceof SIPServerTransaction) {
+    if (stackLogger.isLoggingEnabled())     stackLogger.logStackTrace();
+    String key=sipTransaction.getTransactionId();
+    Object removed=serverTransactionTable.remove(key);
+    String method=sipTransaction.getMethod();
+    this.removePendingTransaction((SIPServerTransaction)sipTransaction);
+    this.removeTransactionPendingAck((SIPServerTransaction)sipTransaction);
+    if (method.equalsIgnoreCase(Request.INVITE)) {
+      this.removeFromMergeTable((SIPServerTransaction)sipTransaction);
+    }
+    SipProviderImpl sipProvider=(SipProviderImpl)sipTransaction.getSipProvider();
+    if (removed != null && sipTransaction.testAndSetTransactionTerminatedEvent()) {
+      TransactionTerminatedEvent event=new TransactionTerminatedEvent(sipProvider,(ServerTransaction)sipTransaction);
+      sipProvider.handleEvent(event,sipTransaction);
+    }
+  }
+ else {
+    String key=sipTransaction.getTransactionId();
+    Object removed=clientTransactionTable.remove(key);
+    if (stackLogger.isLoggingEnabled()) {
+      stackLogger.logDebug("REMOVED client tx " + removed + " KEY = "+ key);
+      if (removed != null) {
+        SIPClientTransaction clientTx=(SIPClientTransaction)removed;
+        if (clientTx.getMethod().equals(Request.INVITE) && this.maxForkTime != 0) {
+          RemoveForkedTransactionTimerTask ttask=new RemoveForkedTransactionTimerTask(clientTx);
+          this.timer.schedule(ttask,this.maxForkTime * 1000);
+        }
+      }
+    }
+    if (removed != null && sipTransaction.testAndSetTransactionTerminatedEvent()) {
+      SipProviderImpl sipProvider=(SipProviderImpl)sipTransaction.getSipProvider();
+      TransactionTerminatedEvent event=new TransactionTerminatedEvent(sipProvider,(ClientTransaction)sipTransaction);
+      sipProvider.handleEvent(event,sipTransaction);
+    }
+  }
+}

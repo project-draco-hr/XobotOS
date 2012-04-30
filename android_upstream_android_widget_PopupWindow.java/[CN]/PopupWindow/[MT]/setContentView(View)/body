@@ -1,0 +1,12 @@
+{
+  if (isShowing()) {
+    return;
+  }
+  mContentView=contentView;
+  if (mContext == null && mContentView != null) {
+    mContext=mContentView.getContext();
+  }
+  if (mWindowManager == null && mContentView != null) {
+    mWindowManager=(WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
+  }
+}

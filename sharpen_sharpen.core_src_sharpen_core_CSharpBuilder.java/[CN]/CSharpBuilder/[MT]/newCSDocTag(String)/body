@@ -1,0 +1,6 @@
+{
+  CSDocTagNode param;
+  param=new CSDocTagNode("param");
+  param.addAttribute("name",paramName);
+  return param;
+}

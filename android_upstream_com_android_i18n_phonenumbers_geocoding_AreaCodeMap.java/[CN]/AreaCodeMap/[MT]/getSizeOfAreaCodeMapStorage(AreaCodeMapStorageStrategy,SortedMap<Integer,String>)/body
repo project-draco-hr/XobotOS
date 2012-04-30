@@ -1,0 +1,10 @@
+{
+  mapStorage.readFromSortedMap(areaCodeMap);
+  ByteArrayOutputStream byteArrayOutputStream=new ByteArrayOutputStream();
+  ObjectOutputStream objectOutputStream=new ObjectOutputStream(byteArrayOutputStream);
+  mapStorage.writeExternal(objectOutputStream);
+  objectOutputStream.flush();
+  int sizeOfStorage=byteArrayOutputStream.size();
+  objectOutputStream.close();
+  return sizeOfStorage;
+}

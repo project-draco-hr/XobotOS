@@ -1,0 +1,3 @@
+{
+  return mappedTypeName(typeName,typeName);
+}

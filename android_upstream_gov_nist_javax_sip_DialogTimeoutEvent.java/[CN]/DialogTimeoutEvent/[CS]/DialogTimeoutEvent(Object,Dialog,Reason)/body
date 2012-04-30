@@ -1,0 +1,5 @@
+{
+  super(source);
+  m_dialog=dialog;
+  m_reason=reason;
+}

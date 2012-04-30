@@ -1,0 +1,6 @@
+{
+  String namespace=node.getName().toString();
+  _compilationUnit.namespace(mappedNamespace(namespace));
+  processDisableTags(node,_compilationUnit);
+  return false;
+}

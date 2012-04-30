@@ -1,0 +1,11 @@
+{
+  final IMethodBinding binding=node.resolveBinding();
+  final IMethodBinding baseMethod=getBaseMethod(binding,false,false);
+  String mappedName;
+  if (baseMethod != null)   mappedName=mappedMethodName(baseMethod);
+ else   mappedName=mappedMethodName(node);
+  if (null == mappedName || 0 == mappedName.length() || mappedName.contains(".")) {
+    return methodName(node.getName().toString());
+  }
+  return mappedName;
+}

@@ -1,0 +1,5 @@
+{
+  checkIndex(index);
+  byteBuffer.putDouble(index * SizeOf.DOUBLE,c);
+  return this;
+}

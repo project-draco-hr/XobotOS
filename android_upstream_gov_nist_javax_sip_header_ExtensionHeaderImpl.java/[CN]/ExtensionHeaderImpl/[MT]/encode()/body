@@ -1,0 +1,3 @@
+{
+  return new StringBuffer(this.headerName).append(COLON).append(SP).append(this.value).append(NEWLINE).toString();
+}

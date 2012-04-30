@@ -1,0 +1,23 @@
+def LinkDependencies(self, targets, dependencies=None, initial=True):
+    'Returns a list of dependency targets that are linked into this target.\n\n    This function has a split personality, depending on the setting of\n    |initial|.  Outside callers should always leave |initial| at its default\n    setting.\n\n    When adding a target to the list of dependencies, this function will\n    recurse into itself with |initial| set to False, to collect dependencies\n    that are linked into the linkable target for which the list is being built.\n    '
+    if (dependencies == None):
+        dependencies = []
+    if (self.ref == None):
+        return dependencies
+    if (not ('target_name' in targets[self.ref])):
+        raise Exception("Missing 'target_name' field in target.")
+    try:
+        target_type = targets[self.ref]['type']
+    except KeyError as e:
+        raise Exception(("Missing 'type' field in target %s" % targets[self.ref]['target_name']))
+    is_linkable = (target_type in linkable_types)
+    if (initial and (not is_linkable)):
+        return dependencies
+    if ((not initial) and (target_type in ('executable', 'loadable_module'))):
+        return dependencies
+    if (self.ref not in dependencies):
+        dependencies.append(self.ref)
+        if (initial or (not is_linkable)):
+            for dependency in self.dependencies:
+                dependency.LinkDependencies(targets, dependencies, False)
+    return dependencies

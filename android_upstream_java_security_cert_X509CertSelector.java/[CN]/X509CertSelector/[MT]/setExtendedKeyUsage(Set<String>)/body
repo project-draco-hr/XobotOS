@@ -1,0 +1,12 @@
+{
+  extendedKeyUsage=null;
+  if ((keyUsage == null) || (keyUsage.size() == 0)) {
+    return;
+  }
+  HashSet<String> key_u=new HashSet<String>();
+  for (  String usage : keyUsage) {
+    checkOID(usage);
+    key_u.add(usage);
+  }
+  extendedKeyUsage=Collections.unmodifiableSet(key_u);
+}

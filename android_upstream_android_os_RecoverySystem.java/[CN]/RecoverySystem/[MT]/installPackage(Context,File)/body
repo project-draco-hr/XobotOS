@@ -1,0 +1,6 @@
+{
+  String filename=packageFile.getCanonicalPath();
+  Log.w(TAG,"!!! REBOOTING TO INSTALL " + filename + " !!!");
+  String arg="--update_package=" + filename;
+  bootCommand(context,arg);
+}

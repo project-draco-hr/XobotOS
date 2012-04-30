@@ -1,0 +1,4 @@
+{
+  final CompilationUnit compilationUnit=compilationUnitFor(node);
+  return sourceInformation(compilationUnit,node);
+}

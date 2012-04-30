@@ -1,0 +1,6 @@
+{
+  if (DEBUG_RESULTS)   Slog.v(TAG,"sendActivityResult: id=" + id + " req="+ requestCode+ " res="+ resultCode+ " data="+ data);
+  ArrayList<ResultInfo> list=new ArrayList<ResultInfo>();
+  list.add(new ResultInfo(id,requestCode,resultCode,data));
+  mAppThread.scheduleSendResult(token,list);
+}

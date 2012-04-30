@@ -1,0 +1,5 @@
+{
+  if (type instanceof TypeDeclaration)   return visit(visitor,getTypes(),(TypeDeclaration)type);
+ else   if (type instanceof EnumDeclaration)   return visit(visitor,getEnums(),(EnumDeclaration)type);
+  return false;
+}

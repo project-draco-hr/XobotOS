@@ -1,0 +1,6 @@
+{
+  theWriter.print('A');
+  theWriter.write(buff,offset,length);
+  theWriter.print(' ');
+  attrName=new String(buff,offset,length);
+}

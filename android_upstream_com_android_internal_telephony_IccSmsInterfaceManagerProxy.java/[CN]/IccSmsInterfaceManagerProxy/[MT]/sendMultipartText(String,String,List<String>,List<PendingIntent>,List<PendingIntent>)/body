@@ -1,0 +1,3 @@
+{
+  mIccSmsInterfaceManager.sendMultipartText(destAddr,scAddr,parts,sentIntents,deliveryIntents);
+}

@@ -1,0 +1,18 @@
+{
+  int threadId=in.readInt();
+  int objectId=readId();
+  int stackTraceSerialNumber=in.readInt();
+  String threadName=readString();
+  String groupName=readString();
+  String parentGroupName=readString();
+  if (TRACE) {
+    System.out.println("\tthreadId=" + threadId);
+    System.out.println("\tobjectId=" + objectId);
+    System.out.println("\tstackTraceSerialNumber=" + stackTraceSerialNumber);
+    System.out.println("\tthreadName=" + threadName);
+    System.out.println("\tgroupName=" + groupName);
+    System.out.println("\tparentGroupName=" + parentGroupName);
+  }
+  HprofData.ThreadEvent event=HprofData.ThreadEvent.start(objectId,threadId,threadName,groupName,parentGroupName);
+  hprofData.addThreadEvent(event);
+}

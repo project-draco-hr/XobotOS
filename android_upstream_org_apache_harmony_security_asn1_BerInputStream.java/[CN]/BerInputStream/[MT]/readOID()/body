@@ -1,0 +1,18 @@
+{
+  if (tag != ASN1Constants.TAG_OID) {
+    throw expected("OID");
+  }
+  if (length < 1) {
+    throw new ASN1Exception("Wrong length for ASN.1 object identifier at [" + tagOffset + "]");
+  }
+  readContent();
+  if ((buffer[offset - 1] & 0x80) != 0) {
+    throw new ASN1Exception("Wrong encoding at [" + (offset - 1) + "]");
+  }
+  oidElement=1;
+  for (int i=0; i < length; i++, ++oidElement) {
+    while ((buffer[contentOffset + i] & 0x80) == 0x80) {
+      i++;
+    }
+  }
+}

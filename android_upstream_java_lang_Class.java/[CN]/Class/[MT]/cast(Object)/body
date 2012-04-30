@@ -1,0 +1,11 @@
+{
+  if (obj == null) {
+    return null;
+  }
+ else   if (this.isInstance(obj)) {
+    return (T)obj;
+  }
+  String actualClassName=obj.getClass().getName();
+  String desiredClassName=this.getName();
+  throw new ClassCastException(actualClassName + " cannot be cast to " + desiredClassName);
+}

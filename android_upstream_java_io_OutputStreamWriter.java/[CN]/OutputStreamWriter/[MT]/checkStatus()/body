@@ -1,0 +1,5 @@
+{
+  if (encoder == null) {
+    throw new IOException("OutputStreamWriter is closed");
+  }
+}

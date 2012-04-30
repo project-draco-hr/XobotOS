@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("Address is null");
+  PProfileKey pProfileKey=new PProfileKey();
+  pProfileKey.setAddress(address);
+  return pProfileKey;
+}

@@ -1,0 +1,5 @@
+{
+  node.getParent().accept(this);
+  write(".");
+  node.getChild().accept(this);
+}

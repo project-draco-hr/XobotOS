@@ -1,0 +1,18 @@
+{
+  try {
+    String s=lexer.number();
+    int hour=Integer.parseInt(s);
+    calendar.set(Calendar.HOUR_OF_DAY,hour);
+    lexer.match(':');
+    s=lexer.number();
+    int min=Integer.parseInt(s);
+    calendar.set(Calendar.MINUTE,min);
+    lexer.match(':');
+    s=lexer.number();
+    int sec=Integer.parseInt(s);
+    calendar.set(Calendar.SECOND,sec);
+  }
+ catch (  Exception ex) {
+    throw createParseException("error processing time ");
+  }
+}

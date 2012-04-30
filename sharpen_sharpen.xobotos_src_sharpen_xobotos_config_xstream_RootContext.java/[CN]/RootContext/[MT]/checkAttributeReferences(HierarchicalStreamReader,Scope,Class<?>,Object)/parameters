@@ -1,0 +1,4 @@
+HierarchicalStreamReader reader
+Scope scope
+Class<?> klass
+Object obj

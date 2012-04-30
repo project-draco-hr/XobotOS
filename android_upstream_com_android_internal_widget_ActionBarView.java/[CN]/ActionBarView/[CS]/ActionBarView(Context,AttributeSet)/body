@@ -1,0 +1,64 @@
+{
+  super(context,attrs);
+  setBackgroundResource(0);
+  TypedArray a=context.obtainStyledAttributes(attrs,R.styleable.ActionBar,com.android.internal.R.attr.actionBarStyle,0);
+  ApplicationInfo appInfo=context.getApplicationInfo();
+  PackageManager pm=context.getPackageManager();
+  mNavigationMode=a.getInt(R.styleable.ActionBar_navigationMode,ActionBar.NAVIGATION_MODE_STANDARD);
+  mTitle=a.getText(R.styleable.ActionBar_title);
+  mSubtitle=a.getText(R.styleable.ActionBar_subtitle);
+  mLogo=a.getDrawable(R.styleable.ActionBar_logo);
+  if (mLogo == null) {
+    if (context instanceof Activity) {
+      try {
+        mLogo=pm.getActivityLogo(((Activity)context).getComponentName());
+      }
+ catch (      NameNotFoundException e) {
+        Log.e(TAG,"Activity component name not found!",e);
+      }
+    }
+    if (mLogo == null) {
+      mLogo=appInfo.loadLogo(pm);
+    }
+  }
+  mIcon=a.getDrawable(R.styleable.ActionBar_icon);
+  if (mIcon == null) {
+    if (context instanceof Activity) {
+      try {
+        mIcon=pm.getActivityIcon(((Activity)context).getComponentName());
+      }
+ catch (      NameNotFoundException e) {
+        Log.e(TAG,"Activity component name not found!",e);
+      }
+    }
+    if (mIcon == null) {
+      mIcon=appInfo.loadIcon(pm);
+    }
+  }
+  final LayoutInflater inflater=LayoutInflater.from(context);
+  final int homeResId=a.getResourceId(com.android.internal.R.styleable.ActionBar_homeLayout,com.android.internal.R.layout.action_bar_home);
+  mHomeLayout=(HomeView)inflater.inflate(homeResId,this,false);
+  mExpandedHomeLayout=(HomeView)inflater.inflate(homeResId,this,false);
+  mExpandedHomeLayout.setUp(true);
+  mExpandedHomeLayout.setOnClickListener(mExpandedActionViewUpListener);
+  mExpandedHomeLayout.setContentDescription(getResources().getText(R.string.action_bar_up_description));
+  mTitleStyleRes=a.getResourceId(R.styleable.ActionBar_titleTextStyle,0);
+  mSubtitleStyleRes=a.getResourceId(R.styleable.ActionBar_subtitleTextStyle,0);
+  mProgressStyle=a.getResourceId(R.styleable.ActionBar_progressBarStyle,0);
+  mIndeterminateProgressStyle=a.getResourceId(R.styleable.ActionBar_indeterminateProgressStyle,0);
+  mProgressBarPadding=a.getDimensionPixelOffset(R.styleable.ActionBar_progressBarPadding,0);
+  mItemPadding=a.getDimensionPixelOffset(R.styleable.ActionBar_itemPadding,0);
+  setDisplayOptions(a.getInt(R.styleable.ActionBar_displayOptions,DISPLAY_DEFAULT));
+  final int customNavId=a.getResourceId(R.styleable.ActionBar_customNavigationLayout,0);
+  if (customNavId != 0) {
+    mCustomNavView=(View)inflater.inflate(customNavId,this,false);
+    mNavigationMode=ActionBar.NAVIGATION_MODE_STANDARD;
+    setDisplayOptions(mDisplayOptions | ActionBar.DISPLAY_SHOW_CUSTOM);
+  }
+  mContentHeight=a.getLayoutDimension(R.styleable.ActionBar_height,0);
+  a.recycle();
+  mLogoNavItem=new ActionMenuItem(context,0,android.R.id.home,0,0,mTitle);
+  mHomeLayout.setOnClickListener(mUpClickListener);
+  mHomeLayout.setClickable(true);
+  mHomeLayout.setFocusable(true);
+}

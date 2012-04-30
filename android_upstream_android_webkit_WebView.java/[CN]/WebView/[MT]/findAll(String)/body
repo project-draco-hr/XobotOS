@@ -1,0 +1,8 @@
+{
+  checkThread();
+  if (0 == mNativeClass)   return 0;
+  int result=find != null ? nativeFindAll(find.toLowerCase(),find.toUpperCase(),find.equalsIgnoreCase(mLastFind)) : 0;
+  invalidate();
+  mLastFind=find;
+  return result;
+}

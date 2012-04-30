@@ -1,0 +1,17 @@
+{
+  if (name.equals(lexicalHandlerProperty)) {
+    return theLexicalHandler == this ? null : theLexicalHandler;
+  }
+ else   if (name.equals(scannerProperty)) {
+    return theScanner;
+  }
+ else   if (name.equals(schemaProperty)) {
+    return theSchema;
+  }
+ else   if (name.equals(autoDetectorProperty)) {
+    return theAutoDetector;
+  }
+ else {
+    throw new SAXNotRecognizedException("Unknown property " + name);
+  }
+}

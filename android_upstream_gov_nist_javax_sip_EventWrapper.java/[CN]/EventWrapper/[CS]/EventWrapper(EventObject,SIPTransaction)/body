@@ -1,0 +1,4 @@
+{
+  this.sipEvent=sipEvent;
+  this.transaction=transaction;
+}

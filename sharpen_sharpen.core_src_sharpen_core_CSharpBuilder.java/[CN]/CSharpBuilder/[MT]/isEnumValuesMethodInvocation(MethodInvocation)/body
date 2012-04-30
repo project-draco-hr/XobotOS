@@ -1,0 +1,3 @@
+{
+  return node.getName().getIdentifier().equals("values") && node.getExpression() != null && node.getExpression().resolveTypeBinding().isEnum();
+}

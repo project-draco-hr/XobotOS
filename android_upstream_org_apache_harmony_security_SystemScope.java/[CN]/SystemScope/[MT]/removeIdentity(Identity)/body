@@ -1,0 +1,19 @@
+{
+  if (identity == null) {
+    throw new NullPointerException("identity == null");
+  }
+  String name=identity.getName();
+  if (name == null) {
+    throw new NullPointerException("name == null");
+  }
+  boolean contains=names.containsKey(name);
+  names.remove(name);
+  PublicKey key=identity.getPublicKey();
+  if (key != null) {
+    contains=contains || keys.containsKey(key);
+    keys.remove(key);
+  }
+  if (!contains) {
+    throw new KeyManagementException("identity not found");
+  }
+}

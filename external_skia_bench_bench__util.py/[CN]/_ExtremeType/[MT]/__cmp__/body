@@ -1,0 +1,4 @@
+def __cmp__(self, other):
+    if (isinstance(other, self.__class__) and (other._cmpr == self._cmpr)):
+        return 0
+    return self._cmpr

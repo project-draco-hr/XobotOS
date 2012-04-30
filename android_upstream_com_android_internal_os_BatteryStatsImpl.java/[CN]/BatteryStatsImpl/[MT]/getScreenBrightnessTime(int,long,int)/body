@@ -1,0 +1,3 @@
+{
+  return mScreenBrightnessTimer[brightnessBin].getTotalTimeLocked(batteryRealtime,which);
+}

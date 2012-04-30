@@ -1,0 +1,17 @@
+{
+  if (generalTimeZone) {
+    TimeZone tz=calendar.getTimeZone();
+    boolean daylight=(calendar.get(Calendar.DST_OFFSET) != 0);
+    int style=count < 4 ? TimeZone.SHORT : TimeZone.LONG;
+    if (!formatData.customZoneStrings) {
+      buffer.append(tz.getDisplayName(daylight,style,formatData.locale));
+      return;
+    }
+    String custom=TimeZones.getDisplayName(formatData.zoneStrings,tz.getID(),daylight,style);
+    if (custom != null) {
+      buffer.append(custom);
+      return;
+    }
+  }
+  appendNumericTimeZone(buffer,generalTimeZone);
+}

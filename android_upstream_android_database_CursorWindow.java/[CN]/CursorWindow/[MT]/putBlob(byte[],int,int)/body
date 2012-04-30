@@ -1,0 +1,9 @@
+{
+  acquireReference();
+  try {
+    return nativePutBlob(mWindowPtr,value,row - mStartPos,column);
+  }
+  finally {
+    releaseReference();
+  }
+}

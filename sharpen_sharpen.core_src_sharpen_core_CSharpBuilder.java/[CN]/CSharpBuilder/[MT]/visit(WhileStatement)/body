@@ -1,0 +1,12 @@
+{
+  consumeContinueLabel(new Function<CSBlock>(){
+    public CSBlock apply(){
+      CSWhileStatement stmt=new CSWhileStatement(node.getStartPosition(),mapExpression(node.getExpression()));
+      visitBlock(stmt.body(),node.getBody());
+      addStatement(stmt);
+      return stmt.body();
+    }
+  }
+);
+  return false;
+}

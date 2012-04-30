@@ -1,0 +1,5 @@
+{
+  SIPClientTransaction ct=new SIPClientTransaction(this,encapsulatedMessageChannel);
+  ct.setOriginalRequest(sipRequest);
+  return ct;
+}

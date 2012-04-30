@@ -1,0 +1,7 @@
+'Argument-less script to select what to run on the buildbots.'
+import os
+import shutil
+import subprocess
+import sys
+if (__name__ == '__main__'):
+    GypBuild()

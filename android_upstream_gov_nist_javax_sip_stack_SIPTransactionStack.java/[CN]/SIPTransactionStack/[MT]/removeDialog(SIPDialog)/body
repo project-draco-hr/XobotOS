@@ -1,0 +1,24 @@
+{
+  String id=dialog.getDialogId();
+  String earlyId=dialog.getEarlyDialogId();
+  if (earlyId != null) {
+    this.earlyDialogTable.remove(earlyId);
+    this.dialogTable.remove(earlyId);
+  }
+  if (id != null) {
+    Object old=this.dialogTable.get(id);
+    if (old == dialog) {
+      this.dialogTable.remove(id);
+    }
+    if (!dialog.testAndSetIsDialogTerminatedEventDelivered()) {
+      DialogTerminatedEvent event=new DialogTerminatedEvent(dialog.getSipProvider(),dialog);
+      dialog.getSipProvider().handleEvent(event,null);
+    }
+  }
+ else   if (this.isDialogTerminatedEventDeliveredForNullDialog) {
+    if (!dialog.testAndSetIsDialogTerminatedEventDelivered()) {
+      DialogTerminatedEvent event=new DialogTerminatedEvent(dialog.getSipProvider(),dialog);
+      dialog.getSipProvider().handleEvent(event,null);
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("setPassToListener()");
+  }
+  this.toListener=true;
+}

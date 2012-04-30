@@ -1,0 +1,9 @@
+{
+  Matcher m=VALID_ALPHA_PHONE_PATTERN.matcher(number);
+  if (m.matches()) {
+    return normalizeHelper(number,ALPHA_PHONE_MAPPINGS,true);
+  }
+ else {
+    return normalizeDigitsOnly(number);
+  }
+}

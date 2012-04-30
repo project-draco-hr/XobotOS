@@ -1,0 +1,3 @@
+{
+  return new CSMethodInvocationExpression(new CSReferenceExpression("Marshal.SizeOf"),new CSTypeofExpression(getManagedStructType()));
+}

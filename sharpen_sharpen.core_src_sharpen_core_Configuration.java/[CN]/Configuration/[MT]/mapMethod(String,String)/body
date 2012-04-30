@@ -1,0 +1,3 @@
+{
+  mapMember(fromQualifiedName,new MemberMapping(to,MemberKind.Method));
+}

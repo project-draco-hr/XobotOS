@@ -1,0 +1,14 @@
+{
+  guard.close();
+  RandomAccessFile raf=mRaf;
+  if (raf != null) {
+synchronized (raf) {
+      mRaf=null;
+      raf.close();
+    }
+    if (fileToDeleteOnClose != null) {
+      fileToDeleteOnClose.delete();
+      fileToDeleteOnClose=null;
+    }
+  }
+}

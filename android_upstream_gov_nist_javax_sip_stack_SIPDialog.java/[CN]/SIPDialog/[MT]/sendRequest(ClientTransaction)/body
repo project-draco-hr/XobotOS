@@ -1,0 +1,3 @@
+{
+  this.sendRequest(clientTransactionId,!this.isBackToBackUserAgent);
+}

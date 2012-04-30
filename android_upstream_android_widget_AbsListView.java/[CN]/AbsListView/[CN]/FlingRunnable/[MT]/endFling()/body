@@ -1,0 +1,12 @@
+{
+  mTouchMode=TOUCH_MODE_REST;
+  removeCallbacks(this);
+  removeCallbacks(mCheckFlywheel);
+  reportScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
+  clearScrollingCache();
+  mScroller.abortAnimation();
+  if (mFlingStrictSpan != null) {
+    mFlingStrictSpan.finish();
+    mFlingStrictSpan=null;
+  }
+}

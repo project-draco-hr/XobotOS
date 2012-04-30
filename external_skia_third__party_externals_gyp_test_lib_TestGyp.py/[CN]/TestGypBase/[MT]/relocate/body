@@ -1,0 +1,6 @@
+def relocate(self, source, destination):
+    '\n    Renames (relocates) the specified source (usually a directory)\n    to the specified destination, creating the destination directory\n    first if necessary.\n\n    Note:  Don\'t use this as a generic "rename" operation.  In the\n    future, "relocating" parts of a GYP tree may affect the state of\n    the test to modify the behavior of later method calls.\n    '
+    destination_dir = os.path.dirname(destination)
+    if (not os.path.exists(destination_dir)):
+        self.subdir(destination_dir)
+    os.rename(source, destination)

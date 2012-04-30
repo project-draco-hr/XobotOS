@@ -1,0 +1,14 @@
+{
+  if (prime == null) {
+    throw new NullPointerException("prime == null");
+  }
+  if (primeExponent == null) {
+    throw new NullPointerException("primeExponent == null");
+  }
+  if (crtCoefficient == null) {
+    throw new NullPointerException("crtCoefficient == null");
+  }
+  this.prime=prime;
+  this.primeExponent=primeExponent;
+  this.crtCoefficient=crtCoefficient;
+}

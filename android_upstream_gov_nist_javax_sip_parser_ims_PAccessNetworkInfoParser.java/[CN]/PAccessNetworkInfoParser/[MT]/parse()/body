@@ -1,0 +1,26 @@
+{
+  if (debug)   dbg_enter("AccessNetworkInfoParser.parse");
+  try {
+    headerName(TokenTypes.P_ACCESS_NETWORK_INFO);
+    PAccessNetworkInfo accessNetworkInfo=new PAccessNetworkInfo();
+    accessNetworkInfo.setHeaderName(SIPHeaderNamesIms.P_ACCESS_NETWORK_INFO);
+    this.lexer.SPorHT();
+    lexer.match(TokenTypes.ID);
+    Token token=lexer.getNextToken();
+    accessNetworkInfo.setAccessType(token.getTokenValue());
+    this.lexer.SPorHT();
+    while (lexer.lookAhead(0) == ';') {
+      this.lexer.match(';');
+      this.lexer.SPorHT();
+      NameValue nv=super.nameValue('=');
+      accessNetworkInfo.setParameter(nv);
+      this.lexer.SPorHT();
+    }
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return accessNetworkInfo;
+  }
+  finally {
+    if (debug)     dbg_leave("AccessNetworkInfoParser.parse");
+  }
+}

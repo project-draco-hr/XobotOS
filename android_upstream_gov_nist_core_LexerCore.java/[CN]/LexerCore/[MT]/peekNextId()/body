@@ -1,0 +1,7 @@
+{
+  int oldPtr=ptr;
+  String retval=ttoken();
+  savedPtr=ptr;
+  ptr=oldPtr;
+  return retval;
+}

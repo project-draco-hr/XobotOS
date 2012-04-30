@@ -1,0 +1,6 @@
+{
+  if (!isInitMac) {
+    throw new IllegalStateException();
+  }
+  spiImpl.engineUpdate(input);
+}

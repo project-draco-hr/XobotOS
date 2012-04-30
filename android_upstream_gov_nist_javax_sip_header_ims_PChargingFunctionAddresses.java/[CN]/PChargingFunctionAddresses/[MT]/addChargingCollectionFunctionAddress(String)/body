@@ -1,0 +1,4 @@
+{
+  if (ccfAddress == null)   throw new NullPointerException("JAIN-SIP Exception, " + "P-Charging-Function-Addresses, setChargingCollectionFunctionAddress(), the ccfAddress parameter is null.");
+  this.parameters.set(ParameterNamesIms.CCF,ccfAddress);
+}

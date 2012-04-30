@@ -1,0 +1,10 @@
+{
+  mLock.readLock().lock();
+  try {
+    if (mSocketState == SocketState.CLOSED)     return EBADFD;
+    return bindListenNative();
+  }
+  finally {
+    mLock.readLock().unlock();
+  }
+}

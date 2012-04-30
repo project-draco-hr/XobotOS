@@ -1,0 +1,14 @@
+{
+  final String fullName=getUnitName(pair.source);
+  final ByRef<CompilationUnitTemplate> result=new ByRef<CompilationUnitTemplate>(null);
+  TemplateVisitor visitor=new TemplateVisitor(){
+    @Override public void accept(    CompilationUnitTemplate template){
+      result.value=template;
+    }
+  }
+;
+  for (  final NamespaceTemplate def : getNamespaces()) {
+    if (def.visit(visitor,fullName,VisitMode.FirstMatch))     break;
+  }
+  return result.value;
+}

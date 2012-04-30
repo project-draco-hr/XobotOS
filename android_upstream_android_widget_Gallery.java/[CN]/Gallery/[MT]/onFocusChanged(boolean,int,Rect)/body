@@ -1,0 +1,7 @@
+{
+  super.onFocusChanged(gainFocus,direction,previouslyFocusedRect);
+  if (gainFocus && mSelectedChild != null) {
+    mSelectedChild.requestFocus(direction);
+    mSelectedChild.setSelected(true);
+  }
+}

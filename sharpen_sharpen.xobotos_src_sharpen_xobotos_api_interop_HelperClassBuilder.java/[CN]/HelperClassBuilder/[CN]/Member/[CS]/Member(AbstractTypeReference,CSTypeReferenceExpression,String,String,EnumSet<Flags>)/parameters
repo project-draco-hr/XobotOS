@@ -1,0 +1,5 @@
+AbstractTypeReference type
+CSTypeReferenceExpression managed
+String name
+String managedName
+EnumSet<Flags> flags

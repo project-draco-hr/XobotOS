@@ -1,0 +1,10 @@
+{
+  if (markLimit < 0) {
+    throw new IllegalArgumentException();
+  }
+synchronized (lock) {
+    checkNotClosed();
+    this.markLimit=markLimit;
+    mark=pos;
+  }
+}

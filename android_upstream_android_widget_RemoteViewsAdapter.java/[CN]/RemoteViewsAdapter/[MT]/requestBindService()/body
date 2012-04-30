@@ -1,0 +1,7 @@
+{
+  if (!mServiceConnection.isConnected()) {
+    mServiceConnection.bind(mContext,mAppWidgetId,mIntent);
+  }
+  mMainQueue.removeMessages(sUnbindServiceMessageType);
+  return mServiceConnection.isConnected();
+}

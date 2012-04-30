@@ -1,0 +1,3 @@
+{
+  return getSettingsBoolean(mContentResolver,Settings.Secure.WIFI_WATCHDOG_ON,true);
+}

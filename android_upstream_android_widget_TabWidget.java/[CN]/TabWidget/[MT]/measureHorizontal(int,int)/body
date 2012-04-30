@@ -1,0 +1,36 @@
+{
+  if (MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.UNSPECIFIED) {
+    super.measureHorizontal(widthMeasureSpec,heightMeasureSpec);
+    return;
+  }
+  final int unspecifiedWidth=MeasureSpec.makeMeasureSpec(0,MeasureSpec.UNSPECIFIED);
+  mImposedTabsHeight=-1;
+  super.measureHorizontal(unspecifiedWidth,heightMeasureSpec);
+  int extraWidth=getMeasuredWidth() - MeasureSpec.getSize(widthMeasureSpec);
+  if (extraWidth > 0) {
+    final int count=getChildCount();
+    int childCount=0;
+    for (int i=0; i < count; i++) {
+      final View child=getChildAt(i);
+      if (child.getVisibility() == GONE)       continue;
+      childCount++;
+    }
+    if (childCount > 0) {
+      if (mImposedTabWidths == null || mImposedTabWidths.length != count) {
+        mImposedTabWidths=new int[count];
+      }
+      for (int i=0; i < count; i++) {
+        final View child=getChildAt(i);
+        if (child.getVisibility() == GONE)         continue;
+        final int childWidth=child.getMeasuredWidth();
+        final int delta=extraWidth / childCount;
+        final int newWidth=Math.max(0,childWidth - delta);
+        mImposedTabWidths[i]=newWidth;
+        extraWidth-=childWidth - newWidth;
+        childCount--;
+        mImposedTabsHeight=Math.max(mImposedTabsHeight,child.getMeasuredHeight());
+      }
+    }
+  }
+  super.measureHorizontal(widthMeasureSpec,heightMeasureSpec);
+}

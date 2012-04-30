@@ -1,0 +1,105 @@
+{
+  SIPResponse sipResponse=(SIPResponse)response;
+  SIPDialog dialog=this.dialog;
+  if (response == null)   throw new NullPointerException("null response");
+  try {
+    sipResponse.checkHeaders();
+  }
+ catch (  ParseException ex) {
+    throw new SipException(ex.getMessage());
+  }
+  if (!sipResponse.getCSeq().getMethod().equals(this.getMethod())) {
+    throw new SipException("CSeq method does not match Request method of request that created the tx.");
+  }
+  if (this.getMethod().equals(Request.SUBSCRIBE) && response.getStatusCode() / 100 == 2) {
+    if (response.getHeader(ExpiresHeader.NAME) == null) {
+      throw new SipException("Expires header is mandatory in 2xx response of SUBSCRIBE");
+    }
+ else {
+      Expires requestExpires=(Expires)this.getOriginalRequest().getExpires();
+      Expires responseExpires=(Expires)response.getExpires();
+      if (requestExpires != null && responseExpires.getExpires() > requestExpires.getExpires()) {
+        throw new SipException("Response Expires time exceeds request Expires time : See RFC 3265 3.1.1");
+      }
+    }
+  }
+  if (sipResponse.getStatusCode() == 200 && sipResponse.getCSeq().getMethod().equals(Request.INVITE) && sipResponse.getHeader(ContactHeader.NAME) == null)   throw new SipException("Contact Header is mandatory for the OK to the INVITE");
+  if (!this.isMessagePartOfTransaction((SIPMessage)response)) {
+    throw new SipException("Response does not belong to this transaction.");
+  }
+  try {
+    if (this.pendingReliableResponse != null && this.getDialog() != null && this.getState() != TransactionState.TERMINATED && ((SIPResponse)response).getContentTypeHeader() != null && response.getStatusCode() / 100 == 2 && ((SIPResponse)response).getContentTypeHeader().getContentType().equalsIgnoreCase("application") && ((SIPResponse)response).getContentTypeHeader().getContentSubType().equalsIgnoreCase("sdp")) {
+      try {
+        boolean acquired=this.provisionalResponseSem.tryAcquire(1,TimeUnit.SECONDS);
+        if (!acquired) {
+          throw new SipException("cannot send response -- unacked povisional");
+        }
+      }
+ catch (      Exception ex) {
+        this.sipStack.getStackLogger().logError("Could not acquire PRACK sem ",ex);
+      }
+    }
+ else {
+      if (this.pendingReliableResponse != null && sipResponse.isFinalResponse()) {
+        this.provisionalResponseTask.cancel();
+        this.provisionalResponseTask=null;
+      }
+    }
+    if (dialog != null) {
+      if (sipResponse.getStatusCode() / 100 == 2 && sipStack.isDialogCreated(sipResponse.getCSeq().getMethod())) {
+        if (dialog.getLocalTag() == null && sipResponse.getTo().getTag() == null) {
+          sipResponse.getTo().setTag(Utils.getInstance().generateTag());
+        }
+ else         if (dialog.getLocalTag() != null && sipResponse.getToTag() == null) {
+          sipResponse.setToTag(dialog.getLocalTag());
+        }
+ else         if (dialog.getLocalTag() != null && sipResponse.getToTag() != null && !dialog.getLocalTag().equals(sipResponse.getToTag())) {
+          throw new SipException("Tag mismatch dialogTag is " + dialog.getLocalTag() + " responseTag is "+ sipResponse.getToTag());
+        }
+      }
+      if (!sipResponse.getCallId().getCallId().equals(dialog.getCallId().getCallId())) {
+        throw new SipException("Dialog mismatch!");
+      }
+    }
+    String fromTag=((SIPRequest)this.getRequest()).getFrom().getTag();
+    if (fromTag != null && sipResponse.getFromTag() != null && !sipResponse.getFromTag().equals(fromTag)) {
+      throw new SipException("From tag of request does not match response from tag");
+    }
+ else     if (fromTag != null) {
+      sipResponse.getFrom().setTag(fromTag);
+    }
+ else {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("WARNING -- Null From tag in request!!");
+    }
+    if (dialog != null && response.getStatusCode() != 100) {
+      dialog.setResponseTags(sipResponse);
+      DialogState oldState=dialog.getState();
+      dialog.setLastResponse(this,(SIPResponse)response);
+      if (oldState == null && dialog.getState() == DialogState.TERMINATED) {
+        DialogTerminatedEvent event=new DialogTerminatedEvent(dialog.getSipProvider(),dialog);
+        dialog.getSipProvider().handleEvent(event,this);
+      }
+    }
+ else     if (dialog == null && this.getMethod().equals(Request.INVITE) && this.retransmissionAlertEnabled && this.retransmissionAlertTimerTask == null && response.getStatusCode() / 100 == 2) {
+      String dialogId=((SIPResponse)response).getDialogId(true);
+      this.retransmissionAlertTimerTask=new RetransmissionAlertTimerTask(dialogId);
+      sipStack.retransmissionAlertTransactions.put(dialogId,this);
+      sipStack.getTimer().schedule(this.retransmissionAlertTimerTask,0,SIPTransactionStack.BASE_TIMER_INTERVAL);
+    }
+    this.sendMessage((SIPResponse)response);
+    if (dialog != null) {
+      dialog.startRetransmitTimer(this,(SIPResponse)response);
+    }
+  }
+ catch (  IOException ex) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logException(ex);
+    this.setState(TransactionState.TERMINATED);
+    raiseErrorEvent(SIPTransactionErrorEvent.TRANSPORT_ERROR);
+    throw new SipException(ex.getMessage());
+  }
+catch (  java.text.ParseException ex1) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logException(ex1);
+    this.setState(TransactionState.TERMINATED);
+    throw new SipException(ex1.getMessage());
+  }
+}

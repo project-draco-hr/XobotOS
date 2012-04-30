@@ -1,0 +1,5 @@
+{
+  if (node.isOut())   write("out ");
+ else   write("ref ");
+  node.getElementType().accept(this);
+}

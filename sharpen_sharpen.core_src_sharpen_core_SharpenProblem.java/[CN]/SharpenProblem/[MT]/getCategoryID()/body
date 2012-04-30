@@ -1,0 +1,4 @@
+{
+  if (_kind == ProblemKind.PARSING_ERROR)   return CAT_SYNTAX;
+ else   return CAT_UNSPECIFIED;
+}

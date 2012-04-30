@@ -1,0 +1,4 @@
+{
+  if (super.hlist.isEmpty())   return "";
+ else   return super.encode();
+}

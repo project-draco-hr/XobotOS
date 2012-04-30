@@ -1,0 +1,37 @@
+{
+  super(context,attrs,defStyle);
+  TypedArray a=context.obtainStyledAttributes(attrs,com.android.internal.R.styleable.Spinner,defStyle,0);
+  if (mode == MODE_THEME) {
+    mode=a.getInt(com.android.internal.R.styleable.Spinner_spinnerMode,MODE_DIALOG);
+  }
+switch (mode) {
+case MODE_DIALOG:
+{
+      mPopup=new DialogPopup();
+      break;
+    }
+case MODE_DROPDOWN:
+{
+    DropdownPopup popup=new DropdownPopup(context,attrs,defStyle);
+    mDropDownWidth=a.getLayoutDimension(com.android.internal.R.styleable.Spinner_dropDownWidth,ViewGroup.LayoutParams.WRAP_CONTENT);
+    popup.setBackgroundDrawable(a.getDrawable(com.android.internal.R.styleable.Spinner_popupBackground));
+    final int verticalOffset=a.getDimensionPixelOffset(com.android.internal.R.styleable.Spinner_dropDownVerticalOffset,0);
+    if (verticalOffset != 0) {
+      popup.setVerticalOffset(verticalOffset);
+    }
+    final int horizontalOffset=a.getDimensionPixelOffset(com.android.internal.R.styleable.Spinner_dropDownHorizontalOffset,0);
+    if (horizontalOffset != 0) {
+      popup.setHorizontalOffset(horizontalOffset);
+    }
+    mPopup=popup;
+    break;
+  }
+}
+mGravity=a.getInt(com.android.internal.R.styleable.Spinner_gravity,Gravity.CENTER);
+mPopup.setPromptText(a.getString(com.android.internal.R.styleable.Spinner_prompt));
+a.recycle();
+if (mTempAdapter != null) {
+mPopup.setAdapter(mTempAdapter);
+mTempAdapter=null;
+}
+}

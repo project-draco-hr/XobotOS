@@ -1,0 +1,5 @@
+{
+  host.encode(buffer);
+  if (port != -1)   buffer.append(COLON).append(port);
+  return buffer;
+}

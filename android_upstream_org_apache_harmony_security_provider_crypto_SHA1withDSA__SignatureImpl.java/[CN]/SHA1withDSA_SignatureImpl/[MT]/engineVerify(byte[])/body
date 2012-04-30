@@ -1,0 +1,6 @@
+{
+  if (sigBytes == null) {
+    throw new NullPointerException("sigBytes == null");
+  }
+  return checkSignature(sigBytes,0,0);
+}

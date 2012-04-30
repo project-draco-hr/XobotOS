@@ -1,0 +1,5 @@
+{
+  if (isStaticVoidMain(binding))   return "Main";
+  String name=isNameMapping(mapping) ? mapping.name : binding.getName();
+  return methodName(name);
+}

@@ -1,0 +1,9 @@
+{
+  Arrays.checkOffsetAndCount(chars.length,offset,length);
+  int newCount=count + length;
+  if (newCount > value.length) {
+    enlargeBuffer(newCount);
+  }
+  System.arraycopy(chars,offset,value,count,length);
+  count=newCount;
+}

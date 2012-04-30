@@ -1,0 +1,3 @@
+{
+  return getClass().getName() + "[delimiter=" + delimiter+ ",findStartIndex="+ findStartIndex+ ",matchSuccessful="+ matchSuccessful+ ",closed="+ closed+ "]";
+}

@@ -1,0 +1,6 @@
+{
+  pause();
+  if (proxy != null) {
+    proxy.dispatchOnPaused();
+  }
+}

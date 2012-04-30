@@ -1,0 +1,16 @@
+{
+  if (containsJavadoc(node,SharpenAnnotations.SHARPEN_REMOVE_FIRST)) {
+    block.statements().remove(0);
+  }
+  BodyDeclaration savedDeclaration=_currentBodyDeclaration;
+  _currentBodyDeclaration=node;
+  if (Modifier.isSynchronized(node.getModifiers())) {
+    CSLockStatement lock=new CSLockStatement(node.getStartPosition(),getLockTarget(node));
+    targetBlock.addStatement(lock);
+    visitBlock(lock.body(),block);
+  }
+ else {
+    visitBlock(targetBlock,block);
+  }
+  _currentBodyDeclaration=savedDeclaration;
+}

@@ -1,0 +1,4 @@
+{
+  mIndex=0;
+  mNameList=getClassNameList(mCookie);
+}

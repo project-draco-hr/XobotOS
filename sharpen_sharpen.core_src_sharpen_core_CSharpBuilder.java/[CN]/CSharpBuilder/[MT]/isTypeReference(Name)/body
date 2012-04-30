@@ -1,0 +1,8 @@
+{
+  final IBinding binding=node.resolveBinding();
+  if (null == binding) {
+    unresolvedTypeBinding(node);
+    return false;
+  }
+  return IBinding.TYPE == binding.getKind();
+}

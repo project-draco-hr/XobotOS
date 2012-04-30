@@ -1,0 +1,8 @@
+{
+  if (this.routeList == null) {
+    return new LinkedList().listIterator();
+  }
+ else {
+    return this.getRouteList().listIterator();
+  }
+}

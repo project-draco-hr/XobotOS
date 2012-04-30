@@ -1,0 +1,20 @@
+{
+  final ITypeBuilder type=_typeStack.peek();
+  final PropertyTemplate template=type.getTypeTemplate().findPropertyTemplate(node);
+  if (template == null)   return null;
+  try {
+    _outputProviderStack.push(template);
+    final OutputType output=getOutputType();
+    final OutputMode mode=output.getModeForMember(node);
+    if (mode == OutputMode.NOTHING)     return null;
+    PropertyBuilder builder=new PropertyBuilder(template,output,node);
+    type.registerMember(node,builder);
+    boolean existing=property != null;
+    property=builder.build(csharpBuilder,delegate);
+    if (!existing)     parent.addMember(property);
+    return property;
+  }
+  finally {
+    _outputProviderStack.pop();
+  }
+}

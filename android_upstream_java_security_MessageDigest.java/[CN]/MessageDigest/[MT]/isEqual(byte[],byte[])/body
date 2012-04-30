@@ -1,0 +1,11 @@
+{
+  if (digesta.length != digestb.length) {
+    return false;
+  }
+  for (int i=0; i < digesta.length; i++) {
+    if (digesta[i] != digestb[i]) {
+      return false;
+    }
+  }
+  return true;
+}

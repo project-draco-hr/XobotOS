@@ -1,0 +1,9 @@
+{
+  NameValueList retval=new NameValueList();
+  retval.setSeparator(this.separator);
+  Iterator<NameValue> it=this.hmap.values().iterator();
+  while (it.hasNext()) {
+    retval.set((NameValue)((NameValue)it.next()).clone());
+  }
+  return retval;
+}

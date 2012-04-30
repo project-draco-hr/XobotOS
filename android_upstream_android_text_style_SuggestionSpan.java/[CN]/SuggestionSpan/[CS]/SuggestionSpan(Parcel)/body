@@ -1,0 +1,13 @@
+{
+  mSuggestions=src.readStringArray();
+  mFlags=src.readInt();
+  mLocaleString=src.readString();
+  mNotificationTargetClassName=src.readString();
+  mHashCode=src.readInt();
+  mEasyCorrectUnderlineColor=src.readInt();
+  mEasyCorrectUnderlineThickness=src.readFloat();
+  mMisspelledUnderlineColor=src.readInt();
+  mMisspelledUnderlineThickness=src.readFloat();
+  mAutoCorrectionUnderlineColor=src.readInt();
+  mAutoCorrectionUnderlineThickness=src.readFloat();
+}

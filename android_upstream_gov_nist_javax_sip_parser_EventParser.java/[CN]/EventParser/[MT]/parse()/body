@@ -1,0 +1,22 @@
+{
+  if (debug)   dbg_enter("EventParser.parse");
+  try {
+    headerName(TokenTypes.EVENT);
+    this.lexer.SPorHT();
+    Event event=new Event();
+    this.lexer.match(TokenTypes.ID);
+    Token token=lexer.getNextToken();
+    String value=token.getTokenValue();
+    event.setEventType(value);
+    super.parse(event);
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return event;
+  }
+ catch (  ParseException ex) {
+    throw createParseException(ex.getMessage());
+  }
+ finally {
+    if (debug)     dbg_leave("EventParser.parse");
+  }
+}

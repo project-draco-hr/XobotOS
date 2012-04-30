@@ -1,0 +1,4 @@
+{
+  if (maxForwards < 0 || maxForwards > 255)   throw new InvalidArgumentException("bad max forwards value " + maxForwards);
+  this.maxForwards=maxForwards;
+}

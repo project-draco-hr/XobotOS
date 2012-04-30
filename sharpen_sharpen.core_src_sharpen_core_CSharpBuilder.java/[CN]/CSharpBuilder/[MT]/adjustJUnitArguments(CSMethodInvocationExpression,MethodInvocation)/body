@@ -1,0 +1,32 @@
+{
+  if (!_configuration.junitConversion())   return;
+  ITypeBinding t=node.resolveMethodBinding().getDeclaringClass();
+  if (t.getQualifiedName().equals("junit.framework.Assert") || t.getQualifiedName().equals("org.junit.Assert")) {
+    String method=node.getName().getIdentifier();
+    int np=-1;
+    if (method.equals("assertTrue") || method.equals("assertFalse") || method.equals("assertNull")|| method.equals("assertNotNull"))     np=1;
+ else     if (method.equals("fail"))     np=0;
+ else     if (method.startsWith("assert"))     np=2;
+    if (np == -1)     return;
+    if (mie.arguments().size() == np + 1) {
+      mie.addArgument(mie.arguments().get(0));
+      mie.removeArgument(0);
+    }
+    if (method.equals("assertSame")) {
+      boolean useEquals=false;
+      final List arguments=node.arguments();
+      for (int i=0; i < arguments.size(); ++i) {
+        final Expression arg=(Expression)arguments.get(i);
+        ITypeBinding b=arg.resolveTypeBinding();
+        if (b.isEnum()) {
+          useEquals=true;
+          break;
+        }
+      }
+      if (useEquals) {
+        CSReferenceExpression mref=(CSReferenceExpression)mie.expression();
+        mref.name("NUnit.Framework.Assert.AreEqual");
+      }
+    }
+  }
+}

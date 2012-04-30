@@ -1,0 +1,4 @@
+{
+  this.encapsulatedChannel.close();
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("Closing " + this.encapsulatedChannel);
+}

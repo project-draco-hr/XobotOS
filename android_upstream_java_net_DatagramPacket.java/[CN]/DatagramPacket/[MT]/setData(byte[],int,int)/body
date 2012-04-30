@@ -1,0 +1,9 @@
+{
+  if ((offset | byteCount) < 0 || offset > data.length || byteCount > data.length - offset) {
+    throw new IllegalArgumentException();
+  }
+  this.data=data;
+  this.offset=offset;
+  this.length=byteCount;
+  this.capacity=byteCount;
+}

@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(DATA_NETWORK_STATUS_ON_RADIO_OFF,dcState,enable);
+}

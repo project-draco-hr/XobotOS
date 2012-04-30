@@ -1,0 +1,4 @@
+{
+  out.writeInt(PARCEL_TOKEN_MOTION_EVENT);
+  nativeWriteToParcel(mNativePtr,out);
+}

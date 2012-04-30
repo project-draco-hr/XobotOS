@@ -1,0 +1,10 @@
+{
+  theName=name;
+  theModel=model;
+  theMemberOf=memberOf;
+  theFlags=flags;
+  theAtts=new AttributesImpl();
+  theSchema=schema;
+  theNamespace=namespace(name,false);
+  theLocalName=localName(name);
+}

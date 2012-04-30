@@ -1,0 +1,10 @@
+{
+  try {
+    mUrl=new URL(url);
+  }
+ catch (  MalformedURLException e) {
+    mUrl=null;
+  }
+  mProxy=proxy;
+  mHandler=new Handler();
+}

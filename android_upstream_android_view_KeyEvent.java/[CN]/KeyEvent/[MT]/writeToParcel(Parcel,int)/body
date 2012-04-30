@@ -1,0 +1,13 @@
+{
+  out.writeInt(PARCEL_TOKEN_KEY_EVENT);
+  out.writeInt(mDeviceId);
+  out.writeInt(mSource);
+  out.writeInt(mAction);
+  out.writeInt(mKeyCode);
+  out.writeInt(mRepeatCount);
+  out.writeInt(mMetaState);
+  out.writeInt(mScanCode);
+  out.writeInt(mFlags);
+  out.writeLong(mDownTime);
+  out.writeLong(mEventTime);
+}

@@ -1,0 +1,10 @@
+{
+  this.unrecognizedHeaders=new LinkedList<String>();
+  this.headers=new ConcurrentLinkedQueue<SIPHeader>();
+  nameTable=new Hashtable<String,SIPHeader>();
+  try {
+    this.attachHeader(new ContentLength(0),false);
+  }
+ catch (  Exception ex) {
+  }
+}

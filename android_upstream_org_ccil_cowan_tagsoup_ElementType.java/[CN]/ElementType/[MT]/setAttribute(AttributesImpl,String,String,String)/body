@@ -1,0 +1,20 @@
+{
+  if (name.equals("xmlns") || name.startsWith("xmlns:")) {
+    return;
+  }
+  ;
+  String namespace=namespace(name,true);
+  String localName=localName(name);
+  int i=atts.getIndex(name);
+  if (i == -1) {
+    name=name.intern();
+    if (type == null)     type="CDATA";
+    if (!type.equals("CDATA"))     value=normalize(value);
+    atts.addAttribute(namespace,localName,name,type,value);
+  }
+ else {
+    if (type == null)     type=atts.getType(i);
+    if (!type.equals("CDATA"))     value=normalize(value);
+    atts.setAttribute(i,namespace,localName,name,type,value);
+  }
+}

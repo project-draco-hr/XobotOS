@@ -1,0 +1,13 @@
+{
+  if (index >= 0 && index <= count) {
+    if (start >= 0 && length >= 0 && length <= chars.length - start) {
+      if (length != 0) {
+        move(length,index);
+        System.arraycopy(chars,start,value,index,length);
+        count+=length;
+      }
+      return;
+    }
+  }
+  throw new StringIndexOutOfBoundsException("this.length=" + count + "; index="+ index+ "; chars.length="+ chars.length+ "; start="+ start+ "; length="+ length);
+}

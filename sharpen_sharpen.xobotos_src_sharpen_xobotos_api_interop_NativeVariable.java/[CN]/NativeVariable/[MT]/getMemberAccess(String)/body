@@ -1,0 +1,4 @@
+{
+  if (isByRef())   return new InstanceMemberAccess(getReference(),name);
+ else   return new StructMemberAccess(getReference(),name);
+}

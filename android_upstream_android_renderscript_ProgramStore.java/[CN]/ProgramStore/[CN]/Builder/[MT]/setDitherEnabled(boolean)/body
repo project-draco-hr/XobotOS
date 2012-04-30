@@ -1,0 +1,4 @@
+{
+  mDither=enable;
+  return this;
+}

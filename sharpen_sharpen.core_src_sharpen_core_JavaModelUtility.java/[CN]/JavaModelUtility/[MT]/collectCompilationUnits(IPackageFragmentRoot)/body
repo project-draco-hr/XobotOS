@@ -1,0 +1,5 @@
+{
+  List<ICompilationUnit> result=new ArrayList<ICompilationUnit>();
+  collectCompilationUnits(result,root);
+  return result;
+}

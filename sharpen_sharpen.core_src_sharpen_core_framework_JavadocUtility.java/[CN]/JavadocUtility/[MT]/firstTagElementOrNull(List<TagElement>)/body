@@ -1,0 +1,3 @@
+{
+  return tagElements.isEmpty() ? null : tagElements.get(0);
+}

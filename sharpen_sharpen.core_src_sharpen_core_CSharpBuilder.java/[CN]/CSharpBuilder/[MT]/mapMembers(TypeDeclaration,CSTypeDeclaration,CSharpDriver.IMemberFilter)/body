@@ -1,0 +1,16 @@
+{
+  CSTypeDeclaration saved=_currentType;
+  _currentType=type;
+  try {
+    List<ASTNode> members=node.bodyDeclarations();
+    for (    final ASTNode member : members) {
+      if ((filter != null) && !filter.includeMember(member))       continue;
+      member.accept(this);
+    }
+    createInheritedAbstractMemberStubs(node);
+    flushInstanceInitializers(type,0);
+  }
+  finally {
+    _currentType=saved;
+  }
+}

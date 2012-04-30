@@ -1,0 +1,8 @@
+{
+  if (instance == null) {
+    instance=new PhoneNumberUtil();
+    instance.countryCallingCodeToRegionCodeMap=countryCallingCodeToRegionCodeMap;
+    instance.init(baseFileLocation);
+  }
+  return instance;
+}

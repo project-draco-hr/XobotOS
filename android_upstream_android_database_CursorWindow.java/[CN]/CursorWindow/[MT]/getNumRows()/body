@@ -1,0 +1,9 @@
+{
+  acquireReference();
+  try {
+    return nativeGetNumRows(mWindowPtr);
+  }
+  finally {
+    releaseReference();
+  }
+}

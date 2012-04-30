@@ -1,0 +1,4 @@
+{
+  checkClosed();
+  return (currentEntry == null || inRead < currentEntry.size) ? 1 : 0;
+}

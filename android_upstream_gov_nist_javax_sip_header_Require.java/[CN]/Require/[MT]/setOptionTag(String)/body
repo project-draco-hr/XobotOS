@@ -1,0 +1,4 @@
+{
+  if (optionTag == null)   throw new NullPointerException("JAIN-SIP Exception, Require, " + "setOptionTag(), the optionTag parameter is null");
+  this.optionTag=optionTag;
+}

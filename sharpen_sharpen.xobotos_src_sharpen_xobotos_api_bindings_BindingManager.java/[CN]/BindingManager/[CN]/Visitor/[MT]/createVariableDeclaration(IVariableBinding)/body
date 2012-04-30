@@ -1,0 +1,6 @@
+{
+  final ScopeEntry scope=getScope();
+  final String name=binding.getName();
+  final String renamed=scope.renameVariable(binding,name);
+  if (renamed != null)   addRenamedVariable(binding,renamed);
+}

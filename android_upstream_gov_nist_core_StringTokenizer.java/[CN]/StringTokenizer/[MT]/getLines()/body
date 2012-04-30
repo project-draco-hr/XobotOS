@@ -1,0 +1,8 @@
+{
+  Vector<String> result=new Vector<String>();
+  while (hasMoreChars()) {
+    String line=getLine();
+    result.addElement(line);
+  }
+  return result;
+}

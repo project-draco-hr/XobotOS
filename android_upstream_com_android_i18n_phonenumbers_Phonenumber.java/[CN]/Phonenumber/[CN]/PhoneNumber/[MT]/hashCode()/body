@@ -1,0 +1,12 @@
+{
+  int hash=41;
+  hash=(53 * hash) + getCountryCode();
+  hash=(53 * hash) + Long.valueOf(getNationalNumber()).hashCode();
+  hash=(53 * hash) + getExtension().hashCode();
+  hash=(53 * hash) + (isItalianLeadingZero() ? 1231 : 1237);
+  hash=(53 * hash) + getRawInput().hashCode();
+  hash=(53 * hash) + getCountryCodeSource().hashCode();
+  hash=(53 * hash) + getPreferredDomesticCarrierCode().hashCode();
+  hash=(53 * hash) + (hasPreferredDomesticCarrierCode() ? 1231 : 1237);
+  return hash;
+}

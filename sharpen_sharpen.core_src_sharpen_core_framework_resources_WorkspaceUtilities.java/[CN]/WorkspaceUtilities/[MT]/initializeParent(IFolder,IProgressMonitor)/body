@@ -1,0 +1,12 @@
+{
+  final IContainer parent=folder.getParent();
+  if (parent.exists()) {
+    return;
+  }
+  if (isProject(parent)) {
+    initializeProject((IProject)parent,monitor);
+  }
+ else {
+    initializeTree((IFolder)parent,monitor);
+  }
+}

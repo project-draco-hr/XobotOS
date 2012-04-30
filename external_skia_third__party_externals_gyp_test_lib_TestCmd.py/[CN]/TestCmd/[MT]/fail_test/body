@@ -1,0 +1,6 @@
+def fail_test(self, condition=1, function=None, skip=0):
+    'Cause the test to fail.\n        '
+    if (not condition):
+        return
+    self.condition = 'fail_test'
+    fail_test(self=self, condition=condition, function=function, skip=skip)

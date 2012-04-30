@@ -1,0 +1,10 @@
+{
+  if (mState != STATE_INITIALIZED) {
+    throw (new IllegalStateException("startRecording() called on an " + "uninitialized AudioRecord."));
+  }
+synchronized (mRecordingStateLock) {
+    if (native_start() == SUCCESS) {
+      mRecordingState=RECORDSTATE_RECORDING;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  if (sipStack instanceof SIPTransactionStack) {
+    this.sipStack=(SIPTransactionStack)sipStack;
+    this.stackLogger=this.sipStack.getStackLogger();
+  }
+ else   throw new IllegalArgumentException("sipStack must be a SIPTransactionStack");
+}

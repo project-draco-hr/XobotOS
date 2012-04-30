@@ -1,0 +1,4 @@
+{
+  _compilationUnit.addComment(new CSLineComment(node.getStartPosition(),getText(node.getStartPosition(),node.getLength())));
+  return false;
+}

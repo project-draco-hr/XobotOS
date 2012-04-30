@@ -1,0 +1,8 @@
+{
+  mClipDescription=new ClipDescription(label,mimeTypes);
+  if (item == null) {
+    throw new NullPointerException("item is null");
+  }
+  mIcon=null;
+  mItems.add(item);
+}

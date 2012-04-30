@@ -1,0 +1,4 @@
+{
+  PVisitedNetworkIDList retval=new PVisitedNetworkIDList();
+  return retval.clonehlist(this.hlist);
+}

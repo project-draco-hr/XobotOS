@@ -1,0 +1,4 @@
+{
+  String result=cachedToStringResult;
+  return (result == null) ? (cachedToStringResult=toNewString()) : result;
+}

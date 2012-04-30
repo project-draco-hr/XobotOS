@@ -1,0 +1,3 @@
+{
+  return "Bounds{" + "before=" + before + ", after="+ after+ '}';
+}

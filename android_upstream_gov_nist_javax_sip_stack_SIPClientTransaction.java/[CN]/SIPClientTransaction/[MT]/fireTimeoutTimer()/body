@@ -1,0 +1,28 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("fireTimeoutTimer " + this);
+  SIPDialog dialog=(SIPDialog)this.getDialog();
+  if (TransactionState.CALLING == this.getState() || TransactionState.TRYING == this.getState() || TransactionState.PROCEEDING == this.getState()) {
+    if (dialog != null && (dialog.getState() == null || dialog.getState() == DialogState.EARLY)) {
+      if (((SIPTransactionStack)getSIPStack()).isDialogCreated(this.getOriginalRequest().getMethod())) {
+        dialog.delete();
+      }
+    }
+ else     if (dialog != null) {
+      if (getOriginalRequest().getMethod().equalsIgnoreCase(Request.BYE) && dialog.isTerminatedOnBye()) {
+        dialog.delete();
+      }
+    }
+  }
+  if (TransactionState.COMPLETED != this.getState()) {
+    raiseErrorEvent(SIPTransactionErrorEvent.TIMEOUT_ERROR);
+    if (this.getOriginalRequest().getMethod().equalsIgnoreCase(Request.CANCEL)) {
+      SIPClientTransaction inviteTx=(SIPClientTransaction)this.getOriginalRequest().getInviteTransaction();
+      if (inviteTx != null && ((inviteTx.getState() == TransactionState.CALLING || inviteTx.getState() == TransactionState.PROCEEDING)) && inviteTx.getDialog() != null) {
+        inviteTx.setState(TransactionState.TERMINATED);
+      }
+    }
+  }
+ else {
+    this.setState(TransactionState.TERMINATED);
+  }
+}

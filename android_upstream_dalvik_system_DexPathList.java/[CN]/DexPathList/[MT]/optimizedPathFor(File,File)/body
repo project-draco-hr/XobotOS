@@ -1,0 +1,17 @@
+{
+  String fileName=path.getName();
+  if (!fileName.endsWith(DEX_SUFFIX)) {
+    int lastDot=fileName.lastIndexOf(".");
+    if (lastDot < 0) {
+      fileName+=DEX_SUFFIX;
+    }
+ else {
+      StringBuilder sb=new StringBuilder(lastDot + 4);
+      sb.append(fileName,0,lastDot);
+      sb.append(DEX_SUFFIX);
+      fileName=sb.toString();
+    }
+  }
+  File result=new File(optimizedDirectory,fileName);
+  return result.getPath();
+}

@@ -1,0 +1,11 @@
+{
+  if (in == null)   return in;
+  int length=in.length();
+  if (length == 0)   return in;
+  char s=in.charAt(0);
+  char e=in.charAt(length - 1);
+  if (s == e && (s == '\'' || s == '"')) {
+    in=in.substring(1,in.length() - 1);
+  }
+  return in;
+}

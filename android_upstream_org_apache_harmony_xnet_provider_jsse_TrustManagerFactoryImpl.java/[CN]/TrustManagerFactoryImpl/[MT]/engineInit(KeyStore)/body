@@ -1,0 +1,20 @@
+{
+  if (ks != null) {
+    keyStore=ks;
+  }
+ else {
+    keyStore=KeyStore.getInstance("AndroidCAStore");
+    try {
+      keyStore.load(null,null);
+    }
+ catch (    IOException e) {
+      throw new KeyStoreException(e);
+    }
+catch (    CertificateException e) {
+      throw new KeyStoreException(e);
+    }
+catch (    NoSuchAlgorithmException e) {
+      throw new KeyStoreException(e);
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  try {
+    InputStream is=context.getResources().openRawResource(com.android.internal.R.drawable.default_wallpaper);
+    if (is != null) {
+      int width=mService.getWidthHint();
+      int height=mService.getHeightHint();
+      try {
+        BitmapFactory.Options options=new BitmapFactory.Options();
+        Bitmap bm=BitmapFactory.decodeStream(is,null,options);
+        return generateBitmap(bm,width,height);
+      }
+ catch (      OutOfMemoryError e) {
+        Log.w(TAG,"Can't decode stream",e);
+      }
+ finally {
+        try {
+          is.close();
+        }
+ catch (        IOException e) {
+        }
+      }
+    }
+  }
+ catch (  RemoteException e) {
+  }
+  return null;
+}

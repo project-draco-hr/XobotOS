@@ -1,0 +1,4 @@
+{
+  int bin=signalStrength.getLevel();
+  updateAllPhoneStateLocked(mPhoneServiceStateRaw,mPhoneSimStateRaw,bin);
+}

@@ -1,0 +1,4 @@
+{
+  enforceNotSealed();
+  setBooleanProperty(PROPERTY_FULL_SCREEN,isFullScreen);
+}

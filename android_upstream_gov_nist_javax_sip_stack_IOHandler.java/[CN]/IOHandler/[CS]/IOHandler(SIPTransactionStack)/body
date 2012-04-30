@@ -1,0 +1,4 @@
+{
+  this.sipStack=(SipStackImpl)sipStack;
+  this.socketTable=new ConcurrentHashMap<String,Socket>();
+}

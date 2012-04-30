@@ -1,0 +1,9 @@
+{
+  ArrayList<V> keyList=map.get(key);
+  if (keyList == null) {
+    keyList=new ArrayList<V>(10);
+    map.put(key,keyList);
+  }
+  keyList.add(value);
+  return keyList;
+}

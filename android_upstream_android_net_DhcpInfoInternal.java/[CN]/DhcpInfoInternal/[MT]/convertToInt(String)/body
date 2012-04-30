@@ -1,0 +1,13 @@
+{
+  if (addr != null) {
+    try {
+      InetAddress inetAddress=NetworkUtils.numericToInetAddress(addr);
+      if (inetAddress instanceof Inet4Address) {
+        return NetworkUtils.inetAddressToInt(inetAddress);
+      }
+    }
+ catch (    IllegalArgumentException e) {
+    }
+  }
+  return 0;
+}

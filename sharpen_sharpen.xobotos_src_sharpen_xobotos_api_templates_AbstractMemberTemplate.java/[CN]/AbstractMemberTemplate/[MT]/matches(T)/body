@@ -1,0 +1,12 @@
+{
+  if (getName() != null) {
+    if (Filter.matchesName(member,getName(),false))     return Match.POSITIVE;
+ else     return Match.NO_MATCH;
+  }
+  if (_filters == null)   return Match.POSITIVE;
+  for (  final Filter filter : _filters) {
+    Match match=filter.matches(member);
+    if (match != Match.NO_MATCH)     return match;
+  }
+  return Match.NO_MATCH;
+}

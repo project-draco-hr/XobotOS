@@ -1,0 +1,20 @@
+{
+  if (getState() == null)   return;
+  if ((TransactionState.COMPLETED == this.getState() || TransactionState.TERMINATED == this.getState()) && transactionResponse.getStatusCode() / 100 == 1) {
+    return;
+  }
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("processing " + transactionResponse.getFirstLine() + "current state = "+ getState());
+    sipStack.getStackLogger().logDebug("dialog = " + dialog);
+  }
+  this.lastResponse=transactionResponse;
+  try {
+    if (isInviteTransaction())     inviteClientTransaction(transactionResponse,sourceChannel,dialog);
+ else     nonInviteClientTransaction(transactionResponse,sourceChannel,dialog);
+  }
+ catch (  IOException ex) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logException(ex);
+    this.setState(TransactionState.TERMINATED);
+    raiseErrorEvent(SIPTransactionErrorEvent.TRANSPORT_ERROR);
+  }
+}

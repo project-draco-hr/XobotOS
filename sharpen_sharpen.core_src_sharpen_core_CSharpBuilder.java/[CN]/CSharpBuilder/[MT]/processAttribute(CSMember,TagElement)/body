@@ -1,0 +1,5 @@
+{
+  String attrType=mappedTypeName(JavadocUtility.singleTextFragmentFrom(element));
+  CSAttribute attribute=new CSAttribute(attrType);
+  member.addAttribute(attribute);
+}

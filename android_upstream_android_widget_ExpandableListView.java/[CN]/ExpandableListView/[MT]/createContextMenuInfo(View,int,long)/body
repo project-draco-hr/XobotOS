@@ -1,0 +1,13 @@
+{
+  if (isHeaderOrFooterPosition(flatListPosition)) {
+    return new AdapterContextMenuInfo(view,flatListPosition,id);
+  }
+  final int adjustedPosition=getFlatPositionForConnector(flatListPosition);
+  PositionMetadata pm=mConnector.getUnflattenedPos(adjustedPosition);
+  ExpandableListPosition pos=pm.position;
+  pm.recycle();
+  id=getChildOrGroupId(pos);
+  long packedPosition=pos.getPackedPosition();
+  pos.recycle();
+  return new ExpandableListContextMenuInfo(view,packedPosition,id);
+}

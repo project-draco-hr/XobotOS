@@ -1,0 +1,6 @@
+{
+  if (contentLength < 0)   throw new InvalidArgumentException("bad contentLength");
+  ContentLength c=new ContentLength();
+  c.setContentLength(contentLength);
+  return c;
+}

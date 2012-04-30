@@ -1,0 +1,15 @@
+{
+  try {
+    mDispatchingUnhandledKey=true;
+    View decor=getWindow().getDecorView();
+    if (decor != null) {
+      return decor.dispatchKeyEvent(event);
+    }
+ else {
+      return false;
+    }
+  }
+  finally {
+    mDispatchingUnhandledKey=false;
+  }
+}

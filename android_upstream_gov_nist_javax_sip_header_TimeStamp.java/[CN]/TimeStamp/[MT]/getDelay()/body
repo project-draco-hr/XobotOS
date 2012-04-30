@@ -1,0 +1,3 @@
+{
+  return delayFloat == -1 ? Float.valueOf(delay).floatValue() : delayFloat;
+}

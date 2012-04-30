@@ -1,0 +1,4 @@
+{
+  if (null == expression)   return;
+  expression.accept(this);
+}

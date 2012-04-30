@@ -1,0 +1,6 @@
+{
+  if (eventType == null)   throw new NullPointerException("null eventType");
+  Event event=new Event();
+  event.setEventType(eventType);
+  return event;
+}

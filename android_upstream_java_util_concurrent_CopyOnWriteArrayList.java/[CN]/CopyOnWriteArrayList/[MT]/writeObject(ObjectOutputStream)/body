@@ -1,0 +1,8 @@
+{
+  Object[] snapshot=elements;
+  out.defaultWriteObject();
+  out.writeInt(snapshot.length);
+  for (  Object o : snapshot) {
+    out.writeObject(o);
+  }
+}

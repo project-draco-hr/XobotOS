@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(CONTENT_QUERY_SAMPLE,uri,projection,selection,sortorder,time,blockingPackage,samplePercent);
+}

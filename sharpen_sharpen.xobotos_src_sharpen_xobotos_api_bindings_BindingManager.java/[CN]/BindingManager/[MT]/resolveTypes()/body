@@ -1,0 +1,22 @@
+{
+  boolean ok=true;
+  for (  Visitor visitor : _compilationUnits.values()) {
+    if (!visitor.resolveTypes()) {
+      Sharpen.Log(Level.SEVERE,"Failed to resolve native type '%s'",visitor.getName());
+      ok=false;
+    }
+  }
+  for (  Visitor visitor : _compilationUnits.values()) {
+    if (!visitor.resolveMethods()) {
+      Sharpen.Log(Level.SEVERE,"Failed to resolve native type '%s'",visitor.getName());
+      ok=false;
+    }
+  }
+  for (  Visitor visitor : _compilationUnits.values()) {
+    if (!visitor.emitHelpers()) {
+      Sharpen.Log(Level.SEVERE,"Failed to resolve native type '%s'",visitor.getName());
+      ok=false;
+    }
+  }
+  return ok;
+}

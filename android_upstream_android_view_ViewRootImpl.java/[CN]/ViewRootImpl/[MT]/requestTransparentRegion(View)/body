@@ -1,0 +1,9 @@
+{
+  checkThread();
+  if (mView == child) {
+    mView.mPrivateFlags|=View.REQUEST_TRANSPARENT_REGIONS;
+    mWindowAttributesChanged=true;
+    mWindowAttributesChangesFlag=0;
+    requestLayout();
+  }
+}

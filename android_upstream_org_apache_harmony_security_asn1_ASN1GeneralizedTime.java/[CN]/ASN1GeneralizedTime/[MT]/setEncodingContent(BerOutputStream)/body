@@ -1,0 +1,15 @@
+{
+  SimpleDateFormat sdf=new SimpleDateFormat(GEN_PATTERN);
+  sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+  String temp=sdf.format(out.content);
+  int nullId;
+  int currLength;
+  while (((nullId=temp.lastIndexOf('0',currLength=temp.length() - 1)) != -1) & (nullId == currLength)) {
+    temp=temp.substring(0,nullId);
+  }
+  if (temp.charAt(currLength) == '.') {
+    temp=temp.substring(0,currLength);
+  }
+  out.content=(temp + "Z").getBytes(Charsets.UTF_8);
+  out.length=((byte[])out.content).length;
+}

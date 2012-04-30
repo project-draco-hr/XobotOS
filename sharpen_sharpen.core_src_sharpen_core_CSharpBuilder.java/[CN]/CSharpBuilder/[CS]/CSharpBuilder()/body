@@ -1,0 +1,10 @@
+{
+  _configuration=my(Configuration.class);
+  _pair=my(CompilationUnitPair.class);
+  _ast=my(CompilationUnit.class);
+  _resolver=my(ASTResolver.class);
+  _compilationUnit=my(CSCompilationUnit.class);
+  _compilationUnit.addUsing(new CSUsing("Sharpen"));
+  _objectType=my(IBindingManager.class).getObjectType();
+  _classType=my(IBindingManager.class).getClassType();
+}

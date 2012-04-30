@@ -1,0 +1,10 @@
+{
+  try {
+    Response response=mMessageFactory.createResponse(Response.REQUEST_TERMINATED,inviteRequest);
+    if (DEBUG)     Log.d(TAG,"send response: " + response);
+    inviteTransaction.sendResponse(response);
+  }
+ catch (  ParseException e) {
+    throw new SipException("sendInviteRequestTerminated()",e);
+  }
+}

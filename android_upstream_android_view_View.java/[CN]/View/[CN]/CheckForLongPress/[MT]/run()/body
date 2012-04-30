@@ -1,0 +1,7 @@
+{
+  if (isPressed() && (mParent != null) && mOriginalWindowAttachCount == mWindowAttachCount) {
+    if (performLongClick()) {
+      mHasPerformedLongPress=true;
+    }
+  }
+}

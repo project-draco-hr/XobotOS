@@ -1,0 +1,7 @@
+{
+  if (position == limit) {
+    throw new BufferOverflowException();
+  }
+  byteBuffer.putLong(position++ * SizeOf.LONG,c);
+  return this;
+}

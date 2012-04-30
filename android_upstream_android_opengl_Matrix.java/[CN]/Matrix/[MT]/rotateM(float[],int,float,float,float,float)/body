@@ -1,0 +1,7 @@
+{
+synchronized (sTemp) {
+    setRotateM(sTemp,0,a,x,y,z);
+    multiplyMM(sTemp,16,m,mOffset,sTemp,0);
+    System.arraycopy(sTemp,16,m,mOffset,16);
+  }
+}

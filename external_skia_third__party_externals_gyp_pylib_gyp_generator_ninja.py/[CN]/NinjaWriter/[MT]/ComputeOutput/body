@@ -1,0 +1,15 @@
+def ComputeOutput(self, spec):
+    'Compute the path for the final output of the spec.'
+    filename = self.ComputeOutputFileName(spec)
+    if ('product_dir' in spec):
+        path = os.path.join(spec['product_dir'], filename)
+        return self.ExpandSpecial(path)
+    if (spec['type'] in ('executable', 'loadable_module')):
+        return filename
+    elif (spec['type'] == 'shared_library'):
+        libdir = 'lib'
+        if (self.toolset != 'target'):
+            libdir = ('lib/%s' % self.toolset)
+        return os.path.join(libdir, filename)
+    else:
+        return self.GypPathToUniqueOutput(filename, qualified=False)

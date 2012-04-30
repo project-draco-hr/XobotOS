@@ -1,0 +1,3 @@
+{
+  return this.secMechanism + SEMICOLON + SP+ parameters.encode();
+}

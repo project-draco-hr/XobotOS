@@ -1,0 +1,5 @@
+def IsStrCanonicalInt(string):
+    'Returns True if |string| is in its canonical integer form.\n\n  The canonical form is such that str(int(string)) == string.\n  '
+    if ((not isinstance(string, str)) or (not canonical_int_re.match(string))):
+        return False
+    return True

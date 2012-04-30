@@ -1,0 +1,5 @@
+{
+  Integer ch=(Integer)theEntities.get(name);
+  if (ch == null)   return 0;
+  return ch.intValue();
+}

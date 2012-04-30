@@ -1,0 +1,19 @@
+{
+  IContentProvider provider=acquireProvider(url);
+  if (provider == null) {
+    throw new IllegalArgumentException("Unknown URL " + url);
+  }
+  try {
+    long startTime=SystemClock.uptimeMillis();
+    Uri createdRow=provider.insert(url,values);
+    long durationMillis=SystemClock.uptimeMillis() - startTime;
+    maybeLogUpdateToEventLog(durationMillis,url,"insert",null);
+    return createdRow;
+  }
+ catch (  RemoteException e) {
+    return null;
+  }
+ finally {
+    releaseProvider(provider);
+  }
+}

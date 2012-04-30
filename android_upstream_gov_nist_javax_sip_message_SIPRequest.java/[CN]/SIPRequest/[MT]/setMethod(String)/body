@@ -1,0 +1,15 @@
+{
+  if (method == null)   throw new IllegalArgumentException("null method");
+  if (this.requestLine == null) {
+    this.requestLine=new RequestLine();
+  }
+  String meth=getCannonicalName(method);
+  this.requestLine.setMethod(meth);
+  if (this.cSeqHeader != null) {
+    try {
+      this.cSeqHeader.setMethod(meth);
+    }
+ catch (    ParseException e) {
+    }
+  }
+}

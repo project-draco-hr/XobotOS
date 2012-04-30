@@ -1,0 +1,23 @@
+{
+  if (bundle == null) {
+    throw new NullPointerException();
+  }
+  String bundleName=toBundleName(baseName,locale);
+  String suffix=format;
+  if (format.equals(JAVACLASS)) {
+    suffix="class";
+  }
+  if (format.equals(JAVAPROPERTIES)) {
+    suffix="properties";
+  }
+  String urlname=toResourceName(bundleName,suffix);
+  URL url=loader.getResource(urlname);
+  if (url != null) {
+    String fileName=url.getFile();
+    long lastModified=new File(fileName).lastModified();
+    if (lastModified > loadTime) {
+      return true;
+    }
+  }
+  return false;
+}

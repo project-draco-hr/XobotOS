@@ -1,0 +1,39 @@
+{
+  if (debug)   dbg_enter("AlertInfoParser.parse");
+  AlertInfoList list=new AlertInfoList();
+  try {
+    headerName(TokenTypes.ALERT_INFO);
+    while (lexer.lookAhead(0) != '\n') {
+      AlertInfo alertInfo=new AlertInfo();
+      alertInfo.setHeaderName(SIPHeaderNames.ALERT_INFO);
+      URLParser urlParser;
+      GenericURI uri;
+      do {
+        this.lexer.SPorHT();
+        if (this.lexer.lookAhead(0) == '<') {
+          this.lexer.match('<');
+          urlParser=new URLParser((Lexer)this.lexer);
+          uri=urlParser.uriReference(true);
+          alertInfo.setAlertInfo(uri);
+          this.lexer.match('>');
+        }
+ else {
+          String alertInfoStr=this.lexer.byteStringNoSemicolon();
+          alertInfo.setAlertInfo(alertInfoStr);
+        }
+        this.lexer.SPorHT();
+        super.parse(alertInfo);
+        list.add(alertInfo);
+        if (lexer.lookAhead(0) == ',') {
+          this.lexer.match(',');
+        }
+ else         break;
+      }
+ while (true);
+    }
+    return list;
+  }
+  finally {
+    if (debug)     dbg_leave("AlertInfoParser.parse");
+  }
+}

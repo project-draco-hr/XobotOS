@@ -1,0 +1,9 @@
+{
+  captureExternalLocalVariables();
+  setUpAnonymousType();
+  setUpConstructor();
+  processAnonymousBody();
+  flushFieldInitializers();
+  int capturedVariableCount=flushCapturedVariables();
+  flushInstanceInitializers(_type,capturedVariableCount);
+}

@@ -1,0 +1,4 @@
+{
+  IntegralToString.appendLong(this,l);
+  return this;
+}

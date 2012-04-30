@@ -1,0 +1,12 @@
+{
+  checkOpen();
+  ensureBound();
+  if (pack == null) {
+    throw new NullPointerException();
+  }
+  if (pendingConnectException != null) {
+    throw new SocketException("Pending connect failure",pendingConnectException);
+  }
+  pack.setLength(pack.getCapacity());
+  impl.receive(pack);
+}

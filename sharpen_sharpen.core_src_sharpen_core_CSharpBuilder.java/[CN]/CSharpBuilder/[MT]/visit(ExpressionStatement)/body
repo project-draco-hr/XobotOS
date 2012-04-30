@@ -1,0 +1,7 @@
+{
+  if (isRemovedMethodInvocation(node.getExpression())) {
+    return false;
+  }
+  addStatement(new CSExpressionStatement(node.getStartPosition(),mapExpression(node.getExpression())));
+  return false;
+}

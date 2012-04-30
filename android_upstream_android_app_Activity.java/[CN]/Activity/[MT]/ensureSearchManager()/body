@@ -1,0 +1,6 @@
+{
+  if (mSearchManager != null) {
+    return;
+  }
+  mSearchManager=new SearchManager(this,null);
+}

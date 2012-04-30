@@ -1,0 +1,35 @@
+def __init__(self, points):
+    n = len(points)
+    max_x = Min
+    min_x = Max
+    Sx = 0.0
+    Sy = 0.0
+    Sxx = 0.0
+    Sxy = 0.0
+    Syy = 0.0
+    for point in points:
+        x = point[0]
+        y = point[1]
+        max_x = max(max_x, x)
+        min_x = min(min_x, x)
+        Sx += x
+        Sy += y
+        Sxx += (x * x)
+        Sxy += (x * y)
+        Syy += (y * y)
+    B = (((n * Sxy) - (Sx * Sy)) / ((n * Sxx) - (Sx * Sx)))
+    a = ((1.0 / n) * (Sy - (B * Sx)))
+    se2 = 0
+    sB2 = 0
+    sa2 = 0
+    if (n >= 3):
+        se2 = ((1.0 / (n * (n - 2))) * (((n * Syy) - (Sy * Sy)) - ((B * B) * ((n * Sxx) - (Sx * Sx)))))
+        sB2 = ((n * se2) / ((n * Sxx) - (Sx * Sx)))
+        sa2 = ((sB2 * (1.0 / n)) * Sxx)
+    self.slope = B
+    self.intercept = a
+    self.serror = math.sqrt(max(0, se2))
+    self.serror_slope = math.sqrt(max(0, sB2))
+    self.serror_intercept = math.sqrt(max(0, sa2))
+    self.max_x = max_x
+    self.min_x = min_x

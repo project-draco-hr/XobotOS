@@ -1,0 +1,7 @@
+{
+  TagElement eventTag=javadocTagFor(node,annotation);
+  if (null != eventTag)   return eventTag;
+  MethodDeclaration originalMethod=findOriginalMethodDeclaration(node);
+  if (null == originalMethod)   return null;
+  return javadocTagFor(originalMethod,annotation);
+}

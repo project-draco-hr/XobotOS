@@ -1,0 +1,15 @@
+{
+  if (prog == null) {
+    throw new NullPointerException();
+  }
+ else   if (prog.length() == 0) {
+    throw new IllegalArgumentException();
+  }
+  StringTokenizer tokenizer=new StringTokenizer(prog);
+  int length=tokenizer.countTokens();
+  String[] progArray=new String[length];
+  for (int i=0; i < length; i++) {
+    progArray[i]=tokenizer.nextToken();
+  }
+  return exec(progArray,envp,directory);
+}

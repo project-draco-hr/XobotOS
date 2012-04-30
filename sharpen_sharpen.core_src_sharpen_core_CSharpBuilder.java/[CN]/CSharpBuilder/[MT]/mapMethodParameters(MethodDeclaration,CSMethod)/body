@@ -1,0 +1,18 @@
+{
+  final IMethodBinding methodBinding=node.resolveBinding();
+  final IMethodBinding baseMethod=my(IBindingManager.class).getBaseMethod(methodBinding);
+  final IMethodBinding baseOrThis=baseMethod != null ? baseMethod : methodBinding;
+  final ITypeBinding[] baseTypes=baseMethod != null ? baseMethod.getParameterTypes() : null;
+  int first=0;
+  final List<SingleVariableDeclaration> params=node.parameters();
+  ITypeInfo typeInfo=my(IBindingManager.class).getTypeInfo(baseOrThis.getDeclaringClass());
+  if ((typeInfo != null) && typeInfo.isEventInterface()) {
+    IVariableBinding vb=params.get(0).resolveBinding();
+    method.addParameter(createVariableDeclaration(vb,OBJECT_TYPE_REFERENCE,null));
+    first=1;
+  }
+  for (int i=first; i < params.size(); i++) {
+    ITypeBinding baseType=!node.isVarargs() && (baseMethod != null) ? baseTypes[i] : null;
+    mapMethodParameter(node,baseType,params.get(i),method);
+  }
+}

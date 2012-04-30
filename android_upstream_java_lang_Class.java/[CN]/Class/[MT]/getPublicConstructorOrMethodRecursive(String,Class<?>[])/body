@@ -1,0 +1,17 @@
+{
+  for (Class<?> c=this; c != null; c=c.getSuperclass()) {
+    Member result=Class.getDeclaredConstructorOrMethod(c,name,parameterTypes);
+    if (result != null && (result.getModifiers() & Modifier.PUBLIC) != 0) {
+      return result;
+    }
+  }
+  for (Class<?> c=this; c != null; c=c.getSuperclass()) {
+    for (    Class<?> ifc : c.getInterfaces()) {
+      Member result=ifc.getPublicConstructorOrMethodRecursive(name,parameterTypes);
+      if (result != null && (result.getModifiers() & Modifier.PUBLIC) != 0) {
+        return result;
+      }
+    }
+  }
+  return null;
+}

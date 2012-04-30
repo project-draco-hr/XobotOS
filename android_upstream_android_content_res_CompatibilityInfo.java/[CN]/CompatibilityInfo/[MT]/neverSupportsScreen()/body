@@ -1,0 +1,3 @@
+{
+  return (mCompatibilityFlags & ALWAYS_NEEDS_COMPAT) != 0;
+}

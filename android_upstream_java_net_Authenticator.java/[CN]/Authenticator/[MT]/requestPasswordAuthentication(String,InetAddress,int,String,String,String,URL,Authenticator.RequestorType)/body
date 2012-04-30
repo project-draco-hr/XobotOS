@@ -1,0 +1,14 @@
+{
+  if (thisAuthenticator == null) {
+    return null;
+  }
+  thisAuthenticator.host=rHost;
+  thisAuthenticator.addr=rAddr;
+  thisAuthenticator.port=rPort;
+  thisAuthenticator.protocol=rProtocol;
+  thisAuthenticator.prompt=rPrompt;
+  thisAuthenticator.scheme=rScheme;
+  thisAuthenticator.url=rURL;
+  thisAuthenticator.rt=reqType;
+  return thisAuthenticator.getPasswordAuthentication();
+}

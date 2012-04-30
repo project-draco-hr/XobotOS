@@ -1,0 +1,16 @@
+{
+  ArrayList<CSStatement> toDelete=new ArrayList<CSStatement>();
+  for (  CSStatement st : method.body().statements()) {
+    if (st instanceof CSExpressionStatement) {
+      CSExpressionStatement es=(CSExpressionStatement)st;
+      if (es.expression() instanceof CSMethodInvocationExpression) {
+        CSMethodInvocationExpression mie=(CSMethodInvocationExpression)es.expression();
+        if (mie.expression() instanceof CSMemberReferenceExpression) {
+          CSMemberReferenceExpression mr=(CSMemberReferenceExpression)mie.expression();
+          if ((mr.expression() instanceof CSBaseExpression) && (mr.name().equals("SetUp") || mr.name().equals("TearDown")))           toDelete.add(st);
+        }
+      }
+    }
+  }
+  for (  CSStatement st : toDelete)   method.body().removeStatement(st);
+}

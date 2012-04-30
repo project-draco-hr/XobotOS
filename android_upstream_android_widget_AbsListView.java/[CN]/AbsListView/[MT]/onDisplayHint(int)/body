@@ -1,0 +1,16 @@
+{
+  super.onDisplayHint(hint);
+switch (hint) {
+case INVISIBLE:
+    if (mPopup != null && mPopup.isShowing()) {
+      dismissPopup();
+    }
+  break;
+case VISIBLE:
+if (mFiltered && mPopup != null && !mPopup.isShowing()) {
+  showPopup();
+}
+break;
+}
+mPopupHidden=hint == INVISIBLE;
+}

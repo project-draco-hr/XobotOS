@@ -1,0 +1,5 @@
+{
+  Accept retval=(Accept)super.clone();
+  if (this.mediaRange != null)   retval.mediaRange=(MediaRange)this.mediaRange.clone();
+  return retval;
+}

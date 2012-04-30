@@ -1,0 +1,24 @@
+{
+  final List fragments=element.fragments();
+  if (fragments.isEmpty()) {
+    return invalidTagWithCRef(element,tagName,element);
+  }
+  final ASTNode linkTarget=(ASTNode)fragments.get(0);
+  String cref=mapCRefTarget(linkTarget);
+  if (null == cref) {
+    return invalidTagWithCRef(linkTarget,tagName,element);
+  }
+  CSDocTagNode node=newTagWithCRef(tagName,cref);
+  if (fragments.size() > 1) {
+    if (isLinkWithSimpleLabel(fragments,linkTarget)) {
+      node.addTextFragment(unqualifiedName(cref));
+    }
+ else {
+      collectFragments(node,fragments,1);
+    }
+  }
+ else {
+    node.addTextFragment(cref.replace("{","&lt;").replace("}","&gt;"));
+  }
+  return node;
+}

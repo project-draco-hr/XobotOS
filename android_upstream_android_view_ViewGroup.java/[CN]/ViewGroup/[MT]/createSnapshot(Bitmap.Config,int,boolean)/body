@@ -1,0 +1,21 @@
+{
+  int count=mChildrenCount;
+  int[] visibilities=null;
+  if (skipChildren) {
+    visibilities=new int[count];
+    for (int i=0; i < count; i++) {
+      View child=getChildAt(i);
+      visibilities[i]=child.getVisibility();
+      if (visibilities[i] == View.VISIBLE) {
+        child.setVisibility(INVISIBLE);
+      }
+    }
+  }
+  Bitmap b=super.createSnapshot(quality,backgroundColor,skipChildren);
+  if (skipChildren) {
+    for (int i=0; i < count; i++) {
+      getChildAt(i).setVisibility(visibilities[i]);
+    }
+  }
+  return b;
+}

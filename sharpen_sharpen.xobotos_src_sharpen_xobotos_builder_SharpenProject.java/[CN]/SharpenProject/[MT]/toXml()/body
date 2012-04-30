@@ -1,0 +1,4 @@
+{
+  XStream stream=createXStream();
+  return stream.toXML(new Remembrance(this));
+}

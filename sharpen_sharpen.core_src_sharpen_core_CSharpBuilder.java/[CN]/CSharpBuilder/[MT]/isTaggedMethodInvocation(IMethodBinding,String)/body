@@ -1,0 +1,7 @@
+{
+  final MethodDeclaration method=declaringNode(originalMethodBinding(binding));
+  if (null == method) {
+    return false;
+  }
+  return containsJavadoc(method,tag);
+}

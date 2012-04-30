@@ -1,0 +1,6 @@
+{
+  if (sContext != null) {
+    return;
+  }
+  sContext=context.getApplicationContext();
+}

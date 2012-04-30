@@ -1,0 +1,11 @@
+{
+  boolean hasStableIds=false;
+  try {
+    hasStableIds=mFactory.hasStableIds();
+  }
+ catch (  Exception ex) {
+    Thread t=Thread.currentThread();
+    Thread.getDefaultUncaughtExceptionHandler().uncaughtException(t,ex);
+  }
+  return hasStableIds;
+}

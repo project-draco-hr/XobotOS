@@ -1,0 +1,10 @@
+{
+switch (node.getNodeType()) {
+case ASTNode.TAG_ELEMENT:
+    return mapTagElement((TagElement)node);
+case ASTNode.TEXT_ELEMENT:
+  return mapTextElement((TextElement)node);
+}
+warning(node,"Documentation node not supported: " + node.getClass() + ": "+ node);
+return new CSDocTextNode(node.toString());
+}

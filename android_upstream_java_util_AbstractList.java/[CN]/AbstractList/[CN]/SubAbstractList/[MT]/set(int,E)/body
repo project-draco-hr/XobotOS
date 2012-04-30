@@ -1,0 +1,9 @@
+{
+  if (modCount == fullList.modCount) {
+    if (location >= 0 && location < size) {
+      return fullList.set(location + offset,object);
+    }
+    throw new IndexOutOfBoundsException();
+  }
+  throw new ConcurrentModificationException();
+}

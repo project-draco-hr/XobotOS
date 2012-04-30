@@ -1,0 +1,11 @@
+{
+  List<AudioDecoder> decoders=DecoderCapabilities.getAudioDecoders();
+  int count=decoders.size();
+  for (int i=0; i < count; i++) {
+    AudioDecoder decoder=decoders.get(i);
+    if (decoder == AudioDecoder.AUDIO_DECODER_WMA) {
+      return true;
+    }
+  }
+  return false;
+}

@@ -1,0 +1,7 @@
+{
+  ManagedVariable ptr=context.createVariable("ptr",new CSTypeReference("System.IntPtr"),expr);
+  context.createRetval(new CSMethodInvocationExpression(NATIVE_TO_MANAGED.expr(),ptr.getReference()));
+  CSExpression freeInvoc=new CSMethodInvocationExpression(FREE_NATIVE_PTR.expr(),ptr.getReference());
+  context.addStatement(new CSExpressionStatement(-1,freeInvoc));
+  return null;
+}

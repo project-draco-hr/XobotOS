@@ -1,0 +1,7 @@
+self
+program
+interpreter
+arguments
+chdir
+stdin
+universal_newlines

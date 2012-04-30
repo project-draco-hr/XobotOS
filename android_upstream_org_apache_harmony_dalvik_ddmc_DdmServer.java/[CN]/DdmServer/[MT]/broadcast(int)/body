@@ -1,0 +1,19 @@
+{
+synchronized (mHandlerMap) {
+    Collection values=mHandlerMap.values();
+    Iterator iter=values.iterator();
+    while (iter.hasNext()) {
+      ChunkHandler handler=(ChunkHandler)iter.next();
+switch (event) {
+case CONNECTED:
+        handler.connected();
+      break;
+case DISCONNECTED:
+    handler.disconnected();
+  break;
+default :
+throw new UnsupportedOperationException();
+}
+}
+}
+}

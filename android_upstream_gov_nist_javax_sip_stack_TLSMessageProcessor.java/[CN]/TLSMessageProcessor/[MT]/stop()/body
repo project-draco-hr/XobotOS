@@ -1,0 +1,20 @@
+{
+  if (!isRunning)   return;
+  isRunning=false;
+  try {
+    sock.close();
+  }
+ catch (  IOException e) {
+    e.printStackTrace();
+  }
+  Collection en=tlsMessageChannels.values();
+  for (Iterator it=en.iterator(); it.hasNext(); ) {
+    TLSMessageChannel next=(TLSMessageChannel)it.next();
+    next.close();
+  }
+  for (Iterator incomingMCIterator=incomingTlsMessageChannels.iterator(); incomingMCIterator.hasNext(); ) {
+    TLSMessageChannel next=(TLSMessageChannel)incomingMCIterator.next();
+    next.close();
+  }
+  this.notify();
+}

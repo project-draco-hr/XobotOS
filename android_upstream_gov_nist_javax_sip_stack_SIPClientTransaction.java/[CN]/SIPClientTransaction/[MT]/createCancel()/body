@@ -1,0 +1,11 @@
+{
+  SIPRequest originalRequest=this.getOriginalRequest();
+  if (originalRequest == null)   throw new SipException("Bad state " + getState());
+  if (!originalRequest.getMethod().equals(Request.INVITE))   throw new SipException("Only INIVTE may be cancelled");
+  if (originalRequest.getMethod().equalsIgnoreCase(Request.ACK))   throw new SipException("Cannot Cancel ACK!");
+ else {
+    SIPRequest cancelRequest=originalRequest.createCancelRequest();
+    cancelRequest.setInviteTransaction(this);
+    return cancelRequest;
+  }
+}

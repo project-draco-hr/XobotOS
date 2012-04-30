@@ -1,0 +1,6 @@
+{
+  this.mdName=mdName;
+  if (this.mdName == null) {
+    throw new NullPointerException("mdName == null");
+  }
+}

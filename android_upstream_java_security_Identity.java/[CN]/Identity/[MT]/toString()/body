@@ -1,0 +1,7 @@
+{
+  String s=(this.name == null ? "" : this.name);
+  if (scope != null) {
+    s+=" [" + scope.getName() + "]";
+  }
+  return s;
+}

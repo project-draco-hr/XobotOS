@@ -1,0 +1,5 @@
+{
+  hasPattern=true;
+  pattern_=value;
+  return this;
+}

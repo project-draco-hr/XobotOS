@@ -1,0 +1,10 @@
+{
+  Thread.currentThread().popInterruptAction$(interruptAndCloseRunnable);
+  if (interrupted) {
+    interrupted=false;
+    throw new ClosedByInterruptException();
+  }
+  if (!success && closed) {
+    throw new AsynchronousCloseException();
+  }
+}

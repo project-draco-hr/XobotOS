@@ -1,0 +1,55 @@
+{
+  if (Debug.parserDebug) {
+    Debug.println("match " + tok);
+  }
+  if (tok > START && tok < END) {
+    if (tok == ID) {
+      if (!startsId())       throw new ParseException(buffer + "\nID expected",ptr);
+      String id=getNextId();
+      this.currentMatch=new Token();
+      this.currentMatch.tokenValue=id;
+      this.currentMatch.tokenType=ID;
+    }
+ else     if (tok == SAFE) {
+      if (!startsSafeToken())       throw new ParseException(buffer + "\nID expected",ptr);
+      String id=ttokenSafe();
+      this.currentMatch=new Token();
+      this.currentMatch.tokenValue=id;
+      this.currentMatch.tokenType=SAFE;
+    }
+ else {
+      String nexttok=getNextId();
+      Integer cur=(Integer)currentLexer.get(nexttok.toUpperCase());
+      if (cur == null || cur.intValue() != tok)       throw new ParseException(buffer + "\nUnexpected Token : " + nexttok,ptr);
+      this.currentMatch=new Token();
+      this.currentMatch.tokenValue=nexttok;
+      this.currentMatch.tokenType=tok;
+    }
+  }
+ else   if (tok > END) {
+    char next=lookAhead(0);
+    if (tok == DIGIT) {
+      if (!isDigit(next))       throw new ParseException(buffer + "\nExpecting DIGIT",ptr);
+      this.currentMatch=new Token();
+      this.currentMatch.tokenValue=String.valueOf(next);
+      this.currentMatch.tokenType=tok;
+      consume(1);
+    }
+ else     if (tok == ALPHA) {
+      if (!isAlpha(next))       throw new ParseException(buffer + "\nExpecting ALPHA",ptr);
+      this.currentMatch=new Token();
+      this.currentMatch.tokenValue=String.valueOf(next);
+      this.currentMatch.tokenType=tok;
+      consume(1);
+    }
+  }
+ else {
+    char ch=(char)tok;
+    char next=lookAhead(0);
+    if (next == ch) {
+      consume(1);
+    }
+ else     throw new ParseException(buffer + "\nExpecting  >>>" + ch+ "<<< got >>>"+ next+ "<<<",ptr);
+  }
+  return this.currentMatch;
+}

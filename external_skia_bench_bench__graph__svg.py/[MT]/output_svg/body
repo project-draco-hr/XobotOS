@@ -1,0 +1,113 @@
+def output_svg(lines, regressions, requested_width, requested_height):
+    'Outputs an svg view of the data.'
+    ((global_min_x, _), (global_max_x, global_max_y)) = bounds(lines)
+    (max_up_slope, min_down_slope) = bounds_slope(regressions)
+    global_min_y = 0
+    x = global_min_x
+    y = global_min_y
+    w = (global_max_x - global_min_x)
+    h = (global_max_y - global_min_y)
+    font_size = 16
+    line_width = 2
+    (pic_width, pic_height) = compute_size(requested_width, requested_height, w, h)
+
+    def cw(w1):
+        'Converts a revision difference to display width.'
+        return ((pic_width / float(w)) * w1)
+
+    def cx(x):
+        'Converts a revision to a horizontal display position.'
+        return cw((x - global_min_x))
+
+    def ch(h1):
+        'Converts a time difference to a display height.'
+        return ((- (pic_height / float(h))) * h1)
+
+    def cy(y):
+        'Converts a time to a vertical display position.'
+        return (pic_height + ch((y - global_min_y)))
+    print '<svg',
+    print ('width=%s' % qa((str(pic_width) + 'px')))
+    print ('height=%s' % qa((str(pic_height) + 'px')))
+    print ('viewBox="0 0 %s %s"' % (str(pic_width), str(pic_height)))
+    print ('onclick=%s' % qa('var event = arguments[0] || window.event; if (event.shiftKey) { highlightRevision(null); } if (event.ctrlKey) { highlight(null); } return false;'))
+    print 'xmlns="http://www.w3.org/2000/svg"'
+    print 'xmlns:xlink="http://www.w3.org/1999/xlink">'
+    print '\n<defs>\n    <marker id="circleMark"\n      viewBox="0 0 2 2" refX="1" refY="1"\n      markerUnits="strokeWidth"\n      markerWidth="2" markerHeight="2"\n      orient="0">\n      <circle cx="1" cy="1" r="1"/>\n    </marker>\n</defs>'
+    print '\n<script type="text/javascript">//<![CDATA[\n    var previousRevision;\n    var previousRevisionFill;\n    var previousRevisionStroke\n    function highlightRevision(id) {\n        if (previousRevision == id) return;\n\n        document.getElementById(\'revision\').firstChild.nodeValue = \'r\' + id;\n        document.getElementById(\'rev_link\').setAttribute(\'xlink:href\',\n            \'http://code.google.com/p/skia/source/detail?r=\' + id);\n        \n        var preRevision = document.getElementById(previousRevision);\n        if (preRevision) {\n            preRevision.setAttributeNS(null,\'fill\', previousRevisionFill);\n            preRevision.setAttributeNS(null,\'stroke\', previousRevisionStroke);\n        }\n        \n        var revision = document.getElementById(id);\n        previousRevision = id;\n        if (revision) {\n            previousRevisionFill = revision.getAttributeNS(null,\'fill\');\n            revision.setAttributeNS(null,\'fill\',\'rgb(100%, 95%, 95%)\');\n            \n            previousRevisionStroke = revision.getAttributeNS(null,\'stroke\');\n            revision.setAttributeNS(null,\'stroke\',\'rgb(100%, 90%, 90%)\');\n        }\n    }\n//]]></script>'
+
+    def print_rect(x, y, w, h, revision):
+        'Outputs a revision rectangle in display space,\n           taking arguments in revision space.'
+        disp_y = cy(y)
+        disp_h = ch(h)
+        if (disp_h < 0):
+            disp_y += disp_h
+            disp_h = (- disp_h)
+        print ('<rect id=%s x=%s y=%s' % (qa(revision), qa(cx(x)), qa(disp_y))),
+        print ('width=%s height=%s' % (qa(cw(w)), qa(disp_h))),
+        print 'fill="white"',
+        print ('stroke="rgb(98%%,98%%,88%%)" stroke-width=%s' % qa(line_width)),
+        print ('onmouseover=%s' % qa((("var event = arguments[0] || window.event; if (event.shiftKey) { highlightRevision('" + str(revision)) + "'); return false; }"))),
+        print ' />'
+    xes = set()
+    for line in lines.itervalues():
+        for point in line:
+            xes.add(point[0])
+    revisions = list(xes)
+    revisions.sort()
+    left = x
+    current_revision = revisions[0]
+    for next_revision in revisions[1:]:
+        width = (((next_revision - current_revision) / 2.0) + (current_revision - left))
+        print_rect(left, y, width, h, current_revision)
+        left += width
+        current_revision = next_revision
+    print_rect(left, y, ((x + w) - left), h, current_revision)
+    print '\n<script type="text/javascript">//<![CDATA[\n    var previous;\n    var previousColor;\n    var previousOpacity;\n    function highlight(id) {\n        if (previous == id) return;\n\n        document.getElementById(\'label\').firstChild.nodeValue = id;\n\n        var preGroup = document.getElementById(previous);\n        if (preGroup) {\n            var preLine = document.getElementById(previous+\'_line\');\n            preLine.setAttributeNS(null,\'stroke\', previousColor);\n            preLine.setAttributeNS(null,\'opacity\', previousOpacity);\n\n            var preSlope = document.getElementById(previous+\'_linear\');\n            if (preSlope) {\n                preSlope.setAttributeNS(null,\'visibility\', \'hidden\');\n            }\n        }\n\n        var group = document.getElementById(id);\n        previous = id;\n        if (group) {\n            group.parentNode.appendChild(group);\n            \n            var line = document.getElementById(id+\'_line\');\n            previousColor = line.getAttributeNS(null,\'stroke\');\n            previousOpacity = line.getAttributeNS(null,\'opacity\');\n            line.setAttributeNS(null,\'stroke\', \'blue\');\n            line.setAttributeNS(null,\'opacity\', \'1\');\n            \n            var slope = document.getElementById(id+\'_linear\');\n            if (slope) {\n                slope.setAttributeNS(null,\'visibility\', \'visible\');\n            }\n        }\n    }\n//]]></script>'
+    for (label, line) in lines.items():
+        print ('<g id=%s>' % qa(label))
+        r = 128
+        g = 128
+        b = 128
+        a = 0.1
+        if (label in regressions):
+            regression = regressions[label]
+            min_slope = regression.find_min_slope()
+            if (min_slope < 0):
+                d = max(0, (min_slope / min_down_slope))
+                g += int((d * 128))
+                a += (d * 0.9)
+            elif (min_slope > 0):
+                d = max(0, (min_slope / max_up_slope))
+                r += int((d * 128))
+                a += (d * 0.9)
+            slope = regression.slope
+            intercept = regression.intercept
+            min_x = regression.min_x
+            max_x = regression.max_x
+            print ('<polyline id=%s' % qa((str(label) + '_linear'))),
+            print 'fill="none" stroke="yellow"',
+            print ('stroke-width=%s' % qa(abs(ch((regression.serror * 2))))),
+            print 'opacity="0.5" pointer-events="none" visibility="hidden"',
+            print 'points="',
+            print ('%s,%s' % (str(cx(min_x)), str(cy(((slope * min_x) + intercept))))),
+            print ('%s,%s' % (str(cx(max_x)), str(cy(((slope * max_x) + intercept))))),
+            print '"/>'
+        print ('<polyline id=%s' % qa((str(label) + '_line'))),
+        print ('onmouseover=%s' % qa((("var event = arguments[0] || window.event; if (event.ctrlKey) { highlight('" + str(label).replace("'", "\\'")) + "'); return false; }"))),
+        print ('fill="none" stroke="rgb(%s,%s,%s)"' % (str(r), str(g), str(b))),
+        print ('stroke-width=%s' % qa(line_width)),
+        print ('opacity=%s' % qa(a)),
+        print 'points="',
+        for point in line:
+            print ('%s,%s' % (str(cx(point[0])), str(cy(point[1])))),
+        print '"/>'
+        print '</g>'
+    print ('<text id="label" x="0" y=%s' % qa(font_size)),
+    print ('font-size=%s> </text>' % qa(font_size))
+    print '<a id="rev_link" xlink:href="" target="_top">'
+    print ('<text id="revision" x="0" y=%s style="' % qa((font_size * 2)))
+    print ('font-size: %s; ' % qe(font_size))
+    print 'stroke: #0000dd; text-decoration: underline; '
+    print '"> </text></a>'
+    print '</svg>'

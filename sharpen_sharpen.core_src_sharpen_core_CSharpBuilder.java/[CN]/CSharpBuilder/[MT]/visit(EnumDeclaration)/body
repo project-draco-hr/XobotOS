@@ -1,0 +1,57 @@
+{
+  if (SharpenAnnotations.hasIgnoreAnnotation(node))   return false;
+  final ITypeBinding typeBinding=node.resolveBinding();
+  final CSTypeContainer current=_currentType != null ? _currentType : _compilationUnit;
+  IExtractedEnumInfo info=my(IBindingManager.class).getExtractedEnumInfo(typeBinding);
+  if (info != null) {
+    processExtractedEnum(node,info);
+    return false;
+  }
+  my(CSharpDriver.class).processEnumDeclaration(this,current,node,new IEnumBuilderDelegate(){
+    public CSEnum create(){
+      return new CSEnum(typeName(node));
+    }
+    public void map(    final CSEnum theEnum){
+      theEnum.visibility(mapVisibility(typeBinding));
+      node.accept(new ASTVisitor(){
+        @Override public boolean visit(        EnumConstantDeclaration node){
+          final String name=identifier(node.getName());
+          CSEnumValue value;
+          if (node.arguments().size() == 0)           value=new CSEnumValue(name);
+ else           if (node.arguments().size() != 1) {
+            addProblem(node,ProblemKind.PARSING_ERROR,"Enum value can not have more than one initializer.");
+            return false;
+          }
+ else {
+            Object arg=node.arguments().get(0);
+            if (!(arg instanceof NumberLiteral)) {
+              addProblem(node,ProblemKind.PARSING_ERROR,"Invalid enum initializer.");
+              return false;
+            }
+            NumberLiteral literal=(NumberLiteral)arg;
+            value=new CSEnumValue(name,mapExpression(literal));
+          }
+          mapJavadoc(node,value);
+          theEnum.addValue(value);
+          return false;
+        }
+        @Override public boolean visit(        MethodDeclaration node){
+          if (node.isConstructor()) {
+            int mods=node.getModifiers();
+            if ((mods == 0) || Modifier.isPrivate(mods))             return false;
+          }
+          addProblem(node,ProblemKind.WARNING,"Enum can contain only fields and a private constructor.");
+          return false;
+        }
+      }
+);
+    }
+    public void document(    CSEnum theEnum){
+      mapJavadoc(node,theEnum);
+    }
+    public void fixup(    CSEnum member){
+    }
+  }
+);
+  return false;
+}

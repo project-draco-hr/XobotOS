@@ -1,0 +1,4 @@
+{
+  if (handling == null)   throw new NullPointerException("JAIN-SIP Exception" + ", ContentDisposition, setHandling(), the handling parameter is null");
+  this.setParameter("handling",handling);
+}

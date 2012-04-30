@@ -1,0 +1,9 @@
+{
+  if (position < 0 || size < 0 || position + size < 0) {
+    throw new IllegalArgumentException();
+  }
+  this.channel=channel;
+  this.position=position;
+  this.size=size;
+  this.shared=shared;
+}

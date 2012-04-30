@@ -1,0 +1,4 @@
+{
+  Object[] snapshot=elements;
+  return indexOf(object,snapshot,from,snapshot.length);
+}

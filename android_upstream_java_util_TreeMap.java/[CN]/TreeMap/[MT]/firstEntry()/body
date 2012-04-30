@@ -1,0 +1,3 @@
+{
+  return immutableCopy(root == null ? null : root.first());
+}

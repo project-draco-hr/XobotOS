@@ -1,0 +1,3 @@
+{
+  return Splitter.split(this,pattern,input.toString(),limit);
+}

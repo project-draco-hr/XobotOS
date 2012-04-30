@@ -1,0 +1,4 @@
+{
+  if (nameTable.containsKey(method))   return (String)nameTable.get(method);
+ else   return method;
+}

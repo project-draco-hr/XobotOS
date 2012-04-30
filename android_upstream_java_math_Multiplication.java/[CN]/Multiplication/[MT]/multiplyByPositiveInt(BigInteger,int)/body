@@ -1,0 +1,5 @@
+{
+  BigInt bi=val.getBigInt().copy();
+  bi.multiplyByPositiveInt(factor);
+  return new BigInteger(bi);
+}

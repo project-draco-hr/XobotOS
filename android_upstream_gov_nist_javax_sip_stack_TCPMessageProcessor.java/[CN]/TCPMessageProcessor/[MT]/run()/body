@@ -1,0 +1,33 @@
+{
+  while (this.isRunning) {
+    try {
+synchronized (this) {
+        while (sipStack.maxConnections != -1 && this.nConnections >= sipStack.maxConnections) {
+          try {
+            this.wait();
+            if (!this.isRunning)             return;
+          }
+ catch (          InterruptedException ex) {
+            break;
+          }
+        }
+        this.nConnections++;
+      }
+      Socket newsock=sock.accept();
+      if (sipStack.isLoggingEnabled()) {
+        getSIPStack().getStackLogger().logDebug("Accepting new connection!");
+      }
+      incomingTcpMessageChannels.add(new TCPMessageChannel(newsock,sipStack,this));
+    }
+ catch (    SocketException ex) {
+      this.isRunning=false;
+    }
+catch (    IOException ex) {
+      if (sipStack.isLoggingEnabled())       getSIPStack().getStackLogger().logException(ex);
+      continue;
+    }
+catch (    Exception ex) {
+      InternalErrorHandler.handleException(ex);
+    }
+  }
+}

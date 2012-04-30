@@ -1,0 +1,29 @@
+{
+  final ITypeBinding[] args=type.getTypeArguments();
+  for (int i=0; i < args.length; i++) {
+    final ITypeBinding arg=args[i];
+    if (!arg.isWildcardType()) {
+      list.add(mappedTypeReference(arg));
+      continue;
+    }
+    final ITypeBinding bound=arg.getBound();
+    if (bound != null) {
+      IMethodBinding boundDecl=bound.getDeclaringMethod();
+      if ((boundDecl != null) && boundDecl.equals(binding)) {
+        list.add(mappedTypeReference(bound));
+        continue;
+      }
+    }
+    final ITypeBinding extended=mapTypeParameterExtendedType(arg);
+    String genericArg="_T" + method.typeParameters().size();
+    CSTypeParameter tp=new CSTypeParameter(genericArg);
+    if (extended != null)     tp.superClass(mappedTypeReference(extended));
+ else     if (bound != null) {
+      list.add(mappedTypeReference(bound));
+      continue;
+    }
+    method.addTypeParameter(tp);
+    _currentWildcardParams.put(arg,genericArg);
+    list.add(new CSTypeReference(genericArg));
+  }
+}

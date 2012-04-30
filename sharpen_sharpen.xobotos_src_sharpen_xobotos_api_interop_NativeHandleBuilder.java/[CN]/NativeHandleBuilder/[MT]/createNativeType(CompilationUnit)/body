@@ -1,0 +1,4 @@
+{
+  unit.addMember(_destructor);
+  return true;
+}

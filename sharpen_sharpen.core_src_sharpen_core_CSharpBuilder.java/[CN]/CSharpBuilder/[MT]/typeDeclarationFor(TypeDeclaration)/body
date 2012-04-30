@@ -1,0 +1,11 @@
+{
+  final String typeName=typeName(node);
+  if (node.isInterface()) {
+    if (!isValidCSInterface(node.resolveBinding()))     addProblem(node,ProblemKind.INTERNAL_ERROR,"Must extract interface");
+    return new CSInterface(processInterfaceName(node));
+  }
+  if (isStruct(node)) {
+    return new CSStruct(typeName);
+  }
+  return new CSClass(typeName,mapClassModifier(node.getModifiers()));
+}

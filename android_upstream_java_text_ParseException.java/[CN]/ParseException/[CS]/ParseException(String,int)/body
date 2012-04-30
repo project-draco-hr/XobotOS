@@ -1,0 +1,4 @@
+{
+  super(detailMessage + (" (at offset " + location + ")"));
+  errorOffset=location;
+}

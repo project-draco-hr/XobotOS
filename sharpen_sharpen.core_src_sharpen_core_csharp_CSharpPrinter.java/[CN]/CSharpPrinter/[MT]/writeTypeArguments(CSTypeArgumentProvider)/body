@@ -1,0 +1,6 @@
+{
+  final List<CSTypeReferenceExpression> typeArgs=node.typeArguments();
+  if (!typeArgs.isEmpty()) {
+    writeGenericParameters(typeArgs);
+  }
+}

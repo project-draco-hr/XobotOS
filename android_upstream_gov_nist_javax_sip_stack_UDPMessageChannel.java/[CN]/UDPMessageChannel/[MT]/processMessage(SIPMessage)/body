@@ -1,0 +1,56 @@
+{
+  if (sipMessage instanceof SIPRequest) {
+    SIPRequest sipRequest=(SIPRequest)sipMessage;
+    if (sipStack.getStackLogger().isLoggingEnabled(ServerLogger.TRACE_MESSAGES)) {
+      this.sipStack.serverLogger.logMessage(sipMessage,this.getPeerHostPort().toString(),this.getHost() + ":" + this.myPort,false,receptionTime);
+    }
+    ServerRequestInterface sipServerRequest=sipStack.newSIPServerRequest(sipRequest,this);
+    if (sipServerRequest == null) {
+      if (sipStack.isLoggingEnabled()) {
+        this.sipStack.getStackLogger().logWarning("Null request interface returned -- dropping request");
+      }
+      return;
+    }
+    if (sipStack.isLoggingEnabled())     this.sipStack.getStackLogger().logDebug("About to process " + sipRequest.getFirstLine() + "/"+ sipServerRequest);
+    try {
+      sipServerRequest.processRequest(sipRequest,this);
+    }
+  finally {
+      if (sipServerRequest instanceof SIPTransaction) {
+        SIPServerTransaction sipServerTx=(SIPServerTransaction)sipServerRequest;
+        if (!sipServerTx.passToListener()) {
+          ((SIPTransaction)sipServerRequest).releaseSem();
+        }
+      }
+    }
+    if (sipStack.isLoggingEnabled())     this.sipStack.getStackLogger().logDebug("Done processing " + sipRequest.getFirstLine() + "/"+ sipServerRequest);
+  }
+ else {
+    SIPResponse sipResponse=(SIPResponse)sipMessage;
+    try {
+      sipResponse.checkHeaders();
+    }
+ catch (    ParseException ex) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logError("Dropping Badly formatted response message >>> " + sipResponse);
+      return;
+    }
+    ServerResponseInterface sipServerResponse=sipStack.newSIPServerResponse(sipResponse,this);
+    if (sipServerResponse != null) {
+      try {
+        if (sipServerResponse instanceof SIPClientTransaction && !((SIPClientTransaction)sipServerResponse).checkFromTag(sipResponse)) {
+          if (sipStack.isLoggingEnabled())           sipStack.getStackLogger().logError("Dropping response message with invalid tag >>> " + sipResponse);
+          return;
+        }
+        sipServerResponse.processResponse(sipResponse,this);
+      }
+  finally {
+        if (sipServerResponse instanceof SIPTransaction && !((SIPTransaction)sipServerResponse).passToListener())         ((SIPTransaction)sipServerResponse).releaseSem();
+      }
+    }
+ else {
+      if (sipStack.isLoggingEnabled()) {
+        this.sipStack.getStackLogger().logDebug("null sipServerResponse!");
+      }
+    }
+  }
+}

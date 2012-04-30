@@ -1,0 +1,621 @@
+{
+  final View host=mView;
+  if (DBG) {
+    System.out.println("======================================");
+    System.out.println("performTraversals");
+    host.debug();
+  }
+  if (host == null || !mAdded)   return;
+  mTraversalScheduled=false;
+  mWillDrawSoon=true;
+  boolean windowSizeMayChange=false;
+  boolean fullRedrawNeeded=mFullRedrawNeeded;
+  boolean newSurface=false;
+  boolean surfaceChanged=false;
+  WindowManager.LayoutParams lp=mWindowAttributes;
+  int desiredWindowWidth;
+  int desiredWindowHeight;
+  int childWidthMeasureSpec;
+  int childHeightMeasureSpec;
+  final View.AttachInfo attachInfo=mAttachInfo;
+  final int viewVisibility=getHostVisibility();
+  boolean viewVisibilityChanged=mViewVisibility != viewVisibility || mNewSurfaceNeeded;
+  WindowManager.LayoutParams params=null;
+  int windowAttributesChanges=0;
+  if (mWindowAttributesChanged) {
+    mWindowAttributesChanged=false;
+    surfaceChanged=true;
+    params=lp;
+    windowAttributesChanges=mWindowAttributesChangesFlag;
+  }
+  CompatibilityInfo compatibilityInfo=mCompatibilityInfo.get();
+  if (compatibilityInfo.supportsScreen() == mLastInCompatMode) {
+    params=lp;
+    fullRedrawNeeded=true;
+    mLayoutRequested=true;
+    if (mLastInCompatMode) {
+      params.flags&=~WindowManager.LayoutParams.FLAG_COMPATIBLE_WINDOW;
+      mLastInCompatMode=false;
+    }
+ else {
+      params.flags|=WindowManager.LayoutParams.FLAG_COMPATIBLE_WINDOW;
+      mLastInCompatMode=true;
+    }
+  }
+  mWindowAttributesChangesFlag=0;
+  Rect frame=mWinFrame;
+  if (mFirst) {
+    fullRedrawNeeded=true;
+    mLayoutRequested=true;
+    if (lp.type == WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL) {
+      Display disp=WindowManagerImpl.getDefault().getDefaultDisplay();
+      Point size=new Point();
+      disp.getRealSize(size);
+      desiredWindowWidth=size.x;
+      desiredWindowHeight=size.y;
+    }
+ else {
+      DisplayMetrics packageMetrics=mView.getContext().getResources().getDisplayMetrics();
+      desiredWindowWidth=packageMetrics.widthPixels;
+      desiredWindowHeight=packageMetrics.heightPixels;
+    }
+    attachInfo.mSurface=mSurface;
+    attachInfo.mUse32BitDrawingCache=true;
+    attachInfo.mHasWindowFocus=false;
+    attachInfo.mWindowVisibility=viewVisibility;
+    attachInfo.mRecomputeGlobalAttributes=false;
+    attachInfo.mKeepScreenOn=false;
+    attachInfo.mSystemUiVisibility=0;
+    viewVisibilityChanged=false;
+    mLastConfiguration.setTo(host.getResources().getConfiguration());
+    host.dispatchAttachedToWindow(attachInfo,0);
+    host.fitSystemWindows(mAttachInfo.mContentInsets);
+  }
+ else {
+    desiredWindowWidth=frame.width();
+    desiredWindowHeight=frame.height();
+    if (desiredWindowWidth != mWidth || desiredWindowHeight != mHeight) {
+      if (DEBUG_ORIENTATION)       Log.v(TAG,"View " + host + " resized to: "+ frame);
+      fullRedrawNeeded=true;
+      mLayoutRequested=true;
+      windowSizeMayChange=true;
+    }
+  }
+  if (viewVisibilityChanged) {
+    attachInfo.mWindowVisibility=viewVisibility;
+    host.dispatchWindowVisibilityChanged(viewVisibility);
+    if (viewVisibility != View.VISIBLE || mNewSurfaceNeeded) {
+      destroyHardwareResources();
+    }
+    if (viewVisibility == View.GONE) {
+      mHasHadWindowFocus=false;
+    }
+  }
+  boolean insetsChanged=false;
+  if (mLayoutRequested && !mStopped) {
+    getRunQueue().executeActions(attachInfo.mHandler);
+    final Resources res=mView.getContext().getResources();
+    if (mFirst) {
+      mAttachInfo.mInTouchMode=!mAddedTouchMode;
+      ensureTouchModeLocally(mAddedTouchMode);
+    }
+ else {
+      if (!mPendingContentInsets.equals(mAttachInfo.mContentInsets)) {
+        insetsChanged=true;
+      }
+      if (!mPendingVisibleInsets.equals(mAttachInfo.mVisibleInsets)) {
+        mAttachInfo.mVisibleInsets.set(mPendingVisibleInsets);
+        if (DEBUG_LAYOUT)         Log.v(TAG,"Visible insets changing to: " + mAttachInfo.mVisibleInsets);
+      }
+      if (lp.width == ViewGroup.LayoutParams.WRAP_CONTENT || lp.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+        windowSizeMayChange=true;
+        if (lp.type == WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL) {
+          Display disp=WindowManagerImpl.getDefault().getDefaultDisplay();
+          Point size=new Point();
+          disp.getRealSize(size);
+          desiredWindowWidth=size.x;
+          desiredWindowHeight=size.y;
+        }
+ else {
+          DisplayMetrics packageMetrics=res.getDisplayMetrics();
+          desiredWindowWidth=packageMetrics.widthPixels;
+          desiredWindowHeight=packageMetrics.heightPixels;
+        }
+      }
+    }
+    if (DEBUG_ORIENTATION || DEBUG_LAYOUT)     Log.v(TAG,"Measuring " + host + " in display "+ desiredWindowWidth+ "x"+ desiredWindowHeight+ "...");
+    boolean goodMeasure=false;
+    if (lp.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+      final DisplayMetrics packageMetrics=res.getDisplayMetrics();
+      res.getValue(com.android.internal.R.dimen.config_prefDialogWidth,mTmpValue,true);
+      int baseSize=0;
+      if (mTmpValue.type == TypedValue.TYPE_DIMENSION) {
+        baseSize=(int)mTmpValue.getDimension(packageMetrics);
+      }
+      if (DEBUG_DIALOG)       Log.v(TAG,"Window " + mView + ": baseSize="+ baseSize);
+      if (baseSize != 0 && desiredWindowWidth > baseSize) {
+        childWidthMeasureSpec=getRootMeasureSpec(baseSize,lp.width);
+        childHeightMeasureSpec=getRootMeasureSpec(desiredWindowHeight,lp.height);
+        host.measure(childWidthMeasureSpec,childHeightMeasureSpec);
+        if (DEBUG_DIALOG)         Log.v(TAG,"Window " + mView + ": measured ("+ host.getMeasuredWidth()+ ","+ host.getMeasuredHeight()+ ")");
+        if ((host.getMeasuredWidthAndState() & View.MEASURED_STATE_TOO_SMALL) == 0) {
+          goodMeasure=true;
+        }
+ else {
+          baseSize=(baseSize + desiredWindowWidth) / 2;
+          if (DEBUG_DIALOG)           Log.v(TAG,"Window " + mView + ": next baseSize="+ baseSize);
+          childWidthMeasureSpec=getRootMeasureSpec(baseSize,lp.width);
+          host.measure(childWidthMeasureSpec,childHeightMeasureSpec);
+          if (DEBUG_DIALOG)           Log.v(TAG,"Window " + mView + ": measured ("+ host.getMeasuredWidth()+ ","+ host.getMeasuredHeight()+ ")");
+          if ((host.getMeasuredWidthAndState() & View.MEASURED_STATE_TOO_SMALL) == 0) {
+            if (DEBUG_DIALOG)             Log.v(TAG,"Good!");
+            goodMeasure=true;
+          }
+        }
+      }
+    }
+    if (!goodMeasure) {
+      childWidthMeasureSpec=getRootMeasureSpec(desiredWindowWidth,lp.width);
+      childHeightMeasureSpec=getRootMeasureSpec(desiredWindowHeight,lp.height);
+      host.measure(childWidthMeasureSpec,childHeightMeasureSpec);
+      if (mWidth != host.getMeasuredWidth() || mHeight != host.getMeasuredHeight()) {
+        windowSizeMayChange=true;
+      }
+    }
+    if (DBG) {
+      System.out.println("======================================");
+      System.out.println("performTraversals -- after measure");
+      host.debug();
+    }
+  }
+  if (attachInfo.mRecomputeGlobalAttributes && host.mAttachInfo != null) {
+    attachInfo.mRecomputeGlobalAttributes=false;
+    boolean oldScreenOn=attachInfo.mKeepScreenOn;
+    int oldVis=attachInfo.mSystemUiVisibility;
+    boolean oldHasSystemUiListeners=attachInfo.mHasSystemUiListeners;
+    attachInfo.mKeepScreenOn=false;
+    attachInfo.mSystemUiVisibility=0;
+    attachInfo.mHasSystemUiListeners=false;
+    host.dispatchCollectViewAttributes(0);
+    if (attachInfo.mKeepScreenOn != oldScreenOn || attachInfo.mSystemUiVisibility != oldVis || attachInfo.mHasSystemUiListeners != oldHasSystemUiListeners) {
+      params=lp;
+    }
+  }
+  if (attachInfo.mForceReportNewAttributes) {
+    attachInfo.mForceReportNewAttributes=false;
+    params=lp;
+  }
+  if (mFirst || attachInfo.mViewVisibilityChanged) {
+    attachInfo.mViewVisibilityChanged=false;
+    int resizeMode=mSoftInputMode & WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST;
+    if (resizeMode == WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED) {
+      final int N=attachInfo.mScrollContainers.size();
+      for (int i=0; i < N; i++) {
+        if (attachInfo.mScrollContainers.get(i).isShown()) {
+          resizeMode=WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
+        }
+      }
+      if (resizeMode == 0) {
+        resizeMode=WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
+      }
+      if ((lp.softInputMode & WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST) != resizeMode) {
+        lp.softInputMode=(lp.softInputMode & ~WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST) | resizeMode;
+        params=lp;
+      }
+    }
+  }
+  if (params != null && (host.mPrivateFlags & View.REQUEST_TRANSPARENT_REGIONS) != 0) {
+    if (!PixelFormat.formatHasAlpha(params.format)) {
+      params.format=PixelFormat.TRANSLUCENT;
+    }
+  }
+  boolean windowShouldResize=mLayoutRequested && windowSizeMayChange && ((mWidth != host.getMeasuredWidth() || mHeight != host.getMeasuredHeight()) || (lp.width == ViewGroup.LayoutParams.WRAP_CONTENT && frame.width() < desiredWindowWidth && frame.width() != mWidth) || (lp.height == ViewGroup.LayoutParams.WRAP_CONTENT && frame.height() < desiredWindowHeight && frame.height() != mHeight));
+  final boolean computesInternalInsets=attachInfo.mTreeObserver.hasComputeInternalInsetsListeners();
+  boolean insetsPending=false;
+  int relayoutResult=0;
+  if (mFirst || windowShouldResize || insetsChanged|| viewVisibilityChanged|| params != null) {
+    if (viewVisibility == View.VISIBLE) {
+      insetsPending=computesInternalInsets && (mFirst || viewVisibilityChanged);
+    }
+    if (mSurfaceHolder != null) {
+      mSurfaceHolder.mSurfaceLock.lock();
+      mDrawingAllowed=true;
+    }
+    boolean hwInitialized=false;
+    boolean contentInsetsChanged=false;
+    boolean visibleInsetsChanged;
+    boolean hadSurface=mSurface.isValid();
+    try {
+      int fl=0;
+      if (params != null) {
+        fl=params.flags;
+        if (attachInfo.mKeepScreenOn) {
+          params.flags|=WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+        }
+        params.subtreeSystemUiVisibility=attachInfo.mSystemUiVisibility;
+        params.hasSystemUiListeners=attachInfo.mHasSystemUiListeners;
+      }
+      if (DEBUG_LAYOUT) {
+        Log.i(TAG,"host=w:" + host.getMeasuredWidth() + ", h:"+ host.getMeasuredHeight()+ ", params="+ params);
+      }
+      final int surfaceGenerationId=mSurface.getGenerationId();
+      relayoutResult=relayoutWindow(params,viewVisibility,insetsPending);
+      if (params != null) {
+        params.flags=fl;
+      }
+      if (DEBUG_LAYOUT)       Log.v(TAG,"relayout: frame=" + frame.toShortString() + " content="+ mPendingContentInsets.toShortString()+ " visible="+ mPendingVisibleInsets.toShortString()+ " surface="+ mSurface);
+      if (mPendingConfiguration.seq != 0) {
+        if (DEBUG_CONFIGURATION)         Log.v(TAG,"Visible with new config: " + mPendingConfiguration);
+        updateConfiguration(mPendingConfiguration,!mFirst);
+        mPendingConfiguration.seq=0;
+      }
+      contentInsetsChanged=!mPendingContentInsets.equals(mAttachInfo.mContentInsets);
+      visibleInsetsChanged=!mPendingVisibleInsets.equals(mAttachInfo.mVisibleInsets);
+      if (contentInsetsChanged) {
+        if (mWidth > 0 && mHeight > 0 && mSurface != null && mSurface.isValid() && !mAttachInfo.mTurnOffWindowResizeAnim && mAttachInfo.mHardwareRenderer != null && mAttachInfo.mHardwareRenderer.isEnabled() && mAttachInfo.mHardwareRenderer.validate() && lp != null && !PixelFormat.formatHasAlpha(lp.format)) {
+          disposeResizeBuffer();
+          boolean completed=false;
+          HardwareCanvas canvas=null;
+          try {
+            if (mResizeBuffer == null) {
+              mResizeBuffer=mAttachInfo.mHardwareRenderer.createHardwareLayer(mWidth,mHeight,false);
+            }
+ else             if (mResizeBuffer.getWidth() != mWidth || mResizeBuffer.getHeight() != mHeight) {
+              mResizeBuffer.resize(mWidth,mHeight);
+            }
+            canvas=mResizeBuffer.start(mAttachInfo.mHardwareCanvas);
+            canvas.setViewport(mWidth,mHeight);
+            canvas.onPreDraw(null);
+            final int restoreCount=canvas.save();
+            canvas.drawColor(0xff000000,PorterDuff.Mode.SRC);
+            int yoff;
+            final boolean scrolling=mScroller != null && mScroller.computeScrollOffset();
+            if (scrolling) {
+              yoff=mScroller.getCurrY();
+              mScroller.abortAnimation();
+            }
+ else {
+              yoff=mScrollY;
+            }
+            canvas.translate(0,-yoff);
+            if (mTranslator != null) {
+              mTranslator.translateCanvas(canvas);
+            }
+            mView.draw(canvas);
+            mResizeBufferStartTime=SystemClock.uptimeMillis();
+            mResizeBufferDuration=mView.getResources().getInteger(com.android.internal.R.integer.config_mediumAnimTime);
+            completed=true;
+            canvas.restoreToCount(restoreCount);
+          }
+ catch (          OutOfMemoryError e) {
+            Log.w(TAG,"Not enough memory for content change anim buffer",e);
+          }
+ finally {
+            if (canvas != null) {
+              canvas.onPostDraw();
+            }
+            if (mResizeBuffer != null) {
+              mResizeBuffer.end(mAttachInfo.mHardwareCanvas);
+              if (!completed) {
+                mResizeBuffer.destroy();
+                mResizeBuffer=null;
+              }
+            }
+          }
+        }
+        mAttachInfo.mContentInsets.set(mPendingContentInsets);
+        host.fitSystemWindows(mAttachInfo.mContentInsets);
+        if (DEBUG_LAYOUT)         Log.v(TAG,"Content insets changing to: " + mAttachInfo.mContentInsets);
+      }
+      if (visibleInsetsChanged) {
+        mAttachInfo.mVisibleInsets.set(mPendingVisibleInsets);
+        if (DEBUG_LAYOUT)         Log.v(TAG,"Visible insets changing to: " + mAttachInfo.mVisibleInsets);
+      }
+      if (!hadSurface) {
+        if (mSurface.isValid()) {
+          newSurface=true;
+          fullRedrawNeeded=true;
+          mPreviousTransparentRegion.setEmpty();
+          if (mAttachInfo.mHardwareRenderer != null) {
+            try {
+              hwInitialized=mAttachInfo.mHardwareRenderer.initialize(mHolder);
+            }
+ catch (            Surface.OutOfResourcesException e) {
+              Log.e(TAG,"OutOfResourcesException initializing HW surface",e);
+              try {
+                if (!sWindowSession.outOfMemory(mWindow)) {
+                  Slog.w(TAG,"No processes killed for memory; killing self");
+                  Process.killProcess(Process.myPid());
+                }
+              }
+ catch (              RemoteException ex) {
+              }
+              mLayoutRequested=true;
+              return;
+            }
+          }
+        }
+      }
+ else       if (!mSurface.isValid()) {
+        mLastScrolledFocus=null;
+        mScrollY=mCurScrollY=0;
+        if (mScroller != null) {
+          mScroller.abortAnimation();
+        }
+        disposeResizeBuffer();
+        if (mAttachInfo.mHardwareRenderer != null && mAttachInfo.mHardwareRenderer.isEnabled()) {
+          mAttachInfo.mHardwareRenderer.destroy(true);
+        }
+      }
+ else       if (surfaceGenerationId != mSurface.getGenerationId() && mSurfaceHolder == null && mAttachInfo.mHardwareRenderer != null) {
+        fullRedrawNeeded=true;
+        try {
+          mAttachInfo.mHardwareRenderer.updateSurface(mHolder);
+        }
+ catch (        Surface.OutOfResourcesException e) {
+          Log.e(TAG,"OutOfResourcesException updating HW surface",e);
+          try {
+            if (!sWindowSession.outOfMemory(mWindow)) {
+              Slog.w(TAG,"No processes killed for memory; killing self");
+              Process.killProcess(Process.myPid());
+            }
+          }
+ catch (          RemoteException ex) {
+          }
+          mLayoutRequested=true;
+          return;
+        }
+      }
+    }
+ catch (    RemoteException e) {
+    }
+    if (DEBUG_ORIENTATION)     Log.v(TAG,"Relayout returned: frame=" + frame + ", surface="+ mSurface);
+    attachInfo.mWindowLeft=frame.left;
+    attachInfo.mWindowTop=frame.top;
+    mWidth=frame.width();
+    mHeight=frame.height();
+    if (mSurfaceHolder != null) {
+      if (mSurface.isValid()) {
+        mSurfaceHolder.mSurface=mSurface;
+      }
+      mSurfaceHolder.setSurfaceFrameSize(mWidth,mHeight);
+      mSurfaceHolder.mSurfaceLock.unlock();
+      if (mSurface.isValid()) {
+        if (!hadSurface) {
+          mSurfaceHolder.ungetCallbacks();
+          mIsCreating=true;
+          mSurfaceHolderCallback.surfaceCreated(mSurfaceHolder);
+          SurfaceHolder.Callback callbacks[]=mSurfaceHolder.getCallbacks();
+          if (callbacks != null) {
+            for (            SurfaceHolder.Callback c : callbacks) {
+              c.surfaceCreated(mSurfaceHolder);
+            }
+          }
+          surfaceChanged=true;
+        }
+        if (surfaceChanged) {
+          mSurfaceHolderCallback.surfaceChanged(mSurfaceHolder,lp.format,mWidth,mHeight);
+          SurfaceHolder.Callback callbacks[]=mSurfaceHolder.getCallbacks();
+          if (callbacks != null) {
+            for (            SurfaceHolder.Callback c : callbacks) {
+              c.surfaceChanged(mSurfaceHolder,lp.format,mWidth,mHeight);
+            }
+          }
+        }
+        mIsCreating=false;
+      }
+ else       if (hadSurface) {
+        mSurfaceHolder.ungetCallbacks();
+        SurfaceHolder.Callback callbacks[]=mSurfaceHolder.getCallbacks();
+        mSurfaceHolderCallback.surfaceDestroyed(mSurfaceHolder);
+        if (callbacks != null) {
+          for (          SurfaceHolder.Callback c : callbacks) {
+            c.surfaceDestroyed(mSurfaceHolder);
+          }
+        }
+        mSurfaceHolder.mSurfaceLock.lock();
+        try {
+          mSurfaceHolder.mSurface=new Surface();
+        }
+  finally {
+          mSurfaceHolder.mSurfaceLock.unlock();
+        }
+      }
+    }
+    if (mAttachInfo.mHardwareRenderer != null && mAttachInfo.mHardwareRenderer.isEnabled()) {
+      if (hwInitialized || windowShouldResize || mWidth != mAttachInfo.mHardwareRenderer.getWidth() || mHeight != mAttachInfo.mHardwareRenderer.getHeight()) {
+        mAttachInfo.mHardwareRenderer.setup(mWidth,mHeight);
+        if (!hwInitialized) {
+          mAttachInfo.mHardwareRenderer.invalidate(mHolder);
+        }
+      }
+    }
+    if (!mStopped) {
+      boolean focusChangedDueToTouchMode=ensureTouchModeLocally((relayoutResult & WindowManagerImpl.RELAYOUT_IN_TOUCH_MODE) != 0);
+      if (focusChangedDueToTouchMode || mWidth != host.getMeasuredWidth() || mHeight != host.getMeasuredHeight() || contentInsetsChanged) {
+        childWidthMeasureSpec=getRootMeasureSpec(mWidth,lp.width);
+        childHeightMeasureSpec=getRootMeasureSpec(mHeight,lp.height);
+        if (DEBUG_LAYOUT)         Log.v(TAG,"Ooops, something changed!  mWidth=" + mWidth + " measuredWidth="+ host.getMeasuredWidth()+ " mHeight="+ mHeight+ " measuredHeight="+ host.getMeasuredHeight()+ " coveredInsetsChanged="+ contentInsetsChanged);
+        host.measure(childWidthMeasureSpec,childHeightMeasureSpec);
+        int width=host.getMeasuredWidth();
+        int height=host.getMeasuredHeight();
+        boolean measureAgain=false;
+        if (lp.horizontalWeight > 0.0f) {
+          width+=(int)((mWidth - width) * lp.horizontalWeight);
+          childWidthMeasureSpec=MeasureSpec.makeMeasureSpec(width,MeasureSpec.EXACTLY);
+          measureAgain=true;
+        }
+        if (lp.verticalWeight > 0.0f) {
+          height+=(int)((mHeight - height) * lp.verticalWeight);
+          childHeightMeasureSpec=MeasureSpec.makeMeasureSpec(height,MeasureSpec.EXACTLY);
+          measureAgain=true;
+        }
+        if (measureAgain) {
+          if (DEBUG_LAYOUT)           Log.v(TAG,"And hey let's measure once more: width=" + width + " height="+ height);
+          host.measure(childWidthMeasureSpec,childHeightMeasureSpec);
+        }
+        mLayoutRequested=true;
+      }
+    }
+  }
+  final boolean didLayout=mLayoutRequested && !mStopped;
+  boolean triggerGlobalLayoutListener=didLayout || attachInfo.mRecomputeGlobalAttributes;
+  if (didLayout) {
+    mLayoutRequested=false;
+    mScrollMayChange=true;
+    if (DEBUG_ORIENTATION || DEBUG_LAYOUT)     Log.v(TAG,"Laying out " + host + " to ("+ host.getMeasuredWidth()+ ", "+ host.getMeasuredHeight()+ ")");
+    long startTime=0L;
+    if (ViewDebug.DEBUG_PROFILE_LAYOUT) {
+      startTime=SystemClock.elapsedRealtime();
+    }
+    host.layout(0,0,host.getMeasuredWidth(),host.getMeasuredHeight());
+    if (false && ViewDebug.consistencyCheckEnabled) {
+      if (!host.dispatchConsistencyCheck(ViewDebug.CONSISTENCY_LAYOUT)) {
+        throw new IllegalStateException("The view hierarchy is an inconsistent state," + "please refer to the logs with the tag " + ViewDebug.CONSISTENCY_LOG_TAG + " for more infomation.");
+      }
+    }
+    if (ViewDebug.DEBUG_PROFILE_LAYOUT) {
+      EventLog.writeEvent(60001,SystemClock.elapsedRealtime() - startTime);
+    }
+    if ((host.mPrivateFlags & View.REQUEST_TRANSPARENT_REGIONS) != 0) {
+      host.getLocationInWindow(mTmpLocation);
+      mTransparentRegion.set(mTmpLocation[0],mTmpLocation[1],mTmpLocation[0] + host.mRight - host.mLeft,mTmpLocation[1] + host.mBottom - host.mTop);
+      host.gatherTransparentRegion(mTransparentRegion);
+      if (mTranslator != null) {
+        mTranslator.translateRegionInWindowToScreen(mTransparentRegion);
+      }
+      if (!mTransparentRegion.equals(mPreviousTransparentRegion)) {
+        mPreviousTransparentRegion.set(mTransparentRegion);
+        try {
+          sWindowSession.setTransparentRegion(mWindow,mTransparentRegion);
+        }
+ catch (        RemoteException e) {
+        }
+      }
+    }
+    if (DBG) {
+      System.out.println("======================================");
+      System.out.println("performTraversals -- after setFrame");
+      host.debug();
+    }
+  }
+  if (triggerGlobalLayoutListener) {
+    attachInfo.mRecomputeGlobalAttributes=false;
+    attachInfo.mTreeObserver.dispatchOnGlobalLayout();
+    if (AccessibilityManager.getInstance(host.mContext).isEnabled()) {
+      postSendWindowContentChangedCallback();
+    }
+  }
+  if (computesInternalInsets) {
+    final ViewTreeObserver.InternalInsetsInfo insets=attachInfo.mGivenInternalInsets;
+    insets.reset();
+    attachInfo.mTreeObserver.dispatchOnComputeInternalInsets(insets);
+    if (insetsPending || !mLastGivenInsets.equals(insets)) {
+      mLastGivenInsets.set(insets);
+      final Rect contentInsets;
+      final Rect visibleInsets;
+      final Region touchableRegion;
+      if (mTranslator != null) {
+        contentInsets=mTranslator.getTranslatedContentInsets(insets.contentInsets);
+        visibleInsets=mTranslator.getTranslatedVisibleInsets(insets.visibleInsets);
+        touchableRegion=mTranslator.getTranslatedTouchableArea(insets.touchableRegion);
+      }
+ else {
+        contentInsets=insets.contentInsets;
+        visibleInsets=insets.visibleInsets;
+        touchableRegion=insets.touchableRegion;
+      }
+      try {
+        sWindowSession.setInsets(mWindow,insets.mTouchableInsets,contentInsets,visibleInsets,touchableRegion);
+      }
+ catch (      RemoteException e) {
+      }
+    }
+  }
+  if (mFirst) {
+    if (DEBUG_INPUT_RESIZE)     Log.v(TAG,"First: mView.hasFocus()=" + mView.hasFocus());
+    if (mView != null) {
+      if (!mView.hasFocus()) {
+        mView.requestFocus(View.FOCUS_FORWARD);
+        mFocusedView=mRealFocusedView=mView.findFocus();
+        if (DEBUG_INPUT_RESIZE)         Log.v(TAG,"First: requested focused view=" + mFocusedView);
+      }
+ else {
+        mRealFocusedView=mView.findFocus();
+        if (DEBUG_INPUT_RESIZE)         Log.v(TAG,"First: existing focused view=" + mRealFocusedView);
+      }
+    }
+  }
+  mFirst=false;
+  mWillDrawSoon=false;
+  mNewSurfaceNeeded=false;
+  mViewVisibility=viewVisibility;
+  if (mAttachInfo.mHasWindowFocus) {
+    final boolean imTarget=WindowManager.LayoutParams.mayUseInputMethod(mWindowAttributes.flags);
+    if (imTarget != mLastWasImTarget) {
+      mLastWasImTarget=imTarget;
+      InputMethodManager imm=InputMethodManager.peekInstance();
+      if (imm != null && imTarget) {
+        imm.startGettingWindowFocus(mView);
+        imm.onWindowFocus(mView,mView.findFocus(),mWindowAttributes.softInputMode,!mHasHadWindowFocus,mWindowAttributes.flags);
+      }
+    }
+  }
+  boolean cancelDraw=attachInfo.mTreeObserver.dispatchOnPreDraw() || viewVisibility != View.VISIBLE;
+  if (!cancelDraw && !newSurface) {
+    if (mPendingTransitions != null && mPendingTransitions.size() > 0) {
+      for (int i=0; i < mPendingTransitions.size(); ++i) {
+        mPendingTransitions.get(i).startChangingAnimations();
+      }
+      mPendingTransitions.clear();
+    }
+    mFullRedrawNeeded=false;
+    final long drawStartTime;
+    if (ViewDebug.DEBUG_LATENCY) {
+      drawStartTime=System.nanoTime();
+    }
+    draw(fullRedrawNeeded);
+    if (ViewDebug.DEBUG_LATENCY) {
+      mLastDrawDurationNanos=System.nanoTime() - drawStartTime;
+    }
+    if ((relayoutResult & WindowManagerImpl.RELAYOUT_FIRST_TIME) != 0 || mReportNextDraw) {
+      if (LOCAL_LOGV) {
+        Log.v(TAG,"FINISHED DRAWING: " + mWindowAttributes.getTitle());
+      }
+      mReportNextDraw=false;
+      if (mSurfaceHolder != null && mSurface.isValid()) {
+        mSurfaceHolderCallback.surfaceRedrawNeeded(mSurfaceHolder);
+        SurfaceHolder.Callback callbacks[]=mSurfaceHolder.getCallbacks();
+        if (callbacks != null) {
+          for (          SurfaceHolder.Callback c : callbacks) {
+            if (c instanceof SurfaceHolder.Callback2) {
+              ((SurfaceHolder.Callback2)c).surfaceRedrawNeeded(mSurfaceHolder);
+            }
+          }
+        }
+      }
+      try {
+        sWindowSession.finishDrawing(mWindow);
+      }
+ catch (      RemoteException e) {
+      }
+    }
+  }
+ else {
+    if (mPendingTransitions != null && mPendingTransitions.size() > 0) {
+      for (int i=0; i < mPendingTransitions.size(); ++i) {
+        mPendingTransitions.get(i).endChangingAnimations();
+      }
+      mPendingTransitions.clear();
+    }
+    if ((relayoutResult & WindowManagerImpl.RELAYOUT_FIRST_TIME) != 0) {
+      mReportNextDraw=true;
+    }
+    if (fullRedrawNeeded) {
+      mFullRedrawNeeded=true;
+    }
+    if (viewVisibility == View.VISIBLE) {
+      scheduleTraversals();
+    }
+  }
+}

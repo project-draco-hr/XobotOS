@@ -1,0 +1,21 @@
+{
+  if (!createProblemMarkers()) {
+    return;
+  }
+  try {
+    IMarker marker=_source.getCorrespondingResource().createMarker(Sharpen.PROBLEM_MARKER);
+    Map<String,Object> attributes=new HashMap<String,Object>();
+    attributes.put(IMarker.MESSAGE,message);
+    if (node != null) {
+      attributes.put(IMarker.CHAR_START,new Integer(node.getStartPosition()));
+      attributes.put(IMarker.CHAR_END,new Integer(node.getStartPosition() + node.getLength()));
+      attributes.put(IMarker.LINE_NUMBER,ASTUtility.lineNumber(ast,node));
+    }
+    attributes.put(IMarker.TRANSIENT,Boolean.TRUE);
+    attributes.put(IMarker.SEVERITY,isError ? IMarker.SEVERITY_ERROR : IMarker.SEVERITY_WARNING);
+    marker.setAttributes(attributes);
+  }
+ catch (  CoreException e) {
+    e.printStackTrace();
+  }
+}

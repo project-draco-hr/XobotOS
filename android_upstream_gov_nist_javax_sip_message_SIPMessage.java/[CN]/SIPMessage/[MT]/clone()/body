@@ -1,0 +1,21 @@
+{
+  SIPMessage retval=(SIPMessage)super.clone();
+  retval.nameTable=new Hashtable<String,SIPHeader>();
+  retval.fromHeader=null;
+  retval.toHeader=null;
+  retval.cSeqHeader=null;
+  retval.callIdHeader=null;
+  retval.contentLengthHeader=null;
+  retval.maxForwardsHeader=null;
+  if (this.headers != null) {
+    retval.headers=new ConcurrentLinkedQueue<SIPHeader>();
+    for (Iterator<SIPHeader> iter=headers.iterator(); iter.hasNext(); ) {
+      SIPHeader hdr=(SIPHeader)iter.next();
+      retval.attachHeader((SIPHeader)hdr.clone());
+    }
+  }
+  if (this.messageContentBytes != null)   retval.messageContentBytes=(byte[])this.messageContentBytes.clone();
+  if (this.messageContentObject != null)   retval.messageContentObject=makeClone(messageContentObject);
+  retval.unrecognizedHeaders=this.unrecognizedHeaders;
+  return retval;
+}

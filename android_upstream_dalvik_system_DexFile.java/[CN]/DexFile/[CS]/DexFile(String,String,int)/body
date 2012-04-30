@@ -1,0 +1,5 @@
+{
+  mCookie=openDexFile(sourceName,outputName,flags);
+  mFileName=sourceName;
+  guard.open("close");
+}

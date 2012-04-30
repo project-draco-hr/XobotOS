@@ -1,0 +1,5 @@
+{
+  mToken=new AudioMessageParams(this,getCallingApp(),mPlayer);
+  mAudioPlaybackHandler.enqueueAudio(mToken);
+  return TextToSpeech.SUCCESS;
+}

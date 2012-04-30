@@ -1,0 +1,4 @@
+{
+  if (this.readTimeout == -1)   return;
+  if (this.myTimerTask != null)   this.myTimerTask.cancel();
+}

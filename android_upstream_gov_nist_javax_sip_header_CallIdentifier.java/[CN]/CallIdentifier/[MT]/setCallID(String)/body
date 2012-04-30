@@ -1,0 +1,15 @@
+{
+  if (cid == null)   throw new IllegalArgumentException("NULL!");
+  int index=cid.indexOf('@');
+  if (index == -1) {
+    localId=cid;
+    host=null;
+  }
+ else {
+    localId=cid.substring(0,index);
+    host=cid.substring(index + 1,cid.length());
+    if (localId == null || host == null) {
+      throw new IllegalArgumentException("CallID  must be token@token or token");
+    }
+  }
+}

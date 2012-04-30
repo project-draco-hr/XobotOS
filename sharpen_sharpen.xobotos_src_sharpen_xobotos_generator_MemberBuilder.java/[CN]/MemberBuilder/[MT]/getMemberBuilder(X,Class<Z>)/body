@@ -1,0 +1,5 @@
+{
+  MemberBuilder<?,?,?> member=_members.get(body);
+  if ((member == null) || !klass.isInstance(member))   return null;
+  return klass.cast(member);
+}

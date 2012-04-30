@@ -1,0 +1,6 @@
+{
+  if ((_currentType != null) && _currentType.noDocs())   return;
+  if (startPosition <= 0)   return;
+  if (_lastPrintedCommentIndex >= _comments.size())   return;
+  _lastPrintedCommentIndex=printCommentsBetween(_lastPrintedCommentIndex,startPosition);
+}

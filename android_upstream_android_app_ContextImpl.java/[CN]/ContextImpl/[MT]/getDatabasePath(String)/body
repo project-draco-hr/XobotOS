@@ -1,0 +1,3 @@
+{
+  return validateFilePath(name,false);
+}

@@ -1,0 +1,5 @@
+{
+  IMethodBinding overriden=getOverridedMethod(node);
+  if (overriden != null)   return mappedTypeReference(overriden.getReturnType());
+  return mappedTypeReference(node.getReturnType2());
+}

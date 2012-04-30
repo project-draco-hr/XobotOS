@@ -1,0 +1,5 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("TransactionTimer() : " + getTransactionId());
+  }
+}

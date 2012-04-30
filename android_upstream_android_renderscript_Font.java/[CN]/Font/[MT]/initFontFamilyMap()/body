@@ -1,0 +1,24 @@
+{
+  sFontFamilyMap=new HashMap<String,FontFamily>();
+  FontFamily sansFamily=new FontFamily();
+  sansFamily.mNames=sSansNames;
+  sansFamily.mNormalFileName="Roboto-Regular.ttf";
+  sansFamily.mBoldFileName="Roboto-Bold.ttf";
+  sansFamily.mItalicFileName="Roboto-Italic.ttf";
+  sansFamily.mBoldItalicFileName="Roboto-BoldItalic.ttf";
+  addFamilyToMap(sansFamily);
+  FontFamily serifFamily=new FontFamily();
+  serifFamily.mNames=sSerifNames;
+  serifFamily.mNormalFileName="DroidSerif-Regular.ttf";
+  serifFamily.mBoldFileName="DroidSerif-Bold.ttf";
+  serifFamily.mItalicFileName="DroidSerif-Italic.ttf";
+  serifFamily.mBoldItalicFileName="DroidSerif-BoldItalic.ttf";
+  addFamilyToMap(serifFamily);
+  FontFamily monoFamily=new FontFamily();
+  monoFamily.mNames=sMonoNames;
+  monoFamily.mNormalFileName="DroidSansMono.ttf";
+  monoFamily.mBoldFileName="DroidSansMono.ttf";
+  monoFamily.mItalicFileName="DroidSansMono.ttf";
+  monoFamily.mBoldItalicFileName="DroidSansMono.ttf";
+  addFamilyToMap(monoFamily);
+}

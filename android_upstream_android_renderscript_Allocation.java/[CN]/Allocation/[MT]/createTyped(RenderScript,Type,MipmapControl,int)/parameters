@@ -1,0 +1,4 @@
+RenderScript rs
+Type type
+MipmapControl mips
+int usage

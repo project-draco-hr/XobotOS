@@ -1,0 +1,4 @@
+{
+  Expression varRef=var.getMemberAccess("item");
+  return new MethodInvocation(varRef,expr);
+}

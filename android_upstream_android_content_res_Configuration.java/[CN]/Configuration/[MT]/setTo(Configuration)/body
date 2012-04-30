@@ -1,0 +1,26 @@
+{
+  fontScale=o.fontScale;
+  mcc=o.mcc;
+  mnc=o.mnc;
+  if (o.locale != null) {
+    locale=(Locale)o.locale.clone();
+    textLayoutDirection=o.textLayoutDirection;
+  }
+  userSetLocale=o.userSetLocale;
+  touchscreen=o.touchscreen;
+  keyboard=o.keyboard;
+  keyboardHidden=o.keyboardHidden;
+  hardKeyboardHidden=o.hardKeyboardHidden;
+  navigation=o.navigation;
+  navigationHidden=o.navigationHidden;
+  orientation=o.orientation;
+  screenLayout=o.screenLayout;
+  uiMode=o.uiMode;
+  screenWidthDp=o.screenWidthDp;
+  screenHeightDp=o.screenHeightDp;
+  smallestScreenWidthDp=o.smallestScreenWidthDp;
+  compatScreenWidthDp=o.compatScreenWidthDp;
+  compatScreenHeightDp=o.compatScreenHeightDp;
+  compatSmallestScreenWidthDp=o.compatSmallestScreenWidthDp;
+  seq=o.seq;
+}

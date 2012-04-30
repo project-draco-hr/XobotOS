@@ -1,0 +1,30 @@
+{
+  super(builder,type);
+  this._name=name;
+  this._managedType=managedType;
+  this._nativeType=nativeType;
+  this._needsHeader=needsHeader;
+  this._isShared=isShared;
+  _members=new ArrayList<Member>();
+  _nativeMembers=new ArrayList<AbstractMember>();
+  if (_needsHeader)   _nativeHeaders=new ArrayList<AbstractMember>();
+ else   _nativeHeaders=null;
+  _struct=new StructDefinition(_name + "_Struct",Visibility.PRIVATE);
+  _structType=new TypeReference(_struct.getName());
+  _nativeMembers.add(_struct);
+  if (_needsHeader)   _nativeHeaders.add(_struct.getDeclaration());
+  _klass=new ClassDefinition(_name + "_Helper",Visibility.PUBLIC,_needsHeader);
+  _klassType=new TypeReference(_klass.getName());
+  _nativeMembers.add(_klass);
+  if (_needsHeader)   _nativeHeaders.add(_klass.getDeclaration());
+  CSStructLayout layout=new CSStructLayout(CSStructLayout.LayoutKind.Sequential);
+  _managedStruct=new CSStruct(_name + "_Struct",layout);
+  _managedStruct.visibility(CSVisibility.Private);
+  _managedStructRef=new CSTypeReference(_managedStruct.name());
+  _managedHelper=new CSClass(_name + "_Helper",CSClassModifier.Static);
+  _managedHelper.visibility(CSVisibility.Internal);
+  _managedHelper.addMember(_managedStruct);
+  _managedHelper.addAttribute(getMarshalHelperAttribute());
+  _managedHelperRef=new CSTypeReference(_managedHelper.name());
+  _destructorName=builder.getFunctionPrefix() + "_" + name+ "_destructor";
+}

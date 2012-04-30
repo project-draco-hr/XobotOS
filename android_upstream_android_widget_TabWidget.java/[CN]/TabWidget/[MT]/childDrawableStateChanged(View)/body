@@ -1,0 +1,6 @@
+{
+  if (getTabCount() > 0 && child == getChildTabViewAt(mSelectedTab)) {
+    invalidate();
+  }
+  super.childDrawableStateChanged(child);
+}

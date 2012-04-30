@@ -1,0 +1,5 @@
+{
+  MemberMapping mapping=_memberRenamings.get(qualifiedName);
+  if (mapping == null || mapping.kind != kind)   return null;
+  return mapping;
+}

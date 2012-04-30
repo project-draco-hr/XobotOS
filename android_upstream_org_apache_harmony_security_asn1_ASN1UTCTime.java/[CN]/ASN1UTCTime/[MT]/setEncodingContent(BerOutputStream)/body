@@ -1,0 +1,6 @@
+{
+  SimpleDateFormat sdf=new SimpleDateFormat(UTC_PATTERN);
+  sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+  out.content=sdf.format(out.content).getBytes(Charsets.UTF_8);
+  out.length=((byte[])out.content).length;
+}

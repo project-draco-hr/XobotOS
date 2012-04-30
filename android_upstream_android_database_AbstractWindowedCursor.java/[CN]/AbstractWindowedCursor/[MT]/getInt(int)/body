@@ -1,0 +1,4 @@
+{
+  checkPosition();
+  return mWindow.getInt(mPos,columnIndex);
+}

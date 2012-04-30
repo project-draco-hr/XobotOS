@@ -1,0 +1,14 @@
+{
+  Dialog retval=null;
+  if (this.lastResponse != null && this.lastResponse.getFromTag() != null && this.lastResponse.getToTag() != null && this.lastResponse.getStatusCode() != 100) {
+    String dialogId=this.lastResponse.getDialogId(false);
+    retval=(Dialog)getDialog(dialogId);
+  }
+  if (retval == null) {
+    retval=(Dialog)this.defaultDialog;
+  }
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug(" sipDialogs =  " + sipDialogs + " default dialog "+ this.defaultDialog+ " retval "+ retval);
+  }
+  return retval;
+}

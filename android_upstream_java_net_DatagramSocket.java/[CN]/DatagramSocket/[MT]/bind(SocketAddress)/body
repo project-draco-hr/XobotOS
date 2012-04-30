@@ -1,0 +1,19 @@
+{
+  checkOpen();
+  int localPort=0;
+  InetAddress addr=Inet4Address.ANY;
+  if (localAddr != null) {
+    if (!(localAddr instanceof InetSocketAddress)) {
+      throw new IllegalArgumentException("Local address not an InetSocketAddress: " + localAddr.getClass());
+    }
+    InetSocketAddress inetAddr=(InetSocketAddress)localAddr;
+    addr=inetAddr.getAddress();
+    if (addr == null) {
+      throw new SocketException("Host is unresolved: " + inetAddr.getHostName());
+    }
+    localPort=inetAddr.getPort();
+    checkPort(localPort);
+  }
+  impl.bind(localPort,addr);
+  isBound=true;
+}

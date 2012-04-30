@@ -1,0 +1,12 @@
+{
+  mNumHistoryItems++;
+  rec.next=null;
+  mHistoryLastEnd=mHistoryEnd;
+  if (mHistoryEnd != null) {
+    mHistoryEnd.next=rec;
+    mHistoryEnd=rec;
+  }
+ else {
+    mHistory=mHistoryEnd=rec;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  if (_parameters != null) {
+    int index=0;
+    for (    final ParameterInfo info : _parameters) {
+      if (info.index > 0)       index=info.index;
+      if (index == pos)       return info;
+      ++index;
+    }
+  }
+  return new ParameterInfo();
+}

@@ -1,0 +1,4 @@
+int countryCallingCode
+String language
+String script
+String region

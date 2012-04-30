@@ -1,0 +1,6 @@
+{
+  if (min > value.length) {
+    int ourMin=value.length * 2 + 2;
+    enlargeBuffer(Math.max(ourMin,min));
+  }
+}

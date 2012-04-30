@@ -1,0 +1,3 @@
+{
+  return HelperClassBuilder.isBlittable(_elementInfo.getType());
+}

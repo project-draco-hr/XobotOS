@@ -1,0 +1,24 @@
+{
+  if (other.hasCountryCode()) {
+    setCountryCode(other.getCountryCode());
+  }
+  if (other.hasNationalNumber()) {
+    setNationalNumber(other.getNationalNumber());
+  }
+  if (other.hasExtension()) {
+    setExtension(other.getExtension());
+  }
+  if (other.hasItalianLeadingZero()) {
+    setItalianLeadingZero(other.isItalianLeadingZero());
+  }
+  if (other.hasRawInput()) {
+    setRawInput(other.getRawInput());
+  }
+  if (other.hasCountryCodeSource()) {
+    setCountryCodeSource(other.getCountryCodeSource());
+  }
+  if (other.hasPreferredDomesticCarrierCode()) {
+    setPreferredDomesticCarrierCode(other.getPreferredDomesticCarrierCode());
+  }
+  return this;
+}

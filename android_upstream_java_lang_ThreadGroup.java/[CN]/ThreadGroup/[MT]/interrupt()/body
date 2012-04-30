@@ -1,0 +1,12 @@
+{
+synchronized (threadRefs) {
+    for (    Thread thread : threads) {
+      thread.interrupt();
+    }
+  }
+synchronized (groups) {
+    for (    ThreadGroup group : groups) {
+      group.interrupt();
+    }
+  }
+}

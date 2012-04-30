@@ -1,0 +1,4 @@
+{
+  List<String> regionCodes=countryCallingCodeToRegionCodeMap.get(countryCallingCode);
+  return regionCodes == null ? UNKNOWN_REGION : regionCodes.get(0);
+}

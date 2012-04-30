@@ -1,0 +1,5 @@
+{
+  boolean originalValue=enableReplace;
+  enableReplace=enable;
+  return originalValue;
+}

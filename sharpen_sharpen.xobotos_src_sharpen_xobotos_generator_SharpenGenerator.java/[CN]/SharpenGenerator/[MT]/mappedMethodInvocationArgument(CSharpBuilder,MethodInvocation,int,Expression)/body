@@ -1,0 +1,18 @@
+{
+  final IMethodBinding binding=node.resolveMethodBinding();
+  final NativeMethodBuilder nativeBuilder=my(BindingManager.class).resolveNativeBinding(binding);
+  final ITypeBinding[] actualTypes=binding.getParameterTypes();
+  final CSExpression mappedExpr=builder.mapExpression(actualTypes[index],expr);
+  if (nativeBuilder != null) {
+    final Signature signature=nativeBuilder.getNativeMethod().getSignature();
+    final ParameterInfo info=signature.getParameterInfo(index);
+    if ((info == null) || (info.mode == Mode.REMOVE))     return null;
+    if ((info.marshal == null) || !(info.marshal instanceof MarshalAsClass.Entry))     return mappedExpr;
+    if (CSharpBuilder.isZeroLiteral(expr)) {
+      MarshalAsClass.Entry marshal=(MarshalAsClass.Entry)info.marshal;
+      if (marshal.getNativeHandle() != null)       return new CSNullLiteralExpression();
+ else       return new CSReferenceExpression("System.IntPtr.Zero");
+    }
+  }
+  return mappedExpr;
+}

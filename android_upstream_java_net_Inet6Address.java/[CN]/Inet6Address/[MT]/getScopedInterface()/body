@@ -1,0 +1,8 @@
+{
+  try {
+    return (scope_ifname_set && ifname != null) ? NetworkInterface.getByName(ifname) : null;
+  }
+ catch (  SocketException ex) {
+    return null;
+  }
+}

@@ -1,0 +1,16 @@
+{
+  Integer threadId=threadIds.get(thread);
+  if (threadId == null) {
+    throw new IllegalArgumentException("Unknown thread " + thread);
+  }
+  mutableStackTrace.threadId=threadId;
+  mutableStackTrace.stackFrames=stackFrames;
+  int[] countCell=stackTraces.get(mutableStackTrace);
+  if (countCell == null) {
+    countCell=new int[1];
+    StackTraceElement[] stackFramesCopy=stackFrames.clone();
+    HprofData.StackTrace stackTrace=new HprofData.StackTrace(nextStackTraceId++,threadId,stackFramesCopy);
+    hprofData.addStackTrace(stackTrace,countCell);
+  }
+  countCell[0]++;
+}

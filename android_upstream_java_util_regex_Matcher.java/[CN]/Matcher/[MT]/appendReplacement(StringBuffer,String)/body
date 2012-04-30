@@ -1,0 +1,6 @@
+{
+  buffer.append(input.substring(appendPos,start()));
+  appendEvaluated(buffer,replacement);
+  appendPos=end();
+  return this;
+}

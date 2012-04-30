@@ -1,0 +1,12 @@
+def _AdjustSourcesForRules(rules, sources, excluded_sources):
+    for rule in rules:
+        if int(rule.get('process_outputs_as_sources', False)):
+            trigger_files = _FindRuleTriggerFiles(rule, sources)
+            for trigger_file in trigger_files:
+                (inputs, outputs) = _RuleInputsAndOutputs(rule, trigger_file)
+                inputs = set(_FixPaths(inputs))
+                outputs = set(_FixPaths(outputs))
+                inputs.remove(_FixPath(trigger_file))
+                sources.update(inputs)
+                excluded_sources.update(inputs)
+                sources.update(outputs)

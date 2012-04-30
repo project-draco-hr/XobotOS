@@ -1,0 +1,5 @@
+{
+  TagElement element=javadocTagFor(node,SharpenAnnotations.SHARPEN_PARTIAL);
+  if (null == element)   return;
+  ((CSTypeDeclaration)member).partial(true);
+}

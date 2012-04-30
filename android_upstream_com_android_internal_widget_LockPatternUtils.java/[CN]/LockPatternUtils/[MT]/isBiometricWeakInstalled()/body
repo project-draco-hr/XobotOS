@@ -1,0 +1,19 @@
+{
+  if (!OPTION_ENABLE_FACELOCK.equals(getString(LOCKSCREEN_OPTIONS))) {
+    return false;
+  }
+  PackageManager pm=mContext.getPackageManager();
+  try {
+    pm.getPackageInfo("com.android.facelock",PackageManager.GET_ACTIVITIES);
+  }
+ catch (  PackageManager.NameNotFoundException e) {
+    return false;
+  }
+  if (!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
+    return false;
+  }
+  if (getDevicePolicyManager().getCameraDisabled(null)) {
+    return false;
+  }
+  return true;
+}

@@ -1,0 +1,3 @@
+{
+  return (RecordRouteList)this.getSIPHeaderListLowerCase(RECORDROUTE_LOWERCASE);
+}

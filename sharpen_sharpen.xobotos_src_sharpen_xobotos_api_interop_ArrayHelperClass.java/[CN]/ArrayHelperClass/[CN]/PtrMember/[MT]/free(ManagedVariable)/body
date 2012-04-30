@@ -1,0 +1,29 @@
+{
+  if (isBlittable() || !isClass())   return null;
+  final CSExpression lengthRef=_lengthMember.getReference(obj);
+  final CSExpression zero=new CSNumberLiteralExpression("0");
+  final CSExpression elementSize=getNativeElementSizeExpr();
+  CSBlock block=new CSBlock();
+  ManagedVariable i=new ManagedVariable("i",new CSTypeReference("int"),zero);
+  CSExpression check=new CSInfixExpression("<",i.getReference(),lengthRef);
+  CSForStatement forStm=new CSForStatement(-1,check);
+  forStm.addInitializer(new CSDeclarationExpression(i.getDeclaration()));
+  forStm.addUpdater(new CSPostfixExpression("++",i.getReference()));
+  final CSTypeReference intPtrType=new CSTypeReference("System.IntPtr");
+  if (isByRef()) {
+    ManagedVariable vector=new ManagedVariable("vector",new CSArrayTypeReference(intPtrType,1),new CSArrayCreationExpression(intPtrType,lengthRef));
+    block.addStatement(vector.getDeclarationStatement());
+    CSExpression copyRef=new CSReferenceExpression("Marshal.Copy");
+    block.addStatement(new CSMethodInvocationExpression(copyRef,getReference(obj),vector.getReference(),zero,lengthRef));
+    CSExpression idx=new CSIndexedExpression(vector.getReference(),i.getReference());
+    forStm.body().addStatement(new CSMethodInvocationExpression(getHelper().FREE_MANAGED_PTR.expr(),idx));
+  }
+ else {
+    ManagedVariable addr=new ManagedVariable("addr",new CSTypeReference("System.IntPtr"),getReference(obj));
+    block.addStatement(addr.getDeclarationStatement());
+    forStm.addUpdater(new CSInfixExpression("+=",addr.getReference(),elementSize));
+    forStm.body().addStatement(new CSMethodInvocationExpression(getHelper().DEEP_FREE_MANAGED_PTR.expr(),addr.getReference()));
+  }
+  block.addStatement(forStm);
+  return block;
+}

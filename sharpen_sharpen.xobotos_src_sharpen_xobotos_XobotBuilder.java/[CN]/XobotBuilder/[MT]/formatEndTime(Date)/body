@@ -1,0 +1,5 @@
+{
+  Date endTime=new Date();
+  long timeDiff=endTime.getTime() - startTime.getTime();
+  return String.format("%s (%d seconds)",endTime,timeDiff / 1000);
+}

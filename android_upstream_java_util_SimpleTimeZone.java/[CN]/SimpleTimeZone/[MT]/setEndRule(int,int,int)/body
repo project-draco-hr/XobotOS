@@ -1,0 +1,7 @@
+{
+  endMonth=month;
+  endDay=dayOfMonth;
+  endDayOfWeek=0;
+  endTime=time;
+  setEndMode();
+}

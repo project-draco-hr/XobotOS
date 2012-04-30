@@ -1,0 +1,6 @@
+{
+  if (null == _docs) {
+    return Collections.emptyList();
+  }
+  return Collections.unmodifiableList(_docs);
+}

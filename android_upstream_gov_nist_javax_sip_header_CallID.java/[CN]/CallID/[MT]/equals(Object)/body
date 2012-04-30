@@ -1,0 +1,8 @@
+{
+  if (this == other)   return true;
+  if (other instanceof CallIdHeader) {
+    final CallIdHeader o=(CallIdHeader)other;
+    return this.getCallId().equalsIgnoreCase(o.getCallId());
+  }
+  return false;
+}

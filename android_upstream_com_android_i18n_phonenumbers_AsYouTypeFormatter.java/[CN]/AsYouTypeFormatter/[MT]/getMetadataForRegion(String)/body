@@ -1,0 +1,9 @@
+{
+  int countryCallingCode=phoneUtil.getCountryCodeForRegion(regionCode);
+  String mainCountry=phoneUtil.getRegionCodeForCountryCode(countryCallingCode);
+  PhoneMetadata metadata=phoneUtil.getMetadataForRegion(mainCountry);
+  if (metadata != null) {
+    return metadata;
+  }
+  return EMPTY_METADATA;
+}

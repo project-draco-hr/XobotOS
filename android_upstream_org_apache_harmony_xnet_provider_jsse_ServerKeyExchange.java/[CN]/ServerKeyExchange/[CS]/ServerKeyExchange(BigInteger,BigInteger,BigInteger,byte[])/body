@@ -1,0 +1,18 @@
+{
+  this.par1=par1;
+  this.par2=par2;
+  this.par3=par3;
+  this.hash=hash;
+  bytes1=toUnsignedByteArray(this.par1);
+  bytes2=toUnsignedByteArray(this.par2);
+  length=4 + bytes1.length + bytes2.length;
+  if (hash != null) {
+    length+=2 + hash.length;
+  }
+  if (par3 == null) {
+    bytes3=null;
+    return;
+  }
+  bytes3=toUnsignedByteArray(this.par3);
+  length+=2 + bytes3.length;
+}

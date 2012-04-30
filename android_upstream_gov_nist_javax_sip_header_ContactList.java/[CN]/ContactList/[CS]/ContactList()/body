@@ -1,0 +1,3 @@
+{
+  super(Contact.class,ContactHeader.NAME);
+}

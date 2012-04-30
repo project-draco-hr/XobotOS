@@ -1,0 +1,28 @@
+{
+  try {
+    PhoneNumber firstNumberAsProto=parse(firstNumber,UNKNOWN_REGION);
+    return isNumberMatch(firstNumberAsProto,secondNumber);
+  }
+ catch (  NumberParseException e) {
+    if (e.getErrorType() == NumberParseException.ErrorType.INVALID_COUNTRY_CODE) {
+      try {
+        PhoneNumber secondNumberAsProto=parse(secondNumber,UNKNOWN_REGION);
+        return isNumberMatch(secondNumberAsProto,firstNumber);
+      }
+ catch (      NumberParseException e2) {
+        if (e2.getErrorType() == NumberParseException.ErrorType.INVALID_COUNTRY_CODE) {
+          try {
+            PhoneNumber firstNumberProto=new PhoneNumber();
+            PhoneNumber secondNumberProto=new PhoneNumber();
+            parseHelper(firstNumber,null,false,false,firstNumberProto);
+            parseHelper(secondNumber,null,false,false,secondNumberProto);
+            return isNumberMatch(firstNumberProto,secondNumberProto);
+          }
+ catch (          NumberParseException e3) {
+          }
+        }
+      }
+    }
+  }
+  return MatchType.NOT_A_NUMBER;
+}

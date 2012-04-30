@@ -1,0 +1,8 @@
+{
+  if (line == null)   return line;
+  int i=line.length() - 1;
+  while (i >= 0 && line.charAt(i) <= 0x20)   i--;
+  if (i == line.length() - 1)   return line;
+  if (i == -1)   return "";
+  return line.substring(0,i + 1);
+}

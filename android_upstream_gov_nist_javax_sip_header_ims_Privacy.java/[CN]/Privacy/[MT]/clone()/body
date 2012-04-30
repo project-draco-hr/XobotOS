@@ -1,0 +1,5 @@
+{
+  Privacy retval=(Privacy)super.clone();
+  if (this.privacy != null)   retval.privacy=this.privacy;
+  return retval;
+}

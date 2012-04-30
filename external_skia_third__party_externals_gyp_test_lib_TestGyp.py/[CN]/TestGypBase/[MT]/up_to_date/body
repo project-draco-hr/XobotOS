@@ -1,0 +1,3 @@
+def up_to_date(self, gyp_file, target=None, **kw):
+    '\n    Verifies that a build of the specified target is up to date.\n\n    The subclass should implement this by calling build()\n    (or a reasonable equivalent), checking whatever conditions\n    will tell it the build was an "up to date" null build, and\n    failing if it isn\'t.\n    '
+    raise NotImplementedError

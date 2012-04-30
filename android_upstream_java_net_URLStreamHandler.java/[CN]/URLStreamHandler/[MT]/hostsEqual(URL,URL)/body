@@ -1,0 +1,5 @@
+{
+  String aHost=a.getHost();
+  String bHost=b.getHost();
+  return (aHost == bHost) || aHost != null && aHost.equalsIgnoreCase(bHost);
+}

@@ -1,0 +1,10 @@
+{
+  if (mHorizontallyScrolling != whether) {
+    mHorizontallyScrolling=whether;
+    if (mLayout != null) {
+      nullLayouts();
+      requestLayout();
+      invalidate();
+    }
+  }
+}

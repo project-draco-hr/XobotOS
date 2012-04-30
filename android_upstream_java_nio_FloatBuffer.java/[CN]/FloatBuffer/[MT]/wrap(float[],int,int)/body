@@ -1,0 +1,7 @@
+{
+  Arrays.checkOffsetAndCount(array.length,start,floatCount);
+  FloatBuffer buf=new ReadWriteFloatArrayBuffer(array);
+  buf.position=start;
+  buf.limit=start + floatCount;
+  return buf;
+}

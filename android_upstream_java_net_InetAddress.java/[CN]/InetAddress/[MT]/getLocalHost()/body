@@ -1,0 +1,4 @@
+{
+  String host=Libcore.os.uname().nodename;
+  return lookupHostByName(host)[0];
+}

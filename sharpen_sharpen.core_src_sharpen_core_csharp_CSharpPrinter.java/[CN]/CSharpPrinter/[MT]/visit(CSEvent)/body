@@ -1,0 +1,17 @@
+{
+  writeMetaMemberHeader(node);
+  write("event ");
+  node.type().accept(this);
+  write(" ");
+  write(node.name());
+  final CSBlock firstBlock=node.getAddBlock();
+  if (null == firstBlock) {
+    writeLine(";");
+    return;
+  }
+  writeLine();
+  enterBody();
+  writeMemberBlock("add",firstBlock,node.isAbstract());
+  writeMemberBlock("remove",node.getRemoveBlock(),node.isAbstract());
+  leaveBody();
+}

@@ -1,0 +1,8 @@
+{
+  if (isClass()) {
+    return new CSExpressionStatement(-1,new CSMethodInvocationExpression(getHelper().MANAGED_MARSHAL_OUT.expr(),addr,expr));
+  }
+ else {
+    return new CSExpressionStatement(-1,new CSInfixExpression("=",expr,getMarshalPtrToStructure(addr,type)));
+  }
+}

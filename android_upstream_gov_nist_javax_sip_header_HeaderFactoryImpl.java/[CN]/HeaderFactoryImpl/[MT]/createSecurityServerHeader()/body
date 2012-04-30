@@ -1,0 +1,4 @@
+{
+  SecurityServer secServer=new SecurityServer();
+  return secServer;
+}

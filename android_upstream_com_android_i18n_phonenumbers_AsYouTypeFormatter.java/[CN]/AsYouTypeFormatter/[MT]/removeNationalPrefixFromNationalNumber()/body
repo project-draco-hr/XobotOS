@@ -1,0 +1,18 @@
+{
+  int startOfNationalNumber=0;
+  if (currentMetaData.getCountryCode() == 1 && nationalNumber.charAt(0) == '1') {
+    startOfNationalNumber=1;
+    prefixBeforeNationalNumber.append("1 ");
+    isInternationalFormatting=true;
+  }
+ else   if (currentMetaData.hasNationalPrefix()) {
+    Pattern nationalPrefixForParsing=regexCache.getPatternForRegex(currentMetaData.getNationalPrefixForParsing());
+    Matcher m=nationalPrefixForParsing.matcher(nationalNumber);
+    if (m.lookingAt()) {
+      isInternationalFormatting=true;
+      startOfNationalNumber=m.end();
+      prefixBeforeNationalNumber.append(nationalNumber.substring(0,startOfNationalNumber));
+    }
+  }
+  nationalNumber.delete(0,startOfNationalNumber);
+}

@@ -1,0 +1,9 @@
+{
+  _writer.writeIndentation();
+  _writer.writeLine("{");
+  _writer.indent();
+  for (  Statement stm : node.getStatements())   stm.accept(this);
+  _writer.outdent();
+  _writer.writeIndentation();
+  _writer.writeLine("}");
+}

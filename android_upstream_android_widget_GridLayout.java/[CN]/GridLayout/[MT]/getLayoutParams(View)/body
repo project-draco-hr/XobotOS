@@ -1,0 +1,7 @@
+{
+  if (!layoutParamsValid) {
+    validateLayoutParams();
+    layoutParamsValid=true;
+  }
+  return getLayoutParams1(c);
+}

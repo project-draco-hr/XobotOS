@@ -1,0 +1,4 @@
+{
+  if (errorInfo == null)   throw new NullPointerException("null arg");
+  return new ErrorInfo((GenericURI)errorInfo);
+}

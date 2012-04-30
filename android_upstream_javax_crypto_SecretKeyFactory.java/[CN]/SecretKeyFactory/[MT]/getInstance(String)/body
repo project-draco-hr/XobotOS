@@ -1,0 +1,7 @@
+{
+  if (algorithm == null) {
+    throw new NullPointerException();
+  }
+  Engine.SpiAndProvider sap=ENGINE.getInstance(algorithm,null);
+  return new SecretKeyFactory((SecretKeyFactorySpi)sap.spi,sap.provider,algorithm);
+}

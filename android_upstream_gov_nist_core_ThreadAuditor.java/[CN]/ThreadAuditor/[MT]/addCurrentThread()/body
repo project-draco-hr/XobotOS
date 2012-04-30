@@ -1,0 +1,7 @@
+{
+  ThreadHandle threadHandle=new ThreadHandle(this);
+  if (isEnabled()) {
+    threadHandles.put(Thread.currentThread(),threadHandle);
+  }
+  return threadHandle;
+}

@@ -1,0 +1,7 @@
+Object audiorecord_this
+int recordSource
+int sampleRate
+int nbChannels
+int audioFormat
+int buffSizeInBytes
+int[] sessionId

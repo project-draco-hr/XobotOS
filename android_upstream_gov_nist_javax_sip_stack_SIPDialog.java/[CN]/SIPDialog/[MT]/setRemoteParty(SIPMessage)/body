@@ -1,0 +1,11 @@
+{
+  if (!isServer()) {
+    this.remoteParty=sipMessage.getTo().getAddress();
+  }
+ else {
+    this.remoteParty=sipMessage.getFrom().getAddress();
+  }
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("settingRemoteParty " + this.remoteParty);
+  }
+}

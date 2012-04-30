@@ -1,0 +1,34 @@
+{
+  if (firstElement) {
+    replaceTop(JsonScope.NONEMPTY_ARRAY);
+  }
+ else {
+switch (nextNonWhitespace()) {
+case ']':
+      pop();
+    return token=JsonToken.END_ARRAY;
+case ';':
+  checkLenient();
+case ',':
+break;
+default :
+throw syntaxError("Unterminated array");
+}
+}
+switch (nextNonWhitespace()) {
+case ']':
+if (firstElement) {
+pop();
+return token=JsonToken.END_ARRAY;
+}
+case ';':
+case ',':
+checkLenient();
+pos--;
+value="null";
+return token=JsonToken.NULL;
+default :
+pos--;
+return nextValue();
+}
+}

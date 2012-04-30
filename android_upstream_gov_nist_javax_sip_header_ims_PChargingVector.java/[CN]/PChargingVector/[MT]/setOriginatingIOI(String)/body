@@ -1,0 +1,6 @@
+{
+  if (origIOI == null || origIOI.length() == 0) {
+    removeParameter(ParameterNamesIms.ORIG_IOI);
+  }
+ else   setParameter(ParameterNamesIms.ORIG_IOI,origIOI);
+}

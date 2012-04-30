@@ -1,0 +1,9 @@
+{
+  db.verifyDbIsOpen();
+  db.verifyLockOwner();
+  mDatabase=db;
+  mSqlStmt=sql;
+  mStackTrace=new DatabaseObjectNotClosedException().fillInStackTrace();
+  nHandle=db.mNativeHandle;
+  native_compile(sql);
+}

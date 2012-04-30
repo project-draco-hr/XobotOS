@@ -1,0 +1,7 @@
+{
+  node.lhs().accept(this);
+  write(" ");
+  write(node.operator());
+  write(" ");
+  node.rhs().accept(this);
+}

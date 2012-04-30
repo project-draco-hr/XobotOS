@@ -1,0 +1,7 @@
+def touch(self, path, mtime=None):
+    'Updates the modification time on the specified file or\n        directory path name.  The default is to update to the\n        current time if no explicit modification time is specified.\n        '
+    path = self.canonicalize(path)
+    atime = os.path.getatime(path)
+    if (mtime is None):
+        mtime = time.time()
+    os.utime(path, (atime, mtime))

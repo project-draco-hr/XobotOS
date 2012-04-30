@@ -1,0 +1,3 @@
+{
+  WebIconDatabase.getInstance().bulkRequestIconForPageUrl(cr,where,listener);
+}

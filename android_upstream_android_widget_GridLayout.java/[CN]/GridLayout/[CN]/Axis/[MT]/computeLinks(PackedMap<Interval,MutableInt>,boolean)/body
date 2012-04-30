@@ -1,0 +1,12 @@
+{
+  MutableInt[] spans=links.values;
+  for (int i=0; i < spans.length; i++) {
+    spans[i].reset();
+  }
+  Bounds[] bounds=getGroupBounds().values;
+  for (int i=0; i < bounds.length; i++) {
+    int size=bounds[i].size(min);
+    MutableInt valueHolder=links.getValue(i);
+    valueHolder.value=max(valueHolder.value,min ? size : -size);
+  }
+}

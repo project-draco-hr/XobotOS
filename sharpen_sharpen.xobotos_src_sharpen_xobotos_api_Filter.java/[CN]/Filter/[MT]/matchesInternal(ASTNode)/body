@@ -1,0 +1,7 @@
+{
+  if (!matchesMemberKind(node))   return false;
+  if (!(node instanceof BodyDeclaration))   return false;
+  BodyDeclaration body=(BodyDeclaration)node;
+  if (!matchesVisibility(body))   return false;
+  return matchesName(body);
+}

@@ -1,0 +1,9 @@
+{
+  if (!enabled) {
+    return;
+  }
+  writeSnapshotFile("zygote",null);
+  samplingProfiler.shutdown();
+  samplingProfiler=null;
+  startMillis=0;
+}

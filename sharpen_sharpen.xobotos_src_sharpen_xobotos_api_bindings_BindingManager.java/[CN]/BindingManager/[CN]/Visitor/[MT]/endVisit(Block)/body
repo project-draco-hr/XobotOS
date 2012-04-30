@@ -1,0 +1,4 @@
+{
+  popScope();
+  super.endVisit(node);
+}

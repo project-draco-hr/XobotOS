@@ -1,0 +1,112 @@
+{
+  if (!sipStack.isAlive())   throw new TransactionUnavailableException("Stack is stopped");
+  SIPServerTransaction transaction=null;
+  SIPRequest sipRequest=(SIPRequest)request;
+  try {
+    sipRequest.checkHeaders();
+  }
+ catch (  ParseException ex) {
+    throw new TransactionUnavailableException(ex.getMessage(),ex);
+  }
+  if (request.getMethod().equals(Request.ACK)) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logError("Creating server transaction for ACK -- makes no sense!");
+    throw new TransactionUnavailableException("Cannot create Server transaction for ACK ");
+  }
+  if (sipRequest.getMethod().equals(Request.NOTIFY) && sipRequest.getFromTag() != null && sipRequest.getToTag() == null) {
+    SIPClientTransaction ct=sipStack.findSubscribeTransaction(sipRequest,(ListeningPointImpl)this.getListeningPoint());
+    if (ct == null && !sipStack.deliverUnsolicitedNotify) {
+      throw new TransactionUnavailableException("Cannot find matching Subscription (and gov.nist.javax.sip.DELIVER_UNSOLICITED_NOTIFY not set)");
+    }
+  }
+  if (!sipStack.acquireSem()) {
+    throw new TransactionUnavailableException("Transaction not available -- could not acquire stack lock");
+  }
+  try {
+    if (sipStack.isDialogCreated(sipRequest.getMethod())) {
+      if (sipStack.findTransaction((SIPRequest)request,true) != null)       throw new TransactionAlreadyExistsException("server transaction already exists!");
+      transaction=(SIPServerTransaction)((SIPRequest)request).getTransaction();
+      if (transaction == null)       throw new TransactionUnavailableException("Transaction not available");
+      if (transaction.getOriginalRequest() == null)       transaction.setOriginalRequest(sipRequest);
+      try {
+        sipStack.addTransaction(transaction);
+      }
+ catch (      IOException ex) {
+        throw new TransactionUnavailableException("Error sending provisional response");
+      }
+      transaction.addEventListener(this);
+      if (isAutomaticDialogSupportEnabled()) {
+        String dialogId=sipRequest.getDialogId(true);
+        SIPDialog dialog=sipStack.getDialog(dialogId);
+        if (dialog == null) {
+          dialog=sipStack.createDialog(transaction);
+        }
+        transaction.setDialog(dialog,sipRequest.getDialogId(true));
+        if (sipRequest.getMethod().equals(Request.INVITE) && this.isDialogErrorsAutomaticallyHandled()) {
+          sipStack.putInMergeTable(transaction,sipRequest);
+        }
+        dialog.addRoute(sipRequest);
+        if (dialog.getRemoteTag() != null && dialog.getLocalTag() != null) {
+          this.sipStack.putDialog(dialog);
+        }
+      }
+    }
+ else {
+      if (isAutomaticDialogSupportEnabled()) {
+        transaction=(SIPServerTransaction)sipStack.findTransaction((SIPRequest)request,true);
+        if (transaction != null)         throw new TransactionAlreadyExistsException("Transaction exists! ");
+        transaction=(SIPServerTransaction)((SIPRequest)request).getTransaction();
+        if (transaction == null)         throw new TransactionUnavailableException("Transaction not available!");
+        if (transaction.getOriginalRequest() == null)         transaction.setOriginalRequest(sipRequest);
+        try {
+          sipStack.addTransaction(transaction);
+        }
+ catch (        IOException ex) {
+          throw new TransactionUnavailableException("Could not send back provisional response!");
+        }
+        String dialogId=sipRequest.getDialogId(true);
+        SIPDialog dialog=sipStack.getDialog(dialogId);
+        if (dialog != null) {
+          dialog.addTransaction(transaction);
+          dialog.addRoute(sipRequest);
+          transaction.setDialog(dialog,sipRequest.getDialogId(true));
+        }
+      }
+ else {
+        transaction=(SIPServerTransaction)sipStack.findTransaction((SIPRequest)request,true);
+        if (transaction != null)         throw new TransactionAlreadyExistsException("Transaction exists! ");
+        transaction=(SIPServerTransaction)((SIPRequest)request).getTransaction();
+        if (transaction != null) {
+          if (transaction.getOriginalRequest() == null)           transaction.setOriginalRequest(sipRequest);
+          sipStack.mapTransaction(transaction);
+          String dialogId=sipRequest.getDialogId(true);
+          SIPDialog dialog=sipStack.getDialog(dialogId);
+          if (dialog != null) {
+            dialog.addTransaction(transaction);
+            dialog.addRoute(sipRequest);
+            transaction.setDialog(dialog,sipRequest.getDialogId(true));
+          }
+          return transaction;
+        }
+ else {
+          MessageChannel mc=(MessageChannel)sipRequest.getMessageChannel();
+          transaction=sipStack.createServerTransaction(mc);
+          if (transaction == null)           throw new TransactionUnavailableException("Transaction unavailable -- too many servrer transactions");
+          transaction.setOriginalRequest(sipRequest);
+          sipStack.mapTransaction(transaction);
+          String dialogId=sipRequest.getDialogId(true);
+          SIPDialog dialog=sipStack.getDialog(dialogId);
+          if (dialog != null) {
+            dialog.addTransaction(transaction);
+            dialog.addRoute(sipRequest);
+            transaction.setDialog(dialog,sipRequest.getDialogId(true));
+          }
+          return transaction;
+        }
+      }
+    }
+    return transaction;
+  }
+  finally {
+    sipStack.releaseSem();
+  }
+}

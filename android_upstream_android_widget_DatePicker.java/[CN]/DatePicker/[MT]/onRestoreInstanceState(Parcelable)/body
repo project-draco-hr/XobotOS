@@ -1,0 +1,7 @@
+{
+  SavedState ss=(SavedState)state;
+  super.onRestoreInstanceState(ss.getSuperState());
+  setDate(ss.mYear,ss.mMonth,ss.mDay);
+  updateSpinners();
+  updateCalendarView();
+}

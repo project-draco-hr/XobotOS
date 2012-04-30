@@ -1,0 +1,3 @@
+{
+  queryFacilityLockForApp(facility,pin,serviceClass,null,result);
+}

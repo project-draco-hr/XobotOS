@@ -1,0 +1,7 @@
+{
+  owner=clone.owner;
+  intents=clone.intents;
+  className=clone.className;
+  componentName=clone.componentName;
+  componentShortName=clone.componentShortName;
+}

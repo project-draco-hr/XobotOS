@@ -1,0 +1,22 @@
+{
+  if (!enabled) {
+    return;
+  }
+  if (samplingProfiler == null) {
+    Log.e(TAG,"SamplingProfilerIntegration is not started");
+    return;
+  }
+  if (pending.compareAndSet(false,true)) {
+    snapshotWriter.execute(new Runnable(){
+      public void run(){
+        try {
+          writeSnapshotFile(processName,packageInfo);
+        }
+  finally {
+          pending.set(false);
+        }
+      }
+    }
+);
+  }
+}

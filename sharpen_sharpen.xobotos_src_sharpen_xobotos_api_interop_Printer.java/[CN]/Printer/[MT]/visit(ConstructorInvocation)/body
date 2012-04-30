@@ -1,0 +1,7 @@
+{
+  _writer.write("new ");
+  node.getType().accept(this);
+  _writer.write("(");
+  visitCommaSeparatedList(node.getArguments());
+  _writer.writeBlock(")");
+}

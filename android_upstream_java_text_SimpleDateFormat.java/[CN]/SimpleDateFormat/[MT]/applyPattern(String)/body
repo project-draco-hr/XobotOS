@@ -1,0 +1,4 @@
+{
+  validatePattern(template);
+  pattern=template;
+}

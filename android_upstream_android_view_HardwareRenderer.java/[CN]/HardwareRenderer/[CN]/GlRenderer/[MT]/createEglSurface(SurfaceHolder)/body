@@ -1,0 +1,30 @@
+{
+  if (sEgl == null) {
+    throw new RuntimeException("egl not initialized");
+  }
+  if (sEglDisplay == null) {
+    throw new RuntimeException("eglDisplay not initialized");
+  }
+  if (sEglConfig == null) {
+    throw new RuntimeException("eglConfig not initialized");
+  }
+  if (Thread.currentThread() != mEglThread) {
+    throw new IllegalStateException("HardwareRenderer cannot be used " + "from multiple threads");
+  }
+  destroySurface();
+  if (!createSurface(holder)) {
+    return null;
+  }
+  if (!sEgl.eglMakeCurrent(sEglDisplay,mEglSurface,mEglSurface,mEglContext)) {
+    throw new Surface.OutOfResourcesException("eglMakeCurrent failed " + GLUtils.getEGLErrorString(sEgl.eglGetError()));
+  }
+  if (sDirtyRegions) {
+    if (!(mDirtyRegionsEnabled=GLES20Canvas.preserveBackBuffer())) {
+      Log.w(LOG_TAG,"Backbuffer cannot be preserved");
+    }
+  }
+ else   if (sDirtyRegionsRequested) {
+    mDirtyRegionsEnabled=GLES20Canvas.isBackBufferPreserved();
+  }
+  return mEglContext.getGL();
+}

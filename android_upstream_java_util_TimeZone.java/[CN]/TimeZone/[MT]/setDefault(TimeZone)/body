@@ -1,0 +1,3 @@
+{
+  defaultTimeZone=timeZone != null ? (TimeZone)timeZone.clone() : null;
+}

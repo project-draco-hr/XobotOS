@@ -1,0 +1,8 @@
+{
+  if (mAttachInfo != null && mAttachInfo.mHardwareCanvas != null) {
+    DisplayList displayList=view.getDisplayList();
+    if (displayList != null) {
+      mAttachInfo.mHardwareCanvas.outputDisplayList(displayList);
+    }
+  }
+}

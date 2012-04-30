@@ -1,0 +1,34 @@
+{
+  String name=e.name();
+  String localName=e.localName();
+  String namespace=e.namespace();
+  String prefix=prefixOf(name);
+  e.clean();
+  if (!namespaces)   namespace=localName="";
+  if (virginStack && localName.equalsIgnoreCase(theDoctypeName)) {
+    try {
+      theEntityResolver.resolveEntity(theDoctypePublicId,theDoctypeSystemId);
+    }
+ catch (    IOException ew) {
+    }
+  }
+  if (foreign(prefix,namespace)) {
+    theContentHandler.startPrefixMapping(prefix,namespace);
+  }
+  Attributes atts=e.atts();
+  int len=atts.getLength();
+  for (int i=0; i < len; i++) {
+    String attNamespace=atts.getURI(i);
+    String attPrefix=prefixOf(atts.getQName(i));
+    if (foreign(attPrefix,attNamespace)) {
+      theContentHandler.startPrefixMapping(attPrefix,attNamespace);
+    }
+  }
+  theContentHandler.startElement(namespace,localName,name,e.atts());
+  e.setNext(theStack);
+  theStack=e;
+  virginStack=false;
+  if (CDATAElements && (theStack.flags() & Schema.F_CDATA) != 0) {
+    theScanner.startCDATA();
+  }
+}

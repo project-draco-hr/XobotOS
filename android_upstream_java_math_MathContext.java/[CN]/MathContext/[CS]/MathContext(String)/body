@@ -1,0 +1,22 @@
+{
+  int precisionLength="precision=".length();
+  int roundingModeLength="roundingMode=".length();
+  int spaceIndex;
+  if (!s.startsWith("precision=") || (spaceIndex=s.indexOf(' ',precisionLength)) == -1) {
+    throw invalidMathContext("Missing precision",s);
+  }
+  String precisionString=s.substring(precisionLength,spaceIndex);
+  try {
+    this.precision=Integer.parseInt(precisionString);
+  }
+ catch (  NumberFormatException nfe) {
+    throw invalidMathContext("Bad precision",s);
+  }
+  int roundingModeStart=spaceIndex + 1;
+  if (!s.regionMatches(roundingModeStart,"roundingMode=",0,roundingModeLength)) {
+    throw invalidMathContext("Missing rounding mode",s);
+  }
+  roundingModeStart+=roundingModeLength;
+  this.roundingMode=RoundingMode.valueOf(s.substring(roundingModeStart));
+  checkValid();
+}

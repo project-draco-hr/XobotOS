@@ -1,0 +1,4 @@
+ElementInfo info
+String name
+String managedName
+Flags flags

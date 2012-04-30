@@ -1,0 +1,3 @@
+{
+  return value <= Short.MAX_VALUE ? SHORT_SIZE : INT_SIZE;
+}

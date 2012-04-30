@@ -1,0 +1,18 @@
+{
+  Arrays.checkOffsetAndCount(buffer.length,offset,length);
+synchronized (this) {
+    if (out == null) {
+      setError();
+      return;
+    }
+    try {
+      out.write(buffer,offset,length);
+      if (autoFlush) {
+        flush();
+      }
+    }
+ catch (    IOException e) {
+      setError();
+    }
+  }
+}

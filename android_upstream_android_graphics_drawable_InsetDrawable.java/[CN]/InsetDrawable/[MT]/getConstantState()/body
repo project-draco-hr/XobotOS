@@ -1,0 +1,7 @@
+{
+  if (mInsetState.canConstantState()) {
+    mInsetState.mChangingConfigurations=getChangingConfigurations();
+    return mInsetState;
+  }
+  return null;
+}

@@ -1,0 +1,10 @@
+{
+  if (pathToNames == null) {
+    return null;
+  }
+  Collection<List<?>> result=new ArrayList<List<?>>();
+  for (  GeneralName name : pathToNames) {
+    result.add(name.getAsList());
+  }
+  return result;
+}

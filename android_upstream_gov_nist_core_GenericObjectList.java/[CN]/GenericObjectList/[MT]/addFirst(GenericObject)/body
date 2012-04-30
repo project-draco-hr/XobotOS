@@ -1,0 +1,8 @@
+{
+  if (myClass == null) {
+    myClass=objToAdd.getClass();
+  }
+ else {
+    super.addFirst(objToAdd);
+  }
+}

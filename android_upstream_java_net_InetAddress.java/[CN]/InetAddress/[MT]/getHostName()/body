@@ -1,0 +1,11 @@
+{
+  if (hostName == null) {
+    try {
+      hostName=getHostByAddrImpl(this).hostName;
+    }
+ catch (    UnknownHostException ex) {
+      hostName=getHostAddress();
+    }
+  }
+  return hostName;
+}

@@ -1,0 +1,3 @@
+{
+  return Character.isDigit(nextChar) || (accruedInput.length() == 1 && PhoneNumberUtil.PLUS_CHARS_PATTERN.matcher(Character.toString(nextChar)).matches());
+}

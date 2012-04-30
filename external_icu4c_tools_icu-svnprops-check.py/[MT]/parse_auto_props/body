@@ -1,0 +1,27 @@
+def parse_auto_props():
+    aprops = svn_auto_props.splitlines()
+    for propline in aprops:
+        if re.match('\\s*(#.*)?$', propline):
+            continue
+        if re.match('\\s*\\[auto-props\\]', propline):
+            continue
+        if (not re.match('\\s*[^\\s]+\\s*=', propline)):
+            print ('Bad line from autoprops definitions: ' + propline)
+            continue
+        (file_type, string_proplist) = propline.split('=', 1)
+        file_type = file_type.strip()
+        file_type = file_type.replace('.', '\\.')
+        file_type = file_type.replace('*', '.*')
+        file_type = (file_type + '$')
+        string_proplist = re.split('(?<!;);(?!;)', string_proplist)
+        proplist = list()
+        for prop in string_proplist:
+            if (prop.find('=') >= 0):
+                (prop_name, prop_val) = prop.split('=', 1)
+            else:
+                (prop_name, prop_val) = (prop, '')
+            prop_name = prop_name.strip()
+            prop_val = prop_val.strip()
+            prop_val = prop_val.replace(';;', ';')
+            proplist.append((prop_name, prop_val))
+        file_types.append((file_type, proplist))

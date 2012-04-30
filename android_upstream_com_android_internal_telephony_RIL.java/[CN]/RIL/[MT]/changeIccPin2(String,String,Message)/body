@@ -1,0 +1,3 @@
+{
+  changeIccPin2ForApp(oldPin2,newPin2,null,result);
+}

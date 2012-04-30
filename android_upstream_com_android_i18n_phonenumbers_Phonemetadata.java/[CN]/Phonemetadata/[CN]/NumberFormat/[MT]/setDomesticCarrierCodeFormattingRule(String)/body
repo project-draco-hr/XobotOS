@@ -1,0 +1,5 @@
+{
+  hasDomesticCarrierCodeFormattingRule=true;
+  domesticCarrierCodeFormattingRule_=value;
+  return this;
+}

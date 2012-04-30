@@ -1,0 +1,4 @@
+{
+  final ITypeContainer container=getCurrentContainer();
+  return container.findTypeTemplate(node);
+}

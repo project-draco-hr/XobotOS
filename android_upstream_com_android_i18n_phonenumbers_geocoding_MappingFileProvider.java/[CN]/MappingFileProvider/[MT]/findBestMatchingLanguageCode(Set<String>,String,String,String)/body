@@ -1,0 +1,34 @@
+{
+  StringBuilder fullLocale=constructFullLocale(language,script,region);
+  String fullLocaleStr=fullLocale.toString();
+  String normalizedLocale=LOCALE_NORMALIZATION_MAP.get(fullLocaleStr);
+  if (normalizedLocale != null) {
+    if (setOfLangs.contains(normalizedLocale)) {
+      return normalizedLocale;
+    }
+  }
+  if (setOfLangs.contains(fullLocaleStr)) {
+    return fullLocaleStr;
+  }
+  if (onlyOneOfScriptOrRegionIsEmpty(script,region)) {
+    if (setOfLangs.contains(language)) {
+      return language;
+    }
+  }
+ else   if (script.length() > 0 && region.length() > 0) {
+    StringBuilder langWithScript=new StringBuilder(language).append('_').append(script);
+    String langWithScriptStr=langWithScript.toString();
+    if (setOfLangs.contains(langWithScriptStr)) {
+      return langWithScriptStr;
+    }
+    StringBuilder langWithRegion=new StringBuilder(language).append('_').append(region);
+    String langWithRegionStr=langWithRegion.toString();
+    if (setOfLangs.contains(langWithRegionStr)) {
+      return langWithRegionStr;
+    }
+    if (setOfLangs.contains(language)) {
+      return language;
+    }
+  }
+  return "";
+}

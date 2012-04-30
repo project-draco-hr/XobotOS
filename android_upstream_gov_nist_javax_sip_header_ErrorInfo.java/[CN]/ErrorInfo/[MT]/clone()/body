@@ -1,0 +1,5 @@
+{
+  ErrorInfo retval=(ErrorInfo)super.clone();
+  if (this.errorInfo != null)   retval.errorInfo=(GenericURI)this.errorInfo.clone();
+  return retval;
+}

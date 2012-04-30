@@ -1,0 +1,13 @@
+{
+  int stringId=in.readInt();
+  byte[] bytes=new byte[recordLength - BinaryHprof.ID_SIZE];
+  readFully(in,bytes);
+  String string=new String(bytes,"UTF-8");
+  if (TRACE) {
+    System.out.println("\tstring=" + string);
+  }
+  String old=idToString.put(stringId,string);
+  if (old != null) {
+    throw new MalformedHprofException("Duplicate string id: " + stringId);
+  }
+}

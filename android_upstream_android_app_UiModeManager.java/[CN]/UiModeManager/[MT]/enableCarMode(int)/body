@@ -1,0 +1,10 @@
+{
+  if (mService != null) {
+    try {
+      mService.enableCarMode(flags);
+    }
+ catch (    RemoteException e) {
+      Log.e(TAG,"disableCarMode: RemoteException",e);
+    }
+  }
+}

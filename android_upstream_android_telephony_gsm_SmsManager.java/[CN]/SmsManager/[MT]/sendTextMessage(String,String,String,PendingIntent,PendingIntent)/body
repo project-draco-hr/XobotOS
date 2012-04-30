@@ -1,0 +1,3 @@
+{
+  mSmsMgrProxy.sendTextMessage(destinationAddress,scAddress,text,sentIntent,deliveryIntent);
+}

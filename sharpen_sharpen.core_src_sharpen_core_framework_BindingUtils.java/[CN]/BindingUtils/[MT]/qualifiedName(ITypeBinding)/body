@@ -1,0 +1,5 @@
+{
+  String qn=declaringClass.getTypeDeclaration().getQualifiedName();
+  if (qn.length() > 0)   return qn;
+ else   return declaringClass.getQualifiedName();
+}

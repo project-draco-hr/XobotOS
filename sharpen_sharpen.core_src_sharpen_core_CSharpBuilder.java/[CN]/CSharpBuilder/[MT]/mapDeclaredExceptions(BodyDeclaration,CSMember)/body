@@ -1,0 +1,5 @@
+{
+  if (!(bodyDecl instanceof MethodDeclaration))   return;
+  MethodDeclaration method=(MethodDeclaration)bodyDecl;
+  mapThrownExceptions(method.thrownExceptions(),member);
+}

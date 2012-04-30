@@ -1,0 +1,5 @@
+{
+  AddressParametersHeader retval=(AddressParametersHeader)super.clone();
+  if (this.address != null)   retval.address=(AddressImpl)this.address.clone();
+  return retval;
+}

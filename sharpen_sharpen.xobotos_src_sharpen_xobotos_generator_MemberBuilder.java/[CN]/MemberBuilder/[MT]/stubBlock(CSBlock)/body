@@ -1,0 +1,8 @@
+{
+  block.clearBlock();
+  CSTypeReference tref=new CSTypeReference("System.NotImplementedException");
+  CSExpression ctor=new CSConstructorInvocationExpression(tref);
+  CSThrowStatement stm=new CSThrowStatement(block.startPosition(),ctor);
+  block.addStatement(stm);
+  block.setImmutable();
+}

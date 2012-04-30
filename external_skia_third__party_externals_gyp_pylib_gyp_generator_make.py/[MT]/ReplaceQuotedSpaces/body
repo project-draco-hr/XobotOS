@@ -1,0 +1,2 @@
+def ReplaceQuotedSpaces(s):
+    return s.replace('\\ ', SPACE_REPLACEMENT)

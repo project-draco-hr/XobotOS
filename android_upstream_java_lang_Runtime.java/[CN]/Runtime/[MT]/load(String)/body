@@ -1,0 +1,3 @@
+{
+  load(pathName,VMStack.getCallingClassLoader());
+}

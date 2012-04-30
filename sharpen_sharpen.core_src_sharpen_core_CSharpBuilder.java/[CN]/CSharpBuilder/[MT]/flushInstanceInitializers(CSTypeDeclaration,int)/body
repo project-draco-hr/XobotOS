@@ -1,0 +1,18 @@
+{
+  if (_instanceInitializers.isEmpty()) {
+    return;
+  }
+  ensureConstructorsFor(type);
+  int initializerIndex=startStatementIndex;
+  for (  Initializer node : _instanceInitializers) {
+    final CSBlock body=mapInitializer(node);
+    for (    CSConstructor ctor : type.constructors()) {
+      if (ctor.isStatic() || hasChainedThisInvocation(ctor)) {
+        continue;
+      }
+      ctor.body().addStatement(initializerIndex,body);
+    }
+    ++initializerIndex;
+  }
+  _instanceInitializers.clear();
+}

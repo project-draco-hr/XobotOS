@@ -1,0 +1,11 @@
+{
+  try {
+    sService.setForegroundDispatch(null,null,null);
+    if (!force && !activity.isResumed()) {
+      throw new IllegalStateException("You must disable foreground dispatching " + "while your activity is still resumed");
+    }
+  }
+ catch (  RemoteException e) {
+    attemptDeadServiceRecovery(e);
+  }
+}

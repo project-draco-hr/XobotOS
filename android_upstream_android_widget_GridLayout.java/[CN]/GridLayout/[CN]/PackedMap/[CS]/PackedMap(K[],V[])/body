@@ -1,0 +1,5 @@
+{
+  this.index=createIndex(keys);
+  this.keys=compact(keys,index);
+  this.values=compact(values,index);
+}

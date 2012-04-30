@@ -1,0 +1,24 @@
+{
+  outputProperties.setProperty(key,value);
+  if (key.equals(ENCODING)) {
+    outputEncoding=value;
+    unicodeMode=value.substring(0,3).equalsIgnoreCase("utf");
+  }
+ else   if (key.equals(METHOD)) {
+    htmlMode=value.equals("html");
+  }
+ else   if (key.equals(DOCTYPE_PUBLIC)) {
+    overridePublic=value;
+    forceDTD=true;
+  }
+ else   if (key.equals(DOCTYPE_SYSTEM)) {
+    overrideSystem=value;
+    forceDTD=true;
+  }
+ else   if (key.equals(VERSION)) {
+    version=value;
+  }
+ else   if (key.equals(STANDALONE)) {
+    standalone=value;
+  }
+}

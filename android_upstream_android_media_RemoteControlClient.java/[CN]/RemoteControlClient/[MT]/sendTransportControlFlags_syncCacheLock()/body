@@ -1,0 +1,11 @@
+{
+  if ((mCurrentClientGenId == mInternalClientGenId) && (mRcDisplay != null)) {
+    try {
+      mRcDisplay.setTransportControlFlags(mInternalClientGenId,mTransportControlFlags);
+    }
+ catch (    RemoteException e) {
+      Log.e(TAG,"Error in sendTransportControlFlags(), dead display " + e);
+      detachFromDisplay_syncCacheLock();
+    }
+  }
+}

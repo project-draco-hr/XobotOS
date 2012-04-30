@@ -1,0 +1,7 @@
+{
+  super(context,resolveDialogTheme(context,0));
+  mWindow.alwaysReadCloseOnTouchAttr();
+  setCancelable(cancelable);
+  setOnCancelListener(cancelListener);
+  mAlert=new AlertController(context,this,getWindow());
+}

@@ -1,0 +1,3 @@
+{
+  return (ErrorInfoList)getSIPHeaderListLowerCase(ERROR_LOWERCASE);
+}

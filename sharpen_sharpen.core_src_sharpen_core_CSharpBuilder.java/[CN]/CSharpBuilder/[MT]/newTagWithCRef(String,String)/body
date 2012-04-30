@@ -1,0 +1,5 @@
+{
+  CSDocTagNode node=new CSDocTagNode(tagName);
+  node.addAttribute("cref",cref);
+  return node;
+}

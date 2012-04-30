@@ -1,0 +1,11 @@
+{
+  int otherflags=member.getModifiers();
+  ITypeBinding declaringType=member.getDeclaringClass();
+  if (Modifier.isPublic(otherflags) || Modifier.isProtected(otherflags) || (declaringType != null && declaringType.isInterface())) {
+    return true;
+  }
+ else   if (Modifier.isPrivate(otherflags)) {
+    return false;
+  }
+  return pack == declaringType.getPackage();
+}

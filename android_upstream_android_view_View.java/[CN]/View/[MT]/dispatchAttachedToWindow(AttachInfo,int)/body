@@ -1,0 +1,28 @@
+{
+  mAttachInfo=info;
+  mWindowAttachCount++;
+  mPrivateFlags|=DRAWABLE_STATE_DIRTY;
+  if (mFloatingTreeObserver != null) {
+    info.mTreeObserver.merge(mFloatingTreeObserver);
+    mFloatingTreeObserver=null;
+  }
+  if ((mPrivateFlags & SCROLL_CONTAINER) != 0) {
+    mAttachInfo.mScrollContainers.add(this);
+    mPrivateFlags|=SCROLL_CONTAINER_ADDED;
+  }
+  performCollectViewAttributes(visibility);
+  onAttachedToWindow();
+  final CopyOnWriteArrayList<OnAttachStateChangeListener> listeners=mOnAttachStateChangeListeners;
+  if (listeners != null && listeners.size() > 0) {
+    for (    OnAttachStateChangeListener listener : listeners) {
+      listener.onViewAttachedToWindow(this);
+    }
+  }
+  int vis=info.mWindowVisibility;
+  if (vis != GONE) {
+    onWindowVisibilityChanged(vis);
+  }
+  if ((mPrivateFlags & DRAWABLE_STATE_DIRTY) != 0) {
+    refreshDrawableState();
+  }
+}

@@ -1,0 +1,6 @@
+{
+  if (!mTimerPaused) {
+    mTimerPaused=true;
+    mHasDeferredTimers=false;
+  }
+}

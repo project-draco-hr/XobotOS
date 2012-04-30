@@ -1,0 +1,11 @@
+def build(self, gyp_file, target=None, **kw):
+    if (self.last_gyp_configuration != self.configuration):
+        self.run_gyp(gyp_file)
+    arguments = kw.get('arguments', [])[:]
+    arguments.append('-C')
+    arguments.append(os.path.join('out', self.configuration_dirname()))
+    if (target is None):
+        target = 'all'
+    arguments.append(target)
+    kw['arguments'] = arguments
+    return self.run(program=self.build_tool, **kw)

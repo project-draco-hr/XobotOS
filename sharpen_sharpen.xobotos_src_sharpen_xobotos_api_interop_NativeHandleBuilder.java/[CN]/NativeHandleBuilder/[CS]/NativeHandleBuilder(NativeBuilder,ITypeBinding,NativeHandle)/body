@@ -1,0 +1,9 @@
+{
+  super(builder,type);
+  this._template=template;
+  String fullName=BindingUtils.qualifiedName(type);
+  String prefix=builder.getConfig().getFunctionPrefix();
+  if (prefix != null)   _functionPrefix=prefix + "_" + fullName.replace('.','_');
+ else   _functionPrefix=fullName.replace('.','_');
+  this._destructorName=_functionPrefix + "_destructor";
+}

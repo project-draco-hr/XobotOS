@@ -1,0 +1,3 @@
+{
+  return createLocal(body,type,name,init,HelperClassBuilder.buildSet(NativeVariable.Flags.class,flags));
+}

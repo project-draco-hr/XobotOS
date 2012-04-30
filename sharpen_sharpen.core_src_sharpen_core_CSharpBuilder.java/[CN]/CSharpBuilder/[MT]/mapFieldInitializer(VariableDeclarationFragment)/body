@@ -1,0 +1,3 @@
+{
+  return mapExpression(fragment.resolveBinding().getType(),fragment.getInitializer());
+}

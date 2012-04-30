@@ -1,0 +1,14 @@
+{
+  View v=findViewById(viewId);
+  if ((v != null) && (v instanceof AdapterView<?>)) {
+    AdapterView<?> adapterView=(AdapterView<?>)v;
+    Adapter adapter=adapterView.getAdapter();
+    if (adapter instanceof BaseAdapter) {
+      BaseAdapter baseAdapter=(BaseAdapter)adapter;
+      baseAdapter.notifyDataSetChanged();
+    }
+ else     if (adapter == null && adapterView instanceof RemoteAdapterConnectionCallback) {
+      ((RemoteAdapterConnectionCallback)adapterView).deferNotifyDataSetChanged();
+    }
+  }
+}

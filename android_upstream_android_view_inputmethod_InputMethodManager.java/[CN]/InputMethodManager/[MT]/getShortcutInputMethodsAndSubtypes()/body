@@ -1,0 +1,30 @@
+{
+synchronized (mH) {
+    HashMap<InputMethodInfo,List<InputMethodSubtype>> ret=new HashMap<InputMethodInfo,List<InputMethodSubtype>>();
+    try {
+      List<Object> info=mService.getShortcutInputMethodsAndSubtypes();
+      ArrayList<InputMethodSubtype> subtypes=null;
+      final int N=info.size();
+      if (info != null && N > 0) {
+        for (int i=0; i < N; ++i) {
+          Object o=info.get(i);
+          if (o instanceof InputMethodInfo) {
+            if (ret.containsKey(o)) {
+              Log.e(TAG,"IMI list already contains the same InputMethod.");
+              break;
+            }
+            subtypes=new ArrayList<InputMethodSubtype>();
+            ret.put((InputMethodInfo)o,subtypes);
+          }
+ else           if (subtypes != null && o instanceof InputMethodSubtype) {
+            subtypes.add((InputMethodSubtype)o);
+          }
+        }
+      }
+    }
+ catch (    RemoteException e) {
+      Log.w(TAG,"IME died: " + mCurId,e);
+    }
+    return ret;
+  }
+}

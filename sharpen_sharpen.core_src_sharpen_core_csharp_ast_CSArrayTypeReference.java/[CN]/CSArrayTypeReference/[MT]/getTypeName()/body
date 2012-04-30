@@ -1,0 +1,10 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append(_elementType.getTypeName());
+  sb.append('[');
+  for (int i=1; i < _dimensions; i++) {
+    sb.append('.');
+  }
+  sb.append(']');
+  return sb.toString();
+}

@@ -1,0 +1,10 @@
+{
+  if (mKeepAliveSession != null) {
+    int newInterval=getKeepAliveInterval();
+    if (DEBUGV) {
+      Log.v(TAG,"restart keepalive w interval=" + newInterval);
+    }
+    mKeepAliveSuccessCount=0;
+    startKeepAliveProcess(newInterval);
+  }
+}

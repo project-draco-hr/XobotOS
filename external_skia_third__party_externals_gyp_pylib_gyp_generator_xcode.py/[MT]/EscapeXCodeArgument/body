@@ -1,0 +1,5 @@
+def EscapeXCodeArgument(s):
+    'We must escape the arguments that we give to XCode so that it knows not to\n     split on spaces and to respect backslash and quote literals.'
+    s = s.replace('\\', '\\\\')
+    s = s.replace('"', '\\"')
+    return (('"' + s) + '"')

@@ -1,0 +1,4 @@
+{
+  setBlockGuardPolicy(policyMask);
+  Binder.setThreadStrictModePolicy(policyMask);
+}

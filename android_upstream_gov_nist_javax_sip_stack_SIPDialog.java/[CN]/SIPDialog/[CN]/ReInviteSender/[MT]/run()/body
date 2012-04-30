@@ -1,0 +1,48 @@
+{
+  try {
+    long timeToWait=0;
+    long startTime=System.currentTimeMillis();
+    if (!SIPDialog.this.takeAckSem()) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logError("Could not send re-INVITE time out ClientTransaction");
+      ((SIPClientTransaction)ctx).fireTimeoutTimer();
+      if (sipProvider.getSipListener() != null && sipProvider.getSipListener() instanceof SipListenerExt) {
+        raiseErrorEvent(SIPDialogErrorEvent.DIALOG_REINVITE_TIMEOUT);
+      }
+ else {
+        Request byeRequest=SIPDialog.this.createRequest(Request.BYE);
+        if (MessageFactoryImpl.getDefaultUserAgentHeader() != null) {
+          byeRequest.addHeader(MessageFactoryImpl.getDefaultUserAgentHeader());
+        }
+        ReasonHeader reasonHeader=new Reason();
+        reasonHeader.setCause(1024);
+        reasonHeader.setText("Timed out waiting to re-INVITE");
+        byeRequest.addHeader(reasonHeader);
+        ClientTransaction byeCtx=SIPDialog.this.getSipProvider().getNewClientTransaction(byeRequest);
+        SIPDialog.this.sendRequest(byeCtx);
+        return;
+      }
+    }
+    if (getState() != DialogState.TERMINATED) {
+      timeToWait=System.currentTimeMillis() - startTime;
+    }
+    try {
+      if (timeToWait != 0) {
+        Thread.sleep(SIPDialog.this.reInviteWaitTime);
+      }
+    }
+ catch (    InterruptedException ex) {
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("Interrupted sleep");
+      return;
+    }
+    if (SIPDialog.this.getState() != DialogState.TERMINATED) {
+      SIPDialog.this.sendRequest(ctx,true);
+    }
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logDebug("re-INVITE successfully sent");
+  }
+ catch (  Exception ex) {
+    sipStack.getStackLogger().logError("Error sending re-INVITE",ex);
+  }
+ finally {
+    this.ctx=null;
+  }
+}

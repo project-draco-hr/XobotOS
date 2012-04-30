@@ -1,0 +1,13 @@
+{
+  Iterator li=this.parameters.iterator();
+  NameValue nv;
+  boolean removed=false;
+  while (li.hasNext()) {
+    nv=(NameValue)li.next();
+    if (((String)nv.getValueAsObject()).equalsIgnoreCase(value) && nv.getName().equalsIgnoreCase(name)) {
+      li.remove();
+      removed=true;
+    }
+  }
+  return removed;
+}

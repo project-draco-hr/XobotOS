@@ -1,0 +1,18 @@
+{
+  if (expectedModCount == modCount) {
+    try {
+      AbstractList.this.add(pos + 1,object);
+    }
+ catch (    IndexOutOfBoundsException e) {
+      throw new NoSuchElementException();
+    }
+    pos++;
+    lastPosition=-1;
+    if (modCount != expectedModCount) {
+      expectedModCount=modCount;
+    }
+  }
+ else {
+    throw new ConcurrentModificationException();
+  }
+}

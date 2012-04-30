@@ -1,0 +1,3 @@
+{
+  return "tokenValue = " + tokenValue + "/tokenType = "+ tokenType;
+}

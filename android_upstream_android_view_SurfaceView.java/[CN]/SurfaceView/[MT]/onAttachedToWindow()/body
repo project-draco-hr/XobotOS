@@ -1,0 +1,14 @@
+{
+  super.onAttachedToWindow();
+  mParent.requestTransparentRegion(this);
+  mSession=getWindowSession();
+  mLayout.token=getWindowToken();
+  mLayout.setTitle("SurfaceView");
+  mViewVisibility=getVisibility() == VISIBLE;
+  if (!mGlobalListenersAdded) {
+    ViewTreeObserver observer=getViewTreeObserver();
+    observer.addOnScrollChangedListener(mScrollChangedListener);
+    observer.addOnPreDrawListener(mDrawListener);
+    mGlobalListenersAdded=true;
+  }
+}

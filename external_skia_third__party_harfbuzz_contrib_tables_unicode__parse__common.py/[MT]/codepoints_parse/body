@@ -1,0 +1,12 @@
+def codepoints_parse(token):
+    'Parse a Unicode style code-point range. Return either a single value or a\n     tuple of (start, end) for a range of code-points.'
+
+    def fromHex(token):
+        return int(token, 16)
+    parts = token.split('..')
+    if (len(parts) == 2):
+        return (fromHex(parts[0]), fromHex(parts[1]))
+    elif (len(parts) == 1):
+        return fromHex(parts[0])
+    else:
+        raise ValueError(token)

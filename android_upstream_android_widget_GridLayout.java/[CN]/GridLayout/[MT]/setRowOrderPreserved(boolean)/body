@@ -1,0 +1,5 @@
+{
+  verticalAxis.setOrderPreserved(rowOrderPreserved);
+  invalidateStructure();
+  requestLayout();
+}

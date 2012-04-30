@@ -1,0 +1,13 @@
+{
+  try {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("semRelease ]]]]" + this);
+      sipStack.getStackLogger().logStackTrace();
+    }
+    this.isSemaphoreAquired=false;
+    this.semaphore.release();
+  }
+ catch (  Exception ex) {
+    sipStack.getStackLogger().logError("Unexpected exception releasing sem",ex);
+  }
+}

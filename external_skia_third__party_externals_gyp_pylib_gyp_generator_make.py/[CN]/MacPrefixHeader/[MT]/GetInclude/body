@@ -1,0 +1,8 @@
+def GetInclude(self, lang):
+    'Gets the cflags to include the prefix header for language |lang|.'
+    if (self.compile_headers and (lang in self.compiled_headers)):
+        return ('-include %s ' % self.compiled_headers[lang])
+    elif self.header:
+        return ('-include %s ' % self.header)
+    else:
+        return ''

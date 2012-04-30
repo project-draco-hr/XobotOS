@@ -1,0 +1,7 @@
+{
+  super(type);
+  this._overrideFlags=flags;
+  this._includes=handle.getIncludes();
+  this._nativeClass=handle.getNativeClass();
+  this._nativeHandle=handle;
+}

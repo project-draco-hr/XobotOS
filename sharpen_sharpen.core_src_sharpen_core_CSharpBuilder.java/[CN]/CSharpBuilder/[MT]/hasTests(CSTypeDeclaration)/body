@@ -1,0 +1,11 @@
+{
+  for (  CSMember m : type.members()) {
+    if (m instanceof CSMethod) {
+      CSMethod met=(CSMethod)m;
+      for (      CSAttribute at : met.attributes()) {
+        if (at.name().equals("Test") || at.name().equals("NUnit.Framework.Test"))         return true;
+      }
+    }
+  }
+  return false;
+}

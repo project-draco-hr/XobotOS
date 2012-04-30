@@ -1,0 +1,14 @@
+{
+  try {
+    Ringtone r=new Ringtone(context);
+    if (streamType >= 0) {
+      r.setStreamType(streamType);
+    }
+    r.open(ringtoneUri);
+    return r;
+  }
+ catch (  Exception ex) {
+    Log.e(TAG,"Failed to open ringtone " + ringtoneUri);
+  }
+  return null;
+}

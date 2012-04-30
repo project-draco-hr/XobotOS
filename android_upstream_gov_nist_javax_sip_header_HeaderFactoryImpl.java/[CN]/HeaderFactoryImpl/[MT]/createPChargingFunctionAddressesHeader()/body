@@ -1,0 +1,4 @@
+{
+  PChargingFunctionAddresses cfa=new PChargingFunctionAddresses();
+  return cfa;
+}

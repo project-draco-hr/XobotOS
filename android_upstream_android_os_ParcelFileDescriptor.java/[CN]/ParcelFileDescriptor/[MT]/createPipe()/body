@@ -1,0 +1,8 @@
+{
+  FileDescriptor[] fds=new FileDescriptor[2];
+  createPipeNative(fds);
+  ParcelFileDescriptor[] pfds=new ParcelFileDescriptor[2];
+  pfds[0]=new ParcelFileDescriptor(fds[0]);
+  pfds[1]=new ParcelFileDescriptor(fds[1]);
+  return pfds;
+}

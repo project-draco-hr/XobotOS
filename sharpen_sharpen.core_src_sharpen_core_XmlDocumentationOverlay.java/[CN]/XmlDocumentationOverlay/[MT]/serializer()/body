@@ -1,0 +1,4 @@
+{
+  if (null != _serializer)   return _serializer;
+  return _serializer=newSerializer();
+}

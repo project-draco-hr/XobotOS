@@ -1,0 +1,13 @@
+{
+  stringRepresentation="";
+  String indent=new Indentation(indentation).getIndentation();
+  String className=this.getClass().getName();
+  sprint(indent + className);
+  sprint(indent + "{");
+  for (Iterator<HDR> it=hlist.iterator(); it.hasNext(); ) {
+    HDR sipHeader=(HDR)it.next();
+    sprint(indent + sipHeader.debugDump());
+  }
+  sprint(indent + "}");
+  return stringRepresentation;
+}

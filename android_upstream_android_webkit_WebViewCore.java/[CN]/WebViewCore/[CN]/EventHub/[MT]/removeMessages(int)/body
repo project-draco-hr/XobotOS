@@ -1,0 +1,15 @@
+{
+  if (mBlockMessages) {
+    return;
+  }
+  if (what == EventHub.WEBKIT_DRAW) {
+    mDrawIsScheduled=false;
+  }
+  if (mMessages != null) {
+    Throwable throwable=new Throwable("EventHub.removeMessages(int what = " + what + ") is not supported "+ "before the WebViewCore is set up.");
+    Log.w(LOGTAG,Log.getStackTraceString(throwable));
+  }
+ else {
+    mHandler.removeMessages(what);
+  }
+}

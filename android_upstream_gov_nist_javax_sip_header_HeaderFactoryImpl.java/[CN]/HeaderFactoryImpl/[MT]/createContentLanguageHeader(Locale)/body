@@ -1,0 +1,6 @@
+{
+  if (contentLanguage == null)   throw new NullPointerException("null arg contentLanguage");
+  ContentLanguage c=new ContentLanguage();
+  c.setContentLanguage(contentLanguage);
+  return c;
+}

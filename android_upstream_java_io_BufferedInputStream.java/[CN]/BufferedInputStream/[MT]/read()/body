@@ -1,0 +1,20 @@
+{
+  byte[] localBuf=buf;
+  InputStream localIn=in;
+  if (localBuf == null || localIn == null) {
+    throw streamClosed();
+  }
+  if (pos >= count && fillbuf(localIn,localBuf) == -1) {
+    return -1;
+  }
+  if (localBuf != buf) {
+    localBuf=buf;
+    if (localBuf == null) {
+      throw streamClosed();
+    }
+  }
+  if (count - pos > 0) {
+    return localBuf[pos++] & 0xFF;
+  }
+  return -1;
+}

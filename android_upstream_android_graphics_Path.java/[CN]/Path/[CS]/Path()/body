@@ -1,0 +1,4 @@
+{
+  mNativePath=init1();
+  mDetectSimplePaths=HardwareRenderer.isAvailable();
+}

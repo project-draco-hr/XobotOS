@@ -1,0 +1,12 @@
+{
+  final int pos=mHistoryBuffer.dataPosition();
+  if (pos == 0) {
+    out.clear();
+  }
+  boolean end=pos >= mHistoryBuffer.dataSize();
+  if (end) {
+    return false;
+  }
+  out.readDelta(mHistoryBuffer);
+  return true;
+}

@@ -1,0 +1,5 @@
+{
+  if (m < 0 || m >= 60)   throw new IllegalArgumentException("Illegal minute : " + (Integer.toString(m)));
+  javaCal=null;
+  minute=m;
+}

@@ -1,0 +1,7 @@
+{
+  node.getLeftExpression().accept(this);
+  _writer.write(" ");
+  _writer.write(node.getOperator());
+  _writer.write(" ");
+  node.getRightExpression().accept(this);
+}

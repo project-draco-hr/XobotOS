@@ -1,0 +1,32 @@
+{
+  final int verticalPadding=widget.getTotalPaddingTop() + widget.getTotalPaddingBottom();
+  final int top=layout.getLineForVertical(y);
+  final int bottom=layout.getLineForVertical(y + widget.getHeight() - verticalPadding);
+  int left=Integer.MAX_VALUE;
+  int right=0;
+  Alignment a=layout.getParagraphAlignment(top);
+  boolean ltr=layout.getParagraphDirection(top) > 0;
+  for (int i=top; i <= bottom; i++) {
+    left=(int)Math.min(left,layout.getLineLeft(i));
+    right=(int)Math.max(right,layout.getLineRight(i));
+  }
+  final int hoizontalPadding=widget.getTotalPaddingLeft() + widget.getTotalPaddingRight();
+  final int availableWidth=widget.getWidth() - hoizontalPadding;
+  final int actualWidth=right - left;
+  if (actualWidth < availableWidth) {
+    if (a == Alignment.ALIGN_CENTER) {
+      x=left - ((availableWidth - actualWidth) / 2);
+    }
+ else     if ((ltr && (a == Alignment.ALIGN_OPPOSITE)) || (a == Alignment.ALIGN_RIGHT)) {
+      x=left - (availableWidth - actualWidth);
+    }
+ else {
+      x=left;
+    }
+  }
+ else {
+    x=Math.min(x,right - availableWidth);
+    x=Math.max(x,left);
+  }
+  widget.scrollTo(x,y);
+}

@@ -1,0 +1,46 @@
+{
+  if (mAttachInfo == null || mAttachInfo.mHardwareRenderer == null || !mAttachInfo.mHardwareRenderer.isEnabled()) {
+    return null;
+  }
+  final int width=mRight - mLeft;
+  final int height=mBottom - mTop;
+  if (width == 0 || height == 0) {
+    return null;
+  }
+  if ((mPrivateFlags & DRAWING_CACHE_VALID) == 0 || mHardwareLayer == null) {
+    if (mHardwareLayer == null) {
+      mHardwareLayer=mAttachInfo.mHardwareRenderer.createHardwareLayer(width,height,isOpaque());
+      mLocalDirtyRect.setEmpty();
+    }
+ else     if (mHardwareLayer.getWidth() != width || mHardwareLayer.getHeight() != height) {
+      mHardwareLayer.resize(width,height);
+      mLocalDirtyRect.setEmpty();
+    }
+    HardwareCanvas currentCanvas=mAttachInfo.mHardwareCanvas;
+    final HardwareCanvas canvas=mHardwareLayer.start(currentCanvas);
+    mAttachInfo.mHardwareCanvas=canvas;
+    try {
+      canvas.setViewport(width,height);
+      canvas.onPreDraw(mLocalDirtyRect);
+      mLocalDirtyRect.setEmpty();
+      final int restoreCount=canvas.save();
+      computeScroll();
+      canvas.translate(-mScrollX,-mScrollY);
+      mPrivateFlags|=DRAWN | DRAWING_CACHE_VALID;
+      if ((mPrivateFlags & SKIP_DRAW) == SKIP_DRAW) {
+        mPrivateFlags&=~DIRTY_MASK;
+        dispatchDraw(canvas);
+      }
+ else {
+        draw(canvas);
+      }
+      canvas.restoreToCount(restoreCount);
+    }
+  finally {
+      canvas.onPostDraw();
+      mHardwareLayer.end(currentCanvas);
+      mAttachInfo.mHardwareCanvas=currentCanvas;
+    }
+  }
+  return mHardwareLayer;
+}

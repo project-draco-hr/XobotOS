@@ -1,0 +1,8 @@
+{
+  if (mCurrentState == STATE_PREPARED) {
+    return mPlayer.getDuration();
+  }
+ else {
+    return -1;
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return getParameter(ParameterNamesIms.UTRAN_CELL_ID_3GPP);
+}

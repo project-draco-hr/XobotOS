@@ -1,0 +1,6 @@
+{
+  write("default");
+  write("(");
+  write(node.name());
+  write(")");
+}

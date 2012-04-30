@@ -1,0 +1,4 @@
+{
+  if (nonce == null)   throw new NullPointerException("JAIN-SIP Exception, " + " AuthenticationHeader, setNonce(), The nonce parameter is null");
+  setParameter(NONCE,nonce);
+}

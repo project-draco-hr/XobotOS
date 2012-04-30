@@ -1,0 +1,13 @@
+def bounds(lines):
+    'Finds the bounding rectangle for the lines.\n    \n    {Label:[(x,y)]} -> ((min_x, min_y),(max_x,max_y))'
+    min_x = bench_util.Max
+    min_y = bench_util.Max
+    max_x = bench_util.Min
+    max_y = bench_util.Min
+    for line in lines.itervalues():
+        for (x, y) in line:
+            min_x = min(min_x, x)
+            min_y = min(min_y, y)
+            max_x = max(max_x, x)
+            max_y = max(max_y, y)
+    return ((min_x, min_y), (max_x, max_y))

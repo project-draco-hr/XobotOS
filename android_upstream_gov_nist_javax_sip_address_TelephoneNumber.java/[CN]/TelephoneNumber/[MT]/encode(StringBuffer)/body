@@ -1,0 +1,9 @@
+{
+  if (isglobal)   buffer.append('+');
+  buffer.append(phoneNumber);
+  if (!parameters.isEmpty()) {
+    buffer.append(SEMICOLON);
+    parameters.encode(buffer);
+  }
+  return buffer;
+}

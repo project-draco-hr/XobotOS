@@ -1,0 +1,4 @@
+{
+  clientSessionContext=new ClientSessionContext();
+  serverSessionContext=new ServerSessionContext();
+}

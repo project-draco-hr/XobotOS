@@ -1,0 +1,10 @@
+{
+  while (binding != null) {
+    if (binding.isInterface())     break;
+    Set<ITypeBinding> ifaces=new LinkedHashSet<ITypeBinding>();
+    collectInterfaces(ifaces,binding);
+    if (ifaces.contains(type))     return true;
+    binding=binding.getSuperclass();
+  }
+  return false;
+}

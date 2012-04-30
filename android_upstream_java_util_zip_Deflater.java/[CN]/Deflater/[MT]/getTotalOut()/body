@@ -1,0 +1,4 @@
+{
+  checkOpen();
+  return (int)getTotalOutImpl(streamHandle);
+}

@@ -1,0 +1,19 @@
+{
+  writeIndented("[StructLayout(");
+  CSStructLayout.LayoutKind kind=layout.getLayoutKind();
+  if (kind != null) {
+    write("LayoutKind.");
+switch (kind) {
+case Sequential:
+      write("Sequential");
+    break;
+case Explicit:
+  write("Explicit");
+break;
+default :
+write("Auto");
+break;
+}
+}
+writeLine(")]");
+}

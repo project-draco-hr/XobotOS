@@ -1,0 +1,8 @@
+{
+  for (  TagElement element : tags) {
+    if (tagName.equals(element.getTagName())) {
+      accumulator.add(element);
+    }
+  }
+  return accumulator;
+}

@@ -1,0 +1,6 @@
+{
+  if (version != null) {
+    throw new IllegalStateException("cannot set strict after read()");
+  }
+  this.strict=strict;
+}

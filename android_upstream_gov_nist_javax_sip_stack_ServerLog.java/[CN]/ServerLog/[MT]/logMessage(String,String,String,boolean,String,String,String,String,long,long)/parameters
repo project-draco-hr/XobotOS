@@ -1,0 +1,10 @@
+String message
+String from
+String to
+boolean sender
+String callId
+String firstLine
+String status
+String tid
+long time
+long timestampVal

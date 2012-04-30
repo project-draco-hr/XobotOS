@@ -1,0 +1,6 @@
+{
+  Object val=this.getValue(name);
+  if (val == null)   return null;
+  if (val instanceof GenericObject)   return ((GenericObject)val).encode();
+ else   return val.toString();
+}

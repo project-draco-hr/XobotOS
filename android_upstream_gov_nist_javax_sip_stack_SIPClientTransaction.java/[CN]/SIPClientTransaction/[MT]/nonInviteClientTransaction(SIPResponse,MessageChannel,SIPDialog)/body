@@ -1,0 +1,64 @@
+{
+  int statusCode=transactionResponse.getStatusCode();
+  if (TransactionState.TRYING == this.getState()) {
+    if (statusCode / 100 == 1) {
+      this.setState(TransactionState.PROCEEDING);
+      enableRetransmissionTimer(MAXIMUM_RETRANSMISSION_TICK_COUNT);
+      enableTimeoutTimer(TIMER_F);
+      if (respondTo != null) {
+        respondTo.processResponse(transactionResponse,this,sipDialog);
+      }
+ else {
+        this.semRelease();
+      }
+    }
+ else     if (200 <= statusCode && statusCode <= 699) {
+      if (respondTo != null) {
+        respondTo.processResponse(transactionResponse,this,sipDialog);
+      }
+ else {
+        this.semRelease();
+      }
+      if (!isReliable()) {
+        this.setState(TransactionState.COMPLETED);
+        enableTimeoutTimer(TIMER_K);
+      }
+ else {
+        this.setState(TransactionState.TERMINATED);
+      }
+    }
+  }
+ else   if (TransactionState.PROCEEDING == this.getState()) {
+    if (statusCode / 100 == 1) {
+      if (respondTo != null) {
+        respondTo.processResponse(transactionResponse,this,sipDialog);
+      }
+ else {
+        this.semRelease();
+      }
+    }
+ else     if (200 <= statusCode && statusCode <= 699) {
+      if (respondTo != null) {
+        respondTo.processResponse(transactionResponse,this,sipDialog);
+      }
+ else {
+        this.semRelease();
+      }
+      disableRetransmissionTimer();
+      disableTimeoutTimer();
+      if (!isReliable()) {
+        this.setState(TransactionState.COMPLETED);
+        enableTimeoutTimer(TIMER_K);
+      }
+ else {
+        this.setState(TransactionState.TERMINATED);
+      }
+    }
+  }
+ else {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug(" Not sending response to TU! " + getState());
+    }
+    this.semRelease();
+  }
+}

@@ -1,0 +1,7 @@
+{
+  checkIsAlive();
+  if (mOnScrollChangedListeners == null) {
+    mOnScrollChangedListeners=new CopyOnWriteArrayList<OnScrollChangedListener>();
+  }
+  mOnScrollChangedListeners.add(listener);
+}

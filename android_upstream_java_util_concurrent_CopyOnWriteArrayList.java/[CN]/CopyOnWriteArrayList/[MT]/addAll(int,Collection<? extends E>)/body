@@ -1,0 +1,9 @@
+{
+  Object[] toAdd=collection.toArray();
+  Object[] newElements=new Object[elements.length + toAdd.length];
+  System.arraycopy(elements,0,newElements,0,index);
+  System.arraycopy(toAdd,0,newElements,index,toAdd.length);
+  System.arraycopy(elements,index,newElements,index + toAdd.length,elements.length - index);
+  elements=newElements;
+  return toAdd.length > 0;
+}

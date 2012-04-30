@@ -1,0 +1,4 @@
+int streamType
+int oldIndex
+int index
+int flags

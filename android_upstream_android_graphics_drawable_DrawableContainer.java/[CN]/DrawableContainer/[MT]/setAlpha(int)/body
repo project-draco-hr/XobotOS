@@ -1,0 +1,13 @@
+{
+  if (mAlpha != alpha) {
+    mAlpha=alpha;
+    if (mCurrDrawable != null) {
+      if (mEnterAnimationEnd == 0) {
+        mCurrDrawable.setAlpha(alpha);
+      }
+ else {
+        animate(false);
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  if (mRaf == null) {
+    throw new IllegalStateException("Zip file closed");
+  }
+}

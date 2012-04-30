@@ -1,0 +1,12 @@
+{
+  if (cookie == null) {
+    throw new NullPointerException("cookie == null");
+  }
+  List<HttpCookie> cookies=map.get(cookiesUri(uri));
+  if (cookies != null) {
+    return cookies.remove(cookie);
+  }
+ else {
+    return false;
+  }
+}

@@ -1,0 +1,19 @@
+{
+  if (processIgnoredType(node)) {
+    return false;
+  }
+  try {
+    my(NameScope.class).enterTypeDeclaration(node);
+    final ITypeBinding binding=node.resolveBinding();
+    if (!binding.isNested()) {
+      processTypeDeclaration(node);
+      return false;
+    }
+    if (isNonStaticNestedType(binding))     NonStaticNestedClassBuilder.build(CSharpBuilder.this,node);
+ else     StaticNestedClassBuilder.build(CSharpBuilder.this,node);
+  }
+  finally {
+    my(NameScope.class).leaveTypeDeclaration(node);
+  }
+  return false;
+}

@@ -1,0 +1,6 @@
+{
+  HashSet<Dialog> dialogs=new HashSet<Dialog>();
+  dialogs.addAll(this.dialogTable.values());
+  dialogs.addAll(this.earlyDialogTable.values());
+  return dialogs;
+}

@@ -1,0 +1,4 @@
+{
+  checkTimeStyle(style);
+  return new SimpleDateFormat(LocaleData.get(locale).getTimeFormat(style),locale);
+}

@@ -1,0 +1,7 @@
+{
+  if (!(expression instanceof MethodInvocation)) {
+    return false;
+  }
+  MethodInvocation invocation=(MethodInvocation)expression;
+  return isTaggedMethodInvocation(invocation,SharpenAnnotations.SHARPEN_REMOVE) || isRemoved(invocation.resolveMethodBinding());
+}

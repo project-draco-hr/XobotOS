@@ -1,0 +1,8 @@
+{
+  final Constructor ctor=node.getDefinition();
+  _writer.writeIndentation();
+  ctor.getType().accept(this);
+  _writer.write("(");
+  visitCommaSeparatedList(ctor.getParameters());
+  _writer.writeLine(");");
+}

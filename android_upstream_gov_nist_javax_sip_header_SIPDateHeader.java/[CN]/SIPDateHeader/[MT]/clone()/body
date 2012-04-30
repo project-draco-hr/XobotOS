@@ -1,0 +1,5 @@
+{
+  SIPDateHeader retval=(SIPDateHeader)super.clone();
+  if (this.date != null)   retval.date=(SIPDate)this.date.clone();
+  return retval;
+}

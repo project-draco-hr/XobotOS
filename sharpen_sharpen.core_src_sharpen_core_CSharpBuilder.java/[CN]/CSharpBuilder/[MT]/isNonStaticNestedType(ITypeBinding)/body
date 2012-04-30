@@ -1,0 +1,5 @@
+{
+  if (binding.isInterface())   return false;
+  if (!binding.isNested())   return false;
+  return !isStatic(binding);
+}

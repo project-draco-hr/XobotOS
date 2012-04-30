@@ -1,0 +1,26 @@
+{
+  if (debug)   dbg_enter("PAssociatedURIParser.parse");
+  PAssociatedURIList associatedURIList=new PAssociatedURIList();
+  try {
+    headerName(TokenTypes.P_ASSOCIATED_URI);
+    PAssociatedURI associatedURI=new PAssociatedURI();
+    associatedURI.setHeaderName(SIPHeaderNamesIms.P_ASSOCIATED_URI);
+    super.parse(associatedURI);
+    associatedURIList.add(associatedURI);
+    this.lexer.SPorHT();
+    while (lexer.lookAhead(0) == ',') {
+      this.lexer.match(',');
+      this.lexer.SPorHT();
+      associatedURI=new PAssociatedURI();
+      super.parse(associatedURI);
+      associatedURIList.add(associatedURI);
+      this.lexer.SPorHT();
+    }
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return associatedURIList;
+  }
+  finally {
+    if (debug)     dbg_leave("PAssociatedURIParser.parse");
+  }
+}

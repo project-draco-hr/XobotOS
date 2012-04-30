@@ -1,0 +1,3 @@
+{
+  return new AssignmentStatement(getReference(dest),getReference(src));
+}

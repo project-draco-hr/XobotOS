@@ -1,0 +1,40 @@
+{
+  super.onDetachedFromWindow();
+  dismissPopup();
+  mRecycler.clear();
+  final ViewTreeObserver treeObserver=getViewTreeObserver();
+  treeObserver.removeOnTouchModeChangeListener(this);
+  if (mTextFilterEnabled && mPopup != null) {
+    treeObserver.removeGlobalOnLayoutListener(this);
+    mGlobalLayoutListenerAddedFilter=false;
+  }
+  if (mAdapter != null) {
+    mAdapter.unregisterDataSetObserver(mDataSetObserver);
+    mDataSetObserver=null;
+  }
+  if (mScrollStrictSpan != null) {
+    mScrollStrictSpan.finish();
+    mScrollStrictSpan=null;
+  }
+  if (mFlingStrictSpan != null) {
+    mFlingStrictSpan.finish();
+    mFlingStrictSpan=null;
+  }
+  if (mFlingRunnable != null) {
+    removeCallbacks(mFlingRunnable);
+  }
+  if (mPositionScroller != null) {
+    mPositionScroller.stop();
+  }
+  if (mClearScrollingCache != null) {
+    removeCallbacks(mClearScrollingCache);
+  }
+  if (mPerformClick != null) {
+    removeCallbacks(mPerformClick);
+  }
+  if (mTouchModeReset != null) {
+    removeCallbacks(mTouchModeReset);
+    mTouchModeReset=null;
+  }
+  mIsAttached=false;
+}

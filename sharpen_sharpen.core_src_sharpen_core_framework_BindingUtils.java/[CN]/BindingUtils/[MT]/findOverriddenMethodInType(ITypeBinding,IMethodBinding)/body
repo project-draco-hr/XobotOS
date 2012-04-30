@@ -1,0 +1,8 @@
+{
+  if (type.getName().equals("Object") && method.getName().equals("clone"))   return null;
+  for (  Object o : type.getDeclaredMethods()) {
+    IMethodBinding existing=(IMethodBinding)o;
+    if (isSubsignature(method,existing))     return existing;
+  }
+  return null;
+}

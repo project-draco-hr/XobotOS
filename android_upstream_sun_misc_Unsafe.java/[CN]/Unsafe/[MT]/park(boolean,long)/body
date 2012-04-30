@@ -1,0 +1,8 @@
+{
+  if (absolute) {
+    Thread.currentThread().parkUntil(time);
+  }
+ else {
+    Thread.currentThread().parkFor(time);
+  }
+}

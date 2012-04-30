@@ -1,0 +1,9 @@
+{
+  DuplicateNameValueList retval=new DuplicateNameValueList();
+  retval.setSeparator(this.separator);
+  Iterator<NameValue> it=this.nameValueMap.values().iterator();
+  while (it.hasNext()) {
+    retval.set((NameValue)((NameValue)it.next()).clone());
+  }
+  return retval;
+}

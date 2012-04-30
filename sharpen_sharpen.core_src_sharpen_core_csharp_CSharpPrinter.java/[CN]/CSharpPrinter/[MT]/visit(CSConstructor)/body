@@ -1,0 +1,18 @@
+{
+  writeDoc(node);
+  writeAttributes(node);
+  if (node.isStatic()) {
+    writeIndented("static ");
+  }
+ else {
+    writeVisibility(node);
+  }
+  write(_currentType.name());
+  writeParameterList(node);
+  if (null != node.chainedConstructorInvocation()) {
+    write(" : ");
+    writeMethodInvocation(node.chainedConstructorInvocation());
+  }
+  writeLine();
+  node.body().accept(this);
+}

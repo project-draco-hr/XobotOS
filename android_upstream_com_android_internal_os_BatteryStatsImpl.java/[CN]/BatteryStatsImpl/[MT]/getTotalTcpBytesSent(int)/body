@@ -1,0 +1,4 @@
+{
+  final long totalTxBytes=getNetworkStatsSummary().getTotal(null).txBytes;
+  return getTcpBytes(totalTxBytes,mTotalDataTx,which);
+}

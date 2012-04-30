@@ -1,0 +1,12 @@
+{
+synchronized (sPoolSync) {
+    if (sPool != null) {
+      Message m=sPool;
+      sPool=m.next;
+      m.next=null;
+      sPoolSize--;
+      return m;
+    }
+  }
+  return new Message();
+}

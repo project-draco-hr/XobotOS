@@ -1,0 +1,8 @@
+CharSequence text
+TextPaint paint
+float avail
+TruncateAt where
+boolean preserveLength
+EllipsizeCallback callback
+TextDirectionHeuristic textDir
+String ellipsis

@@ -1,0 +1,100 @@
+{
+  ApnContext apnContext=null;
+  if (ar.userObj instanceof ApnContext) {
+    apnContext=(ApnContext)ar.userObj;
+  }
+ else {
+    throw new RuntimeException("onDataSetupComplete: No apnContext");
+  }
+  if (isDataSetupCompleteOk(ar)) {
+    DataConnectionAc dcac=apnContext.getDataConnectionAc();
+    if (dcac == null) {
+      throw new RuntimeException("onDataSetupCompete: No dcac");
+    }
+    DataConnection dc=apnContext.getDataConnection();
+    if (DBG) {
+      log(String.format("onDataSetupComplete: success apn=%s",apnContext.getWaitingApns().get(0).apn));
+    }
+    ApnSetting apn=apnContext.getApnSetting();
+    if (apn.proxy != null && apn.proxy.length() != 0) {
+      try {
+        String port=apn.port;
+        if (TextUtils.isEmpty(port))         port="8080";
+        ProxyProperties proxy=new ProxyProperties(apn.proxy,Integer.parseInt(port),null);
+        dcac.setLinkPropertiesHttpProxySync(proxy);
+      }
+ catch (      NumberFormatException e) {
+        loge("onDataSetupComplete: NumberFormatException making ProxyProperties (" + apn.port + "): "+ e);
+      }
+    }
+    if (TextUtils.equals(apnContext.getApnType(),Phone.APN_TYPE_DEFAULT)) {
+      SystemProperties.set("gsm.defaultpdpcontext.active","true");
+      if (canSetPreferApn && mPreferredApn == null) {
+        if (DBG)         log("onDataSetupComplete: PREFERED APN is null");
+        mPreferredApn=apnContext.getApnSetting();
+        if (mPreferredApn != null) {
+          setPreferredApn(mPreferredApn.id);
+        }
+      }
+    }
+ else {
+      SystemProperties.set("gsm.defaultpdpcontext.active","false");
+    }
+    notifyDefaultData(apnContext);
+  }
+ else {
+    String apnString;
+    DataConnection.FailCause cause;
+    cause=(DataConnection.FailCause)(ar.result);
+    if (DBG) {
+      try {
+        apnString=apnContext.getWaitingApns().get(0).apn;
+      }
+ catch (      Exception e) {
+        apnString="<unknown>";
+      }
+      log(String.format("onDataSetupComplete: error apn=%s cause=%s",apnString,cause));
+    }
+    if (cause.isEventLoggable()) {
+      int cid=getCellLocationId();
+      EventLog.writeEvent(EventLogTags.PDP_SETUP_FAIL,cause.ordinal(),cid,TelephonyManager.getDefault().getNetworkType());
+    }
+    if (cause.isPermanentFail())     apnContext.decWaitingApnsPermFailCount();
+    apnContext.removeNextWaitingApn();
+    if (DBG) {
+      log(String.format("onDataSetupComplete: WaitingApns.size=%d" + " WaitingApnsPermFailureCountDown=%d",apnContext.getWaitingApns().size(),apnContext.getWaitingApnsPermFailCount()));
+    }
+    if (apnContext.getWaitingApns().isEmpty()) {
+      if (apnContext.getWaitingApnsPermFailCount() == 0) {
+        if (DBG) {
+          log("onDataSetupComplete: All APN's had permanent failures, stop retrying");
+        }
+        apnContext.setState(State.FAILED);
+        mPhone.notifyDataConnection(Phone.REASON_APN_FAILED,apnContext.getApnType());
+        apnContext.setDataConnection(null);
+        apnContext.setDataConnectionAc(null);
+        if (DBG) {
+          log("onDataSetupComplete: permanent error apn=%s" + apnString);
+        }
+      }
+ else {
+        if (DBG)         log("onDataSetupComplete: Not all permanent failures, retry");
+        int retryOverride=-1;
+        if (ar.exception instanceof DataConnection.CallSetupException) {
+          retryOverride=((DataConnection.CallSetupException)ar.exception).getRetryOverride();
+        }
+        if (retryOverride == RILConstants.MAX_INT) {
+          if (DBG)           log("No retry is suggested.");
+        }
+ else {
+          startDelayedRetry(cause,apnContext,retryOverride);
+        }
+      }
+    }
+ else {
+      if (DBG)       log("onDataSetupComplete: Try next APN");
+      apnContext.setState(State.SCANNING);
+      startAlarmForReconnect(APN_DELAY_MILLIS,apnContext);
+    }
+  }
+}

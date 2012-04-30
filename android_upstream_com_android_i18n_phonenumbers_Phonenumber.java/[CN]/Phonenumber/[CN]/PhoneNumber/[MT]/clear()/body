@@ -1,0 +1,10 @@
+{
+  clearCountryCode();
+  clearNationalNumber();
+  clearExtension();
+  clearItalianLeadingZero();
+  clearRawInput();
+  clearCountryCodeSource();
+  clearPreferredDomesticCarrierCode();
+  return this;
+}

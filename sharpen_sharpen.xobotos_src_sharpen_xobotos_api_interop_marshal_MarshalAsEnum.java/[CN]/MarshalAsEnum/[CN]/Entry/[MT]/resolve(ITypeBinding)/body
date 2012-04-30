@@ -1,0 +1,4 @@
+{
+  if (!type.isEnum() && (!type.isPrimitive() || !type.getName().equals("int")))   return null;
+  return new MarshalAsEnum(type,_managedType,_nativeType);
+}

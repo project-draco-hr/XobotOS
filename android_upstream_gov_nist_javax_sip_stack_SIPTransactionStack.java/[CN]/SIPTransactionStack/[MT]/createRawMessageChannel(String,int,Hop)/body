@@ -1,0 +1,30 @@
+{
+  Host targetHost;
+  HostPort targetHostPort;
+  Iterator processorIterator;
+  MessageProcessor nextProcessor;
+  MessageChannel newChannel;
+  targetHost=new Host();
+  targetHost.setHostname(nextHop.getHost());
+  targetHostPort=new HostPort();
+  targetHostPort.setHost(targetHost);
+  targetHostPort.setPort(nextHop.getPort());
+  newChannel=null;
+  processorIterator=messageProcessors.iterator();
+  while (processorIterator.hasNext() && newChannel == null) {
+    nextProcessor=(MessageProcessor)processorIterator.next();
+    if (nextHop.getTransport().equalsIgnoreCase(nextProcessor.getTransport()) && sourceIpAddress.equals(nextProcessor.getIpAddress().getHostAddress()) && sourcePort == nextProcessor.getPort()) {
+      try {
+        newChannel=nextProcessor.createMessageChannel(targetHostPort);
+      }
+ catch (      UnknownHostException ex) {
+        if (stackLogger.isLoggingEnabled())         stackLogger.logException(ex);
+        throw ex;
+      }
+catch (      IOException e) {
+        if (stackLogger.isLoggingEnabled())         stackLogger.logException(e);
+      }
+    }
+  }
+  return newChannel;
+}

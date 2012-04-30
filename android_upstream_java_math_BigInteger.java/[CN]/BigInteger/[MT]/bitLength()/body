@@ -1,0 +1,6 @@
+{
+  if (!nativeIsValid && javaIsValid) {
+    return BitLevel.bitLength(this);
+  }
+  return getBigInt().bitLength();
+}

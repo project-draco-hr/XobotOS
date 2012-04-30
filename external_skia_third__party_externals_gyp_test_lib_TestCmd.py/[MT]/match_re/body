@@ -1,0 +1,18 @@
+def match_re(lines=None, res=None):
+    '\n    '
+    if (not is_List(lines)):
+        lines = string.split(lines, '\n')
+    if (not is_List(res)):
+        res = string.split(res, '\n')
+    if (len(lines) != len(res)):
+        return
+    for i in range(len(lines)):
+        s = (('^' + res[i]) + '$')
+        try:
+            expr = re.compile(s)
+        except re.error as e:
+            msg = 'Regular expression error in %s: %s'
+            raise re.error, (msg % (repr(s), e[0]))
+        if (not expr.search(lines[i])):
+            return
+    return 1

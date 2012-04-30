@@ -1,0 +1,4 @@
+{
+  checkIndex(index,SizeOf.DOUBLE);
+  return Double.longBitsToDouble(this.block.peekLong(offset + index,order));
+}

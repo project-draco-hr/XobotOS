@@ -1,0 +1,4 @@
+{
+  mShapeState.mIntrinsicWidth=width;
+  invalidateSelf();
+}

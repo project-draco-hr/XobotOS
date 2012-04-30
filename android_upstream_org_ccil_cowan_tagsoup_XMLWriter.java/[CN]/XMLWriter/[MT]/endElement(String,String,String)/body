@@ -1,0 +1,14 @@
+{
+  if (!(htmlMode && (uri.equals("http://www.w3.org/1999/xhtml") || uri.equals("")) && (qName.equals("area") || qName.equals("base") || qName.equals("basefont")|| qName.equals("br")|| qName.equals("col")|| qName.equals("frame")|| qName.equals("hr")|| qName.equals("img")|| qName.equals("input")|| qName.equals("isindex")|| qName.equals("link")|| qName.equals("meta")|| qName.equals("param")))) {
+    write("</");
+    writeName(uri,localName,qName,true);
+    write('>');
+  }
+  if (elementLevel == 1) {
+    write('\n');
+  }
+  cdataElement=false;
+  super.endElement(uri,localName,qName);
+  nsSupport.popContext();
+  elementLevel--;
+}

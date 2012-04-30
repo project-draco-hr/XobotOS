@@ -1,0 +1,3 @@
+double[] dst
+int dstOffset
+int doubleCount

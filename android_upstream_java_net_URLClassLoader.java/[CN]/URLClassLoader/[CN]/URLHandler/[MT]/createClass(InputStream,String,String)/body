@@ -1,0 +1,25 @@
+{
+  if (is == null) {
+    return null;
+  }
+  byte[] clBuf;
+  try {
+    clBuf=Streams.readFully(is);
+  }
+ catch (  IOException e) {
+    return null;
+  }
+  if (packageName != null) {
+    String packageDotName=packageName.replace('/','.');
+    Package packageObj=getPackage(packageDotName);
+    if (packageObj == null) {
+      definePackage(packageDotName,null,null,null,null,null,null,null);
+    }
+ else {
+      if (packageObj.isSealed()) {
+        throw new SecurityException("Package is sealed");
+      }
+    }
+  }
+  return defineClass(origName,clBuf,0,clBuf.length,new CodeSource(codeSourceUrl,(Certificate[])null));
+}

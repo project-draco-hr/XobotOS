@@ -1,0 +1,4 @@
+IPackageFragmentRoot sourceFolder
+String packageName
+String cuName
+String contents

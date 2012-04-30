@@ -1,0 +1,7 @@
+InetAddress senderAddress
+InetAddress receiverAddress
+int contactPort
+String transport
+byte[] bytes
+boolean retry
+MessageChannel messageChannel

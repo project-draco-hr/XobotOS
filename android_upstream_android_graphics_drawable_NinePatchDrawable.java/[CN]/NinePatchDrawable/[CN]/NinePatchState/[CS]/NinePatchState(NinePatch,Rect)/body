@@ -1,0 +1,3 @@
+{
+  this(ninePatch,padding,DEFAULT_DITHER);
+}

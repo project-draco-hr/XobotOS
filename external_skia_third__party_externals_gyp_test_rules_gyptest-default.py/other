@@ -1,0 +1,23 @@
+"\nVerifies simple rules when using an explicit build target of 'all'.\n"
+import TestGyp
+test = TestGyp.TestGyp()
+test.run_gyp('actions.gyp', chdir='src')
+test.relocate('src', 'relocate/src')
+test.build('actions.gyp', chdir='relocate/src')
+expect = 'Hello from program.c\nHello from function1.in\nHello from function2.in\n'
+if (test.format == 'xcode'):
+    chdir = 'relocate/src/subdir1'
+else:
+    chdir = 'relocate/src'
+test.run_built_executable('program', chdir=chdir, stdout=expect)
+expect = 'Hello from program.c\nHello from function3.in\n'
+if (test.format == 'xcode'):
+    chdir = 'relocate/src/subdir3'
+else:
+    chdir = 'relocate/src'
+test.run_built_executable('program2', chdir=chdir, stdout=expect)
+test.must_match('relocate/src/subdir2/file1.out', 'Hello from file1.in\n')
+test.must_match('relocate/src/subdir2/file2.out', 'Hello from file2.in\n')
+test.must_match('relocate/src/subdir2/file1.out2', 'Hello from file1.in\n')
+test.must_match('relocate/src/subdir2/file2.out2', 'Hello from file2.in\n')
+test.pass_test()

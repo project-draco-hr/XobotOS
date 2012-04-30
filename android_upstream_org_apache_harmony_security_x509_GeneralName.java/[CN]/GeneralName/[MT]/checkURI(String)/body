@@ -1,0 +1,14 @@
+{
+  try {
+    URI ur=new URI(uri);
+    if (ur.getScheme() == null || ur.getRawSchemeSpecificPart().isEmpty()) {
+      throw new IOException("No scheme or scheme-specific-part in uniformResourceIdentifier: " + uri);
+    }
+    if (!ur.isAbsolute()) {
+      throw new IOException("Relative uniformResourceIdentifier: " + uri);
+    }
+  }
+ catch (  URISyntaxException e) {
+    throw (IOException)new IOException("Bad representation of uniformResourceIdentifier: " + uri).initCause(e);
+  }
+}

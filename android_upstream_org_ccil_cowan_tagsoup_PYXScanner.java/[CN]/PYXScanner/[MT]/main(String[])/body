@@ -1,0 +1,6 @@
+{
+  Scanner s=new PYXScanner();
+  Reader r=new InputStreamReader(System.in,"UTF-8");
+  Writer w=new BufferedWriter(new OutputStreamWriter(System.out,"UTF-8"));
+  s.scan(r,new PYXWriter(w));
+}

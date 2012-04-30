@@ -1,0 +1,59 @@
+{
+  mContext=context;
+  mAudioManager=(AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+  mAudioService=volumeService;
+  LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  View view=mView=inflater.inflate(R.layout.volume_adjust,null);
+  mView.setOnTouchListener(new View.OnTouchListener(){
+    public boolean onTouch(    View v,    MotionEvent event){
+      resetTimeout();
+      return false;
+    }
+  }
+);
+  mPanel=(ViewGroup)mView.findViewById(R.id.visible_panel);
+  mSliderGroup=(ViewGroup)mView.findViewById(R.id.slider_group);
+  mMoreButton=(ImageView)mView.findViewById(R.id.expand_button);
+  mDivider=(ImageView)mView.findViewById(R.id.expand_button_divider);
+  mDialog=new Dialog(context,R.style.Theme_Panel_Volume){
+    public boolean onTouchEvent(    MotionEvent event){
+      if (isShowing() && event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+        forceTimeout();
+        return true;
+      }
+      return false;
+    }
+  }
+;
+  mDialog.setTitle("Volume control");
+  mDialog.setContentView(mView);
+  mDialog.setOnDismissListener(new OnDismissListener(){
+    public void onDismiss(    DialogInterface dialog){
+      mActiveStreamType=-1;
+      mAudioManager.forceVolumeControlStream(mActiveStreamType);
+    }
+  }
+);
+  Window window=mDialog.getWindow();
+  window.setGravity(Gravity.TOP);
+  LayoutParams lp=window.getAttributes();
+  lp.token=null;
+  lp.y=mContext.getResources().getDimensionPixelOffset(com.android.internal.R.dimen.volume_panel_top);
+  lp.type=LayoutParams.TYPE_VOLUME_OVERLAY;
+  lp.width=LayoutParams.WRAP_CONTENT;
+  lp.height=LayoutParams.WRAP_CONTENT;
+  window.setAttributes(lp);
+  window.addFlags(LayoutParams.FLAG_NOT_FOCUSABLE | LayoutParams.FLAG_NOT_TOUCH_MODAL | LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
+  mToneGenerators=new ToneGenerator[AudioSystem.getNumStreamTypes()];
+  mVibrator=new Vibrator();
+  mVoiceCapable=context.getResources().getBoolean(R.bool.config_voice_capable);
+  mShowCombinedVolumes=!mVoiceCapable;
+  if (!mShowCombinedVolumes) {
+    mMoreButton.setVisibility(View.GONE);
+    mDivider.setVisibility(View.GONE);
+  }
+ else {
+    mMoreButton.setOnClickListener(this);
+  }
+  listenToRingerMode();
+}

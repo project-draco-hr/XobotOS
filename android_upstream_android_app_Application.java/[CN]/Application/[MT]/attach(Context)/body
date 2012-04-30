@@ -1,0 +1,4 @@
+{
+  attachBaseContext(context);
+  mLoadedApk=ContextImpl.getImpl(context).mPackageInfo;
+}

@@ -1,0 +1,7 @@
+{
+  SocketChannel socketChannel=open();
+  if (socketChannel != null) {
+    socketChannel.connect(address);
+  }
+  return socketChannel;
+}

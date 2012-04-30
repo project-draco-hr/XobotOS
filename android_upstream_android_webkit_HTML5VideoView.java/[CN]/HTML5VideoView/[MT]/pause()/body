@@ -1,0 +1,13 @@
+{
+  if (isPlaying()) {
+    mPlayer.pause();
+  }
+ else   if (mCurrentState == STATE_NOTPREPARED) {
+    mPauseDuringPreparing=true;
+  }
+  if (mTimer != null) {
+    mTimer.purge();
+    mTimer.cancel();
+    mTimer=null;
+  }
+}

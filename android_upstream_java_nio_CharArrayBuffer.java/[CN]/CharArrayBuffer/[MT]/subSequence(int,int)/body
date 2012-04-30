@@ -1,0 +1,7 @@
+{
+  checkStartEndRemaining(start,end);
+  CharBuffer result=duplicate();
+  result.limit(position + end);
+  result.position(position + start);
+  return result;
+}

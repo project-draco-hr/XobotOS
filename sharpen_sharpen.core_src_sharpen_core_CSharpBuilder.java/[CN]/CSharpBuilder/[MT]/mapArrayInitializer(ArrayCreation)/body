@@ -1,0 +1,3 @@
+{
+  return (CSArrayInitializerExpression)mapExpression(node.getInitializer());
+}

@@ -1,0 +1,8 @@
+{
+  int threadId=in.readInt();
+  if (TRACE) {
+    System.out.println("\tthreadId=" + threadId);
+  }
+  HprofData.ThreadEvent event=HprofData.ThreadEvent.end(threadId);
+  hprofData.addThreadEvent(event);
+}

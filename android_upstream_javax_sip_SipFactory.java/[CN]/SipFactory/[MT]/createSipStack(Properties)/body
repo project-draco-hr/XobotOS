@@ -1,0 +1,21 @@
+{
+  String name=properties.getProperty(IP_ADDRESS_PROP);
+  if (name == null) {
+    name=properties.getProperty(STACK_NAME_PROP);
+    if (name == null) {
+      throw new PeerUnavailableException(STACK_NAME_PROP + " property not found");
+    }
+  }
+  SipStack sipStack=mNameSipStackMap.get(name);
+  if (sipStack == null) {
+    String implClassName="gov.nist." + SipStack.class.getCanonicalName() + "Impl";
+    try {
+      sipStack=Class.forName(implClassName).asSubclass(SipStack.class).getConstructor(new Class[]{Properties.class}).newInstance(new Object[]{properties});
+    }
+ catch (    Exception e) {
+      throw new PeerUnavailableException("Failed to initiate " + implClassName,e);
+    }
+    mNameSipStackMap.put(name,sipStack);
+  }
+  return sipStack;
+}

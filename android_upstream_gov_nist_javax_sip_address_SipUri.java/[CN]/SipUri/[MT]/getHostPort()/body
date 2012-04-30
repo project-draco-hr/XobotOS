@@ -1,0 +1,6 @@
+{
+  if (authority == null || authority.getHost() == null)   return null;
+ else {
+    return authority.getHostPort();
+  }
+}

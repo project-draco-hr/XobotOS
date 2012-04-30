@@ -1,0 +1,14 @@
+{
+  if (logFile != null)   throw new IllegalArgumentException("BuildLogger.setLogFile() may be used only once");
+  try {
+    logFileStream=new FileOutputStream(newFile,append);
+    logFile=newFile;
+  }
+ catch (  FileNotFoundException e) {
+    logger.log(Level.WARNING,"Cannot open logfile: " + newFile.getAbsolutePath());
+    return;
+  }
+  logger.log(Level.INFO,"Added logfile " + logFile.getAbsolutePath());
+  logFileHandler=new MyStreamHandler(logFileStream);
+  logger.addHandler(logFileHandler);
+}

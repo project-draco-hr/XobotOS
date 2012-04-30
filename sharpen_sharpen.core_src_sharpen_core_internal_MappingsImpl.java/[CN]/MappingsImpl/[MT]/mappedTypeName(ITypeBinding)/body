@@ -1,0 +1,28 @@
+{
+  if (type.isArray() || type.isWildcardType()) {
+    return type.getQualifiedName();
+  }
+  if (!hasMapping(type)) {
+    String annotatedRenaming=annotatedRenaming(type);
+    if (annotatedRenaming != null) {
+      return registerMappedType(type,fullyQualifyIfNeeded(annotatedRenaming,type));
+    }
+    ITypeBinding declaringType=type.getDeclaringClass();
+    if (type.isNested() && declaringType.isInterface()) {
+      final String extracted=extractedInterfaceName(declaringType);
+      return registerMappedType(type,extracted + "." + identifier(type.getName()));
+    }
+    if (type.isNested() && declaringType.getTypeDeclaration().isGenericType()) {
+      if (type.isInterface() || (type.isClass() && Modifier.isStatic(type.getModifiers()))) {
+        final String rawName=mappedTypeName(declaringType.getTypeDeclaration());
+        return registerMappedType(type,rawName + "." + identifier(type.getName()));
+      }
+    }
+  }
+  String mappedTypeName=mappedTypeName(BindingUtils.typeMappingKey(type),qualifiedName(type));
+  if (mappedTypeName.length() == 0)   mappedTypeName="_T" + Math.abs(type.getKey().hashCode());
+  if (shouldPrefixInterface(type)) {
+    return registerMappedType(type,mappedInterfaceName(mappedTypeName));
+  }
+  return registerMappedType(type,mappedTypeName);
+}

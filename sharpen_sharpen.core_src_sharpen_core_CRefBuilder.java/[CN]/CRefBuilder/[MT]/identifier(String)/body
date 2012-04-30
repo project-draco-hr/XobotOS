@@ -1,0 +1,3 @@
+{
+  return my(Configuration.class).getNamingStrategy().identifier(name);
+}

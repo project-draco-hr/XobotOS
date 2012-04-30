@@ -1,0 +1,12 @@
+def WriteIndex(path, locales, cldr_version=None):
+    empty_value = ' {""}\n'
+    f = open(path, 'w')
+    f.write('res_index:table(nofallback) {\n')
+    if cldr_version:
+        f.write(('  CLDRVersion { %s }\n' % cldr_version))
+    f.write('  InstalledLocales {\n')
+    for locale in locales:
+        f.write((locale + empty_value))
+    f.write('  }\n')
+    f.write('}\n')
+    f.close()

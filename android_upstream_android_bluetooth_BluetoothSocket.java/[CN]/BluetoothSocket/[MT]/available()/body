@@ -1,0 +1,10 @@
+{
+  mLock.readLock().lock();
+  try {
+    if (mSocketState == SocketState.CLOSED)     throw new IOException("socket closed");
+    return availableNative();
+  }
+  finally {
+    mLock.readLock().unlock();
+  }
+}

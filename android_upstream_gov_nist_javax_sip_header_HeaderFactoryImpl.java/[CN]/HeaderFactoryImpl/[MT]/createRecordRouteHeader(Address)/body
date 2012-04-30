@@ -1,0 +1,6 @@
+{
+  if (address == null)   throw new NullPointerException("Null argument!");
+  RecordRoute recordRoute=new RecordRoute();
+  recordRoute.setAddress(address);
+  return recordRoute;
+}

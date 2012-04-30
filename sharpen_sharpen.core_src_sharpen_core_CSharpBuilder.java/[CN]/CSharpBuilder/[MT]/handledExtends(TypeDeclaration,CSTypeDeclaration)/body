@@ -1,0 +1,7 @@
+{
+  final TagElement replaceExtendsTag=javadocTagFor(node,SharpenAnnotations.SHARPEN_EXTENDS);
+  if (null == replaceExtendsTag)   return false;
+  final String baseType=JavadocUtility.singleTextFragmentFrom(replaceExtendsTag);
+  type.addBaseType(new CSTypeReference(baseType));
+  return true;
+}

@@ -1,0 +1,15 @@
+{
+  StringBuilder uri=new StringBuilder();
+  if (scheme != null) {
+    uri.append(scheme);
+    uri.append(':');
+  }
+  if (schemeSpecificPart != null) {
+    ALL_LEGAL_ENCODER.appendEncoded(uri,schemeSpecificPart);
+  }
+  if (fragment != null) {
+    uri.append('#');
+    ALL_LEGAL_ENCODER.appendEncoded(uri,fragment);
+  }
+  parseURI(uri.toString(),false);
+}

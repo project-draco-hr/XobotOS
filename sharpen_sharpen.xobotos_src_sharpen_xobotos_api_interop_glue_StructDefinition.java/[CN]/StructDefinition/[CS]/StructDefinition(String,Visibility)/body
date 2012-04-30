@@ -1,0 +1,4 @@
+{
+  super(name,visibility);
+  this._members=new ArrayList<AbstractDefinition>();
+}

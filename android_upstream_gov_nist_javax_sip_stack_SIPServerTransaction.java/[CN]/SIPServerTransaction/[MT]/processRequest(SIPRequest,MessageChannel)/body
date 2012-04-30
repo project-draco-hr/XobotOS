@@ -1,0 +1,94 @@
+{
+  boolean toTu=false;
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("processRequest: " + transactionRequest.getFirstLine());
+    sipStack.getStackLogger().logDebug("tx state = " + this.getRealState());
+  }
+  try {
+    if (getRealState() == null) {
+      setOriginalRequest(transactionRequest);
+      this.setState(TransactionState.TRYING);
+      toTu=true;
+      this.setPassToListener();
+      if (isInviteTransaction() && this.isMapped) {
+        sendMessage(transactionRequest.createResponse(100,"Trying"));
+      }
+    }
+ else     if (isInviteTransaction() && TransactionState.COMPLETED == getRealState() && transactionRequest.getMethod().equals(Request.ACK)) {
+      this.setState(TransactionState.CONFIRMED);
+      disableRetransmissionTimer();
+      if (!isReliable()) {
+        enableTimeoutTimer(TIMER_I);
+      }
+ else {
+        this.setState(TransactionState.TERMINATED);
+      }
+      if (sipStack.isNon2XXAckPassedToListener()) {
+        requestOf.processRequest(transactionRequest,this);
+      }
+ else {
+        if (sipStack.isLoggingEnabled()) {
+          sipStack.getStackLogger().logDebug("ACK received for server Tx " + this.getTransactionId() + " not delivering to application!");
+        }
+        this.semRelease();
+      }
+      return;
+    }
+ else     if (transactionRequest.getMethod().equals(getOriginalRequest().getMethod())) {
+      if (TransactionState.PROCEEDING == getRealState() || TransactionState.COMPLETED == getRealState()) {
+        this.semRelease();
+        if (lastResponse != null) {
+          super.sendMessage(lastResponse);
+        }
+      }
+ else       if (transactionRequest.getMethod().equals(Request.ACK)) {
+        if (requestOf != null)         requestOf.processRequest(transactionRequest,this);
+ else         this.semRelease();
+      }
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("completed processing retransmitted request : " + transactionRequest.getFirstLine() + this+ " txState = "+ this.getState()+ " lastResponse = "+ this.getLastResponse());
+      return;
+    }
+    if (TransactionState.COMPLETED != getRealState() && TransactionState.TERMINATED != getRealState() && requestOf != null) {
+      if (getOriginalRequest().getMethod().equals(transactionRequest.getMethod())) {
+        if (toTu) {
+          requestOf.processRequest(transactionRequest,this);
+        }
+ else         this.semRelease();
+      }
+ else {
+        if (requestOf != null)         requestOf.processRequest(transactionRequest,this);
+ else         this.semRelease();
+      }
+    }
+ else {
+      if (((SIPTransactionStack)getSIPStack()).isDialogCreated(getOriginalRequest().getMethod()) && getRealState() == TransactionState.TERMINATED && transactionRequest.getMethod().equals(Request.ACK) && requestOf != null) {
+        SIPDialog thisDialog=(SIPDialog)this.dialog;
+        if (thisDialog == null || !thisDialog.ackProcessed) {
+          if (thisDialog != null) {
+            thisDialog.ackReceived(transactionRequest);
+            thisDialog.ackProcessed=true;
+          }
+          requestOf.processRequest(transactionRequest,this);
+        }
+ else {
+          this.semRelease();
+        }
+      }
+ else       if (transactionRequest.getMethod().equals(Request.CANCEL)) {
+        if (sipStack.isLoggingEnabled())         sipStack.getStackLogger().logDebug("Too late to cancel Transaction");
+        this.semRelease();
+        try {
+          this.sendMessage(transactionRequest.createResponse(Response.OK));
+        }
+ catch (        IOException ex) {
+        }
+      }
+      if (sipStack.isLoggingEnabled())       sipStack.getStackLogger().logDebug("Dropping request " + getRealState());
+    }
+  }
+ catch (  IOException e) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logError("IOException ",e);
+    this.semRelease();
+    this.raiseIOExceptionEvent();
+  }
+}

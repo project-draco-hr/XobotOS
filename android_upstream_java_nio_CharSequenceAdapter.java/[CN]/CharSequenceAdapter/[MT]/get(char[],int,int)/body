@@ -1,0 +1,10 @@
+{
+  Arrays.checkOffsetAndCount(dst.length,dstOffset,charCount);
+  if (charCount > remaining()) {
+    throw new BufferUnderflowException();
+  }
+  int newPosition=position + charCount;
+  sequence.toString().getChars(position,newPosition,dst,dstOffset);
+  position=newPosition;
+  return this;
+}

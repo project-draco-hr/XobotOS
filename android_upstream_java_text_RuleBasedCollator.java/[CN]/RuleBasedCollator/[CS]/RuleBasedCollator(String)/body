@@ -1,0 +1,17 @@
+{
+  if (rules == null) {
+    throw new NullPointerException();
+  }
+  if (rules.isEmpty()) {
+    throw new ParseException("empty rules",0);
+  }
+  try {
+    icuColl=new RuleBasedCollatorICU(rules);
+  }
+ catch (  Exception e) {
+    if (e instanceof ParseException) {
+      throw (ParseException)e;
+    }
+    throw new ParseException(e.getMessage(),-1);
+  }
+}

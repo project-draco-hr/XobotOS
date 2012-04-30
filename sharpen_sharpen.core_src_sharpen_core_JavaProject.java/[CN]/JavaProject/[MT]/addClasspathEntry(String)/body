@@ -1,0 +1,4 @@
+{
+  if (containsClasspathEntry(absolutePath))   return;
+  addClasspathEntry(new Path(absolutePath));
+}

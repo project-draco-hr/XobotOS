@@ -1,0 +1,7 @@
+{
+  mPreferenceGroup=preferenceGroup;
+  mPreferenceGroup.setOnPreferenceChangeInternalListener(this);
+  mPreferenceList=new ArrayList<Preference>();
+  mPreferenceLayouts=new ArrayList<PreferenceLayout>();
+  syncMyPreferences();
+}

@@ -1,0 +1,5 @@
+{
+  if (qname.length() == 0)   qname=localname;
+  theWriter.print(')');
+  theWriter.println(qname);
+}

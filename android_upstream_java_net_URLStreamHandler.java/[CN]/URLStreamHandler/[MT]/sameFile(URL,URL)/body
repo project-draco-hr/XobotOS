@@ -1,0 +1,3 @@
+{
+  return Objects.equal(a.getProtocol(),b.getProtocol()) && hostsEqual(a,b) && a.getEffectivePort() == b.getEffectivePort() && Objects.equal(a.getFile(),b.getFile());
+}

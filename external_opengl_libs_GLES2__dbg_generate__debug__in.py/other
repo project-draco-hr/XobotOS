@@ -1,0 +1,21 @@
+import os
+import sys
+if (__name__ == '__main__'):
+    definedFunctions = []
+    lines = open('gl2_api_annotated.in').readlines()
+    definedFunctions = append_functions(definedFunctions, lines)
+    output = open('../debug.in', 'w')
+    lines = open('../trace.in').readlines()
+    output.write('// the following functions are not defined in GLESv2_dbg\n')
+    for line in lines:
+        functionName = ''
+        if (line.find('TRACE_GL(') >= 0):
+            functionName = line.split(',')[1].strip()
+        elif (line.find('TRACE_GL_VOID(') >= 0):
+            functionName = line[(line.find('(') + 1):line.find(',')]
+        else:
+            continue
+        if (functionName in definedFunctions):
+            continue
+        else:
+            output.write(line)

@@ -1,0 +1,8 @@
+{
+  this.eventScanner=sipStack.getEventScanner();
+  this.sipStack=sipStack;
+  this.eventScanner.incrementRefcount();
+  this.listeningPoints=new ConcurrentHashMap<String,ListeningPointImpl>();
+  this.automaticDialogSupportEnabled=this.sipStack.isAutomaticDialogSupportEnabled();
+  this.dialogErrorsAutomaticallyHandled=this.sipStack.isAutomaticDialogErrorHandlingEnabled();
+}

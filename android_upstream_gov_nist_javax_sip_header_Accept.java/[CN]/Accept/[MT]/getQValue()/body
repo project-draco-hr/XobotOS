@@ -1,0 +1,3 @@
+{
+  return getParameterAsFloat(ParameterNames.Q);
+}

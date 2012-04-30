@@ -1,0 +1,18 @@
+{
+  if (DBG)   Log.d(TAG,"done()");
+  SynthesisMessageParams token=null;
+synchronized (mStateLock) {
+    if (mDone) {
+      Log.w(TAG,"Duplicate call to done()");
+      return TextToSpeech.ERROR;
+    }
+    mDone=true;
+    if (mToken == null) {
+      return TextToSpeech.ERROR;
+    }
+    token=mToken;
+  }
+  mAudioTrackHandler.enqueueSynthesisDone(token);
+  mLogger.onEngineComplete();
+  return TextToSpeech.SUCCESS;
+}

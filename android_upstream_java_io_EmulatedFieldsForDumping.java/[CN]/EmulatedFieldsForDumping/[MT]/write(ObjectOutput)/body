@@ -1,0 +1,36 @@
+{
+  if (!output.equals(oos)) {
+    throw new IllegalArgumentException("Attempting to write to a different stream than the one that created this PutField");
+  }
+  for (  EmulatedFields.ObjectSlot slot : emulatedFields.slots()) {
+    Object fieldValue=slot.getFieldValue();
+    Class<?> type=slot.getField().getType();
+    if (type == int.class) {
+      output.writeInt(fieldValue != null ? ((Integer)fieldValue).intValue() : 0);
+    }
+ else     if (type == byte.class) {
+      output.writeByte(fieldValue != null ? ((Byte)fieldValue).byteValue() : 0);
+    }
+ else     if (type == char.class) {
+      output.writeChar(fieldValue != null ? ((Character)fieldValue).charValue() : 0);
+    }
+ else     if (type == short.class) {
+      output.writeShort(fieldValue != null ? ((Short)fieldValue).shortValue() : 0);
+    }
+ else     if (type == boolean.class) {
+      output.writeBoolean(fieldValue != null ? ((Boolean)fieldValue).booleanValue() : false);
+    }
+ else     if (type == long.class) {
+      output.writeLong(fieldValue != null ? ((Long)fieldValue).longValue() : 0);
+    }
+ else     if (type == float.class) {
+      output.writeFloat(fieldValue != null ? ((Float)fieldValue).floatValue() : 0);
+    }
+ else     if (type == double.class) {
+      output.writeDouble(fieldValue != null ? ((Double)fieldValue).doubleValue() : 0);
+    }
+ else {
+      output.writeObject(fieldValue);
+    }
+  }
+}

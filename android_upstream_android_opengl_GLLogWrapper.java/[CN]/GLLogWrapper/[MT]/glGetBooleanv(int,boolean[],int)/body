@@ -1,0 +1,9 @@
+{
+  begin("glGetBooleanv");
+  arg("pname",pname);
+  arg("params",params.toString());
+  arg("offset",offset);
+  end();
+  mgl11.glGetBooleanv(pname,params,offset);
+  checkError();
+}

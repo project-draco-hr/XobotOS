@@ -1,0 +1,6 @@
+{
+  if (index < 1 || index > count) {
+    throw indexAndLength(index);
+  }
+  return Character.codePointBefore(value,index);
+}

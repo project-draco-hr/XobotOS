@@ -1,0 +1,15 @@
+{
+  ctor.addParameter(0,new CSVariableDeclaration(_enclosingField.name(),_enclosingField.type()));
+  if (!ctor.isStub())   ctor.body().addStatement(0,createFieldAssignment(_enclosingField.name(),_enclosingField.name()));
+  ITypeBinding superClass=nestedTypeBinding().getSuperclass();
+  if (superClass != null && isNonStaticNestedType(superClass)) {
+    CSConstructorInvocationExpression oldCie=ctor.chainedConstructorInvocation();
+    CSConstructorInvocationExpression cie=new CSConstructorInvocationExpression(new CSBaseExpression());
+    CSExpression enclosing=createEnclosingBaseCtorArgument(_enclosingField.name(),superClass);
+    cie.addArgument(enclosing);
+    if (oldCie != null) {
+      for (      CSExpression arg : oldCie.arguments())       cie.addArgument(arg);
+    }
+    ctor.chainedConstructorInvocation(cie);
+  }
+}

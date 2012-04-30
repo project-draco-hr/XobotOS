@@ -1,0 +1,25 @@
+{
+  final EnumTemplate template=findEnumTemplate(node);
+  if (template == null)   return null;
+  final ITypeBinding typeBinding=node.resolveBinding();
+  final AbstractTypeBinding binding=my(BindingManager.class).resolveBinding(typeBinding);
+  if ((binding != null) && (binding.getMapping() != null))   return null;
+  try {
+    _outputProviderStack.push(template);
+    final OutputType output=getOutputType();
+    final OutputMode mode;
+    if (node.resolveBinding().isNested())     mode=output.getModeForMember(node);
+ else     mode=output.getMode();
+    CSTypeDeclaration type;
+    if ((mode == OutputMode.NOTHING) || (mode == OutputMode.NAKED_STUB))     return null;
+    ExtractedEnumBuilder builder=new ExtractedEnumBuilder(template,output,node);
+    _typeStack.push(builder);
+    type=builder.build(csharpBuilder,delegate);
+    if (type != null)     parent.addType(type);
+    _typeStack.pop();
+    return type;
+  }
+  finally {
+    _outputProviderStack.pop();
+  }
+}

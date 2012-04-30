@@ -1,0 +1,6 @@
+{
+  if (input == null || (long)offset + (long)len > input.length) {
+    throw new IllegalArgumentException();
+  }
+  engineUpdate(input,offset,len);
+}

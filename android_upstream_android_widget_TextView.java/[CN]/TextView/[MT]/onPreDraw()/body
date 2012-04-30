@@ -1,0 +1,33 @@
+{
+  if (mPreDrawState != PREDRAW_PENDING) {
+    return true;
+  }
+  if (mLayout == null) {
+    assumeLayout();
+  }
+  boolean changed=false;
+  if (mMovement != null) {
+    int curs=getSelectionEnd();
+    if (mSelectionModifierCursorController != null && mSelectionModifierCursorController.isSelectionStartDragged()) {
+      curs=getSelectionStart();
+    }
+    if (curs < 0 && (mGravity & Gravity.VERTICAL_GRAVITY_MASK) == Gravity.BOTTOM) {
+      curs=mText.length();
+    }
+    if (curs >= 0) {
+      changed=bringPointIntoView(curs);
+    }
+  }
+ else {
+    changed=bringTextIntoView();
+  }
+  if (mCreatedWithASelection) {
+    startSelectionActionMode();
+    mCreatedWithASelection=false;
+  }
+  if (this instanceof ExtractEditText && hasSelection()) {
+    startSelectionActionMode();
+  }
+  mPreDrawState=PREDRAW_DONE;
+  return !changed;
+}

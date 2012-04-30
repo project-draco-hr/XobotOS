@@ -1,0 +1,6 @@
+{
+  if (null == drmInfoRequest || !drmInfoRequest.isValid()) {
+    throw new IllegalArgumentException("Given drmInfoRequest is invalid/null");
+  }
+  return _acquireDrmInfo(mUniqueId,drmInfoRequest);
+}

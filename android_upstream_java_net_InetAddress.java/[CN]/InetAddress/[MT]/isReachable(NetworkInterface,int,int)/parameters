@@ -1,0 +1,3 @@
+NetworkInterface networkInterface
+int ttl
+int timeout

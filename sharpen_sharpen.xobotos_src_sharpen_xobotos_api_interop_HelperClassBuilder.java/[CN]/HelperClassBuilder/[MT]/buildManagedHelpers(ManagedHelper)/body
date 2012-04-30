@@ -1,0 +1,5 @@
+{
+  for (  ManagedHelper helper : helpers) {
+    if (GENERATE_ALL || helper.isUsed())     helper.create();
+  }
+}

@@ -1,0 +1,22 @@
+{
+  if (DBG)   log(getName() + "\n");
+  EventLog.writeEvent(EVENTLOG_WIFI_STATE_CHANGED,getName());
+  WifiApConfigStore.initialize(mContext);
+  if (WifiNative.isDriverLoaded()) {
+    transitionTo(mDriverLoadedState);
+  }
+ else {
+    transitionTo(mDriverUnloadedState);
+  }
+  mWifiP2pManager=(WifiP2pManager)mContext.getSystemService(Context.WIFI_P2P_SERVICE);
+  mWifiP2pChannel.connect(mContext,getHandler(),mWifiP2pManager.getMessenger());
+  try {
+    mNwService.disableIpv6(mInterfaceName);
+  }
+ catch (  RemoteException re) {
+    loge("Failed to disable IPv6: " + re);
+  }
+catch (  IllegalStateException e) {
+    loge("Failed to disable IPv6: " + e);
+  }
+}

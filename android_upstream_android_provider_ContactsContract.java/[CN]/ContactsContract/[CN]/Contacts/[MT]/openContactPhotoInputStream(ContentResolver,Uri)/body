@@ -1,0 +1,3 @@
+{
+  return openContactPhotoInputStream(cr,contactUri,false);
+}

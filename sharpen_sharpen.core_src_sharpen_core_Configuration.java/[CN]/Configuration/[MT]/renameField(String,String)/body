@@ -1,0 +1,3 @@
+{
+  renameMember(fromQualifiedName,new MemberMapping(to,MemberKind.Field));
+}

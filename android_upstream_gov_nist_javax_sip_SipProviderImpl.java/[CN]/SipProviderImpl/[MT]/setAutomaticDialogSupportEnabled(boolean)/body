@@ -1,0 +1,6 @@
+{
+  this.automaticDialogSupportEnabled=automaticDialogSupportEnabled;
+  if (this.automaticDialogSupportEnabled) {
+    this.dialogErrorsAutomaticallyHandled=true;
+  }
+}

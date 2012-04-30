@@ -1,0 +1,4 @@
+{
+  checkIndex(index,SizeOf.CHAR);
+  return (char)this.block.peekShort(offset + index,order);
+}

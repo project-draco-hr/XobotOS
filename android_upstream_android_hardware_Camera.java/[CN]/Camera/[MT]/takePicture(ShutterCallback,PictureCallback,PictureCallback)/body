@@ -1,0 +1,3 @@
+{
+  takePicture(shutter,raw,null,jpeg);
+}

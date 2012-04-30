@@ -1,0 +1,6 @@
+{
+  FileWriter writer=new FileWriter(fileName);
+  XStream xstream=prepareXStream();
+  xstream.toXML(config,writer);
+  writer.close();
+}

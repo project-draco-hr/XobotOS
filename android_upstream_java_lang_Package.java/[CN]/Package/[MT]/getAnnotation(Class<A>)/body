@@ -1,0 +1,8 @@
+{
+  for (  Annotation annotation : getAnnotations()) {
+    if (annotationType.isInstance(annotation)) {
+      return (A)annotation;
+    }
+  }
+  return null;
+}

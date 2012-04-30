@@ -1,0 +1,7 @@
+{
+  long offset=checkedByteOffset(i);
+  while (true) {
+    E current=(E)getRaw(offset);
+    if (compareAndSetRaw(offset,current,newValue))     return current;
+  }
+}

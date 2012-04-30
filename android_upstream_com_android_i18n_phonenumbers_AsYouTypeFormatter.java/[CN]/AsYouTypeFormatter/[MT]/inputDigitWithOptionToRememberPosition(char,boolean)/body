@@ -1,0 +1,56 @@
+{
+  accruedInput.append(nextChar);
+  if (rememberPosition) {
+    originalPosition=accruedInput.length();
+  }
+  if (!isDigitOrLeadingPlusSign(nextChar)) {
+    ableToFormat=false;
+  }
+  if (!ableToFormat) {
+    return accruedInput.toString();
+  }
+  nextChar=normalizeAndAccrueDigitsAndPlusSign(nextChar,rememberPosition);
+switch (accruedInputWithoutFormatting.length()) {
+case 0:
+case 1:
+case 2:
+    return accruedInput.toString();
+case 3:
+  if (attemptToExtractIdd()) {
+    isExpectingCountryCallingCode=true;
+  }
+ else {
+    removeNationalPrefixFromNationalNumber();
+    return attemptToChooseFormattingPattern();
+  }
+case 4:
+case 5:
+if (isExpectingCountryCallingCode) {
+  if (attemptToExtractCountryCallingCode()) {
+    isExpectingCountryCallingCode=false;
+  }
+  return prefixBeforeNationalNumber + nationalNumber.toString();
+}
+case 6:
+if (isExpectingCountryCallingCode && !attemptToExtractCountryCallingCode()) {
+ableToFormat=false;
+return accruedInput.toString();
+}
+default :
+if (possibleFormats.size() > 0) {
+String tempNationalNumber=inputDigitHelper(nextChar);
+String formattedNumber=attemptToFormatAccruedDigits();
+if (formattedNumber.length() > 0) {
+return formattedNumber;
+}
+narrowDownPossibleFormats(nationalNumber.toString());
+if (maybeCreateNewTemplate()) {
+return inputAccruedNationalNumber();
+}
+return ableToFormat ? prefixBeforeNationalNumber + tempNationalNumber : tempNationalNumber;
+}
+ else {
+return attemptToChooseFormattingPattern();
+}
+}
+}

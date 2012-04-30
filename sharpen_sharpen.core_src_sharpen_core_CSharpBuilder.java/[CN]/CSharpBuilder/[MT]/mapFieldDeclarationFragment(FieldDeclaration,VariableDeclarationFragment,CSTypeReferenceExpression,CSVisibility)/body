@@ -1,0 +1,25 @@
+{
+  final String mappedName=mappedFieldDeclarationName(node,fragment);
+  CSExpression initializer=mapFieldInitializer(fragment);
+  CSField field=new CSField(mappedName,fieldType,fieldVisibility,initializer);
+  if (isConstField(node,fragment)) {
+    ITypeBinding type=fragment.resolveBinding().getType();
+    boolean useStaticReadonly;
+    if (type.equals(my(IBindingManager.class).getStringType()))     useStaticReadonly=!(initializer instanceof CSStringLiteralExpression) && !(initializer instanceof CSNullLiteralExpression);
+ else     useStaticReadonly=type.isArray() || !type.isPrimitive();
+    if (useStaticReadonly) {
+      field.addModifier(CSFieldModifier.Static);
+      field.addModifier(CSFieldModifier.Readonly);
+    }
+ else {
+      field.addModifier(CSFieldModifier.Const);
+      if (field.visibility() != CSVisibility.Public)       field.visibility(CSVisibility.Internal);
+    }
+  }
+ else {
+    processFieldModifiers(field,node.getModifiers());
+  }
+  mapDocumentation(node,field);
+  mapAnnotations(node,field);
+  return field;
+}

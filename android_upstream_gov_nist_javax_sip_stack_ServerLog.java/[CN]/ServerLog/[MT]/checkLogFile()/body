@@ -1,0 +1,41 @@
+{
+  if (logFileName == null || traceLevel < TRACE_MESSAGES) {
+    return;
+  }
+  try {
+    File logFile=new File(logFileName);
+    if (!logFile.exists()) {
+      logFile.createNewFile();
+      printWriter=null;
+    }
+    if (printWriter == null) {
+      boolean overwrite=Boolean.valueOf(configurationProperties.getProperty("gov.nist.javax.sip.SERVER_LOG_OVERWRITE"));
+      FileWriter fw=new FileWriter(logFileName,!overwrite);
+      printWriter=new PrintWriter(fw,true);
+      printWriter.println("<!-- " + "Use the  Trace Viewer in src/tools/tracesviewer to" + " view this  trace  \n"+ "Here are the stack configuration properties \n"+ "javax.sip.IP_ADDRESS= " + configurationProperties.getProperty("javax.sip.IP_ADDRESS") + "\n"+ "javax.sip.STACK_NAME= "+ configurationProperties.getProperty("javax.sip.STACK_NAME")+ "\n"+ "javax.sip.ROUTER_PATH= "+ configurationProperties.getProperty("javax.sip.ROUTER_PATH")+ "\n"+ "javax.sip.OUTBOUND_PROXY= "+ configurationProperties.getProperty("javax.sip.OUTBOUND_PROXY")+ "\n"+ "-->");
+      printWriter.println("<description\n logDescription=\"" + description + "\"\n name=\""+ configurationProperties.getProperty("javax.sip.STACK_NAME")+ "\"\n auxInfo=\""+ auxInfo+ "\"/>\n ");
+      if (auxInfo != null) {
+        if (sipStack.isLoggingEnabled()) {
+          stackLogger.logDebug("Here are the stack configuration properties \n" + "javax.sip.IP_ADDRESS= " + configurationProperties.getProperty("javax.sip.IP_ADDRESS") + "\n"+ "javax.sip.ROUTER_PATH= "+ configurationProperties.getProperty("javax.sip.ROUTER_PATH")+ "\n"+ "javax.sip.OUTBOUND_PROXY= "+ configurationProperties.getProperty("javax.sip.OUTBOUND_PROXY")+ "\n"+ "gov.nist.javax.sip.CACHE_CLIENT_CONNECTIONS= "+ configurationProperties.getProperty("gov.nist.javax.sip.CACHE_CLIENT_CONNECTIONS")+ "\n"+ "gov.nist.javax.sip.CACHE_SERVER_CONNECTIONS= "+ configurationProperties.getProperty("gov.nist.javax.sip.CACHE_SERVER_CONNECTIONS")+ "\n"+ "gov.nist.javax.sip.REENTRANT_LISTENER= "+ configurationProperties.getProperty("gov.nist.javax.sip.REENTRANT_LISTENER")+ "gov.nist.javax.sip.THREAD_POOL_SIZE= "+ configurationProperties.getProperty("gov.nist.javax.sip.THREAD_POOL_SIZE")+ "\n");
+          stackLogger.logDebug(" ]]> ");
+          stackLogger.logDebug("</debug>");
+          stackLogger.logDebug("<description\n logDescription=\"" + description + "\"\n name=\""+ stackIpAddress+ "\"\n auxInfo=\""+ auxInfo+ "\"/>\n ");
+          stackLogger.logDebug("<debug>");
+          stackLogger.logDebug("<![CDATA[ ");
+        }
+      }
+ else {
+        if (sipStack.isLoggingEnabled()) {
+          stackLogger.logDebug("Here are the stack configuration properties \n" + configurationProperties + "\n");
+          stackLogger.logDebug(" ]]>");
+          stackLogger.logDebug("</debug>");
+          stackLogger.logDebug("<description\n logDescription=\"" + description + "\"\n name=\""+ stackIpAddress+ "\" />\n");
+          stackLogger.logDebug("<debug>");
+          stackLogger.logDebug("<![CDATA[ ");
+        }
+      }
+    }
+  }
+ catch (  IOException ex) {
+  }
+}

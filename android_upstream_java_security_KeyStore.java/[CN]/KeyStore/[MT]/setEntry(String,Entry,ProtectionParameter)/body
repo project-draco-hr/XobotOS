@@ -1,0 +1,12 @@
+{
+  if (!isInit) {
+    throwNotInitialized();
+  }
+  if (alias == null) {
+    throw new NullPointerException("alias == null");
+  }
+  if (entry == null) {
+    throw new NullPointerException("entry == null");
+  }
+  implSpi.engineSetEntry(alias,entry,param);
+}

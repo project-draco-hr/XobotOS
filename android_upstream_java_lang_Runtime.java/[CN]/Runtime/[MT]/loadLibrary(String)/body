@@ -1,0 +1,3 @@
+{
+  loadLibrary(libName,VMStack.getCallingClassLoader());
+}

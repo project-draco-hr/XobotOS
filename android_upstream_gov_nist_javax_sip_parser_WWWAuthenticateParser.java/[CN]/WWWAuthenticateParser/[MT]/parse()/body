@@ -1,0 +1,12 @@
+{
+  if (debug)   dbg_enter("parse");
+  try {
+    headerName(TokenTypes.WWW_AUTHENTICATE);
+    WWWAuthenticate wwwAuthenticate=new WWWAuthenticate();
+    super.parse(wwwAuthenticate);
+    return wwwAuthenticate;
+  }
+  finally {
+    if (debug)     dbg_leave("parse");
+  }
+}

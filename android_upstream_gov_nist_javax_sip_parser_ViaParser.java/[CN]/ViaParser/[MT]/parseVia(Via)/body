@@ -1,0 +1,66 @@
+{
+  lexer.match(TokenTypes.ID);
+  Token protocolName=lexer.getNextToken();
+  this.lexer.SPorHT();
+  lexer.match('/');
+  this.lexer.SPorHT();
+  lexer.match(TokenTypes.ID);
+  this.lexer.SPorHT();
+  Token protocolVersion=lexer.getNextToken();
+  this.lexer.SPorHT();
+  lexer.match('/');
+  this.lexer.SPorHT();
+  lexer.match(TokenTypes.ID);
+  this.lexer.SPorHT();
+  Token transport=lexer.getNextToken();
+  this.lexer.SPorHT();
+  Protocol protocol=new Protocol();
+  protocol.setProtocolName(protocolName.getTokenValue());
+  protocol.setProtocolVersion(protocolVersion.getTokenValue());
+  protocol.setTransport(transport.getTokenValue());
+  v.setSentProtocol(protocol);
+  HostNameParser hnp=new HostNameParser(this.getLexer());
+  HostPort hostPort=hnp.hostPort(true);
+  v.setSentBy(hostPort);
+  this.lexer.SPorHT();
+  while (lexer.lookAhead(0) == ';') {
+    this.lexer.consume(1);
+    this.lexer.SPorHT();
+    NameValue nameValue=this.nameValue();
+    String name=nameValue.getName();
+    if (name.equals(Via.BRANCH)) {
+      String branchId=(String)nameValue.getValueAsObject();
+      if (branchId == null)       throw new ParseException("null branch Id",lexer.getPtr());
+    }
+    v.setParameter(nameValue);
+    this.lexer.SPorHT();
+  }
+  if (lexer.lookAhead(0) == '(') {
+    this.lexer.selectLexer("charLexer");
+    lexer.consume(1);
+    StringBuffer comment=new StringBuffer();
+    while (true) {
+      char ch=lexer.lookAhead(0);
+      if (ch == ')') {
+        lexer.consume(1);
+        break;
+      }
+ else       if (ch == '\\') {
+        Token tok=lexer.getNextToken();
+        comment.append(tok.getTokenValue());
+        lexer.consume(1);
+        tok=lexer.getNextToken();
+        comment.append(tok.getTokenValue());
+        lexer.consume(1);
+      }
+ else       if (ch == '\n') {
+        break;
+      }
+ else {
+        comment.append(ch);
+        lexer.consume(1);
+      }
+    }
+    v.setComment(comment.toString());
+  }
+}

@@ -1,0 +1,7 @@
+{
+  super(fieldName);
+  this.calendarField=calendarField;
+  if (calendarField != -1 && table.get(Integer.valueOf(calendarField)) == null) {
+    table.put(Integer.valueOf(calendarField),this);
+  }
+}

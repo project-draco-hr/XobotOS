@@ -1,0 +1,10 @@
+{
+  String newString=input.toLowerCase();
+  int len=newString.length();
+  String retval="";
+  for (int i=0; i < len; i++) {
+    if (newString.charAt(i) == ' ' || newString.charAt(i) == '\t')     continue;
+ else     retval+=newString.charAt(i);
+  }
+  return retval;
+}

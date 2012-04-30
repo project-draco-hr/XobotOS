@@ -1,0 +1,18 @@
+{
+  if (number.length() == 0) {
+    return CountryCodeSource.FROM_DEFAULT_COUNTRY;
+  }
+  Matcher m=PLUS_CHARS_PATTERN.matcher(number);
+  if (m.lookingAt()) {
+    number.delete(0,m.end());
+    normalize(number);
+    return CountryCodeSource.FROM_NUMBER_WITH_PLUS_SIGN;
+  }
+  Pattern iddPattern=regexCache.getPatternForRegex(possibleIddPrefix);
+  if (parsePrefixAsIdd(iddPattern,number)) {
+    normalize(number);
+    return CountryCodeSource.FROM_NUMBER_WITH_IDD;
+  }
+  normalize(number);
+  return parsePrefixAsIdd(iddPattern,number) ? CountryCodeSource.FROM_NUMBER_WITH_IDD : CountryCodeSource.FROM_DEFAULT_COUNTRY;
+}

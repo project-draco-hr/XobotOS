@@ -1,0 +1,3 @@
+{
+  _pair.addProblem(new SharpenProblem(_pair.ast,node,kind,String.format(message,args)));
+}

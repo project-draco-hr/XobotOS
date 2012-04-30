@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(CDMA_DATA_SETUP_FAILED,cause,cid,networkType);
+}

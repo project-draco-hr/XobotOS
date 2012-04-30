@@ -1,0 +1,7 @@
+{
+  StringBuffer stringBuffer=new StringBuffer();
+  for (  Content content : this.contentList) {
+    stringBuffer.append(content.toString());
+  }
+  return stringBuffer.toString();
+}

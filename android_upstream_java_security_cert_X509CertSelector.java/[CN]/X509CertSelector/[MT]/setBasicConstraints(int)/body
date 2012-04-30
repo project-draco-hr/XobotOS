@@ -1,0 +1,6 @@
+{
+  if (pathLen < -2) {
+    throw new IllegalArgumentException("pathLen < -2");
+  }
+  this.pathLen=pathLen;
+}

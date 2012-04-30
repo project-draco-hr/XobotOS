@@ -1,0 +1,15 @@
+{
+  if (globalSearchActivity == null) {
+    return null;
+  }
+  Intent intent=new Intent(Intent.ACTION_WEB_SEARCH);
+  intent.setPackage(globalSearchActivity.getPackageName());
+  PackageManager pm=mContext.getPackageManager();
+  List<ResolveInfo> activities=pm.queryIntentActivities(intent,PackageManager.MATCH_DEFAULT_ONLY);
+  if (activities != null && !activities.isEmpty()) {
+    ActivityInfo ai=activities.get(0).activityInfo;
+    return new ComponentName(ai.packageName,ai.name);
+  }
+  Log.w(LOG_TAG,"No web search activity found");
+  return null;
+}

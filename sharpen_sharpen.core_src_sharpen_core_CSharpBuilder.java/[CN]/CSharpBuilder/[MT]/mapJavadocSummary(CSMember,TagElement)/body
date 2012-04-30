@@ -1,0 +1,14 @@
+{
+  List<String> summary=getFirstSentence(element);
+  if (null != summary) {
+    CSDocTagNode summaryNode=new CSDocTagNode("summary");
+    for (    String fragment : summary) {
+      summaryNode.addFragment(new CSDocTextNode(fragment));
+    }
+    member.addDoc(summaryNode);
+    member.addDoc(createTagNode("remarks",element));
+  }
+ else {
+    member.addDoc(createTagNode("summary",element));
+  }
+}

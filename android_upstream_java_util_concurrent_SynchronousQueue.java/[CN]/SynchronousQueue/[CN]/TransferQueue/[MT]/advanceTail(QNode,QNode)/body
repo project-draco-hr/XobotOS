@@ -1,0 +1,3 @@
+{
+  if (tail == t)   UNSAFE.compareAndSwapObject(this,tailOffset,t,nt);
+}

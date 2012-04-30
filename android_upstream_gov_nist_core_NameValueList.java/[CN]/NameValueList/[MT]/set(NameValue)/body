@@ -1,0 +1,3 @@
+{
+  this.hmap.put(nv.getName().toLowerCase(),nv);
+}

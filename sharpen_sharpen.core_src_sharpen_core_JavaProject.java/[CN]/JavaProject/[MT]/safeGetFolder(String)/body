@@ -1,0 +1,4 @@
+{
+  IFolder folder=_project.getFolder(folderName);
+  return folder.exists() ? folder : createFolder(folderName);
+}

@@ -1,0 +1,4 @@
+{
+  if (parameters == null)   return false;
+  return hasParameter(ParameterNames.TAG);
+}

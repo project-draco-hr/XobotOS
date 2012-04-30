@@ -1,0 +1,8 @@
+{
+  if (newAction == null) {
+    throw new IllegalArgumentException("newAction == null");
+  }
+  malformedInputAction=newAction;
+  implOnMalformedInput(newAction);
+  return this;
+}

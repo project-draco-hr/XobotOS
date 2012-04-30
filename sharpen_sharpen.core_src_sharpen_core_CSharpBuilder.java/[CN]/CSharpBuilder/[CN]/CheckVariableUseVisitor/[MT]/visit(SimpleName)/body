@@ -1,0 +1,10 @@
+{
+  IBinding binding=name.resolveBinding();
+  if (binding == null) {
+    return false;
+  }
+  if (binding.equals(_var)) {
+    _used=true;
+  }
+  return false;
+}

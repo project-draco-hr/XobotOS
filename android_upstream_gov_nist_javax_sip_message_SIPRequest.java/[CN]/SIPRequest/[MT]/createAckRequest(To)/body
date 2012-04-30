@@ -1,0 +1,65 @@
+{
+  SIPRequest newRequest;
+  Iterator headerIterator;
+  SIPHeader nextHeader;
+  newRequest=new SIPRequest();
+  newRequest.setRequestLine((RequestLine)this.requestLine.clone());
+  newRequest.setMethod(Request.ACK);
+  headerIterator=getHeaders();
+  while (headerIterator.hasNext()) {
+    nextHeader=(SIPHeader)headerIterator.next();
+    if (nextHeader instanceof RouteList) {
+      continue;
+    }
+ else     if (nextHeader instanceof ProxyAuthorization) {
+      continue;
+    }
+ else     if (nextHeader instanceof ContentLength) {
+      nextHeader=(SIPHeader)nextHeader.clone();
+      try {
+        ((ContentLength)nextHeader).setContentLength(0);
+      }
+ catch (      InvalidArgumentException e) {
+      }
+    }
+ else     if (nextHeader instanceof ContentType) {
+      continue;
+    }
+ else     if (nextHeader instanceof CSeq) {
+      CSeq cseq=(CSeq)nextHeader.clone();
+      try {
+        cseq.setMethod(Request.ACK);
+      }
+ catch (      ParseException e) {
+      }
+      nextHeader=cseq;
+    }
+ else     if (nextHeader instanceof To) {
+      if (responseToHeader != null) {
+        nextHeader=responseToHeader;
+      }
+ else {
+        nextHeader=(SIPHeader)nextHeader.clone();
+      }
+    }
+ else     if (nextHeader instanceof ContactList || nextHeader instanceof Expires) {
+      continue;
+    }
+ else     if (nextHeader instanceof ViaList) {
+      nextHeader=(SIPHeader)((ViaList)nextHeader).getFirst().clone();
+    }
+ else {
+      nextHeader=(SIPHeader)nextHeader.clone();
+    }
+    try {
+      newRequest.attachHeader(nextHeader,false);
+    }
+ catch (    SIPDuplicateHeaderException e) {
+      e.printStackTrace();
+    }
+  }
+  if (MessageFactoryImpl.getDefaultUserAgentHeader() != null) {
+    newRequest.setHeader(MessageFactoryImpl.getDefaultUserAgentHeader());
+  }
+  return newRequest;
+}

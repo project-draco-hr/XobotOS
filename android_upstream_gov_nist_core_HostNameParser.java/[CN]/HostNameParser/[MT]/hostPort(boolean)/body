@@ -1,0 +1,47 @@
+{
+  if (debug)   dbg_enter("hostPort");
+  try {
+    Host host=this.host();
+    HostPort hp=new HostPort();
+    hp.setHost(host);
+    if (allowWS)     lexer.SPorHT();
+    if (lexer.hasMoreChars()) {
+      char la=lexer.lookAhead(0);
+switch (la) {
+case ':':
+        lexer.consume(1);
+      if (allowWS)       lexer.SPorHT();
+    try {
+      String port=lexer.number();
+      hp.setPort(Integer.parseInt(port));
+    }
+ catch (    NumberFormatException nfe) {
+      throw new ParseException(lexer.getBuffer() + " :Error parsing port ",lexer.getPtr());
+    }
+  break;
+case ',':
+case ';':
+case '?':
+case '>':
+case ' ':
+case '\t':
+case '\r':
+case '\n':
+case '/':
+break;
+case '%':
+if (stripAddressScopeZones) {
+break;
+}
+default :
+if (!allowWS) {
+throw new ParseException(lexer.getBuffer() + " Illegal character in hostname:" + lexer.lookAhead(0),lexer.getPtr());
+}
+}
+}
+return hp;
+}
+  finally {
+if (debug) dbg_leave("hostPort");
+}
+}

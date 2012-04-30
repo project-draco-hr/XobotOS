@@ -1,0 +1,16 @@
+{
+  stringRep="";
+  Object obj=this.first();
+  if (obj == null)   return "<null>";
+  sprint("listName:");
+  sprint(listName);
+  sprint("{");
+  while (obj != null) {
+    sprint("[");
+    sprint(((GenericObject)obj).debugDump(this.indentation));
+    obj=next();
+    sprint("]");
+  }
+  sprint("}");
+  return stringRep;
+}

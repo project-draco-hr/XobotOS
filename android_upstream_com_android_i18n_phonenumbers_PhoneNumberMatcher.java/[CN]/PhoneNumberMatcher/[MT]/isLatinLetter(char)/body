@@ -1,0 +1,7 @@
+{
+  if (!Character.isLetter(letter) && Character.getType(letter) != Character.NON_SPACING_MARK) {
+    return false;
+  }
+  UnicodeBlock block=UnicodeBlock.of(letter);
+  return block.equals(UnicodeBlock.BASIC_LATIN) || block.equals(UnicodeBlock.LATIN_1_SUPPLEMENT) || block.equals(UnicodeBlock.LATIN_EXTENDED_A)|| block.equals(UnicodeBlock.LATIN_EXTENDED_ADDITIONAL)|| block.equals(UnicodeBlock.LATIN_EXTENDED_B)|| block.equals(UnicodeBlock.COMBINING_DIACRITICAL_MARKS);
+}

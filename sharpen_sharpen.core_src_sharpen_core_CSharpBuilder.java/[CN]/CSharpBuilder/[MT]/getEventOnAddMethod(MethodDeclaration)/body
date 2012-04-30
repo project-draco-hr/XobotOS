@@ -1,0 +1,5 @@
+{
+  final TagElement onAddTag=javadocTagFor(node,SharpenAnnotations.SHARPEN_EVENT_ON_ADD);
+  if (null == onAddTag)   return null;
+  return methodName(JavadocUtility.singleTextFragmentFrom(onAddTag));
+}

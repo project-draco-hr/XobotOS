@@ -1,0 +1,4 @@
+{
+  if (hlist.size() == 0)   return false;
+ else   return hlist.remove(obj);
+}

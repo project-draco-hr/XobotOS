@@ -1,0 +1,17 @@
+{
+  SIPResponse sipResponse=sipRequest.createResponse(Response.LOOP_DETECTED);
+  ServerHeader serverHeader=MessageFactoryImpl.getDefaultServerHeader();
+  if (serverHeader != null) {
+    sipResponse.setHeader(serverHeader);
+  }
+  try {
+    sipStack.addTransactionPendingAck(transaction);
+    transaction.sendResponse(sipResponse);
+    transaction.releaseSem();
+  }
+ catch (  Exception ex) {
+    sipStack.getStackLogger().logError("Problem sending error response",ex);
+    transaction.releaseSem();
+    sipStack.removeTransaction(transaction);
+  }
+}

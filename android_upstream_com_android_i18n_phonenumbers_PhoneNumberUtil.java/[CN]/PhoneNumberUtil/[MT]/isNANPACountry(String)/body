@@ -1,0 +1,3 @@
+{
+  return nanpaRegions.contains(regionCode);
+}

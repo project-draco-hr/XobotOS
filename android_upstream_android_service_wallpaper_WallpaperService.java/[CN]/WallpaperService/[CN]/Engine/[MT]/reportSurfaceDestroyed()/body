@@ -1,0 +1,14 @@
+{
+  if (mSurfaceCreated) {
+    mSurfaceCreated=false;
+    mSurfaceHolder.ungetCallbacks();
+    SurfaceHolder.Callback callbacks[]=mSurfaceHolder.getCallbacks();
+    if (callbacks != null) {
+      for (      SurfaceHolder.Callback c : callbacks) {
+        c.surfaceDestroyed(mSurfaceHolder);
+      }
+    }
+    if (DEBUG)     Log.v(TAG,"onSurfaceDestroyed(" + mSurfaceHolder + "): "+ this);
+    onSurfaceDestroyed(mSurfaceHolder);
+  }
+}

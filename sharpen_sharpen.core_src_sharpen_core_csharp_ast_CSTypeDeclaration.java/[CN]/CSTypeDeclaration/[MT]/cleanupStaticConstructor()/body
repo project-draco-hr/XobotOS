@@ -1,0 +1,15 @@
+{
+  if (_staticCtor == null)   return;
+  int countBlocks=0;
+  for (  final CSStatement stm : _staticCtor.body().statements()) {
+    if (stm instanceof CSBlock)     ++countBlocks;
+  }
+  if (countBlocks != 1)   return;
+  List<CSStatement> list=new ArrayList<CSStatement>();
+  list.addAll(_staticCtor.body().statements());
+  _staticCtor.body().clearBlock();
+  for (  final CSStatement stm : list) {
+    if (stm instanceof CSBlock)     _staticCtor.body().addAll((CSBlock)stm);
+ else     _staticCtor.body().addStatement(stm);
+  }
+}

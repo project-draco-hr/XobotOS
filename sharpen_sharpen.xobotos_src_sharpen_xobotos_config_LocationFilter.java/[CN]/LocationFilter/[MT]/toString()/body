@@ -1,0 +1,24 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append('{');
+  if (_is_regex)   sb.append('?');
+ else   if (_is_substring)   sb.append('$');
+  if (_mustMatch)   sb.append("&");
+  boolean first=true;
+  if (_include != null) {
+    for (    String text : _include) {
+      if (first)       first=false;
+ else       sb.append(',');
+      sb.append("+" + text);
+    }
+  }
+  if (_exclude != null) {
+    for (    String text : _exclude) {
+      if (first)       first=false;
+ else       sb.append(',');
+      sb.append("-" + text);
+    }
+  }
+  sb.append('}');
+  return sb.toString();
+}

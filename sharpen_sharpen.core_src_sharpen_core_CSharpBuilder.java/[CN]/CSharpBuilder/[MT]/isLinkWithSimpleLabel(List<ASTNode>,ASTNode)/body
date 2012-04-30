@@ -1,0 +1,7 @@
+{
+  if (fragments.size() != 2)   return false;
+  if (!JavadocUtility.isTextFragment(fragments,1))   return false;
+  final String link=linkTarget.toString();
+  final String label=JavadocUtility.textFragment(fragments,1);
+  return label.equals(link) || label.equals(unqualifiedName(link));
+}

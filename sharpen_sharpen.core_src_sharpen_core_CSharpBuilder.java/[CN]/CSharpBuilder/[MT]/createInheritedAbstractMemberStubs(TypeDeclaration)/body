@@ -1,0 +1,8 @@
+{
+  if (node.isInterface())   return;
+  ITypeBinding binding=node.resolveBinding();
+  if (!Modifier.isAbstract(node.getModifiers()))   return;
+  for (  ITypeBinding baseType : BindingUtils.getAllInterfaces(binding)) {
+    createInheritedAbstractMemberStubs(binding,baseType);
+  }
+}

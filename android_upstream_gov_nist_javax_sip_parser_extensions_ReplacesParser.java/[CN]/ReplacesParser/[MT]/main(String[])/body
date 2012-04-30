@@ -1,0 +1,10 @@
+{
+  String to[]={"Replaces: 12345th5z8z\n","Replaces: 12345th5z8z;to-tag=tozght6-45;from-tag=fromzght789-337-2\n"};
+  for (int i=0; i < to.length; i++) {
+    ReplacesParser tp=new ReplacesParser(to[i]);
+    Replaces t=(Replaces)tp.parse();
+    System.out.println("Parsing => " + to[i]);
+    System.out.print("encoded = " + t.encode() + "==> ");
+    System.out.println("callId " + t.getCallId() + " from-tag="+ t.getFromTag()+ " to-tag="+ t.getToTag());
+  }
+}

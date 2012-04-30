@@ -1,0 +1,6 @@
+{
+  super(verticalAlignment);
+  mContext=context;
+  mContentUri=uri;
+  mSource=uri.toString();
+}

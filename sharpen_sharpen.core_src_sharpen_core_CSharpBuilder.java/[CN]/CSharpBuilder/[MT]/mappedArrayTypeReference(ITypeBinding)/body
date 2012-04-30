@@ -1,0 +1,3 @@
+{
+  return new CSArrayTypeReference(mappedTypeReference(type.getElementType()),type.getDimensions());
+}

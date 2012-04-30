@@ -1,0 +1,6 @@
+{
+  if (DebugFlags.NETWORK) {
+    Assert.assertTrue(isValidProxySet());
+  }
+  mProxyPassword=proxyPassword;
+}

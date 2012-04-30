@@ -1,0 +1,13 @@
+{
+  String user="";
+  if (authority.getUserInfo() != null)   user=authority.getUserInfo().getUser();
+  String host=authority.getHost().encode();
+  StringBuffer s=null;
+  if (user.equals("")) {
+    s=new StringBuffer();
+  }
+ else {
+    s=new StringBuffer(user).append(AT);
+  }
+  return s.append(host).toString();
+}

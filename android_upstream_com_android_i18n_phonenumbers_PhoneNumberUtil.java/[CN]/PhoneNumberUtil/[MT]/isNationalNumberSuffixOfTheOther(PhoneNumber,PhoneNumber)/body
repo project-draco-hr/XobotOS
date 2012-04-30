@@ -1,0 +1,5 @@
+{
+  String firstNumberNationalNumber=String.valueOf(firstNumber.getNationalNumber());
+  String secondNumberNationalNumber=String.valueOf(secondNumber.getNationalNumber());
+  return firstNumberNationalNumber.endsWith(secondNumberNationalNumber) || secondNumberNationalNumber.endsWith(firstNumberNationalNumber);
+}

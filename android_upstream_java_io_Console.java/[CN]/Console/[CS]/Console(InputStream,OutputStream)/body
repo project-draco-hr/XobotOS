@@ -1,0 +1,4 @@
+{
+  this.reader=new ConsoleReader(in);
+  this.writer=new ConsoleWriter(out);
+}

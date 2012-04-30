@@ -1,0 +1,4 @@
+{
+  if (javaCal == null)   setJavaCal();
+  return javaCal;
+}

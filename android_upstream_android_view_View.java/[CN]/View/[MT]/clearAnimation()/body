@@ -1,0 +1,7 @@
+{
+  if (mCurrentAnimation != null) {
+    mCurrentAnimation.detach();
+  }
+  mCurrentAnimation=null;
+  invalidateParentIfNeeded();
+}

@@ -1,0 +1,4 @@
+{
+  mUtteranceCompletedListener=listener;
+  return TextToSpeech.SUCCESS;
+}

@@ -1,0 +1,8 @@
+{
+  LinkedList<String> ll=new LinkedList<String>();
+  for (Iterator<Allow> it=this.hlist.iterator(); it.hasNext(); ) {
+    Allow a=(Allow)it.next();
+    ll.add(a.getMethod());
+  }
+  return ll.listIterator();
+}

@@ -1,0 +1,3 @@
+{
+  return (int)((mKeyCodeAndModifiers & KEY_CODE_MASK) >> KEY_CODE_OFFSET);
+}

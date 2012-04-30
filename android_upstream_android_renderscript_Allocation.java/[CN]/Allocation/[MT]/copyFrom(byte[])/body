@@ -1,0 +1,4 @@
+{
+  mRS.validate();
+  copy1DRangeFrom(0,mCurrentCount,d);
+}

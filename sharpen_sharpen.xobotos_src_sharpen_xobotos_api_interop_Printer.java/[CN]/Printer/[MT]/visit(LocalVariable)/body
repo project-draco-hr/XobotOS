@@ -1,0 +1,11 @@
+{
+  _writer.writeIndentation();
+  node.getType().accept(this);
+  _writer.write(" ");
+  _writer.write(node.getName());
+  if (node.getInitializer() != null) {
+    _writer.write(" = ");
+    node.getInitializer().accept(this);
+  }
+  _writer.writeLine(";");
+}

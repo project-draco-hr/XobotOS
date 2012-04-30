@@ -1,0 +1,7 @@
+{
+  reqTouchScreen=source.readInt();
+  reqKeyboardType=source.readInt();
+  reqNavigation=source.readInt();
+  reqInputFeatures=source.readInt();
+  reqGlEsVersion=source.readInt();
+}

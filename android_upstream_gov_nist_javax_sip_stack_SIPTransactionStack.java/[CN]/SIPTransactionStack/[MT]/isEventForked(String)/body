@@ -1,0 +1,6 @@
+{
+  if (stackLogger.isLoggingEnabled()) {
+    stackLogger.logDebug("isEventForked: " + ename + " returning "+ this.forkedEvents.contains(ename));
+  }
+  return this.forkedEvents.contains(ename);
+}

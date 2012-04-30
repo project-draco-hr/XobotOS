@@ -1,0 +1,10 @@
+{
+  if (uri != null) {
+    NameValue nv=new NameValue(ParameterNames.URI,uri);
+    nv.setQuotedValue();
+    super.parameters.set(nv);
+  }
+ else {
+    throw new NullPointerException("Null URI");
+  }
+}

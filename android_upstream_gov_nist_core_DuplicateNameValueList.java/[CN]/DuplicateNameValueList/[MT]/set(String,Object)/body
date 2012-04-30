@@ -1,0 +1,4 @@
+{
+  NameValue nameValue=new NameValue(name,value);
+  nameValueMap.put(name.toLowerCase(),nameValue);
+}

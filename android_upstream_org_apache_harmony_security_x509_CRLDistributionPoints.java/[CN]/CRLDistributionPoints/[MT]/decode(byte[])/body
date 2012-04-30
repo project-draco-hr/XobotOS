@@ -1,0 +1,3 @@
+{
+  return (CRLDistributionPoints)ASN1.decode(encoding);
+}

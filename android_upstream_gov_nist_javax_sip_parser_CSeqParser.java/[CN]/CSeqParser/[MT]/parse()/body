@@ -1,0 +1,25 @@
+{
+  try {
+    CSeq c=new CSeq();
+    this.lexer.match(TokenTypes.CSEQ);
+    this.lexer.SPorHT();
+    this.lexer.match(':');
+    this.lexer.SPorHT();
+    String number=this.lexer.number();
+    c.setSeqNumber(Long.parseLong(number));
+    this.lexer.SPorHT();
+    String m=SIPRequest.getCannonicalName(method());
+    c.setMethod(m);
+    this.lexer.SPorHT();
+    this.lexer.match('\n');
+    return c;
+  }
+ catch (  NumberFormatException ex) {
+    Debug.printStackTrace(ex);
+    throw createParseException("Number format exception");
+  }
+catch (  InvalidArgumentException ex) {
+    Debug.printStackTrace(ex);
+    throw createParseException(ex.getMessage());
+  }
+}

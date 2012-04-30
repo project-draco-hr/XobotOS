@@ -1,0 +1,8 @@
+{
+  if (v == Value.WRAP || v == Value.CLAMP) {
+    mWrapT=v;
+  }
+ else {
+    throw new IllegalArgumentException("Invalid value");
+  }
+}

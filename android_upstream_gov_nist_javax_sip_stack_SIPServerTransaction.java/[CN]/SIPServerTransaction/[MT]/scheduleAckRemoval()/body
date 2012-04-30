@@ -1,0 +1,6 @@
+{
+  if (this.getMethod() == null || !this.getMethod().equals(Request.ACK)) {
+    throw new IllegalStateException("Method is null[" + (getMethod() == null) + "] or method is not ACK["+ this.getMethod()+ "]");
+  }
+  this.startTransactionTimer();
+}

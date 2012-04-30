@@ -1,0 +1,22 @@
+{
+  String user=authorization.getUsername();
+  if (callId == null)   throw new NullPointerException("Call ID is null!");
+  if (authorization == null)   throw new NullPointerException("Null authorization domain");
+  List<AuthorizationHeader> authHeaders=authorizationHeaders.get(callId);
+  if (authHeaders == null) {
+    authHeaders=new LinkedList<AuthorizationHeader>();
+    authorizationHeaders.put(callId,authHeaders);
+  }
+ else {
+    String realm=authorization.getRealm();
+    for (ListIterator<AuthorizationHeader> li=authHeaders.listIterator(); li.hasNext(); ) {
+      AuthorizationHeader authHeader=(AuthorizationHeader)li.next();
+      if (realm.equals(authHeader.getRealm())) {
+        li.remove();
+      }
+    }
+  }
+  authHeaders.add(authorization);
+  TimeoutTask timeoutTask=new TimeoutTask(callId,user);
+  if (cacheTime != -1)   this.timer.schedule(timeoutTask,cacheTime * 1000);
+}

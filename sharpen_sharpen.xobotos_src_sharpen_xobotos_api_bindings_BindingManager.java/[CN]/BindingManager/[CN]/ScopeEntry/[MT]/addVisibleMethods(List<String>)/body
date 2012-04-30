@@ -1,0 +1,4 @@
+{
+  _localBlockVariables.addAll(methods);
+  _blockVariables.addAll(methods);
+}

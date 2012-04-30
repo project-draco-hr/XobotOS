@@ -1,0 +1,2 @@
+def must_not_contain_lines(self, lines, output, title=None):
+    return self.must_not_contain_any_line(output, lines, title)

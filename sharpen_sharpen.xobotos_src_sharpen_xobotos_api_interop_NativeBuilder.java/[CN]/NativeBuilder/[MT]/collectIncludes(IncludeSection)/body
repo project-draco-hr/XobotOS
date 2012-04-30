@@ -1,0 +1,7 @@
+{
+  for (  IncludeFileProvider provider : _includeProviders)   section.addIncludes(provider);
+  for (  IncludeFileProvider provider : _nativeTypes)   section.addIncludes(provider);
+  for (  final NativeMethodBuilder builder : _nativeMethods.values()) {
+    builder.collectIncludes(section);
+  }
+}

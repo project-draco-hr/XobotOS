@@ -1,0 +1,6 @@
+{
+  if (text.charAt(0) != '"') {
+    text=Utils.getQuotedString(text);
+  }
+  this.parameters.set("text",text);
+}

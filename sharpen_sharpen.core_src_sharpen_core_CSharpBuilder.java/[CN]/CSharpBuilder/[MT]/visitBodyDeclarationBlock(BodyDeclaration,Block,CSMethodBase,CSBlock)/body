@@ -1,0 +1,7 @@
+{
+  CSMethodBase saved=_currentMethod;
+  _currentMethod=method;
+  processDisableTags(node,method);
+  processBlock(node,block,body);
+  _currentMethod=saved;
+}

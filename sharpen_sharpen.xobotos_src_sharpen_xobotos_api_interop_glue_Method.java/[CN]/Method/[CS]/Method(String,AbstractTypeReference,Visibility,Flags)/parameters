@@ -1,0 +1,4 @@
+String name
+AbstractTypeReference returnType
+Visibility visibility
+Flags flags

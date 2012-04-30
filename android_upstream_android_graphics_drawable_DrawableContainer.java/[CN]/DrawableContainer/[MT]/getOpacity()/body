@@ -1,0 +1,3 @@
+{
+  return mCurrDrawable == null || !mCurrDrawable.isVisible() ? PixelFormat.TRANSPARENT : mDrawableContainerState.getOpacity();
+}

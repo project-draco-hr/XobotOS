@@ -1,0 +1,7 @@
+def WriteList(self, list, variable=None, prefix='', quoter=QuoteIfNecessary):
+    "Write a variable definition that is a list of values.\n\n    E.g. WriteList(['a','b'], 'foo', prefix='blah') writes out\n         foo = blaha blahb\n    but in a pretty-printed style.\n    "
+    self.fp.write((variable + ' := '))
+    if list:
+        list = [quoter((prefix + l)) for l in list]
+        self.fp.write(' \\\n\t'.join(list))
+    self.fp.write('\n\n')

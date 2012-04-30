@@ -1,0 +1,7 @@
+{
+  if (method.equals(Request.ACK) || method.equals(Request.PRACK)) {
+    throw new SipException("Invalid method specified for createRequest:" + method);
+  }
+  if (lastResponse != null)   return this.createRequest(method,this.lastResponse);
+ else   throw new SipException("Dialog not yet established -- no response!");
+}

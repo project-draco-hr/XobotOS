@@ -1,0 +1,8 @@
+{
+  if ("".equals(language.getCountry())) {
+    this.languageRange=language.getLanguage();
+  }
+ else {
+    this.languageRange=language.getLanguage() + '-' + language.getCountry();
+  }
+}

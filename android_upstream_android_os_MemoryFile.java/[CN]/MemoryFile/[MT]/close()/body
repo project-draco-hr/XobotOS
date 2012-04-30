@@ -1,0 +1,6 @@
+{
+  deactivate();
+  if (!isClosed()) {
+    native_close(mFD);
+  }
+}

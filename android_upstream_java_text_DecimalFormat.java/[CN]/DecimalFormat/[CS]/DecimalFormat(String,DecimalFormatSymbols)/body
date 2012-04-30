@@ -1,0 +1,4 @@
+{
+  this.symbols=(DecimalFormatSymbols)value.clone();
+  initNative(pattern);
+}

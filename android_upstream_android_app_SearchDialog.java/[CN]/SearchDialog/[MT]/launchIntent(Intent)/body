@@ -1,0 +1,14 @@
+{
+  if (intent == null) {
+    return;
+  }
+  Log.d(LOG_TAG,"launching " + intent);
+  try {
+    Log.i(LOG_TAG,"Starting (as ourselves) " + intent.toUri(0));
+    getContext().startActivity(intent);
+    dismiss();
+  }
+ catch (  RuntimeException ex) {
+    Log.e(LOG_TAG,"Failed launch activity: " + intent,ex);
+  }
+}

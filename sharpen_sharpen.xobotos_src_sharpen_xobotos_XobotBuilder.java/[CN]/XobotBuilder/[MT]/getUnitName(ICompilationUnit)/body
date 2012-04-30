@@ -1,0 +1,6 @@
+{
+  String packageName=unit.getParent().getElementName();
+  String unitName=unit.getElementName().split("\\.")[0];
+  if (packageName.length() > 0)   unitName=_config.applyNamespaceMappings(packageName) + '.' + unitName;
+  return unitName;
+}

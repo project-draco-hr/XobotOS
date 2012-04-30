@@ -1,0 +1,33 @@
+{
+  boolean secure=false;
+  String compareString=url;
+  if (compareString.startsWith("http://")) {
+    compareString=compareString.substring(7);
+  }
+ else   if (compareString.startsWith("https://")) {
+    compareString=compareString.substring(8);
+    secure=true;
+  }
+  if (compareString.startsWith("www.")) {
+    compareString=compareString.substring(4);
+  }
+  StringBuilder whereClause=null;
+  if (secure) {
+    whereClause=new StringBuilder(Bookmarks.URL + " = ");
+    DatabaseUtils.appendEscapedSQLString(whereClause,"https://" + compareString);
+    addOrUrlEquals(whereClause);
+    DatabaseUtils.appendEscapedSQLString(whereClause,"https://www." + compareString);
+  }
+ else {
+    whereClause=new StringBuilder(Bookmarks.URL + " = ");
+    DatabaseUtils.appendEscapedSQLString(whereClause,compareString);
+    addOrUrlEquals(whereClause);
+    String wwwString="www." + compareString;
+    DatabaseUtils.appendEscapedSQLString(whereClause,wwwString);
+    addOrUrlEquals(whereClause);
+    DatabaseUtils.appendEscapedSQLString(whereClause,"http://" + compareString);
+    addOrUrlEquals(whereClause);
+    DatabaseUtils.appendEscapedSQLString(whereClause,"http://" + wwwString);
+  }
+  return cr.query(History.CONTENT_URI,new String[]{History._ID,History.VISITS},whereClause.toString(),null,null);
+}

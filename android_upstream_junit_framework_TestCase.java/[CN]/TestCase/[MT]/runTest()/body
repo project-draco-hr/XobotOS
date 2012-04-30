@@ -1,0 +1,24 @@
+{
+  assertNotNull(fName);
+  Method runMethod=null;
+  try {
+    runMethod=getClass().getMethod(fName,(Class[])null);
+  }
+ catch (  NoSuchMethodException e) {
+    fail("Method \"" + fName + "\" not found");
+  }
+  if (!Modifier.isPublic(runMethod.getModifiers())) {
+    fail("Method \"" + fName + "\" should be public");
+  }
+  try {
+    runMethod.invoke(this,(Object[])null);
+  }
+ catch (  InvocationTargetException e) {
+    e.fillInStackTrace();
+    throw e.getTargetException();
+  }
+catch (  IllegalAccessException e) {
+    e.fillInStackTrace();
+    throw e;
+  }
+}

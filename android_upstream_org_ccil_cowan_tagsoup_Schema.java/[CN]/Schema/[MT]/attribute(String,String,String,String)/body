@@ -1,0 +1,7 @@
+{
+  ElementType e=getElementType(elemName);
+  if (e == null) {
+    throw new Error("Attribute " + attrName + " specified for unknown element type "+ elemName);
+  }
+  e.setAttribute(attrName,type,value);
+}

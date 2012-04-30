@@ -1,0 +1,7 @@
+{
+  IVariableBinding binding=fragment.resolveBinding();
+  if (binding.getDeclaringClass().isInterface())   return true;
+  ITypeBinding type=binding.getType();
+  boolean isPrimitive=type.isPrimitive() || type.equals(my(IBindingManager.class).getStringType());
+  return Modifier.isFinal(node.getModifiers()) && isPrimitive && hasConstValue(fragment)&& Modifier.isStatic(node.getModifiers());
+}

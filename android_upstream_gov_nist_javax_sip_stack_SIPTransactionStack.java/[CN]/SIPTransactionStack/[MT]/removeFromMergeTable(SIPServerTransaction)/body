@@ -1,0 +1,9 @@
+{
+  if (stackLogger.isLoggingEnabled()) {
+    this.stackLogger.logDebug("Removing tx from merge table ");
+  }
+  String key=((SIPRequest)tr.getRequest()).getMergeId();
+  if (key != null) {
+    this.mergeTable.remove(key);
+  }
+}

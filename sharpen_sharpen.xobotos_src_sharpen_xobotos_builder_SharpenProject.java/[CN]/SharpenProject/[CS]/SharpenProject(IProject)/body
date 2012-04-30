@@ -1,0 +1,4 @@
+{
+  _project=project;
+  _targetProject=getUninitializedTargetProject(project);
+}

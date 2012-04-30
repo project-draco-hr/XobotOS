@@ -1,0 +1,7 @@
+{
+  Enumeration prefixes=forcedDeclTable.keys();
+  while (prefixes.hasMoreElements()) {
+    String prefix=(String)prefixes.nextElement();
+    doPrefix(prefix,null,true);
+  }
+}

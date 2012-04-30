@@ -1,0 +1,13 @@
+{
+  CompareResult<LinkAddress> result=new CompareResult<LinkAddress>();
+  result.removed=new ArrayList<LinkAddress>(mLinkAddresses);
+  result.added.clear();
+  if (target != null) {
+    for (    LinkAddress newAddress : target.getLinkAddresses()) {
+      if (!result.removed.remove(newAddress)) {
+        result.added.add(newAddress);
+      }
+    }
+  }
+  return result;
+}

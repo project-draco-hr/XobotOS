@@ -1,0 +1,8 @@
+{
+  if (msg.obj instanceof Runnable) {
+    executeInternal((Runnable)msg.obj);
+  }
+ else {
+    Log.w(TAG,"can't handle msg: " + msg);
+  }
+}

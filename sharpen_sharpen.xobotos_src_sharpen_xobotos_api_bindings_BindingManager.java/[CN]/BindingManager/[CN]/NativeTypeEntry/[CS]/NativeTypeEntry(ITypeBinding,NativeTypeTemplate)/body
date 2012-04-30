@@ -1,0 +1,4 @@
+{
+  this.Binding=type;
+  this.Template=template;
+}

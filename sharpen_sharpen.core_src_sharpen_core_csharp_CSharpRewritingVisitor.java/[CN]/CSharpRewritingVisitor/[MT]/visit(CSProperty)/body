@@ -1,0 +1,7 @@
+{
+  node.type().accept(this);
+  final CSBlock getter=node.getter();
+  if (getter != null)   getter.accept(this);
+  final CSBlock setter=node.setter();
+  if (setter != null)   setter.accept(this);
+}

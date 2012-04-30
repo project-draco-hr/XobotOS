@@ -1,0 +1,8 @@
+{
+  if (!isViablePhoneNumber(number)) {
+    return false;
+  }
+  StringBuilder strippedNumber=new StringBuilder(number);
+  maybeStripExtension(strippedNumber);
+  return VALID_ALPHA_PHONE_PATTERN.matcher(strippedNumber).matches();
+}

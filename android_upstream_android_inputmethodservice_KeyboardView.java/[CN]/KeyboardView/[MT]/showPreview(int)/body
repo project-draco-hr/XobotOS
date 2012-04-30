@@ -1,0 +1,36 @@
+{
+  int oldKeyIndex=mCurrentKeyIndex;
+  final PopupWindow previewPopup=mPreviewPopup;
+  mCurrentKeyIndex=keyIndex;
+  final Key[] keys=mKeys;
+  if (oldKeyIndex != mCurrentKeyIndex) {
+    if (oldKeyIndex != NOT_A_KEY && keys.length > oldKeyIndex) {
+      Key oldKey=keys[oldKeyIndex];
+      oldKey.onReleased(mCurrentKeyIndex == NOT_A_KEY);
+      invalidateKey(oldKeyIndex);
+      sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_EXIT,oldKey.codes[0]);
+    }
+    if (mCurrentKeyIndex != NOT_A_KEY && keys.length > mCurrentKeyIndex) {
+      Key newKey=keys[mCurrentKeyIndex];
+      newKey.onPressed();
+      invalidateKey(mCurrentKeyIndex);
+      sendAccessibilityEventForUnicodeCharacter(AccessibilityEvent.TYPE_VIEW_HOVER_ENTER,newKey.codes[0]);
+    }
+  }
+  if (oldKeyIndex != mCurrentKeyIndex && mShowPreview) {
+    mHandler.removeMessages(MSG_SHOW_PREVIEW);
+    if (previewPopup.isShowing()) {
+      if (keyIndex == NOT_A_KEY) {
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_REMOVE_PREVIEW),DELAY_AFTER_PREVIEW);
+      }
+    }
+    if (keyIndex != NOT_A_KEY) {
+      if (previewPopup.isShowing() && mPreviewText.getVisibility() == VISIBLE) {
+        showKey(keyIndex);
+      }
+ else {
+        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SHOW_PREVIEW,keyIndex,0),DELAY_BEFORE_PREVIEW);
+      }
+    }
+  }
+}

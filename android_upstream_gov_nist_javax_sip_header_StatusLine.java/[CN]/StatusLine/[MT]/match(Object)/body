@@ -1,0 +1,19 @@
+{
+  if (!(matchObj instanceof StatusLine))   return false;
+  StatusLine sl=(StatusLine)matchObj;
+  if (sl.matchExpression != null)   return sl.matchExpression.match(this.encode());
+  if (sl.sipVersion != null && !sl.sipVersion.equals(sipVersion))   return false;
+  if (sl.statusCode != 0) {
+    if (matchStatusClass) {
+      int hiscode=sl.statusCode;
+      String codeString=Integer.toString(sl.statusCode);
+      String mycode=Integer.toString(statusCode);
+      if (codeString.charAt(0) != mycode.charAt(0))       return false;
+    }
+ else {
+      if (statusCode != sl.statusCode)       return false;
+    }
+  }
+  if (sl.reasonPhrase == null || reasonPhrase == sl.reasonPhrase)   return true;
+  return reasonPhrase.equals(sl.reasonPhrase);
+}

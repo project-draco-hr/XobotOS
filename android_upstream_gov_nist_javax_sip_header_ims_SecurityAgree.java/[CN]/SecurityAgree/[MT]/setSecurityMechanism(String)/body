@@ -1,0 +1,4 @@
+{
+  if (secMech == null)   throw new NullPointerException("JAIN-SIP " + "Exception, SecurityAgree, setSecurityMechanism(), the sec-mechanism parameter is null");
+  this.secMechanism=secMech;
+}

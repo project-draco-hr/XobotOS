@@ -1,0 +1,4 @@
+{
+  mAllowedNetworkTypes=flags;
+  return this;
+}

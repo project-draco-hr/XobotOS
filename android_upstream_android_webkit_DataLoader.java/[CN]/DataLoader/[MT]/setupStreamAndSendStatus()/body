@@ -1,0 +1,10 @@
+{
+  if (mDataStream != null) {
+    mLoadListener.status(1,1,200,"OK");
+    return true;
+  }
+ else {
+    mLoadListener.error(EventHandler.ERROR,mContext.getString(R.string.httpError));
+    return false;
+  }
+}

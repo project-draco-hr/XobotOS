@@ -1,0 +1,3 @@
+def is_writable(f):
+    mode = os.stat(f)[stat.ST_MODE]
+    return (mode & stat.S_IWUSR)

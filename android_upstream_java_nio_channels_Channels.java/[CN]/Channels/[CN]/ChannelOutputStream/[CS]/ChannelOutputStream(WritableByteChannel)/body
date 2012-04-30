@@ -1,0 +1,6 @@
+{
+  if (channel == null) {
+    throw new NullPointerException();
+  }
+  this.channel=channel;
+}

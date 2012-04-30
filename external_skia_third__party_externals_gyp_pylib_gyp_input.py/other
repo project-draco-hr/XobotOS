@@ -1,0 +1,30 @@
+from compiler.ast import Const
+from compiler.ast import Dict
+from compiler.ast import Discard
+from compiler.ast import List
+from compiler.ast import Module
+from compiler.ast import Node
+from compiler.ast import Stmt
+import compiler
+import copy
+import gyp.common
+import optparse
+import os.path
+import re
+import shlex
+import subprocess
+import sys
+linkable_types = ['executable', 'shared_library', 'loadable_module']
+dependency_sections = ['dependencies', 'export_dependent_settings']
+base_path_sections = ['destination', 'files', 'include_dirs', 'inputs', 'libraries', 'outputs', 'sources']
+path_sections = []
+base_non_configuration_keys = ['actions', 'configurations', 'copies', 'default_configuration', 'dependencies', 'dependencies_original', 'link_languages', 'libraries', 'postbuilds', 'product_dir', 'product_extension', 'product_name', 'product_prefix', 'rules', 'run_as', 'sources', 'suppress_wildcard', 'target_name', 'toolset', 'toolsets', 'type', 'variants', 'variables']
+non_configuration_keys = []
+invalid_configuration_keys = ['actions', 'all_dependent_settings', 'configurations', 'dependencies', 'direct_dependent_settings', 'libraries', 'link_settings', 'sources', 'target_name', 'type']
+absolute_build_file_paths = False
+multiple_toolsets = False
+canonical_int_re = re.compile('^(0|-?[1-9][0-9]*)$')
+early_variable_re = re.compile('(?P<replace>(?P<type><(?:(?:!?@?)|\\|)?)(?P<command_string>[-a-zA-Z0-9_.]+)?\\((?P<is_array>\\s*\\[?)(?P<content>.*?)(\\]?)\\))')
+late_variable_re = re.compile('(?P<replace>(?P<type>>(?:(?:!?@?)|\\|)?)(?P<command_string>[-a-zA-Z0-9_.]+)?\\((?P<is_array>\\s*\\[?)(?P<content>.*?)(\\]?)\\))')
+cached_command_results = {}
+exception_re = re.compile('["\']?[-/$<>]')

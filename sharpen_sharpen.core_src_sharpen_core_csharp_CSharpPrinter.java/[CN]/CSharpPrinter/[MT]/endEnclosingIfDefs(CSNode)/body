@@ -1,0 +1,6 @@
+{
+  for (  String expression : node.enclosingIfDefs()) {
+    writeIndented("#endif // ");
+    writeLine(expression);
+  }
+}

@@ -1,0 +1,16 @@
+{
+  if (stackLogger.isLoggingEnabled())   stackLogger.logDebug("Re-initializing !");
+  messageProcessors=new ArrayList<MessageProcessor>();
+  this.ioHandler=new IOHandler(this);
+  pendingTransactions=new ConcurrentHashMap<String,SIPServerTransaction>();
+  clientTransactionTable=new ConcurrentHashMap<String,SIPClientTransaction>();
+  serverTransactionTable=new ConcurrentHashMap<String,SIPServerTransaction>();
+  retransmissionAlertTransactions=new ConcurrentHashMap<String,SIPServerTransaction>();
+  mergeTable=new ConcurrentHashMap<String,SIPServerTransaction>();
+  this.dialogTable=new ConcurrentHashMap<String,SIPDialog>();
+  this.earlyDialogTable=new ConcurrentHashMap<String,SIPDialog>();
+  this.terminatedServerTransactionsPendingAck=new ConcurrentHashMap<String,SIPServerTransaction>();
+  this.forkedClientTransactionTable=new ConcurrentHashMap<String,SIPClientTransaction>();
+  this.timer=new Timer();
+  this.activeClientTransactionCount=new AtomicInteger(0);
+}

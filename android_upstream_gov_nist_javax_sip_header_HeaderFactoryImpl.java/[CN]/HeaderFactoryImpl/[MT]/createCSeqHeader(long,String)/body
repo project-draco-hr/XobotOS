@@ -1,0 +1,8 @@
+{
+  if (sequenceNumber < 0)   throw new InvalidArgumentException("bad arg " + sequenceNumber);
+  if (method == null)   throw new NullPointerException("null arg method");
+  CSeq cseq=new CSeq();
+  cseq.setMethod(method);
+  cseq.setSeqNumber(sequenceNumber);
+  return cseq;
+}

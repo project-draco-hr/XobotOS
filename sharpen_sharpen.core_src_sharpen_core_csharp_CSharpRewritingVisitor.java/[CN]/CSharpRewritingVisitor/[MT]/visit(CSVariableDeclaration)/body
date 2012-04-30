@@ -1,0 +1,6 @@
+{
+  node.type().accept(this);
+  if (null != node.initializer()) {
+    node.initializer().accept(this);
+  }
+}

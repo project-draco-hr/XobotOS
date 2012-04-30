@@ -1,0 +1,27 @@
+{
+  super.writeToParcel(dest,parcelableFlags);
+  dest.writeString(taskAffinity);
+  dest.writeString(permission);
+  dest.writeString(processName);
+  dest.writeString(className);
+  dest.writeInt(theme);
+  dest.writeInt(flags);
+  dest.writeInt(requiresSmallestWidthDp);
+  dest.writeInt(compatibleWidthLimitDp);
+  dest.writeInt(largestWidthLimitDp);
+  dest.writeString(sourceDir);
+  dest.writeString(publicSourceDir);
+  dest.writeString(nativeLibraryDir);
+  dest.writeStringArray(resourceDirs);
+  dest.writeStringArray(sharedLibraryFiles);
+  dest.writeString(dataDir);
+  dest.writeInt(uid);
+  dest.writeInt(targetSdkVersion);
+  dest.writeInt(enabled ? 1 : 0);
+  dest.writeInt(enabledSetting);
+  dest.writeInt(installLocation);
+  dest.writeString(manageSpaceActivityName);
+  dest.writeString(backupAgentName);
+  dest.writeInt(descriptionRes);
+  dest.writeInt(uiOptions);
+}

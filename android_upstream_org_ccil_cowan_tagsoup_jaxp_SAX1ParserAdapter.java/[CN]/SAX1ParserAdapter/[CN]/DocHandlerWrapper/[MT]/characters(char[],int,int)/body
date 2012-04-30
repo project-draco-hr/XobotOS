@@ -1,0 +1,3 @@
+{
+  docHandler.characters(ch,start,length);
+}

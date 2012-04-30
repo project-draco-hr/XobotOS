@@ -1,0 +1,4 @@
+{
+  this.peerHost=host;
+  this.peerPort=port;
+}

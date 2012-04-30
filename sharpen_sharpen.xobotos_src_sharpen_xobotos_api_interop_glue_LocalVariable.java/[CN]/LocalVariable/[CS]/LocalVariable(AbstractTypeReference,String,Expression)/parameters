@@ -1,0 +1,3 @@
+AbstractTypeReference type
+String name
+Expression init

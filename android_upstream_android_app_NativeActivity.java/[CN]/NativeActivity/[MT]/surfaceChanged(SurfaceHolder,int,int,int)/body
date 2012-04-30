@@ -1,0 +1,6 @@
+{
+  if (!mDestroyed) {
+    mCurSurfaceHolder=holder;
+    onSurfaceChangedNative(mNativeHandle,holder.getSurface(),format,width,height);
+  }
+}

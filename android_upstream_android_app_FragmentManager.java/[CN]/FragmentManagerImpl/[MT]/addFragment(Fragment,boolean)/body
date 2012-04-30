@@ -1,0 +1,18 @@
+{
+  if (mAdded == null) {
+    mAdded=new ArrayList<Fragment>();
+  }
+  if (DEBUG)   Log.v(TAG,"add: " + fragment);
+  makeActive(fragment);
+  if (!fragment.mDetached) {
+    mAdded.add(fragment);
+    fragment.mAdded=true;
+    fragment.mRemoving=false;
+    if (fragment.mHasMenu && fragment.mMenuVisible) {
+      mNeedMenuInvalidate=true;
+    }
+    if (moveToStateNow) {
+      moveToState(fragment);
+    }
+  }
+}

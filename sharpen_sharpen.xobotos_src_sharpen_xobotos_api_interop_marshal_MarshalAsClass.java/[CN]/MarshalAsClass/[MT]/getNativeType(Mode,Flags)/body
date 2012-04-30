@@ -1,0 +1,4 @@
+{
+  if ((flags != Flags.ELEMENT) && (mode == Mode.IN))   return new ConstPointerType(_nativeClass);
+ else   return new PointerType(_nativeClass);
+}

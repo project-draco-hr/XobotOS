@@ -1,0 +1,5 @@
+{
+  super(info,nativeName,managedName,flags);
+  this._ptrName="ptr_" + nativeName;
+  this._mode=mode;
+}

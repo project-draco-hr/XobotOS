@@ -1,0 +1,58 @@
+{
+  Arrays.checkOffsetAndCount(bytes.length,offset,byteCount);
+  if (byteCount == 0) {
+    return 0;
+  }
+  if (!isConnected) {
+    throw new IOException("Not connected");
+  }
+  if (buffer == null) {
+    throw new IOException("InputStream is closed");
+  }
+  lastReader=Thread.currentThread();
+  try {
+    int attempts=3;
+    while (in == -1) {
+      if (isClosed) {
+        return -1;
+      }
+      if ((attempts-- <= 0) && lastWriter != null && !lastWriter.isAlive()) {
+        throw new IOException("Pipe broken");
+      }
+      notifyAll();
+      wait(1000);
+    }
+  }
+ catch (  InterruptedException e) {
+    throw new InterruptedIOException();
+  }
+  int totalCopied=0;
+  if (out >= in) {
+    int leftInBuffer=buffer.length - out;
+    int length=leftInBuffer < byteCount ? leftInBuffer : byteCount;
+    System.arraycopy(buffer,out,bytes,offset,length);
+    out+=length;
+    if (out == buffer.length) {
+      out=0;
+    }
+    if (out == in) {
+      in=-1;
+      out=0;
+    }
+    totalCopied+=length;
+  }
+  if (totalCopied < byteCount && in != -1) {
+    int leftInBuffer=in - out;
+    int leftToCopy=byteCount - totalCopied;
+    int length=leftToCopy < leftInBuffer ? leftToCopy : leftInBuffer;
+    System.arraycopy(buffer,out,bytes,offset + totalCopied,length);
+    out+=length;
+    if (out == in) {
+      in=-1;
+      out=0;
+    }
+    totalCopied+=length;
+  }
+  notifyAll();
+  return totalCopied;
+}

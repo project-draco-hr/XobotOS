@@ -1,0 +1,5 @@
+{
+  if (!(obj instanceof MemberMapping))   return false;
+  MemberMapping other=(MemberMapping)obj;
+  return name.equals(other.name) && kind.equals(other.kind) && flags.equals(other.flags);
+}

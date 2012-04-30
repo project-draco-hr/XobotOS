@@ -1,0 +1,9 @@
+{
+  if (mSearchable != null && isShowing()) {
+    updateSearchAppIcon();
+    updateSearchBadge();
+    if (isLandscapeMode(getContext())) {
+      mSearchAutoComplete.ensureImeVisible(true);
+    }
+  }
+}

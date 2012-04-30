@@ -1,0 +1,19 @@
+{
+  if (index < 0 || index >= count) {
+    throw indexAndLength(index);
+  }
+  int length=count - index - 1;
+  if (length > 0) {
+    if (!shared) {
+      System.arraycopy(value,index + 1,value,index,length);
+    }
+ else {
+      char[] newData=new char[value.length];
+      System.arraycopy(value,0,newData,0,index);
+      System.arraycopy(value,index + 1,newData,index,length);
+      value=newData;
+      shared=false;
+    }
+  }
+  count--;
+}

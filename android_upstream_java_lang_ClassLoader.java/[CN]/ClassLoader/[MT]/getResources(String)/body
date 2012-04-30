@@ -1,0 +1,5 @@
+{
+  Enumeration first=parent.getResources(resName);
+  Enumeration second=findResources(resName);
+  return new TwoEnumerationsInOne(first,second);
+}

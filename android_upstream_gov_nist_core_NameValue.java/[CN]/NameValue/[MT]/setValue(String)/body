@@ -1,0 +1,5 @@
+{
+  String retval=this.value == null ? null : value;
+  this.value=value;
+  return retval;
+}

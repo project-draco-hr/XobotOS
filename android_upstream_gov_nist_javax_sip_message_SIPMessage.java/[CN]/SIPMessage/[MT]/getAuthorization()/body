@@ -1,0 +1,3 @@
+{
+  return (Authorization)getHeaderLowerCase(AUTHORIZATION_LOWERCASE);
+}

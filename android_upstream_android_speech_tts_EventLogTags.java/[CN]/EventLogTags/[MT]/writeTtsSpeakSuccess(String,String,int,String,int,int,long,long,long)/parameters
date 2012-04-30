@@ -1,0 +1,9 @@
+String engine
+String caller
+int length
+String locale
+int rate
+int pitch
+long engineLatency
+long engineTotal
+long audioLatency

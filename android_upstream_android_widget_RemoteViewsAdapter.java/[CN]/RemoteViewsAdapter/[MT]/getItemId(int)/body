@@ -1,0 +1,8 @@
+{
+synchronized (mCache) {
+    if (mCache.containsMetaDataAt(position)) {
+      return mCache.getMetaDataAt(position).itemId;
+    }
+    return 0;
+  }
+}

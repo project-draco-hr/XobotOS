@@ -1,0 +1,7 @@
+{
+  if (l == null) {
+    throw new NullPointerException();
+  }
+  this.locale=l;
+  return this;
+}

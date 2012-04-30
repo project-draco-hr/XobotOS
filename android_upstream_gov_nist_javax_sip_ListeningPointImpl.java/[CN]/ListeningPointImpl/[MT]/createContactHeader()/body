@@ -1,0 +1,19 @@
+{
+  try {
+    String ipAddress=this.getIPAddress();
+    int port=this.getPort();
+    SipURI sipURI=new SipUri();
+    sipURI.setHost(ipAddress);
+    sipURI.setPort(port);
+    sipURI.setTransportParam(this.transport);
+    Contact contact=new Contact();
+    AddressImpl address=new AddressImpl();
+    address.setURI(sipURI);
+    contact.setAddress(address);
+    return contact;
+  }
+ catch (  Exception ex) {
+    InternalErrorHandler.handleException("Unexpected exception",sipStack.getStackLogger());
+    return null;
+  }
+}

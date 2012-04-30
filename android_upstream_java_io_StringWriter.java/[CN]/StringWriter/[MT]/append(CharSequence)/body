@@ -1,0 +1,7 @@
+{
+  if (csq == null) {
+    csq="null";
+  }
+  write(csq.toString());
+  return this;
+}

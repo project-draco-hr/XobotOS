@@ -1,0 +1,4 @@
+{
+  NonStaticNestedClassBuilder builder=new NonStaticNestedClassBuilder(parent,nestedType);
+  return builder.build();
+}

@@ -1,0 +1,4 @@
+{
+  if (_map != null)   return new TypeMapping(_map);
+  return null;
+}

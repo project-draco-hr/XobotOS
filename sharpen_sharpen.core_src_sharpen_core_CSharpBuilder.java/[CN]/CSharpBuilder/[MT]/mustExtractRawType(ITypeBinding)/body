@@ -1,0 +1,12 @@
+{
+  if (!type.isGenericType())   return false;
+  for (  final ITypeBinding nested : type.getDeclaredTypes()) {
+    if (nested.isInterface() || nested.isEnum())     return true;
+    if (nested.isClass() && Modifier.isStatic(nested.getModifiers()))     return true;
+    if (mustExtractRawType(nested))     return true;
+  }
+  for (  final IVariableBinding field : type.getDeclaredFields()) {
+    if (field.getConstantValue() != null)     return true;
+  }
+  return false;
+}

@@ -1,0 +1,8 @@
+{
+synchronized (URLConnection.class) {
+    if (fileNameMap == null) {
+      fileNameMap=new DefaultFileNameMap();
+    }
+    return fileNameMap;
+  }
+}

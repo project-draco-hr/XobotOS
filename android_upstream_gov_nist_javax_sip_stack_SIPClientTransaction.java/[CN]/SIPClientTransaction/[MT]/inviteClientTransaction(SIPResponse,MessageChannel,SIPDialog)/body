@@ -1,0 +1,119 @@
+{
+  int statusCode=transactionResponse.getStatusCode();
+  if (TransactionState.TERMINATED == this.getState()) {
+    boolean ackAlreadySent=false;
+    if (dialog != null && dialog.isAckSeen() && dialog.getLastAckSent() != null) {
+      if (dialog.getLastAckSent().getCSeq().getSeqNumber() == transactionResponse.getCSeq().getSeqNumber() && transactionResponse.getFromTag().equals(dialog.getLastAckSent().getFromTag())) {
+        ackAlreadySent=true;
+      }
+    }
+    if (dialog != null && ackAlreadySent && transactionResponse.getCSeq().getMethod().equals(dialog.getMethod())) {
+      try {
+        if (sipStack.isLoggingEnabled())         sipStack.getStackLogger().logDebug("resending ACK");
+        dialog.resendAck();
+      }
+ catch (      SipException ex) {
+      }
+    }
+    this.semRelease();
+    return;
+  }
+ else   if (TransactionState.CALLING == this.getState()) {
+    if (statusCode / 100 == 2) {
+      disableRetransmissionTimer();
+      disableTimeoutTimer();
+      this.setState(TransactionState.TERMINATED);
+      if (respondTo != null)       respondTo.processResponse(transactionResponse,this,dialog);
+ else {
+        this.semRelease();
+      }
+    }
+ else     if (statusCode / 100 == 1) {
+      disableRetransmissionTimer();
+      disableTimeoutTimer();
+      this.setState(TransactionState.PROCEEDING);
+      if (respondTo != null)       respondTo.processResponse(transactionResponse,this,dialog);
+ else {
+        this.semRelease();
+      }
+    }
+ else     if (300 <= statusCode && statusCode <= 699) {
+      try {
+        sendMessage((SIPRequest)createErrorAck());
+      }
+ catch (      Exception ex) {
+        sipStack.getStackLogger().logError("Unexpected Exception sending ACK -- sending error AcK ",ex);
+      }
+      if (respondTo != null) {
+        respondTo.processResponse(transactionResponse,this,dialog);
+      }
+ else {
+        this.semRelease();
+      }
+      if (this.getDialog() != null && ((SIPDialog)this.getDialog()).isBackToBackUserAgent()) {
+        ((SIPDialog)this.getDialog()).releaseAckSem();
+      }
+      if (!isReliable()) {
+        this.setState(TransactionState.COMPLETED);
+        enableTimeoutTimer(TIMER_D);
+      }
+ else {
+        this.setState(TransactionState.TERMINATED);
+      }
+    }
+  }
+ else   if (TransactionState.PROCEEDING == this.getState()) {
+    if (statusCode / 100 == 1) {
+      if (respondTo != null) {
+        respondTo.processResponse(transactionResponse,this,dialog);
+      }
+ else {
+        this.semRelease();
+      }
+    }
+ else     if (statusCode / 100 == 2) {
+      this.setState(TransactionState.TERMINATED);
+      if (respondTo != null) {
+        respondTo.processResponse(transactionResponse,this,dialog);
+      }
+ else {
+        this.semRelease();
+      }
+    }
+ else     if (300 <= statusCode && statusCode <= 699) {
+      try {
+        sendMessage((SIPRequest)createErrorAck());
+      }
+ catch (      Exception ex) {
+        InternalErrorHandler.handleException(ex);
+      }
+      if (this.getDialog() != null) {
+        ((SIPDialog)this.getDialog()).releaseAckSem();
+      }
+      if (!isReliable()) {
+        this.setState(TransactionState.COMPLETED);
+        this.enableTimeoutTimer(TIMER_D);
+      }
+ else {
+        this.setState(TransactionState.TERMINATED);
+      }
+      if (respondTo != null)       respondTo.processResponse(transactionResponse,this,dialog);
+ else {
+        this.semRelease();
+      }
+    }
+  }
+ else   if (TransactionState.COMPLETED == this.getState()) {
+    if (300 <= statusCode && statusCode <= 699) {
+      try {
+        sendMessage((SIPRequest)createErrorAck());
+      }
+ catch (      Exception ex) {
+        InternalErrorHandler.handleException(ex);
+      }
+ finally {
+        this.semRelease();
+      }
+    }
+  }
+}

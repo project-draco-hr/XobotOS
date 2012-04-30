@@ -1,0 +1,34 @@
+{
+  final TypeTemplate template=findTypeTemplate(node);
+  if (template == null)   return null;
+  final ITypeBinding typeBinding=node.resolveBinding();
+  final AbstractTypeBinding binding=my(BindingManager.class).resolveBinding(typeBinding);
+  if ((binding != null) && (binding.getMapping() != null))   return null;
+  try {
+    _outputProviderStack.push(template);
+    final OutputType output=getOutputType();
+    final OutputMode mode;
+    if (node.resolveBinding().isNested())     mode=output.getModeForMember(node);
+ else     mode=output.getMode();
+    CSTypeDeclaration type;
+    if (mode == OutputMode.NOTHING)     return null;
+ else     if (mode == OutputMode.NAKED_STUB) {
+      type=delegate.create();
+      generateNakedStub(csharpBuilder,node,type);
+      parent.addType(type);
+      return type;
+    }
+    TypeBuilder builder=new TypeBuilder(template,output,node);
+    _typeStack.push(builder);
+    type=builder.build(csharpBuilder,delegate);
+    if (type != null) {
+      registerType(typeBinding,type);
+      parent.addType(type);
+    }
+    _typeStack.pop();
+    return type;
+  }
+  finally {
+    _outputProviderStack.pop();
+  }
+}

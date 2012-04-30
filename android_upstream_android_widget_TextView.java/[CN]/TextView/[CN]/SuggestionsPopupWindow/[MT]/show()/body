@@ -1,0 +1,7 @@
+{
+  if (!(mText instanceof Editable))   return;
+  updateSuggestions();
+  mCursorWasVisibleBeforeSuggestions=mCursorVisible;
+  setCursorVisible(false);
+  super.show();
+}

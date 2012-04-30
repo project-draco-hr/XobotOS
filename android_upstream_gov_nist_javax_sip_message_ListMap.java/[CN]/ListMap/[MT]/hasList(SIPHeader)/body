@@ -1,0 +1,7 @@
+{
+  if (sipHeader instanceof SIPHeaderList)   return false;
+ else {
+    Class<?> headerClass=sipHeader.getClass();
+    return headerListTable.get(headerClass) != null;
+  }
+}

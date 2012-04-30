@@ -1,0 +1,5 @@
+{
+  writeDoc(node);
+  writeAttributes(node);
+  writeMethodHeader(node,node.modifier());
+}

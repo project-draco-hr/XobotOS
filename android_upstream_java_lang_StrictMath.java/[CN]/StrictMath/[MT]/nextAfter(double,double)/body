@@ -1,0 +1,6 @@
+{
+  if (start == 0 && direction == 0) {
+    return direction;
+  }
+  return nextafter(start,direction);
+}

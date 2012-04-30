@@ -1,0 +1,5 @@
+{
+  mLeftStrip=drawable;
+  requestLayout();
+  invalidate();
+}

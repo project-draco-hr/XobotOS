@@ -1,0 +1,3 @@
+{
+  return BindingUtils.qualifiedSignature(getASTNode().resolveBinding());
+}

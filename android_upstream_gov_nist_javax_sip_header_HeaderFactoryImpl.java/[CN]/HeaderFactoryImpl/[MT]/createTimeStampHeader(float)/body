@@ -1,0 +1,6 @@
+{
+  if (timeStamp < 0)   throw new IllegalArgumentException("illegal timeStamp");
+  TimeStamp t=new TimeStamp();
+  t.setTimeStamp(timeStamp);
+  return t;
+}

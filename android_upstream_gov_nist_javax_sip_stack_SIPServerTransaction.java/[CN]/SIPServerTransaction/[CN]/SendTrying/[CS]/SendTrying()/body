@@ -1,0 +1,3 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("scheduled timer for " + SIPServerTransaction.this);
+}

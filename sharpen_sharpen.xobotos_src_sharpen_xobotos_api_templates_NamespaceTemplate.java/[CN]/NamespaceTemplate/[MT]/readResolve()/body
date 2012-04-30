@@ -1,0 +1,4 @@
+{
+  if (_namespaces == null)   _namespaces=new ArrayList<NamespaceTemplate>();
+  return super.readResolve();
+}

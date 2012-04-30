@@ -1,0 +1,10 @@
+{
+  for (  NumberFormat numFormat : possibleFormats) {
+    Matcher m=regexCache.getPatternForRegex(numFormat.getPattern()).matcher(nationalNumber);
+    if (m.matches()) {
+      String formattedNumber=m.replaceAll(numFormat.getFormat());
+      return prefixBeforeNationalNumber + formattedNumber;
+    }
+  }
+  return "";
+}

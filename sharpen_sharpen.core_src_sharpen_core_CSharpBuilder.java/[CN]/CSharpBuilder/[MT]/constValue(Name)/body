@@ -1,0 +1,7 @@
+{
+  IBinding binding=expression.resolveBinding();
+  if (IBinding.VARIABLE == binding.getKind()) {
+    return ((IVariableBinding)binding).getConstantValue();
+  }
+  return null;
+}

@@ -1,0 +1,13 @@
+def WriteXmlIfChanged(content, path, encoding='utf-8', pretty=False):
+    ' Writes the XML content to disk, touching the file only if it has changed.\n\n  Args:\n    content:  The structured content to be written.\n    path: Location of the file.\n    encoding: The encoding to report on the first line of the XML file.\n    pretty: True if we want pretty printing with indents and new lines.\n  '
+    xml_string = XmlToString(content, encoding, pretty)
+    try:
+        f = open(path, 'r')
+        existing = f.read()
+        f.close()
+    except:
+        existing = None
+    if (existing != xml_string):
+        f = open(path, 'w')
+        f.write(xml_string)
+        f.close()

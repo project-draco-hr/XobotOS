@@ -1,0 +1,5 @@
+{
+  if (sm != null) {
+    throw new SecurityException();
+  }
+}

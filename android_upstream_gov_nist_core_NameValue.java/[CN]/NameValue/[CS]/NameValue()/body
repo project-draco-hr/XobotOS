@@ -1,0 +1,7 @@
+{
+  name=null;
+  value="";
+  separator=Separators.EQUALS;
+  this.quotes="";
+  this.isFlagParameter=false;
+}

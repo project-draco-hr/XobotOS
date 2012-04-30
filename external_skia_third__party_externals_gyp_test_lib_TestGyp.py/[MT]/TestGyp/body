@@ -1,0 +1,11 @@
+def TestGyp(*args, **kw):
+    '\n  Returns an appropriate TestGyp* instance for a specified GYP format.\n  '
+    format = kw.get('format')
+    if format:
+        del kw['format']
+    else:
+        format = os.environ.get('TESTGYP_FORMAT')
+    for format_class in format_class_list:
+        if (format == format_class.format):
+            return format_class(*args, **kw)
+    raise Exception, ('unknown format %r' % format)

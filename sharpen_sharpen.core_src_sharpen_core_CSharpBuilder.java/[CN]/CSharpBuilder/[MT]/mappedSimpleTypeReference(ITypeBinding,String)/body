@@ -1,0 +1,5 @@
+{
+  final CSTypeReference typeRef=new CSTypeReference(name);
+  addTypeArguments(typeRef,type);
+  return typeRef;
+}

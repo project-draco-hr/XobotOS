@@ -1,0 +1,26 @@
+{
+  if (!sipRequest.getMethod().equals(Request.INVITE)) {
+    return null;
+  }
+  String mergeId=sipRequest.getMergeId();
+  SIPServerTransaction mergedTransaction=(SIPServerTransaction)this.mergeTable.get(mergeId);
+  if (mergeId == null) {
+    return null;
+  }
+ else   if (mergedTransaction != null && !mergedTransaction.isMessagePartOfTransaction(sipRequest)) {
+    return mergedTransaction;
+  }
+ else {
+    for (    Dialog dialog : this.dialogTable.values()) {
+      SIPDialog sipDialog=(SIPDialog)dialog;
+      if (sipDialog.getFirstTransaction() != null && sipDialog.getFirstTransaction() instanceof ServerTransaction) {
+        SIPServerTransaction serverTransaction=((SIPServerTransaction)sipDialog.getFirstTransaction());
+        SIPRequest transactionRequest=((SIPServerTransaction)sipDialog.getFirstTransaction()).getOriginalRequest();
+        if ((!serverTransaction.isMessagePartOfTransaction(sipRequest)) && sipRequest.getMergeId().equals(transactionRequest.getMergeId())) {
+          return (SIPServerTransaction)sipDialog.getFirstTransaction();
+        }
+      }
+    }
+    return null;
+  }
+}

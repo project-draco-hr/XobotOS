@@ -1,0 +1,4 @@
+{
+  if (this.messageProcessor != null)   return messageProcessor.getPort();
+ else   return -1;
+}

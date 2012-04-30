@@ -1,0 +1,4 @@
+{
+  if (comment == null)   throw new NullPointerException("the comment parameter is null");
+  this.comment=comment;
+}

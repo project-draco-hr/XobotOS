@@ -1,0 +1,5 @@
+{
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("setLocalSequenceNumber: original  " + this.localSequenceNumber + " new  = "+ lCseq);
+  if (lCseq <= this.localSequenceNumber)   throw new RuntimeException("Sequence number should not decrease !");
+  this.localSequenceNumber=lCseq;
+}

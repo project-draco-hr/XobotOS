@@ -1,0 +1,6 @@
+{
+  mTitle=title;
+  mTextButton.setText(mTitle);
+  setContentDescription(mTitle);
+  updateTextButtonVisibility();
+}

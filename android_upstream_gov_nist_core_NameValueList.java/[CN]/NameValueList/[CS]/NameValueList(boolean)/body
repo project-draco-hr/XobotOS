@@ -1,0 +1,5 @@
+{
+  this.separator=";";
+  if (sync)   this.hmap=new ConcurrentHashMap<String,NameValue>();
+ else   this.hmap=new LinkedHashMap<String,NameValue>();
+}

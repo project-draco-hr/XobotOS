@@ -1,0 +1,13 @@
+{
+  printPrecedingComments(node);
+  writeIndented("for (");
+  writeCommaSeparatedList(node.initializers());
+  write("; ");
+  if (null != node.expression()) {
+    node.expression().accept(this);
+  }
+  write("; ");
+  writeCommaSeparatedList(node.updaters());
+  writeLine(")");
+  node.body().accept(this);
+}

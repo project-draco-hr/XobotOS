@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(GSM_RAT_SWITCHED,cid,networkFrom,networkTo);
+}

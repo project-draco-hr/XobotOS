@@ -1,0 +1,20 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("creating new TCPMessageChannel ");
+    sipStack.getStackLogger().logStackTrace();
+  }
+  mySock=sock;
+  peerAddress=mySock.getInetAddress();
+  myAddress=msgProcessor.getIpAddress().getHostAddress();
+  myClientInputStream=mySock.getInputStream();
+  myClientOutputStream=mySock.getOutputStream();
+  mythread=new Thread(this);
+  mythread.setDaemon(true);
+  mythread.setName("TCPMessageChannelThread");
+  this.sipStack=sipStack;
+  this.peerPort=mySock.getPort();
+  this.tcpMessageProcessor=msgProcessor;
+  this.myPort=this.tcpMessageProcessor.getPort();
+  super.messageProcessor=msgProcessor;
+  mythread.start();
+}

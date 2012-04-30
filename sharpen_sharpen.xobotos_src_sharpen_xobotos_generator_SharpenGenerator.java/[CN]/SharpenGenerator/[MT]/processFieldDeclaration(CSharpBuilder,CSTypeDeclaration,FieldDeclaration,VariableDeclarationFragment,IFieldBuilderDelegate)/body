@@ -1,0 +1,19 @@
+{
+  final ITypeBuilder type=_typeStack.peek();
+  final FieldTemplate template=type.getTypeTemplate().findFieldTemplate(node);
+  if (template == null)   return null;
+  try {
+    _outputProviderStack.push(template);
+    final OutputType output=getOutputType();
+    final OutputMode mode=output.getModeForMember(node);
+    if (mode == OutputMode.NOTHING)     return null;
+    FieldBuilder builder=new FieldBuilder(template,output,node,fragment);
+    type.registerMember(node,builder);
+    CSField field=builder.build(csharpBuilder,delegate);
+    if (field != null)     parent.addMember(field);
+    return field;
+  }
+  finally {
+    _outputProviderStack.pop();
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return cleanMe == cmp && UNSAFE.compareAndSwapObject(this,cleanMeOffset,cmp,val);
+}

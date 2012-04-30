@@ -1,0 +1,4 @@
+{
+  RealToString.getInstance().appendFloat(this,f);
+  return this;
+}

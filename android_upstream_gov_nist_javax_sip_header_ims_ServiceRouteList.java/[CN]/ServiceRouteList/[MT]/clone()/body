@@ -1,0 +1,4 @@
+{
+  ServiceRouteList retval=new ServiceRouteList();
+  return retval.clonehlist(this.hlist);
+}

@@ -1,0 +1,8 @@
+{
+  CSVisibility vis=my(CSharpDriver.class).mapVisibility(binding);
+  if (vis != null)   return vis;
+  if (binding.getDeclaringClass().isInterface())   return CSVisibility.Public;
+  vis=mapVisibility(binding.getModifiers());
+  vis=adjustVisibility(binding.getDeclaringClass(),binding.getType(),vis);
+  return vis;
+}

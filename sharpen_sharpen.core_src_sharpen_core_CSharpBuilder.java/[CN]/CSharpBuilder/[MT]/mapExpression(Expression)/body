@@ -1,0 +1,11 @@
+{
+  if (null == expression)   return null;
+  try {
+    expression.accept(this);
+    return popExpression();
+  }
+ catch (  Exception e) {
+    unsupportedConstruct(expression,e);
+    return null;
+  }
+}

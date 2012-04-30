@@ -1,0 +1,11 @@
+{
+  Parcel data=Parcel.obtain();
+  Parcel reply=Parcel.obtain();
+  data.writeInterfaceToken(IActivityManager.descriptor);
+  data.writeString(packageName);
+  data.writeInt(ask ? 1 : 0);
+  mRemote.transact(SET_PACKAGE_ASK_SCREEN_COMPAT_TRANSACTION,data,reply,0);
+  reply.readException();
+  reply.recycle();
+  data.recycle();
+}

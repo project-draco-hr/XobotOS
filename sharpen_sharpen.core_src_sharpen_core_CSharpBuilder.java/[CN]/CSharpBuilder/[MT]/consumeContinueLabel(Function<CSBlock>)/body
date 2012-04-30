@@ -1,0 +1,8 @@
+{
+  CSLabelStatement label=_currentContinueLabel;
+  _currentContinueLabel=null;
+  CSBlock body=func.apply();
+  if (label != null) {
+    body.addStatement(label);
+  }
+}

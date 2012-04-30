@@ -1,0 +1,21 @@
+{
+  SIPHeader sh=(SIPHeader)sipHeader;
+  try {
+    if ((sipHeader instanceof ViaHeader) || (sipHeader instanceof RecordRouteHeader)) {
+      attachHeader(sh,false,true);
+    }
+ else {
+      attachHeader(sh,false,false);
+    }
+  }
+ catch (  SIPDuplicateHeaderException ex) {
+    try {
+      if (sipHeader instanceof ContentLength) {
+        ContentLength cl=(ContentLength)sipHeader;
+        contentLengthHeader.setContentLength(cl.getContentLength());
+      }
+    }
+ catch (    InvalidArgumentException e) {
+    }
+  }
+}

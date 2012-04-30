@@ -1,0 +1,11 @@
+{
+  numOfEntries=sortedAreaCodeMap.size();
+  phoneNumberPrefixes=new int[numOfEntries];
+  descriptions=new String[numOfEntries];
+  int index=0;
+  for (  int prefix : sortedAreaCodeMap.keySet()) {
+    phoneNumberPrefixes[index++]=prefix;
+    possibleLengths.add((int)Math.log10(prefix) + 1);
+  }
+  sortedAreaCodeMap.values().toArray(descriptions);
+}

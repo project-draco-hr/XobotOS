@@ -1,0 +1,4 @@
+{
+  if (privacy == null || privacy == "")   throw new NullPointerException("JAIN-SIP Exception, " + " Privacy, setPrivacy(), privacy value is null or empty");
+  this.privacy=privacy;
+}

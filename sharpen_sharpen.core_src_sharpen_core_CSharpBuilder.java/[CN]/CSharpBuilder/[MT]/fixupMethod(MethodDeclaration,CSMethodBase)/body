@@ -1,0 +1,5 @@
+{
+  final IMethodBinding binding=node.resolveBinding();
+  method.visibility(mapVisibility(binding));
+  if (method instanceof CSMethod)   fixupMethod(node,(CSMethod)method);
+}

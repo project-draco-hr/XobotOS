@@ -1,0 +1,60 @@
+{
+  CallerInfo info=new CallerInfo();
+  info.photoResource=0;
+  info.phoneLabel=null;
+  info.numberType=0;
+  info.numberLabel=null;
+  info.cachedPhoto=null;
+  info.isCachedPhotoCurrent=false;
+  info.contactExists=false;
+  if (VDBG)   Log.v(TAG,"getCallerInfo() based on cursor...");
+  if (cursor != null) {
+    if (cursor.moveToFirst()) {
+      int columnIndex;
+      columnIndex=cursor.getColumnIndex(PhoneLookup.DISPLAY_NAME);
+      if (columnIndex != -1) {
+        info.name=cursor.getString(columnIndex);
+      }
+      columnIndex=cursor.getColumnIndex(PhoneLookup.NUMBER);
+      if (columnIndex != -1) {
+        info.phoneNumber=cursor.getString(columnIndex);
+      }
+      columnIndex=cursor.getColumnIndex(PhoneLookup.NORMALIZED_NUMBER);
+      if (columnIndex != -1) {
+        info.normalizedNumber=cursor.getString(columnIndex);
+      }
+      columnIndex=cursor.getColumnIndex(PhoneLookup.LABEL);
+      if (columnIndex != -1) {
+        int typeColumnIndex=cursor.getColumnIndex(PhoneLookup.TYPE);
+        if (typeColumnIndex != -1) {
+          info.numberType=cursor.getInt(typeColumnIndex);
+          info.numberLabel=cursor.getString(columnIndex);
+          info.phoneLabel=Phone.getDisplayLabel(context,info.numberType,info.numberLabel).toString();
+        }
+      }
+      columnIndex=getColumnIndexForPersonId(contactRef,cursor);
+      if (columnIndex != -1) {
+        info.person_id=cursor.getLong(columnIndex);
+        if (VDBG)         Log.v(TAG,"==> got info.person_id: " + info.person_id);
+      }
+ else {
+        Log.w(TAG,"Couldn't find person_id column for " + contactRef);
+      }
+      columnIndex=cursor.getColumnIndex(PhoneLookup.CUSTOM_RINGTONE);
+      if ((columnIndex != -1) && (cursor.getString(columnIndex) != null)) {
+        info.contactRingtoneUri=Uri.parse(cursor.getString(columnIndex));
+      }
+ else {
+        info.contactRingtoneUri=null;
+      }
+      columnIndex=cursor.getColumnIndex(PhoneLookup.SEND_TO_VOICEMAIL);
+      info.shouldSendToVoicemail=(columnIndex != -1) && ((cursor.getInt(columnIndex)) == 1);
+      info.contactExists=true;
+    }
+    cursor.close();
+  }
+  info.needUpdate=false;
+  info.name=normalize(info.name);
+  info.contactRefUri=contactRef;
+  return info;
+}

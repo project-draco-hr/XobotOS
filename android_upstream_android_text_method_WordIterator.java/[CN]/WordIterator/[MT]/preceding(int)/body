@@ -1,0 +1,13 @@
+{
+  int shiftedOffset=offset - mOffsetShift;
+  do {
+    shiftedOffset=mIterator.preceding(shiftedOffset);
+    if (shiftedOffset == BreakIterator.DONE) {
+      return BreakIterator.DONE;
+    }
+    if (isOnLetterOrDigit(shiftedOffset)) {
+      return shiftedOffset + mOffsetShift;
+    }
+  }
+ while (true);
+}

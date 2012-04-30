@@ -1,0 +1,6 @@
+{
+  if (!isVoiceCapable()) {
+    return PHONE_TYPE_NONE;
+  }
+  return getCurrentPhoneType();
+}

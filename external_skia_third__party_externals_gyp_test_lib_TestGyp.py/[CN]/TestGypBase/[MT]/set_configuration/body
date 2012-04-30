@@ -1,0 +1,3 @@
+def set_configuration(self, configuration):
+    '\n    Sets the configuration, to be used for invoking the build\n    tool and testing potential built output.\n    '
+    self.configuration = configuration

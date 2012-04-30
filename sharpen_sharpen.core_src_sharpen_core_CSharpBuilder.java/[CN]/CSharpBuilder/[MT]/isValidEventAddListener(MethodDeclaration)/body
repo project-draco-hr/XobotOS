@@ -1,0 +1,6 @@
+{
+  if (1 != addListener.parameters().size())   return false;
+  final ITypeBinding type=getFirstParameterType(addListener);
+  if (!type.isInterface())   return false;
+  return type.getDeclaredMethods().length == 1;
+}

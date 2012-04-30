@@ -1,0 +1,7 @@
+{
+  if (fd == null) {
+    throw new NullPointerException("fd == null");
+  }
+  this.fd=fd;
+  this.shouldClose=false;
+}

@@ -1,0 +1,16 @@
+{
+synchronized (sLock) {
+    Intent.FilterComparison fc=new Intent.FilterComparison(intent);
+    if (RemoteViewsService.sRemoteViewFactories.containsKey(fc)) {
+      RemoteViewsFactory factory=RemoteViewsService.sRemoteViewFactories.get(fc);
+      try {
+        factory.onDestroy();
+      }
+ catch (      Exception ex) {
+        Thread t=Thread.currentThread();
+        Thread.getDefaultUncaughtExceptionHandler().uncaughtException(t,ex);
+      }
+      RemoteViewsService.sRemoteViewFactories.remove(fc);
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  if (fromIndex == -1) {
+    mInAnimation.setTarget(view);
+    mInAnimation.start();
+  }
+ else   if (toIndex == -1) {
+    mOutAnimation.setTarget(view);
+    mOutAnimation.start();
+  }
+}

@@ -1,0 +1,11 @@
+{
+  String result=null;
+  final String column=actionKey.getSuggestActionMsgColumn();
+  if (column != null) {
+    result=SuggestionsAdapter.getColumnString(c,column);
+  }
+  if (result == null) {
+    result=actionKey.getSuggestActionMsg();
+  }
+  return result;
+}

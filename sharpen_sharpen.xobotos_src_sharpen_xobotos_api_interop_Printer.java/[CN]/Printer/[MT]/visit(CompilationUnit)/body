@@ -1,0 +1,7 @@
+{
+  node.getIncludeSection().accept(this);
+  _writer.writeLine();
+  visitList(node.getMembers());
+  _writer.writeLine();
+  visitList(node.getMethods());
+}

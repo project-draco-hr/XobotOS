@@ -1,0 +1,41 @@
+{
+  ThreadAuditor.ThreadHandle threadHandle=null;
+  while (true) {
+    if (myParser == null) {
+      myParser=new StringMsgParser();
+      myParser.setParseExceptionListener(this);
+    }
+    DatagramPacket packet;
+    if (sipStack.threadPoolSize != -1) {
+synchronized (((UDPMessageProcessor)messageProcessor).messageQueue) {
+        while (((UDPMessageProcessor)messageProcessor).messageQueue.isEmpty()) {
+          if (!((UDPMessageProcessor)messageProcessor).isRunning)           return;
+          try {
+            if (threadHandle == null) {
+              threadHandle=sipStack.getThreadAuditor().addCurrentThread();
+            }
+            threadHandle.ping();
+            ((UDPMessageProcessor)messageProcessor).messageQueue.wait(threadHandle.getPingIntervalInMillisecs());
+          }
+ catch (          InterruptedException ex) {
+            if (!((UDPMessageProcessor)messageProcessor).isRunning)             return;
+          }
+        }
+        packet=(DatagramPacket)((UDPMessageProcessor)messageProcessor).messageQueue.removeFirst();
+      }
+      this.incomingPacket=packet;
+    }
+ else {
+      packet=this.incomingPacket;
+    }
+    try {
+      processIncomingDataPacket(packet);
+    }
+ catch (    Exception e) {
+      sipStack.getStackLogger().logError("Error while processing incoming UDP packet",e);
+    }
+    if (sipStack.threadPoolSize == -1) {
+      return;
+    }
+  }
+}

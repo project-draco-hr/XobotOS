@@ -1,0 +1,5 @@
+{
+  ois.defaultReadObject();
+  this.longCount=this.bits.length;
+  shrinkSize();
+}

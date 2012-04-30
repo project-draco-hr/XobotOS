@@ -1,0 +1,3 @@
+{
+  return getInstance(LocaleData.get(locale).percentPattern,locale);
+}

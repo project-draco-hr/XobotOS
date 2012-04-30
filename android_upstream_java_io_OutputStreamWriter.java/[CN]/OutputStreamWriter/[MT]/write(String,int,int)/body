@@ -1,0 +1,16 @@
+{
+synchronized (lock) {
+    if (count < 0) {
+      throw new StringIndexOutOfBoundsException(str,offset,count);
+    }
+    if (str == null) {
+      throw new NullPointerException("str == null");
+    }
+    if ((offset | count) < 0 || offset > str.length() - count) {
+      throw new StringIndexOutOfBoundsException(str,offset,count);
+    }
+    checkStatus();
+    CharBuffer chars=CharBuffer.wrap(str,offset,count + offset);
+    convert(chars);
+  }
+}

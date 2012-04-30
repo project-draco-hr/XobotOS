@@ -1,0 +1,7 @@
+{
+  checkOpenAndCreate(false);
+  if (isOutputShutdown()) {
+    throw new SocketException("Socket output is shutdown");
+  }
+  return impl.getOutputStream();
+}

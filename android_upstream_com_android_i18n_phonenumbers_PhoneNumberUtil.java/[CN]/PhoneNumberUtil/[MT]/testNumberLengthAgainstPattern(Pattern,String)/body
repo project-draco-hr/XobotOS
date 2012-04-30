@@ -1,0 +1,12 @@
+{
+  Matcher numberMatcher=numberPattern.matcher(number);
+  if (numberMatcher.matches()) {
+    return ValidationResult.IS_POSSIBLE;
+  }
+  if (numberMatcher.lookingAt()) {
+    return ValidationResult.TOO_LONG;
+  }
+ else {
+    return ValidationResult.TOO_SHORT;
+  }
+}

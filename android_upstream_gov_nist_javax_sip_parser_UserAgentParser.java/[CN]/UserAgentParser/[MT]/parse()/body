@@ -1,0 +1,34 @@
+{
+  if (debug)   dbg_enter("UserAgentParser.parse");
+  UserAgent userAgent=new UserAgent();
+  try {
+    headerName(TokenTypes.USER_AGENT);
+    if (this.lexer.lookAhead(0) == '\n')     throw createParseException("empty header");
+    while (this.lexer.lookAhead(0) != '\n' && this.lexer.lookAhead(0) != '\0') {
+      if (this.lexer.lookAhead(0) == '(') {
+        String comment=this.lexer.comment();
+        userAgent.addProductToken('(' + comment + ')');
+      }
+ else {
+        this.getLexer().SPorHT();
+        String product=this.lexer.byteStringNoSlash();
+        if (product == null)         throw createParseException("Expected product string");
+        StringBuffer productSb=new StringBuffer(product);
+        if (this.lexer.peekNextToken().getTokenType() == TokenTypes.SLASH) {
+          this.lexer.match(TokenTypes.SLASH);
+          this.getLexer().SPorHT();
+          String productVersion=this.lexer.byteStringNoSlash();
+          if (productVersion == null)           throw createParseException("Expected product version");
+          productSb.append("/");
+          productSb.append(productVersion);
+        }
+        userAgent.addProductToken(productSb.toString());
+      }
+      this.lexer.SPorHT();
+    }
+  }
+  finally {
+    if (debug)     dbg_leave("UserAgentParser.parse");
+  }
+  return userAgent;
+}

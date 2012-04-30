@@ -1,0 +1,5 @@
+{
+  mGradientState.setGradientRadius(gradientRadius);
+  mRectIsDirty=true;
+  invalidateSelf();
+}

@@ -1,0 +1,6 @@
+{
+  if (!isClass())   return;
+  CSField ptr=new CSField(_ptrName,new CSTypeReference("System.IntPtr"),CSVisibility.Public);
+  struct.addMember(ptr);
+  free.body().addStatement(new CSMethodInvocationExpression(getHelper().FREE_MANAGED_PTR.expr(),new CSReferenceExpression(_ptrName)));
+}

@@ -1,0 +1,68 @@
+{
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.grant_credentials_permission);
+  setTitle(R.string.grant_permissions_header_text);
+  mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+  final Bundle extras=getIntent().getExtras();
+  if (extras == null) {
+    setResult(Activity.RESULT_CANCELED);
+    finish();
+    return;
+  }
+  mAccount=extras.getParcelable(EXTRAS_ACCOUNT);
+  mAuthTokenType=extras.getString(EXTRAS_AUTH_TOKEN_TYPE);
+  mUid=extras.getInt(EXTRAS_REQUESTING_UID);
+  final PackageManager pm=getPackageManager();
+  final String[] packages=pm.getPackagesForUid(mUid);
+  if (mAccount == null || mAuthTokenType == null || packages == null) {
+    setResult(Activity.RESULT_CANCELED);
+    finish();
+    return;
+  }
+  String accountTypeLabel;
+  try {
+    accountTypeLabel=accountManagerService.getAccountLabel(mAccount.type);
+  }
+ catch (  IllegalArgumentException e) {
+    setResult(Activity.RESULT_CANCELED);
+    finish();
+    return;
+  }
+  final TextView authTokenTypeView=(TextView)findViewById(R.id.authtoken_type);
+  authTokenTypeView.setVisibility(View.GONE);
+  IAccountManagerResponse response=new IAccountManagerResponse.Stub(){
+    public void onResult(    Bundle bundle){
+      final String authTokenLabel=bundle.getString(AccountManager.KEY_AUTH_TOKEN_LABEL);
+      if (!TextUtils.isEmpty(authTokenLabel)) {
+        runOnUiThread(new Runnable(){
+          public void run(){
+            if (!isFinishing()) {
+              authTokenTypeView.setText(authTokenLabel);
+              authTokenTypeView.setVisibility(View.VISIBLE);
+            }
+          }
+        }
+);
+      }
+    }
+    public void onError(    int code,    String message){
+    }
+  }
+;
+  accountManagerService.getAuthTokenLabel(response,mAccount,mAuthTokenType);
+  findViewById(R.id.allow_button).setOnClickListener(this);
+  findViewById(R.id.deny_button).setOnClickListener(this);
+  LinearLayout packagesListView=(LinearLayout)findViewById(R.id.packages_list);
+  for (  String pkg : packages) {
+    String packageLabel;
+    try {
+      packageLabel=pm.getApplicationLabel(pm.getApplicationInfo(pkg,0)).toString();
+    }
+ catch (    PackageManager.NameNotFoundException e) {
+      packageLabel=pkg;
+    }
+    packagesListView.addView(newPackageView(packageLabel));
+  }
+  ((TextView)findViewById(R.id.account_name)).setText(mAccount.name);
+  ((TextView)findViewById(R.id.account_type)).setText(accountTypeLabel);
+}

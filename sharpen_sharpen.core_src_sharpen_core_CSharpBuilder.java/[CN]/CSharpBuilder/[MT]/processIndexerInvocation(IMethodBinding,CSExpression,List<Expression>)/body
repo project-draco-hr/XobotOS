@@ -1,0 +1,4 @@
+{
+  if (arguments.size() == 1)   processIndexerGetter(binding,target,arguments);
+ else   processIndexerSetter(binding,target,arguments);
+}

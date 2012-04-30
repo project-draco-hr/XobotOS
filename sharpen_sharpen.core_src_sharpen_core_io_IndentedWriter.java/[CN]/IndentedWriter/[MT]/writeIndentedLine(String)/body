@@ -1,0 +1,4 @@
+{
+  writeIndentation();
+  writeLine(s);
+}

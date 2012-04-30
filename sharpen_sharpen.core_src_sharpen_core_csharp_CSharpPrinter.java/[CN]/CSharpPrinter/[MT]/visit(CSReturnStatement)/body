@@ -1,0 +1,11 @@
+{
+  printPrecedingComments(node);
+  if (null == node.expression()) {
+    writeIndentedLine("return;");
+  }
+ else {
+    writeIndented("return ");
+    node.expression().accept(this);
+    writeLine(";");
+  }
+}

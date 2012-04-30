@@ -1,0 +1,11 @@
+{
+  int measuredWidth=resolveSize(Integer.MAX_VALUE,widthMeasureSpec);
+  calculateItemFittingMetadata(measuredWidth);
+  layoutItems(measuredWidth);
+  final int layoutNumRows=mLayoutNumRows;
+  final int desiredHeight=(mRowHeight + mHorizontalDividerHeight) * layoutNumRows - mHorizontalDividerHeight;
+  setMeasuredDimension(measuredWidth,resolveSize(desiredHeight,heightMeasureSpec));
+  if (layoutNumRows > 0) {
+    positionChildren(getMeasuredWidth(),getMeasuredHeight());
+  }
+}

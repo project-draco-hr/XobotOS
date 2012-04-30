@@ -1,0 +1,26 @@
+{
+  if (flags == Flags.ELEMENT) {
+    CSExpression infix=new CSInfixExpression("!=",expr,new CSNullLiteralExpression());
+    CSExpression instance;
+    if (isManagedClass())     instance=new CSMemberReferenceExpression(expr,_nativeHandle.getField());
+ else     instance=expr;
+    CSExpression handleRef=new CSMemberReferenceExpression(instance,"Handle");
+    CSExpression zeroRef=new CSReferenceExpression("System.IntPtr.Zero");
+    return new CSConditionalExpression(infix,handleRef,zeroRef);
+  }
+  if (isManagedClass()) {
+    CSExpression infix=new CSInfixExpression("!=",expr,new CSNullLiteralExpression());
+    String handle=_nativeHandle.getField();
+    CSExpression handleRef=new CSMemberReferenceExpression(expr,handle);
+    CSExpression zeroRef=new CSMemberReferenceExpression(_nativeHandle.getManagedType(),"Zero");
+    return new CSConditionalExpression(infix,handleRef,zeroRef);
+  }
+  if ((flags == Flags.ALLOW_NULL) || (_overrideFlags == Flags.ALLOW_NULL)) {
+    CSExpression infix=new CSInfixExpression("!=",expr,new CSNullLiteralExpression());
+    CSExpression zeroRef=new CSMemberReferenceExpression(_nativeHandle.getManagedType(),"Zero");
+    return new CSConditionalExpression(infix,expr,zeroRef);
+  }
+ else {
+    return expr;
+  }
+}

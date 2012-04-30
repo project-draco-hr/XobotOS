@@ -1,0 +1,7 @@
+{
+  mVideoSurfaceView=new VideoSurfaceView(context);
+  mFullScreenMode=FULLSCREEN_OFF;
+  mVideoWidth=0;
+  mVideoHeight=0;
+  init(videoLayerId,position,autoStart);
+}

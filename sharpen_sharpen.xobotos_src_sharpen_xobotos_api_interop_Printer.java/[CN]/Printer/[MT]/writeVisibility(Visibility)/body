@@ -1,0 +1,13 @@
+{
+switch (visibility) {
+case PUBLIC:
+    _writer.writeLine("public:");
+  break;
+case PROTECTED:
+_writer.writeLine("protected:");
+break;
+case PRIVATE:
+_writer.writeLine("private:");
+break;
+}
+}

@@ -1,0 +1,10 @@
+{
+  Date date=new Date(record.getMillis());
+  printStream.printf("[%tT] %s",date,record.getMessage());
+  printStream.println();
+  Throwable throwable=record.getThrown();
+  if (throwable != null) {
+    throwable.printStackTrace(printStream);
+    printStream.println();
+  }
+}

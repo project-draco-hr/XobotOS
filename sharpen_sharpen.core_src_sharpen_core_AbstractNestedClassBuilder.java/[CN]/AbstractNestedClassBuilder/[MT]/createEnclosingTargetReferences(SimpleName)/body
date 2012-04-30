@@ -1,0 +1,9 @@
+{
+  ITypeBinding enclosingClassBinding=getDeclaringClass(name);
+  if (isStaticMember(name)) {
+    if (enclosingClassBinding == nestedTypeBinding())     return null;
+ else     return mappedTypeReference(enclosingClassBinding);
+  }
+  CSExpression target=isStaticMember(name) ? mappedTypeReference(enclosingClassBinding) : createEnclosingThisReference(enclosingClassBinding);
+  return target;
+}

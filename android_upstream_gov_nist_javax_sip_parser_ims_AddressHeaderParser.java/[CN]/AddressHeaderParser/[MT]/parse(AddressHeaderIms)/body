@@ -1,0 +1,14 @@
+{
+  dbg_enter("AddressHeaderParser.parse");
+  try {
+    AddressParser addressParser=new AddressParser(this.getLexer());
+    AddressImpl addr=addressParser.address(true);
+    addressHeader.setAddress(addr);
+  }
+ catch (  ParseException ex) {
+    throw ex;
+  }
+ finally {
+    dbg_leave("AddressParametersParser.parse");
+  }
+}

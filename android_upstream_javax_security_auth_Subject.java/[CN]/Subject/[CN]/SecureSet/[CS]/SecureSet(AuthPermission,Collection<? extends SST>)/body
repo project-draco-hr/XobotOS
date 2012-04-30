@@ -1,0 +1,10 @@
+{
+  this(perm);
+  boolean trust=s.getClass().getClassLoader() == null;
+  for (  SST o : s) {
+    verifyElement(o);
+    if (trust || !elements.contains(o)) {
+      elements.add(o);
+    }
+  }
+}

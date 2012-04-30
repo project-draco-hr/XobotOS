@@ -1,0 +1,35 @@
+{
+  if (isMappedEventSubscription(node)) {
+    processMappedEventSubscription(node);
+    return;
+  }
+  if (isEventSubscription(node)) {
+    processEventSubscription(node);
+    return;
+  }
+  if (isRemovedMethodInvocation(node)) {
+    processRemovedInvocation(node);
+    return;
+  }
+  if (isUnwrapInvocation(node)) {
+    processUnwrapInvocation(node);
+    return;
+  }
+  if (isMacro(node)) {
+    processMacroInvocation(node);
+    return;
+  }
+  if (isEnumOrdinalMethodInvocation(node)) {
+    processEnumOrdinalMethodInvocation(node);
+    return;
+  }
+  if (isEnumNameMethodInvocation(node)) {
+    processEnumNameMethodInvocation(node);
+    return;
+  }
+  if (isEnumValuesMethodInvocation(node)) {
+    processEnumValuesMethodInvocation(node);
+    return;
+  }
+  processOrdinaryMethodInvocation(node);
+}

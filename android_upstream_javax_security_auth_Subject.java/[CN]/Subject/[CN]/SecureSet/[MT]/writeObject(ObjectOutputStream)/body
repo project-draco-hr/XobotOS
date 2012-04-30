@@ -1,0 +1,12 @@
+{
+  if (permission == _PRIVATE_CREDENTIALS) {
+    setType=SET_PrivCred;
+  }
+ else   if (permission == _PRINCIPALS) {
+    setType=SET_Principal;
+  }
+ else {
+    setType=SET_PubCred;
+  }
+  out.defaultWriteObject();
+}

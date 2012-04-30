@@ -1,0 +1,6 @@
+{
+  AbstractTypeReference effective=getEffectiveType(type,flags);
+  NativeVariable var=context.createVariable(name,effective,init);
+  var._flags.addAll(flags);
+  return var;
+}

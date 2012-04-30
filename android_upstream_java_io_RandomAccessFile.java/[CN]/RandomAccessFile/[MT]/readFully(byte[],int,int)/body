@@ -1,0 +1,11 @@
+{
+  Arrays.checkOffsetAndCount(dst.length,offset,byteCount);
+  while (byteCount > 0) {
+    int result=read(dst,offset,byteCount);
+    if (result < 0) {
+      throw new EOFException();
+    }
+    offset+=result;
+    byteCount-=result;
+  }
+}

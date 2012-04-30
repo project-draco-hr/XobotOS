@@ -1,0 +1,6 @@
+{
+  if (expires < 0)   throw new InvalidArgumentException("bad value " + expires);
+  MinSE e=new MinSE();
+  e.setExpires(expires);
+  return e;
+}

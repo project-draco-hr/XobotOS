@@ -1,0 +1,6 @@
+{
+  if (lowerCaseHeaderName == null)   throw new NullPointerException("bad name");
+  SIPHeader sipHeader=(SIPHeader)nameTable.get(lowerCaseHeaderName);
+  if (sipHeader instanceof SIPHeaderList)   return (Header)((SIPHeaderList)sipHeader).getFirst();
+ else   return (Header)sipHeader;
+}

@@ -1,0 +1,14 @@
+{
+switch (action) {
+case ACTION_FOCUS:
+    return "ACTION_FOCUS";
+case ACTION_CLEAR_FOCUS:
+  return "ACTION_CLEAR_FOCUS";
+case ACTION_SELECT:
+return "ACTION_SELECT";
+case ACTION_CLEAR_SELECTION:
+return "ACTION_CLEAR_SELECTION";
+default :
+throw new IllegalArgumentException("Unknown action: " + action);
+}
+}

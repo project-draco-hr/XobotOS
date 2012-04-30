@@ -1,0 +1,41 @@
+{
+  checkClosed();
+  Arrays.checkOffsetAndCount(buffer.length,offset,byteCount);
+  if (byteCount == 0) {
+    return 0;
+  }
+  if (eof) {
+    return -1;
+  }
+  do {
+    if (inf.needsInput()) {
+      fill();
+    }
+    try {
+      int result=inf.inflate(buffer,offset,byteCount);
+      eof=inf.finished();
+      if (result > 0) {
+        return result;
+      }
+ else       if (eof) {
+        return -1;
+      }
+ else       if (inf.needsDictionary()) {
+        eof=true;
+        return -1;
+      }
+ else       if (len == -1) {
+        eof=true;
+        throw new EOFException();
+      }
+    }
+ catch (    DataFormatException e) {
+      eof=true;
+      if (len == -1) {
+        throw new EOFException();
+      }
+      throw (IOException)(new IOException().initCause(e));
+    }
+  }
+ while (true);
+}

@@ -1,0 +1,4 @@
+{
+  String mapped=_identifierMappings.get(name);
+  return escapeIdentifier(mapped != null ? mapped : name);
+}

@@ -1,0 +1,3 @@
+{
+  return compilationUnitPath(compilationUnit) + ":" + lineNumber(compilationUnit,node);
+}

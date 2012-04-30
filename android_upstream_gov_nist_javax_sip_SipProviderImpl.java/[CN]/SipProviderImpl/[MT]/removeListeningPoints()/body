@@ -1,0 +1,7 @@
+{
+  for (Iterator it=this.listeningPoints.values().iterator(); it.hasNext(); ) {
+    ListeningPointImpl lp=(ListeningPointImpl)it.next();
+    lp.messageProcessor.stop();
+    it.remove();
+  }
+}

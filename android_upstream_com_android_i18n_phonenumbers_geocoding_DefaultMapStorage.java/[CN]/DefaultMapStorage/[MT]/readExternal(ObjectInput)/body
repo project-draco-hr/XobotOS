@@ -1,0 +1,18 @@
+{
+  numOfEntries=objectInput.readInt();
+  if (phoneNumberPrefixes == null || phoneNumberPrefixes.length < numOfEntries) {
+    phoneNumberPrefixes=new int[numOfEntries];
+  }
+  if (descriptions == null || descriptions.length < numOfEntries) {
+    descriptions=new String[numOfEntries];
+  }
+  for (int i=0; i < numOfEntries; i++) {
+    phoneNumberPrefixes[i]=objectInput.readInt();
+    descriptions[i]=objectInput.readUTF();
+  }
+  int sizeOfLengths=objectInput.readInt();
+  possibleLengths.clear();
+  for (int i=0; i < sizeOfLengths; i++) {
+    possibleLengths.add(objectInput.readInt());
+  }
+}

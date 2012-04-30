@@ -1,0 +1,6 @@
+{
+synchronized (this) {
+    mSubtype=subtype;
+    mSubtypeName=subtypeName;
+  }
+}

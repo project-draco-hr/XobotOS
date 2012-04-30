@@ -1,0 +1,6 @@
+{
+  mWantContinuousLocationUpdates=false;
+  if (!mWantSingleLocationUpdate && !mWantContinuousLocationUpdates) {
+    cm.setLocationUpdates(false,null);
+  }
+}

@@ -1,0 +1,11 @@
+def must_not_contain(self, file, banned, mode='rb'):
+    "Ensures that the specified file doesn't contain the banned text.\n        "
+    file_contents = self.read(file, mode)
+    contains = (string.find(file_contents, banned) != (-1))
+    if contains:
+        print ("File `%s' contains banned string." % file)
+        print self.banner('Banned string ')
+        print banned
+        print self.banner(('%s contents ' % file))
+        print file_contents
+        self.fail_test(contains)

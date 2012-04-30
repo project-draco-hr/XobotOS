@@ -1,0 +1,13 @@
+{
+  if (string == null) {
+    appendNull();
+    return;
+  }
+  int length=string.length();
+  int newCount=count + length;
+  if (newCount > value.length) {
+    enlargeBuffer(newCount);
+  }
+  string._getChars(0,length,value,count);
+  count=newCount;
+}

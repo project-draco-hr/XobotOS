@@ -1,0 +1,3 @@
+{
+  android.util.EventLog.writeEvent(GSM_SERVICE_STATE_CHANGE,oldstate,oldgprsstate,newstate,newgprsstate);
+}

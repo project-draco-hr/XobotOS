@@ -1,0 +1,110 @@
+{
+  boolean hasDesc=objectInput.readBoolean();
+  if (hasDesc) {
+    PhoneNumberDesc desc=new PhoneNumberDesc();
+    desc.readExternal(objectInput);
+    setGeneralDesc(desc);
+  }
+  hasDesc=objectInput.readBoolean();
+  if (hasDesc) {
+    PhoneNumberDesc desc=new PhoneNumberDesc();
+    desc.readExternal(objectInput);
+    setFixedLine(desc);
+  }
+  hasDesc=objectInput.readBoolean();
+  if (hasDesc) {
+    PhoneNumberDesc desc=new PhoneNumberDesc();
+    desc.readExternal(objectInput);
+    setMobile(desc);
+  }
+  hasDesc=objectInput.readBoolean();
+  if (hasDesc) {
+    PhoneNumberDesc desc=new PhoneNumberDesc();
+    desc.readExternal(objectInput);
+    setTollFree(desc);
+  }
+  hasDesc=objectInput.readBoolean();
+  if (hasDesc) {
+    PhoneNumberDesc desc=new PhoneNumberDesc();
+    desc.readExternal(objectInput);
+    setPremiumRate(desc);
+  }
+  hasDesc=objectInput.readBoolean();
+  if (hasDesc) {
+    PhoneNumberDesc desc=new PhoneNumberDesc();
+    desc.readExternal(objectInput);
+    setSharedCost(desc);
+  }
+  hasDesc=objectInput.readBoolean();
+  if (hasDesc) {
+    PhoneNumberDesc desc=new PhoneNumberDesc();
+    desc.readExternal(objectInput);
+    setPersonalNumber(desc);
+  }
+  hasDesc=objectInput.readBoolean();
+  if (hasDesc) {
+    PhoneNumberDesc desc=new PhoneNumberDesc();
+    desc.readExternal(objectInput);
+    setVoip(desc);
+  }
+  hasDesc=objectInput.readBoolean();
+  if (hasDesc) {
+    PhoneNumberDesc desc=new PhoneNumberDesc();
+    desc.readExternal(objectInput);
+    setPager(desc);
+  }
+  hasDesc=objectInput.readBoolean();
+  if (hasDesc) {
+    PhoneNumberDesc desc=new PhoneNumberDesc();
+    desc.readExternal(objectInput);
+    setUan(desc);
+  }
+  hasDesc=objectInput.readBoolean();
+  if (hasDesc) {
+    PhoneNumberDesc desc=new PhoneNumberDesc();
+    desc.readExternal(objectInput);
+    setNoInternationalDialling(desc);
+  }
+  setId(objectInput.readUTF());
+  setCountryCode(objectInput.readInt());
+  setInternationalPrefix(objectInput.readUTF());
+  boolean hasString=objectInput.readBoolean();
+  if (hasString) {
+    setPreferredInternationalPrefix(objectInput.readUTF());
+  }
+  hasString=objectInput.readBoolean();
+  if (hasString) {
+    setNationalPrefix(objectInput.readUTF());
+  }
+  hasString=objectInput.readBoolean();
+  if (hasString) {
+    setPreferredExtnPrefix(objectInput.readUTF());
+  }
+  hasString=objectInput.readBoolean();
+  if (hasString) {
+    setNationalPrefixForParsing(objectInput.readUTF());
+  }
+  hasString=objectInput.readBoolean();
+  if (hasString) {
+    setNationalPrefixTransformRule(objectInput.readUTF());
+  }
+  setSameMobileAndFixedLinePattern(objectInput.readBoolean());
+  int nationalFormatSize=objectInput.readInt();
+  for (int i=0; i < nationalFormatSize; i++) {
+    NumberFormat numFormat=new NumberFormat();
+    numFormat.readExternal(objectInput);
+    numberFormat_.add(numFormat);
+  }
+  int intlNumberFormatSize=objectInput.readInt();
+  for (int i=0; i < intlNumberFormatSize; i++) {
+    NumberFormat numFormat=new NumberFormat();
+    numFormat.readExternal(objectInput);
+    intlNumberFormat_.add(numFormat);
+  }
+  setMainCountryForCode(objectInput.readBoolean());
+  hasString=objectInput.readBoolean();
+  if (hasString) {
+    setLeadingDigits(objectInput.readUTF());
+  }
+  setLeadingZeroPossible(objectInput.readBoolean());
+}

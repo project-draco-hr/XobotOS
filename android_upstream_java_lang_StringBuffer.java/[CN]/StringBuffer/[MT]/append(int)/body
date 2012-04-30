@@ -1,0 +1,4 @@
+{
+  IntegralToString.appendInt(this,i);
+  return this;
+}

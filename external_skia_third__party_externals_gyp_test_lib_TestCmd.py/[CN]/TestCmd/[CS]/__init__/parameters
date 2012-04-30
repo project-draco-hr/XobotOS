@@ -1,0 +1,11 @@
+self
+description
+program
+interpreter
+workdir
+subdir
+verbose
+match
+diff
+combine
+universal_newlines

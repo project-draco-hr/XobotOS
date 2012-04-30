@@ -1,0 +1,3 @@
+{
+  super(AlertInfo.class,AlertInfoHeader.NAME);
+}

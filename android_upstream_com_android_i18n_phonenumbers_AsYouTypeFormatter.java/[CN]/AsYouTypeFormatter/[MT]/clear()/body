@@ -1,0 +1,19 @@
+{
+  currentOutput="";
+  accruedInput.setLength(0);
+  accruedInputWithoutFormatting.setLength(0);
+  formattingTemplate.setLength(0);
+  lastMatchPosition=0;
+  currentFormattingPattern="";
+  prefixBeforeNationalNumber.setLength(0);
+  nationalNumber.setLength(0);
+  ableToFormat=true;
+  positionToRemember=0;
+  originalPosition=0;
+  isInternationalFormatting=false;
+  isExpectingCountryCallingCode=false;
+  possibleFormats.clear();
+  if (!currentMetaData.equals(defaultMetaData)) {
+    currentMetaData=getMetadataForRegion(defaultCountry);
+  }
+}

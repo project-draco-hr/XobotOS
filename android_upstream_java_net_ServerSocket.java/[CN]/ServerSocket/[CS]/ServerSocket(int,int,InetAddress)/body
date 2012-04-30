@@ -1,0 +1,17 @@
+{
+  checkListen(port);
+  this.impl=factory != null ? factory.createSocketImpl() : new PlainServerSocketImpl();
+  InetAddress addr=(localAddress == null) ? Inet4Address.ANY : localAddress;
+synchronized (this) {
+    impl.create(true);
+    try {
+      impl.bind(addr,port);
+      isBound=true;
+      impl.listen(backlog > 0 ? backlog : DEFAULT_BACKLOG);
+    }
+ catch (    IOException e) {
+      close();
+      throw e;
+    }
+  }
+}

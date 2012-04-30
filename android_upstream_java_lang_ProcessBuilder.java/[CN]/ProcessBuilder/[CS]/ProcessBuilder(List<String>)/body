@@ -1,0 +1,7 @@
+{
+  if (command == null) {
+    throw new NullPointerException();
+  }
+  this.command=command;
+  this.environment=new Hashtable<String,String>(System.getenv());
+}

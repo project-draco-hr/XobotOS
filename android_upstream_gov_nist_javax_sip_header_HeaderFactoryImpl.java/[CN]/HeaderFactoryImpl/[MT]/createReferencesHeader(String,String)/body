@@ -1,0 +1,6 @@
+{
+  ReferencesHeader retval=new References();
+  retval.setCallId(callId);
+  retval.setRel(rel);
+  return retval;
+}

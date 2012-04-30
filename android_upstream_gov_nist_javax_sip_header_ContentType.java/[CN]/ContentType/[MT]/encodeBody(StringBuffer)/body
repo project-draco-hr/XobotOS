@@ -1,0 +1,8 @@
+{
+  mediaRange.encode(buffer);
+  if (hasParameters()) {
+    buffer.append(SEMICOLON);
+    parameters.encode(buffer);
+  }
+  return buffer;
+}

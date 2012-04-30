@@ -1,0 +1,4 @@
+{
+  if (getOutputType().getModeForMember(node) == OutputMode.NOTHING)   return false;
+  return true;
+}

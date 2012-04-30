@@ -1,0 +1,4 @@
+{
+  super(P_SERVED_USER);
+  this.address=address;
+}

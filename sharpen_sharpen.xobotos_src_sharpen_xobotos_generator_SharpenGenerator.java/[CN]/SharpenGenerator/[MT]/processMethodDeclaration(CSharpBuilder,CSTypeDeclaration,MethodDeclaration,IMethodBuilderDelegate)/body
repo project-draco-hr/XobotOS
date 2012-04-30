@@ -1,0 +1,30 @@
+{
+  final ITypeBuilder type=_typeStack.peek();
+  final AbstractMethodTemplate<?> template=type.findMethodTemplate(node);
+  if (template == null)   return null;
+  try {
+    _outputProviderStack.push(template);
+    final OutputType output=getOutputType();
+    final OutputMode mode=output.getModeForMember(node);
+    if (mode == OutputMode.NOTHING)     return null;
+    MethodBinding binding=template.getBinding();
+    if ((binding != null) && (binding.getNativeHandle() != null))     return null;
+    AbstractMethodBuilder<?,?> builder;
+    if (node.isConstructor())     builder=new ConstructorBuilder((ConstructorTemplate)template,output,node);
+ else     if (template instanceof DestructorTemplate)     builder=new DestructorBuilder((DestructorTemplate)template,output,node);
+ else     builder=new MethodBuilder(type,(MethodTemplate)template,output,node,_builder.getNativeBuilder());
+    type.registerMember(node,builder);
+    _currentMethod=builder;
+    CSMethodBase method=builder.build(csharpBuilder,delegate);
+    _currentMethod=null;
+    if (method != null) {
+      delegate.fixup(parent,method);
+      parent.addMember(method);
+      if (method instanceof CSMethod)       registerMethod(node.resolveBinding(),(CSMethod)method);
+    }
+    return method;
+  }
+  finally {
+    _outputProviderStack.pop();
+  }
+}

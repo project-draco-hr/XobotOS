@@ -1,0 +1,3 @@
+{
+  _types.add(_types.indexOf(anchor),type);
+}

@@ -1,0 +1,22 @@
+{
+  if (digits > 0) {
+    return bits << digits;
+  }
+  long absDigits=-digits;
+  if (!(Long.numberOfLeadingZeros(bits & ~Double.SIGN_MASK) <= (64 - absDigits))) {
+    return 0;
+  }
+  long ret=bits >> absDigits;
+  boolean halfBit=((bits >> (absDigits - 1)) & 0x1) == 1;
+  if (halfBit) {
+    if (Long.numberOfTrailingZeros(bits) < (absDigits - 1)) {
+      ret=ret + 1;
+    }
+    if (Long.numberOfTrailingZeros(bits) == (absDigits - 1)) {
+      if ((ret & 0x1) == 1) {
+        ret=ret + 1;
+      }
+    }
+  }
+  return ret;
+}

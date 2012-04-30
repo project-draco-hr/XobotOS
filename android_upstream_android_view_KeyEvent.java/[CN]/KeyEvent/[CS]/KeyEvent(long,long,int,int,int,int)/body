@@ -1,0 +1,9 @@
+{
+  mDownTime=downTime;
+  mEventTime=eventTime;
+  mAction=action;
+  mKeyCode=code;
+  mRepeatCount=repeat;
+  mMetaState=metaState;
+  mDeviceId=KeyCharacterMap.VIRTUAL_KEYBOARD;
+}

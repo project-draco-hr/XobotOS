@@ -1,0 +1,6 @@
+{
+  CSLockStatement stmt=new CSLockStatement(node.getStartPosition(),mapExpression(node.getExpression()));
+  visitBlock(stmt.body(),node.getBody());
+  addStatement(stmt);
+  return false;
+}

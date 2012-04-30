@@ -1,0 +1,126 @@
+{
+  pw.print("data connected: ");
+  pw.println(mDataConnectionIsConnected);
+  pw.print("memory low: ");
+  pw.println(mStorageIsLow);
+  final Account[] accounts=mAccounts;
+  pw.print("accounts: ");
+  if (accounts != INITIAL_ACCOUNTS_ARRAY) {
+    pw.println(accounts.length);
+  }
+ else {
+    pw.println("not known yet");
+  }
+  final long now=SystemClock.elapsedRealtime();
+  pw.print("now: ");
+  pw.print(now);
+  pw.println(" (" + formatTime(System.currentTimeMillis()) + ")");
+  pw.print("uptime: ");
+  pw.print(DateUtils.formatElapsedTime(now / 1000));
+  pw.println(" (HH:MM:SS)");
+  pw.print("time spent syncing: ");
+  pw.print(DateUtils.formatElapsedTime(mSyncHandler.mSyncTimeTracker.timeSpentSyncing() / 1000));
+  pw.print(" (HH:MM:SS), sync ");
+  pw.print(mSyncHandler.mSyncTimeTracker.mLastWasSyncing ? "" : "not ");
+  pw.println("in progress");
+  if (mSyncHandler.mAlarmScheduleTime != null) {
+    pw.print("next alarm time: ");
+    pw.print(mSyncHandler.mAlarmScheduleTime);
+    pw.print(" (");
+    pw.print(DateUtils.formatElapsedTime((mSyncHandler.mAlarmScheduleTime - now) / 1000));
+    pw.println(" (HH:MM:SS) from now)");
+  }
+ else {
+    pw.println("no alarm is scheduled (there had better not be any pending syncs)");
+  }
+  pw.print("notification info: ");
+  final StringBuilder sb=new StringBuilder();
+  mSyncHandler.mSyncNotificationInfo.toString(sb);
+  pw.println(sb.toString());
+  pw.println();
+  pw.println("Active Syncs: " + mActiveSyncContexts.size());
+  for (  SyncManager.ActiveSyncContext activeSyncContext : mActiveSyncContexts) {
+    final long durationInSeconds=(now - activeSyncContext.mStartTime) / 1000;
+    pw.print("  ");
+    pw.print(DateUtils.formatElapsedTime(durationInSeconds));
+    pw.print(" - ");
+    pw.print(activeSyncContext.mSyncOperation.dump(false));
+    pw.println();
+  }
+synchronized (mSyncQueue) {
+    sb.setLength(0);
+    mSyncQueue.dump(sb);
+  }
+  pw.println();
+  pw.print(sb.toString());
+  pw.println();
+  pw.println("Sync Status");
+  for (  Account account : accounts) {
+    pw.print("  Account ");
+    pw.print(account.name);
+    pw.print(" ");
+    pw.print(account.type);
+    pw.println(":");
+    for (    RegisteredServicesCache.ServiceInfo<SyncAdapterType> syncAdapterType : mSyncAdapters.getAllServices()) {
+      if (!syncAdapterType.type.accountType.equals(account.type)) {
+        continue;
+      }
+      SyncStorageEngine.AuthorityInfo settings=mSyncStorageEngine.getOrCreateAuthority(account,syncAdapterType.type.authority);
+      SyncStatusInfo status=mSyncStorageEngine.getOrCreateSyncStatus(settings);
+      pw.print("    ");
+      pw.print(settings.authority);
+      pw.println(":");
+      pw.print("      settings:");
+      pw.print(" " + (settings.syncable > 0 ? "syncable" : (settings.syncable == 0 ? "not syncable" : "not initialized")));
+      pw.print(", " + (settings.enabled ? "enabled" : "disabled"));
+      if (settings.delayUntil > now) {
+        pw.print(", delay for " + ((settings.delayUntil - now) / 1000) + " sec");
+      }
+      if (settings.backoffTime > now) {
+        pw.print(", backoff for " + ((settings.backoffTime - now) / 1000) + " sec");
+      }
+      if (settings.backoffDelay > 0) {
+        pw.print(", the backoff increment is " + settings.backoffDelay / 1000 + " sec");
+      }
+      pw.println();
+      for (int periodicIndex=0; periodicIndex < settings.periodicSyncs.size(); periodicIndex++) {
+        Pair<Bundle,Long> info=settings.periodicSyncs.get(periodicIndex);
+        long lastPeriodicTime=status.getPeriodicSyncTime(periodicIndex);
+        long nextPeriodicTime=lastPeriodicTime + info.second * 1000;
+        pw.println("      periodic period=" + info.second + ", extras="+ info.first+ ", next="+ formatTime(nextPeriodicTime));
+      }
+      pw.print("      count: local=");
+      pw.print(status.numSourceLocal);
+      pw.print(" poll=");
+      pw.print(status.numSourcePoll);
+      pw.print(" periodic=");
+      pw.print(status.numSourcePeriodic);
+      pw.print(" server=");
+      pw.print(status.numSourceServer);
+      pw.print(" user=");
+      pw.print(status.numSourceUser);
+      pw.print(" total=");
+      pw.print(status.numSyncs);
+      pw.println();
+      pw.print("      total duration: ");
+      pw.println(DateUtils.formatElapsedTime(status.totalElapsedTime / 1000));
+      if (status.lastSuccessTime != 0) {
+        pw.print("      SUCCESS: source=");
+        pw.print(SyncStorageEngine.SOURCES[status.lastSuccessSource]);
+        pw.print(" time=");
+        pw.println(formatTime(status.lastSuccessTime));
+      }
+      if (status.lastFailureTime != 0) {
+        pw.print("      FAILURE: source=");
+        pw.print(SyncStorageEngine.SOURCES[status.lastFailureSource]);
+        pw.print(" initialTime=");
+        pw.print(formatTime(status.initialFailureTime));
+        pw.print(" lastTime=");
+        pw.println(formatTime(status.lastFailureTime));
+        int errCode=status.getLastFailureMesgAsInt(0);
+        pw.print("      message: ");
+        pw.println(getLastFailureMessage(errCode) + " (" + errCode+ ")");
+      }
+    }
+  }
+}

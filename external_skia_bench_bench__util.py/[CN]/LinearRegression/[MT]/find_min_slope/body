@@ -1,0 +1,17 @@
+def find_min_slope(self):
+    'Finds the minimal slope given one standard deviation.'
+    slope = self.slope
+    intercept = self.intercept
+    error = self.serror
+    regr_start = self.min_x
+    regr_end = self.max_x
+    regr_width = (regr_end - regr_start)
+    if (slope < 0):
+        lower_left_y = (((slope * regr_start) + intercept) - error)
+        upper_right_y = (((slope * regr_end) + intercept) + error)
+        return min(0, ((upper_right_y - lower_left_y) / regr_width))
+    elif (slope > 0):
+        upper_left_y = (((slope * regr_start) + intercept) + error)
+        lower_right_y = (((slope * regr_end) + intercept) - error)
+        return max(0, ((lower_right_y - upper_left_y) / regr_width))
+    return 0

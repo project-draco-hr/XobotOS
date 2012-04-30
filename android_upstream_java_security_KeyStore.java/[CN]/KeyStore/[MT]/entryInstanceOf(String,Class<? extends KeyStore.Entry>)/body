@@ -1,0 +1,12 @@
+{
+  if (alias == null) {
+    throw new NullPointerException("alias == null");
+  }
+  if (entryClass == null) {
+    throw new NullPointerException("entryClass == null");
+  }
+  if (!isInit) {
+    throwNotInitialized();
+  }
+  return implSpi.engineEntryInstanceOf(alias,entryClass);
+}

@@ -1,0 +1,5 @@
+{
+synchronized (mFocusListenerLock) {
+    mAudioFocusIdListenerMap.remove(getIdForAudioFocusListener(l));
+  }
+}

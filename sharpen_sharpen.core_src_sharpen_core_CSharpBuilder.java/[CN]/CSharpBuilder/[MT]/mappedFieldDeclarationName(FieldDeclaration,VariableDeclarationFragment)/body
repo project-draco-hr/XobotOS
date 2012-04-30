@@ -1,0 +1,8 @@
+{
+  final IVariableBinding binding=fragment.resolveBinding();
+  final String mappedName=null == binding ? null : my(Mappings.class).mappedFieldName(binding);
+  if (null == mappedName || 0 == mappedName.length() || mappedName.contains(".")) {
+    return fieldName(fragment);
+  }
+  return mappedName;
+}

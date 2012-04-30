@@ -1,0 +1,3 @@
+{
+  return _currentBodyDeclaration instanceof MethodDeclaration ? ((MethodDeclaration)_currentBodyDeclaration).resolveBinding() : null;
+}

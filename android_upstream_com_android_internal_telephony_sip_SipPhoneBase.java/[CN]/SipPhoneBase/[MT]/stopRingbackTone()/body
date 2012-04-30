@@ -1,0 +1,4 @@
+{
+  AsyncResult result=new AsyncResult(null,Boolean.FALSE,null);
+  mRingbackRegistrants.notifyRegistrants(result);
+}

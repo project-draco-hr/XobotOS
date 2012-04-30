@@ -1,0 +1,17 @@
+{
+  crashInfo=new ApplicationErrorReport.CrashInfo(in);
+  int rawPolicy=in.readInt();
+  if (unsetGatheringBit) {
+    policy=rawPolicy & ~PENALTY_GATHER;
+  }
+ else {
+    policy=rawPolicy;
+  }
+  durationMillis=in.readInt();
+  violationNumThisLoop=in.readInt();
+  numAnimationsRunning=in.readInt();
+  violationUptimeMillis=in.readLong();
+  numInstances=in.readLong();
+  broadcastIntentAction=in.readString();
+  tags=in.readStringArray();
+}

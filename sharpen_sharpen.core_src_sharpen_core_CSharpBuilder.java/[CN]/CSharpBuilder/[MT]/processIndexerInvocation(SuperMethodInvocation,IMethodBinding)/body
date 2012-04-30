@@ -1,0 +1,6 @@
+{
+  CSExpression target=new CSBaseExpression();
+  List<Expression> arguments=new ArrayList<Expression>();
+  arguments.addAll(node.arguments());
+  processIndexerInvocation(binding,target,arguments);
+}

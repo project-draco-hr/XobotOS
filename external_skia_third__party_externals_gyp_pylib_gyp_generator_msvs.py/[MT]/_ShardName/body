@@ -1,0 +1,5 @@
+def _ShardName(name, number):
+    'Add a shard number to the end of a target.\n\n  Arguments:\n    name: name of the target (foo#target)\n    number: shard number\n  Returns:\n    Target name with shard added (foo_1#target)\n  '
+    parts = name.rsplit('#', 1)
+    parts[0] = ('%s_%d' % (parts[0], number))
+    return '#'.join(parts)

@@ -1,0 +1,4 @@
+{
+  if (this.callIdHeader == null)   throw new RuntimeException("Invalid message! Cannot compute hashcode! call-id header is missing !");
+ else   return this.callIdHeader.getCallId().hashCode();
+}

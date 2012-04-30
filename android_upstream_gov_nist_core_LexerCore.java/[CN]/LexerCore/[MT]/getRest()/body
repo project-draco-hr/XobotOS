@@ -1,0 +1,4 @@
+{
+  if (ptr >= buffer.length())   return null;
+ else   return buffer.substring(ptr);
+}

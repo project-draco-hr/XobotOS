@@ -1,0 +1,6 @@
+{
+  if (scheme == null)   throw new NullPointerException("null scheme");
+  WWWAuthenticate www=new WWWAuthenticate();
+  www.setScheme(scheme);
+  return www;
+}

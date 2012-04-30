@@ -1,0 +1,8 @@
+{
+  char next=lexer.lookAhead(0);
+  if (isUnreserved(next)) {
+    lexer.consume(1);
+    return String.valueOf(next);
+  }
+ else   throw createParseException("unreserved");
+}

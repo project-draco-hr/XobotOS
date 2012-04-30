@@ -1,0 +1,5 @@
+{
+  super.visit(visitor,mode);
+  for (  final VariableTemplate template : getVariables())   template.visit(visitor,mode);
+  for (  final ParameterTemplate template : getParameters())   template.visit(visitor,mode);
+}

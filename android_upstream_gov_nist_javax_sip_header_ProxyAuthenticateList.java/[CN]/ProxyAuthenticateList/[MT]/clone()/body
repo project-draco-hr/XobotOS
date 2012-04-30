@@ -1,0 +1,5 @@
+{
+  ProxyAuthenticateList retval=new ProxyAuthenticateList();
+  retval.clonehlist(this.hlist);
+  return retval;
+}

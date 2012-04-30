@@ -1,0 +1,15 @@
+{
+  if (mDecor == null || !mShowing) {
+    return;
+  }
+  try {
+    mWindowManager.removeView(mDecor);
+  }
+  finally {
+    mDecor=null;
+    mWindow.closeAllPanels();
+    onStop();
+    mShowing=false;
+    sendDismissMessage();
+  }
+}

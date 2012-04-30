@@ -1,0 +1,9 @@
+self
+outputs
+inputs
+actions
+comment
+order_only
+force
+phony
+multiple_output_trick

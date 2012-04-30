@@ -1,0 +1,7 @@
+{
+  int pid=Binder.getCallingPid();
+  if (pid != Process.myPid()) {
+    return checkUriPermission(uri,pid,Binder.getCallingUid(),modeFlags);
+  }
+  return PackageManager.PERMISSION_DENIED;
+}

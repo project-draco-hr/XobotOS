@@ -1,0 +1,3 @@
+{
+  return forXPath("/doc/type[@name='" + fullName + "']/doc");
+}

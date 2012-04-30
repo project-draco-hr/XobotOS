@@ -1,0 +1,6 @@
+{
+  this.accountManager=accountManager;
+  this.headerFactory=headerFactory;
+  this.sipStack=sipStack;
+  this.cachedCredentials=new CredentialsCache(((SIPTransactionStack)sipStack).getTimer());
+}

@@ -1,0 +1,23 @@
+{
+  final IMethodBinding binding=node.resolveMethodBinding();
+  final ITypeBinding declaringType=binding.getDeclaringClass();
+  final AbstractTypeBinding typeBinding=my(BindingManager.class).resolveBinding(declaringType);
+  final MethodBinding methodBinding=my(BindingManager.class).resolveBinding(binding);
+  if (typeBinding instanceof EnumBinding) {
+    EnumBinding enumBinding=(EnumBinding)typeBinding;
+    String ctorMethod=enumBinding.getConstructorMethod();
+    if ((ctorMethod != null) && node.getName().toString().equals(ctorMethod)) {
+      return builder.mapExpression(declaringType,(Expression)node.arguments().get(0));
+    }
+  }
+  if (methodBinding != null) {
+    NativeHandle nh=methodBinding.getNativeHandle();
+    if (nh != null) {
+      CSExpression expr=builder.mapExpression(declaringType,node.getExpression());
+      String member=nh.getProperty() != null ? nh.getProperty() : nh.getField();
+      return new CSMemberReferenceExpression(expr,member);
+    }
+  }
+  if (_currentMethod != null)   _currentMethod.checkInvocationTarget(binding);
+  return null;
+}

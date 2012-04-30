@@ -1,0 +1,4 @@
+{
+  if (mod == null)   throw new NullPointerException("JAIN-SIP " + "Exception, SecurityClient, setMode(), the mode parameter is null");
+  setParameter(ParameterNamesIms.MOD,mod);
+}

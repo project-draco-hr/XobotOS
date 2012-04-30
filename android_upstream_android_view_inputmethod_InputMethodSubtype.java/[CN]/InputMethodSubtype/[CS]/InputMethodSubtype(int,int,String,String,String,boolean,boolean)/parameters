@@ -1,0 +1,7 @@
+int nameId
+int iconId
+String locale
+String mode
+String extraValue
+boolean isAuxiliary
+boolean overridesImplicitlyEnabledSubtype

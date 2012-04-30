@@ -1,0 +1,14 @@
+{
+  String retval;
+  if (requestLine != null) {
+    this.setRequestLineDefaults();
+    retval=requestLine.encode() + super.encode();
+  }
+ else   if (this.isNullRequest()) {
+    retval="\r\n\r\n";
+  }
+ else {
+    retval=super.encode();
+  }
+  return retval;
+}

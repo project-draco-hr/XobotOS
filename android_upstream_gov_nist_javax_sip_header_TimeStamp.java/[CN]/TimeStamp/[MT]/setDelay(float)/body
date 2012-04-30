@@ -1,0 +1,5 @@
+{
+  if (delay < 0 && delay != -1)   throw new InvalidArgumentException("JAIN-SIP Exception, TimeStamp, " + "setDelay(), the delay parameter is <0");
+  this.delayFloat=delay;
+  this.delay=-1;
+}

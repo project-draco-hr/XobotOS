@@ -1,0 +1,3 @@
+def CopyAndStripAndMerge(s, t):
+    'Copies and strips a file and merges lines.\n\n  Copies a file, removes comments, and\n  merges lines with adjacent code point ranges and identical per-code point\n  data lines into one line with range syntax.\n  '
+    CopyAndStripWithOptionalMerge(s, t, True)

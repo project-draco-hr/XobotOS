@@ -1,0 +1,8 @@
+{
+  if (mWindow == null) {
+    mWindow=new CursorWindow(name,true);
+  }
+ else {
+    mWindow.clear();
+  }
+}

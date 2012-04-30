@@ -1,0 +1,12 @@
+{
+  Object val=getParameterValue(parameterName);
+  if (val instanceof GenericURI)   return (GenericURI)val;
+ else {
+    try {
+      return new GenericURI((String)val);
+    }
+ catch (    ParseException ex) {
+      return null;
+    }
+  }
+}

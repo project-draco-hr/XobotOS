@@ -1,0 +1,90 @@
+{
+  if (sipStack.isLoggingEnabled()) {
+    sipStack.getStackLogger().logDebug("PROCESSING INCOMING RESPONSE" + response.encodeMessage());
+  }
+  if (listeningPoint == null) {
+    if (sipStack.isLoggingEnabled())     sipStack.getStackLogger().logError("Dropping message: No listening point" + " registered!");
+    return;
+  }
+  if (sipStack.checkBranchId() && !Utils.getInstance().responseBelongsToUs(response)) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logError("Dropping response - topmost VIA header does not originate from this stack");
+    }
+    return;
+  }
+  SipProviderImpl sipProvider=listeningPoint.getProvider();
+  if (sipProvider == null) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logError("Dropping message:  no provider");
+    }
+    return;
+  }
+  if (sipProvider.getSipListener() == null) {
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logError("No listener -- dropping response!");
+    }
+    return;
+  }
+  SIPClientTransaction transaction=(SIPClientTransaction)this.transactionChannel;
+  SipStackImpl sipStackImpl=sipProvider.sipStack;
+  if (sipStack.isLoggingEnabled()) {
+    sipStackImpl.getStackLogger().logDebug("Transaction = " + transaction);
+  }
+  if (transaction == null) {
+    if (dialog != null) {
+      if (response.getStatusCode() / 100 != 2) {
+        if (sipStack.isLoggingEnabled()) {
+          sipStack.getStackLogger().logDebug("Response is not a final response and dialog is found for response -- dropping response!");
+        }
+        return;
+      }
+ else       if (dialog.getState() == DialogState.TERMINATED) {
+        if (sipStack.isLoggingEnabled()) {
+          sipStack.getStackLogger().logDebug("Dialog is terminated -- dropping response!");
+        }
+        return;
+      }
+ else {
+        boolean ackAlreadySent=false;
+        if (dialog.isAckSeen() && dialog.getLastAckSent() != null) {
+          if (dialog.getLastAckSent().getCSeq().getSeqNumber() == response.getCSeq().getSeqNumber()) {
+            ackAlreadySent=true;
+          }
+        }
+        if (ackAlreadySent && response.getCSeq().getMethod().equals(dialog.getMethod())) {
+          try {
+            if (sipStack.isLoggingEnabled()) {
+              sipStack.getStackLogger().logDebug("Retransmission of OK detected: Resending last ACK");
+            }
+            dialog.resendAck();
+            return;
+          }
+ catch (          SipException ex) {
+            sipStack.getStackLogger().logError("could not resend ack",ex);
+          }
+        }
+      }
+    }
+    if (sipStack.isLoggingEnabled()) {
+      sipStack.getStackLogger().logDebug("could not find tx, handling statelessly Dialog =  " + dialog);
+    }
+    ResponseEventExt sipEvent=new ResponseEventExt(sipProvider,transaction,dialog,(Response)response);
+    if (response.getCSeqHeader().getMethod().equals(Request.INVITE)) {
+      SIPClientTransaction forked=this.sipStack.getForkedTransaction(response.getTransactionId());
+      sipEvent.setOriginalTransaction(forked);
+    }
+    sipProvider.handleEvent(sipEvent,transaction);
+    return;
+  }
+  ResponseEventExt responseEvent=null;
+  responseEvent=new ResponseEventExt(sipProvider,(ClientTransactionExt)transaction,dialog,(Response)response);
+  if (response.getCSeqHeader().getMethod().equals(Request.INVITE)) {
+    SIPClientTransaction forked=this.sipStack.getForkedTransaction(response.getTransactionId());
+    responseEvent.setOriginalTransaction(forked);
+  }
+  if (dialog != null && response.getStatusCode() != 100) {
+    dialog.setLastResponse(transaction,response);
+    transaction.setDialog(dialog,dialog.getDialogId());
+  }
+  sipProvider.handleEvent(responseEvent,transaction);
+}

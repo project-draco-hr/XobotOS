@@ -1,0 +1,8 @@
+import sys
+from unicode_parse_common import *
+property_to_harfbuzz = {'CR': 'HB_Grapheme_CR', 'LF': 'HB_Grapheme_LF', 'Control': 'HB_Grapheme_Control', 'Extend': 'HB_Grapheme_Extend', 'Prepend': 'HB_Grapheme_Other', 'SpacingMark': 'HB_Grapheme_Other', 'L': 'HB_Grapheme_L', 'V': 'HB_Grapheme_V', 'T': 'HB_Grapheme_T', 'LV': 'HB_Grapheme_LV', 'LVT': 'HB_Grapheme_LVT', }
+if (__name__ == '__main__'):
+    if (len(sys.argv) != 3):
+        print ('Usage: %s <input .txt> <output .h>' % sys.argv[0])
+    else:
+        main(file(sys.argv[1], 'r'), file(sys.argv[2], 'w+'))

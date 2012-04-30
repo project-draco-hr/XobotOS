@@ -1,0 +1,7 @@
+{
+  while (theSaved != null && theStack.canContain(theSaved) && (e == null || theSaved.canContain(e))) {
+    Element next=theSaved.next();
+    push(theSaved);
+    theSaved=next;
+  }
+}

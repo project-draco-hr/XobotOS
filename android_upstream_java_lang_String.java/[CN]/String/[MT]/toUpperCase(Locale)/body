@@ -1,0 +1,3 @@
+{
+  return CaseMapper.toUpperCase(locale,this,value,offset,count);
+}

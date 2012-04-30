@@ -1,0 +1,4 @@
+{
+  CSExpression marshal=new CSReferenceExpression("Marshal.PtrToStringUni");
+  return new CSMethodInvocationExpression(marshal,_ptr.getReference(obj),_length.getReference(obj));
+}

@@ -1,0 +1,7 @@
+{
+  if (handler == null)   throw new NullPointerException();
+synchronized (mHandlerMap) {
+    if (mHandlerMap.get(type) != null)     throw new RuntimeException("type " + Integer.toHexString(type) + " already registered");
+    mHandlerMap.put(type,handler);
+  }
+}

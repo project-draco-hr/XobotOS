@@ -1,0 +1,10 @@
+{
+  if (key == null) {
+    throw new NullPointerException();
+  }
+  if (key.length - offset < DES_EDE_KEY_LEN) {
+    throw new InvalidKeyException();
+  }
+  this.key=new byte[DES_EDE_KEY_LEN];
+  System.arraycopy(key,offset,this.key,0,DES_EDE_KEY_LEN);
+}

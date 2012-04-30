@@ -1,0 +1,145 @@
+{
+  if (mArtist == null || mArtist.length() == 0) {
+    mArtist=mAlbumArtist;
+  }
+  ContentValues values=toValues();
+  String title=values.getAsString(MediaStore.MediaColumns.TITLE);
+  if (title == null || TextUtils.isEmpty(title.trim())) {
+    title=MediaFile.getFileTitle(values.getAsString(MediaStore.MediaColumns.DATA));
+    values.put(MediaStore.MediaColumns.TITLE,title);
+  }
+  String album=values.getAsString(Audio.Media.ALBUM);
+  if (MediaStore.UNKNOWN_STRING.equals(album)) {
+    album=values.getAsString(MediaStore.MediaColumns.DATA);
+    int lastSlash=album.lastIndexOf('/');
+    if (lastSlash >= 0) {
+      int previousSlash=0;
+      while (true) {
+        int idx=album.indexOf('/',previousSlash + 1);
+        if (idx < 0 || idx >= lastSlash) {
+          break;
+        }
+        previousSlash=idx;
+      }
+      if (previousSlash != 0) {
+        album=album.substring(previousSlash + 1,lastSlash);
+        values.put(Audio.Media.ALBUM,album);
+      }
+    }
+  }
+  long rowId=entry.mRowId;
+  if (MediaFile.isAudioFileType(mFileType) && (rowId == 0 || mMtpObjectHandle != 0)) {
+    values.put(Audio.Media.IS_RINGTONE,ringtones);
+    values.put(Audio.Media.IS_NOTIFICATION,notifications);
+    values.put(Audio.Media.IS_ALARM,alarms);
+    values.put(Audio.Media.IS_MUSIC,music);
+    values.put(Audio.Media.IS_PODCAST,podcasts);
+  }
+ else   if (mFileType == MediaFile.FILE_TYPE_JPEG && !mNoMedia) {
+    ExifInterface exif=null;
+    try {
+      exif=new ExifInterface(entry.mPath);
+    }
+ catch (    IOException ex) {
+    }
+    if (exif != null) {
+      float[] latlng=new float[2];
+      if (exif.getLatLong(latlng)) {
+        values.put(Images.Media.LATITUDE,latlng[0]);
+        values.put(Images.Media.LONGITUDE,latlng[1]);
+      }
+      long time=exif.getGpsDateTime();
+      if (time != -1) {
+        values.put(Images.Media.DATE_TAKEN,time);
+      }
+ else {
+        time=exif.getDateTime();
+        if (Math.abs(mLastModified * 1000 - time) >= 86400000) {
+          values.put(Images.Media.DATE_TAKEN,time);
+        }
+      }
+      int orientation=exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,-1);
+      if (orientation != -1) {
+        int degree;
+switch (orientation) {
+case ExifInterface.ORIENTATION_ROTATE_90:
+          degree=90;
+        break;
+case ExifInterface.ORIENTATION_ROTATE_180:
+      degree=180;
+    break;
+case ExifInterface.ORIENTATION_ROTATE_270:
+  degree=270;
+break;
+default :
+degree=0;
+break;
+}
+values.put(Images.Media.ORIENTATION,degree);
+}
+}
+}
+Uri tableUri=mFilesUri;
+FileInserter inserter=mFileInserter;
+if (!mNoMedia) {
+if (MediaFile.isVideoFileType(mFileType)) {
+tableUri=mVideoUri;
+inserter=mVideoInserter;
+}
+ else if (MediaFile.isImageFileType(mFileType)) {
+tableUri=mImagesUri;
+inserter=mImageInserter;
+}
+ else if (MediaFile.isAudioFileType(mFileType)) {
+tableUri=mAudioUri;
+inserter=mAudioInserter;
+}
+}
+Uri result=null;
+if (rowId == 0) {
+if (mMtpObjectHandle != 0) {
+values.put(MediaStore.MediaColumns.MEDIA_SCANNER_NEW_OBJECT_ID,mMtpObjectHandle);
+}
+if (tableUri == mFilesUri) {
+int format=entry.mFormat;
+if (format == 0) {
+format=MediaFile.getFormatCode(entry.mPath,mMimeType);
+}
+values.put(Files.FileColumns.FORMAT,format);
+}
+if (inserter == null || entry.mFormat == MtpConstants.FORMAT_ASSOCIATION) {
+result=mMediaProvider.insert(tableUri,values);
+}
+ else {
+result=inserter.insert(values);
+}
+if (result != null) {
+rowId=ContentUris.parseId(result);
+entry.mRowId=rowId;
+}
+}
+ else {
+result=ContentUris.withAppendedId(tableUri,rowId);
+values.remove(MediaStore.MediaColumns.DATA);
+mMediaProvider.update(result,values,null,null);
+}
+if (notifications && mWasEmptyPriorToScan && !mDefaultNotificationSet) {
+if (TextUtils.isEmpty(mDefaultNotificationFilename) || doesPathHaveFilename(entry.mPath,mDefaultNotificationFilename)) {
+setSettingIfNotSet(Settings.System.NOTIFICATION_SOUND,tableUri,rowId);
+mDefaultNotificationSet=true;
+}
+}
+ else if (ringtones && mWasEmptyPriorToScan && !mDefaultRingtoneSet) {
+if (TextUtils.isEmpty(mDefaultRingtoneFilename) || doesPathHaveFilename(entry.mPath,mDefaultRingtoneFilename)) {
+setSettingIfNotSet(Settings.System.RINGTONE,tableUri,rowId);
+mDefaultRingtoneSet=true;
+}
+}
+ else if (alarms && mWasEmptyPriorToScan && !mDefaultAlarmSet) {
+if (TextUtils.isEmpty(mDefaultAlarmAlertFilename) || doesPathHaveFilename(entry.mPath,mDefaultAlarmAlertFilename)) {
+setSettingIfNotSet(Settings.System.ALARM_ALERT,tableUri,rowId);
+mDefaultAlarmSet=true;
+}
+}
+return result;
+}

@@ -1,0 +1,13 @@
+{
+  StringBuffer encoding=new StringBuffer();
+  if (uri != null) {
+    encoding.append(LESS_THAN).append(uri.encode()).append(GREATER_THAN);
+  }
+ else   if (string != null) {
+    encoding.append(string);
+  }
+  if (!parameters.isEmpty()) {
+    encoding.append(SEMICOLON).append(parameters.encode());
+  }
+  return encoding.toString();
+}

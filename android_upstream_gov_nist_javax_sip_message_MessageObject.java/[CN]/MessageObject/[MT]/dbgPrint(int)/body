@@ -1,0 +1,7 @@
+{
+  int save=indentation;
+  indentation=indent;
+  String retval=this.toString();
+  indentation=save;
+  return retval;
+}

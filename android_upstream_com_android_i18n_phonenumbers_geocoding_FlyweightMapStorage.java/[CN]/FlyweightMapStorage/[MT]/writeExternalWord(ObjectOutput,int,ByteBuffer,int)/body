@@ -1,0 +1,9 @@
+{
+  index*=wordSize;
+  if (wordSize == SHORT_SIZE) {
+    objectOutput.writeShort(inputBuffer.getShort(index));
+  }
+ else {
+    objectOutput.writeInt(inputBuffer.getInt(index));
+  }
+}

@@ -1,0 +1,10 @@
+{
+  super.onFinishInflate();
+  mTimeDisplayBackground=(TextView)findViewById(R.id.timeDisplayBackground);
+  mTimeDisplayBackground.setTypeface(sBackgroundFont);
+  mTimeDisplayForeground=(TextView)findViewById(R.id.timeDisplayForeground);
+  mTimeDisplayForeground.setTypeface(sForegroundFont);
+  mAmPm=new AmPm(this,null);
+  mCalendar=Calendar.getInstance();
+  setDateFormat();
+}

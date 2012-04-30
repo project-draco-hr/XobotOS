@@ -1,0 +1,10 @@
+{
+  if (sipStack.sipListener == null) {
+    sipStack.sipListener=sipListener;
+  }
+ else   if (sipStack.sipListener != sipListener) {
+    throw new TooManyListenersException("Stack already has a listener. Only one listener per stack allowed");
+  }
+  if (sipStack.isLoggingEnabled())   sipStack.getStackLogger().logDebug("add SipListener " + sipListener);
+  this.sipListener=sipListener;
+}

@@ -1,0 +1,8 @@
+{
+  super.onProgressRefresh(scale,fromUser);
+  Drawable thumb=mThumb;
+  if (thumb != null) {
+    setThumbPos(getWidth(),thumb,scale,Integer.MIN_VALUE);
+    invalidate();
+  }
+}

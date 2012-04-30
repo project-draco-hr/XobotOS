@@ -1,0 +1,10 @@
+{
+  if (DBG)   log("onRoamingOff");
+  if (getDataOnRoamingEnabled() == false) {
+    notifyOffApnsOfAvailability(Phone.REASON_ROAMING_OFF);
+    setupDataOnReadyApns(Phone.REASON_ROAMING_OFF);
+  }
+ else {
+    notifyDataConnection(Phone.REASON_ROAMING_OFF);
+  }
+}

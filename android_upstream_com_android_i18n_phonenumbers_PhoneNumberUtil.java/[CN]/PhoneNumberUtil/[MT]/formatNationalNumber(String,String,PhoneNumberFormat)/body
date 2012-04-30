@@ -1,0 +1,3 @@
+{
+  return formatNationalNumber(number,regionCode,numberFormat,null);
+}

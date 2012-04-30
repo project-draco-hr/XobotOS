@@ -1,0 +1,7 @@
+{
+  if (mAttachInfo.mHardwareRenderer != null) {
+    mAttachInfo.mHardwareRenderer.destroy(true);
+    mAttachInfo.mHardwareRenderer=null;
+    mAttachInfo.mHardwareAccelerated=false;
+  }
+}

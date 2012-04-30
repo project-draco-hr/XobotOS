@@ -1,0 +1,6 @@
+{
+  if (instance == null) {
+    return getInstance(META_DATA_FILE_PREFIX,CountryCodeToRegionCodeMap.getCountryCodeToRegionCodeMap());
+  }
+  return instance;
+}
