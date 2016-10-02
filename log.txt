@@ -1,0 +1,7 @@
+INFO:kenja.converter:/tmp/tmpmWrfDY
+INFO:kenja.converter:create parser processes...
+INFO:kenja.converter:waiting parser processes
+INFO:kenja.converter:convert a git repository to a  historage...
+INFO:kenja.converter:[0/2] convert f20db6295e878a2f298c5e3896528e240785805b to: /hr/.git
+INFO:kenja.converter:[1/2] convert 888ed3b8cc8d8e0a54b1858bfa5a3572545f4d2f to: /hr/.git
+INFO:kenja.converter:completed!
